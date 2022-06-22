@@ -29,6 +29,7 @@
     "react-hot-toast": "^2.2.0",
     "react-icons": "^4.3.1",
     "react-infinite-scroll-component": "^6.1.0",
+    "react-next": "^0.0.1",
     "react-paginate": "^8.1.2",
     "react-phone-input-2": "^2.15.0",
     "react-query": "^3.35.0",
