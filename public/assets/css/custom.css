@@ -1,0 +1,168 @@
+@font-face {
+  font-family: 'Celias';
+  src: url('../font/Celias-Black.eot');
+  src: local('../font/Celias Black Italic'), local('Celias-BlackItalic'),
+      url('../font/Celias-BlackItalic.eot?#iefix') format('embedded-opentype'),
+      url('../font/Celias-BlackItalic.woff2') format('woff2'),
+      url('../font/Celias-BlackItalic.woff') format('woff'),
+      url('../font/Celias-BlackItalic.ttf') format('truetype');
+  font-weight: 900;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Celias';
+  src: url('../font/Celias-Italic.eot');
+  src: local('../font/Celias Italic'), local('Celias-Italic'),
+      url('../font/Celias-Italic.eot?#iefix') format('embedded-opentype'),
+      url('Celias-Italic.woff2') format('woff2'),
+      url('../font/Celias-Italic.woff') format('woff'),
+      url('../font/Celias-Italic.ttf') format('truetype');
+  font-weight: normal;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Celias';
+  src: url('../font/Celias-Hairline.eot');
+  src: local('../font/Celias Hairline'), local('Celias-Hairline'),
+      url('../font/Celias-Hairline.eot?#iefix') format('embedded-opentype'),
+      url('../font/Celias-Hairline.woff2') format('woff2'),
+      url('../font/Celias-Hairline.woff') format('woff'),
+      url('../font/Celias-Hairline.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Celias';
+  src: url('../font/Celias-HairlineItalic.eot');
+  src: local('../font/Celias Hairline Italic'), local('Celias-HairlineItalic'),
+      url('../font/Celias-HairlineItalic.eot?#iefix') format('embedded-opentype'),
+      url('../font/Celias-HairlineItalic.woff2') format('woff2'),
+      url('../font/Celias-HairlineItalic.woff') format('woff'),
+      url('../font/Celias-HairlineItalic.ttf') format('truetype');
+  font-weight: normal;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Celias';
+  src: url('../font/Celias-LightItalic.eot');
+  src: local('../font/Celias Light Italic'), local('Celias-LightItalic'),
+      url('../font/Celias-LightItalic.eot?#iefix') format('embedded-opentype'),
+      url('../font/Celias-LightItalic.woff2') format('woff2'),
+      url('../font/Celias-LightItalic.woff') format('woff'),
+      url('../font/Celias-LightItalic.ttf') format('truetype');
+  font-weight: 300;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Celias';
+  src: url('../font/Celias-Thin.eot');
+  src: local('../font/Celias Thin'), local('Celias-Thin'),
+      url('../font/Celias-Thin.eot?#iefix') format('embedded-opentype'),
+      url('../font/Celias-Thin.woff2') format('woff2'),
+      url('../font/Celias-Thin.woff') format('woff'),
+      url('../font/Celias-Thin.ttf') format('truetype');
+  font-weight: 100;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Celias';
+  src: url('../font/Celias-Bold.eot');
+  src: local('../font/Celias Bold'), local('Celias-Bold'),
+      url('../font/Celias-Bold.eot?#iefix') format('embedded-opentype'),
+      url('../font/Celias-Bold.woff2') format('woff2'),
+      url('../font/Celias-Bold.woff') format('woff'),
+      url('../font/Celias-Bold.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Celias';
+  src: url('../font/Celias-BoldItalic.eot');
+  src: local('../font/Celias Bold Italic'), local('Celias-BoldItalic'),
+      url('../font/Celias-BoldItalic.eot?#iefix') format('embedded-opentype'),
+      url('../font/Celias-BoldItalic.woff2') format('woff2'),
+      url('../font/Celias-BoldItalic.woff') format('woff'),
+      url('../font/Celias-BoldItalic.ttf') format('truetype');
+  font-weight: bold;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Celias';
+  src: url('../font/Celias-Light.eot');
+  src: local('../font/Celias Light'), local('Celias-Light'),
+      url('../font/Celias-Light.eot?#iefix') format('embedded-opentype'),
+      url('../font/Celias-Light.woff2') format('woff2'),
+      url('../font/Celias-Light.woff') format('woff'),
+      url('../font/Celias-Light.ttf') format('truetype');
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Celias';
+  src: url('../font/Celias-Black.eot');
+  src: local('../font/Celias Black'), local('Celias-Black'),
+      url('../font/Celias-Black.eot?#iefix') format('embedded-opentype'),
+      url('../font/Celias-Black.woff2') format('woff2'),
+      url('../font/Celias-Black.woff') format('woff'),
+      url('../font/Celias-Black.ttf') format('truetype');
+  font-weight: 900;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Celias';
+  src: url('../font/Celias-ThinItalic.eot');
+  src: local('../font/Celias Thin Italic'), local('Celias-ThinItalic'),
+      url('../font/Celias-ThinItalic.eot?#iefix') format('embedded-opentype'),
+      url('../font/Celias-ThinItalic.woff2') format('woff2'),
+      url('../font/Celias-ThinItalic.woff') format('woff'),
+      url('../font/Celias-ThinItalic.ttf') format('truetype');
+  font-weight: 100;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Celias';
+  src: url('../font/Celias-MediumItalic.eot');
+  src: local('../font/Celias Medium Italic'), local('Celias-MediumItalic'),
+      url('../font/Celias-MediumItalic.eot?#iefix') format('embedded-opentype'),
+      url('../font/Celias-MediumItalic.woff2') format('woff2'),
+      url('../font/Celias-MediumItalic.woff') format('woff'),
+      url('../font/Celias-MediumItalic.ttf') format('truetype');
+  font-weight: 500;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Celias';
+  src: url('../font/Celias.eot');
+  src: local('../font/Celias'),
+      url('../font/Celias.eot?#iefix') format('embedded-opentype'),
+      url('../font/Celias.woff2') format('woff2'),
+      url('../font/Celias.woff') format('woff'),
+      url('../font/Celias.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Celias';
+  src: url('../font/Celias-Medium.eot');
+  src: local('../font/Celias Medium'), local('Celias-Medium'),
+      url('../font/Celias-Medium.eot?#iefix') format('embedded-opentype'),
+      url('../font/Celias-Medium.woff2') format('woff2'),
+      url('../font/Celias-Medium.woff') format('woff'),
+      url('../font/Celias-Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+}
+
