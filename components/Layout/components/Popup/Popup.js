@@ -1,14 +1,23 @@
-import React from "react";
- 
-const Popup = props => {
-  return (
-    <div className="popup-box">
-      <div className="box">
-        <span className="close-icon" onClick={props.handleClose}>x</span>
-        {props.content}
-      </div>
-    </div>
-  );
-};
- 
-export default Popup;
+import Image from "next/image"
+
+// ICONS
+import crossIcon from '../../../../public/assets/images/crossIcon.svg'
+
+export default function Popup({content, handleClose}){
+    return(
+        <div className="fixed w-1/2 bg-white h-1/6 border-8 inset-0 m-auto z-10">
+            <div className="absolute right-[10px] top-[10px]">
+                <button
+                    onClick={handleClose}
+                >
+                    <Image
+                        src={crossIcon}
+                        width={"20px"}
+                        height={"20px"}
+                    />
+                </button>
+            </div>
+            {content}
+        </div>
+    )
+}

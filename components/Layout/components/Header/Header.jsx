@@ -678,7 +678,7 @@ useEffect(() => {
     
       <nav className="navbar navbar-expand-lg navbar-light bg-light shadow">
         <div className="container-fluid">
-          <Link href="/">
+          {/* <Link href="/">
             <a className="navbar-brand">
               <img
                 src="/assets/images/logo.png"
@@ -686,7 +686,7 @@ useEffect(() => {
                 width="150px;"
               />
             </a>
-          </Link>
+          </Link> */}
           
           <form className="d-flex ms-auto manu_cat" required onSubmit={inputData}>
           <div className="sidebar-1">
