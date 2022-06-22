@@ -4,7 +4,7 @@ import { Button } from "react-bootstrap";
 import Image from "next/image";
 import Popup from "../Popup/Popup";
 import Cookies from "universal-cookie";
-let base_url_api = "https://cbe.apricart.pk/v1";
+let base_url_api = "https://staging.apricart.pk/v1";
 
 // IMAGES
 import bikePNG from "../../../../public/assets/images/bike.png";
