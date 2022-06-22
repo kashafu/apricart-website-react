@@ -69,7 +69,7 @@ const SlideDrawer = (props) => {
       'Authorization' : 'Bearer ' + cookies.get('cookies-token'),
     }
   }
-  
+  // 
   if (token) {
   
        cartAll = async() =>{
@@ -86,7 +86,8 @@ const SlideDrawer = (props) => {
       
       let Data1 = response.data.data;
       mydata = Data1;
-      dispatch(updatedcart(Data1))
+      Data1.map((item)=>{dispatch(updatedcart(item.product));});
+     // dispatch(updatedcart(carti));
       //cart= response.data.data;
       setTotal(response.data.total)
       console.log(response.data.data);
@@ -131,13 +132,14 @@ const SlideDrawer = (props) => {
     OptionAll();
     // cartall();
   },[])
-
+  
  let shippment_charged = option.find(e => e.key === 'shippment_charged_at')
  let shippment_waved_limit = option.find(e => e.key === 'shippment_waved_limit')
  let shippment_fix_amount = option.find(e => e.key === 'shippment_fix_amount')
  
 
   const getTotalPrice = () => {
+  
     return cart.reduce(
       (accumulator, item) => accumulator + item.quantity * item.currentPrice,0
     );
@@ -195,6 +197,7 @@ const SlideDrawer = (props) => {
             <>
              <div className="cart_body">
               {cart.map((item) => {
+                 //let i=item.product;
                 const { id, productImageUrl, title, currentPrice, sku } = item;
                 return (
                   <>
