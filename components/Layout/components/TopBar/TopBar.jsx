@@ -2,9 +2,11 @@ import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { Button } from "react-bootstrap";
 import Image from "next/image";
+import Link from 'next/link'
 import Popup from "../Popup/Popup";
 import Cookies from "universal-cookie";
-let base_url_api = "https://staging.apricart.pk/v1";
+// let base_url_api = "https://staging.apricart.pk/v1";
+let base_url_api = process.env.BASE_URL_API
 
 // IMAGES
 import bikePNG from "../../../../public/assets/images/bike.png";
@@ -134,14 +136,18 @@ export default function Layout() {
 
     return (
         <header className="flex flex-row w-screen bg-main-yellow justify-between p-6 items-center h-[70px]">
-            <div className="flex flex-row space-x-4 items-center justify-between">
+            <div className="flex flex-row space-x-4 items-center justify-between items-center">
                 {/* APRICART LOGO */}
-                <div className="relative w-1/5 lg:hidden">
-                    <Image
-                        src={logoPNG}
-                        alt={"logo"}
-                        // layout={'fill'}
-                    />
+                <div className="relative min-w-[100px] w-1/6 lg:hidden">
+                    <Link href={"/"} passHref>
+                        <button className="flex">
+                            <Image
+                                src={logoPNG}
+                                alt={"logo"}
+                                // layout={'fill'}
+                            />
+                        </button>
+                    </Link>
 
                 </div>
                 {/* DELIVERY */}
