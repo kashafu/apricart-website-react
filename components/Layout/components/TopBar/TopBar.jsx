@@ -1,9 +1,13 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { Button } from "react-bootstrap";
+import Image from "next/image";
 import Popup from "../Popup/Popup";
 import Cookies from "universal-cookie";
 let base_url_api = "https://cbe.apricart.pk/v1";
+
+// IMAGES
+import bikePNG from "../../../../public/assets/images/bike.png";
 
 export default function Layout() {
     const cookies = new Cookies();
@@ -21,7 +25,7 @@ export default function Layout() {
 
     const getPopularitems = async () => {
         const response = await axios.get(
-            base_url_api + "/home/address/cities?lang=en"
+            base_url_api + "/home/address/cities?lang=en&client_type=apricart"
         );
         setUsers(response.data.data);
     };
@@ -50,7 +54,6 @@ export default function Layout() {
                 longitude >= karachiCoords.left[1]
             ) {
                 setcity("karachi");
-                console.log("SETTING CITY COOKIE TO KARACHI");
                 cookies.set("cities", "karachi");
                 return;
             }
@@ -79,7 +82,6 @@ export default function Layout() {
     useEffect(() => {
         getPopularitems();
         if (cookies.get("cities") == null) {
-            console.log("SETTING CITY COOKIE TO KARACHI AND CALLING LOCATION");
             cookies.set("cities", "karachi");
             getLocation();
         }
@@ -137,7 +139,7 @@ export default function Layout() {
                                         <img
                                             src="assets/images/bike.png"
                                             className="img-fluid"
-                                        />{" "}
+                                        />
                                         Fast & Free Delivery
                                     </a>
                                 </li>
@@ -159,13 +161,14 @@ export default function Layout() {
                                     <a href="#">English</a>
                                 </li>
                                 {/* <li className="text-center">
-                  <h3>
-                    <div className="ticker">
-                      <a className="inTicker">{user}</a>
-                    </div>
-                  </h3>
-            
-                </li> */}
+                                    <h3>
+                                        <div className="ticker">
+                                        <a className="inTicker">{user}</a>
+                                        </div>
+                                    </h3>
+                                
+                                    </li> 
+                                */}
                             </ul>
                         </div>
                         {isOpen && (
