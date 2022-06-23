@@ -12,6 +12,7 @@ import { useEffect, useState } from "react";
 import { base_url_api } from '../information.json'
 import axios from "axios";
 import BannerSlider from "../components/Layout/components/Slider/BannerSlider";
+import MainProducts from "../components/Layout/components/Products/MainProducts";
 //import Slider from "../components/Layout/components/Slider/Slider";
 
 
@@ -54,6 +55,7 @@ export default function Home() {
 				}
 			)
 			setHomeData(response.data.data)
+			console.log(response.data.data)
 		} catch (error) {
 			setErrorMessage(error)
 		}
@@ -92,6 +94,9 @@ export default function Home() {
 							banners={homeData.banners}
 						/>
 					</section>
+					<MainProducts
+						products={homeData.webProducts[0].data}
+					/>
 					<PopularItem />
 					<RecommendedProducts />
 					<MostSold />

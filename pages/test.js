@@ -1,4 +1,5 @@
-import SingleItem from "../components/Layout/components/SingleItem/SingleItem";
+import MainProducts from "../components/Layout/components/Products/MainProducts";
+import SingleItem from "../components/Layout/components/Products/SingleProduct";
 let json = {
     "id": 12216,
     "sku": "APRA-BD02-01",
@@ -26,8 +27,10 @@ export default function Test(){
     return(
         <div>
             <p>TEST PAGE</p>
-            <SingleItem
+            {/* <SingleItem
                 item={json}
+            /> */}
+            <MainProducts
             />
         </div>
     )
