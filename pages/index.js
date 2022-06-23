@@ -41,21 +41,19 @@ export default function Home() {
 			longitude= position.coords.longitude
 		})
 		// TODO CHECK IF GUEST USER AND USE ID ACCORDINGLY
-		let response = await axios.get(
-			base_url_api + '/home/all?client_lat=' + latitude + '&client_long=' + longitude + '&city=' + city + '&lang=en&userid' + userId + '&web=true&client_type=apricart',
-			{
-				headers: {
-					"Content-Type": "application/json",
-					// Authorization: "Bearer " + cookies.get("cookies-token"),
-				},
-			}
-		)
-
-		if(response.status != 1){
-			setErrorMessage(response.message)
-		}
-		else{
-			setHomeData(response.data)
+		try {
+			let response = await axios.get(
+				base_url_api + '/home/all?client_lat=' + latitude + '&client_long=' + longitude + '&city=' + city + '&lang=en&userid' + userId + '&web=true&client_type=apricart',
+				{
+					headers: {
+						"Content-Type": "application/json",
+						// Authorization: "Bearer " + cookies.get("cookies-token"),
+					},
+				}
+			)
+			setHomeData(response.data.data)
+		} catch (error) {
+			setErrorMessage(error)
 		}
 	}
 
@@ -75,12 +73,14 @@ export default function Home() {
 			{/* TODO IMPLEMENT HEAD WITH ICON AND NAME */}
 			<Head>Apricart</Head>
 			<div>
-				
+
 			</div>
 			{/* old */}
 			<div className="row">
 				<div className="col-12 col-sm-2  col-md-2  col-lg-3  col-xl-2  col-xxl-2">
-					<Categories />
+					<Categories 
+						categories={homeData.categories}
+					/>
 				</div>
 				<div className="col-12 col-sm-12  col-md-10  col-lg-9  col-xl-10  col-xxl-10 parot">
 					{/* <Slider /> */}
