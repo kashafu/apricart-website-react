@@ -240,6 +240,7 @@ export default function Layout() {
                                     </div>
                                 </div>
                                 <Button
+                                 className="bg-sky-600 w-[75px] rounded-full hover:bg-sky-700"
                                     type="submit"
                                     onClick={closeButton}
                                 >
