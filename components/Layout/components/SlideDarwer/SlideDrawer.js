@@ -61,7 +61,7 @@ const SlideDrawer = (props) => {
  
  let cartAll={}
   const config = {
-    method: 'GET',
+   
     headers: {
     
       'Accept' : 'application/json',
@@ -157,21 +157,20 @@ const SlideDrawer = (props) => {
   let disValue = 3;
   const Discount = getTotalPrice();
   const Avail = Discount - (Discount * disValue) / 100;
+  
   const delitem=(item)=>{
-   const response = axios.delete('https://staging.apricart.pk/v1/order/cart/delete?city=karachi&lang=en',{
-    "cart": [
-                {
-                    sku:item.id
-                }
-            ]
-},
-      {
-      headers: {
-    
-        'Accept' : 'application/json',
-        'Content-Type' : 'application/json',
-        'Authorization' : 'Bearer ' + cookies.get('cookies-token'),
-      }})
+    console.log(item.sku);
+    console.log(cookies.get('cookies-token'));
+    let dat ={
+      "cart": [
+                  {
+                      "sku":item.sku
+                  }
+              ]
+  };
+   const response = axios.delete('https://staging.apricart.pk/v1/order/cart/delete?city=karachi&lang=en&client_type=apricart',
+  dat,config
+  )
 
 
   }
