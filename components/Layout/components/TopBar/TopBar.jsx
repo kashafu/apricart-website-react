@@ -5,8 +5,7 @@ import Image from "next/image";
 import Link from 'next/link'
 import Popup from "../Popup/Popup";
 import Cookies from "universal-cookie";
-// let base_url_api = "https://staging.apricart.pk/v1";
-let base_url_api = process.env.BASE_URL_API
+import { base_url_api } from '../../../../information.json'
 
 // IMAGES
 import bikePNG from "../../../../public/assets/images/bike.png";
