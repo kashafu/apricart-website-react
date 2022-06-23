@@ -159,19 +159,51 @@ const SlideDrawer = (props) => {
   const Avail = Discount - (Discount * disValue) / 100;
   
   const delitem=(item)=>{
-    console.log(item.sku);
-    console.log(cookies.get('cookies-token'));
-    let dat ={
-      "cart": [
-                  {
-                      "sku":item.sku
-                  }
-              ]
-  };
-   const response = axios.delete('https://staging.apricart.pk/v1/order/cart/delete?city=karachi&lang=en&client_type=apricart',
-  dat,config
-  )
+    if (token){
+  //   console.log(item.sku);
+  //   console.log(cookies.get('cookies-token'));
+  //   let dat ={
+  //     "cart": [
+  //                 {
+  //                     sku:item.sku
+  //                 }
+  //             ]
+  // };
+  // //city=karachi&lang=en&client_type=apricart
+  // let parmas={"city":"karachi",
+  //   "lang":"en",
+  //   "client_type":"apricart"}
+  //  const response = axios.delete('https://staging.apricart.pk/v1/order/cart/delete?',dat,{headers:{'Accept':'*/*','Content-Type' : 'application/json','Authorization' : 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI5MjMxMTE4MTMzODkiLCJyb2xlIjoiVVNFUiIsImlzcyI6Ind3dy5ib2lsZXJwbGF0ZS5kZXNpZ24iLCJpYXQiOjE2NTU5Njk3NzEsImV4cCI6MTY1ODU2MTc3MX0.Vbe_9XTQOqDwkkNzc0po96aJWqCnA8lqDahOjTWQgfU'}});
 
+  //   
+  var data = JSON.stringify({
+    "cart": [
+      {
+        "sku": item.sku
+      }
+    ]
+  });
+  
+  var config = {
+    method: 'delete',
+    url: 'https://staging.apricart.pk/v1/order/cart/delete?city=karachi&lang=en&client_type=apricart',
+    headers: { 
+      'Content-Type': 'application/json', 
+      'Authorization': 'Bearer '+ cookies.get("cookies-token")
+    },
+    data : data
+  };
+  
+  axios(config)
+  .then(function (response) {
+    console.log(JSON.stringify(response.data));
+  })
+  .catch(function (error) {
+    console.log(error);
+  });
+  
+
+}
 
   }
   
