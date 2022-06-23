@@ -5,7 +5,8 @@ import Image from "next/image";
 import Link from 'next/link'
 import Popup from "../Popup/Popup";
 import Cookies from "universal-cookie";
-import { base_url_api } from '../../../../information.json'
+import information from '../../../../information.json'
+let base_url_api = information.base_url_api
 
 // IMAGES
 import bikePNG from "../../../../public/assets/images/bike.png";
@@ -21,21 +22,31 @@ export default function Layout() {
 
     console.log(cookies.get("cities"));
 
-    // if (cookies.get("cities") == "undefined") {
-    //   cookies.set("cities", "karachi");
-    // }
-
-    const [users, setUsers] = useState([]);
+    // const [users, setUsers] = useState([]);
     const [getcity, setcity] = useState(
         cookies.get("cities") == null ? "karachi" : cookies.get("cities")
     );
+    // const [user, setUser] = useState([]);
+    const [isOpen, setIsOpen] = useState(false);
 
-    const getPopularitems = async () => {
-        const response = await axios.get(
-            base_url_api + "/home/address/cities?lang=en&client_type=apricart"
-        );
-        setUsers(response.data.data);
-    };
+    useEffect(() => {
+        // getPopularitems();
+        if (cookies.get("cities") == null) {
+            cookies.set("cities", "karachi");
+            getLocation();
+        }
+    }, []);
+
+    // useEffect(() => {
+    //     getTicker();
+    // }, []);
+
+    // const getPopularitems = async () => {
+    //     const response = await axios.get(
+    //         base_url_api + "/home/address/cities?lang=en&client_type=apricart"
+    //     );
+    //     setUsers(response.data.data);
+    // };
 
     const getLocation = () => {
         if (!navigator.geolocation) {
@@ -85,33 +96,20 @@ export default function Layout() {
             }
         });
     };
-
-    useEffect(() => {
-        getPopularitems();
-        if (cookies.get("cities") == null) {
-            cookies.set("cities", "karachi");
-            getLocation();
-        }
-    }, []);
-
-    const [user, setUser] = useState([]);
-    const getTicker = async () => {
-        const response = await axios.get(
-            `https://staging.apricart.pk/v1/home/all?client_lat=34.02910146301811&client_long=71.63761019869207&city=${cookies.get(
-                "cities"
-            )}&lang=en&userid=abc123&web=true`
-        );
-        setUser(response.data.data.ticker);
-    };
-    useEffect(() => {
-        getTicker();
-    }, []);
-
-    const [isOpen, setIsOpen] = useState(false);
+    
+    // const getTicker = async () => {
+    //     const response = await axios.get(
+    //         `https://staging.apricart.pk/v1/home/all?client_lat=34.02910146301811&client_long=71.63761019869207&city=${cookies.get(
+    //             "cities"
+    //         )}&lang=en&userid=abc123&web=true`
+    //     );
+    //     setUser(response.data.data.ticker);
+    // };
 
     const togglePopup = () => {
         setIsOpen(!isOpen);
     };
+    
     const closeButton = () => {
         setIsOpen(!isOpen);
         window.location.reload();
@@ -121,17 +119,13 @@ export default function Layout() {
         setcity(event.target.value);
         cookies.set("cities", event.target.value);
     };
+
     const submitCities = (e) => {
         e.preventDefault();
         setcity(e.target.value);
-        // window.location.reload();
-        // console.log("SELECTED CITY IS " + e.target.value + " AND SETTING COOKIE")
-        // cookies.set("cities", e.target.value);
     };
-    // console.log(getcity);
-    // cookies.set("cities", getcity);
 
-    let checkcity = cookies.get("cities");
+    // let checkcity = cookies.get("cities");
 
     return (
         <header className="flex flex-row w-screen bg-main-yellow justify-between p-6 items-center h-[70px]">
