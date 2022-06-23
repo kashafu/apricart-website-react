@@ -10,6 +10,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer, toast } from "react-toastify";
 import Cookies from "universal-cookie";
 import { useRouter } from "next/router";
+import SingleItem from "../SingleItem/SingleItem";
 
 ///catalog/mostviewed?page=1&size=10&city=karachi&lang=en
 const useEffectAPI = () => {
@@ -96,6 +97,14 @@ const useEffectAPI = () => {
         }
     };
 
+    if(!users){
+        return(
+            <div>
+                Loading
+            </div>
+        )
+    }
+
     return (
         <>
             <div className="">
@@ -117,6 +126,9 @@ const useEffectAPI = () => {
                                         } = list;
                                         //stop
                                         return (
+                                            // <SingleItem
+                                            //     item={list}
+                                            // />
                                             <div className="col" key={id}>
                                                 <div className="p-3 border bg-light btnchan">
                                                     <div
