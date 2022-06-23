@@ -6,7 +6,7 @@ import Link from 'next/link'
 import Popup from "../Popup/Popup";
 import Cookies from "universal-cookie";
 import information from '../../../../information.json'
-let base_url_api = information.base_url_api
+const base_url_api = information.base_url_api
 
 // IMAGES
 import bikePNG from "../../../../public/assets/images/bike.png";
@@ -19,8 +19,6 @@ export default function Layout() {
     // let divIconStyle = "relative w-[15px] h-[15px] lg:w-[22px] lg:h-[22px]" 
 
     const cookies = new Cookies();
-
-    console.log(cookies.get("cities"));
 
     // const [users, setUsers] = useState([]);
     const [getcity, setcity] = useState(
