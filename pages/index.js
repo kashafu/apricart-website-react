@@ -13,6 +13,7 @@ import { base_url_api } from '../information.json'
 import axios from "axios";
 import BannerSlider from "../components/Layout/components/Slider/BannerSlider";
 import MainProducts from "../components/Layout/components/Products/MainProducts";
+import ScrollingProducts from "../components/Layout/components/Products/ScrollingProducts";
 //import Slider from "../components/Layout/components/Slider/Slider";
 
 
@@ -43,7 +44,7 @@ export default function Home() {
 			longitude= position.coords.longitude
 		})
 		// TODO CHECK IF GUEST USER AND USE ID ACCORDINGLY
-		let url = base_url_api + '/home/all?client_lat=' + latitude + '&client_long=' + longitude + '&city=' + city + '&lang=en&userid=' + userId + '&web=true&client_type=apricart'
+		let url = base_url_api + '/home/all?client_lat=' + latitude + '&client_long=' + longitude + '&city=' + city + '&lang=en&userid=' + userId + '&web=false&client_type=apricart'
 		try {
 			let response = await axios.get(
 				url,
@@ -95,7 +96,10 @@ export default function Home() {
 						/>
 					</section>
 					<MainProducts
-						products={homeData.webProducts[0].data}
+						products={homeData.products[0].data}
+					/>
+					<ScrollingProducts
+						products={homeData.products[1].data}
 					/>
 					<PopularItem />
 					<RecommendedProducts />

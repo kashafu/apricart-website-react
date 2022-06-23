@@ -1,7 +1,6 @@
 import SingleProduct from "./SingleProduct"
 
 export default function MainProducts({products}){
-    console.log(products)
     if(!products){
         return(
             <div>
