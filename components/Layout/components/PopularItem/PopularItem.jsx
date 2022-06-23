@@ -58,6 +58,7 @@ const useEffectAPI = () => {
         console.log(list.sku);
         const wishdata = { sku: [list.sku] };
         if (token) {
+            console.log(token)
             const response = axios.post(
                 "https://staging.apricart.pk/v1/watchlist/save?",
                 wishdata,
