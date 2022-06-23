@@ -1,7 +1,10 @@
+import Image from "next/image";
 import Slider from "react-slick";
 import SingleProduct from "./SingleProduct";
 
 export default function ScrollingProducts({ products }) {
+    console.log(products)
+
     const settings = {
         dots: false,
         infinite: true,
@@ -51,18 +54,67 @@ export default function ScrollingProducts({ products }) {
     }
 
     return (
-        <div>  
-            <Slider {...settings}>
-                {products.map((product)=>{
-                    return(
-                        <div key={product.id}>
-                            <SingleProduct
-                                product={product}
-                            />
+        // <section>
+        //     {/* BANNER */}
+        //     <div className="w-full">
+        //         {/* <Image
+        //             src={bannerImageWeb}
+        //             layout={'fill'}
+        //         /> */}
+        //     </div>
+        //     <p>
+        //         {name}
+        //     </p>
+        //     {/* SECTION HEADER */}
+        //     <section>
+        //         <Slider {...settings}>
+        //             {products.map((product)=>{
+        //                 return(
+        //                     <div key={product.id}>
+        //                         <SingleProduct
+        //                             product={product}
+        //                         />
+        //                     </div>
+        //                 )
+        //             })}
+        //         </Slider>               
+        //     </section>
+        // </section>
+        <section>
+            {products.map((product)=>{
+                let {bannerImageWeb, name, id} = product
+                return(
+                    <div key={id}>
+                        <section>
+                        {/* BANNER */}
+                        <div className="w-full">
+                            {/* <Image
+                                src={bannerImageWeb}
+                                layout={'fill'}
+                            /> */}
                         </div>
-                    )
-                })}
-            </Slider>
-        </div>
+                        <p>
+                            {name}
+                        </p>
+                        {/* SECTION HEADER */}
+                        <section>
+                            <Slider {...settings}>
+                                {products.map((product)=>{
+                                    return(
+                                        <div key={product.id}>
+                                            <SingleProduct
+                                                product={product}
+                                            />
+                                        </div>
+                                    )
+                                })}
+                            </Slider>               
+                        </section>
+                    </section>
+
+                    </div>
+                )
+            })}
+        </section>
     )
 }
