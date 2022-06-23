@@ -8,6 +8,9 @@ import RecommendedProducts from "../components/Layout/components/RecommendedProd
 import MostSold from "../components/Layout/components/MostSold/MostSold";
 import Slider2 from "../components/Layout/components/Slider/Slider";
 import Cookies from 'universal-cookie';
+import { useEffect, useState } from "react";
+import { base_url_api } from '../information.json'
+import axios from "axios";
 //import Slider from "../components/Layout/components/Slider/Slider";
 
 
@@ -19,9 +22,62 @@ export default function Home() {
 		const d = new Date();
 		cookies.set('guestUserId', 'desktopuser_' + d.getTime(), 30);
 	}
+
+	const [homeData, setHomeData] = useState(null)
+	const [errorMessage, setErrorMessage] = useState('Loading')
+
+	useEffect(()=>{
+		getHomeDataApi()
+	}, [])
+
+	const getHomeDataApi = async() => {
+		// city cookies is being set in TopBar.js
+		let city = cookies.get('city')
+		let latitude = 0 
+		let longitude = 0
+		let userId = cookies.get('guestUserId')
+		navigator.geolocation.getCurrentPosition((position)=> {
+			latitude= position.coords.latitude
+			longitude= position.coords.longitude
+		})
+		// TODO CHECK IF GUEST USER AND USE ID ACCORDINGLY
+		let response = await axios.get(
+			base_url_api + '/home/all?client_lat=' + latitude + '&client_long=' + longitude + '&city=' + city + '&lang=en&userid' + userId + '&web=true&client_type=apricart',
+			{
+				headers: {
+					"Content-Type": "application/json",
+					// Authorization: "Bearer " + cookies.get("cookies-token"),
+				},
+			}
+		)
+
+		if(response.status != 1){
+			setErrorMessage(response.message)
+		}
+		else{
+			setHomeData(response.data)
+		}
+	}
+
+	if(!homeData){
+		return(
+			<div>
+				<p>
+					{errorMessage}
+				</p>
+			</div>
+		)
+	}
+
+
 	return (
 		<>
+			{/* TODO IMPLEMENT HEAD WITH ICON AND NAME */}
 			<Head>Apricart</Head>
+			<div>
+				
+			</div>
+			{/* old */}
 			<div className="row">
 				<div className="col-12 col-sm-2  col-md-2  col-lg-3  col-xl-2  col-xxl-2">
 					<Categories />

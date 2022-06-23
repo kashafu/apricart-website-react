@@ -1,48 +1,34 @@
-// import React, { useState } from "react";
-// import InfiniteScroll from "react-infinite-scroll-component";
+import SingleItem from "../components/Layout/components/SingleItem/SingleItem";
+let json = {
+    "id": 12216,
+    "sku": "APRA-BD02-01",
+    "title": "Canbebe Primary Care Classic - 56 Pack",
+    "description": "Canbebe Primary Care Classic - 56 Pack",
+    "brand": "Canbebe",
+    "barcode": "",
+    "inStock": true,
+    "qty": 10,
+    "minQty": 1,
+    "maxQty": 1000,
+    "categoryIds": " 1156 | 1131 | 0",
+    "categoryleafName": " Diapers & Wipes",
+    "currentPrice": 310.0,
+    "specialPrice": 0.0,
+    "productImageUrl": "http://15.184.248.248:8080/options/stream/APRA-BD02-01.png",
+    "productImageUrlThumbnail": "",
+    "updateDateTimeInventory": "2022-06-22T19:15:13.897027",
+    "updateTime": null,
+    "instant": false,
+    "favourite": false
+}
 
-// const Content = ({ data }) => {
-//   const [posts, setPosts] = useState(data);
-//   const [hasMore, setHasMore] = useState(true);
-
-//   const getMorePost = async () => {
-//     const res = await fetch(
-//       `https://jsonplaceholder.typicode.com/todos?_start=${posts.length}&_limit=10`
-//     );
-//     const newPosts = await res.json();
-//     setPosts((post) => [...post, ...newPosts]);
-//   };
-
-//   return (
-//     <>
-//       <InfiniteScroll
-//         dataLength={posts.length}
-//         next={getMorePost}
-//         hasMore={hasMore}
-//         loader={<h3> Loading...</h3>}
-//         endMessage={<h4>Nothing more to show</h4>}
-//       >
-//         {posts.map((data) => (
-//           <div key={data.id}>
-//             <div className="back">
-//               <strong> {data.id}</strong> {data.title}
-//             </div>
-//             {data.completed}
-//           </div>
-//         ))}
-//       </InfiniteScroll>
-//       <style jsx>
-//         {`
-//           .back {
-//             padding: 10px;
-//             background-color: dodgerblue;
-//             color: white;
-//             margin: 10px;
-//           }
-//         `}
-//       </style>
-//     </>
-//   );
-// };
-
-// export default Content;
+export default function Test(){
+    return(
+        <div>
+            <p>TEST PAGE</p>
+            <SingleItem
+                item={json}
+            />
+        </div>
+    )
+}
