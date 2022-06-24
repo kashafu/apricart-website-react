@@ -56,7 +56,6 @@ export default function Home() {
 				}
 			)
 			setHomeData(response.data.data)
-			console.log(response.data.data)
 		} catch (error) {
 			setErrorMessage(error)
 		}
@@ -77,35 +76,48 @@ export default function Home() {
 		<>
 			{/* TODO IMPLEMENT HEAD WITH ICON AND NAME */}
 			<Head>Apricart</Head>
-			<div>
-
-			</div>
-			{/* old */}
-			<div className="row">
-				<div className="col-12 col-sm-2  col-md-2  col-lg-3  col-xl-2  col-xxl-2">
-					<Categories 
+			<div className="grid grid-cols-5 gap-8">
+				{/* CATEGORIES SECTION */}
+				<section className="col-span-1">
+					<Categories
 						categories={homeData.categories}
 					/>
-				</div>
-				<div className="col-12 col-sm-12  col-md-10  col-lg-9  col-xl-10  col-xxl-10 parot">
-					{/* <Slider /> */}
-					<section className="min-h-[150px] sm:min-h-[170px] md:min-h-[300px] lg:min-h-[360px]">
-						{/* <Slider2 /> */}
-						<BannerSlider
-							banners={homeData.banners}
-						/>
-					</section>
-					<MainProducts
-						products={homeData.products[0].data}
-					/>
-					<ScrollingProducts
-						products={homeData.products[1].data}
-					/>
-					<PopularItem />
-					<RecommendedProducts />
-					<MostSold />
-				</div>
+				</section>
+				{/* PRODUCTS SECTION */}
+				<section className="col-span-4 space-y-12">
+					{homeData.products.map((product)=>{
+						let {bannerImageWeb, data, name} = product
+						
+						// If the name is 'Upload Grocery List', we have to return a button which allows to upload grocery list
+						if(name === 'Upload Grocery List'){
+							return(
+								<button className="w-full bg-main-blue text-white p-6 text-xl rounded-xl">
+									Upload Grocery List
+								</button>
+							)
+						}
+
+						return(
+							// TODO get a unique id from api, using name for now
+							<section key={name} className='space-y-4'>
+								<div className="relative w-full h-[100px] md:h-[200px] lg:h-[300px]">
+									<Image
+										src={bannerImageWeb}
+										layout={'fill'}
+									/>
+								</div>
+								<p className="text-2xl">
+									{name}
+								</p>
+								<ScrollingProducts
+									products={data}
+								/>
+							</section>
+						)	
+					})}
+				</section>
 			</div>
+			
 		</>
 	);
 }

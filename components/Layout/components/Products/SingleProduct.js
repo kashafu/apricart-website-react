@@ -99,9 +99,11 @@ export default function SingleProduct({product}){
                             Add to Cart
                         </button>
                         :
-                        <div className="bg-main-blue font-lato text-sm py-2 w-5/6 rounded text-white hover:bg-white hover:text-main-blue">
+                        <button className="bg-main-blue font-lato text-sm py-2 w-5/6 rounded text-white hover:bg-white hover:text-main-blue"
+                            disabled={true}
+                        >
                             Out of Stock
-                        </div>
+                        </button>
                     }
                     
                 </div>
