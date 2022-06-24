@@ -20,7 +20,7 @@ import ScrollingProducts from "../components/Layout/components/Products/Scrollin
 
 export default function Home() {
 	const cookies = new Cookies();
-	var token = cookies.get('cookies-token')
+	let token = cookies.get('cookies-token')
 	if (!token) {
 		const d = new Date();
 		cookies.set('guestUserId', 'desktopuser_' + d.getTime(), 30);
@@ -38,25 +38,41 @@ export default function Home() {
 		let city = cookies.get('cities')
 		let latitude = 0 
 		let longitude = 0
-		let userId = cookies.get('guestUserId')
-		navigator.geolocation.getCurrentPosition((position)=> {
-			latitude= position.coords.latitude
-			longitude= position.coords.longitude
-		})
-		// TODO CHECK IF GUEST USER AND USE ID ACCORDINGLY
+		let userId
+		let headers = {}
+
+		// if user is logged in
+		if(token){
+			userId = cookies.get('cookies-userId')
+			// if user has a selected address, use that addresses's latitude longitude
+			// TODO
+			// if no address is selected or no address has been added, use default lat long 0
+			headers = {
+				"Content-Type": "application/json",
+				Authorization: "Bearer " + cookies.get("cookies-token")
+			}
+		}
+		// if its a guest
+		else{
+			userId = cookies.get('guestUserId')
+			// if location enabled, use browser latitude and longitude, if not enabled, send 0 by default
+			navigator.geolocation.getCurrentPosition((position)=> {
+				latitude= position.coords.latitude
+				longitude= position.coords.longitude
+			})
+			headers = {
+				"Content-Type": "application/json",
+			}
+		}
 		let url = base_url_api + '/home/all?client_lat=' + latitude + '&client_long=' + longitude + '&city=' + city + '&lang=en&userid=' + userId + '&web=false&client_type=apricart'
 		try {
 			let response = await axios.get(
 				url,
 				{
-					headers: {
-						"Content-Type": "application/json",
-						// Authorization: "Bearer " + cookies.get("cookies-token"),
-					},
+					'headers': headers
 				}
 			)
 			setHomeData(response.data.data)
-			console.log(response.data.data)
 		} catch (error) {
 			setErrorMessage(error)
 		}
@@ -77,35 +93,48 @@ export default function Home() {
 		<>
 			{/* TODO IMPLEMENT HEAD WITH ICON AND NAME */}
 			<Head>Apricart</Head>
-			<div>
-
-			</div>
-			{/* old */}
-			<div className="row">
-				<div className="col-12 col-sm-2  col-md-2  col-lg-3  col-xl-2  col-xxl-2">
-					<Categories 
+			<div className="grid grid-cols-5 gap-8">
+				{/* CATEGORIES SECTION */}
+				<section className="col-span-1">
+					<Categories
 						categories={homeData.categories}
 					/>
-				</div>
-				<div className="col-12 col-sm-12  col-md-10  col-lg-9  col-xl-10  col-xxl-10 parot">
-					{/* <Slider /> */}
-					<section className="min-h-[150px] sm:min-h-[170px] md:min-h-[300px] lg:min-h-[360px]">
-						{/* <Slider2 /> */}
-						<BannerSlider
-							banners={homeData.banners}
-						/>
-					</section>
-					<MainProducts
-						products={homeData.products[0].data}
-					/>
-					<ScrollingProducts
-						products={homeData.products[1].data}
-					/>
-					<PopularItem />
-					<RecommendedProducts />
-					<MostSold />
-				</div>
+				</section>
+				{/* PRODUCTS SECTION */}
+				<section className="col-span-4 space-y-12">
+					{homeData.products.map((product)=>{
+						let {bannerImageWeb, data, name} = product
+						
+						// If the name is 'Upload Grocery List', we have to return a button which allows to upload grocery list
+						if(name === 'Upload Grocery List'){
+							return(
+								<button className="w-full bg-main-blue text-white p-6 text-xl rounded-xl">
+									Upload Grocery List
+								</button>
+							)
+						}
+
+						return(
+							// TODO get a unique id from api, using name for now
+							<section key={name} className='space-y-4'>
+								<div className="relative w-full h-[100px] md:h-[200px] lg:h-[300px]">
+									<Image
+										src={bannerImageWeb}
+										layout={'fill'}
+									/>
+								</div>
+								<p className="text-2xl">
+									{name}
+								</p>
+								<ScrollingProducts
+									products={data}
+								/>
+							</section>
+						)	
+					})}
+				</section>
 			</div>
+			
 		</>
 	);
 }

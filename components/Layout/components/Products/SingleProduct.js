@@ -14,7 +14,6 @@ export default function SingleProduct({product}){
 
     let { productImageUrl, productImageUrlThumbnail, title, currentPrice, sku, inStock } = product
     let imageUrl = productImageUrlThumbnail == '' ? productImageUrl : productImageUrlThumbnail
-    // let token = cookies.get("cookies-token") == null ? cookies.get('guestUserId') : cookies.get("cookies-token")
     let isLoggedIn = cookies.get('cookies-token') != null 
 
     const addToCartHandler = async () => {
@@ -41,7 +40,6 @@ export default function SingleProduct({product}){
                     },
                 }
             )
-            console.log(response)
         }
         else{
             let data = {
@@ -63,7 +61,6 @@ export default function SingleProduct({product}){
                     },
                 }
             )
-            console.log(response)
         }
     }
 
@@ -99,9 +96,11 @@ export default function SingleProduct({product}){
                             Add to Cart
                         </button>
                         :
-                        <div className="bg-main-blue font-lato text-sm py-2 w-5/6 rounded text-white hover:bg-white hover:text-main-blue">
+                        <button className="bg-zinc-400 font-lato text-sm py-2 w-5/6 rounded text-white"
+                            disabled={true}
+                        >
                             Out of Stock
-                        </div>
+                        </button>
                     }
                     
                 </div>

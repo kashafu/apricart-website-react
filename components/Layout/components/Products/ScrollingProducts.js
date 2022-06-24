@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Slider from "react-slick";
 import SingleProduct from "./SingleProduct";
 
@@ -10,7 +9,7 @@ export default function ScrollingProducts({ products }) {
         infinite: true,
         speed: 500,
         autoplay: true,
-        slidesToShow: 5,
+        slidesToShow: 3,
         centerMargin: "20px",
         slidesToScroll: 1,
         autoplaySpeed: 2000,
@@ -54,67 +53,19 @@ export default function ScrollingProducts({ products }) {
     }
 
     return (
-        // <section>
-        //     {/* BANNER */}
-        //     <div className="w-full">
-        //         {/* <Image
-        //             src={bannerImageWeb}
-        //             layout={'fill'}
-        //         /> */}
-        //     </div>
-        //     <p>
-        //         {name}
-        //     </p>
-        //     {/* SECTION HEADER */}
-        //     <section>
-        //         <Slider {...settings}>
-        //             {products.map((product)=>{
-        //                 return(
-        //                     <div key={product.id}>
-        //                         <SingleProduct
-        //                             product={product}
-        //                         />
-        //                     </div>
-        //                 )
-        //             })}
-        //         </Slider>               
-        //     </section>
-        // </section>
-        <section>
-            {products.map((product)=>{
-                let {bannerImageWeb, name, id} = product
-                return(
-                    <div key={id}>
-                        <section>
-                        {/* BANNER */}
-                        <div className="w-full">
-                            {/* <Image
-                                src={bannerImageWeb}
-                                layout={'fill'}
-                            /> */}
-                        </div>
-                        <p>
-                            {name}
-                        </p>
-                        {/* SECTION HEADER */}
-                        <section>
-                            <Slider {...settings}>
-                                {products.map((product)=>{
-                                    return(
-                                        <div key={product.id}>
-                                            <SingleProduct
-                                                product={product}
-                                            />
-                                        </div>
-                                    )
-                                })}
-                            </Slider>               
+        <section className="">
+            <Slider {...settings}>
+                {products.map((product)=>{
+                    let {id} = product
+                    return(
+                        <section key={id}>
+                            <SingleProduct
+                                product={product}
+                            />
                         </section>
-                    </section>
-
-                    </div>
-                )
-            })}
+                    )
+                })}
+            </Slider>               
         </section>
     )
 }
