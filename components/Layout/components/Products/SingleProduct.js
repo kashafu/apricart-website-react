@@ -96,7 +96,7 @@ export default function SingleProduct({product}){
                             Add to Cart
                         </button>
                         :
-                        <button className="bg-main-blue font-lato text-sm py-2 w-5/6 rounded text-white hover:bg-white hover:text-main-blue"
+                        <button className="bg-zinc-400 font-lato text-sm py-2 w-5/6 rounded text-white"
                             disabled={true}
                         >
                             Out of Stock
