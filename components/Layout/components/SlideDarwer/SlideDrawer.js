@@ -219,12 +219,20 @@ const SlideDrawer = (props) => {
 }
 
   }
-  const UpdateQty=()=>{
+  const UpdateQty=(item,val)=>{
+    console.log(item.qty);
+    var qt =item.qty ;
+    if (val==0){
+      qt--;
+    }
+    else{
+      qt++
+    }
     var udat={
       "cart": [
                   {
-                      "sku":"APR-BC67-01",
-                      "qty": 1
+                      "sku":item.sku,
+                      "qty": qt
                   }
               ]
   }
@@ -288,7 +296,7 @@ const SlideDrawer = (props) => {
                                 type="button"
                                 name="button"
                                 onClick={() =>{
-                                  UpdateQty()
+                                  UpdateQty(item,0)
                                   dispatch(decrementQuantity(item.id))}
                                 }
                                 
@@ -301,7 +309,7 @@ const SlideDrawer = (props) => {
                                 type="button"
                                 name="button"
                                 onClick={() =>{
-                                  UpdateQty()
+                                  UpdateQty(item,1)
                                   dispatch(incrementQuantity(item.id))}
                                 }
                               >
