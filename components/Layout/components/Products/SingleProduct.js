@@ -14,7 +14,6 @@ export default function SingleProduct({product}){
 
     let { productImageUrl, productImageUrlThumbnail, title, currentPrice, sku, inStock } = product
     let imageUrl = productImageUrlThumbnail == '' ? productImageUrl : productImageUrlThumbnail
-    // let token = cookies.get("cookies-token") == null ? cookies.get('guestUserId') : cookies.get("cookies-token")
     let isLoggedIn = cookies.get('cookies-token') != null 
 
     const addToCartHandler = async () => {
@@ -41,7 +40,6 @@ export default function SingleProduct({product}){
                     },
                 }
             )
-            console.log(response)
         }
         else{
             let data = {
@@ -63,7 +61,6 @@ export default function SingleProduct({product}){
                     },
                 }
             )
-            console.log(response)
         }
     }
 

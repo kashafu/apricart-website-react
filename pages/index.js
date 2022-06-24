@@ -20,7 +20,7 @@ import ScrollingProducts from "../components/Layout/components/Products/Scrollin
 
 export default function Home() {
 	const cookies = new Cookies();
-	var token = cookies.get('cookies-token')
+	let token = cookies.get('cookies-token')
 	if (!token) {
 		const d = new Date();
 		cookies.set('guestUserId', 'desktopuser_' + d.getTime(), 30);
@@ -38,21 +38,38 @@ export default function Home() {
 		let city = cookies.get('cities')
 		let latitude = 0 
 		let longitude = 0
-		let userId = cookies.get('guestUserId')
-		navigator.geolocation.getCurrentPosition((position)=> {
-			latitude= position.coords.latitude
-			longitude= position.coords.longitude
-		})
-		// TODO CHECK IF GUEST USER AND USE ID ACCORDINGLY
+		let userId
+		let headers = {}
+
+		// if user is logged in
+		if(token){
+			userId = cookies.get('cookies-userId')
+			// if user has a selected address, use that addresses's latitude longitude
+			// TODO
+			// if no address is selected or no address has been added, use default lat long 0
+			headers = {
+				"Content-Type": "application/json",
+				Authorization: "Bearer " + cookies.get("cookies-token")
+			}
+		}
+		// if its a guest
+		else{
+			userId = cookies.get('guestUserId')
+			// if location enabled, use browser latitude and longitude, if not enabled, send 0 by default
+			navigator.geolocation.getCurrentPosition((position)=> {
+				latitude= position.coords.latitude
+				longitude= position.coords.longitude
+			})
+			headers = {
+				"Content-Type": "application/json",
+			}
+		}
 		let url = base_url_api + '/home/all?client_lat=' + latitude + '&client_long=' + longitude + '&city=' + city + '&lang=en&userid=' + userId + '&web=false&client_type=apricart'
 		try {
 			let response = await axios.get(
 				url,
 				{
-					headers: {
-						"Content-Type": "application/json",
-						// Authorization: "Bearer " + cookies.get("cookies-token"),
-					},
+					'headers': headers
 				}
 			)
 			setHomeData(response.data.data)
