@@ -24,6 +24,9 @@ import information from '../../../../information.json'
 // const baseURL = "https://staging.staging.pk/v1";
 const baseURL = information.base_url_api
 
+import { getGeneralApiParams } from '../../../../helpers/ApiHelpers'
+import SearchBar from "../SearchBar/SearchBar";
+
 export default function Header(props) {
 	const cookies = new Cookies();
     const router = useRouter();
@@ -33,67 +36,23 @@ export default function Header(props) {
     const [suggestions, setSuggestions] = useState([]);
 	
 	const [searchText, setSearchText] = useState('')
+    useEffect(()=>{
+        console.log(searchText)
+    }, [searchText])
 	const [searchResults, setSearchResults] = useState([])
 
 	const searchHandler = async (searchTerm) => {
-		let city = cookies.get('cities')
-		// TODO CHECK USER ID FOR GUEST AND LOGGED IN USERS
-		let userId = cookies.get('guestUserId')
+        let {city, userId, headers} = getGeneralApiParams()
+        let url = baseURL + '/catalog/products/search?page=1&size=20&term=' + searchTerm + '&category=&city=' + city + '&lang=en&userid=' + userId + '&client_type=apricart'
 		let searchResponse = await axios.get(
-			baseURL + '/catalog/products/search?page=1&size=20&term=' + searchTerm + '&category=&city=' + city + '&lang=en&userid=' + userId + '&client_type=apricart'
+            url,
+            {
+                'headers': headers
+            }
 		)
+        console.log(searchResponse)
 	}
 
-
-    // function onChange(newName) {
-    //     setCookie("name", newName, { path: "/" });
-    // }
-    // useEffect(() => {
-    //     const loadUsers = async () => {
-    //         const response = await axios.get(
-    //             `https://staging.apricart.pk/v1/catalog/products?page=1&size=40&sortType=&sortDirection=desc&city=karachi&lang=en&userid=abc123&client_type=apricart`
-    //         );
-    //         setUsers(response.data.data);
-    //     };
-    //     loadUsers();
-    // }, []);
-
-    // const onSuggestHandler = (text) => {
-    //     setText(text);
-    //     setSuggestions([]);
-    // };
-
-    //   function isLoggedIn() {
-    //     let token = getCookie('login_token');
-    //     if(token !== undefined && token.trim() !== ''){
-    //         return true;
-    //     }
-    //     return false;
-    // }
-    // console.log(isLoggedIn())
-
-    // const onChangeHandler = (text) => {
-    //     let matches = [];
-    //     if (text.length > 0) {
-    //         matches = users.filter((user) => {
-    //             const regex = new RegExp(`${text}`, "gi");
-    //             return user.title.match(regex);
-    //         });
-    //     }
-
-    //     setSuggestions(matches);
-    //     setText(text);
-    // };
-    // function DropSuggestion() {
-    //     setSuggestions("");
-
-    //     setText("");
-    // }
-    // let [searchInput, setSearchInput] = useState("");
-
-    // if (searchInput.length == 0) {
-    //     searchInput = "product";
-    // }
     function inputData(e) {
         e.preventDefault();
     }
@@ -377,6 +336,10 @@ export default function Header(props) {
               </button> */}
                         </div>
                         <div className="input-group searching_pro">
+                            <SearchBar
+                                onChange={setSearchText}
+                                value={searchText}
+                            />
                             <input
                                 className="form-control border-0 mr-2"
                                 type="search"
