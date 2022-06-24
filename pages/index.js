@@ -1,21 +1,12 @@
 import Head from "next/head";
 import Image from "next/image";
-import styles from "../styles/Home.module.css";
 import Categories from "../components/Layout/components/Categories/Categories";
-import Slider from "../components/Layout/components/Slider/BannerSlider";
-import PopularItem from "../components/Layout/components/PopularItem/PopularItem";
-import RecommendedProducts from "../components/Layout/components/RecommendedProducts/RecommendedProducts";
-import MostSold from "../components/Layout/components/MostSold/MostSold";
-import Slider2 from "../components/Layout/components/Slider/BannerSlider";
 import Cookies from 'universal-cookie';
 import { useEffect, useState } from "react";
 import { base_url_api } from '../information.json'
 import axios from "axios";
-import BannerSlider from "../components/Layout/components/Slider/BannerSlider";
-import MainProducts from "../components/Layout/components/Products/MainProducts";
 import ScrollingProducts from "../components/Layout/components/Products/ScrollingProducts";
-//import Slider from "../components/Layout/components/Slider/Slider";
-
+import {getGeneralApiParams} from '../helpers/ApiHelpers'
 
 
 export default function Home() {
@@ -34,36 +25,8 @@ export default function Home() {
 	}, [])
 
 	const getHomeDataApi = async() => {
-		// city cookies is being set in TopBar.js
-		let city = cookies.get('cities')
-		let latitude = 0 
-		let longitude = 0
-		let userId
-		let headers = {}
-
-		// if user is logged in
-		if(token){
-			userId = cookies.get('cookies-userId')
-			// if user has a selected address, use that addresses's latitude longitude
-			// TODO
-			// if no address is selected or no address has been added, use default lat long 0
-			headers = {
-				"Content-Type": "application/json",
-				Authorization: "Bearer " + cookies.get("cookies-token")
-			}
-		}
-		// if its a guest
-		else{
-			userId = cookies.get('guestUserId')
-			// if location enabled, use browser latitude and longitude, if not enabled, send 0 by default
-			navigator.geolocation.getCurrentPosition((position)=> {
-				latitude= position.coords.latitude
-				longitude= position.coords.longitude
-			})
-			headers = {
-				"Content-Type": "application/json",
-			}
-		}
+		let {city, latitude, longitude, userId, headers} = getGeneralApiParams()
+		
 		let url = base_url_api + '/home/all?client_lat=' + latitude + '&client_long=' + longitude + '&city=' + city + '&lang=en&userid=' + userId + '&web=false&client_type=apricart'
 		try {
 			let response = await axios.get(
