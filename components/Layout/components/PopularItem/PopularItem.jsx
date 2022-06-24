@@ -10,7 +10,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer, toast } from "react-toastify";
 import Cookies from "universal-cookie";
 import { useRouter } from "next/router";
-import SingleItem from "../SingleItem/SingleItem";
+import SingleItem from "../Products/SingleProduct";
 
 ///catalog/mostviewed?page=1&size=10&city=karachi&lang=en
 const useEffectAPI = () => {
@@ -58,6 +58,7 @@ const useEffectAPI = () => {
         console.log(list.sku);
         const wishdata = { sku: [list.sku] };
         if (token) {
+            console.log(token)
             const response = axios.post(
                 "https://staging.apricart.pk/v1/watchlist/save?",
                 wishdata,

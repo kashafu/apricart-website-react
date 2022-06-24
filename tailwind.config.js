@@ -9,6 +9,9 @@ module.exports = {
       colors: {
         'main-yellow': {
           DEFAULT: '#FFD54C'
+        },
+        'main-blue': {
+          DEFAULT: '#08185A'
         }
       },
       fontFamily: {
