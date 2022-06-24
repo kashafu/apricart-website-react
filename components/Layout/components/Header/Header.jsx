@@ -35,23 +35,20 @@ export default function Header(props) {
     const [text, setText] = useState("");
     const [suggestions, setSuggestions] = useState([]);
 	
-	const [searchText, setSearchText] = useState('')
-    useEffect(()=>{
-        console.log(searchText)
-    }, [searchText])
-	const [searchResults, setSearchResults] = useState([])
+	// const [searchText, setSearchText] = useState('')
+	// const [searchResults, setSearchResults] = useState([])
 
-	const searchHandler = async (searchTerm) => {
-        let {city, userId, headers} = getGeneralApiParams()
-        let url = baseURL + '/catalog/products/search?page=1&size=20&term=' + searchTerm + '&category=&city=' + city + '&lang=en&userid=' + userId + '&client_type=apricart'
-		let searchResponse = await axios.get(
-            url,
-            {
-                'headers': headers
-            }
-		)
-        console.log(searchResponse)
-	}
+	// const searchHandler = async (searchTerm) => {
+    //     let {city, userId, headers} = getGeneralApiParams()
+    //     let url = baseURL + '/catalog/products/search?page=1&size=20&term=' + searchTerm + '&category=&city=' + city + '&lang=en&userid=' + userId + '&client_type=apricart'
+	// 	let searchResponse = await axios.get(
+    //         url,
+    //         {
+    //             'headers': headers
+    //         }
+	// 	)
+    //     console.log(searchResponse)
+	// }
 
     function inputData(e) {
         e.preventDefault();
@@ -336,10 +333,7 @@ export default function Header(props) {
               </button> */}
                         </div>
                         <div className="input-group searching_pro">
-                            <SearchBar
-                                onChange={setSearchText}
-                                value={searchText}
-                            />
+                            <SearchBar />
                             <input
                                 className="form-control border-0 mr-2"
                                 type="search"
