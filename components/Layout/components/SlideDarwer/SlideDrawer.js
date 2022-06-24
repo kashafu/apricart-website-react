@@ -58,8 +58,6 @@ const SlideDrawer = (props) => {
   const cart = useSelector((state) => state.cart);
   const dispatch = useDispatch();
   var token = cookies.get("cookies-token");
- 
- let cartAll={}
   const config = {
    
     headers: {
@@ -69,6 +67,8 @@ const SlideDrawer = (props) => {
       'Authorization' : 'Bearer ' + cookies.get('cookies-token'),
     }
   }
+ let cartAll={}
+
   // 
   if (token) {
     var data = {
@@ -88,7 +88,7 @@ const SlideDrawer = (props) => {
         let userId=cookies.get('cookies-userId')
        cartAll = async() =>{
         //${cookies.get("cookies-userId")}& &userid=${userI {cookies.get("cookies-userId")}
-      const response = await axios.post('https://staging.apricart.pk/v1/order/cart/checkout?city=karachi&lang=en&userid=10638&client_lat=24.909230104621333&client_long=67.12185373161728',data,{headers: { 'Content-Type' : 'application/json',
+      const response = await axios.post('https://staging.apricart.pk/v1/order/cart/checkout?userid=10638&city=karachi&lang=en&client_lat=24.909230104621333&client_long=67.12185373161728',data,{headers: { 'Content-Type' : 'application/json',
         'Authorization' : 'Bearer ' 
                          + token}}
       )
@@ -197,7 +197,7 @@ const SlideDrawer = (props) => {
     ]
   });
   
-  var config = {
+  var conf = {
     method: 'delete',
     url: 'https://staging.apricart.pk/v1/order/cart/delete?city=karachi&lang=en&client_type=apricart',
     headers: { 
@@ -207,7 +207,7 @@ const SlideDrawer = (props) => {
     data : data
   };
   
-  axios(config)
+  axios(conf)
   .then(function (response) {
     console.log(JSON.stringify(response.data));
   })
@@ -218,6 +218,28 @@ const SlideDrawer = (props) => {
 
 }
 
+  }
+  const UpdateQty=()=>{
+    var udat={
+      "cart": [
+                  {
+                      "sku":"APR-BC67-01",
+                      "qty": 1
+                  }
+              ]
+  }
+   if (token){
+    axios.post('https://staging.apricart.pk/v1/order/cart/updateqty?city=karachi&lang=en&client_type=apricart',udat,   {headers: { 
+      'Content-Type': 'application/json', 
+      'Authorization': 'Bearer '+ cookies.get("cookies-token")}
+    },).then(function (response) {
+      console.log(JSON.stringify(response.data));
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+    
+   }
   }
   
   return (
@@ -265,8 +287,9 @@ const SlideDrawer = (props) => {
                                 className="minus-btn"
                                 type="button"
                                 name="button"
-                                onClick={() =>
-                                  dispatch(decrementQuantity(item.id))
+                                onClick={() =>{
+                                  UpdateQty()
+                                  dispatch(decrementQuantity(item.id))}
                                 }
                                 
                               >
@@ -277,9 +300,9 @@ const SlideDrawer = (props) => {
                                 className="plus-btn"
                                 type="button"
                                 name="button"
-                                onClick={() =>
-
-                                  dispatch(incrementQuantity(item.id))
+                                onClick={() =>{
+                                  UpdateQty()
+                                  dispatch(incrementQuantity(item.id))}
                                 }
                               >
                                 <i className="fa fa-plus" aria-hidden="true"></i>

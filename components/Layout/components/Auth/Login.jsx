@@ -116,7 +116,7 @@ const login = () => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "https://staging.apricart.pk/v1/auth/open/login",
+        "https://cbe.apricart.pk/v1/auth/open/login",
         { ...userData }
       );
       // console.log("Data", response.data);
