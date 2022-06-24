@@ -32,59 +32,13 @@ export default function Header(props) {
     const router = useRouter();
 
     const [users, setUsers] = useState([]);
-    const [text, setText] = useState("");
-    const [suggestions, setSuggestions] = useState([]);
-	
-	// const [searchText, setSearchText] = useState('')
-	// const [searchResults, setSearchResults] = useState([])
-
-	// const searchHandler = async (searchTerm) => {
-    //     let {city, userId, headers} = getGeneralApiParams()
-    //     let url = baseURL + '/catalog/products/search?page=1&size=20&term=' + searchTerm + '&category=&city=' + city + '&lang=en&userid=' + userId + '&client_type=apricart'
-	// 	let searchResponse = await axios.get(
-    //         url,
-    //         {
-    //             'headers': headers
-    //         }
-	// 	)
-    //     console.log(searchResponse)
-	// }
 
     function inputData(e) {
         e.preventDefault();
     }
-    // let logindata;
-    //   //Login/Welcome condition
-    //   if(isLoggedIn()){
-    //     logindata =true
-    // }
-    // else{
-    //   logindata = false
-
-    // }
 
     const [user, setAuthenticated] = useState(false);
 
-    const login = () => {
-        setAuthenticated(true);
-    };
-
-    // useEffect(() => {
-    //     const token = localStorage.getItem('token');
-    //     const name = localStorage.getItem('name')
-    //     if (token) {
-    //         setAuthenticated(true);
-    //     } else if (token === null) {
-    //         setAuthenticated(false);
-    //     }
-
-    //     return () => {};
-    // }, []);
-    // const handleSubmit = (e) => {
-    //   localStorage.removeItem("token");
-    // };
-
-    const [homeprofile, setHomeprofile] = useState([]);
 
     var messsage = cookies.get("cookies-message");
     var token = cookies.get("cookies-token");
@@ -92,23 +46,6 @@ export default function Header(props) {
     var name = cookies.get("cookies-name");
     var userId = cookies.get("cookies-userId");
     console.log(userId);
-
-    // if (messsage == 'success')
-    // {
-    //   const getHomeprofile = async () => {
-    //     const response = await axios.get(`https://staging.apricart.pk/v1/home/profile`
-    //     );
-    //     setHomeprofile(response.data.data.name);
-    //     // const msg = response.data.total;
-    //     // if(msg === 'Success')
-    //     // console.log("response login", response.data.total);
-    //   };
-    //   useEffect(() => {
-    //     getHomeprofile();
-
-    //   }, []);
-
-    // }
 
     useEffect(() => {
         if (token) {
@@ -118,26 +55,6 @@ export default function Header(props) {
             token;
         };
     }, []);
-    // const handleSubmit = (e) => {
-    //   localStorage.removeItem("token");
-    // };
-
-    //   function handleSubmit(){
-    //  //   cookies.remove('token');
-    //    // cookies.remove('name');
-    //   // cookies.remove(cookies.get('cookies-token'));
-    //   // cookies.remove(cookies.get('cookies-name'));
-    //   var allCookies = document.cookie.split(';');
-
-    //   // The "expire" attribute of every cookie is
-    //   // Set to "Thu, 01 Jan 1970 00:00:00 GMT"
-    //   for (var i = 0; i < allCookies.length; i++)
-    //       document.cookie = allCookies[i] + "=;expires="
-    //       + new Date(0).toUTCString();
-
-    //   displayCookies.innerHTML = document.cookie;
-
-    //   }
 
     const logout = () => {
         cookies.remove("cookies-token");
@@ -213,18 +130,6 @@ export default function Header(props) {
         <li className="nav-item">
             <div className="dropdown">
                 <WelcomeBtn className="navlink" />
-                {/* <button
-          className="dropbtn"
-          data-bs-toggle="modal"
-          data-bs-target="#exampleModal"
-          data-bs-whatever="@mdo"
-        >
-          {" "}
-          <a className="nav-link" href="#">
-            <img src="assets/images/user.png" className="img-fluid" />
-            Login/Signup
-          </a>
-        </button> */}
             </div>
         </li>
     );
@@ -307,7 +212,7 @@ export default function Header(props) {
         <div className="container-fluid hae">
             <nav className="navbar navbar-expand-lg navbar-light bg-light shadow">
                 <div className="container-fluid">
-                    {/* <Link href="/">
+                    <Link href="/">
             <a className="navbar-brand">
               <img
                 src="/assets/images/logo.png"
@@ -315,7 +220,7 @@ export default function Header(props) {
                 width="150px;"
               />
             </a>
-          </Link> */}
+          </Link>
 
                     <form
                         className="d-flex ms-auto manu_cat"
@@ -328,35 +233,9 @@ export default function Header(props) {
                             </a>
                         </div>
                         <div className=" d-md-none d-lg-none">
-                            {/* <button onClick="myFunction()" className="dropbtn">
-                Category
-              </button> */}
                         </div>
                         <div className="input-group searching_pro">
                             <SearchBar />
-                            <input
-                                className="form-control border-0 mr-2"
-                                type="search"
-                                placeholder="Search Products"
-                                aria-label="Search"
-                                onChange={(e) =>
-                                    onChangeHandler(e.target.value)
-                                }
-                                value={text}
-                                required
-                            />
-
-                            <Link href="/search/[id]" as={"/search/" + text}>
-                                <button
-                                    className="btn btn-primary chane border-0"
-                                    type="submit"
-                                >
-                                    <i
-                                        className="fa fa-search"
-                                        aria-hidden="true"
-                                    ></i>
-                                </button>
-                            </Link>
                         </div>
                     </form>
 
@@ -391,22 +270,6 @@ export default function Header(props) {
                 </div>
             </nav>
             <div>
-                <div className="suggDrop">
-                    {suggestions &&
-                        suggestions.map((suggestion, i) => (
-                            <div key={i} className="suggestion col-md-12">
-                                <Link
-                                    href="/details/[id]"
-                                    as={"/details/" + suggestion.sku}
-                                    className="Link-CSS"
-                                >
-                                    <p onClick={DropSuggestion}>
-                                        {suggestion.title}
-                                    </p>
-                                </Link>
-                            </div>
-                        ))}
-                </div>
             </div>
         </div>
     );
