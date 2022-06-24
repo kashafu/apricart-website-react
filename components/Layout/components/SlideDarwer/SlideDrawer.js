@@ -71,11 +71,24 @@ const SlideDrawer = (props) => {
   }
   // 
   if (token) {
-  
+    var data = {
+      "coupon": "",
+      "address": 4582,
+      "clientType": "apricart",
+      "orderType": "delivery",
+      "prodType": "cus",
+      "day": "",
+      "startTime": "",
+      "endTime": "",
+      "notes": "test order",
+      "showProducts": true,
+      "verify": true,
+      "paymentMethod": "cash"
+    };
+        let userId=cookies.get('cookies-userId')
        cartAll = async() =>{
-      const response = await axios.get(
-        'https://staging.apricart.pk/v1/order/cart/all?userid=10638',
-       {headers: { 'Content-Type' : 'application/json',
+        //${cookies.get("cookies-userId")}& &userid=${userI {cookies.get("cookies-userId")}
+      const response = await axios.post('https://staging.apricart.pk/v1/order/cart/checkout?city=karachi&lang=en&userid=10638&client_lat=24.909230104621333&client_long=67.12185373161728',data,{headers: { 'Content-Type' : 'application/json',
         'Authorization' : 'Bearer ' 
                          + token}}
       )
@@ -85,8 +98,8 @@ const SlideDrawer = (props) => {
 
       
       let Data1 = response.data.data;
-      mydata = Data1;
-      Data1.map((item)=>{dispatch(updatedcart(item.product));});
+      mydata = Data1.products;
+      mydata.map((item)=>{dispatch(updatedcart(item));});
      // dispatch(updatedcart(carti));
       //cart= response.data.data;
       setTotal(response.data.total)
