@@ -2,6 +2,7 @@ import axios from "axios"
 import { useState } from "react"
 import { getGeneralApiParams } from "../../../../helpers/ApiHelpers"
 import { base_url_api } from '../../../../information.json'
+import SingleProduct from '../Products/SingleProduct'
 
 export default function SearchBar(){
     const [searchText, setSearchText] = useState('')
@@ -37,19 +38,24 @@ export default function SearchBar(){
                     searchHandler(e.target.value)
                 }}
                 placeholder='Search Products'
+                onBlur={()=>{
+                    setShowSearchResults(false)
+                }}
             />
-            {}
             {showSearchResults && (
                 <div className="absolute bg-white w-full z-20 flex flex-col space-y-2">
                     {searchResults.length > 0 ? (
-                        <div>
-                            {searchResults.map((product)=>{
-                                let {title, id} = product
+                        <div className='grid grid-cols-3 gap-6 p-6'>
+                            {searchResults.slice(0, 9).map((product)=>{
+                                let {id} = product
                                 return(
                                     <div key={id}>
-                                        <p>
+                                        {/* <p>
                                             {title}
-                                        </p>
+                                        </p> */}
+                                        <SingleProduct
+                                            product={product}
+                                        />
                                     </div>
                                 )
                             })}
