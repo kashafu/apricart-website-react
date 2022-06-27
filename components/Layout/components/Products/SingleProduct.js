@@ -7,6 +7,7 @@ import { addToCart } from "../../../../redux/cart.slice";
 import { addToWish } from "../../../../redux/wish.slice";
 
 import { base_url_api } from '../../../../information.json'
+import { getGeneralApiParams } from "../../../../helpers/ApiHelpers";
 
 export default function SingleProduct({product}){
     const cookies = new Cookies();
@@ -19,7 +20,9 @@ export default function SingleProduct({product}){
     const addToCartHandler = async () => {
         dispatch(addToCart(product))
 
-        let city = cookies.get('cities')
+        let { city, userId, headers } = getGeneralApiParams()
+
+        // let city = cookies.get('cities')
         if(isLoggedIn){
             let data = {
                 cart: [{
@@ -29,21 +32,17 @@ export default function SingleProduct({product}){
             }
 
             let url = base_url_api + "/order/cart/save?city=" + city + "&lang=en&client_type=apricart"
-            console.log(url)
             let response = await axios.post(
                 url,
                 data,
                 {
-                    headers: {
-                        "Content-Type": "application/json",
-                        Authorization: "Bearer " + cookies.get('cookies-token'),
-                    },
+                    headers: headers,
                 }
             )
         }
         else{
             let data = {
-                userId: cookies.get('guestUserId'),
+                userId: userId,
                 cart: [{
                         'sku': sku,
                         'qty': "1",
@@ -51,14 +50,11 @@ export default function SingleProduct({product}){
             }
 
             let url = base_url_api + "/guest/cart/save?city=" + city + "&lang=en&client_type=apricart"
-            console.log(url)
             let response = await axios.post(
                 url,
                 data,
                 {
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
+                    headers: headers
                 }
             )
         }
