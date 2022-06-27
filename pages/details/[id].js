@@ -70,8 +70,6 @@ export default function Post({ product }) {
 		);
 	}
 
-
-
 	let incNum = () => {
 		if (num < 5) {
 			setNum(Number(num) + 1);
@@ -117,8 +115,8 @@ export default function Post({ product }) {
         if(isLoggedIn){
             let data = {
                 cart: [{
-                        'sku': item.sku,
-                        'qty': "1",
+					'sku': item.sku,
+					'qty': "1",
                 }]
             }
 
