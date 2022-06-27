@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { base_url_api } from '../information.json'
 import axios from "axios";
 import ScrollingProducts from "../components/Layout/components/Products/ScrollingProducts";
-import {getGeneralApiParams} from '../helpers/ApiHelpers'
+import { getGeneralApiParams } from '../helpers/ApiHelpers'
 
 
 export default function Home() {
@@ -20,14 +20,15 @@ export default function Home() {
 	const [homeData, setHomeData] = useState(null)
 	const [errorMessage, setErrorMessage] = useState('Loading')
 
-	useEffect(()=>{
+	useEffect(() => {
 		getHomeDataApi()
 	}, [])
 
-	const getHomeDataApi = async() => {
-		let {city, latitude, longitude, userId, headers} = getGeneralApiParams()
-		
+	const getHomeDataApi = async () => {
+		let { city, latitude, longitude, userId, headers } = getGeneralApiParams()
+
 		let url = base_url_api + '/home/all?client_lat=' + latitude + '&client_long=' + longitude + '&city=' + city + '&lang=en&userid=' + userId + '&web=false&client_type=apricart'
+		console.log(url)
 		try {
 			let response = await axios.get(
 				url,
@@ -37,12 +38,12 @@ export default function Home() {
 			)
 			setHomeData(response.data.data)
 		} catch (error) {
-			setErrorMessage(error)
+			setErrorMessage(error.message)
 		}
 	}
 
-	if(!homeData){
-		return(
+	if (!homeData) {
+		return (
 			<div>
 				<p>
 					{errorMessage}
@@ -65,19 +66,19 @@ export default function Home() {
 				</section>
 				{/* PRODUCTS SECTION */}
 				<section className="col-span-4 space-y-12">
-					{homeData.products.map((product)=>{
-						let {bannerImageWeb, data, name} = product
-						
+					{homeData.products.map((product) => {
+						let { bannerImageWeb, data, name } = product
+
 						// If the name is 'Upload Grocery List', we have to return a button which allows to upload grocery list
-						if(name === 'Upload Grocery List'){
-							return(
+						if (name === 'Upload Grocery List') {
+							return (
 								<button className="w-full bg-main-blue text-white p-6 text-xl rounded-xl">
 									Upload Grocery List
 								</button>
 							)
 						}
 
-						return(
+						return (
 							// TODO get a unique id from api, using name for now
 							<section key={name} className='space-y-4'>
 								<div className="relative w-full h-[100px] md:h-[200px] lg:h-[300px]">
@@ -93,11 +94,11 @@ export default function Home() {
 									products={data}
 								/>
 							</section>
-						)	
+						)
 					})}
 				</section>
 			</div>
-			
+
 		</>
 	);
 }
