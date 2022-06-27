@@ -102,6 +102,9 @@ import "react-toastify/dist/ReactToastify.css";
 import Cookies from "universal-cookie";
 //import { dispatch } from "react-hot-toast/dist/core/store";
 import { cartReducer, Login_Succeed } from "../../../../redux/cart.slice";
+import { getGeneralApiParams } from "../../../../helpers/ApiHelpers";
+import { base_url_api } from "../../../../information.json";
+
 const login = () => {
     const router = useRouter();
     const cookies = new Cookies();
@@ -115,10 +118,13 @@ const login = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post(
-                "https://cbe.apricart.pk/v1/auth/open/login",
-                { ...userData }
-            );
+            let { city } = getGeneralApiParams();
+            let url =
+                base_url_api +
+                "/auth/open/login?city=" +
+                city +
+                "&lang=en&client_type=apricart";
+            const response = await axios.post(url, { ...userData });
             console.log(response);
             // console.log("Data", response.data);
             // console.log("response login", response.data.message);
