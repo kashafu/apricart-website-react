@@ -14,11 +14,17 @@ export default function Post({ product }) {
 	const dispatch = useDispatch();
 	const cookies = new Cookies();
 	var token = cookies.get("cookies-token");
+	let isLoggedIn = cookies.get('cookies-token') != null 
+	const router = useRouter()
+	const { id } = router.query
+	console.log(router.query)
 
 	const [categories, setCategories] = useState(null)
+	const [inStock, setInStock] = useState(true)
 
 	useEffect(()=>{
 		getCategoriesApi()
+		getInStockApi()
 	}, [])
 
 	const getCategoriesApi = async () => {
@@ -35,10 +41,27 @@ export default function Post({ product }) {
 		} catch (error) {
 			console.log(error)
 		}
-
 	}
 
-	const router = useRouter();
+	const getInStockApi = async () => {
+		let {city, headers, userId} = getGeneralApiParams()
+		let url = base_url_api + '/catalog/products/detail?id=' + id + '&city=' + city + '&lang=en&client_type=apricart&userid=' + userId
+		// console.log(url)
+		try {
+			let response = await axios.get(url, 
+				{
+					headers: headers
+				}
+			)
+			// console.log(response.data)
+			if(response.data.data.length > 0){
+				setInStock(response.data.data[0].inStock)
+			}
+		} catch (error) {
+			console.log(error)
+		}
+	}
+
 	if (router.isFallback) {
 		return (
 			<div>
@@ -59,32 +82,83 @@ export default function Post({ product }) {
 			setNum(num - 1);
 		}
 	};
-	const Cartapi = (list) => {
-		const data =
-		{
-			cart:
-				[
-					{
-						sku: list.sku,
-						qty: "1"
-					}
-				]
-		}
-		console.log(data.cart)
 
-		if (token) {
-			console.log("AVG ")
-			console.log(list.sku);
-			const response = axios.post('https://staging.apricart.pk/v1/order/cart/save?city=karachi&lang=en', data, {
-				headers: {
-					"Content-Type": "application/json",
-					Authorization: "Bearer " + cookies.get("cookies-token"),
-				},
-			}
+	// const Cartapi = (list) => {
+	// 	const data =
+	// 	{
+	// 		cart:
+	// 			[
+	// 				{
+	// 					sku: list.sku,
+	// 					qty: "1"
+	// 				}
+	// 			]
+	// 	}
+	// 	console.log(data.cart)
 
-			);
-		}
+	// 	if (token) {
+	// 		console.log("AVG ")
+	// 		console.log(list.sku);
+	// 		const response = axios.post('https://staging.apricart.pk/v1/order/cart/save?city=karachi&lang=en', data, {
+	// 			headers: {
+	// 				"Content-Type": "application/json",
+	// 				Authorization: "Bearer " + cookies.get("cookies-token"),
+	// 			},
+	// 		}
 
+	// 		);
+	// 	}
+
+	// }
+
+	const addToCartHandler = async (item) => {
+        let { city, userId, headers } = getGeneralApiParams()
+
+        if(isLoggedIn){
+            let data = {
+                cart: [{
+                        'sku': item.sku,
+                        'qty': "1",
+                }]
+            }
+
+            let url = base_url_api + "/order/cart/save?city=" + city + "&lang=en&client_type=apricart"
+            let response = await axios.post(
+                url,
+                data,
+                {
+                    headers: headers,
+                }
+            )
+        }
+        else{
+            let data = {
+                userId: userId,
+                cart: [{
+                        'sku': item.sku,
+                        'qty': "1",
+                }]
+            }
+
+            let url = base_url_api + "/guest/cart/save?city=" + city + "&lang=en&client_type=apricart"
+            let response = await axios.post(
+                url,
+                data,
+                {
+                    headers: headers
+                }
+            )
+        }
+    }
+
+	if(!product){
+		return(
+			<div>
+				<p>
+					Item does not exist
+				</p>
+			</div>
+		)
 	}
 
 	return (
@@ -148,12 +222,12 @@ export default function Post({ product }) {
 																</div>
 																<ul className="detail-pro">
 																	<li>
-																		{product.data[0].inStock == true ? (
+																		{inStock == true ? (
 																			<div
 																				className="pro_btn2"
 																				onClick={() => {
-																					Cartapi(catagory);
-																					dispatch(addToCart(catagory))
+																					addToCartHandler(product.data[0]);
+																					dispatch(addToCart(product.data[0]))
 																				}
 																				}
 																			>
@@ -206,6 +280,7 @@ export default function Post({ product }) {
 }
 
 export async function getStaticPaths() {
+	// TODO implement get static paths properly
 	const paths = ["/details/[id]", "/details/[slug]"];
 	return { paths, fallback: true };
 }
@@ -214,9 +289,10 @@ export async function getStaticProps({ query, params }) {
 	const { id } = query || params;
 	let { headers } = getGeneralApiParams()
 	let city = 'karachi'
+	// let userId = 'desktopuser_1656325126007'
+	// let url = base_url_api + '/catalog/products/detail?id=' + id + '&city=' + city + '&lang=en&client_type=apricart&userid=' + userId
 	let url = base_url_api + '/catalog/products/detail?id=' + id + '&city=' + city + '&lang=en&client_type=apricart'
 	let product = null
-
 	try {
 		let response = await axios.get(url,
 			{
@@ -231,5 +307,6 @@ export async function getStaticProps({ query, params }) {
 		props: {
 			product,
 		},
+		revalidate: 200
 	};
 }

@@ -22,7 +22,6 @@ export default function SingleProduct({product}){
 
         let { city, userId, headers } = getGeneralApiParams()
 
-        // let city = cookies.get('cities')
         if(isLoggedIn){
             let data = {
                 cart: [{

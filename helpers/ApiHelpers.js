@@ -16,7 +16,8 @@ export const getGeneralApiParams = () => {
 
     // if user is logged in
     if (token) {
-        userId = cookies.get('cookies-userId')
+        // userId = cookies.get('cookies-userId')
+        userId = cookies.get('guestUserId')
         // if user has a selected address, use that addresses's latitude longitude
         // TODO
         // if no address is selected or no address has been added, use default lat long 0

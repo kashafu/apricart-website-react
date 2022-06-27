@@ -28,7 +28,6 @@ export default function Home() {
 		let { city, latitude, longitude, userId, headers } = getGeneralApiParams()
 
 		let url = base_url_api + '/home/all?client_lat=' + latitude + '&client_long=' + longitude + '&city=' + city + '&lang=en&userid=' + userId + '&web=false&client_type=apricart'
-		console.log(url)
 		try {
 			let response = await axios.get(
 				url,
