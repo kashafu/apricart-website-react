@@ -181,7 +181,7 @@ export default function Header(props) {
         userId = cookies.get("cookies-userId");
         cartAll = async () => {
             const response = await axios.get(
-                `https://staging.apricart.pk/v1/order/cart/all?city=karachi&lang=en&orderType=pickup`,
+                `https://staging.apricart.pk/v1/order/cart/checkout?userid=10638&city=karachi&lang=en&client_lat=24.909230104621333&client_long=67.12185373161728`,
                 {
                     headers: {
                         "Content-Type": "application/json",
@@ -189,9 +189,9 @@ export default function Header(props) {
                     },
                 }
             );
-            setData(response.data.data);
+            //setData(response.data.data);
             let Data1 = response.data.data;
-            mydata = Data1;
+            mydata = Data1.products;
             console.log("NEW"); //checking data
             console.log(Data1);
         };
