@@ -120,7 +120,7 @@ const login = () => {
         try {
             let { city } = getGeneralApiParams();
             let url =
-                base_url_api +
+            "https://cbe.apricart.pk/v1"+
                 "/auth/open/login?city=" +
                 city +
                 "&lang=en&client_type=apricart";
