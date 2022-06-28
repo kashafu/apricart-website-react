@@ -99,6 +99,7 @@ const SlideDrawer = (props) => {
       
       let Data1 = response.data.data;
       mydata = Data1.products;
+      console.log(mydata);
       mydata.map((item)=>{dispatch(updatedcart(item));});
      // dispatch(updatedcart(carti));
       //cart= response.data.data;
