@@ -92,12 +92,13 @@ const SlideDrawer = (props) => {
         'Authorization' : 'Bearer ' 
                          + token}}
       )
-        setData(response.data.data);
-        console.log(mydata);
+      
+      //  console.log(mydata);
         
 
       
       let Data1 = response.data.data;
+      setData(Data1.products);
       mydata = Data1.products;
       console.log(mydata);
       mydata.map((item)=>{dispatch(updatedcart(item));});
@@ -122,7 +123,7 @@ const SlideDrawer = (props) => {
       );
       setData(response.data.data);
       let Data1 = response.data.data;
-      mydata = Data1;
+      mydata = Data1.products;
       setTotal(response.data.total)
       let total1 = response.data.total;
       total = total1;
@@ -250,7 +251,7 @@ const SlideDrawer = (props) => {
     
    }
   }
-  
+  console.log(cart);
   return (
     <>
       <div className="sidebarD">
@@ -318,12 +319,12 @@ const SlideDrawer = (props) => {
                               </button>
                             </div>
                           </li>
-                          <li className="cart-total">
+                          {<li className="cart-total">
                             <div className="total-price1">
                               {" "}
                               RS :{item.currentPrice}
                             </div>
-                          </li>
+                          </li> }
                           <li>
                           <span
                           className="delete-btn"
