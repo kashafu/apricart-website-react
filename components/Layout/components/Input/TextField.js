@@ -1,0 +1,19 @@
+export default function TextField({label, placeHolder, onChange, value, name, type, disabled}){
+    return(
+        <div>
+            <p>
+                {label}
+            </p>
+            <input
+                disabled={disabled}
+                type={type}
+                placeholder={placeHolder}
+                value={value}
+                name={name}
+                onChange={(e)=>{
+                    onChange(e)
+                }}
+            />
+        </div>
+    )
+}

@@ -1,0 +1,34 @@
+export default function Dropdown({label, options, name, optionText, onChange, value, placeholder, disabled}){
+    return(
+        <div>
+            <p>
+                {label}
+            </p>
+            <select
+                disabled={disabled}
+                onChange={(e)=>{
+                    onChange(e)
+                }}
+                name={name}
+                value={value}
+            >
+                <option
+                    value={''}
+                    disabled
+                    selected
+                >
+                    {placeholder}
+                </option>
+                {options.map((option)=>{
+                    return(
+                        <option
+                            value={option.id}
+                        >
+                            {option[optionText]}
+                        </option>
+                    )
+                })}
+            </select>
+        </div>
+    )
+}

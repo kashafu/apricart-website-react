@@ -1,3 +1,4 @@
+import AddressCard from "../components/Layout/components/Address/AddressCard";
 import MainProducts from "../components/Layout/components/Products/MainProducts";
 import SingleItem from "../components/Layout/components/Products/SingleProduct";
 let json = {
@@ -26,32 +27,9 @@ let json = {
 export default function Test(){
     return(
         <div>
-            {/* old */}
-			<div className="row">
-				<div className="col-12 col-sm-2  col-md-2  col-lg-3  col-xl-2  col-xxl-2">
-					<Categories 
-						categories={homeData.categories}
-					/>
-				</div>
-				<div className="col-12 col-sm-12  col-md-10  col-lg-9  col-xl-10  col-xxl-10 parot">
-					{/* <Slider /> */}
-					<section className="min-h-[150px] sm:min-h-[170px] md:min-h-[300px] lg:min-h-[360px]">
-						{/* <Slider2 /> */}
-						<BannerSlider
-							banners={homeData.banners}
-						/>
-					</section>
-					<MainProducts
-						products={homeData.products[0].data}
-					/>
-					<ScrollingProducts
-						products={homeData.products[1].data}
-					/>
-					{/* <PopularItem />
-					<RecommendedProducts />
-					<MostSold /> */}
-				</div>
-			</div>
+            <AddressCard
+                type={'add'}
+            />
         </div>
     )
 }
