@@ -6,6 +6,7 @@ import Dropdown from "../Input/Dropdown";
 import TextField from "../Input/TextField";
 import SubmitButton from "../Buttons/SubmitButton";
 import LocationPicker from "../Input/LocationPicker";
+import ErrorText from "../Typography/ErrorText";
 
 // type can be either 'edit' or 'add'
 // previousAddress will be empty if type is 'add', in 'edit' previousAddress is the previous address to be modified
@@ -13,7 +14,6 @@ export default function AddressCard({ type, previousAddress }) {
     const [deliveryAreaOptions, setDeliveryAreaOptions] = useState([]);
     const [cityOptions, setCityOptions] = useState([]);
     const [errorMessage, setErrorMessage] = useState('')
-
     const [address, setAddress] = useState({
         name: "",
         address: "",
@@ -21,13 +21,24 @@ export default function AddressCard({ type, previousAddress }) {
         email: "",
         cityId: "",
         areaId: '',
-        // mapLat: "",
-        // mapLong: "",
-        // googleAddress: "",
     })
     const [mapLat, setMapLat] = useState('')
     const [mapLong, setMapLong] = useState('')
     const [googleAddress, setGoogleAddress] = useState('')
+
+    if(previousAddress){
+        setAddress({
+            name: previousAddress.name,
+            address: previousAddress.address,
+            phoneNumber: previousAddress.phoneNumber,
+            email: previousAddress.email,
+            cityId: previousAddress.cityId,
+            areaId: previousAddress.areaId,
+        })
+        setMapLat(previousAddress.mapLat)
+        setMapLong(previousAddress.mapLong)
+        setGoogleAddress(previousAddress.googleAddress)
+    }
 
     useEffect(() => {
         getCityAreasOptionsApi()
@@ -73,21 +84,26 @@ export default function AddressCard({ type, previousAddress }) {
         setCityOptions(response.data.data)
     }
 
-    const addAddressApi = async (e) => {
-        e.preventDefault();
+    const addAddressApi = async () => {
         try {
             let { headers } = getGeneralApiParams()
             let url = base_url_api + '/home/address/delivery/save?client_type=apricart'
-            let body = address
+            let body = {
+                ...address,
+                'mapLat': mapLat,
+                'mapLong': mapLong,
+                'googleAddress': googleAddress,
+            }
 
             const response = await axios.post(
                 url, body,
                 {
                     headers: headers
                 }
-            );
-            alert(response.data.message)
+            )
+
             setErrorMessage('')
+            alert(response.data.message)
         } catch (err) {
             setErrorMessage(err.response.data.message)
         }
@@ -99,7 +115,10 @@ export default function AddressCard({ type, previousAddress }) {
             let url = base_url_api + '/home/address/delivery/update?client_type=apricart'
             let body = {
                 id: id,
-                ...address
+                ...address,
+                'mapLat': mapLat,
+                'mapLong': mapLong,
+                'googleAddress': googleAddress,
             }
 
             const response = await axios.post(
@@ -116,7 +135,7 @@ export default function AddressCard({ type, previousAddress }) {
     }
 
     return (
-        <div>
+        <div className="min-w-full flex flex-col space-y-2">
             <TextField
                 label={'Name'}
                 type={'text'}
@@ -165,23 +184,36 @@ export default function AddressCard({ type, previousAddress }) {
                 value={address.areaId}
                 placeholder={'Select Area'}
             />
-            {type == 'add' && (
-                <SubmitButton
-                    text={'Add Address'}
-                    onClick={() => {
-                        console.log(address)
-                        console.log(googleAddress)
-                        console.log(mapLat)
-                        console.log(mapLong)
-                    }}
-                />
-            )}
+            <p>
+                Choose Location
+            </p>
             <div className="w-full h-[300px]">
+                {/* <p>
+                    Pick Location
+                </p> */}
                 <LocationPicker
+                    label={"Pick Location"}
                     onChangeLatitude={setMapLat}
                     onChangeLongitude={setMapLong}
                 />
             </div>
+            {errorMessage != '' && (
+                <ErrorText
+                    text={errorMessage}
+                />
+            )}
+            {type == 'add' && (
+                <SubmitButton
+                    text={'Add Address'}
+                    onClick={addAddressApi}
+                />
+            )}
+            {type == 'edit' && (
+                <SubmitButton
+                    text={'Update Address'}
+                    onClick={editAddressApi}
+                />
+            )}
         </div>
     )
 }

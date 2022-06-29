@@ -3,7 +3,7 @@ import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
 // import PlacesAutocomplete from './PlacesAutocomplete';
 const defaultLocation = { lat: 24.917122827062762, lng: 67.09610049861793 }; 
 
-export default function LocationPicker({onChangeLatitude, onChangeLongitude}) {
+export default function LocationPicker({label, onChangeLatitude, onChangeLongitude}) {
     const [mapref, setMapRef] = useState(null);
     const [centerLocation, setCenterLocation] = useState({
         lat: 24.917122827062762,

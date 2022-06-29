@@ -5,9 +5,10 @@ import AddressBtn1 from "../components/Layout/components/Auth/Test";
 import Cookies from "universal-cookie";
 import { useRouter } from "next/router";
 import axios from "axios";
-import MapPicker from 'react-google-map-picker'
+// import MapPicker from 'react-google-map-picker'
 import { base_url_api } from '../information.json'
 import { getGeneralApiParams } from "../helpers/ApiHelpers";
+import AddressCard from "../components/Layout/components/Address/AddressCard";
 
 const address = () => {
 	const cookies = new Cookies();
@@ -339,7 +340,12 @@ const address = () => {
 
 										{
 											save ? <>
-												<div className="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 col-xxl-6">
+												<div className="min-w-full">
+													<AddressCard
+														type={'add'}
+													/>
+												</div>
+												{/* <div className="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 col-xxl-6">
 													<div className="personal-f address-card1 ">
 														<div className="form-group">
 															<label htmlFor="exampleFormControlInput1">
@@ -429,7 +435,7 @@ const address = () => {
 															<button onClick={addAddressApi}>Submit1</button>
 														</div>
 													</div>
-												</div>
+												</div> */}
 											</> : null
 										}
 									</div>
