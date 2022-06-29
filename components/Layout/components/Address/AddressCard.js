@@ -5,10 +5,7 @@ import { base_url_api } from '../../../../information.json'
 import Dropdown from "../Input/Dropdown";
 import TextField from "../Input/TextField";
 import SubmitButton from "../Buttons/SubmitButton";
-// import MapPicker from "react-google-map-picker";
-// import LocationPicker from "../Input/LocationPicker";
-const DefaultLocation = { lat: 10, lng: 106 };
-const DefaultZoom = 10;
+import LocationPicker from "../Input/LocationPicker";
 
 // type can be either 'edit' or 'add'
 // previousAddress will be empty if type is 'add', in 'edit' previousAddress is the previous address to be modified
@@ -24,27 +21,13 @@ export default function AddressCard({ type, previousAddress }) {
         email: "",
         cityId: "",
         areaId: '',
-        mapLat: "",
-        mapLong: "",
-        googleAddress: "",
+        // mapLat: "",
+        // mapLong: "",
+        // googleAddress: "",
     })
-
-    const [defaultLocation, setDefaultLocation] = useState(DefaultLocation);
-
-    const [location, setLocation] = useState(defaultLocation);
-    const [zoom, setZoom] = useState(DefaultZoom);
-    function handleChangeLocation(lat, lng) {
-        setLocation({ lat: lat, lng: lng });
-    }
-
-    function handleChangeZoom(newZoom) {
-        setZoom(newZoom);
-    }
-
-    function handleResetLocation() {
-        setDefaultLocation({ ...DefaultLocation });
-        setZoom(DefaultZoom);
-    }
+    const [mapLat, setMapLat] = useState('')
+    const [mapLong, setMapLong] = useState('')
+    const [googleAddress, setGoogleAddress] = useState('')
 
     useEffect(() => {
         getCityAreasOptionsApi()
@@ -187,27 +170,18 @@ export default function AddressCard({ type, previousAddress }) {
                     text={'Add Address'}
                     onClick={() => {
                         console.log(address)
+                        console.log(googleAddress)
+                        console.log(mapLat)
+                        console.log(mapLong)
                     }}
                 />
             )}
-            <button onClick={handleResetLocation}>Reset Location</button>
-            <label>Latitute:</label><input type='text' value={location.lat} disabled />
-            <label>Longitute:</label><input type='text' value={location.lng} disabled />
-            <label>Zoom:</label><input type='text' value={zoom} disabled />
-
-            {/* <div className="h-[700px] w-[700px]">
-                <MapPicker defaultLocation={defaultLocation}
-                    zoom={zoom}
-                    mapTypeId="roadmap"
-                    style={{ height: '700px' }}
-                    onChangeLocation={handleChangeLocation}
-                    onChangeZoom={handleChangeZoom}
-                    apiKey='AIzaSyD07E1VvpsN_0FvsmKAj4nK9GnLq-9jtj8' 
+            <div className="w-full h-[300px]">
+                <LocationPicker
+                    onChangeLatitude={setMapLat}
+                    onChangeLongitude={setMapLong}
                 />
-            </div> */}
-
-            {/* <LocationPicker/> */}
-
+            </div>
         </div>
     )
 }
