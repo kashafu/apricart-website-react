@@ -101,6 +101,9 @@ export default function AddressCard({ type, previousAddress }) {
                     headers: headers
                 }
             )
+            // console.log(url)
+            // console.log(body)
+            // console.log(response)
 
             setErrorMessage('')
             alert(response.data.message)
