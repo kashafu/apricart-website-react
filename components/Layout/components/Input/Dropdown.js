@@ -1,4 +1,4 @@
-export default function Dropdown({label, options, name, optionText, onChange, value, placeholder, disabled}){
+export default function Dropdown({label, options, name, optionText, onChange, value, placeholder, disabled, customOnChange}){
     return(
         <div className="grid grid-cols-3">
             <p className="col-span-1">
@@ -8,7 +8,12 @@ export default function Dropdown({label, options, name, optionText, onChange, va
                 className="col-span-2"
                 disabled={disabled}
                 onChange={(e)=>{
-                    onChange(e)
+                    if(customOnChange){
+                        onChange(e)
+                    }
+                    else{
+                        onChange(e.target.value)
+                    }
                 }}
                 name={name}
                 value={value}

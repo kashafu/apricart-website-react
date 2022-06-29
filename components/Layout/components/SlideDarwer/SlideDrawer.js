@@ -100,12 +100,12 @@ const SlideDrawer = (props) => {
       let Data1 = response.data.data;
       setData(Data1.products);
       mydata = Data1.products;
-      console.log(mydata);
+      // console.log(mydata);
       mydata.map((item)=>{dispatch(updatedcart(item));});
    
       setTotal(response.data.total)
-      console.log(response.data.data);
-      console.log(Data1)
+      // console.log(response.data.data);
+      // console.log(Data1)
       let total1 = response.data.total;
       total = total1;
       setDiscount(response.data.message);
@@ -139,7 +139,7 @@ const SlideDrawer = (props) => {
     );
     setOption(response.data.data);
 
-   console.log("Option API",option)
+  //  console.log("Option API",option)
   
   }
   useEffect(()=>{
@@ -167,7 +167,7 @@ const SlideDrawer = (props) => {
     
   };
 
-  console.log(discount)
+  // console.log(discount)
   let disValue = 3;
   const Discount = getTotalPrice();
   const Avail = Discount - (Discount * disValue) / 100;
@@ -210,10 +210,10 @@ const SlideDrawer = (props) => {
   
   axios(conf)
   .then(function (response) {
-    console.log(JSON.stringify(response.data));
+    // console.log(JSON.stringify(response.data));
   })
   .catch(function (error) {
-    console.log(error);
+    // console.log(error);
   });
   
 
@@ -221,7 +221,7 @@ const SlideDrawer = (props) => {
 
   }
   const UpdateQty=(item,val)=>{
-    console.log(item.qty);
+    // console.log(item.qty);
     var qt =item.qty ;
     if (val==0){
       qt--;
@@ -242,15 +242,15 @@ const SlideDrawer = (props) => {
       'Content-Type': 'application/json', 
       'Authorization': 'Bearer '+ cookies.get("cookies-token")}
     },).then(function (response) {
-      console.log(JSON.stringify(response.data));
+      // console.log(JSON.stringify(response.data));
     })
     .catch(function (error) {
-      console.log(error);
+      // console.log(error);
     });
     
    }
   }
-  console.log(cart);
+  // console.log(cart);
   return (
     <>
       <div className="sidebarD">

@@ -102,7 +102,7 @@ export default function AddressCard({ type, previousAddress }) {
                 }
             )
             // console.log(url)
-            // console.log(body)
+            console.log(body)
             // console.log(response)
 
             setErrorMessage('')
@@ -144,6 +144,7 @@ export default function AddressCard({ type, previousAddress }) {
                 type={'text'}
                 placeHolder={'Your Name'}
                 name={'name'}
+                customOnChange={true}
                 onChange={handleAddressChange}
                 value={address.name}
             />
@@ -151,6 +152,7 @@ export default function AddressCard({ type, previousAddress }) {
                 label={'Address'}
                 placeHolder={'Flat no., street'}
                 name={'address'}
+                customOnChange={true}
                 onChange={handleAddressChange}
                 value={address.address}
             />
@@ -158,6 +160,7 @@ export default function AddressCard({ type, previousAddress }) {
                 label={'Phone Number'}
                 placeHolder={'03001234567'}
                 name={'phoneNumber'}
+                customOnChange={true}
                 onChange={handleAddressChange}
                 value={address.phoneNumber}
             />
@@ -165,6 +168,7 @@ export default function AddressCard({ type, previousAddress }) {
                 label={'Email Address'}
                 placeHolder={'youremail@email.com'}
                 name={'email'}
+                customOnChange={true}
                 onChange={handleAddressChange}
                 value={address.email}
             />
@@ -173,6 +177,7 @@ export default function AddressCard({ type, previousAddress }) {
                 options={cityOptions}
                 name={'cityId'}
                 optionText={'city'}
+                customOnChange={true}
                 onChange={handleAddressChange}
                 value={address.cityId}
                 placeholder={'Select City'}
@@ -183,6 +188,7 @@ export default function AddressCard({ type, previousAddress }) {
                 options={deliveryAreaOptions}
                 name={'areaId'}
                 optionText={'town'}
+                customOnChange={true}
                 onChange={handleAddressChange}
                 value={address.areaId}
                 placeholder={'Select Area'}

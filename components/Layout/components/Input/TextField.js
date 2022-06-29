@@ -1,4 +1,4 @@
-export default function TextField({label, placeHolder, onChange, value, name, type, disabled}){
+export default function TextField({label, placeHolder, onChange, value, name, type, disabled, customOnChange}){
     return(
         <div className="grid grid-cols-3">
             <p className="col-span-1">
@@ -12,7 +12,12 @@ export default function TextField({label, placeHolder, onChange, value, name, ty
                 value={value}
                 name={name}
                 onChange={(e)=>{
-                    onChange(e)
+                    if(customOnChange){
+                        onChange(e)
+                    }
+                    else{
+                        onChange(e.target.value)
+                    }
                 }}
             />
         </div>

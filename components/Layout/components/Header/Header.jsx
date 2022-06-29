@@ -41,10 +41,8 @@ export default function Header(props) {
 
     var messsage = cookies.get("cookies-message");
     var token = cookies.get("cookies-token");
-    console.log(token);
     var name = cookies.get("cookies-name");
     var userId = cookies.get("cookies-userId");
-    console.log(userId);
 
     useEffect(() => {
         if (token) {
@@ -186,8 +184,8 @@ export default function Header(props) {
             //setData(response.data.data);
             let Data1 = response.data.data;
             mydata = Data1.products;
-            console.log("NEW"); //checking data
-            console.log(Data1);
+            // console.log("NEW"); //checking data
+            // console.log(Data1);
         };
     } else {
         // cartAll = async() =>{

@@ -12,7 +12,6 @@ export default function Layout(props) {
     const handleAppState = (newState) => {
         setAppState({ ...appState, ...newState });
     };
-    console.log({ Layout: props });
     return (
         <AppContext.Provider value={{ appState, handleAppState }}>
             <TopBar />
