@@ -7,6 +7,7 @@ import { base_url_api } from '../information.json'
 import axios from "axios";
 import ScrollingProducts from "../components/Layout/components/Products/ScrollingProducts";
 import { getGeneralApiParams } from '../helpers/ApiHelpers'
+import Banner from "../components/Layout/components/Banner/Banner";
 
 
 export default function Home() {
@@ -56,6 +57,12 @@ export default function Home() {
 		<>
 			{/* TODO IMPLEMENT HEAD WITH ICON AND NAME */}
 			<Head>Apricart</Head>
+			{/* BANNERS SECTION */}
+			<section>
+				<Banner
+					banners={homeData.banners}
+				/>
+			</section>
 			<div className="grid grid-cols-5 gap-8">
 				{/* CATEGORIES SECTION */}
 				<section className="col-span-1">
