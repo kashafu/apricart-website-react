@@ -58,20 +58,20 @@ export default function Home() {
 			{/* TODO IMPLEMENT HEAD WITH ICON AND NAME */}
 			<Head>Apricart</Head>
 			{/* BANNERS SECTION */}
-			<section>
+			<section className="w-full ">
 				<Banner
 					banners={homeData.banners}
 				/>
 			</section>
 			<div className="grid grid-cols-5 gap-8">
 				{/* CATEGORIES SECTION */}
-				<section className="col-span-1">
+				<section className="hidden lg:col-span-1 lg:block">
 					<Categories
 						categories={homeData.categories}
 					/>
 				</section>
 				{/* PRODUCTS SECTION */}
-				<section className="col-span-4 space-y-12">
+				<section className="col-span-5 lg:col-span-4 space-y-12">
 					{homeData.products.map((product) => {
 						let { bannerImageWeb, data, name } = product
 
