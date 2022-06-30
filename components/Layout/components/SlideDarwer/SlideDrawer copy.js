@@ -18,18 +18,19 @@ import { getGeneralApiParams } from "../../../../helpers/ApiHelpers";
 
 const SlideDrawer = (props) => {
 	const cookies = new Cookies();
-	const router = useRouter();
 
 	const [discount, setDiscount] = useState("none");
-	let { appState, handleAppState } = useContext(AppContext)
+	const { appState, handleAppState } = useContext(AppContext)
 	const [mydata, setData] = useState([]);
 	const [total, setTotal] = useState([]);
 	const [option, setOption] = useState([]);
+	const router = useRouter();
 
+	//let cartAll={};
 	useEffect(() => {
 		cartAll();
+		//getdiscount
 	}, [])
-
 	var token = cookies.get("cookies-token");
 	let drawerClasses = "side-drawer";
 	if (props.show) {
@@ -40,6 +41,19 @@ const SlideDrawer = (props) => {
 			"drawerOpen": !appState.drawerOpen
 		})
 	}
+	// const [mydata,setData] = useState([]);
+
+	// const getDiscount = async() =>{
+	//   const response = await axios.get(
+	//     'https://staging.apricart.pk/api/v1/order/cart/all?city=karachi&lang=en&orderType=delivery'
+	//   );
+	//   setData(response);
+	//   console.log(response)
+	// }
+	// useEffect(() => {
+	//   getDiscount();
+	// },[])
+
 
 	const cart = useSelector((state) => state.cart);
 	const dispatch = useDispatch();
@@ -83,6 +97,10 @@ const SlideDrawer = (props) => {
 			}
 			)
 
+			//  console.log(mydata);
+
+
+
 			let Data1 = response.data.data;
 			setData(Data1.products);
 			mydata = Data1.products;
@@ -94,7 +112,7 @@ const SlideDrawer = (props) => {
 			// console.log(Data1)
 			let total1 = response.data.total;
 			total = total1;
-			// setDiscount(response.data.message);
+			setDiscount(response.data.message);
 			//dispatch(updatedcart(response.data.data));
 		}
 
@@ -153,6 +171,7 @@ const SlideDrawer = (props) => {
 
 	};
 
+	// console.log(discount)
 	let disValue = 3;
 	const Discount = getTotalPrice();
 	const Avail = Discount - (Discount * disValue) / 100;

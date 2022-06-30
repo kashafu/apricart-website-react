@@ -44,17 +44,21 @@ const address = () => {
 	}, []);
 
 	const getSavedAddressesApi = async () => {
-		let { headers } = getGeneralApiParams()
-		let url = base_url_api + '/home/address/delivery?lang=en&client_type=apricart'
-		
-		const response = await axios.get(
-			url,
-			{
-				headers: headers
-			}
-		);
-		setSavedAddresses(response.data.data);
-	};
+		try {
+			let { headers } = getGeneralApiParams()
+			let url = base_url_api + '/home/address/delivery?lang=en&client_type=apricart'
+			
+			const response = await axios.get(
+				url,
+				{
+					headers: headers
+				}
+			);
+			setSavedAddresses(response.data.data);
+		} catch (error) {
+			console.log(error.response.data.message)
+		}
+	}
 
 	const getDeliveryAreasOptionsApi = async (id) => {
 		let { headers } = getGeneralApiParams()
@@ -82,24 +86,6 @@ const address = () => {
 
 		setCityOptions(response.data.data)
 	}
-
-	const addAddressApi = async (e) => {
-		e.preventDefault();
-		try {
-			let { headers } = getGeneralApiParams()
-			let url = base_url_api + '/home/address/delivery/save?client_type=apricart'
-			const response = await axios.post(
-				url, newAddress, 
-				{
-					headers: headers
-				}
-			);
-			alert(response.data.message)
-			setErrorMessage('')
-		} catch (err) {
-			setErrorMessage(err.response.data.message)
-		}
-	};
 
 	const handleAreaSave = (e) => {
 		const { name, value } = e.target;
