@@ -59,7 +59,7 @@ const Checkout = () => {
 	const getUserAddresses = async () => {
 		try {
 			let { headers } = getGeneralApiParams()
-			let url = base_url_api + '/home/address/delivery?lang=en&client_type=apricart'
+			let url = base_url_api + '/home/address/areas?cityid=1&lang=en'//&client_type=apricart
 			
 			const response = await axios.get(
 				url,
@@ -68,6 +68,7 @@ const Checkout = () => {
 				}
 			);
 			setUserAddresses(response.data.data);
+			console.log(response.data.data)
 		} catch (error) {
 			console.log(error.response.data.message)
 		}
@@ -152,7 +153,7 @@ const Checkout = () => {
 									<select>
 										{userAddresses.map((addr) => {
 											return (
-												<option value={addr.googleAddress}>{addr.googleAddress}</option>
+												<option value={addr.googleAddress}>{addr.googleAddress}</option>//googleAddress
 											)
 										})}
 									</select>
