@@ -11,6 +11,7 @@ export const getGeneralApiParams = () => {
     let longitude = 0
     let userId
     let headers = {
+        'Accept': 'application/json',
         "Content-Type": "application/json",
     }
 
@@ -22,7 +23,7 @@ export const getGeneralApiParams = () => {
         // TODO
         // if no address is selected or no address has been added, use default lat long 0
         headers = {
-            "Content-Type": "application/json",
+            ...headers,
             Authorization: "Bearer " + cookies.get("cookies-token")
         }
     }
@@ -36,9 +37,9 @@ export const getGeneralApiParams = () => {
                 longitude = position.coords.longitude
             })
         }
-        headers = {
-            "Content-Type": "application/json",
-        }
+        // headers = {
+        //     "Content-Type": "application/json",
+        // }
     }
 
     return ({

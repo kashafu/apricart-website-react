@@ -20,15 +20,15 @@ import {
     removeFromCart,
     updatedcart,
 } from "../../../../redux/cart.slice";
-import information from '../../../../information.json'
+import information from "../../../../information.json";
 // const baseURL = "https://staging.staging.pk/v1";
-const baseURL = information.base_url_api
+const baseURL = information.base_url_api;
 
-import { getGeneralApiParams } from '../../../../helpers/ApiHelpers'
+import { getGeneralApiParams } from "../../../../helpers/ApiHelpers";
 import SearchBar from "../SearchBar/SearchBar";
 
 export default function Header(props) {
-	const cookies = new Cookies();
+    const cookies = new Cookies();
     const router = useRouter();
 
     const [users, setUsers] = useState([]);
@@ -39,13 +39,10 @@ export default function Header(props) {
 
     const [user, setAuthenticated] = useState(false);
 
-
     var messsage = cookies.get("cookies-message");
     var token = cookies.get("cookies-token");
-    console.log(token);
     var name = cookies.get("cookies-name");
     var userId = cookies.get("cookies-userId");
-    console.log(userId);
 
     useEffect(() => {
         if (token) {
@@ -68,22 +65,17 @@ export default function Header(props) {
             <div className="dropdown">
                 <button
                     className="dropbtn"
-                    data-bs-toggle="modal"
-                    data-bs-target="#exampleModal"
-                    data-bs-whatever="@mdo"
+                    // data-bs-toggle="modal"
+                    // data-bs-target="#exampleModal"
+                    // data-bs-whatever="@mdo"
                 >
                     {""}
-                    <a className="nav-link" href="#">
+                    <a className="nav-link">
                         <img
                             src="/assets/images/user.png"
                             className="img-fluid"
                         />
                         {name && <p>Welcome {name}</p>}
-
-                        {/*
-            {profile.map((pro) => {
-             return(<p>{pro.name}</p>)
-           })} */}
                     </a>
                 </button>
                 <div className="dropdown-content">
@@ -192,8 +184,8 @@ export default function Header(props) {
             //setData(response.data.data);
             let Data1 = response.data.data;
             mydata = Data1.products;
-            console.log("NEW"); //checking data
-            console.log(Data1);
+            // console.log("NEW"); //checking data
+            // console.log(Data1);
         };
     } else {
         // cartAll = async() =>{
@@ -212,15 +204,17 @@ export default function Header(props) {
         <div className="container-fluid hae">
             <nav className="navbar navbar-expand-lg navbar-light bg-light shadow">
                 <div className="container-fluid">
-                    <Link href="/">
-            <a className="navbar-brand">
-              <img
-                src="/assets/images/logo.png"
-                className="img-fluid"
-                width="150px;"
-              />
-            </a>
-          </Link>
+                    <div className="hidden lg:block">
+                        <Link href="/" passHref>
+                            <button>
+                                <img
+                                    src="/assets/images/logo.png"
+                                    // className="img-fluid"
+                                    width="150px;"
+                                />
+                            </button>
+                        </Link>
+                    </div>
 
                     <form
                         className="d-flex ms-auto manu_cat"
@@ -232,8 +226,7 @@ export default function Header(props) {
                                 <CatagoryBtn />
                             </a>
                         </div>
-                        <div className=" d-md-none d-lg-none">
-                        </div>
+                        <div className=" d-md-none d-lg-none"></div>
                         <div className="input-group searching_pro">
                             <SearchBar />
                         </div>
@@ -269,8 +262,7 @@ export default function Header(props) {
                     </div>
                 </div>
             </nav>
-            <div>
-            </div>
+            <div></div>
         </div>
     );
 }

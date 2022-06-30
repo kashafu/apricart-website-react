@@ -1,98 +1,163 @@
-import React,{useState} from "react";
+import { useEffect, useState } from "react";
 import Link from 'next/link';
+import { useRouter } from "next/router";
+import { toast } from "react-toastify";
 import Cookies from "universal-cookie";
+import TextField from '../components/Layout/components/Input/TextField'
+import SubmitButton from '../components/Layout/components/Buttons/SubmitButton'
+import axios from "axios";
+import { base_url_api } from '../information.json'
+import { getGeneralApiParams } from '../helpers/ApiHelpers'
+import PageHeading from "../components/Layout/components/Typography/PageHeading";
+import ErrorText from "../components/Layout/components/Typography/ErrorText";
+import SuccessText from "../components/Layout/components/Typography/SuccessText";
 
+export default function forgot_password(){
+	const router = useRouter()
 
-const forgot_password = () => {
-  const cookies = new Cookies();
-  var token = cookies.get("cookies-token");
-  if (!token) {
-    return <h5 className='login-token'>Please Login First</h5>;
-  }
-  const[show,setShow]=useState(false);
-  return (
-    <>
-      <section className="profile_sec">
-        <div className="container">
-          <div className="row">
-            <div className="col-12 col-sm-12 col-md-1 col-lg-1 col-xl-1 col-xxl-1"></div>
-            <div className="col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xxl-3">
-              <div className="personal_details" id="myDIV">
-                <div className="personal_info">
-                 <Link href='/profile_user' passHref>
-                 <button href="#" className="btn">
-                    Personal Information
-                  </button>
-                 </Link>
-                </div>
-                <div className="change_password">
-                  <button href="#" className="btn active">
-                    Change Password
-                  </button>
-                </div>
-              </div>
-            </div>
-            <div className="col-12 col-sm-12 col-md-1 col-lg-1 col-xl-1 col-xxl-1"></div>
-            <div className="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 col-xxl-6">
-              <div className="personal_form"></div>
-              <div className="cont_shop_sec1">
-                <div className="row center">
-                  <div className="col-12 col-sm-12 col-md-1 col-lg-1 col-xl-1 col-xxl-1"></div>
-                  <div className="col-12 col-sm-12 col-md-10 col-lg-10 col-xl-10 col-xxl-10">
-                    <div className="personal-f">
-                      <form>
-                        <div className="form-group">
-                          <label htmlFor="exampleFormControlInput1">
-                            Current Password{" "}
-                          </label>
-                          <input
-                            type="password"
-                            className="form-control"
-                            id="exampleFormControlInput1"
-                            placeholder=""
-                            required
-                          />
-                        </div>
-                        <div className="form-group">
-                          <label htmlFor="exampleFormControlInput1">
-                            New Password
-                          </label>
-                          <input
-                            type="password"
-                            className="form-control"
-                            id="exampleFormControlInput1"
-                            placeholder=""
-                            required
-                          />
-                        </div>
-                        <div className="form-group">
-                          <label htmlFor="exampleFormControlInput1">
-                            Confirm Password
-                          </label>
-                          <input
-                            type="password"
-                            className="form-control"
-                            id="exampleFormControlInput1"
-                            placeholder=""
-                            required
-                          />
-                        </div>
+	/* states can be
+		'otp' : user enters mobile number and generates otp
+		'verify' : user enters new password and otp and clicks submit
+	*/
+	const [viewState, setViewState] = useState('otp') 
+	const [phoneNumber, setPhoneNumber] = useState('')
+	const [otp, setOtp] = useState('')
+	const [newPassword, setNewPassword] = useState('')
+	const [errorMessage, setErrorMessage] = useState('')
+	const [successMessage, setSuccessMessage] = useState('')
+	const [buttonDisabled, setButtonDisabled] = useState(true)
 
-                        <div className="form-group">
-                          <button>Update Password</button>
-                        </div>
-                      </form>
-                    </div>
-                  </div>
-                  <div className="col-12 col-sm-12 col-md-2 col-lg-2 col-xl-2 col-xxl-1"></div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-    </>
-  );
-};
+	useEffect(() => {
+		setButtonDisabled(phoneNumber.length != 10)
+	}, [phoneNumber])
 
-export default forgot_password;
+	useEffect(() => {
+		setButtonDisabled(otp.length != 4 || newPassword.length == 0)
+	}, [otp, newPassword])
+
+	const getOtpApi = async () => {
+		try {
+			let { headers } = getGeneralApiParams()
+			let url = base_url_api + '/auth/open/otp?client_type=apricart' 
+			let body = {
+				'phoneNumber' : phoneNumber
+			}
+
+			let response = await axios.post(url, body, {
+				headers: headers
+			})
+
+			toast.success(response.data.message);
+			setButtonDisabled(true)
+			setErrorMessage('')
+			setViewState('verify')
+		} catch (error) {
+			setErrorMessage(error.response.data)
+		}
+	}
+
+	const changePasswordApi = async () => {
+		try {
+			let { headers } = getGeneralApiParams()
+			let url = base_url_api + '/auth/open/password/forgot?client_type=apricart' 
+			let body = {
+				'phoneNumber' : phoneNumber,
+				'password': newPassword,
+				'otp': otp
+			}
+
+			let response = await axios.post(url, body, {
+				headers: headers
+			})
+			console.log(response)
+
+			setButtonDisabled(true)
+			setErrorMessage('')
+			setSuccessMessage(response.data.message)
+			console.log(response.data.message)
+			// router.push('/')
+		} catch (error) {
+			setErrorMessage(error.response.data.message)
+		}
+	}
+
+	return(
+		<div className="flex flex-col w-screen items-center justify-center">
+			<div className="mt-4 mb-12">
+				<PageHeading
+					text={"Forgot Password"}
+				/>
+			</div>
+			<div className="w-1/2">
+				{viewState == 'otp' && (
+					<div className="space-y-6">
+						<TextField
+							label={'Enter Registered Phone Number'}
+							placeHolder={'3301234567'}
+							onChange={setPhoneNumber}
+							value={phoneNumber}
+							type={'number'}
+						/>
+						{errorMessage != '' && (
+							<ErrorText
+								text={errorMessage}
+							/>
+						)}
+						<SubmitButton
+							disabled={buttonDisabled}
+							text={'Send OTP'}
+							onClick={getOtpApi}
+						/>
+					</div>
+				)}
+				{viewState == 'verify' && (
+					<div className="space-y-6">
+						<div className="flex flex-row space-x-2 justify-center">
+							<p className="text-center">
+								OTP sent to {phoneNumber}
+							</p>
+							<button
+								onClick={()=>{
+									setViewState('otp')
+								}}
+							>
+								<p>
+									Wrong Number?
+								</p>
+							</button>
+						</div>
+						<TextField
+							label={'Enter New Password'}
+							placeHolder={'password'}
+							onChange={setNewPassword}
+							value={newPassword}
+							type={'text'}
+						/>
+						<TextField
+							label={'Enter OTP'}
+							placeHolder={'1234'}
+							onChange={setOtp}
+							value={otp}
+							type={'number'}
+						/>
+						{errorMessage != '' && (
+							<ErrorText
+								text={errorMessage}
+							/>
+						)}
+						{successMessage != '' && (
+							<SuccessText
+								text={errorMessage}
+							/>
+						)}
+						<SubmitButton
+							disabled={buttonDisabled}
+							text={'Change Password'}
+							onClick={changePasswordApi}
+						/>
+					</div>
+				)}
+			</div>
+		</div>
+	)
+}
