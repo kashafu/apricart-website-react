@@ -29,6 +29,20 @@ const Checkout = () => {
 			0
 		);
 	};
+	var data = {
+		"coupon": "",
+		"address": 4582,
+		"clientType": "apricart",
+		"orderType": "delivery",
+		"prodType": "cus",
+		"day": "",
+		"startTime": "",
+		"endTime": "",
+		"notes": "test order",
+		"showProducts": true,
+		"verify": false,
+		"paymentMethod": "cash"
+	};
 
 	const [userAddresses, setUserAddresses] = useState([]);
 	// const [checkoutData, setCheckOutData] = useState({
@@ -79,7 +93,7 @@ const Checkout = () => {
 			let { headers, city, userId } = getGeneralApiParams()
 			let url = base_url_api + '/order/cart/checkout?city=' + city + '&userid=' + userId + '&client_lat=' + + '&client_long=' + + ''
 		} catch (error) {
-			setErrorMessage(error.response.data.message)
+			setErrorMessage(error.response.data.message);
 		}
 
 		e.preventDefault();
@@ -89,7 +103,7 @@ const Checkout = () => {
 				`https://staging.apricart.pk/v1//order/cart/checkout?city=karachi&lang=en&userid=${cookies.get('cookies-userId')}&client_lat=24.909230104621333&client_long=67.12185373161728`, checkoutData, {
 				headers: {
 					'Accept': 'application/json',
-					'Content-Type': 'application/json',
+					'Content-Type': 'application/json',//'https://staging.apricart.pk/v1/order/cart/checkout?userid=10638&city=karachi&lang=en&client_lat=24.909230104621333&client_long=67.12185373161728'
 					'Authorization': 'Bearer ' + cookies.get('cookies-token'),
 				}
 			}
