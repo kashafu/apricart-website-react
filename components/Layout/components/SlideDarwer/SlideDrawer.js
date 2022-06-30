@@ -396,3 +396,29 @@ const SlideDrawer = (props) => {
 };
 
 export default SlideDrawer;
+
+
+
+// later updates
+//CART DONE
+//login with cbe 
+//cart increment ;
+//remaining 
+
+
+//guest user order increment 
+//order by guest 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
