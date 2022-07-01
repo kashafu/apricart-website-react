@@ -55,6 +55,7 @@ export default function Header(props) {
 
     const logout = () => {
         cookies.remove("cookies-token");
+        cookies.remove('selected-address')
         localStorage.clear();
         setAuthenticated(false);
         router.push("/");
