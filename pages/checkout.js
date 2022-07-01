@@ -30,6 +30,20 @@ const Checkout = () => {
 			0
 		);
 	};
+	var data = {
+		"coupon": "",
+		"address": 4582,
+		"clientType": "apricart",
+		"orderType": "delivery",
+		"prodType": "cus",
+		"day": "",
+		"startTime": "",
+		"endTime": "",
+		"notes": "test order",
+		"showProducts": true,
+		"verify": false,
+		"paymentMethod": "cash"
+	};
 
 	const [userAddresses, setUserAddresses] = useState([]);
 	// const [checkoutData, setCheckOutData] = useState({
@@ -58,7 +72,7 @@ const Checkout = () => {
 	const getUserAddresses = async () => {
 		try {
 			let { headers } = getGeneralApiParams()
-			let url = base_url_api + '/home/address/delivery?lang=en&client_type=apricart'
+			let url = base_url_api + '/home/address/areas?cityid=1&lang=en'//&client_type=apricart
 			
 			const response = await axios.get(
 				url,
@@ -67,6 +81,7 @@ const Checkout = () => {
 				}
 			);
 			setUserAddresses(response.data.data);
+			console.log(response.data.data)
 		} catch (error) {
 			console.log(error.response.data.message)
 		}
@@ -90,7 +105,7 @@ const Checkout = () => {
 			console.log(body)
 			console.log(response)
 		} catch (error) {
-			setErrorMessage(error.response.data.message)
+			setErrorMessage(error.response.data.message);
 		}
 
 		e.preventDefault();
@@ -100,7 +115,7 @@ const Checkout = () => {
 				`https://staging.apricart.pk/v1//order/cart/checkout?city=karachi&lang=en&userid=${cookies.get('cookies-userId')}&client_lat=24.909230104621333&client_long=67.12185373161728`, checkoutData, {
 				headers: {
 					'Accept': 'application/json',
-					'Content-Type': 'application/json',
+					'Content-Type': 'application/json',//'https://staging.apricart.pk/v1/order/cart/checkout?userid=10638&city=karachi&lang=en&client_lat=24.909230104621333&client_long=67.12185373161728'
 					'Authorization': 'Bearer ' + cookies.get('cookies-token'),
 				}
 			}
@@ -164,7 +179,7 @@ const Checkout = () => {
 									<select>
 										{userAddresses.map((addr) => {
 											return (
-												<option value={addr.googleAddress}>{addr.googleAddress}</option>
+												<option value={addr.googleAddress}>{addr.googleAddress}</option>//googleAddress
 											)
 										})}
 									</select>
