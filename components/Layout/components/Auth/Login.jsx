@@ -115,15 +115,11 @@ const login = () => {
     const dispatch = useDispatch();
     const cart = useSelector((state) => state.cart);
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
+    const handleSubmit = async () => {
+        let { city } = getGeneralApiParams();
+        let url = base_url_api + "/auth/open/login?city=" + city + "&lang=en&client_type=apricart"
+
         try {
-            let { city } = getGeneralApiParams();
-            let url =
-            "https://cbe.apricart.pk/v1"+
-                "/auth/open/login?city=" +
-                city +
-                "&lang=en&client_type=apricart";
             const response = await axios.post(url, { ...userData });
             console.log(response);
             // console.log("Data", response.data);
@@ -135,7 +131,7 @@ const login = () => {
             cookies.set("cookies-email", response.data.data.email);
             cookies.set("cookies-phoneNumber", response.data.data.phoneNumber);
             cookies.set("cookies-userId", response.data.data.userId);
-            console.log(response.data.data.userId);
+            // console.log(response.data.data.userId);
             // console.log(cart.getstate());
             // dispatch(Login_Succeed(cart.getstate()));
             router.push("/");

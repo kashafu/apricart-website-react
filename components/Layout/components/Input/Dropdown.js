@@ -1,3 +1,7 @@
+/*
+    If you want custom onChange that is defined in the file where the component is called, 
+    set customOnChange to true and pass the custom function to onChange
+*/
 export default function Dropdown({label, options, name, optionText, onChange, value, placeholder, disabled, customOnChange}){
     return(
         <div className="grid grid-cols-3">

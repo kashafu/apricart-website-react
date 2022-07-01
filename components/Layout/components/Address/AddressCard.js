@@ -10,7 +10,7 @@ import ErrorText from "../Typography/ErrorText";
 
 // type can be either 'edit' or 'add'
 // previousAddress will be empty if type is 'add', in 'edit' previousAddress is the previous address to be modified
-export default function AddressCard({ type, previousAddress }) {
+export default function AddressCard({ type, previousAddress, updateSavedAddresses }) {
     const [deliveryAreaOptions, setDeliveryAreaOptions] = useState([]);
     const [cityOptions, setCityOptions] = useState([]);
     const [errorMessage, setErrorMessage] = useState('')
@@ -102,9 +102,10 @@ export default function AddressCard({ type, previousAddress }) {
                 }
             )
             // console.log(url)
-            console.log(body)
+            // console.log(body)
             // console.log(response)
 
+            updateSavedAddresses()
             setErrorMessage('')
             alert(response.data.message)
         } catch (err) {
@@ -129,7 +130,9 @@ export default function AddressCard({ type, previousAddress }) {
                 {
                     headers: headers
                 }
-            );
+            )
+
+            updateSavedAddresses()
             alert(response.data.message)
             setErrorMessage('')
         } catch (err) {

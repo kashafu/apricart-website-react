@@ -30,22 +30,21 @@ const Register = () => {
         e.preventDefault();
         try {
             let { userId, headers } = getGeneralApiParams();
-            let url = base_url_api + "/auth/open/register";
+            let url = base_url_api + "/auth/open/register?client_type=apricart";
             let body = {
                 ...userData,
                 guestuserid: userId,
-            };
+            }
             const response = await axios.post(url, body, {
                 headers: headers,
             });
-            console.log(response);
             toast.success(response.data.message);
             setShowOTPScreen(true);
             setCookie("register");
             setCookie("token", response.data.data.token, { path: "/address" });
         } catch (err) {
             //const Error = err.response.data;
-            console.log(err);
+            console.log(err.response);
             toast.error(Error.message);
         }
     };

@@ -11,6 +11,7 @@ import Cookies from 'universal-cookie';
 import AddressCard from '../components/Layout/components/Address/AddressCard'
 import { base_url_api } from '../information.json'
 import { getGeneralApiParams } from "../helpers/ApiHelpers";
+import SelectAddress from "../components/Layout/components/Address/SelectAddress";
 
 const Checkout = () => {
 	const cookies = new Cookies();
@@ -41,13 +42,11 @@ const Checkout = () => {
 	// 	"paymentMethod": "cash"
 	// })
 	const [checkoutData, setCheckOutData] = useState({
-		"coupon": "",
-		"address": 5828,
-		"orderType": "delivery",
-		"notes": "delivery bhejo",
-		"showProducts": true,
-		"verify": false,
-		"paymentMethod": "cash"
+		"coupon": '',
+		"address": '',
+		"orderType": "",
+		"notes": "",
+		"paymentMethod": ""
 	})
 	const [showAddAddress, setShowAddAddress] = useState(false)
 	const [errorMessage, setErrorMessage] = useState('')
@@ -74,9 +73,22 @@ const Checkout = () => {
 	}
 
 	const handleCheckOut = async (e) => {
+		let { headers, city, userId, selectedAddress } = getGeneralApiParams()
+		let lat = selectedAddress.mapLat
+		let long = selectedAddress.mapLong
+		let body = {
+			...checkoutData,
+			'showProducts': true,
+			// 'verify': false
+		}
+		let url = base_url_api + '/order/cart/checkout?city=' + city + '&userid=' + userId + '&client_lat=' + lat + '&client_long=' + long + '&lang=en&client_type=apricart'
+		
 		try {
-			let { headers, city, userId } = getGeneralApiParams()
-			let url = base_url_api + '/order/cart/checkout?city=' + city + '&userid=' + userId + '&client_lat=' + + '&client_long=' + + ''
+			let response = await axios.post(url, body, {
+				headers: headers
+			})
+			console.log(body)
+			console.log(response)
 		} catch (error) {
 			setErrorMessage(error.response.data.message)
 		}
@@ -140,8 +152,8 @@ const Checkout = () => {
 					<div className="row">
 						<div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 col-xxl-6">
 							<div class="delivery_body_sec">
-
-								<div class="d_address">
+								<SelectAddress />
+								{/* <div class="d_address">
 									<ul>
 										<li><h4>Delivery Address</h4></li>
 										<li><button onClick={() => setShowAddAddress(!showAddAddress)}>Add Address</button></li>
@@ -161,7 +173,7 @@ const Checkout = () => {
 									<AddressCard
 										type={'add'}
 									/>
-								)}
+								)} */}
 								<div class="payment_m">
 									<h4>Payment Method</h4>
 									<div className="freehome_d">

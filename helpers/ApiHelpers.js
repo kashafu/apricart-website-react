@@ -7,6 +7,7 @@ export const getGeneralApiParams = () => {
     let token = cookies.get('cookies-token')
     // city cookies is being set in TopBar.js
     let city = cookies.get('cities')
+    let selectedAddress = cookies.get('selected-address')
     let latitude = 0
     let longitude = 0
     let userId
@@ -44,6 +45,7 @@ export const getGeneralApiParams = () => {
 
     return ({
         'city': city,
+        'selectedAddress': selectedAddress,
         'latitude': latitude,
         'longitude': longitude,
         'userId': userId,

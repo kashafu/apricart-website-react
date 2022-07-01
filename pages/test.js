@@ -1,4 +1,5 @@
 import AddressCard from "../components/Layout/components/Address/AddressCard";
+import SelectAddress from "../components/Layout/components/Address/SelectAddress";
 import MainProducts from "../components/Layout/components/Products/MainProducts";
 import SingleItem from "../components/Layout/components/Products/SingleProduct";
 let json = {
@@ -27,9 +28,10 @@ let json = {
 export default function Test(){
     return(
         <div>
-            <AddressCard
+            <SelectAddress />
+            {/* <AddressCard
                 type={'add'}
-            />
+            /> */}
         </div>
     )
 }
