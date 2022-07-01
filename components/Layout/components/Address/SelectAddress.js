@@ -9,9 +9,11 @@ import AddressCard from "./AddressCard"
 const cookies = new Cookies();
 
 /*
-    type can be either 'dropdown' or 'list' depending on use case
+    type can be 'checkout' if using it on checkout page, 
+    'checkout' type will not modify the selected address cookie 
 */
-export default function SelectAddress({type}){
+
+export default function SelectAddress({type, setAddress}){
     const [savedAddresses, setSavedAddresses] = useState([])
     const [selectedAddress, setSelectedAddress] = useState({})
     const [showAddressCard, setShowAddressCard] = useState(false)
@@ -40,48 +42,49 @@ export default function SelectAddress({type}){
 
     const handleSavedAddressChange = (e) => {
         setSelectedAddress(e.target.value)
-        cookies.set('selected-address', e.target.value)
+        if(type === 'checkout'){
+            setAddress(e.target.value)
+        }
+        else{
+            cookies.set('selected-address', e.target.value)
+        }
+    }
+
+    if(!selectedAddress){
+        return
     }
 
     return(
         <div className="w-full space-y-2">
-            {type == 'dropdown' && (
-                <div className="grid grid-cols-3">
-                    <p className="col-span-1">
-                        Select Address
-                    </p>
-                    <select
-                        className="col-span-2"
-                        disabled={false}
-                        onChange={handleSavedAddressChange}
-                        value={selectedAddress}
+            <div className="grid grid-cols-3">
+                <p className="col-span-1">
+                    Select Address
+                </p>
+                <select
+                    className="col-span-2"
+                    disabled={false}
+                    onChange={handleSavedAddressChange}
+                    value={selectedAddress}
+                >
+                    <option
+                        value={''}
+                        disabled= {true}
+                        selected= {true}
                     >
-                        <option
-                            value={''}
-                            disabled
-                            selected
-                        >
-                            Select Address
-                        </option>
-                        {savedAddresses.map((option)=>{
-                            return(
-                                <option
-                                    key={option.id}
-                                    value={JSON.stringify(option)}
-                                >
-                                    {option.address}
-                                </option>
-                            )
-                        })}
-                    </select>
-                </div>
-            )}
-
-            {type == 'list' && (
-                <div>
-                    
-                </div>
-            )}
+                        Select Address
+                    </option>
+                    {savedAddresses.map((option)=>{
+                        return(
+                            <option
+                                key={option.id}
+                                value={JSON.stringify(option)}
+                            >
+                                {option.address}
+                            </option>
+                        )
+                    })}
+                </select>
+            </div>
 
             <SubmitButton
                 text={"Add Address"}
