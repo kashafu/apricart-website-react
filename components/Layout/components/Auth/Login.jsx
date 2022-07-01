@@ -116,11 +116,11 @@ const login = () => {
     const cart = useSelector((state) => state.cart);
 
     const handleSubmit = async () => {
-        let { city } = getGeneralApiParams();
+        let { city ,headers} = getGeneralApiParams();
         let url = base_url_api + "/auth/open/login?city=" + city + "&lang=en&client_type=apricart"
 
         try {
-            const response = await axios.post(url, { ...userData });
+            const response = await axios.post(url, { ...userData },{headers:headers});
             console.log(response);
             // console.log("Data", response.data);
             // console.log("response login", response.data.message);
@@ -198,7 +198,7 @@ const login = () => {
                     </div>
                     <div className="mb-3">
                         <a href="#">
-                            <button className="btn3">Login</button>
+                            <button className="btn3" onClick={handleSubmit}>Login</button>
                         </a>
                     </div>
                 </div>
