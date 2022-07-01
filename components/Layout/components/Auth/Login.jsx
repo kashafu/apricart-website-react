@@ -117,6 +117,7 @@ const login = () => {
 
     const handleSubmit = async () => {
         let { city ,headers} = getGeneralApiParams();
+        console.log(headers);
         let url = base_url_api + "/auth/open/login?city=" + city + "&lang=en&client_type=apricart"
 
         try {
@@ -147,10 +148,10 @@ const login = () => {
         const { name, value } = e.target;
         setUserData({ ...userData, [name]: value });
     };
-
+////onSubmit={handleSubmit}
     return (
         <>
-            <form onSubmit={handleSubmit}>
+            <form >
                 <label
                     htmlFor="exampleFormControlInput1"
                     className="label-left"

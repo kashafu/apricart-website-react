@@ -212,19 +212,26 @@ export async function getStaticPaths() {
 
 export async function getStaticProps({ query, params }) {
   const { idd } = query || params;
-
+  let { headers } = getGeneralApiParams()
+	let city = 'karachi'
   let perPage = 1;
+  try{
   // `https://staging.apricart.pk/v1/catalog/categories/products?category=${id}&page=1&size=10&sortType=&sortDirection=desc&instant=3`
   const res = await axios.get(
-    `https://staging.apricart.pk/v1/catalog/categories/products?category=1169&page=1&size=100&sortType=&sortDirection=desc&instant=3&city=peshawar&lang=en&userid=abc123&client_type=apricart`
+    `https://staging.apricart.pk/v1/catalog/categories/products?category=1169&page=1&size=100&sortType=&sortDirection=desc&instant=3&city=karachi&lang=en&userid=abc123&client_type=apricart`
   );
-  const alldata = await res.json();
+  const alldata = res.data;
   console.log(res.data);
   const postData = alldata.data;
+}
+  catch(err){
+    console.log(err);
+  }
 
   return {
     props: {
       postData,
     },
+    revalidate: 200
   };
 }
