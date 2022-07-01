@@ -215,11 +215,11 @@ export async function getStaticProps({ query, params }) {
 
   let perPage = 1;
   // `https://staging.apricart.pk/v1/catalog/categories/products?category=${id}&page=1&size=10&sortType=&sortDirection=desc&instant=3`
-  const res = await fetch(
+  const res = await axios.get(
     `https://staging.apricart.pk/v1/catalog/categories/products?category=1169&page=1&size=100&sortType=&sortDirection=desc&instant=3&city=peshawar&lang=en&userid=abc123&client_type=apricart`
   );
   const alldata = await res.json();
-  console.log(res.datas);
+  console.log(res.data);
   const postData = alldata.data;
 
   return {
