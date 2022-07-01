@@ -101,9 +101,6 @@ export default function AddressCard({ type, previousAddress, updateSavedAddresse
                     headers: headers
                 }
             )
-            // console.log(url)
-            // console.log(body)
-            // console.log(response)
 
             updateSavedAddresses()
             setErrorMessage('')

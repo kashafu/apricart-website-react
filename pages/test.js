@@ -28,7 +28,9 @@ let json = {
 export default function Test(){
     return(
         <div>
-            <SelectAddress />
+            <SelectAddress 
+                type={'dropdown'}
+            />
             {/* <AddressCard
                 type={'add'}
             /> */}

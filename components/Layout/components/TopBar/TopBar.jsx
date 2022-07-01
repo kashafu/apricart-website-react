@@ -1,12 +1,9 @@
-import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { Button } from "react-bootstrap";
 import Image from "next/image";
 import Link from 'next/link'
 import Popup from "../Popup/Popup";
 import Cookies from "universal-cookie";
-import information from '../../../../information.json'
-const base_url_api = information.base_url_api
 
 // IMAGES
 import bikePNG from "../../../../public/assets/images/bike.png";
@@ -17,34 +14,22 @@ import logoPNG from '../../../../public/assets/images/logo.png'
 export default function Layout() {
     let pStyle = "font-lato font-bold text-xs text-black lg:text-base"
     // let divIconStyle = "relative w-[15px] h-[15px] lg:w-[22px] lg:h-[22px]" 
-
     const cookies = new Cookies();
 
-    // const [users, setUsers] = useState([]);
     const [getcity, setcity] = useState(
         cookies.get("cities") == null ? "karachi" : cookies.get("cities")
     );
-    // const [user, setUser] = useState([]);
+    const [currentSelectedAddress, setCurrentSelectedAddress] = useState(
+        cookies.get('selected-address') == null ? 'No address selected' : cookies.get('selected-address').address
+    )
     const [isOpen, setIsOpen] = useState(false);
 
     useEffect(() => {
-        // getPopularitems();
         if (cookies.get("cities") == null) {
             cookies.set("cities", "karachi");
             getLocation();
         }
     }, []);
-
-    // useEffect(() => {
-    //     getTicker();
-    // }, []);
-
-    // const getPopularitems = async () => {
-    //     const response = await axios.get(
-    //         base_url_api + "/home/address/cities?lang=en&client_type=apricart"
-    //     );
-    //     setUsers(response.data.data);
-    // };
 
     const getLocation = () => {
         if (!navigator.geolocation) {
@@ -94,15 +79,6 @@ export default function Layout() {
             }
         });
     };
-    
-    // const getTicker = async () => {
-    //     const response = await axios.get(
-    //         `https://staging.apricart.pk/v1/home/all?client_lat=34.02910146301811&client_long=71.63761019869207&city=${cookies.get(
-    //             "cities"
-    //         )}&lang=en&userid=abc123&web=true`
-    //     );
-    //     setUser(response.data.data.ticker);
-    // };
 
     const togglePopup = () => {
         setIsOpen(!isOpen);
@@ -122,8 +98,6 @@ export default function Layout() {
         e.preventDefault();
         setcity(e.target.value);
     };
-
-    // let checkcity = cookies.get("cities");
 
     return (
         <header className="flex flex-row w-screen bg-main-yellow justify-between p-6 items-center h-[70px]">
@@ -172,6 +146,15 @@ export default function Layout() {
                                 {getcity}
                             </p>
                         </button>
+                    </div>
+                    {/* CURRENT SELECTED ADDRESS */}
+                    <div className="flex flex-row space-x-2">
+                        <p>
+                            Selected Address: 
+                        </p>
+                        <p>
+                            {currentSelectedAddress}
+                        </p>
                     </div>
                     {/* LANGUAGE */}
                     <div>
