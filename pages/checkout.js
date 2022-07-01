@@ -72,7 +72,7 @@ const Checkout = () => {
 	const getUserAddresses = async () => {
 		try {
 			let { headers } = getGeneralApiParams()
-			let url = base_url_api + '/home/address/areas?cityid=1&lang=en'//&client_type=apricart
+			let url = base_url_api + '/home/address/delivery?lang=en&client_type=apricart'
 			
 			const response = await axios.get(
 				url,
