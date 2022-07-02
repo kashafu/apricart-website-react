@@ -1,4 +1,6 @@
-export default function TextField({label, placeHolder, onChange, value, name, type, disabled, customOnChange}){
+export default function TextField({label, placeHolder, onChange, value, name, type, disabled, customOnChange, onEnterPress}){
+    
+    
     return(
         <div className="grid grid-cols-3">
             <p className="col-span-1">
@@ -11,6 +13,11 @@ export default function TextField({label, placeHolder, onChange, value, name, ty
                 placeholder={placeHolder}
                 value={value}
                 name={name}
+                onKeyDown={(e)=>{
+                    if(e.key === 'Enter'){
+                        onEnterPress()
+                    }
+                }}
                 onChange={(e)=>{
                     if(customOnChange){
                         onChange(e)
