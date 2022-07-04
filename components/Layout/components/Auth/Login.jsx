@@ -109,19 +109,22 @@ const login = () => {
     const router = useRouter();
     const cookies = new Cookies();
     const [userData, setUserData] = useState({
+        guestuserid:cookies.get("guestUserId"),
         username: "",
         password: "",
+       
     });
+    let { city ,headers} = getGeneralApiParams();
+    console.log(headers);
     const dispatch = useDispatch();
     const cart = useSelector((state) => state.cart);
 
-    const handleSubmit = async () => {
-        let { city ,headers} = getGeneralApiParams();
-        console.log(headers);
-        let url = base_url_api + "/auth/open/login?city=" + city + "&lang=en&client_type=apricart"
+    const handleSubmit = async () => {  //
+       
+        let url ="https://staging.apricart.pk/v1/auth/open/login?city=karachi&lang=en"
 
         try {
-            const response = await axios.post(url, { ...userData },{headers:headers});
+            const response = await axios.post(url, { ...userData},{headers:headers});
             console.log(response);
             // console.log("Data", response.data);
             // console.log("response login", response.data.message);
@@ -199,7 +202,7 @@ const login = () => {
                     </div>
                     <div className="mb-3">
                         <a href="#">
-                            <button className="btn3" onClick={handleSubmit}>Login</button>
+                            <button className="btn3" onClick={()=>{handleSubmit();}} >Login</button>
                         </a>
                     </div>
                 </div>
