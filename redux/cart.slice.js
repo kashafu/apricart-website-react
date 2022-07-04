@@ -114,6 +114,10 @@ const cartSlice = createSlice({
         item.quantity--;
       }
     },
+    Initilaize(state,action){
+      state.push({undefined,action})
+    }
+    ,
     removeFromCart: (state, action) => {
       const index = state.findIndex((item) => item.id === action.payload);
       state.splice(index, 1);
@@ -130,5 +134,6 @@ export const {
   incrementQuantity,
   decrementQuantity,
   removeFromCart,
-  updatedcart
+  updatedcart,
+  Initilaize
 } = cartSlice.actions;

@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState, useContext , useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Link from "next/link";
 import { AppContext } from "../../Layout";
@@ -7,7 +7,8 @@ import {
 	incrementQuantity,
 	decrementQuantity,
 	removeFromCart,
-	updatedcart
+	updatedcart,
+	Initilaize
 } from "../../../../redux/cart.slice";
 import axios from "axios";
 import Cookies from 'universal-cookie';
@@ -87,6 +88,7 @@ const SlideDrawer = (props) => {
 			setData(Data1.products);
 			mydata = Data1.products;
 			// console.log(mydata);
+			//dispatch(Initilaize([]));
 			mydata.map((item) => { dispatch(updatedcart(item)); });
 
 			setTotal(response.data.total)
@@ -205,9 +207,14 @@ const SlideDrawer = (props) => {
 		}
 
 	}
-	const UpdateQty = (item, val) => {
-		// console.log(item.qty);
-		var qt = item.qty;
+	//const[qty,setqty] = useState();
+	useCallback(() => {
+		console.log('Clicked!');
+	  }, []);
+	const UpdateQty = useCallback( (item, val,qty) => {
+		console.log(qty);
+		let qt = item.quantity;
+		console.log(item.quantity);
 		if (val == 0) {
 			qt--;
 		}
@@ -218,7 +225,7 @@ const SlideDrawer = (props) => {
 			"cart": [
 				{
 					"sku": item.sku,
-					"qty": qt
+					"qty": item.quantity
 				}
 			]
 		}
@@ -229,6 +236,7 @@ const SlideDrawer = (props) => {
 					'Authorization': 'Bearer ' + cookies.get("cookies-token")
 				}
 			}).then(function (response) {
+				console.log(response);
 				// console.log(JSON.stringify(response.data));
 			})
 				.catch(function (error) {
@@ -236,7 +244,7 @@ const SlideDrawer = (props) => {
 				});
 
 		}
-	}
+	},[]);
 	// console.log(cart);
 	return (
 		<>
@@ -260,7 +268,7 @@ const SlideDrawer = (props) => {
 							<div className="cart_body">
 								{cart.map((item) => {
 									//let i=item.product;
-									const { id, productImageUrl, title, currentPrice, sku } = item;
+									const { id, productImageUrl, title, currentPrice, sku,qty } = item;									 qty=item.qty;
 									return (
 										<>
 
@@ -283,11 +291,7 @@ const SlideDrawer = (props) => {
 																	className="minus-btn"
 																	type="button"
 																	name="button"
-																	onClick={() => {
-																		UpdateQty(item, 0)
-																		dispatch(decrementQuantity(item.id))
-																	}
-																	}
+																	onClick={() => {qty--;dispatch(decrementQuantity(item.id));UpdateQty(item, 0,qty) ;}}
 
 																>
 																	<i className="fa fa-minus" aria-hidden="true"></i>
@@ -297,12 +301,9 @@ const SlideDrawer = (props) => {
 																	className="plus-btn"
 																	type="button"
 																	name="button"
-																	onClick={() => {
-																		UpdateQty(item, 1)
-																		dispatch(incrementQuantity(item.id))
-																	}
-																	}
-																>
+																	href="#"
+																	onClick={(e) => {qty++;dispatch(incrementQuantity(item.id));UpdateQty(item, 1,qty) ;}}
+																	>
 																	<i className="fa fa-plus" aria-hidden="true"></i>
 																</button>
 															</div>
