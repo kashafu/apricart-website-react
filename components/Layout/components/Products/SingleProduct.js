@@ -8,77 +8,71 @@ import { addToWish } from "../../../../redux/wish.slice";
 
 import { base_url_api } from '../../../../information.json'
 import { getGeneralApiParams } from "../../../../helpers/ApiHelpers";
-import { toast } from "react-toastify";
 
-export default function SingleProduct({ product }) {
+export default function SingleProduct({product}){
     const cookies = new Cookies();
     const dispatch = useDispatch();
 
-    console.log(product)
     let { productImageUrl, productImageUrlThumbnail, title, currentPrice, sku, inStock } = product
     let imageUrl = productImageUrlThumbnail == '' ? productImageUrl : productImageUrlThumbnail
-    let isLoggedIn = cookies.get('cookies-token') != null
+    let isLoggedIn = cookies.get('cookies-token') != null 
 
     const addToCartHandler = async () => {
+        dispatch(addToCart(product))
+
         let { city, userId, headers } = getGeneralApiParams()
 
-        try {
-            if (isLoggedIn) {
-                let data = {
-                    cart: [{
+        if(isLoggedIn){
+            let data = {
+                cart: [{
                         'sku': sku,
                         'qty': "1",
-                    }]
-                }
-
-                let url = base_url_api + "/order/cart/save?city=" + city + "&lang=en&client_type=apricart"
-                let response = await axios.post(
-                    url,
-                    data,
-                    {
-                        headers: headers,
-                    }
-                )
+                }]
             }
-            else {
-                let data = {
-                    userId: userId,
-                    cart: [{
+
+            let url = base_url_api + "/order/cart/save?city=" + city + "&lang=en&client_type=apricart"
+            let response = await axios.post(
+                url,
+                data,
+                {
+                    headers: headers,
+                }
+            )
+        }
+        else{
+            let data = {
+                userId: userId,
+                cart: [{
                         'sku': sku,
                         'qty': "1",
-                    }]
-                }
-
-                let url = base_url_api + "/guest/cart/save?city=" + city + "&lang=en&client_type=apricart"
-                let response = await axios.post(
-                    url,
-                    data,
-                    {
-                        headers: headers
-                    }
-                )
+                }]
             }
 
-        dispatch(addToCart(product))
-        } catch (error) {
-            toast.error(error.response.message)
+            let url = base_url_api + "/guest/cart/save?city=" + city + "&lang=en&client_type=apricart"
+            let response = await axios.post(
+                url,
+                data,
+                {
+                    headers: headers
+                }
+            )
         }
     }
 
-    return (
+    return(
         <div className="flex flex-col items-center justify-between p-2 border-2 bg-white w-full h-[250px] rounded-2xl space-y-2">
             <div className="flex flex-col items-center">
                 <Link href="/details/[id]"
                     as={
                         "/details/" + sku
-                    }
+                    } 
                     passHref
                 >
                     <button className="relative w-[120px] h-[120px]">
                         <Image
                             src={imageUrl}
                             layout={'fill'}
-                        />
+                            />
                     </button>
                 </Link>
                 <p className="font-lato font-bold text-left text-xs text-main-blue flex-1">
@@ -89,7 +83,7 @@ export default function SingleProduct({ product }) {
                 <p className="font-lato text-sm text-left">
                     Rs. <span className="text-main-blue font-bold"> {currentPrice} </span>
                 </p>
-                {inStock ?
+                {inStock ? 
                     <button className="bg-main-blue font-lato text-sm py-2 w-5/6 rounded text-white hover:bg-white hover:text-main-blue"
                         onClick={addToCartHandler}
                     >
@@ -102,7 +96,7 @@ export default function SingleProduct({ product }) {
                         Out of Stock
                     </button>
                 }
-
+                
             </div>
         </div>
     )
