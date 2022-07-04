@@ -30,7 +30,7 @@ export default function Test(){
     return(
         <div>
             <SelectAddress 
-                type={'manage'}
+                type={'dropdown'}
             />
             {/* <AddressCard
                 type={'add'}
