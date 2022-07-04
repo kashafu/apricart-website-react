@@ -8,37 +8,25 @@ import SubmitButton from "../Buttons/SubmitButton";
 import LocationPicker from "../Input/LocationPicker";
 import ErrorText from "../Typography/ErrorText";
 
-// type can be either 'edit' or 'add'
-// previousAddress will be empty if type is 'add', in 'edit' previousAddress is the previous address to be modified
+/*  type can be either 'edit' or 'add'
+    previousAddress will be empty if type is 'add', in 'edit' previousAddress is the previous address to be modified
+    updateSavedAddresses is there so that it can recall the getSavedAddresses API in parent component
+*/
 export default function AddressCard({ type, previousAddress, updateSavedAddresses }) {
     const [deliveryAreaOptions, setDeliveryAreaOptions] = useState([]);
     const [cityOptions, setCityOptions] = useState([]);
     const [errorMessage, setErrorMessage] = useState('')
     const [address, setAddress] = useState({
-        name: "",
-        address: "",
-        phoneNumber: '',
-        email: "",
-        cityId: "",
-        areaId: '',
+        name: previousAddress ? previousAddress.name : '',
+        address: previousAddress ? previousAddress.address : '',
+        phoneNumber: previousAddress ? previousAddress.phoneNumber : '',
+        email: previousAddress ? previousAddress.email : '',
+        cityId: previousAddress ? previousAddress.cityId : '',
+        areaId: previousAddress ? previousAddress.areaId : '',
     })
-    const [mapLat, setMapLat] = useState('')
-    const [mapLong, setMapLong] = useState('')
-    const [googleAddress, setGoogleAddress] = useState('')
-
-    if(previousAddress){
-        setAddress({
-            name: previousAddress.name,
-            address: previousAddress.address,
-            phoneNumber: previousAddress.phoneNumber,
-            email: previousAddress.email,
-            cityId: previousAddress.cityId,
-            areaId: previousAddress.areaId,
-        })
-        setMapLat(previousAddress.mapLat)
-        setMapLong(previousAddress.mapLong)
-        setGoogleAddress(previousAddress.googleAddress)
-    }
+    const [mapLat, setMapLat] = useState(previousAddress ? previousAddress.mapLat : '')
+    const [mapLong, setMapLong] = useState(previousAddress ? previousAddress.mapLong : '')
+    const [googleAddress, setGoogleAddress] = useState(previousAddress ? previousAddress.googleAddress : '')
 
     useEffect(() => {
         getCityAreasOptionsApi()
@@ -110,17 +98,18 @@ export default function AddressCard({ type, previousAddress, updateSavedAddresse
         }
     }
 
-    const editAddressApi = async (id) => {
+    const editAddressApi = async () => {
         try {
             let { headers } = getGeneralApiParams()
             let url = base_url_api + '/home/address/delivery/update?client_type=apricart'
             let body = {
-                id: id,
+                id: previousAddress.id,
                 ...address,
                 'mapLat': mapLat,
                 'mapLong': mapLong,
                 'googleAddress': googleAddress,
             }
+            console.log(body)
 
             const response = await axios.post(
                 url, body,
@@ -197,13 +186,14 @@ export default function AddressCard({ type, previousAddress, updateSavedAddresse
                 Choose Location
             </p>
             <div className="w-full h-[300px]">
-                {/* <p>
-                    Pick Location
-                </p> */}
                 <LocationPicker
                     label={"Pick Location"}
                     onChangeLatitude={setMapLat}
                     onChangeLongitude={setMapLong}
+                    startingLocation={{ 
+                        lat: mapLat, 
+                        lng: mapLong 
+                    }}
                 />
             </div>
             {errorMessage != '' && (
