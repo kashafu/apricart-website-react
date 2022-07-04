@@ -2,7 +2,6 @@ import AddressCard from "../components/Layout/components/Address/AddressCard";
 import SelectAddress from "../components/Layout/components/Address/SelectAddress";
 import MainProducts from "../components/Layout/components/Products/MainProducts";
 import SingleItem from "../components/Layout/components/Products/SingleProduct";
-import {getGeneralApiParams} from '../helpers/ApiHelpers'
 let json = {
     "id": 12216,
     "sku": "APRA-BD02-01",
