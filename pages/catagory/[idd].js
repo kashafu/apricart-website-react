@@ -54,6 +54,7 @@ export default function Post({ postData }) {
   }
 
   const Cartapi =(list)=>{
+    if (token){
     const data =
     {cart : 
      [
@@ -76,8 +77,18 @@ export default function Post({ postData }) {
       
       );
     }
+  }
 
   }
+  if(!postData){
+		return(
+			<div>
+				<p>
+					Item does not exist
+				</p>
+			</div>
+		)
+	}
   return (
     <div>
       <section className="popular_sec">
@@ -107,7 +118,8 @@ export default function Post({ postData }) {
                 <div>
                 
                   
-                  {/* <p>
+                  {
+                  /* <p>
                     {postData.map((data) =>{
                       return(
                         <>
@@ -211,11 +223,15 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ query, params }) {
-  const { idd } = query || params;
-  let { headers } = getGeneralApiParams()
-	let city = 'karachi'
-  let perPage = 1;
+  // const { idd } = query || params;
+  // let { headers } = getGeneralApiParams()
+	// let city = 'karachi'
+  // let perPage = 1;
   try{
+    const { idd } = query || params;
+    let { headers } = getGeneralApiParams()
+    let city = 'karachi'
+    let perPage = 1;
   // `https://staging.apricart.pk/v1/catalog/categories/products?category=${id}&page=1&size=10&sortType=&sortDirection=desc&instant=3`
   const res = await axios.get(
     `https://staging.apricart.pk/v1/catalog/categories/products?category=1169&page=1&size=100&sortType=&sortDirection=desc&instant=3&city=karachi&lang=en&userid=abc123&client_type=apricart`
