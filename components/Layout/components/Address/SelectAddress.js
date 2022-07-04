@@ -6,11 +6,13 @@ import axios from "axios"
 import Cookies from "universal-cookie"
 import SubmitButton from "../Buttons/SubmitButton"
 import AddressCard from "./AddressCard"
+import SingleAddressListing from "./SingleAddressListing"
 const cookies = new Cookies();
 
 /*
-    type can be 'checkout' if using it on checkout page, 
-    'checkout' type will not modify the selected address cookie 
+    type can be 'checkout', 'manage' 
+    if using it on checkout page, 'checkout' type will not modify the selected address cookie 
+    'manage' allows u to edit address and select
 */
 
 export default function SelectAddress({type, setAddress}){
@@ -56,35 +58,51 @@ export default function SelectAddress({type, setAddress}){
 
     return(
         <div className="w-full space-y-2">
-            <div className="grid grid-cols-3">
-                <p className="col-span-1">
-                    Select Address
-                </p>
-                <select
-                    className="col-span-2"
-                    disabled={false}
-                    onChange={handleSavedAddressChange}
-                    value={selectedAddress}
-                >
-                    <option
-                        value={''}
-                        disabled= {true}
-                        selected= {true}
-                    >
+            {type === 'checkout' && (
+                <div className="grid grid-cols-3">
+                    <p className="col-span-1">
                         Select Address
-                    </option>
-                    {savedAddresses.map((option)=>{
+                    </p>
+                    <select
+                        className="col-span-2"
+                        disabled={false}
+                        onChange={handleSavedAddressChange}
+                        value={selectedAddress}
+                    >
+                        <option
+                            value={''}
+                            disabled= {true}
+                            selected= {true}
+                        >
+                            Select Address
+                        </option>
+                        {savedAddresses.map((option)=>{
+                            return(
+                                <option
+                                    key={option.id}
+                                    value={JSON.stringify(option)}
+                                >
+                                    {option.address}
+                                </option>
+                            )
+                        })}
+                    </select>
+                </div>
+            )}
+            {type === 'manage' && (
+                <div className="flex flex-col space-y-4">
+                    {savedAddresses.map((address)=>{
+                        let {id} = address
+                        let { selectedAddress } = getGeneralApiParams()
                         return(
-                            <option
-                                key={option.id}
-                                value={JSON.stringify(option)}
-                            >
-                                {option.address}
-                            </option>
+                            <SingleAddressListing
+                                listing={address}
+                                isSelected={selectedAddress.id == id}
+                            />
                         )
                     })}
-                </select>
-            </div>
+                </div>
+            )}
 
             <SubmitButton
                 text={"Add Address"}
