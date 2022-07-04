@@ -225,7 +225,7 @@ const SlideDrawer = (props) => {
 			"cart": [
 				{
 					"sku": item.sku,
-					"qty": item.quantity
+					"qty": qt
 				}
 			]
 		}
