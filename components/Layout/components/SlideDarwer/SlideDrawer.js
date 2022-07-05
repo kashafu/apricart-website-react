@@ -118,6 +118,7 @@ const SlideDrawer = (props) => {
 		}
 
 	}
+	// for push
 
 	const OptionAll = async () => {
 
