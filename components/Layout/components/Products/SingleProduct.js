@@ -80,7 +80,9 @@ export default function SingleProduct({ product, isInStock }) {
                     {
                         headers: headers
                     }
+                   
                 )
+           
             } catch (error) {
                 console.log(error)
             }
@@ -93,6 +95,7 @@ export default function SingleProduct({ product, isInStock }) {
                 <button onClick={() => {
                     addToWishlistApi();
                     dispatch(addToWish(product));
+                
                 }}>
                     <Image
                         src={heartimg}

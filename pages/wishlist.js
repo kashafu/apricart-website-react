@@ -139,7 +139,7 @@ else {
                       <div className="p-3 border bg-light btnchan">
                         <div
                           className="heart"
-                          onClick={() => dispatch(addToWish(wish))}
+                          // onClick={}
                         ></div>
                         <div className="pro_img">
                           <Link
