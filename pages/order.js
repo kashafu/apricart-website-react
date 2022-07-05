@@ -121,7 +121,7 @@ const handleCancel = async (e) => {
                       <Link href='/account_Detail' passHref>
                       <button className="tablinks">Account details</button>
                       </Link>
-                     <button className="tablinks" onClick={logout}>Logout</button>
+                   
                   </div>
                   <div id="London" className="tabcontent">
                      {/* <!-- Main content -->
