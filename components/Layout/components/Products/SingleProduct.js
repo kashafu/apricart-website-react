@@ -10,13 +10,20 @@ import heartimg from"../../../../public/assets/images/heart.png" ;
 import { base_url_api } from '../../../../information.json'
 import { getGeneralApiParams } from "../../../../helpers/ApiHelpers";
 
-export default function SingleProduct({product}){
+/*
+    isInStock is being passed where static site generation is being used
+    to keep stock of item uptodate always
+*/
+export default function SingleProduct({product, isInStock}){
     const cookies = new Cookies();
     var token = cookies.get("cookies-token;")
     const dispatch = useDispatch();
     const cart = useSelector((state) => state.cart);
     const wish = useSelector((state) => state.wish);
     let { productImageUrl, productImageUrlThumbnail, title, currentPrice, sku, inStock } = product
+    if(isInStock){
+        inStock = isInStock
+    }
     let imageUrl = productImageUrlThumbnail == '' ? productImageUrl : productImageUrlThumbnail
     let isLoggedIn = cookies.get('cookies-token') != null 
 
@@ -61,38 +68,39 @@ export default function SingleProduct({product}){
             )
         }
     }
-    const wishapi = (list) => {
-        console.log(list.sku);
-        const wishdata = { sku: [list.sku] };
+
+    const addToWishlistApi = async () => {
+        let { token, headers } = getGeneralApiParams()
+        let body = { sku: [list.sku] }
         if (token) {
-            console.log(token)
-            const response = axios.post(
-                "https://staging.apricart.pk/v1/watchlist/save?",
-                wishdata,
-                {
-                    headers: {
-                        "Content-Type": "application/json",
-                        Authorization: "Bearer " + cookies.get("cookies-token"),
-                    },
-                }
-            );
+            let url = base_url_api + 'watchlist/save?client_type=apricart'
+
+            try {
+                let response = await axios.post(url, body,
+                    {
+                        headers: headers
+                    }
+                )
+            } catch (error) {
+                console.log(error.response)
+            }
         }
-    };
-//visible md:
+    }
 
     return(
         <div className="relative flex flex-col items-center justify-between p-2 border-2 bg-white w-full h-[250px] rounded-2xl space-y-2">
              <div className="absolute top-1 right-1">
-                 <Image
-                            src={heartimg}
-                            width="20" height="20"
-                            ></Image>
-                            <button  className="absolute top-0 right-0" onClick={
-                                ()=>{
-                                     wishapi(product);
-                                    dispatch(addToWish(product));
-                                }
-                            }>bt</button></div>
+                <button onClick={()=>{
+                    addToWishlistApi();
+                    dispatch(addToWish(product));
+                }}>
+                    <Image
+                        src={heartimg}
+                        width="20" 
+                        height="20"
+                    />
+                </button>
+            </div>
             <div className=" flex flex-col items-center">
           
                 <Link href="/details/[id]"

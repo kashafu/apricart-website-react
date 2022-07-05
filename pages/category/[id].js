@@ -1,24 +1,22 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import axios from "axios";
-import Cookies from 'universal-cookie';
 let base_url_api = "https://staging.apricart.pk/v1";
-import Link from "next/link";
-import Pagination from "../../components/Layout/components/Pagination/pagination";
-import PerPage from "../../components/Layout/components/PerPage/PerPage";
-import { useDispatch } from "react-redux";
-import Image from 'next/image';
 import { getGeneralApiParams } from "../../helpers/ApiHelpers";
-import MainProducts from "../../components/Layout/components/Products/MainProducts";
 import Categories from "../../components/Layout/components/Categories/Categories";
+import SingleProduct from "../../components/Layout/components/Products/SingleProduct";
 
 export default function CategoryProducts({ products }) {
-	const router = useRouter();
+	const router = useRouter()
+	const { id } = router.query
 
 	const [categories, setCategories] = useState(null)
+	const [updatedProductsList, setUpdatedProductsList] = useState(null)
+	const [errorMessage, setErrorMessage] = useState('')
 
 	useEffect(()=>{
 		getCategoriesApi()
+		getUpdatedProductsApi()
 	}, [])
 
 	const getCategoriesApi = async () => {
@@ -37,20 +35,22 @@ export default function CategoryProducts({ products }) {
 		}
 	}
 
-	// let total = postData.length;
+	const getUpdatedProductsApi = async () => {
+		let { headers, city } = getGeneralApiParams()
+		let url = base_url_api + '/catalog/categories/products?category=' + id + '&page=1&size=100&sortType=&sortDirection=desc&instant=3&city=' + city + '&lang=en&client_type=apricart'
 
-	// let cattype = postData.data
-	// console.log("Total item found", postData.length)
+		try {
+			let response = await axios.get(url, {
+				headers: headers
+			})
 
-	// if (!postData) {
-	// 	return (
-	// 		<div>
-	// 			<p>
-	// 				Item does not exist
-	// 			</p>
-	// 		</div>
-	// 	)
-	// }
+			setUpdatedProductsList(response.data)
+			setErrorMessage('')
+		}
+		catch (err) {
+			setErrorMessage(err.response.data.message)
+		}
+	}
 
 	if (router.isFallback) {
 		return (
@@ -92,17 +92,61 @@ export default function CategoryProducts({ products }) {
 			</section>
 			{/* PRODUCTS SECTION */}
 			<section className="col-span-5 lg:col-span-4 space-y-12">
-				<MainProducts
+				{/* <MainProducts
 					products={products.data}
-				/>
+				/> */}
+				{errorMessage == '' ? (
+					<div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
+						{products.data.map((product)=>{
+							let { id } = product
+							return(
+								<div key={id}>
+									<SingleProduct
+										product={product}
+										// TODO call api to get updated details of product and check if it is in stock
+									/>
+								</div>
+							)
+						})}
+					</div>
+				)
+				:
+				(
+					<p>
+						{errorMessage}
+					</p>
+				)}
 			</section>
 		</div>
 	);
 }
 
 export async function getStaticPaths() {
-	const paths = ["/category/[id]", "/category/[id]"];
-	return { paths, fallback: true };
+	let { headers } = getGeneralApiParams()
+	let url = base_url_api + '/catalog/categories?level=all'
+	let paths = []
+
+	try {
+		let response = await axios.get(url, {
+			headers: headers
+		})
+
+		paths = response.data.data.map((categoryId)=>{
+			categoryId.map((childId)=>{
+				{
+					params: {id: childId.id}
+				}
+			})
+			{
+				params: {id: categoryId.id}
+			}
+		})
+	} catch (error) {
+		console.log(error.response)
+	}
+
+	// const paths = ["/category/[id]", "/category/[id]"];
+	return { paths, fallback: 'blocking' };
 }
 
 export async function getStaticProps({ query, params }) {
