@@ -159,9 +159,7 @@ const address = () => {
 								<Link href="/account_Detail" passHref>
 									<button className="tablinks">Account details</button>
 								</Link>
-								<button onClick={logout} className="tablinks">
-									Logout
-								</button>
+							
 							</div>
 							<div id="London" className="tabcontent">
 								{/* <!-- Main content -->
