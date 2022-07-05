@@ -108,7 +108,7 @@ const Wishpage = () => {
     console.log(Data1)
     let total1 = response.data.total;
     total = total1;
-    // setDiscount(response.data.message);
+    // setDiscount(response.data.message);   
     //dispatch(updatedcart(response.data.data));
   }
   
