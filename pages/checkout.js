@@ -14,7 +14,7 @@ import { incrementQuantity, decrementQuantity, removeFromCart, updatedcart } fro
 
 export default function Checkout() {
 	let { token } = getGeneralApiParams()
-	const cart = useSelector((state) => state.cart)
+	const cart = useSelector((state) => state.cart);
 	console.log(cart);
 	const [paymentMethods, setPaymentMethods] = useState([])
 	const [cartData, setCartData] = useState(null)
