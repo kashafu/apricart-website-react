@@ -116,6 +116,10 @@ export default function Checkout() {
 				headers: headers
 			})
 
+			if(checkoutData.paymentMethod === 'meezan'){
+				let { paymentUrl } = response.data.data
+				window.open(paymentUrl, '_blank').focus()
+			}
 			setCheckoutErrorMessage('')
 			setSuccessResponse(response.data)
 			setViewState('success')
