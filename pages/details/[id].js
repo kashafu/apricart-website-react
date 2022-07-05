@@ -279,7 +279,7 @@ export default function Post({ product }) {
 export async function getStaticPaths() {
 	// TODO implement get static paths properly
 	const paths = ["/details/[id]", "/details/[slug]"];
-	return { paths, fallback: true };
+	return { paths, fallback: blocking };
 }
 
 export async function getStaticProps({ query, params }) {

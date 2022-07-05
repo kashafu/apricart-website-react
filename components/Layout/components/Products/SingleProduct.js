@@ -9,11 +9,18 @@ import { addToWish } from "../../../../redux/wish.slice";
 import { base_url_api } from '../../../../information.json'
 import { getGeneralApiParams } from "../../../../helpers/ApiHelpers";
 
-export default function SingleProduct({product}){
+/*
+    isInStock is being passed where static site generation is being used
+    to keep stock of item uptodate always
+*/
+export default function SingleProduct({product, isInStock}){
     const cookies = new Cookies();
     const dispatch = useDispatch();
 
     let { productImageUrl, productImageUrlThumbnail, title, currentPrice, sku, inStock } = product
+    if(isInStock){
+        inStock = isInStock
+    }
     let imageUrl = productImageUrlThumbnail == '' ? productImageUrl : productImageUrlThumbnail
     let isLoggedIn = cookies.get('cookies-token') != null 
 
