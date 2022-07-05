@@ -5,6 +5,7 @@ import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "../../../../redux/cart.slice";
 import { addToWish } from "../../../../redux/wish.slice";
+import heartimg from"../../../../public/assets/images/heart.png" ;
 
 import { base_url_api } from '../../../../information.json'
 import { getGeneralApiParams } from "../../../../helpers/ApiHelpers";
@@ -15,8 +16,10 @@ import { getGeneralApiParams } from "../../../../helpers/ApiHelpers";
 */
 export default function SingleProduct({product, isInStock}){
     const cookies = new Cookies();
+    var token = cookies.get("cookies-token;")
     const dispatch = useDispatch();
-
+    const cart = useSelector((state) => state.cart);
+    const wish = useSelector((state) => state.wish);
     let { productImageUrl, productImageUrlThumbnail, title, currentPrice, sku, inStock } = product
     if(isInStock){
         inStock = isInStock
@@ -65,16 +68,47 @@ export default function SingleProduct({product, isInStock}){
             )
         }
     }
+    const wishapi = (list) => {
+        console.log(list.sku);
+        const wishdata = { sku: [list.sku] };
+        if (token) {
+            console.log(token)
+            const response = axios.post(
+                "https://staging.apricart.pk/v1/watchlist/save?",
+                wishdata,
+                {
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: "Bearer " + cookies.get("cookies-token"),
+                    },
+                }
+            );
+        }
+    };
+//visible md:
 
     return(
-        <div className="flex flex-col items-center justify-between p-2 border-2 bg-white w-full h-[250px] rounded-2xl space-y-2">
-            <div className="flex flex-col items-center">
+        <div className="relative flex flex-col items-center justify-between p-2 border-2 bg-white w-full h-[250px] rounded-2xl space-y-2">
+             <div className="absolute top-1 right-1">
+                 <Image
+                            src={heartimg}
+                            width="20" height="20"
+                            ></Image>
+                            <button  className="absolute top-0 right-0" onClick={
+                                ()=>{
+                                     wishapi(product);
+                                    dispatch(addToWish(product));
+                                }
+                            }>bt</button></div>
+            <div className=" flex flex-col items-center">
+          
                 <Link href="/details/[id]"
                     as={
                         "/details/" + sku
-                    } 
+                    }  
                     passHref
                 >
+                    
                     <button className="relative w-[120px] h-[120px]">
                         <Image
                             src={imageUrl}
