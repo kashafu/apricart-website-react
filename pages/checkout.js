@@ -9,9 +9,13 @@ import SubmitButton from "../components/Layout/components/Buttons/SubmitButton";
 import TextField from "../components/Layout/components/Input/TextField";
 import parse from 'html-react-parser';
 import Image from "next/image";
+import { useSelector, useDispatch } from "react-redux";
+import { incrementQuantity, decrementQuantity, removeFromCart, updatedcart } from "../redux/cart.slice";
 
 export default function Checkout() {
 	let { token } = getGeneralApiParams()
+	const cart = useSelector((state) => state.cart)
+	console.log(cart);
 	const [paymentMethods, setPaymentMethods] = useState([])
 	const [cartData, setCartData] = useState(null)
 	const [checkoutData, setCheckOutData] = useState({
@@ -132,176 +136,211 @@ export default function Checkout() {
 	}
 
 	return (
-		<div className="grid grid-cols-3">
-			<div className="col-span-2">
-				{viewState == 'checkout' && (
-					<section className="grid grid-cols-2 gap-12">
-						<div>
-							<SelectAddress
-								type={'checkout'}
-								setAddress={setCheckoutAddress}
-							/>
-							<ErrorText
-								text={addressErrorMessage}
-							/>
-							<div>
-								{paymentMethods.map((method) => {
-									let { id, name, key, description } = method
-									return (
-										<div key={id}>
-											<input
-												value={key}
-												name={'paymentMethod'}
-												type={'radio'}
-												onChange={(e) => {
-													handleCheckoutDataChange(e)
-												}}
-												checked={checkoutData.paymentMethod == key}
-											/>
-											{name}
-										</div>
-									)
-								})}
-							</div>
-							<TextField
-								label={"Special Instructions"}
-								placeHolder={"instructions"}
-								customOnChange={true}
-								onChange={handleCheckoutDataChange}
-								name={'notes'}
-								value={checkoutData.notes}
-							/>
+		<div>
+			<div className="flex flex-col md:grid md:grid-cols-3">
+				<div className="col-span-2">
+					<div className="flex flex-row justify-around pb-6 md:pb-12">
+						<div className="flex flex-col items-center">
+							<p className="font-extrabold">
+								O
+							</p>
+							<p>
+								SHIPPING
+							</p>
 						</div>
-						{cartData && (
-							<div>
-								<p>
-									YOUR ORDER
-								</p>
-								<div className="grid grid-cols-2">
-									<div className="col-span-2 grid grid-cols-2">
-										<div>
-											{cartData.products.map((item) => {
-												let { title, qty, currentPrice } = item
-												return (
-													<div>
-														<p>
-															{title}
-														</p>
-														<p>
-															{qty}
-														</p>
-														<p>
-															{currentPrice}
-														</p>
-													</div>
-												)
-											})}
-										</div>
-									</div>
-									<p>
-										Coupon
-									</p>
-									<p>
-										{cartData.couponMessage}
-									</p>
-									<p>
-										SubTotal
-									</p>
-									<p>
-										{cartData.subtotal}
-									</p>
-									<p>
-										Shipping
-									</p>
-									<p>
-										{parse(cartData.shipment_message)}
-										{/* {cartData.shipment_message} */}
-									</p>
-									<p>
-										Shipping Fee
-									</p>
-									<p>
-										{cartData.shipping_amount}
-									</p>
-									<p>
-										Tax
-									</p>
-									<p>
-										{cartData.tax}
-									</p>
-									<p>
-										Total
-									</p>
-									<p>
-										{cartData.grand_total}
-									</p>
-								</div>
-								<SubmitButton
-									text={"CHECKOUT"}
-									onClick={checkoutApi}
-								/>
-								<ErrorText
-									text={checkoutErrorMessage}
-								/>
-							</div>
-						)}
-					</section>
-				)}
-				{viewState == 'success' && (
-					<section className="flex items-center justify-center align-center m-auto">
-						<div>
-							{parse(successResponse.message)}
+						<div className="flex flex-col items-center">
+							<p className="font-extrabold">
+								O
+							</p>
+							<p>
+								PAYMENT
+							</p>
 						</div>
-						<div className="">
-							<Image
-								src={successResponse.data.thankyou_image}
-								layout={'responsive'}
-								width={100}
-								height={100}
-							/>
+						<div className="flex flex-col items-center">
+							<p className="font-extrabold">
+								O
+							</p>
+							<p>
+								REVIEW
+							</p>
 						</div>
-
-						{JSON.stringify(successResponse.data.thankyou_image)}
-					</section>
-				)}
-			</div>
-			{/* CART DIV */}
-			<div className="col-span-1">
-				{/* CART ITEMS */}
-				<div className="overflow-y-auto">
-				
-				</div>
-				
-			</div>
-			{/* <section className="popular_sec">
-				<div className="container-fluid">
-					<div className="row">
-						<div className="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-12">
-							<section className="ContentSec">
-								<div className="container-fluid">
-									<div className="row">
-										<div className="prothreeHead">
-											<ol className="breadcrumb">
-												<Link href="/" passHref>
-													<li>
-														{" "}
-														<a passHref="#">Home</a>{" "}
-													</li>
-												</Link>
-												<li>
-													<a passHref="/cart">Cart</a>
-												</li>
-												<li className="is-current">Check Out</li>
-											</ol>
-										</div>
-									</div>
-								</div>
-							</section>
+						<div className="flex flex-col items-center">
+							<p className="font-extrabold">
+								O
+							</p>
+							<p>
+								DETAILS
+							</p>
 						</div>
 					</div>
+					{viewState == 'shipping' && (
+						<section className="">
+							<div>
+								<SelectAddress
+									type={'checkout'}
+									setAddress={setCheckoutAddress}
+								/>
+								<ErrorText
+									text={addressErrorMessage}
+								/>
+								<div>
+									{paymentMethods.map((method) => {
+										let { id, name, key, description } = method
+										return (
+											<div key={id}>
+												<input
+													value={key}
+													name={'paymentMethod'}
+													type={'radio'}
+													onChange={(e) => {
+														handleCheckoutDataChange(e)
+													}}
+													checked={checkoutData.paymentMethod == key}
+												/>
+												{name}
+											</div>
+										)
+									})}
+								</div>
+								<TextField
+									label={"Special Instructions"}
+									placeHolder={"instructions"}
+									customOnChange={true}
+									onChange={handleCheckoutDataChange}
+									name={'notes'}
+									value={checkoutData.notes}
+								/>
+							</div>
+						</section>
+					)}
+					{viewState == 'success' && (
+						<section className="flex items-center justify-center align-center m-auto">
+							<div>
+								{parse(successResponse.message)}
+							</div>
+							<div className="">
+								<Image
+									src={successResponse.data.thankyou_image}
+									layout={'responsive'}
+									width={100}
+									height={100}
+								/>
+							</div>
+
+							{JSON.stringify(successResponse.data.thankyou_image)}
+						</section>
+					)}
 				</div>
-			</section> */}
-			
+				{/* CART DIV */}
+				<div className="col-span-1">
+					{/* CART ITEMS */}
+					<div className="overflow-y-auto">
+						
+					</div>
+					{cartData && (
+								<div>
+									<p>
+										YOUR ORDER
+									</p>
+									<div className="grid grid-cols-2">
+										<div className="col-span-2 grid grid-cols-2">
+											<div>
+												{cartData.products.map((item) => {
+													let { title, qty, currentPrice } = item
+													return (
+														<div>
+															<p>
+																{title}
+															</p>
+															<p>
+																{qty}
+															</p>
+															<p>
+																{currentPrice}
+															</p>
+														</div>
+													)
+												})}
+											</div>
+										</div>
+										<p>
+											Coupon
+										</p>
+										<p>
+											{cartData.couponMessage}
+										</p>
+										<p>
+											SubTotal
+										</p>
+										<p>
+											{cartData.subtotal}
+										</p>
+										<p>
+											Shipping
+										</p>
+										<p>
+											{parse(cartData.shipment_message)}
+											{/* {cartData.shipment_message} */}
+										</p>
+										<p>
+											Shipping Fee
+										</p>
+										<p>
+											{cartData.shipping_amount}
+										</p>
+										<p>
+											Tax
+										</p>
+										<p>
+											{cartData.tax}
+										</p>
+										<p>
+											Total
+										</p>
+										<p>
+											{cartData.grand_total}
+										</p>
+									</div>
+									<SubmitButton
+										text={"CHECKOUT"}
+										onClick={checkoutApi}
+									/>
+									<ErrorText
+										text={checkoutErrorMessage}
+									/>
+								</div>
+							)}
+				</div>
+				{/* <section className="popular_sec">
+					<div className="container-fluid">
+						<div className="row">
+							<div className="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-12">
+								<section className="ContentSec">
+									<div className="container-fluid">
+										<div className="row">
+											<div className="prothreeHead">
+												<ol className="breadcrumb">
+													<Link href="/" passHref>
+														<li>
+															{" "}
+															<a passHref="#">Home</a>{" "}
+														</li>
+													</Link>
+													<li>
+														<a passHref="/cart">Cart</a>
+													</li>
+													<li className="is-current">Check Out</li>
+												</ol>
+											</div>
+										</div>
+									</div>
+								</section>
+							</div>
+						</div>
+					</div>
+				</section> */}
+				
+			</div>
 		</div>
 	)
 }
