@@ -1,5 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import Cookies from 'universal-cookie';
 
+const cookies = new Cookies();
 const wishSlice = createSlice({
   name: 'wish',
   initialState: [],
@@ -16,9 +18,9 @@ const wishSlice = createSlice({
       const item = state.find((item) => item.id === action.payload);
       item.quantity++;
     },
-    Login_Succeed :(state,action)=>{
-
-      
+    updatedwish:(state,action)=>{
+      let userId=cookies.get('cookies-userId');
+      state.push({ ...action.payload, quantity: 1 });
     },
     decrementwishQuantity: (state, action) => {
       const item = state.find((item) => item.id === action.payload);
@@ -43,4 +45,5 @@ export const {
   incrementQuantity,
   decrementQuantity,
   removeFromWish,
+  updatedwish
 } = wishSlice.actions;
