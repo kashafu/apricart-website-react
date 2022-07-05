@@ -81,18 +81,13 @@ const Wishpage = () => {
 	}, [])
 
   const  removewish=(wish)=>{
-    var dat =JSON.stringify({sku:[wish.sku]})
-    var conf = {
-      method: 'delete',
-      url: 'https://staging.apricart.pk/v1/order/cart/delete?city=karachi&lang=en&client_type=apricart',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + cookies.get("cookies-token")
-      },
-      data: dat
-    };
+    var dat =JSON.stringify({sku:[wish.sku]}); //  method: 'delete',
+
+   
+      let url='https://staging.apricart.pk/v1/watchlist/delete?city=karachi&lang=en';
+    
    if (token){
-    const response = axios(conf)
+    const response = axios.delete(url,{headers:headers},dat)
   }}
   let Wishall={};
   Wishall = async () => {
