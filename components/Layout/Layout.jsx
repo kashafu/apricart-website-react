@@ -3,7 +3,6 @@ import TopBar from "./components/TopBar/TopBar";
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
 import Copyrights from "./components/Footer/Copyrights";
-//I am here
 
 export const AppContext = createContext();
 
@@ -14,14 +13,20 @@ export default function Layout(props) {
     };
     return (
         <AppContext.Provider value={{ appState, handleAppState }}>
-            <TopBar />
-            <div className="container-fluid">
-                <Header />
-                {props.children}
-                <div className="mt-4">
-                	<Footer />
-				</div>
-                <Copyrights />
+            <div className="flex flex-col min-h-screen">
+                <div>
+                    <TopBar />
+                    <Header />
+                </div>
+                {/* <div className="container-fluid"> */}
+                <div className="p-4">
+                    {props.children}
+                </div>
+                <div className="mt-auto">
+                    <Footer />
+                    <Copyrights />
+                </div>
+                {/* </div> */}
             </div>
         </AppContext.Provider>
     );

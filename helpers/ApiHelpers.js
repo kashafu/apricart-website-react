@@ -21,11 +21,14 @@ export const getGeneralApiParams = () => {
         // userId = cookies.get('cookies-userId')
         userId = cookies.get('guestUserId')
         // if user has a selected address, use that addresses's latitude longitude
-        // TODO
+        if(selectedAddress){
+            latitude = selectedAddress.mapLat
+            longitude = selectedAddress.mapLong
+        }
         // if no address is selected or no address has been added, use default lat long 0
         headers = {
             ...headers,
-            Authorization: "Bearer " + cookies.get("cookies-token")
+            Authorization: "Bearer " + token
         }
     }
     // if its a guest
@@ -49,6 +52,7 @@ export const getGeneralApiParams = () => {
         'latitude': latitude,
         'longitude': longitude,
         'userId': userId,
-        'headers': headers
+        'headers': headers,
+        'token': token
     })
 }

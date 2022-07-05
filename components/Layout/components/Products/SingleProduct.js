@@ -17,7 +17,7 @@ export default function SingleProduct({product}){
     let imageUrl = productImageUrlThumbnail == '' ? productImageUrl : productImageUrlThumbnail
     let isLoggedIn = cookies.get('cookies-token') != null 
 
-    const addToCartHandler = async () => {
+    const addToCartApi = async () => {
         dispatch(addToCart(product))
 
         let { city, userId, headers } = getGeneralApiParams()
@@ -85,7 +85,7 @@ export default function SingleProduct({product}){
                 </p>
                 {inStock ? 
                     <button className="bg-main-blue font-lato text-sm py-2 w-5/6 rounded text-white hover:bg-white hover:text-main-blue"
-                        onClick={addToCartHandler}
+                        onClick={addToCartApi}
                     >
                         Add to Cart
                     </button>
