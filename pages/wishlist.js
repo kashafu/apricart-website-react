@@ -81,13 +81,14 @@ const Wishpage = () => {
 	}, [])
 
   const  removewish=(wish)=>{
-    var dat =JSON.stringify({sku:[wish.sku]}); //  method: 'delete',
+    console.log(wish.sku);
+    var data =JSON.stringify({sku:[wish.sku]}); //  method: 'delete',
 
    
       let url='https://staging.apricart.pk/v1/watchlist/delete?city=karachi&lang=en';
     
    if (token){
-    const response = axios.delete(url,{headers:headers},dat)
+    const response = axios.delete(url,{headers:headers,data:data})
   }}
   let Wishall={};
   Wishall = async () => {
