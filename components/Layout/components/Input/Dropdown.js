@@ -32,6 +32,7 @@ export default function Dropdown({label, options, name, optionText, onChange, va
                 {options.map((option)=>{
                     return(
                         <option
+                            key={option.id}
                             value={option.id}
                         >
                             {option[optionText]}

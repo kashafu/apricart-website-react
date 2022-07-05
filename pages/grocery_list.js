@@ -1,18 +1,13 @@
-import React, { useEffect, useState } from "react";
+import { useState } from "react";
 import Cookies from "universal-cookie";
 import axios from "axios";
+import { getGeneralApiParams } from '../helpers/ApiHelpers'
 
 export default function GroceryList(){
-	const cookies = new Cookies();
-	var token = cookies.get("cookies-token");
-	if (!token) {
-		return <h5 className="login-token">Please Login First</h5>;
-	}
-	let userId = cookies.get("userId");
-	let userCity = cookies.get("cities");
+	let { token, userId, city } = getGeneralApiParams()
 
 	const [userData, setUserData] = useState({
-		city: userCity,
+		city: city,
 		userid: userId,
 		address: 5828,
 		notes: "test order",
@@ -43,6 +38,11 @@ export default function GroceryList(){
 		}
 	};
 	console.log("My Data", userData);
+
+	if (!token) {
+		return <h5 className="login-token">Please Login First</h5>;
+	}
+
 	return (
 		<>
 			<section className="grocery_sec">

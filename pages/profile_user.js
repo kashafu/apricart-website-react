@@ -10,26 +10,19 @@ import {
 let base_url_api = "https://staging.apricart.pk/v1";
 import axios from 'axios'
 import Cookies from 'universal-cookie';
-// import { Redirect } from 'react-router'
+import { getGeneralApiParams } from "../helpers/ApiHelpers";
 
 export default function ProfileUser(){
 	const cookies = new Cookies();
 	const router = useRouter();
-
+	let { token } = getGeneralApiParams()
 
 	const [profile, setProfile] = useState([]);
 
+	useEffect(() => {
+		getProfile();
+	}, [])
 
-	var token = cookies.get('cookies-token')
-	if (!token) {
-		const d = new Date();
-		cookies.get('guestUserId', 'desktopuser_' + d.getTime(), 30);
-		return (
-			<>
-				<h5 className='login-token'>Please Login first</h5>
-			</>
-		)
-	}
 	const getProfile = async () => {
 		const config = {
 			method: 'GET',
@@ -46,11 +39,17 @@ export default function ProfileUser(){
 		let profileData = response.data
 		profile = profileData;
 
-	};
-	useEffect(() => {
-		getProfile();
-	}, []);
+	}
 
+	if (!token) {
+		const d = new Date();
+		cookies.get('guestUserId', 'desktopuser_' + d.getTime(), 30);
+		return (
+			<>
+				<h5 className='login-token'>Please Login first</h5>
+			</>
+		)
+	}
 
 	return (
 		<>

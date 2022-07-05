@@ -1,22 +1,11 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link';
 import axios from 'axios';
-import Cookies from 'universal-cookie';
-import { useRouter } from "next/router";
+import { getGeneralApiParams } from '../helpers/ApiHelpers';
 
 export default function Order(){
-	const cookies = new Cookies();
-	const router = useRouter();
+	let { token } = getGeneralApiParams()
 
-	var token = cookies.get('cookies-token')
-	if (!token) {
-		return (
-			<>
-				<h5 className='login-token'>Please Login first</h5>
-			</>
-		)
-	}
-	const [orders, setOrder] = useState([]);
 	const [pending, setPending] = useState([]);
 	const [completed, setCompleted] = useState([]);
 	const [cancel, setCancel] = useState([]);
@@ -98,11 +87,15 @@ export default function Order(){
 	};
 
 	console.log("Cancel Id", cancelid)
-	const logout = () => {
-		cookies.remove('cookies-token');
-		localStorage.clear();
-		router.push('/');
+
+	if(!token) {
+		return (
+			<>
+				<h5 className='login-token'>Please Login first</h5>
+			</>
+		)
 	}
+
 	return (
 		<>
 			<section className="popular_sec">

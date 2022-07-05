@@ -16,10 +16,8 @@ import { getGeneralApiParams } from "../../../../helpers/ApiHelpers";
 */
 export default function SingleProduct({ product, isInStock }) {
     const cookies = new Cookies();
-    var token = cookies.get("cookies-token;")
     const dispatch = useDispatch();
-    const cart = useSelector((state) => state.cart);
-    const wish = useSelector((state) => state.wish);
+
     let { productImageUrl, productImageUrlThumbnail, title, currentPrice, sku, inStock } = product
     if (isInStock) {
         inStock = isInStock
