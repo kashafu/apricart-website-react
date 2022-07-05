@@ -207,13 +207,13 @@ export default function Header(props) {
                 <div className="container-fluid">
                     <div className="hidden lg:block">
                         <Link href="/" passHref>
-                            <button>
+                            <a>
                                 <img
                                     src="/assets/images/logo.png"
                                     // className="img-fluid"
                                     width="150px;"
                                 />
-                            </button>
+                            </a>
                         </Link>
                     </div>
 

@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react"
-import Dropdown from "../Input/Dropdown"
 import { getGeneralApiParams } from "../../../../helpers/ApiHelpers"
 import { base_url_api } from '../../../../information.json'
 import axios from "axios"
