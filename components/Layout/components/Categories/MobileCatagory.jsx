@@ -37,21 +37,21 @@ export default function Categories() {
       <strong className="title">Category</strong>
 
       <div className="sidebar">
-        {users.map((catagory) => {
+        {users.map((category) => {
           return (
-            <Dropdown key={catagory.id} className="dropdown1">
+            <Dropdown key={category.id} className="dropdown1">
               <Dropdown.Toggle id="dropdown-basic">
-               {catagory.childrenData.length > 1 && <i className="fas fa-plus"></i> }
+               {category.childrenData.length > 1 && <i className="fas fa-plus"></i> }
 
-                <Link href="/catagory/[idd]" as={"/catagory/" + catagory.id} passHref>
-                  <span onClick={catagory.childrenData.length == 0 && hideSideDrawer } className="forpadding"> {catagory.name}</span>
+                <Link href="/category/[id]" as={"/category/" + category.id} passHref>
+                  <span onClick={category.childrenData.length == 0 && hideSideDrawer } className="forpadding"> {category.name}</span>
                 </Link>
               </Dropdown.Toggle>
-              {catagory.childrenData.map((sub) => {
+              {category.childrenData.map((sub) => {
                 return (
                   <Dropdown.Menu key={sub.id}>
                     <Dropdown.Item>
-                      <Link href="/catagory/[idd]" as={"/catagory/" + sub.id} passHref>
+                      <Link href="/category/[id]" as={"/category/" + sub.id} passHref>
                         <a className="mob_subcatagory" onClick={hideSideDrawer}><span className="mob-cat">{sub.name}</span></a>
                       </Link>
                     </Dropdown.Item>
