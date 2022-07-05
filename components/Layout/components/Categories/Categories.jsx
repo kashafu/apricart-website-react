@@ -14,8 +14,8 @@ export default function Categories({categories}) {
                                 <i className="fas fa-plus"></i>
 
                                 <Link
-                                    href="/catagory/[idd]"
-                                    as={"/catagory/" + category.id}
+                                    href="/category/[id]"
+                                    as={"/category/" + category.id}
                                     passHref
                                 >
                                     <span className="forpadding">
@@ -29,8 +29,8 @@ export default function Categories({categories}) {
                                     <Dropdown.Menu key={sub.id}>
                                         <Dropdown.Item>
                                             <Link
-                                                href="/catagory/[idd]"
-                                                as={"/catagory/" + sub.id}
+                                                href="/category/[id]"
+                                                as={"/category/" + sub.id}
                                             >
                                                 <a className="subcatagory">
                                                     {sub.name}

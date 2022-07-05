@@ -245,7 +245,7 @@
 
 //           <form className="d-flex ms-auto manu_cat" required onSubmit={inputData}>
 //           <div className="sidebar-1">
-//              <a className="nav-link d-lg-none catagory-style"
+//              <a className="nav-link d-lg-none category-style"
 //            >
 //               <CatagoryBtn/>
 //               </a>
@@ -685,7 +685,7 @@ export default function Header(props) {
                         onSubmit={inputData}
                     >
                         <div className="sidebar-1">
-                            <a className="nav-link d-lg-none catagory-style">
+                            <a className="nav-link d-lg-none category-style">
                                 <CatagoryBtn />
                             </a>
                         </div>

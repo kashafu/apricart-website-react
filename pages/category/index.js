@@ -10,7 +10,7 @@ export default function Posts({ posts }) {
         return (
           <li key={post.id}>
             <h3>
-              <Link href="/catagory/[id]" as={"/catagory/" + post.id}>
+              <Link href="/category/[id]" as={"/category/" + post.id}>
                 <a>{post.name}</a>
               </Link>
             </h3>

@@ -13,7 +13,6 @@ export default function Post({ product }) {
 	let [num, setNum] = useState(1);
 	const dispatch = useDispatch();
 	const cookies = new Cookies();
-	var token = cookies.get("cookies-token");
 	let isLoggedIn = cookies.get('cookies-token') != null 
 	const router = useRouter()
 	const { id } = router.query
