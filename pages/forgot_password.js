@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react";
-import Link from 'next/link';
 import { useRouter } from "next/router";
 import { toast } from "react-toastify";
-import Cookies from "universal-cookie";
 import TextField from '../components/Layout/components/Input/TextField'
 import SubmitButton from '../components/Layout/components/Buttons/SubmitButton'
 import axios from "axios";
@@ -12,7 +10,7 @@ import PageHeading from "../components/Layout/components/Typography/PageHeading"
 import ErrorText from "../components/Layout/components/Typography/ErrorText";
 import SuccessText from "../components/Layout/components/Typography/SuccessText";
 
-export default function forgot_password(){
+export default function ForgotPassword(){
 	const router = useRouter()
 
 	/* states can be

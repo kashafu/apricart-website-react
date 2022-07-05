@@ -91,6 +91,7 @@ export default function Home() {
 									<Image
 										src={bannerImageWeb}
 										layout={'fill'}
+										alt={"banner image"}
 									/>
 								</div>
 								<p className="text-2xl">

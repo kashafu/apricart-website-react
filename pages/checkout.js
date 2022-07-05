@@ -226,6 +226,7 @@ export default function Checkout() {
 								<Image
 									src={successResponse.data.thankyou_image}
 									layout={'responsive'}
+									alt={"Thank You Image"}
 									width={100}
 									height={100}
 								/>
@@ -250,9 +251,9 @@ export default function Checkout() {
 										<div className="col-span-2 grid grid-cols-2">
 											<div>
 												{cartData.products.map((item) => {
-													let { title, qty, currentPrice } = item
+													let { title, qty, currentPrice, id } = item
 													return (
-														<div>
+														<div key={id}>
 															<p>
 																{title}
 															</p>

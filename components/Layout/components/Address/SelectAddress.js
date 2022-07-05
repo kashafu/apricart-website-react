@@ -90,8 +90,9 @@ export default function SelectAddress({type, setAddress}){
                         let {id} = address
                         return(
                             <SingleAddressListing
+                                key={id}
                                 listing={address}
-                                isSelected={selectedAddress.id == id}
+                                isSelected={selectedAddress ? selectedAddress.id == id : false}
                                 setAddress= {setSelectedAddress}
                                 updateSavedAddresses={getSavedAddressesApi}
                             />
