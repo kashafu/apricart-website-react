@@ -81,42 +81,48 @@ export default function CategoryProducts({ products }) {
 	}
 
 	return (
-		<div className="grid grid-cols-5 gap-8">
-			{/* CATEGORIES SECTION */}
-			<section className="hidden lg:col-span-1 lg:block">
-				{categories && (
-					<Categories
-						categories={categories}
-					/>
-				)}
-			</section>
-			{/* PRODUCTS SECTION */}
-			<section className="col-span-5 lg:col-span-4 space-y-12">
-				{/* <MainProducts
-					products={products.data}
-				/> */}
-				{errorMessage == '' ? (
-					<div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
-						{products.data.map((product)=>{
-							let { id } = product
-							return(
-								<div key={id}>
-									<SingleProduct
-										product={product}
-										// TODO call api to get updated details of product and check if it is in stock
-									/>
-								</div>
-							)
-						})}
-					</div>
-				)
-				:
-				(
-					<p>
-						{errorMessage}
-					</p>
-				)}
-			</section>
+		<div>
+			<p>
+				{/* {products.data[0].categoryleafName} */}
+				{JSON.stringify(products)}
+			</p>
+			<div className="grid grid-cols-5 gap-8">
+				{/* CATEGORIES SECTION */}
+				<section className="hidden lg:col-span-1 lg:block">
+					{categories && (
+						<Categories
+							categories={categories}
+						/>
+					)}
+				</section>
+				{/* PRODUCTS SECTION */}
+				<section className="col-span-5 lg:col-span-4 space-y-12">
+					{/* <MainProducts
+						products={products.data}
+					/> */}
+					{errorMessage == '' ? (
+						<div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
+							{products.data.map((product)=>{
+								let { id } = product
+								return(
+									<div key={id}>
+										<SingleProduct
+											product={product}
+											// TODO call api to get updated details of product and check if it is in stock
+										/>
+									</div>
+								)
+							})}
+						</div>
+					)
+					:
+					(
+						<p>
+							{errorMessage}
+						</p>
+					)}
+				</section>
+			</div>
 		</div>
 	);
 }

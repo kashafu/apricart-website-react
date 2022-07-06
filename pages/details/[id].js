@@ -277,7 +277,6 @@ export default function Post({ product }) {
 }
 
 export async function getStaticPaths() {
-	// TODO implement get static paths properly
 	const paths = ["/details/[id]", "/details/[slug]"];
 	return { paths, fallback: 'blocking' };
 }
@@ -286,8 +285,6 @@ export async function getStaticProps({ query, params }) {
 	const { id } = query || params;
 	let { headers } = getGeneralApiParams()
 	let city = 'karachi'
-	// let userId = 'desktopuser_1656325126007'
-	// let url = base_url_api + '/catalog/products/detail?id=' + id + '&city=' + city + '&lang=en&client_type=apricart&userid=' + userId
 	let url = base_url_api + '/catalog/products/detail?id=' + id + '&city=' + city + '&lang=en&client_type=apricart'
 	let product = null
 	try {

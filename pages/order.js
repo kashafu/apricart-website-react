@@ -2,67 +2,37 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link';
 import axios from 'axios';
 import { getGeneralApiParams } from '../helpers/ApiHelpers';
+import { base_url_api } from '../information.json'
 
-export default function Order(){
+export default function Order() {
 	let { token } = getGeneralApiParams()
 
-	const [pending, setPending] = useState([]);
-	const [completed, setCompleted] = useState([]);
-	const [cancel, setCancel] = useState([]);
+	const [pendingOrders, setPendingOrders] = useState([])
+	const [completedOrders, setCompletedOrders] = useState([])
+	const [cancelledOrders, setCancelledOrders] = useState([])
 
+	const getOrderHistoryApi = async () => {
+		let { headers } = getGeneralApiParams()
+		let url = base_url_api + '/order/history?client_type=apricart'
 
-	const getProfile = async () => {
-		const config = {
-			method: 'GET',
-			headers: {
-				'Accept': 'application/json',
-				'Content-Type': 'application/json',
-				'Authorization': 'Bearer ' + cookies.get('cookies-token'),
-			}
+		try {
+			let response = await axios.get(url, {
+				headers: headers
+			})
+
+			setPendingOrders(response.data.data.pending);
+			setCancelledOrders(response.data.data.cancelled)
+			setCompletedOrders(response.data.data.completed)
+		} catch (error) {
+			console.log(error.response)
 		}
-		const resp = await axios.get(
-			'https://staging.apricart.pk/v1/order/history', config
-		);
-		setPending(resp.data.data.pending);
-		setCancel(resp.data.data.cancelled)
-		setCompleted(resp.data.data.completed)
-		let pendingOrder = resp.data.data.pending
-		let cancelOrder = resp.data.data.cancelled
-		let completeOrder = resp.data.data.completed
-		pending = pendingOrder;
-		completed = completeOrder;
-		cancel = cancelOrder;
+	}
 
-
-		console.log("Total order1", pending);
-
-
-
-	};
 	useEffect(() => {
-		getProfile();
-	}, []);
+		getOrderHistoryApi();
+	}, [])
 
-	///-----------------Cancel Order -------------------///
-	//   const [cancelOrderId,setCancelId] = useState([]);
-
-	//   const handleCancel = () => {
-	//      const config = {
-	//       method: 'GET',
-	//       headers: {
-	//         'Accept' : 'application/json',
-	//         'Content-Type' : 'application/json',
-	//         'Authorization' : 'Bearer ' + cookies.get('cookies-token'),
-	//       }
-	//      }
-	//      useEffect(() => {
-	//         const response = axios.get(`https://staging.apricart.pk/v1/order/checkout/cancel?id=00922422153228445`,
-	//         config);
-
-	//      })
-	//   }
-
-	const [cancelid, setCancelid] = useState('00922422153228445');
+	// const [cancelid, setCancelid] = useState('00922422153228445')
 	const handleCancel = async (e) => {
 		e.preventDefault();
 		try {
@@ -80,15 +50,13 @@ export default function Order(){
 		} catch (err) {
 			alert("Sorry desired order can not be cancelled anymore")
 		}
-	};
+	}
 	const handleCancelOrder = (event) => {
 		setDiscount(event.target.value);
 
-	};
+	}
 
-	console.log("Cancel Id", cancelid)
-
-	if(!token) {
+	if (!token) {
 		return (
 			<>
 				<h5 className='login-token'>Please Login first</h5>
@@ -98,6 +66,48 @@ export default function Order(){
 
 	return (
 		<>
+			<p>
+				PENDING ORDERS
+			</p>
+			<table class="table-auto">
+				<thead>
+					<tr>
+						<th>Order Id</th>
+						<th>Date</th>
+						<th>Address</th>
+						<th>Amount</th>
+						<th>Products</th>
+						<th>Coupon</th>
+						<th>Status</th>
+					</tr>
+				</thead>
+				<tbody>
+					{pendingOrders.map((userOrder) => {
+						return (
+							<>
+								<tr key={userOrder.orderId} name="cancelid"
+									value={userOrder.orderId}
+									onChange={handleCancelOrder}>
+									<td>{userOrder.displayOrderId}</td>
+									<td>{userOrder.receivedAt}</td>
+									<td>{userOrder.addressUsed}</td>
+									<td>{userOrder.grandTotal}</td>
+									<td>{userOrder.productCount}</td>
+									<td>{userOrder.couponsUsed}</td>
+									<td>{userOrder.status}</td>
+									<td style={{ color: "red", cursor: "pointer" }} onClick={handleCancel}>cancel</td>
+									<td></td>
+								</tr>
+							</>
+						)
+					})}
+					<tr>
+						<td>The Sliding Mr. Bones (Next Stop, Pottersville)</td>
+						<td>Malcolm Lockyer</td>
+						<td>1961</td>
+					</tr>
+				</tbody>
+			</table>
 			<section className="popular_sec">
 				<div className="container">
 					<div className="row">
@@ -115,13 +125,10 @@ export default function Order(){
 
 							</div>
 							<div id="London" className="tabcontent">
-								{/* <!-- Main content -->
-                     <!-- /.card -->    */}
 								<div className="card">
 									<div className="card-header">
 										<h3 className="card-title">My Orders</h3>
 									</div>
-									{/* <!-- /.card-header --> */}
 									<div className="card-body">
 										<div className="container">
 
@@ -141,7 +148,7 @@ export default function Order(){
 														</tr>
 													</thead>
 													<tbody>
-														{pending.map((userOrder) => {
+														{pendingOrders.map((userOrder) => {
 															return (
 																<>
 																	<tr key={userOrder.orderId} name="cancelid"
@@ -162,7 +169,7 @@ export default function Order(){
 														})}
 													</tbody>
 													<tbody>
-														{cancel.map((userOrder) => {
+														{cancelledOrders.map((userOrder) => {
 															return (
 																<>
 																	<tr>
@@ -181,7 +188,7 @@ export default function Order(){
 														})}
 													</tbody>
 													<tbody>
-														{completed.map((userOrder) => {
+														{completedOrders.map((userOrder) => {
 															return (
 																<>
 																	<tr>

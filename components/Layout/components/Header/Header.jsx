@@ -14,33 +14,21 @@ import WelcomeBtn from "../Auth/Test";
 import { useRouter } from "next/router";
 import Cookies from "universal-cookie";
 import CatagoryBtn from "../test1";
-import {
-    incrementQuantity,
-    decrementQuantity,
-    removeFromCart,
-    updatedcart,
-} from "../../../../redux/cart.slice";
-import information from "../../../../information.json";
-// const baseURL = "https://staging.staging.pk/v1";
-const baseURL = information.base_url_api;
 
+import { base_url_api } from '../../../../information.json'
 import { getGeneralApiParams } from "../../../../helpers/ApiHelpers";
 import SearchBar from "../SearchBar/SearchBar";
+import HamburgerMenu from "../Menus/HamburgerMenu";
 
-export default function Header(props) {
+export default function Header({}) {
     const cookies = new Cookies();
     const router = useRouter();
 
-    const [users, setUsers] = useState([]);
-
-    function inputData(e) {
-        e.preventDefault();
-    }
+    let { token } = getGeneralApiParams()
 
     const [user, setAuthenticated] = useState(false);
 
     var messsage = cookies.get("cookies-message");
-    var token = cookies.get("cookies-token");
     var name = cookies.get("cookies-name");
     var userId = cookies.get("cookies-userId");
 
@@ -202,68 +190,71 @@ export default function Header(props) {
 
     return (
         //Main Header Start
-        <div className="container-fluid hae">
-            <nav className="navbar navbar-expand-lg navbar-light bg-light shadow">
-                <div className="container-fluid">
-                    <div className="hidden lg:block">
-                        <Link href="/" passHref>
-                            <a>
-                                <img
-                                    src="/assets/images/logo.png"
-                                    // className="img-fluid"
-                                    width="150px;"
-                                />
-                            </a>
-                        </Link>
-                    </div>
-
-                    <form
-                        className="d-flex ms-auto manu_cat"
-                        required
-                        onSubmit={inputData}
-                    >
-                        <div className="sidebar-1">
-                            <a className="nav-link d-lg-none category-style">
-                                <CatagoryBtn />
-                            </a>
-                        </div>
-                        <div className=" d-md-none d-lg-none"></div>
-                        <div className="input-group searching_pro">
-                            <SearchBar />
-                        </div>
-                    </form>
-
-                    <div className="cart-header" id="navbar-content">
-                        <ul className="navbar-nav mr-auto mb-2 mb-lg-0 float-end">
-                            <li className="nav-item">
-                                <Link href="/grocery_list">
-                                    <a
-                                        className="nav-link"
-                                        aria-current="page"
-                                        href="#"
-                                    >
-                                        Grocery List
-                                    </a>
-                                </Link>
-                            </li>
-
-                            <li className="nav-item" onClick={wishnotify}>
-                                <Link href="/wishlist">
-                                    <a className="nav-link" href="#">
-                                        {wishList}
-                                        Wishlist
-                                    </a>
-                                </Link>
-                            </li>
-                            <BtnCart />
-                            {cart.length}
-
-                            {Links}
-                        </ul>
-                    </div>
-                </div>
-            </nav>
-            <div></div>
+        <div className="flex flex-row h-[50px] bg-red-100 items-center p-2">
+            <HamburgerMenu />
         </div>
+        // <div className="container-fluid hae">
+        //     <nav className="navbar navbar-expand-lg navbar-light bg-light shadow">
+        //         <div className="container-fluid">
+        //             <div className="hidden lg:block">
+        //                 <Link href="/" passHref>
+        //                     <a>
+        //                         <img
+        //                             src="/assets/images/logo.png"
+        //                             // className="img-fluid"
+        //                             width="150px;"
+        //                         />
+        //                     </a>
+        //                 </Link>
+        //             </div>
+
+        //             <form
+        //                 className="d-flex ms-auto manu_cat"
+        //                 required
+        //                 onSubmit={inputData}
+        //             >
+        //                 <div className="sidebar-1">
+        //                     <a className="nav-link d-lg-none category-style">
+        //                         <CatagoryBtn />
+        //                     </a>
+        //                 </div>
+        //                 <div className=" d-md-none d-lg-none"></div>
+        //                 <div className="input-group searching_pro">
+        //                     <SearchBar />
+        //                 </div>
+        //             </form>
+
+        //             <div className="cart-header" id="navbar-content">
+        //                 <ul className="navbar-nav mr-auto mb-2 mb-lg-0 float-end">
+        //                     <li className="nav-item">
+        //                         <Link href="/grocery_list">
+        //                             <a
+        //                                 className="nav-link"
+        //                                 aria-current="page"
+        //                                 href="#"
+        //                             >
+        //                                 Order Manually
+        //                             </a>
+        //                         </Link>
+        //                     </li>
+
+        //                     <li className="nav-item" onClick={wishnotify}>
+        //                         <Link href="/wishlist">
+        //                             <a className="nav-link" href="#">
+        //                                 {wishList}
+        //                                 Shopping List
+        //                             </a>
+        //                         </Link>
+        //                     </li>
+        //                     <BtnCart />
+        //                     {cart.length}
+
+        //                     {Links}
+        //                 </ul>
+        //             </div>
+        //         </div>
+        //     </nav>
+        //     <div></div>
+        // </div>
     );
 }

@@ -8,6 +8,8 @@ import axios from "axios";
 import ScrollingProducts from "../components/Layout/components/Products/ScrollingProducts";
 import { getGeneralApiParams } from '../helpers/ApiHelpers'
 import Banner from "../components/Layout/components/Banner/Banner";
+import MainProducts from '../components/Layout/components/Products/MainProducts'
+import Link from "next/link";
 
 
 export default function Home() {
@@ -36,6 +38,7 @@ export default function Home() {
 					'headers': headers
 				}
 			)
+
 			setHomeData(response.data.data)
 		} catch (error) {
 			setErrorMessage(error.message)
@@ -55,10 +58,13 @@ export default function Home() {
 
 	return (
 		<>
+			<p>
+				{homeData.nearestWareHouse}
+			</p>
 			{/* TODO IMPLEMENT HEAD WITH ICON AND NAME */}
 			<Head>Apricart</Head>
 			{/* BANNERS SECTION */}
-			<section className="w-full ">
+			<section className="w-full">
 				<Banner
 					banners={homeData.banners}
 				/>
@@ -70,6 +76,12 @@ export default function Home() {
 						categories={homeData.categories}
 					/>
 				</section>
+				{/* WEB PRODUCTS SECTION */}
+				{/* <section className="col-span-5 lg:col-span-4 space-y-12">
+					<MainProducts
+						products={homeData.webProducts}
+					/>
+				</section> */}
 				{/* PRODUCTS SECTION */}
 				<section className="col-span-5 lg:col-span-4 space-y-12">
 					{homeData.products.map((product) => {
@@ -78,16 +90,20 @@ export default function Home() {
 						// If the name is 'Upload Grocery List', we have to return a button which allows to upload grocery list
 						if (name === 'Upload Grocery List') {
 							return (
-								<button className="w-full bg-main-blue text-white p-6 text-xl rounded-xl">
-									Upload Grocery List
-								</button>
+								<div className="flex align-center">
+									<Link href={'/grocery_list'} passHref>
+										<a className="w-full bg-main-blue text-white p-4 text-xl rounded-xl text-center">
+											Manual Order
+										</a>
+									</Link>
+								</div>
 							)
 						}
 
 						return (
 							// TODO get a unique id from api, using name for now
 							<section key={name} className='space-y-4'>
-								<div className="relative w-full h-[100px] md:h-[200px] lg:h-[300px]">
+								<div className="relative w-full h-[100px] md:h-[200px] lg:h-[300px] rounded-xl overflow-hidden">
 									<Image
 										src={bannerImageWeb}
 										layout={'fill'}

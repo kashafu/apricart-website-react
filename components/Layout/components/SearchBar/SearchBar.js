@@ -31,28 +31,25 @@ export default function SearchBar(){
         <div className="w-full">
             <input
                 type={'search'}
-                className="w-full"
+                className="w-full p-4 bg-[#cee8e0] font-bold"
                 value={searchText}
                 onChange={(e)=>{
                     setSearchText(e.target.value)
                     searchHandler(e.target.value)
                 }}
-                placeholder='Search Products'
+                placeholder='Search'
                 onBlur={()=>{
                     setShowSearchResults(false)
                 }}
             />
             {showSearchResults && (
-                <div className="absolute bg-white w-full z-20 flex flex-col space-y-2">
+                <div className="absolute bg-white w-full z-20 flex flex-col space-y-2 max-h-[300px] overflow-auto">
                     {searchResults.length > 0 ? (
-                        <div className='grid grid-cols-3 gap-6 p-6'>
-                            {searchResults.slice(0, 9).map((product)=>{
+                        <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-6'>
+                            {searchResults.map((product)=>{
                                 let {id} = product
                                 return(
                                     <div key={id}>
-                                        {/* <p>
-                                            {title}
-                                        </p> */}
                                         <SingleProduct
                                             product={product}
                                         />

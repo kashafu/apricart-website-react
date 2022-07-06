@@ -18,7 +18,8 @@ export default function Layout() {
 
     const [getcity, setcity] = useState(
         cookies.get("cities") == null ? "karachi" : cookies.get("cities")
-    );
+    )
+    
     const [currentSelectedAddress, setCurrentSelectedAddress] = useState(
         cookies.get('selected-address') == null ? 'No address selected' : cookies.get('selected-address').address
     )
@@ -116,7 +117,7 @@ export default function Layout() {
 
                 </div>
                 {/* DELIVERY */}
-                <div className="hidden lg:inline-flex flex flex-row space-x-2 items-center">
+                {/* <div className="hidden lg:inline-flex flex flex-row space-x-2 items-center">
                     <div className="relative w-[15px] h-[15px] lg:w-[22px] lg:h-[22px]">
                         <Image 
                             src={bikePNG} 
@@ -125,9 +126,9 @@ export default function Layout() {
                         />
                     </div>
                     <p className={pStyle}>
-                        Fast & Free Delivery
+                        Fast Delivery
                     </p>
-                </div>
+                </div> */}
                 <div className="flex flex-row space-x-4">
                     {/* LOCATION */}
                     <div>
@@ -157,11 +158,11 @@ export default function Layout() {
                         </p>
                     </div>
                     {/* LANGUAGE */}
-                    <div>
+                    {/* <div>
                         <p className={pStyle}>
                             English
                         </p>
-                    </div>
+                    </div> */}
                 </div>
             </div>
             {/* PHONE NUMBER */}
