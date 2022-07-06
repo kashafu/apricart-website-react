@@ -1,7 +1,7 @@
 import Image from "next/image"
 
 // ICONS
-import crossIcon from '../../../../public/assets/images/crossIcon.svg'
+import crossIcon from '../../../../public/assets/svgs/crossIcon.svg'
 
 export default function Popup({content, handleClose}){
     return(

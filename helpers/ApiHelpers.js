@@ -3,6 +3,18 @@ let isNode = require('detect-node')
 
 const cookies = new Cookies();
 
+export const getGeneralCookies = () => {
+    let name = cookies.get('cookies-name')
+    let phoneNumber = cookies.get('cookies-phoneNumber')
+    let email = cookies.get('cookies-email')
+
+    return({
+        'name': name,
+        'phoneNumber': phoneNumber,
+        'email': email
+    })
+}
+
 export const getGeneralApiParams = () => {
     let token = cookies.get('cookies-token')
     // city cookies is being set in TopBar.js
@@ -55,4 +67,15 @@ export const getGeneralApiParams = () => {
         'headers': headers,
         'token': token
     })
+}
+
+export const logOutRemoveCookies = () => {
+    cookies.remove("cookies-token")
+    cookies.remove('selected-address')
+    cookies.remove('guestUserId')
+    cookies.remove('cookies-name')
+    cookies.remove('cookies-userId')
+    cookies.remove('cookies-phoneNumber')
+    cookies.remove('cookies-email')
+    localStorage.clear()
 }

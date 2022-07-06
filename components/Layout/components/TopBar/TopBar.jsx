@@ -114,7 +114,6 @@ export default function Layout() {
                             />
                         </button>
                     </Link>
-
                 </div>
                 {/* DELIVERY */}
                 {/* <div className="hidden lg:inline-flex flex flex-row space-x-2 items-center">

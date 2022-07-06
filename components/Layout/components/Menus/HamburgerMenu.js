@@ -1,12 +1,28 @@
 import Image from "next/image"
 import { useState } from "react"
-import menuIcon from '../../../../public/assets/svgs/MenuIcon.svg'
+import { useRouter } from "next/router"
+import menuIcon from '../../../../public/assets/svgs/menuIcon.svg'
+import crossIcon from '../../../../public/assets/svgs/crossIcon.svg'
+import profileIcon from '../../../../public/assets/svgs/profileIcon.svg'
+import Logo from "../Logo/Logo"
+import { getGeneralApiParams, logOutRemoveCookies, getGeneralCookies } from "../../../../helpers/ApiHelpers"
+import SubmitButton from "../Buttons/SubmitButton"
+import LinkButton from "../Buttons/LinkButton"
 
 export default function HamburgerMenu({}){
+    const router = useRouter()
+
+    let { token } = getGeneralApiParams()
+    let { name, email, phoneNumber } = getGeneralCookies()
     const [showMenu, setShowMenu] = useState(false)
+
+    const logout = () => {
+        logOutRemoveCookies()
+        router.push('/')
+    }
     
     return(
-        <div className="relative w-full">
+        <div className="relative">
             <button
                 onClick={()=>{
                     setShowMenu(!showMenu)
@@ -20,8 +36,83 @@ export default function HamburgerMenu({}){
                 />  
             </button>
             {showMenu && (
-                <div className="absolute top-0 left-0 w-3/4 bg-black z-10">
-
+                <div className="fixed top-0 flex flex-col p-2 left-0 w-3/4 h-screen bg-white z-10 justify-between rounded-r-2xl">
+                    <div className="space-y-4">
+                        <div className="flex flex-row justify-between items-center">
+                            <div className="w-1/2">
+                                <Logo />
+                            </div>
+                            <button
+                                onClick={()=>{
+                                    setShowMenu(!showMenu)
+                                }}
+                            >
+                                <Image
+                                    src={crossIcon}
+                                    alt={'cross icon'}
+                                    width={20}
+                                    height={20}
+                                />
+                            </button>
+                        </div>
+                        {token && (
+                            <p>
+                                Welcome, {name}
+                            </p>
+                        )}
+                        <div className="items-center align-center space-y-2">
+                            <LinkButton
+                                text={"View Categories"}
+                                path={'/'}
+                            />
+                            <LinkButton
+                                text={"Shopping List"}
+                                path={'/'}
+                            />
+                            <LinkButton
+                                text={"Order Manually"}
+                                path={'/'}
+                            />
+                        </div>
+                    </div>
+                    {token ? (
+                        <div className="flex flex-col">
+                            {/* <div className="flex flex-row">
+                                <Image
+                                    src={profileIcon}
+                                    alt={'icon'}
+                                    height={20}
+                                    width={20}
+                                />
+                                <div className="flex flex-col">
+                                    <p>
+                                        {name}
+                                    </p>
+                                    <p>
+                                        {email}
+                                    </p>
+                                    <p>
+                                        {phoneNumber}
+                                    </p>
+                                </div>
+                            </div> */}
+                            <SubmitButton
+                                text={"LOGOUT"}
+                                onClick={logout}
+                            />
+                        </div>
+                    ):(
+                        <div className="space-y-2">
+                            <SubmitButton
+                                text={"LOGIN"}
+                                onClick={logout}
+                            />
+                            <SubmitButton
+                                text={"REGISTER"}
+                                onClick={logout}
+                            />
+                        </div>
+                    )}
                 </div>
             )}
         </div>
