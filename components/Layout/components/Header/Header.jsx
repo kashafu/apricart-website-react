@@ -14,17 +14,20 @@ import WelcomeBtn from "../Auth/Test";
 import { useRouter } from "next/router";
 import Cookies from "universal-cookie";
 import CatagoryBtn from "../test1";
+import profileIcon from '../../../../public/assets/svgs/profileIcon.svg'
 
-import { base_url_api } from '../../../../information.json'
+import { base_url_api } from "../../../../information.json";
 import { getGeneralApiParams } from "../../../../helpers/ApiHelpers";
 import SearchBar from "../SearchBar/SearchBar";
 import HamburgerMenu from "../Menus/HamburgerMenu";
+import Logo from "../Logo/Logo";
+import LinkText from "../Typography/LinkText";
 
 export default function Header({}) {
     const cookies = new Cookies();
     const router = useRouter();
 
-    let { token } = getGeneralApiParams()
+    let { token } = getGeneralApiParams();
 
     const [user, setAuthenticated] = useState(false);
 
@@ -43,7 +46,7 @@ export default function Header({}) {
 
     const logout = () => {
         cookies.remove("cookies-token");
-        cookies.remove('selected-address')
+        cookies.remove("selected-address");
         localStorage.clear();
         setAuthenticated(false);
         router.push("/");
@@ -190,8 +193,31 @@ export default function Header({}) {
 
     return (
         //Main Header Start
-        <div className="flex flex-row h-[50px] bg-red-100 items-center p-2">
-            <HamburgerMenu />
+        <div className="flex flex-row h-[50px] bg-white items-center py-2 px-4 space-x-4">
+            <div className="md:hidden">
+                <HamburgerMenu />
+            </div>
+            <div className="hidden md:block md:w-[200px]">
+                <Logo />
+            </div>
+            <div className="md:grow">
+                <SearchBar />
+            </div>
+            <div className="hidden md:inline md:flex md:flex-row md:space-x-4">
+                <LinkText
+                    text={"Order Manually"}
+                    path={"/grocery_list"}
+                />
+                <LinkText
+                    text={"Shopping List"}
+                    path={"/wishlist"}
+                />
+                <LinkText
+                    text={"Login"}
+                    path={"/login"}
+                    icon={profileIcon}
+                />
+            </div>
         </div>
         // <div className="container-fluid hae">
         //     <nav className="navbar navbar-expand-lg navbar-light bg-light shadow">

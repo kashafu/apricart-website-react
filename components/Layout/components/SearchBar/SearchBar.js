@@ -31,7 +31,7 @@ export default function SearchBar(){
         <div className="w-full">
             <input
                 type={'search'}
-                className="w-full p-4 bg-[#cee8e0] font-bold"
+                className="w-full p-2 bg-slate-200 rounded-xl font-bold"
                 value={searchText}
                 onChange={(e)=>{
                     setSearchText(e.target.value)
