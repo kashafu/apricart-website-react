@@ -19,11 +19,13 @@ export default function HamburgerMenu({}){
     const logout = () => {
         logOutRemoveCookies()
         router.push('/')
+        router.reload()
     }
     
     return(
         <div className="relative">
             <button
+                className="flex items-center"
                 onClick={()=>{
                     setShowMenu(!showMenu)
                 }}
@@ -36,7 +38,7 @@ export default function HamburgerMenu({}){
                 />  
             </button>
             {showMenu && (
-                <div className="fixed top-0 flex flex-col p-2 left-0 w-3/4 h-screen bg-white z-10 justify-between rounded-r-2xl">
+                <div className="fixed top-0 flex flex-col py-4 px-2 left-0 w-3/4 h-screen bg-white z-10 justify-between rounded-r-2xl">
                     <div className="space-y-4">
                         <div className="flex flex-row justify-between items-center">
                             <div className="w-1/2">
@@ -105,11 +107,15 @@ export default function HamburgerMenu({}){
                         <div className="space-y-2">
                             <SubmitButton
                                 text={"LOGIN"}
-                                onClick={logout}
+                                onClick={()=>{
+                                    router.push('/login')
+                                }}
                             />
                             <SubmitButton
                                 text={"REGISTER"}
-                                onClick={logout}
+                                onClick={()=>{
+                                    router.push('/register')
+                                }}
                             />
                         </div>
                     )}

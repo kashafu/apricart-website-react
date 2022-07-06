@@ -200,7 +200,7 @@ export default function Header({}) {
             <div className="hidden md:block md:w-[200px]">
                 <Logo />
             </div>
-            <div className="md:grow">
+            <div className="grow">
                 <SearchBar />
             </div>
             <div className="hidden md:inline md:flex md:flex-row md:space-x-4 md:items-center">
@@ -223,7 +223,6 @@ export default function Header({}) {
                         icon={profileIcon}
                     />
                 )}
-                
             </div>
         </div>
         // <div className="container-fluid hae">
