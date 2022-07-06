@@ -22,6 +22,7 @@ import SearchBar from "../SearchBar/SearchBar";
 import HamburgerMenu from "../Menus/HamburgerMenu";
 import Logo from "../Logo/Logo";
 import LinkText from "../Typography/LinkText";
+import Profile from "../Auth/Profile";
 
 export default function Header({}) {
     const cookies = new Cookies();
@@ -192,7 +193,6 @@ export default function Header({}) {
     }
 
     return (
-        //Main Header Start
         <div className="flex flex-row h-[50px] bg-white items-center py-2 px-4 space-x-4">
             <div className="md:hidden">
                 <HamburgerMenu />
@@ -203,7 +203,7 @@ export default function Header({}) {
             <div className="md:grow">
                 <SearchBar />
             </div>
-            <div className="hidden md:inline md:flex md:flex-row md:space-x-4">
+            <div className="hidden md:inline md:flex md:flex-row md:space-x-4 md:items-center">
                 <LinkText
                     text={"Order Manually"}
                     path={"/grocery_list"}
@@ -212,11 +212,18 @@ export default function Header({}) {
                     text={"Shopping List"}
                     path={"/wishlist"}
                 />
-                <LinkText
-                    text={"Login"}
-                    path={"/login"}
-                    icon={profileIcon}
-                />
+                <BtnCart />
+                {cart.length}
+                {token ? (
+                    <Profile />
+                ):(
+                    <LinkText
+                        text={"Login"}
+                        path={"/login"}
+                        icon={profileIcon}
+                    />
+                )}
+                
             </div>
         </div>
         // <div className="container-fluid hae">

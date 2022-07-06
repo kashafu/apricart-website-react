@@ -18,7 +18,7 @@ export default function Layout(props) {
                     <TopBar />
                     <Header />
                 </div>
-                {/* <div className="container-fluid"> */}
+                {/* <div className="p-4 flex-1 min-h-full min-w-full"> */}
                 <div className="p-4">
                     {props.children}
                 </div>
@@ -26,7 +26,6 @@ export default function Layout(props) {
                     <Footer />
                     <Copyrights />
                 </div>
-                {/* </div> */}
             </div>
         </AppContext.Provider>
     );

@@ -7,11 +7,13 @@ export const getGeneralCookies = () => {
     let name = cookies.get('cookies-name')
     let phoneNumber = cookies.get('cookies-phoneNumber')
     let email = cookies.get('cookies-email')
+    let token = cookies.get('cookies-token')
 
     return({
         'name': name,
         'phoneNumber': phoneNumber,
-        'email': email
+        'email': email,
+        'token': token
     })
 }
 
