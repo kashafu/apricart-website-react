@@ -4,9 +4,13 @@ import AddressCard from "./AddressCard"
 import { getGeneralApiParams } from "../../../../helpers/ApiHelpers"
 import { base_url_api } from '../../../../information.json'
 import axios from "axios"
+import { useDispatch } from "react-redux";
+import { updateSelectedAddress } from "../../../../redux/general.slice"
 
 export default function SingleAddressListing({listing, isSelected, setAddress, updateSavedAddresses}){
     const cookies = new Cookies()
+    const dispatch = useDispatch()
+
     let {address, area, city, name, phoneNumber, email} = listing
     let style = isSelected ? "bg-red-400" : ""
 
@@ -35,6 +39,7 @@ export default function SingleAddressListing({listing, isSelected, setAddress, u
 
     const onClickHandle = () => {
         cookies.set('selected-address', listing)
+        dispatch(updateSelectedAddress(listing))
         setAddress(listing)
     }
 

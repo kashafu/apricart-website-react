@@ -6,11 +6,11 @@ import Cookies from "universal-cookie"
 import SubmitButton from "../Buttons/SubmitButton"
 import AddressCard from "./AddressCard"
 import SingleAddressListing from "./SingleAddressListing"
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
+import { updateSelectedAddress } from "../../../../redux/general.slice"
 import Link from "next/link";
 import { AppContext } from "../../Layout";
 import { useRouter } from "next/router";
-import { Addressupdate } from "../../../../redux/general.slice"
 const cookies = new Cookies();
 
 /*
@@ -23,9 +23,8 @@ export default function SelectAddress({type, setAddress}){
     const [savedAddresses, setSavedAddresses] = useState([])
     const [selectedAddress, setSelectedAddress] = useState(getGeneralApiParams().selectedAddress)
     const [showAddressCard, setShowAddressCard] = useState(false)
-const dispatch =useDispatch();
-const seladd =useSelector((state)=>state.general);
-console.log( seladd);
+    const dispatch = useDispatch()
+    // const generalStore = useSelector((state)=>state.general)
 
     useEffect(() => {
         getSavedAddressesApi()
@@ -55,6 +54,7 @@ console.log( seladd);
         }
         else{
             cookies.set('selected-address', e.target.value)
+            dispatch(updateSelectedAddress(e.target.value))
         }
     }
 
