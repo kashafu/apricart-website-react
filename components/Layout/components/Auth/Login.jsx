@@ -7,6 +7,7 @@ import { base_url_api } from "../../../../information.json";
 import TextField from '../Input/TextField'
 import SubmitButton from '../Buttons/SubmitButton'
 import ErrorText from '../Typography/ErrorText'
+import { Link } from "react-router-dom";
 
 export default function Login(){
     const router = useRouter();
@@ -74,6 +75,7 @@ export default function Login(){
                     value={password}
                     type={'password'}
                 />
+              
             </div>
             <div>
                 <SubmitButton
@@ -83,7 +85,10 @@ export default function Login(){
                 <ErrorText
                     text={errorMessage}
                 />
+             
             </div>
+            
         </div>
     )
 }
+//<Link> SIGNUP </Link>      <p>Don't have an Account ?  </p>

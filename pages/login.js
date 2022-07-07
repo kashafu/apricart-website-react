@@ -1,6 +1,7 @@
 import axios from "axios"
-import { useRouter } from "next/router"
+import { useRouter  } from "next/router"
 import { useState } from "react"
+import Link from "next/link"
 import Cookies from "universal-cookie"
 import { getGeneralApiParams } from "../helpers/ApiHelpers"
 import { base_url_api } from '../information.json'
@@ -92,7 +93,12 @@ export default function Login(){
                 <ErrorText
                     text={errorMessage}
                 />
+                  <p>Don't have an Account ?  <Link href="/Register">
+          <a>About Us</a>
+        </Link> </p>  
             </div>
+          
         </div>
     )
 }
+//<Link> SIGNUP </Link> 
