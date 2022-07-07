@@ -10,11 +10,19 @@ import { getGeneralApiParams } from '../helpers/ApiHelpers'
 import Banner from "../components/Layout/components/Banner/Banner";
 import MainProducts from '../components/Layout/components/Products/MainProducts'
 import Link from "next/link";
+import { useSelector, useDispatch } from "react-redux";
 
+
+import { useRouter } from "next/router";
+import { Addressupdate} from "../redux/general.slice"
 
 export default function Home() {
 	const cookies = new Cookies();
 	let token = cookies.get('cookies-token')
+	const seladd = useSelector((state)=>state.general);
+	console.log( seladd);
+	
+
 	if (!token) {
 		const d = new Date();
 		cookies.set('guestUserId', 'desktopuser_' + d.getTime(), 30);
@@ -54,8 +62,7 @@ export default function Home() {
 			</div>
 		)
 	}
-
-
+	
 	return (
 		<>
 			<p>
