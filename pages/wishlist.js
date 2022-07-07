@@ -14,7 +14,7 @@ import axios from "axios";
 import Cookies from 'universal-cookie';
 import { getGeneralApiParams } from "../helpers/ApiHelpers";
 let base_url_api = "https://staging.apricart.pk/v1";
-
+//none
 const Wishpage = () => {
   const cookies = new Cookies();
  // var token = cookies.get("cookies-token");
