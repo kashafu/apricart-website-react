@@ -5,9 +5,10 @@ import Link from 'next/link'
 import Popup from "../Popup/Popup";
 import Cookies from "universal-cookie";
 import {useRouter} from "next/router"
-import { useSelector ,useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import {Addressupdate} from "../../../../redux/general.slice";
 import { getGeneralApiParams } from "../../../../helpers/ApiHelpers";
+
 // IMAGES
 // import bikePNG from "../../../../public/assets/images/bike.png";
 import locationPinPNG from "../../../../public/assets/images/location.png";
@@ -17,24 +18,21 @@ import logoPNG from '../../../../public/assets/images/logo.png'
 export default function Layout() {
     const cookies = new Cookies()
     const router = useRouter()
+    const addressSelector = useSelector((state=>state.general.selectedAddress));
 
     let pStyle = "font-lato font-bold text-sm lg:text-md text-black lg:text-base"
     // let divIconStyle = "relative w-[15px] h-[15px] lg:w-[22px] lg:h-[22px]" 
-
-    // TODO USE REDUX TO FETCH
-    let { selectedAddress, city } = getGeneralApiParams()
+    let { city } = getGeneralApiParams()
 
     const [getcity, setcity] = useState(city)
-    const [currentSelectedAddress, setCurrentSelectedAddress] = useState(selectedAddress)
-    const [isOpen, setIsOpen] = useState(false);
+    const [isOpen, setIsOpen] = useState(false)
 
     useEffect(() => {
         if (cookies.get("cities") == null) {
             cookies.set("cities", "karachi");
             getLocation();
         }
-        console.log(currentSelectedAddress);
-    }, []);
+    }, [])
 
     const getLocation = () => {
         if (!navigator.geolocation) {
@@ -156,9 +154,9 @@ export default function Layout() {
                         <button onClick={()=>{
                             router.push('/address')
                         }}>
-                            {currentSelectedAddress ? (
+                            {addressSelector ? (
                                 <p>
-                                    {currentSelectedAddress.area}
+                                    {addressSelector.area}
                                 </p>
                             ):(
                                 <p className="truncate">
