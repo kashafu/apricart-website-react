@@ -68,12 +68,7 @@ const Register = () => {
         }
     };
 
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setUserData({ ...userData, [name]: value });
-    };
-
-    const [otpCode, setOtpCode] = useState("");
+  c
 
     return (
         <>
