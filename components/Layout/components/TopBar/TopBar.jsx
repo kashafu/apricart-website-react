@@ -4,7 +4,8 @@ import Image from "next/image";
 import Link from 'next/link'
 import Popup from "../Popup/Popup";
 import Cookies from "universal-cookie";
-
+import { useSelector ,useDispatch } from "react-redux";
+import {Addressupdate} from "../../../../redux/general.slice"
 // IMAGES
 import bikePNG from "../../../../public/assets/images/bike.png";
 import locationPinPNG from "../../../../public/assets/images/location.png";
@@ -15,13 +16,16 @@ export default function Layout() {
     let pStyle = "font-lato font-bold text-xs text-black lg:text-base"
     // let divIconStyle = "relative w-[15px] h-[15px] lg:w-[22px] lg:h-[22px]" 
     const cookies = new Cookies();
+    const dipatch =useDispatch();
+    const Add = useSelector((state=>state.general));
 
     const [getcity, setcity] = useState(
         cookies.get("cities") == null ? "karachi" : cookies.get("cities")
     )
     
     const [currentSelectedAddress, setCurrentSelectedAddress] = useState(
-        cookies.get('selected-address') == null ? 'No address selected' : cookies.get('selected-address').address
+        Add.Address
+        //cookies.get('selected-address') == null ? 'No address selected' : cookies.get('selected-address').address
     )
     const [isOpen, setIsOpen] = useState(false);
 
