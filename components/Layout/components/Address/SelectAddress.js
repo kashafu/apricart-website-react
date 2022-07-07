@@ -8,9 +8,6 @@ import AddressCard from "./AddressCard"
 import SingleAddressListing from "./SingleAddressListing"
 import { useDispatch } from "react-redux";
 import { updateSelectedAddress } from "../../../../redux/general.slice"
-import Link from "next/link";
-import { AppContext } from "../../Layout";
-import { useRouter } from "next/router";
 const cookies = new Cookies();
 
 /*

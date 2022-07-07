@@ -12,7 +12,7 @@ export default function SingleAddressListing({listing, isSelected, setAddress, u
     const dispatch = useDispatch()
 
     let {address, area, city, name, phoneNumber, email} = listing
-    let style = isSelected ? "bg-red-400" : ""
+    let style = isSelected ? "bg-lime-300 rounded-xl" : ""
 
     const [showEdit, setShowEdit] = useState(false)
 
@@ -44,7 +44,7 @@ export default function SingleAddressListing({listing, isSelected, setAddress, u
     }
 
     return(
-        <div className="flex flex-col">
+        <div className="flex flex-col border-2 rounded-2xl mx-4">
             <button
                 onClick= {onClickHandle}
                 className= {style}
