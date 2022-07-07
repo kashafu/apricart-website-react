@@ -141,9 +141,9 @@ export default function Checkout() {
 
 	return (
 		<div>
-			<div className="flex flex-col md:grid md:grid-cols-3">
+			<div className="flex flex-col lg:grid lg:grid-cols-3">
 				<div className="col-span-2">
-					<div className="flex flex-row justify-around pb-6 md:pb-12">
+					<div className="flex flex-row justify-around pb-6 lg:pb-12">
 						<div className="flex flex-col items-center">
 							<p className="font-extrabold">
 								O

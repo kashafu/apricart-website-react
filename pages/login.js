@@ -63,7 +63,7 @@ export default function Login(){
             className="flex justify-center w-full"
             onKeyDown={onEnterPress}
         >
-            <div className="flex flex-col p-8 space-y-6 md:w-1/3 items-center align-center bg-slate-100 shadow rounded-3xl">
+            <div className="flex flex-col p-8 space-y-6 lg:w-1/3 items-center align-center bg-slate-100 shadow rounded-3xl">
                 <PageHeading
                     text={"LOGIN"}
                 />

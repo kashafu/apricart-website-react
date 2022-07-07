@@ -4,29 +4,28 @@ import Image from "next/image";
 import Link from 'next/link'
 import Popup from "../Popup/Popup";
 import Cookies from "universal-cookie";
+import {useRouter} from "next/router"
 import { useSelector ,useDispatch } from "react-redux";
-import {Addressupdate} from "../../../../redux/general.slice"
+import {Addressupdate} from "../../../../redux/general.slice";
+import { getGeneralApiParams } from "../../../../helpers/ApiHelpers";
 // IMAGES
-import bikePNG from "../../../../public/assets/images/bike.png";
+// import bikePNG from "../../../../public/assets/images/bike.png";
 import locationPinPNG from "../../../../public/assets/images/location.png";
 import phonePNG from "../../../../public/assets/images/phone.png";
 import logoPNG from '../../../../public/assets/images/logo.png'
 
 export default function Layout() {
-    let pStyle = "font-lato font-bold text-xs text-black lg:text-base"
-    // let divIconStyle = "relative w-[15px] h-[15px] lg:w-[22px] lg:h-[22px]" 
-    const cookies = new Cookies();
-    const dipatch =useDispatch();
-    const Add = useSelector((state=>state.general));
+    const cookies = new Cookies()
+    const router = useRouter()
 
-    const [getcity, setcity] = useState(
-        cookies.get("cities") == null ? "karachi" : cookies.get("cities")
-    )
-    
-    const [currentSelectedAddress, setCurrentSelectedAddress] = useState(
-        Add.Address
-        //cookies.get('selected-address') == null ? 'No address selected' : cookies.get('selected-address').address
-    )
+    let pStyle = "font-lato font-bold text-sm lg:text-md text-black lg:text-base"
+    // let divIconStyle = "relative w-[15px] h-[15px] lg:w-[22px] lg:h-[22px]" 
+
+    // TODO USE REDUX TO FETCH
+    let { selectedAddress, city } = getGeneralApiParams()
+
+    const [getcity, setcity] = useState(city)
+    const [currentSelectedAddress, setCurrentSelectedAddress] = useState(selectedAddress)
     const [isOpen, setIsOpen] = useState(false);
 
     useEffect(() => {
@@ -34,6 +33,7 @@ export default function Layout() {
             cookies.set("cities", "karachi");
             getLocation();
         }
+        console.log(currentSelectedAddress);
     }, []);
 
     const getLocation = () => {
@@ -105,8 +105,8 @@ export default function Layout() {
     };
 
     return (
-        <header className="flex flex-row w-screen bg-main-yellow justify-between p-6 items-center h-[70px]">
-            <div className="flex flex-row space-x-4 items-center justify-between items-center">
+        <header className="flex flex-row w-screen bg-main-yellow lg:justify-between p-6 items-center h-[70px]">
+            <div className="flex flex-row items-center justify-between">
                 {/* APRICART LOGO */}
                 <div className="relative min-w-[100px] w-1/6 lg:hidden">
                     <Link href={"/"} passHref>
@@ -132,7 +132,7 @@ export default function Layout() {
                         Fast Delivery
                     </p>
                 </div> */}
-                <div className="flex flex-row space-x-4">
+                <div className="flex flex-row space-x-4 lg:space-x-12 items-center">
                     {/* LOCATION */}
                     <div>
                         <button 
@@ -146,19 +146,26 @@ export default function Layout() {
                                     layout={'fill'} 
                                 />
                             </div>
-                            <p className={pStyle + " capitalize-class"}>
+                            <p className={pStyle + " capitalize"}>
                                 {getcity}
                             </p>
                         </button>
                     </div>
                     {/* CURRENT SELECTED ADDRESS */}
-                    <div className="flex flex-row space-x-2">
-                        <p>
-                            Selected Address: 
-                        </p>
-                        <p>
-                            {currentSelectedAddress}
-                        </p>
+                    <div className={pStyle + " capitalize flex flex-row space-x-2"}>
+                        <button onClick={()=>{
+                            router.push('/address')
+                        }}>
+                            {currentSelectedAddress ? (
+                                <p>
+                                    {currentSelectedAddress.area}
+                                </p>
+                            ):(
+                                <p className="truncate">
+                                    Select Delivery Address
+                                </p>
+                            )}
+                        </button>
                     </div>
                     {/* LANGUAGE */}
                     {/* <div>
