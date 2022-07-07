@@ -93,8 +93,8 @@ export default function Login(){
                 <ErrorText
                     text={errorMessage}
                 />
-                  <p>Don't have an Account ?  <Link href="/Register">
-          <a>About Us</a>
+                  <p>Don't have an Account ?  <Link href="/register">
+          <a>Sign Up</a>
         </Link> </p>  
             </div>
           

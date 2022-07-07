@@ -2,6 +2,11 @@ import react from 'react';
 import { useSelector ,useDispatch } from 'react-redux';
 import { useRouter } from 'next/router';
 import { useEffect,useState } from 'react';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { getGeneralApiParams } from '../helpers/ApiHelpers';
+import {base_url_api} from "../information.json";
+import axios from "axios"
 export default function Register(){
     const router = useRouter();
     const [userData, setUserData] = useState({
@@ -19,7 +24,7 @@ export default function Register(){
         e.preventDefault();
         try {
             let { userId, headers } = getGeneralApiParams();
-            let url = base_url_api + "/auth/open/register?client_type=apricart";
+            let url = base_url_api + "/auth/open/register?city=karachi&lang=en";
             let body = {
                 ...userData,
                 guestuserid: userId,
@@ -33,10 +38,16 @@ export default function Register(){
             setCookie("token", response.data.data.token, { path: "/address" });
         } catch (err) {
             //const Error = err.response.data;
-            console.log(err.response);
+            console.log(err);
             toast.error(Error.message);
         }
     };
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setUserData({ ...userData, [name]: value });
+    };
+
+    const [otpCode, setOtpCode] = useState("");
     return(
         <div>
             {showOTPScreen ? (
