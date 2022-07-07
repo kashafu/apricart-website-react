@@ -88,7 +88,7 @@ export default function SingleProduct({ product, isInStock }) {
     }
 
     return (
-        <div className="relative flex flex-col items-center justify-between p-2 border-2 bg-white w-full h-[250px] rounded-2xl space-y-2">
+        <div className="relative flex flex-col items-center justify-between p-2 border-2 bg-white w-full h-[280px] lg:h-[250px] rounded-2xl space-y-2">
             <div className="absolute top-1 right-1">
                 <button onClick={() => {
                     addToWishlistApi();

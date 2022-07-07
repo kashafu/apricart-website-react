@@ -63,7 +63,7 @@ export default function Header({}) {
                     // data-bs-whatever="@mdo"
                 >
                     {""}
-                    <a className="nav-link">
+                    <a className="nav-link capitalize">
                         <img
                             src="/assets/images/user.png"
                             className="img-fluid"
@@ -194,16 +194,16 @@ export default function Header({}) {
 
     return (
         <div className="flex flex-row h-[50px] bg-white items-center py-2 px-4 space-x-4">
-            <div className="md:hidden">
+            <div className="lg:hidden">
                 <HamburgerMenu />
             </div>
-            <div className="hidden md:block md:w-[200px]">
+            <div className="hidden lg:block lg:w-[200px]">
                 <Logo />
             </div>
             <div className="grow">
                 <SearchBar />
             </div>
-            <div className="hidden md:inline md:flex md:flex-row md:space-x-4 md:items-center">
+            <div className="hidden lg:inline lg:flex lg:flex-row lg:space-x-4 lg:items-center">
                 <LinkText
                     text={"Order Manually"}
                     path={"/grocery_list"}
