@@ -386,7 +386,6 @@ export default function SlideDrawer(props) {
 							<div className="cart_body">
 								{cart.map((item) => {
 									console.log(item);
-									//let i=item.product;
 									const { id, productImageUrl, title, currentPrice, sku, qty } = item
 									return (
 										<div className="item cartitem" key={id}>
@@ -500,7 +499,8 @@ export default function SlideDrawer(props) {
 										<button onClick={() => {
 											hideSideDrawer()
 											if(token){
-												router.reload()
+												router.push('/checkout')
+												// router.reload()
 											}
 											else{
 												router.push('/login')

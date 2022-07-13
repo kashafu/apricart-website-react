@@ -9,6 +9,7 @@ import SubmitButton from "../components/Layout/components/Buttons/SubmitButton";
 import TextField from "../components/Layout/components/Input/TextField";
 import parse from 'html-react-parser';
 import Image from "next/image";
+import { toast } from "react-toastify";
 
 // ICONS
 import blueCircleIcon from '../public/assets/svgs/circle/filledBlueCircle.svg'
@@ -39,7 +40,8 @@ export default function Checkout() {
 	const [checkoutAddress, setCheckoutAddress] = useState(null)
 	const [checkoutErrorMessage, setCheckoutErrorMessage] = useState('')
 	const [addressErrorMessage, setAddressErrorMessage] = useState('')
-	// view state can be either 'shipping', 'payment', 'review', 'success'
+	const [cartErrorMessage, setCartErrorMessage] = useState('')
+	// view state can be either 'shipping', 'payment', 'review'
 	const [viewState, setViewState] = useState('shipping')
 	const [successResponse, setSuccessResponse] = useState(null)
 
@@ -97,12 +99,12 @@ export default function Checkout() {
 			setAddressErrorMessage('')
 			setCartData(response.data.data)
 		} catch (error) {
-			setAddressErrorMessage(error.response.data.message)
+			setAddressErrorMessage(error?.response?.data?.message)
 			setCartData(null)
 		}
 	}
 
-	const incrementItemQty = async (sku, qty) => {
+	const incrementItemQty = async (sku, qty, id) => {
 		let { headers, city } = getGeneralApiParams()
 		let url = base_url_api + '/order/cart/updateqty?city=' + city + '&lang=en&client_type=apricart'
 		let body = {
@@ -119,15 +121,19 @@ export default function Checkout() {
 				headers: headers
 			})
 
-			if(viewState != 'shipping'){
+			dispatch(incrementQuantity(id))
+			if (viewState != 'shipping') {
+				console.log(response)
 				getCartDataApi()
 			}
 		} catch (error) {
+			setCartErrorMessage(error?.response?.data?.message)
+			toast.error(error?.response?.data?.message)
 			console.log(error.response)
 		}
 	}
 
-	const decrementItemQty = async (sku, qty) => {
+	const decrementItemQty = async (sku, qty, id) => {
 		let { headers, city } = getGeneralApiParams()
 		let url = base_url_api + '/order/cart/updateqty?city=' + city + '&lang=en&client_type=apricart'
 		let body = {
@@ -144,10 +150,13 @@ export default function Checkout() {
 				headers: headers
 			})
 
-			if(viewState != 'shipping'){
+			dispatch(decrementQuantity(id))
+			if (viewState != 'shipping') {
 				getCartDataApi()
 			}
 		} catch (error) {
+			toast.error(error?.response?.data?.message)
+			setCartErrorMessage(error?.response?.data?.message)
 			console.log(error.response)
 		}
 	}
@@ -165,7 +174,7 @@ export default function Checkout() {
 			}
 
 			try {
-				let response = axios.delete(url, 
+				let response = axios.delete(url,
 					{
 						headers: headers,
 						data: body
@@ -188,7 +197,7 @@ export default function Checkout() {
 			}
 
 			try {
-				let response = axios.delete(url, 
+				let response = axios.delete(url,
 					{
 						headers: headers,
 						data: body
@@ -245,11 +254,11 @@ export default function Checkout() {
 		try {
 			let response = await axios.get(url)
 
-			response.data.data.forEach((item)=>{
-				if (item.key === 'shippment_charged_at'){
+			response.data.data.forEach((item) => {
+				if (item.key === 'shippment_charged_at') {
 					setShipmentChargedAt(item.value)
 				}
-				if (item.key === 'shippment_fix_amount'){
+				if (item.key === 'shippment_fix_amount') {
 					setShipmentFixAmount(item.value)
 				}
 			})
@@ -354,7 +363,7 @@ export default function Checkout() {
 
 		const getTotalPrice = () => {
 			return cart.reduce(
-				(accumulator, item) => accumulator + item.quantity * item.currentPrice, 0
+				(accumulator, item) => accumulator + item.qty * item.currentPrice, 0
 			)
 		}
 
@@ -363,7 +372,7 @@ export default function Checkout() {
 				<div className="flex flex-col w-full h-full justify-between bg-white rounded-3xl">
 					<div className="overflow-y-auto p-4 h-96 space-y-4">
 						{cart.map((item) => {
-							let { title, quantity, currentPrice, id, productImageUrlThumbnail, productImageUrl, sku } = item
+							let { title, qty, currentPrice, id, productImageUrlThumbnail, productImageUrl, sku } = item
 							return (
 								<div key={id} className='flex flex-row space-x-2 shadow rounded-3xl overflow-hidden p-2'>
 									<div className="relative h-[100px] w-[100px]">
@@ -379,8 +388,8 @@ export default function Checkout() {
 										<div className="flex flex-row space-x-4">
 											<button
 												onClick={() => {
-													dispatch(decrementQuantity(id))
-													decrementItemQty(sku, quantity)
+													// dispatch(decrementQuantity(id))
+													decrementItemQty(sku, qty, id)
 												}}
 											>
 												<Image
@@ -390,12 +399,12 @@ export default function Checkout() {
 												/>
 											</button>
 											<p>
-												{quantity}
+												{qty}
 											</p>
 											<button
 												onClick={() => {
-													dispatch(incrementQuantity(id))
-													incrementItemQty(sku, quantity)
+													// dispatch(incrementQuantity(id))
+													incrementItemQty(sku, qty, id)
 												}}
 											>
 												<Image
@@ -421,7 +430,7 @@ export default function Checkout() {
 											</p>
 										</div>
 										<p>
-											RS. {currentPrice * quantity}
+											RS. {currentPrice * qty}
 										</p>
 									</div>
 								</div>
@@ -442,7 +451,7 @@ export default function Checkout() {
 							<p className={pRight}>
 								Add items worth PKR {shipmentChargedAt - getTotalPrice()} more to avail free shipping
 							</p>
-						):(
+						) : (
 							<p className={pRight}>
 								Free Shipping
 							</p>
@@ -454,7 +463,7 @@ export default function Checkout() {
 							<p className={pRight}>
 								PKR {shipmentFixAmount}
 							</p>
-						):(
+						) : (
 							<p className={pRight}>
 								Free Shipping
 							</p>
@@ -492,22 +501,42 @@ export default function Checkout() {
 										<div className="flex flex-row space-x-4">
 											<button
 												onClick={() => {
-													dispatch(decrementQuantity(id))
-													decrementItemQty(sku, qty)
+													// dispatch(decrementQuantity(id))
+													decrementItemQty(sku, qty, id)
 												}}
 											>
-												-
+												<Image
+													src={minusIcon}
+													height={20}
+													width={20}
+												/>
 											</button>
 											<p>
 												{qty}
 											</p>
 											<button
 												onClick={() => {
-													dispatch(incrementQuantity(id))
-													incrementItemQty(sku, qty)
+													// dispatch(incrementQuantity(id))
+													incrementItemQty(sku, qty, id)
 												}}
 											>
-												+
+												<Image
+													src={plusIcon}
+													height={20}
+													width={20}
+												/>
+											</button>
+											<button
+												onClick={() => {
+													dispatch(removeFromCart(id))
+													deleteItem(sku)
+												}}
+											>
+												<Image
+													src={trashIcon}
+													height={20}
+													width={20}
+												/>
 											</button>
 											<p>
 												x RS. {currentPrice}
@@ -572,9 +601,8 @@ export default function Checkout() {
 
 	return (
 		<div>
-			<button
-				onClick={async()=>{
-					console.log("REDUX CART", cart)
+			{/* <button
+				onClick={async () => {
 					let { headers, city, userId } = getGeneralApiParams()
 					let lat = checkoutAddress ? JSON.parse(checkoutAddress).mapLat : '0'
 					let long = checkoutAddress ? JSON.parse(checkoutAddress).mapLong : '0'
@@ -598,20 +626,20 @@ export default function Checkout() {
 						let response = await axios.post(url, body, {
 							headers: headers
 						})
-						console.log("API CART", response.data.data)
+						// console.log("API CART", response.data.data)
 						// setAddressErrorMessage('')
 						// setCartData(response.data.data)
 					} catch (error) {
-						console.log("API ERROR",error)
+						// console.log("API ERROR",error)
 						// setAddressErrorMessage(error.response.data.message)
 						// setCartData(null)
 					}
 				}}
 			>
 				SHOW SHIT
-			</button>
-			<div className="flex flex-col lg:grid lg:grid-cols-3 gap-28">
-				<div className="col-span-2 space-y-12">
+			</button> */}
+			<div className="flex flex-col lg:grid lg:grid-cols-5 2xl:grid 2xl:grid-cols-6 gap-28">
+				<div className="lg:col-span-3 2xl:col-span-4 space-y-12">
 					<ProgressBar
 						currentState={viewState}
 						onClick={setViewState}
@@ -704,7 +732,7 @@ export default function Checkout() {
 					)}
 				</div>
 				{/* CART DIV */}
-				<div className="col-span-1 h-full">
+				<div className="lg:col-span-2 2xl:col-span-2 h-full">
 					<Cart
 						currentState={viewState}
 					/>

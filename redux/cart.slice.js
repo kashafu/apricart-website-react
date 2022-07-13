@@ -9,6 +9,7 @@ const cartSlice = createSlice({
 	initialState: [],
 	reducers: {
 		addToCart: (state, action) => {
+			console.log(action);
 			const itemExists = state.find((item) => item.id === action.payload.id);
 
 			if (itemExists) {
@@ -25,25 +26,24 @@ const cartSlice = createSlice({
 		},
 		incrementQuantity: (state, action) => {
 			const item = state.find((item) => item.id === action.payload);
-			if (item.quantity < item.maxQty) {
-				item.quantity++;
+			if (item.qty < item.maxQty) {
+				item.qty++;
 			} else {
-				item.quantity;
+				item.qty;
 				toast.info("Limit Exceeded !");
 			}
 		},
 		decrementQuantity: (state, action) => {
 			const item = state.find((item) => item.id === action.payload);
-			if (item.quantity === 1) {
+			if (item.qty === 1) {
 				const index = state.findIndex((item) => item.id === action.payload);
 				state.splice(index, 1);
 			} else {
-				item.quantity--;
+				item.qty--;
 			}
 		},
 		initialize: (state, action) => {
 			// state.push({ undefined, action })
-			console.log(action)
 			state.splice(0, state.length)
 			action.payload.forEach((item)=>{
 				state.push(item)
