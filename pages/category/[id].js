@@ -1,12 +1,15 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import axios from "axios";
-let base_url_api = "https://staging.apricart.pk/v1";
+import { base_url_api } from '../../information.json'
 import { getGeneralApiParams } from "../../helpers/ApiHelpers";
 import Categories from "../../components/Layout/components/Categories/Categories";
 import SingleProduct from "../../components/Layout/components/Products/SingleProduct";
+import PageHeading from '../../components/Layout/components/Typography/PageHeading'
+import Image from "next/image";
+import Link from "next/link";
 
-export default function CategoryProducts({ products }) {
+export default function CategoryProducts({ products, subCategories }) {
 	const router = useRouter()
 	const { id } = router.query
 
@@ -14,17 +17,17 @@ export default function CategoryProducts({ products }) {
 	const [updatedProductsList, setUpdatedProductsList] = useState(null)
 	const [errorMessage, setErrorMessage] = useState('')
 
-	useEffect(()=>{
+	useEffect(() => {
 		getCategoriesApi()
 		getUpdatedProductsApi()
 	}, [])
 
 	const getCategoriesApi = async () => {
-		let {city, headers} = getGeneralApiParams()
+		let { city, headers } = getGeneralApiParams()
 		let url = base_url_api + '/catalog/categories?level=all&client_type=apricart&city=' + city
-		
+
 		try {
-			let response = await axios.get(url, 
+			let response = await axios.get(url,
 				{
 					headers: headers
 				}
@@ -48,7 +51,8 @@ export default function CategoryProducts({ products }) {
 			setErrorMessage('')
 		}
 		catch (err) {
-			setErrorMessage(err.response.data.message)
+			console.log(err)
+			setErrorMessage(err?.response?.data?.message)
 		}
 	}
 
@@ -60,18 +64,18 @@ export default function CategoryProducts({ products }) {
 		)
 	}
 
-	if(!products) {
-		return(
-			<div>
-				<p>
-					NO ITEMS EXIST
-				</p>
-			</div>
-		)
-	}
+	// if (!products || products?.data?.length == 0) {
+	// 	return (
+	// 		<div>
+	// 			<p>
+	// 				NO ITEMS EXIST
+	// 			</p>
+	// 		</div>
+	// 	)
+	// }
 
-	if(products.status != 1){
-		return(
+	if (products.status != 1) {
+		return (
 			<div>
 				<p>
 					{products.message}
@@ -82,10 +86,12 @@ export default function CategoryProducts({ products }) {
 
 	return (
 		<div>
-			<p>
-				{/* {products.data[0].categoryleafName} */}
+			{/* <p>
 				{JSON.stringify(products)}
-			</p>
+			</p> */}
+			{/* <PageHeading
+				text={products.data[0].categoryleafName}
+			/> */}
 			<div className="grid grid-cols-5 gap-8">
 				{/* CATEGORIES SECTION */}
 				<section className="hidden lg:col-span-1 lg:block">
@@ -97,26 +103,55 @@ export default function CategoryProducts({ products }) {
 				</section>
 				{/* PRODUCTS SECTION */}
 				<section className="col-span-5 lg:col-span-4 space-y-12">
-					{/* <MainProducts
-						products={products.data}
-					/> */}
+					{/* SUB CATEGORIES SECTION */}
+					{subCategories && (
+						<section>
+							{subCategories.data.length > 0 && (
+								<div className="flex flex-row overflow-y-auto w-full space-x-4">
+									{subCategories.data.map((category) => {
+										let { id, name, image } = category
+										return (
+											<Link href={'/category/' + id} passHref>
+												<button key={id} className='flex flex-col items-center'>
+													<p className="font-lato text-main-blue text-lg font-bold">
+														{name}
+													</p>
+													<Image
+														src={image}
+														height={100}
+														width={100}
+													/>
+												</button>
+											</Link>
+										)
+									})}
+								</div>
+							)}
+						</section>
+					)}
 					{errorMessage == '' ? (
-						<div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
-							{products.data.map((product)=>{
-								let { id } = product
-								return(
-									<div key={id}>
-										<SingleProduct
-											product={product}
-											// TODO call api to get updated details of product and check if it is in stock
-										/>
-									</div>
-								)
-							})}
+						<div className="">
+							{products == null || products?.data?.length == 0 ? (
+								<div>
+									NO ITEMS EXIST
+								</div>
+							) : (
+								<section className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
+									{products.data.map((product) => {
+										let { id } = product
+										return (
+											<div key={id}>
+												<SingleProduct
+													product={product}
+												// TODO call api to get updated details of product and check if it is in stock
+												/>
+											</div>
+										)
+									})}
+								</section>
+							)}
 						</div>
-					)
-					:
-					(
+					) : (
 						<p>
 							{errorMessage}
 						</p>
@@ -137,14 +172,14 @@ export async function getStaticPaths() {
 			headers: headers
 		})
 
-		paths = response.data.data.map((categoryId)=>{
-			categoryId.map((childId)=>{
+		paths = response.data.data.map((categoryId) => {
+			categoryId.map((childId) => {
 				{
-					params: {id: childId.id}
+					params: { id: childId.id }
 				}
 			})
 			{
-				params: {id: categoryId.id}
+				params: { id: categoryId.id }
 			}
 		})
 	} catch (error) {
@@ -173,10 +208,24 @@ export async function getStaticProps({ query, params }) {
 		console.log(err);
 	}
 
+	let subCategoriesUrl = base_url_api + '/catalog/categories/detail?id=' + id + '&lang=en&client_type=apricart'
+	let subCategories = null
+
+	try {
+		let response = await axios.get(subCategoriesUrl, {
+			headers: headers
+		})
+
+		subCategories = response.data
+	} catch (error) {
+		console.log(error)
+	}
+
 	return {
 		props: {
 			products,
+			subCategories
 		},
 		revalidate: 200
-	};
+	}
 }
