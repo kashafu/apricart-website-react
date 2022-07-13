@@ -23,10 +23,10 @@ export default function Home() {
 	console.log( seladd);
 	
 
-	if (!token) {
-		const d = new Date();
-		cookies.set('guestUserId', 'desktopuser_' + d.getTime(), 30);
-	}
+	// if (!token) {
+	// 	const d = new Date();
+	// 	cookies.set('guestUserId', 'desktopuser_' + d.getTime(), 30);
+	// }
 
 	const [homeData, setHomeData] = useState(null)
 	const [errorMessage, setErrorMessage] = useState('Loading')
@@ -110,7 +110,7 @@ export default function Home() {
 						return (
 							// TODO get a unique id from api, using name for now
 							<section key={name} className='space-y-4'>
-								<div className="relative w-full h-[100px] md:h-[200px] lg:h-[300px] rounded-xl overflow-hidden">
+								<div className="relative w-full h-[100px] md:h-[150px] lg:h-[250px] rounded-xl overflow-hidden">
 									<Image
 										src={bannerImageWeb}
 										layout={'fill'}

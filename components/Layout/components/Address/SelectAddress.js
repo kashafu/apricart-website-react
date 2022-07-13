@@ -16,7 +16,7 @@ const cookies = new Cookies();
     'manage' allows u to edit address and select
 */
 
-export default function SelectAddress({type, setAddress}){
+export default function SelectAddress({ type, setAddress, dropDownSelectedAddress }) {
     const [savedAddresses, setSavedAddresses] = useState([])
     const [selectedAddress, setSelectedAddress] = useState(getGeneralApiParams().selectedAddress)
     const [showAddressCard, setShowAddressCard] = useState(false)
@@ -32,52 +32,53 @@ export default function SelectAddress({type, setAddress}){
         let url = base_url_api + '/home/address/delivery?lang=en&client_type=apricart'
 
         try {
-			const response = await axios.get(
-				url,
-				{
-					headers: headers
-				}
-			)
-			setSavedAddresses(response.data.data)
-		} catch (error) {
+            const response = await axios.get(
+                url,
+                {
+                    headers: headers
+                }
+            )
+            setSavedAddresses(response.data.data)
+        } catch (error) {
             console.log(error)
-		}
-	}
+        }
+    }
 
     const handleSavedAddressChange = (e) => {
         setSelectedAddress(e.target.value)
-        if(type === 'checkout'){
+        if (type === 'checkout') {
             setAddress(e.target.value)
         }
-        else{
+        else {
             cookies.set('selected-address', e.target.value)
             dispatch(updateSelectedAddress(e.target.value))
         }
     }
 
-    return(
+    return (
         <div className="w-full space-y-2">
             {type === 'checkout' && (
-                <div className="grid grid-cols-3">
-                    <p className="col-span-1">
+                <div className="grid grid-cols-5 items-center gap-4">
+                    <p className="col-span-1 font-lato text-main-blue font-semibold">
                         Select Address
                     </p>
                     <select
-                        className="col-span-2"
+                        className="col-span-3 h-full py-2 px-4 rounded-lg"
                         disabled={false}
                         onChange={handleSavedAddressChange}
                         value={selectedAddress}
                     >
                         <option
                             value={''}
-                            disabled= {true}
-                            selected= {true}
+                            disabled={true}
+                            selected={true}
                         >
                             Select Address
                         </option>
-                        {savedAddresses.map((option)=>{
-                            return(
+                        {savedAddresses.map((option) => {
+                            return (
                                 <option
+                                    selected={dropDownSelectedAddress ? JSON.parse(dropDownSelectedAddress).id == option.id : false}
                                     key={option.id}
                                     value={JSON.stringify(option)}
                                 >
@@ -86,32 +87,46 @@ export default function SelectAddress({type, setAddress}){
                             )
                         })}
                     </select>
+                    <div>
+                        <SubmitButton
+                            text={"Add Address"}
+                            onClick={() => {
+                                setShowAddressCard(!showAddressCard)
+                            }}
+                        />
+                    </div>
                 </div>
             )}
 
             {type === 'manage' && (
                 <div className="flex flex-col space-y-4">
-                    {savedAddresses.map((address)=>{
-                        let {id} = address
-                        return(
+                    {savedAddresses.map((address) => {
+                        let { id } = address
+                        return (
                             <SingleAddressListing
                                 key={id}
                                 listing={address}
                                 isSelected={selectedAddress ? selectedAddress.id == id : false}
-                                setAddress= {setSelectedAddress}
+                                setAddress={setSelectedAddress}
                                 updateSavedAddresses={getSavedAddressesApi}
                             />
                         )
                     })}
+                    <SubmitButton
+                        text={"Add Address"}
+                        onClick={() => {
+                            setShowAddressCard(!showAddressCard)
+                        }}
+                    />
                 </div>
             )}
 
-            <SubmitButton
+            {/* <SubmitButton
                 text={"Add Address"}
-                onClick={()=>{
+                onClick={() => {
                     setShowAddressCard(!showAddressCard)
                 }}
-            />
+            /> */}
             {showAddressCard && (
                 <AddressCard
                     type={'add'}

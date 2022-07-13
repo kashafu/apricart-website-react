@@ -100,7 +100,7 @@ const Wishpage = () => {
     setData(Data1);
     mydata = Data1;
     // console.log(mydata);
-    //dispatch(Initilaize([]));
+    //dispatch(initialize([]));
     mydata.map((item) => { dispatch(updatedwish(item)); });
 
     setTotal(response.data.total)

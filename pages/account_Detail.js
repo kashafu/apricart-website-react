@@ -23,7 +23,7 @@ export default function Account_Detail(){
 								<Link href={'/address'} passHref>
 									<button className="tablinks" >My Address</button>
 								</Link>
-								<Link href={'/account_Detail'} passHref>
+								<Link href={'/account_detail'} passHref>
 									<button className="tablinks active" >Account details</button>
 								</Link>
 							</div>
