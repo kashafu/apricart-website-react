@@ -130,7 +130,7 @@ export default function CategoryProducts({ products, subCategories }) {
 						</section>
 					)}
 					{errorMessage == '' ? (
-						<div className="">
+						<div>
 							{products == null || products?.data?.length == 0 ? (
 								<div>
 									NO ITEMS EXIST
