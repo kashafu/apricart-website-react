@@ -2,7 +2,7 @@ import PageHeading from '../components/Layout/components/Typography/PageHeading'
 import Heading from '../components/Layout/components/Typography/Heading'
 import Paragraph from '../components/Layout/components/Typography/Paragraph'
 
-export default function privacy() {
+export default function Privacy() {
 	return (
 		<div>
 			<PageHeading

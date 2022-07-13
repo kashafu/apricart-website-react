@@ -21,7 +21,9 @@ export default function Layout() {
 						<Link href={'/privacypolicy'} passHref>
                         	<a>Privacy Policy</a>
 						</Link>
-                        <a href="#">Terms of Use</a>
+						<Link href={'/term-of-use'} passHref>
+                        	<a>Terms of Use</a>
+						</Link>
                         <a href="#">FAQs</a>
 
                         <a href="#">Contact Us</a>
