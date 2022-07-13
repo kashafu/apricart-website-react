@@ -15,6 +15,8 @@ export default function Register(){
         phoneNumber: "",
         password: "",
     });
+    //empty push
+    
     const [showOTPScreen, setShowOTPScreen] = useState(false);
 
     var myHeaders = new Headers();
