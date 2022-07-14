@@ -11,13 +11,15 @@ import Banner from "../components/Layout/components/Banner/Banner";
 import MainProducts from '../components/Layout/components/Products/MainProducts'
 import Link from "next/link";
 import { useSelector, useDispatch } from "react-redux";
-
+import {updateticker} from "../redux/general.slice";
 
 import { useRouter } from "next/router";
 import { Addressupdate} from "../redux/general.slice"
 
+
 export default function Home() {
 	const cookies = new Cookies();
+	const dispatch=useDispatch();
 	let token = cookies.get('cookies-token')
 	const seladd = useSelector((state)=>state.general);
 	console.log( seladd);
@@ -29,7 +31,8 @@ export default function Home() {
 	}
 
 	const [homeData, setHomeData] = useState(null)
-	const [errorMessage, setErrorMessage] = useState('Loading')
+	const [errorMessage, setErrorMessage] = useState('Loading');
+	const [ticker,setticker]=useState()
 
 	useEffect(() => {
 		getHomeDataApi()
@@ -47,7 +50,10 @@ export default function Home() {
 				}
 			)
 
-			setHomeData(response.data.data)
+			setHomeData(response.data.data);
+			setticker(response.data.data.ticker);
+			console.log(ticker);
+			dispatch(updateticker(ticker));
 		} catch (error) {
 			setErrorMessage(error.message)
 		}

@@ -22,6 +22,10 @@ const wishSlice = createSlice({
       let userId=cookies.get('cookies-userId');
       state.push({ ...action.payload, quantity: 1 });
     },
+    Initilaize(state,action){
+      state = {...action.payload}
+    }
+    ,
     decrementwishQuantity: (state, action) => {
       const item = state.find((item) => item.id === action.payload);
       if (item.quantity === 1) {
@@ -45,5 +49,6 @@ export const {
   incrementQuantity,
   decrementQuantity,
   removeFromWish,
-  updatedwish
+  updatedwish,
+  Initilaize
 } = wishSlice.actions;

@@ -135,5 +135,5 @@ export const {
   decrementQuantity,
   removeFromCart,
   updatedcart,
-  Initilaize
+  //Initilaize
 } = cartSlice.actions;

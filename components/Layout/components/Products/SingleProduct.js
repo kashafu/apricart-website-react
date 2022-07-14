@@ -68,7 +68,8 @@ export default function SingleProduct({ product, isInStock }) {
     }
 
     const addToWishlistApi = async () => {
-        let { token, headers } = getGeneralApiParams()
+        let { token, headers } = getGeneralApiParams();
+      //  dispatch(addToWish(product));
         let body = { sku: [product.sku] }
         if (token) {
             let url = base_url_api + '/watchlist/save?city=karachi&lang=en'
@@ -92,7 +93,7 @@ export default function SingleProduct({ product, isInStock }) {
             <div className="absolute top-1 right-1">
                 <button onClick={() => {
                     addToWishlistApi();
-                    dispatch(addToWish(product));
+                   
                 
                 }}>
                     <Image
