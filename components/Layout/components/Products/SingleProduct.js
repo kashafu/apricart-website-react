@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "../../../../redux/cart.slice";
 import { addToWish } from "../../../../redux/wish.slice";
 import heartimg from "../../../../public/assets/images/heart.png";
+import missingImageIcon from '../../../../public/assets/svgs/missingImageIcon.svg'
 
 import { base_url_api } from '../../../../information.json'
 import { getGeneralApiParams } from "../../../../helpers/ApiHelpers";
@@ -23,7 +24,7 @@ export default function SingleProduct({ product, isInStock }) {
     if (isInStock) {
         inStock = isInStock
     }
-    let imageUrl = productImageUrlThumbnail == '' ? productImageUrl : productImageUrlThumbnail
+    let imageUrl = productImageUrlThumbnail != '' ? productImageUrlThumbnail : (productImageUrl != '' ? productImageUrl : missingImageIcon)
     let isLoggedIn = cookies.get('cookies-token') != null
 
     const [innerText, setInnerText] = useState('Add to Cart')

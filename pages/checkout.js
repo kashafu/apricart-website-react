@@ -17,6 +17,7 @@ import blackCircleIcon from '../public/assets/svgs/circle/unfilledCircle.svg'
 import plusIcon from '../public/assets/svgs/plusIcon.svg'
 import minusIcon from '../public/assets/svgs/minusIcon.svg'
 import trashIcon from '../public/assets/svgs/trashIcon.svg'
+import missingImageIcon from '../public/assets/svgs/missingImageIcon.svg'
 
 import { useSelector, useDispatch } from "react-redux";
 import { incrementQuantity, decrementQuantity, removeFromCart, updatedcart } from "../redux/cart.slice";
@@ -377,7 +378,7 @@ export default function Checkout() {
 								<div key={id} className='flex flex-row space-x-2 shadow rounded-3xl overflow-hidden p-2'>
 									<div className="relative h-[100px] w-[100px]">
 										<Image
-											src={productImageUrlThumbnail ? productImageUrlThumbnail : productImageUrl}
+											src={productImageUrlThumbnail ? productImageUrlThumbnail : (productImageUrl ? productImageUrl : missingImageIcon)}
 											layout={'fill'}
 										/>
 									</div>
