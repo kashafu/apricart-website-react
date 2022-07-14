@@ -13,7 +13,7 @@ import { addToWish,updatedwish, Initilaize} from "../redux/wish.slice";
 import axios from "axios";
 import Cookies from 'universal-cookie';
 import { getGeneralApiParams } from "../helpers/ApiHelpers";
-let base_url_api = "https://staging.apricart.pk/v1";
+let base_url_api = "https://stag.apricart.pk/v1";
 //none
 const Wishpage = () => {
   const cookies = new Cookies();
@@ -85,7 +85,7 @@ const Wishpage = () => {
     var data =JSON.stringify({sku:[wish.sku]}); //  method: 'delete',
 
    
-      let url='https://staging.apricart.pk/v1/watchlist/delete?city=karachi&lang=en';
+      let url='https://stag.apricart.pk/v1/watchlist/delete?city=karachi&lang=en';
     
    if (token){
     const response = axios.delete(url,{headers:headers,data:data})
@@ -94,7 +94,7 @@ const Wishpage = () => {
   Wishall = async () => {
     if (token){
     //${cookies.get("cookies-userId")}& &userid=${userI {cookies.get("cookies-userId")}
-    const response = await axios.get('https://staging.apricart.pk/v1/watchlist/all?guestuserid=abc123&city=karachi&lang=en',{headers:headers});
+    const response = await axios.get('https://stag.apricart.pk/v1/watchlist/all?guestuserid=abc123&city=karachi&lang=en',{headers:headers});
 
     let Data1 = response.data.data;
     setData(Data1);

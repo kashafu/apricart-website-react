@@ -4,7 +4,7 @@ import Slider from "react-slick";
 import Link from "next/link";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../../../../redux/cart.slice";
-let base_url_api = "https://staging.apricart.pk/v1";
+let base_url_api = "https://stag.apricart.pk/v1";
 import Cookies from 'universal-cookie';
 
 export default function RecommendedProducts() {

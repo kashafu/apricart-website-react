@@ -1,6 +1,6 @@
 // const { data } = require("jquery");
 
-let base_url_api = "https://staging.apricart.pk/api/v1/";
+let base_url_api = "https://stag.apricart.pk/api/v1/";
 //let base_url_api = "https://cbe.apricart.pk/v1/";
 // let base_url_api = "http://192.168.18.14:8080/v1/";
 
@@ -8,7 +8,7 @@ let base_url_web = "http://localhost:3000/";
 // let base_url_images = "https://chai.apricart.pk"; //http://15.185.57.143
 let base_url_images = base_url_api.slice(0, -1);
 let default_image = base_url_web + "assets/imgs/default/MicrosoftTeams-image.png"
-// let base_url_cbe = "https://staging.apricart.pk/api/v1/";
+// let base_url_cbe = "https://stag.apricart.pk/api/v1/";
 let testingPage = ['index1.html', 'index2.html'];
 
 
@@ -344,7 +344,7 @@ function updateButton(response,sku) {
 //     }
 // function login(username, password) {
 //     $.ajax({
-//         url: "https://staging.apricart.pk/erp/v1/auth/open/login",
+//         url: "https://stag.apricart.pk/erp/v1/auth/open/login",
 //         context: document.body,
 //         type: "post",
 //         data: '{"guestuserid":"'+getCookie('guestUserId')+'","username":"'+username+'","password":"'+password+'"}',
@@ -1515,7 +1515,7 @@ $( document ).ready(function() {
     
 
     // $.ajax({
-    //       url: "https://staging.apricart.pk/erp/v1/home/all?client_lat=24.881308&client_long=67.06022",
+    //       url: "https://stag.apricart.pk/erp/v1/home/all?client_lat=24.881308&client_long=67.06022",
     //       context: document.body
     //     })
     // .done(function(data) {
@@ -1529,7 +1529,7 @@ $( document ).ready(function() {
     
     if (window.location.pathname.indexOf('/')> 0) {
         // $.ajax({
-        //     url: "https://staging.apricart.pk/erp/v1/home/all?client_lat=24.881308&client_long=67.06022",
+        //     url: "https://stag.apricart.pk/erp/v1/home/all?client_lat=24.881308&client_long=67.06022",
         //     context: document.body
         //   })
         // .done(function(data) {

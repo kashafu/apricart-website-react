@@ -45,7 +45,7 @@ const SlideDrawer = (props) => {
 
 	// const getDiscount = async() =>{
 	//   const response = await axios.get(
-	//     'https://staging.apricart.pk/api/v1/order/cart/all?city=karachi&lang=en&orderType=delivery'
+	//     'https://stag.apricart.pk/api/v1/order/cart/all?city=karachi&lang=en&orderType=delivery'
 	//   );
 	//   setData(response);
 	//   console.log(response)
@@ -88,7 +88,7 @@ const SlideDrawer = (props) => {
 		let userId = cookies.get('cookies-userId')
 		cartAll = async () => {
 			//${cookies.get("cookies-userId")}& &userid=${userI {cookies.get("cookies-userId")}
-			const response = await axios.post('https://staging.apricart.pk/v1/order/cart/checkout?userid=10638&city=karachi&lang=en&client_lat=24.909230104621333&client_long=67.12185373161728', data, {
+			const response = await axios.post('https://stag.apricart.pk/v1/order/cart/checkout?userid=10638&city=karachi&lang=en&client_lat=24.909230104621333&client_long=67.12185373161728', data, {
 				headers: {
 					'Content-Type': 'application/json',
 					'Authorization': 'Bearer '
@@ -121,7 +121,7 @@ const SlideDrawer = (props) => {
 		cartAll = async () => {
 
 			const response = await axios.get(
-				`https://staging.apricart.pk/v1/guest/cart/all?userid=${cookies.get('guestUserId')}&lang=en`,
+				`https://stag.apricart.pk/v1/guest/cart/all?userid=${cookies.get('guestUserId')}&lang=en`,
 				config
 			);
 			setData(response.data.data);
@@ -138,7 +138,7 @@ const SlideDrawer = (props) => {
 	const OptionAll = async () => {
 
 		const response = await axios.get(
-			`https://staging.apricart.pk/v1/options/all`,
+			`https://stag.apricart.pk/v1/options/all`,
 			config
 		);
 		setOption(response.data.data);
@@ -191,7 +191,7 @@ const SlideDrawer = (props) => {
 			// let parmas={"city":"karachi",
 			//   "lang":"en",
 			//   "client_type":"apricart"}
-			//  const response = axios.delete('https://staging.apricart.pk/v1/order/cart/delete?',dat,{headers:{'Accept':'*/*','Content-Type' : 'application/json','Authorization' : 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI5MjMxMTE4MTMzODkiLCJyb2xlIjoiVVNFUiIsImlzcyI6Ind3dy5ib2lsZXJwbGF0ZS5kZXNpZ24iLCJpYXQiOjE2NTU5Njk3NzEsImV4cCI6MTY1ODU2MTc3MX0.Vbe_9XTQOqDwkkNzc0po96aJWqCnA8lqDahOjTWQgfU'}});
+			//  const response = axios.delete('https://stag.apricart.pk/v1/order/cart/delete?',dat,{headers:{'Accept':'*/*','Content-Type' : 'application/json','Authorization' : 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI5MjMxMTE4MTMzODkiLCJyb2xlIjoiVVNFUiIsImlzcyI6Ind3dy5ib2lsZXJwbGF0ZS5kZXNpZ24iLCJpYXQiOjE2NTU5Njk3NzEsImV4cCI6MTY1ODU2MTc3MX0.Vbe_9XTQOqDwkkNzc0po96aJWqCnA8lqDahOjTWQgfU'}});
 
 			//   
 			var data = JSON.stringify({
@@ -204,7 +204,7 @@ const SlideDrawer = (props) => {
 
 			var conf = {
 				method: 'delete',
-				url: 'https://staging.apricart.pk/v1/order/cart/delete?city=karachi&lang=en&client_type=apricart',
+				url: 'https://stag.apricart.pk/v1/order/cart/delete?city=karachi&lang=en&client_type=apricart',
 				headers: {
 					'Content-Type': 'application/json',
 					'Authorization': 'Bearer ' + cookies.get("cookies-token")
@@ -242,7 +242,7 @@ const SlideDrawer = (props) => {
 			]
 		}
 		if (token) {
-			axios.post('https://staging.apricart.pk/v1/order/cart/updateqty?city=karachi&lang=en&client_type=apricart', udat, {
+			axios.post('https://stag.apricart.pk/v1/order/cart/updateqty?city=karachi&lang=en&client_type=apricart', udat, {
 				headers: {
 					'Content-Type': 'application/json',
 					'Authorization': 'Bearer ' + cookies.get("cookies-token")

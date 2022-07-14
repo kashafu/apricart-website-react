@@ -21,7 +21,7 @@ export default function GroceryList(){
 		e.preventDefault();
 		try {
 			const response = await axios.post(
-				`https://staging.apricart.pk/v1/order/checkout/manual`,
+				`https://stag.apricart.pk/v1/order/checkout/manual`,
 				userData,
 				{
 					headers: {

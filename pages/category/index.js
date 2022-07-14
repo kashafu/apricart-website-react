@@ -63,7 +63,7 @@ export default function Posts({ posts }) {
 }
 
 // export async function getServerSideProps() {
-// 	const res = await fetch("https://staging.apricart.pk/v1/catalog/categories?level=all");
+// 	const res = await fetch("https://stag.apricart.pk/v1/catalog/categories?level=all");
 
 // 	const getdata = await res.json();
 // 	const posts = getdata.data

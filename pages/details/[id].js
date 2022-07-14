@@ -96,7 +96,7 @@ export default function Post({ product }) {
 	// 	if (token) {
 	// 		console.log("AVG ")
 	// 		console.log(list.sku);
-	// 		const response = axios.post('https://staging.apricart.pk/v1/order/cart/save?city=karachi&lang=en', data, {
+	// 		const response = axios.post('https://stag.apricart.pk/v1/order/cart/save?city=karachi&lang=en', data, {
 	// 			headers: {
 	// 				"Content-Type": "application/json",
 	// 				Authorization: "Bearer " + cookies.get("cookies-token"),

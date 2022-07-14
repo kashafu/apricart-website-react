@@ -4,7 +4,7 @@ import axios from "axios";
 import Catagory1 from '../../components/Layout/components/Categories/Categories'
 
 
-let base_url_api = "https://staging.apricart.pk/v1";
+let base_url_api = "https://stag.apricart.pk/v1";
 
 export default function Posts({ posts }) {
   return (

@@ -54,7 +54,7 @@ export const profileUser = (userData) => {
 
 		dispatch({type :SET_LOADER});
 		try{
-			const {data} = await axios.post('https://staging.apricart.pk/v1/home/profile',userData,config);
+			const {data} = await axios.post('https://stag.apricart.pk/v1/home/profile',userData,config);
 			dispatch({type: CLOSE_LOADER});
 			dispatch({type: SET_MESSAGE,payload: data.data.total});
 			dispatch({type: REDIRECT_TRUE});

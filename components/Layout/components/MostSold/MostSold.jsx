@@ -11,7 +11,7 @@ import Cookies from 'universal-cookie';
 import Image from 'next/image'
 
 
-let base_url_api = "https://staging.apricart.pk/v1";
+let base_url_api = "https://stag.apricart.pk/v1";
 
 export default function RecommendedProducts() {
   
@@ -73,7 +73,7 @@ export default function RecommendedProducts() {
     const wishdata=
       {sku:[list.sku]}
     if (token){
-    const response = axios.post('https://staging.apricart.pk/v1/watchlist/save?',wishdata,
+    const response = axios.post('https://stag.apricart.pk/v1/watchlist/save?',wishdata,
     { headers:{
       "Content-Type": "application/json",
       Authorization: "Bearer " + cookies.get("cookies-token"),
@@ -93,7 +93,7 @@ export default function RecommendedProducts() {
     if (token){
       console.log("AVG ")
       console.log(list.sku);
-      const response =  axios.post( 'https://staging.apricart.pk/v1/order/cart/save?city=karachi&lang=en&client_type=apricart' ,data,{
+      const response =  axios.post( 'https://stag.apricart.pk/v1/order/cart/save?city=karachi&lang=en&client_type=apricart' ,data,{
         headers:{
           "Content-Type": "application/json",
           Authorization: "Bearer " + cookies.get("cookies-token"),

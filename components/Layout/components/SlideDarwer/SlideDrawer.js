@@ -119,7 +119,7 @@ export default function SlideDrawer(props) {
 	// 	let userId = cookies.get('cookies-userId')
 	// 	cartAll = async () => {
 	// 		//${cookies.get("cookies-userId")}& &userid=${userI {cookies.get("cookies-userId")}
-	// 		const response = await axios.post('https://staging.apricart.pk/v1/order/cart/checkout?userid=10638&city=karachi&lang=en&client_lat=24.909230104621333&client_long=67.12185373161728', data, {
+	// 		const response = await axios.post('https://stag.apricart.pk/v1/order/cart/checkout?userid=10638&city=karachi&lang=en&client_lat=24.909230104621333&client_long=67.12185373161728', data, {
 	// 			headers: {
 	// 				'Content-Type': 'application/json',
 	// 				'Authorization': 'Bearer '
@@ -149,7 +149,7 @@ export default function SlideDrawer(props) {
 	// 	cartAll = async () => {
 
 	// 		const response = await axios.get(
-	// 			`https://staging.apricart.pk/v1/guest/cart/all?userid=${cookies.get('guestUserId')}&lang=en`,
+	// 			`https://stag.apricart.pk/v1/guest/cart/all?userid=${cookies.get('guestUserId')}&lang=en`,
 	// 			config
 	// 		);
 	// 		setCartData(response.data.data);
@@ -167,7 +167,7 @@ export default function SlideDrawer(props) {
 	// const OptionAll = async () => {
 
 	// 	const response = await axios.get(
-	// 		`https://staging.apricart.pk/v1/options/all`,
+	// 		`https://stag.apricart.pk/v1/options/all`,
 	// 		config
 	// 	);
 	// 	setOption(response.data.data);
@@ -283,7 +283,7 @@ export default function SlideDrawer(props) {
 
 			// var conf = {
 			// 	method: 'delete',
-			// 	url: 'https://staging.apricart.pk/v1/order/cart/delete?city=karachi&lang=en&client_type=apricart',
+			// 	url: 'https://stag.apricart.pk/v1/order/cart/delete?city=karachi&lang=en&client_type=apricart',
 			// 	headers: {
 			// 		'Content-Type': 'application/json',
 			// 		'Authorization': 'Bearer ' + cookies.get("cookies-token")
@@ -350,7 +350,7 @@ export default function SlideDrawer(props) {
 			]
 		}
 		if (token) {
-			axios.post('https://staging.apricart.pk/v1/order/cart/updateqty?city=karachi&lang=en&client_type=apricart', udat, {
+			axios.post('https://stag.apricart.pk/v1/order/cart/updateqty?city=karachi&lang=en&client_type=apricart', udat, {
 				headers: {
 					'Content-Type': 'application/json',
 					'Authorization': 'Bearer ' + cookies.get("cookies-token")

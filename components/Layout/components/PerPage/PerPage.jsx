@@ -4,7 +4,7 @@ import "react-phone-input-2/lib/style.css";
 
 import React, { useEffect, useState } from "react";
 
-const baseURL ="https://staging.apricart.pk/v1";
+const baseURL ="https://stag.apricart.pk/v1";
 
 export default function Header() {
   const [page, setPage] = useState();

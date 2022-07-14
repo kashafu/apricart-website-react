@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import axios from "axios";
 import Catagory1 from "../../components/Layout/components/Categories/Categories";
 import Pagination from "../../components/Layout/components/Pagination/pagination";
-let base_url_api = "https://staging.apricart.pk/v1";
+let base_url_api = "https://stag.apricart.pk/v1";
 import Link from "next/link";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -55,7 +55,7 @@ export default function Post({ postData }) {
     if (token){
       console.log("AVG ")
       console.log(list.sku);
-      const response =  axios.post( 'https://staging.apricart.pk/v1/order/cart/save?city=karachi&lang=en' ,data,{
+      const response =  axios.post( 'https://stag.apricart.pk/v1/order/cart/save?city=karachi&lang=en' ,data,{
         headers:{
           "Content-Type": "application/json",
           Authorization: "Bearer " + cookies.get("cookies-token"),
@@ -190,9 +190,9 @@ export async function getStaticPaths() {
 export async function getStaticProps({ query, params }) {
   const { id } = query || params;
 
-  // `https://staging.apricart.pk/v1/catalog/categories/products?category=${id}&page=1&size=10&sortType=&sortDirection=desc&instant=3`
+  // `https://stag.apricart.pk/v1/catalog/categories/products?category=${id}&page=1&size=10&sortType=&sortDirection=desc&instant=3`
   const res = await fetch(
-    `https://staging.apricart.pk/v1/catalog/products/search?page=1&size=60&term=${id}&category=&city=${cookies.get('cities')}&lang=en`
+    `https://stag.apricart.pk/v1/catalog/products/search?page=1&size=60&term=${id}&category=&city=${cookies.get('cities')}&lang=en`
   );
   const alldata = await res.json();
   const postData = alldata.data;

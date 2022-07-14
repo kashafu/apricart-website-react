@@ -37,7 +37,7 @@ export default function Order() {
 		e.preventDefault();
 		try {
 			const response = await axios.get(
-				`https://staging.apricart.pk/v1/order/checkout/cancel?id=${cancelid}`, {
+				`https://stag.apricart.pk/v1/order/checkout/cancel?id=${cancelid}`, {
 				headers: {
 					'Accept': 'application/json',
 					'Content-Type': 'application/json',

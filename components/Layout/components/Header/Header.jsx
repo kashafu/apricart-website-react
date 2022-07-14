@@ -171,7 +171,7 @@ export default function Header({}) {
         userId = cookies.get("cookies-userId");
         cartAll = async () => {
             const response = await axios.get(
-                `https://staging.apricart.pk/v1/order/cart/checkout?userid=10638&city=karachi&lang=en&client_lat=24.909230104621333&client_long=67.12185373161728`,
+                `https://stag.apricart.pk/v1/order/cart/checkout?userid=10638&city=karachi&lang=en&client_lat=24.909230104621333&client_long=67.12185373161728`,
                 {
                     headers: {
                         "Content-Type": "application/json",
@@ -188,7 +188,7 @@ export default function Header({}) {
     } else {
         // cartAll = async() =>{
         //   const response = await axios.get(
-        //     `https://staging.apricart.pk/v1/guest/cart/all?userid=${cookies.get('guestUserId')}&lang=en`,
+        //     `https://stag.apricart.pk/v1/guest/cart/all?userid=${cookies.get('guestUserId')}&lang=en`,
         //     config
         //   );
         //   setData(response.data.data);

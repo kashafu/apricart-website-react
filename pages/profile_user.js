@@ -7,7 +7,7 @@ import {
 	decrementQuantity,
 	removeFromCart,
 } from "../redux/cart.slice";
-let base_url_api = "https://staging.apricart.pk/v1";
+let base_url_api = "https://stag.apricart.pk/v1";
 import axios from 'axios'
 import Cookies from 'universal-cookie';
 import { getGeneralApiParams } from "../helpers/ApiHelpers";
@@ -33,7 +33,7 @@ export default function ProfileUser(){
 			}
 		}
 		const response = await axios.get(
-			'https://staging.apricart.pk/v1/home/profile', config
+			'https://stag.apricart.pk/v1/home/profile', config
 		);
 		setProfile(response.data.data);
 		let profileData = response.data
