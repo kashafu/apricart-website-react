@@ -2,8 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Nunito:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+/* @import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap'); */
+/* @import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Nunito:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap'); */
 html, body {
     box-sizing: border-box;
     font-family: Celias,Arial;
@@ -625,7 +625,7 @@ li.bos a {
     transform: rotate(90deg);
 }
 
-/*/top bar section end*/
+/*top bar section end*/
 
 /*navigation bar section start*/
 
@@ -864,7 +864,7 @@ section.recommend_sec {
 
 /*recommended section end*/
 
-/*/footer sec start*/
+/*footer sec start*/
 footer#footer {
     padding: 30px 0 0px;
     background-color: #fff;
@@ -953,7 +953,7 @@ span.highligh1 {
     color: #0b185a;
 }
 
-/*/footer sec end*/
+/*footer sec end*/
 /*copysec start*/
 section.copysec {
     background-color: #fff;
@@ -1400,7 +1400,7 @@ input:focus {
 }
 .pro_discount {
     padding-top: 5px;
-} */
+}
 
 /*category section end */
 
@@ -2444,7 +2444,7 @@ select#product {
     width: 100%;
 }
 
-/*/footer sec start*/
+/*footer sec start*/
 footer#footer {
     padding: 30px 0 0px;
     background-color: #fff;
@@ -2552,7 +2552,7 @@ li.cart-total.total-price1{
 
 
 
-/*/footer sec end*/
+/*footer sec end*/
 /*copysec start*/
 section.copysec {
     background-color: #fff;
@@ -3085,7 +3085,7 @@ select#product {
     width: 100%;
 }
 
-/*/footer sec start*/
+/*footer sec start*/
 footer#footer {
     padding: 30px 0 0px;
     background-color: #fff;
@@ -3849,7 +3849,7 @@ a.btn.btn-primary.chane:hover {
     border-color: #08185A !important;
     font-size: 13;
 }
-/*/footer sec start*/
+/*footer sec start*/
 footer#footer {
     padding: 30px 0 0px;
     background-color: #fff;
@@ -3873,7 +3873,7 @@ footer#footer {
     color: #000;
     margin: 0 auto;
 }
-/*/footer sec end*/
+/*footer sec end*/
 /*copysec start*/
 section.copysec {
     background-color: #fff;
@@ -4546,7 +4546,7 @@ a.mob_subcatagory {
 
 .box {
     border: 5px solid #deddf7 !important;
-    box-shadow: rgb(0 0 0 / 25%) 0px 54px 55px, rgb(0 0 0 / 12%) 0px -12px 30px, rgb(0 0 0 / 12%) 0px 4px 6px, rgb(0 0 0 / 17%) 0px 12px 13px, rgb(0 0 0 / 9%) 0px -3px 5px;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgb(0 0 0 / 12%) 0px -12px 30px, rgb(0 0 0 / 12%) 0px 4px 6px, rgb(0 0 0 / 17%) 0px 12px 13px, rgb(0 0 0 / 9%) 0px -3px 5px;
     position: relative;
     width: 70%;
     margin: 0 auto;
@@ -5066,7 +5066,7 @@ select#product {
     width: 100%;
 }
 
-/*/footer sec start*/
+/*footer sec start*/
 footer#footer {
     padding: 30px 0 0px;
     background-color: #fff;
@@ -5634,7 +5634,7 @@ section.myordersec {
 
 /*account sec start*/
 
-  @import url(https://fonts.googleapis.com/css?family=Open+Sans:400,500,300,700);
+  /* @import url(https://fonts.googleapis.com/css?family=Open+Sans:400,500,300,700); */
 .tab button {
   display: block;
   background-color: inherit;
@@ -5654,7 +5654,7 @@ section.myordersec {
     color: #fff;
 }
 
-/* Create an active/current "tab button" class */
+/* Create an activecurrent "tab button" class */
 .tab button.active {
     background-color: #08185a;
     color: #fff;
