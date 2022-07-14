@@ -10,29 +10,17 @@ import { getGeneralApiParams } from '../helpers/ApiHelpers'
 import Banner from "../components/Layout/components/Banner/Banner";
 import MainProducts from '../components/Layout/components/Products/MainProducts'
 import Link from "next/link";
-import { useSelector, useDispatch } from "react-redux";
-import {updateticker} from "../redux/general.slice";
-
-import { useRouter } from "next/router";
-import { Addressupdate} from "../redux/general.slice"
-
+import { useDispatch } from "react-redux";
+import { updateTicker } from "../redux/general.slice";
 
 export default function Home() {
 	const cookies = new Cookies();
-	const dispatch=useDispatch();
+	const dispatch = useDispatch();
 	let token = cookies.get('cookies-token')
-	const seladd = useSelector((state)=>state.general);
-	console.log( seladd);
-	
 
-	// if (!token) {
-	// 	const d = new Date();
-	// 	cookies.set('guestUserId', 'desktopuser_' + d.getTime(), 30);
-	// }
 
 	const [homeData, setHomeData] = useState(null)
 	const [errorMessage, setErrorMessage] = useState('Loading');
-	const [ticker,setticker]=useState()
 
 	useEffect(() => {
 		getHomeDataApi()
@@ -51,9 +39,7 @@ export default function Home() {
 			)
 
 			setHomeData(response.data.data);
-			setticker(response.data.data.ticker);
-			console.log(ticker);
-			dispatch(updateticker(ticker));
+			dispatch(updateTicker(response.data.data.ticker));
 		} catch (error) {
 			setErrorMessage(error.message)
 		}
@@ -68,7 +54,7 @@ export default function Home() {
 			</div>
 		)
 	}
-	
+
 	return (
 		<>
 			<p>
@@ -89,14 +75,14 @@ export default function Home() {
 						categories={homeData.categories}
 					/>
 				</section>
-				{/* WEB PRODUCTS SECTION */}
-				{/* <section className="col-span-5 lg:col-span-4 space-y-12">
-					<MainProducts
-						products={homeData.webProducts}
-					/>
-				</section> */}
 				{/* PRODUCTS SECTION */}
 				<section className="col-span-5 lg:col-span-4 space-y-12">
+					{/* WEB PRODUCTS SECTION */}
+					<section className="col-span-5 lg:col-span-4 space-y-12">
+						<MainProducts
+							products={homeData.webProducts}
+						/>
+					</section>
 					{homeData.products.map((product) => {
 						let { bannerImageWeb, data, name } = product
 

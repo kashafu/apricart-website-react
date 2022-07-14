@@ -80,7 +80,6 @@ export default function SlideDrawer(props) {
 				headers: headers
 			})
 
-			console.log(response.data);
 			dispatch(initialize(response.data.data.products))
 			setCartData(response.data.data)
 		} catch (error) {

@@ -1,38 +1,41 @@
 import React, { useState, useEffect } from "react";
 import { Button } from "react-bootstrap";
 import Image from "next/image";
-import Link from 'next/link'
+import Link from "next/link";
 import Popup from "../Popup/Popup";
 import Cookies from "universal-cookie";
-import {useRouter} from "next/router"
+import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
-import {Addressupdate} from "../../../../redux/general.slice";
 import { getGeneralApiParams } from "../../../../helpers/ApiHelpers";
 
 // IMAGES
 // import bikePNG from "../../../../public/assets/images/bike.png";
 import locationPinPNG from "../../../../public/assets/images/location.png";
 import phonePNG from "../../../../public/assets/images/phone.png";
-import logoPNG from '../../../../public/assets/images/logo.png'
+import logoPNG from "../../../../public/assets/images/logo.png";
 
 export default function Layout() {
-    const cookies = new Cookies()
-    const router = useRouter()
-    const addressSelector = useSelector((state=>state.general.selectedAddress));
+    const cookies = new Cookies();
+    const router = useRouter();
+    const addressSelector = useSelector(
+        (state) => state.general.selectedAddress
+    );
+    const tickerSelector = useSelector((state) => state.general.ticker);
 
-    let pStyle = "font-lato font-bold text-sm lg:text-md text-black lg:text-base"
-    // let divIconStyle = "relative w-[15px] h-[15px] lg:w-[22px] lg:h-[22px]" 
-    let { city } = getGeneralApiParams()
+    let pStyle =
+        "font-lato font-bold text-sm lg:text-md text-black lg:text-base";
+    // let divIconStyle = "relative w-[15px] h-[15px] lg:w-[22px] lg:h-[22px]"
+    let { city } = getGeneralApiParams();
 
-    const [getcity, setcity] = useState(city)
-    const [isOpen, setIsOpen] = useState(false)
+    const [getcity, setcity] = useState(city);
+    const [isOpen, setIsOpen] = useState(false);
 
     useEffect(() => {
         if (cookies.get("cities") == null) {
             cookies.set("cities", "karachi");
             getLocation();
         }
-    }, [])
+    }, []);
 
     const getLocation = () => {
         if (!navigator.geolocation) {
@@ -86,7 +89,7 @@ export default function Layout() {
     const togglePopup = () => {
         setIsOpen(!isOpen);
     };
-    
+
     const closeButton = () => {
         setIsOpen(!isOpen);
         window.location.reload();
@@ -103,146 +106,147 @@ export default function Layout() {
     };
 
     return (
-        <header className="flex flex-row w-screen bg-main-yellow lg:justify-between p-6 items-center h-[70px]">
-            <div className="flex flex-row items-center justify-between">
-                {/* APRICART LOGO */}
-                <div className="relative min-w-[100px] w-1/6 lg:hidden">
-                    <Link href={"/"} passHref>
-                        <button className="flex">
-                            <Image
-                                src={logoPNG}
-                                alt={"logo"}
-                                // layout={'fill'}
+        <header className="flex flex-col">
+            <div className="flex flex-row w-screen bg-main-yellow lg:justify-between p-6 items-center h-[70px]">
+                {/* ARPICART LOGO, LOCATION AND SELECTED ADDRESS */}
+                <div className="flex flex-row items-center justify-between">
+                    {/* APRICART LOGO shown on phone, hidden on desktop*/}
+                    <div className="relative min-w-[100px] w-1/6 lg:hidden">
+                        <Link href={"/"} passHref>
+                            <button className="flex">
+                                <Image
+                                    src={logoPNG}
+                                    alt={"logo"}
+                                    // layout={'fill'}
+                                />
+                            </button>
+                        </Link>
+                    </div>
+                    {/* DELIVERY */}
+                    {/* <div className="hidden lg:inline-flex flex flex-row space-x-2 items-center">
+                        <div className="relative w-[15px] h-[15px] lg:w-[22px] lg:h-[22px]">
+                            <Image 
+                                src={bikePNG} 
+                                alt={"bike icon"}
+                                layout={"fill"}
                             />
-                        </button>
-                    </Link>
+                        </div>
+                        <p className={pStyle}>
+                            Fast Delivery
+                        </p>
+                    </div> */}
+                    {/* LOCATION AND SELECTED ADDRESS */}
+                    <div className="flex flex-row space-x-4 lg:space-x-12 items-center">
+                        {/* LOCATION */}
+                        <div>
+                            <button
+                                className="flex flex-row space-x-2 items-center"
+                                onClick={togglePopup}
+                            >
+                                <div className="relative w-[12px] h-[15px] lg:w-[19px] lg:h-[22px]">
+                                    <Image
+                                        src={locationPinPNG}
+                                        alt={"location icon"}
+                                        layout={"fill"}
+                                    />
+                                </div>
+                                <p className={pStyle + " capitalize"}>
+                                    {getcity}
+                                </p>
+                            </button>
+                        </div>
+                        {/* CURRENT SELECTED ADDRESS */}
+                        <div
+                            className={
+                                pStyle + " capitalize flex flex-row space-x-2"
+                            }
+                        >
+                            <button
+                                onClick={() => {
+                                    router.push("/address");
+                                }}
+                            >
+                                {addressSelector ? (
+                                    <p>{addressSelector.area}</p>
+                                ) : (
+                                    <p className="truncate">
+                                        Select Delivery Address
+                                    </p>
+                                )}
+                            </button>
+                        </div>
+                        {/* LANGUAGE */}
+                        {/* <div>
+                            <p className={pStyle}>
+                                English
+                            </p>
+                        </div> */}
+                    </div>
                 </div>
-                {/* DELIVERY */}
-                {/* <div className="hidden lg:inline-flex flex flex-row space-x-2 items-center">
+                {/* PHONE NUMBER hidden on phone, shown on desktop*/}
+                <div className="hidden flex flex-row space-x-2 items-center lg:inline-flex">
                     <div className="relative w-[15px] h-[15px] lg:w-[22px] lg:h-[22px]">
-                        <Image 
-                            src={bikePNG} 
-                            alt={"bike icon"}
+                        <Image
+                            src={phonePNG}
+                            alt={"phone icon"}
                             layout={"fill"}
                         />
                     </div>
-                    <p className={pStyle}>
-                        Fast Delivery
-                    </p>
-                </div> */}
-                <div className="flex flex-row space-x-4 lg:space-x-12 items-center">
-                    {/* LOCATION */}
-                    <div>
-                        <button 
-                            className="flex flex-row space-x-2 items-center"
-                            onClick={togglePopup}
-                        >
-                            <div className="relative w-[12px] h-[15px] lg:w-[19px] lg:h-[22px]">
-                                <Image 
-                                    src={locationPinPNG} 
-                                    alt={"location icon"}
-                                    layout={'fill'} 
-                                />
-                            </div>
-                            <p className={pStyle + " capitalize"}>
-                                {getcity}
-                            </p>
-                        </button>
-                    </div>
-                    {/* CURRENT SELECTED ADDRESS */}
-                    <div className={pStyle + " capitalize flex flex-row space-x-2"}>
-                        <button onClick={()=>{
-                            router.push('/address')
-                        }}>
-                            {addressSelector ? (
-                                <p>
-                                    {addressSelector.area}
-                                </p>
-                            ):(
-                                <p className="truncate">
-                                    Select Delivery Address
-                                </p>
-                            )}
-                        </button>
-                    </div>
-                    {/* LANGUAGE */}
-                    {/* <div>
-                        <p className={pStyle}>
-                            English
-                        </p>
-                    </div> */}
+                    <p className={pStyle}>0304-1110195</p>
                 </div>
+                {isOpen && (
+                    <div className="fixed w-1/2 bg-white h-1/6 border-8 inset-0 m-auto z-10">
+                        <Popup
+                            content={
+                                <form onSubmit={submitCities}>
+                                    <label className="select_city">
+                                        Select City
+                                    </label>
+                                    <hr />
+                                    <div className="freehome_d">
+                                        <div className="freehome_title">
+                                            <input
+                                                className="radiobtn"
+                                                type="radio"
+                                                name="cities"
+                                                value="karachi"
+                                                checked={getcity === "karachi"}
+                                                onChange={handleCity}
+                                            />
+                                            Karachi
+                                        </div>
+                                        <div className="freehome_title">
+                                            <input
+                                                className="radiobtn"
+                                                type="radio"
+                                                name="cities"
+                                                value="peshawar"
+                                                checked={getcity === "peshawar"}
+                                                onChange={handleCity}
+                                            />
+                                            Peshawar
+                                        </div>
+                                    </div>
+                                    <Button
+                                        className="bg-sky-600 w-[75px] rounded-full hover:bg-sky-700"
+                                        type="submit"
+                                        onClick={closeButton}
+                                    >
+                                        Submit
+                                    </Button>
+                                </form>
+                            }
+                            handleClose={togglePopup}
+                        />
+                    </div>
+                )}
             </div>
-            {/* PHONE NUMBER */}
-            <div className="flex flex-row space-x-2 items-center hidden lg:inline-flex">
-                <div className="relative w-[15px] h-[15px] lg:w-[22px] lg:h-[22px]">
-                    <Image 
-                        src={phonePNG} 
-                        alt={"phone icon"}
-                        layout={'fill'} 
-                    />
-                </div>
-                <p className={pStyle}>
-                    0304-1110195
+            {/* TICKER */}
+            <div className="overflow-x-auto text-center">
+                <p className="font-lato text-md font-bold text-main-blue p-2 whitespace-nowrap">
+                    {tickerSelector}
                 </p>
             </div>
-            {isOpen && (
-                <div className="fixed w-1/2 bg-white h-1/6 border-8 inset-0 m-auto z-10">
-                    <Popup
-                        content={
-                            <form onSubmit={submitCities}>
-                                <label className="select_city">
-                                    Select City
-                                </label>
-                                <hr />
-                                <div className="freehome_d">
-                                    <div className="freehome_title">
-                                        <input
-                                            className="radiobtn"
-                                            type="radio"
-                                            name="cities"
-                                            value="karachi"
-                                            checked={
-                                                getcity ===
-                                                "karachi"
-                                            }
-                                            onChange={
-                                                handleCity
-                                            }
-                                        />
-                                        Karachi
-                                    </div>
-                                    <div className="freehome_title">
-                                        <input
-                                            className="radiobtn"
-                                            type="radio"
-                                            name="cities"
-                                            value="peshawar"
-                                            checked={
-                                                getcity ===
-                                                "peshawar"
-                                            }
-                                            onChange={
-                                                handleCity
-                                            }
-                                        />
-                                        Peshawar
-                                    </div>
-                                </div>
-                                <Button
-                                 className="bg-sky-600 w-[75px] rounded-full hover:bg-sky-700"
-                                    type="submit"
-                                    onClick={closeButton}
-                                >
-                                    Submit
-                                </Button>
-                            </form>
-                        }
-                        handleClose={togglePopup}
-                    />
-                    
-                </div>
-            )}
         </header>
     );
 }

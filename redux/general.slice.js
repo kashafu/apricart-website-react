@@ -15,8 +15,8 @@ const generalSlice = createSlice({
 		updateSelectedAddress: (state, action) => {
 			state.selectedAddress = {...action.payload}
 		},
-		updateticker: (state, action) => {
-			state.ticker = {...action.payload}
+		updateTicker: (state, action) => {
+			state.ticker = action.payload
 		}
 	}
 })
@@ -26,5 +26,5 @@ export const generalReducer = generalSlice.reducer
 
 export const {
 	updateSelectedAddress,
-	updateticker
+	updateTicker
 } = generalSlice.actions
