@@ -36,6 +36,11 @@ export default function Header({}) {
     var name = cookies.get("cookies-name");
     var userId = cookies.get("cookies-userId");
 
+    if (!cookies.get('guestUserId')) {
+		const d = new Date();
+		cookies.set('guestUserId', 'desktopuser_' + d.getTime(), 30);
+	}
+
     useEffect(() => {
         if (token) {
             setAuthenticated(true);
@@ -202,6 +207,10 @@ export default function Header({}) {
             </div>
             <div className="grow">
                 <SearchBar />
+            </div>
+            <div className="lg:hidden flex flex-row">
+                <BtnCart />
+                {cart.length}
             </div>
             <div className="hidden lg:inline lg:flex lg:flex-row lg:space-x-4 lg:items-center">
                 <LinkText

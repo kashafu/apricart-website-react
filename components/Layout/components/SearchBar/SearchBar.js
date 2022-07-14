@@ -45,7 +45,7 @@ export default function SearchBar() {
             {showSearchResults && (
                 <div className="absolute z-20 w-full bg-white max-h-[350px] overflow-auto">
                     {searchResults.length > 0 ? (
-                        <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-6'>
+                        <div className='grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-3 gap-6 p-6'>
                             {searchResults.map((product) => {
                                 let { id } = product
                                 return (

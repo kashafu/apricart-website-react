@@ -6,9 +6,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "../../../../redux/cart.slice";
 import { addToWish } from "../../../../redux/wish.slice";
 import heartimg from "../../../../public/assets/images/heart.png";
+import missingImageIcon from '../../../../public/assets/svgs/missingImageIcon.svg'
 
 import { base_url_api } from '../../../../information.json'
 import { getGeneralApiParams } from "../../../../helpers/ApiHelpers";
+import { useState } from "react";
+import { toast } from "react-toastify";
 
 /*
     isInStock is being passed where static site generation is being used
@@ -22,12 +25,12 @@ export default function SingleProduct({ product, isInStock }) {
     if (isInStock) {
         inStock = isInStock
     }
-    let imageUrl = productImageUrlThumbnail == '' ? productImageUrl : productImageUrlThumbnail
+    let imageUrl = productImageUrlThumbnail != '' ? productImageUrlThumbnail : (productImageUrl != '' ? productImageUrl : missingImageIcon)
     let isLoggedIn = cookies.get('cookies-token') != null
 
-    const addToCartApi = async () => {
-        dispatch(addToCart(product))
+    const [innerText, setInnerText] = useState('Add to Cart')
 
+    const addToCartApi = async () => {
         let { city, userId, headers } = getGeneralApiParams()
 
         if (isLoggedIn) {
@@ -37,15 +40,22 @@ export default function SingleProduct({ product, isInStock }) {
                     'qty': "1",
                 }]
             }
-
             let url = base_url_api + "/order/cart/save?city=" + city + "&lang=en&client_type=apricart"
-            let response = await axios.post(
-                url,
-                data,
-                {
-                    headers: headers,
-                }
-            )
+
+            try {
+                let response = await axios.post(
+                    url,
+                    data,
+                    {
+                        headers: headers,
+                    }
+                )
+                setInnerText("ADDED")
+                dispatch(addToCart(product))
+            } catch (error) {
+				console.log(error?.response)
+				toast.error(error?.response?.data?.message)
+			}
         }
         else {
             let data = {
@@ -55,15 +65,22 @@ export default function SingleProduct({ product, isInStock }) {
                     'qty': "1",
                 }]
             }
-
             let url = base_url_api + "/guest/cart/save?city=" + city + "&lang=en&client_type=apricart"
-            let response = await axios.post(
-                url,
-                data,
-                {
-                    headers: headers
-                }
-            )
+
+            try {
+                let response = await axios.post(
+                    url,
+                    data,
+                    {
+                        headers: headers
+                    }
+                )
+                dispatch(addToCart(product))
+                setInnerText("ADDED")
+            } catch (error) {
+				console.log(error?.response)
+				toast.error(error?.response?.data?.message)
+			}
         }
     }
 
@@ -127,10 +144,10 @@ export default function SingleProduct({ product, isInStock }) {
                     Rs. <span className="text-main-blue font-bold"> {currentPrice} </span>
                 </p>
                 {inStock ?
-                    <button className="bg-main-blue font-lato text-sm py-2 w-5/6 rounded text-white hover:bg-white hover:text-main-blue"
+                    <button className="bg-main-blue font-lato text-sm py-2 w-5/6 rounded text-white"
                         onClick={addToCartApi}
                     >
-                        Add to Cart
+                        {innerText}
                     </button>
                     :
                     <button className="bg-zinc-400 font-lato text-sm py-2 w-5/6 rounded text-white"

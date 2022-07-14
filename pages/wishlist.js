@@ -9,7 +9,7 @@ import React, { useEffect, useState, useContext , useCallback } from "react";
 import { AiOutlineHeart } from "react-icons/ai";
 import Link from "next/link";
 import { addToCart } from "../redux/cart.slice";
-import { addToWish,updatedwish,Initilaize} from "../redux/wish.slice";
+import { addToWish,updatedwish, Initilaize} from "../redux/wish.slice";
 import axios from "axios";
 import Cookies from 'universal-cookie';
 import { getGeneralApiParams } from "../helpers/ApiHelpers";

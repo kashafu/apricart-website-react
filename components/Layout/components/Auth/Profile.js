@@ -31,7 +31,7 @@ export default function Profile({ }) {
                         setShowDropdown(false)
                     }}
                 >
-                    <p>
+                    <p className="capitalize">
                         Welcome, {name}
                     </p>
                 </a>

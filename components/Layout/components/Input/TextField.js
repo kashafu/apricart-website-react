@@ -14,8 +14,10 @@ export default function TextField({label, placeHolder, onChange, value, name, ty
                 value={value}
                 name={name}
                 onKeyDown={(e)=>{
-                    if(e.key === 'Enter'){
-                        onEnterPress()
+                    if(onEnterPress){
+                        if(e.key === 'Enter'){
+                            onEnterPress()
+                        }
                     }
                 }}
                 onChange={(e)=>{

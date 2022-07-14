@@ -5,11 +5,11 @@
 export default function Dropdown({label, options, name, optionText, onChange, value, placeholder, disabled, customOnChange}){
     return(
         <div className="grid grid-cols-3">
-            <p className="col-span-1">
+            <p className="col-span-1 font-lato text-main-blue font-semibold">
                 {label}
             </p>
             <select
-                className="col-span-2"
+                className="col-span-2 h-[40px] py-2 px-4 rounded-lg"
                 disabled={disabled}
                 onChange={(e)=>{
                     if(customOnChange){

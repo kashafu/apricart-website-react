@@ -9,7 +9,7 @@ import { getGeneralApiParams, logOutRemoveCookies, getGeneralCookies } from "../
 import SubmitButton from "../Buttons/SubmitButton"
 import LinkButton from "../Buttons/LinkButton"
 
-export default function HamburgerMenu({}){
+export default function HamburgerMenu({ }) {
     const router = useRouter()
 
     let { token } = getGeneralApiParams()
@@ -21,12 +21,12 @@ export default function HamburgerMenu({}){
         router.push('/')
         router.reload()
     }
-    
-    return(
+
+    return (
         <div className="relative">
             <button
                 className="flex items-center"
-                onClick={()=>{
+                onClick={() => {
                     setShowMenu(!showMenu)
                 }}
             >
@@ -35,7 +35,7 @@ export default function HamburgerMenu({}){
                     alt={'icon'}
                     width={25}
                     height={20}
-                />  
+                />
             </button>
             {showMenu && (
                 <div className="fixed top-0 flex flex-col py-4 px-2 left-0 w-3/4 h-screen bg-white z-10 justify-between rounded-r-2xl">
@@ -45,7 +45,7 @@ export default function HamburgerMenu({}){
                                 <Logo />
                             </div>
                             <button
-                                onClick={()=>{
+                                onClick={() => {
                                     setShowMenu(!showMenu)
                                 }}
                             >
@@ -65,15 +65,24 @@ export default function HamburgerMenu({}){
                         <div className="items-center align-center space-y-2">
                             <LinkButton
                                 text={"View Categories"}
-                                path={'/'}
+                                path={'/category'}
+                                onClick={() => {
+                                    setShowMenu(!showMenu)
+                                }}
                             />
                             <LinkButton
                                 text={"Shopping List"}
-                                path={'/'}
+                                path={'/wishlist'}
+                                onClick={() => {
+                                    setShowMenu(!showMenu)
+                                }}
                             />
                             <LinkButton
                                 text={"Order Manually"}
-                                path={'/'}
+                                path={'/grocery_list'}
+                                onClick={() => {
+                                    setShowMenu(!showMenu)
+                                }}
                             />
                         </div>
                     </div>
@@ -103,17 +112,19 @@ export default function HamburgerMenu({}){
                                 onClick={logout}
                             />
                         </div>
-                    ):(
+                    ) : (
                         <div className="space-y-2">
                             <SubmitButton
                                 text={"LOGIN"}
-                                onClick={()=>{
+                                onClick={() => {
+                                    setShowMenu(!showMenu)
                                     router.push('/login')
                                 }}
                             />
                             <SubmitButton
                                 text={"REGISTER"}
-                                onClick={()=>{
+                                onClick={() => {
+                                    setShowMenu(!showMenu)
                                     router.push('/register')
                                 }}
                             />
