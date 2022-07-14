@@ -7,7 +7,6 @@ let defaultLocation = {
 }
 
 export default function LocationPicker({label, onChangeLatitude, onChangeLongitude, startingLocation}) {
-    console.log(startingLocation);
     const [mapref, setMapRef] = useState(null);
     const [centerLocation, setCenterLocation] = useState({
         lat: 24.917122827062762,

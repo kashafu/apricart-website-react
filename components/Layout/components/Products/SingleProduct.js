@@ -11,6 +11,7 @@ import missingImageIcon from '../../../../public/assets/svgs/missingImageIcon.sv
 import { base_url_api } from '../../../../information.json'
 import { getGeneralApiParams } from "../../../../helpers/ApiHelpers";
 import { useState } from "react";
+import { toast } from "react-toastify";
 
 /*
     isInStock is being passed where static site generation is being used
@@ -30,8 +31,6 @@ export default function SingleProduct({ product, isInStock }) {
     const [innerText, setInnerText] = useState('Add to Cart')
 
     const addToCartApi = async () => {
-        dispatch(addToCart(product))
-
         let { city, userId, headers } = getGeneralApiParams()
 
         if (isLoggedIn) {
@@ -52,9 +51,11 @@ export default function SingleProduct({ product, isInStock }) {
                     }
                 )
                 setInnerText("ADDED")
+                dispatch(addToCart(product))
             } catch (error) {
-                console.log(error)
-            }
+				console.log(error?.response)
+				toast.error(error?.response?.data?.message)
+			}
         }
         else {
             let data = {
@@ -74,11 +75,12 @@ export default function SingleProduct({ product, isInStock }) {
                         headers: headers
                     }
                 )
-                console.log(response.data);
+                dispatch(addToCart(product))
                 setInnerText("ADDED")
             } catch (error) {
-                console.log(error.response)
-            }
+				console.log(error?.response)
+				toast.error(error?.response?.data?.message)
+			}
         }
     }
 

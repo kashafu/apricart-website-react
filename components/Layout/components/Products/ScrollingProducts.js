@@ -2,8 +2,6 @@ import Slider from "react-slick";
 import SingleProduct from "./SingleProduct";
 
 export default function ScrollingProducts({ products }) {
-    console.log(products)
-
     const settings = {
         dots: false,
         infinite: true,

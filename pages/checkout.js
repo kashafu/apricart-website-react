@@ -245,7 +245,8 @@ export default function Checkout() {
 			setSuccessResponse(response.data)
 			setViewState('review')
 		} catch (error) {
-			setCheckoutErrorMessage(error.response.data.message);
+			console.log(error)
+			setCheckoutErrorMessage(error?.response?.data?.message);
 		}
 	}
 
@@ -281,13 +282,19 @@ export default function Checkout() {
 			<div className="grid grid-cols-3 justify-items-center border-b-2 p-4">
 				<button className={divStyle}
 					onClick={() => {
+						console.log('clikc');
 						onClick('shipping')
 					}}
-					disabled={() => {
-						if (currentState == 'review') {
-							return true
-						}
-					}}
+					// disabled={() => {
+					// 	if (currentState == 'review') {
+					// 		console.log('disables');
+					// 		return true
+					// 	}
+					// 	else{
+					// 		console.log('not disables');
+					// 		return false
+					// 	}
+					// }}
 				>
 					<Image
 						src={currentState === 'shipping' ? blueCircleIcon : blackCircleIcon}
@@ -714,11 +721,11 @@ export default function Checkout() {
 						</section>
 					)}
 					{viewState == 'review' && (
-						<section className="flex items-center justify-center align-center m-auto">
-							<div>
+						<section className="flex flex-col items-center justify-center align-center m-auto">
+							<div className="text-center">
 								{parse(successResponse.message)}
 							</div>
-							<div className="">
+							<div className="h-[100px] w-[100px]">
 								<Image
 									src={successResponse.data.thankyou_image}
 									layout={'responsive'}
@@ -727,8 +734,6 @@ export default function Checkout() {
 									height={100}
 								/>
 							</div>
-
-							{JSON.stringify(successResponse.data.thankyou_image)}
 						</section>
 					)}
 				</div>

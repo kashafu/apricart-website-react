@@ -22,7 +22,6 @@ const cartSlice = createSlice({
 		updatedcart: (state, action) => {
 			let qty = action.payload.qty;      
 			state.push({ ...action.payload, quantity: qty });
-
 		},
 		incrementQuantity: (state, action) => {
 			const item = state.find((item) => item.id === action.payload);

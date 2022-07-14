@@ -14,6 +14,7 @@ import axios from "axios";
 import Cookies from 'universal-cookie';
 import { base_url_api } from '../../../../information.json'
 import { getGeneralApiParams } from "../../../../helpers/ApiHelpers";
+import { toast } from "react-toastify";
 
 
 export default function SlideDrawer(props) {
@@ -29,7 +30,7 @@ export default function SlideDrawer(props) {
 	const [total, setTotal] = useState([]);
 	const [option, setOption] = useState([]);
 
-	// const [drawerStyle, setDrawerStyle] = useState(props.show ? "side-drawer open" : "side-drawer close")
+	const [drawerStyle, setDrawerStyle] = useState(props.show ? "side-drawer open" : "side-drawer")
 
 	// var token = cookies.get("cookies-token");
 	let { token } = getGeneralApiParams()
@@ -221,7 +222,8 @@ export default function SlideDrawer(props) {
 
 				getCartDataApi()
 			} catch (error) {
-				console.log(error.response)
+				console.log(error?.response)
+				toast.error(error?.response?.data?.message)
 			}
 		}
 		else {
@@ -243,7 +245,8 @@ export default function SlideDrawer(props) {
 
 				getCartDataApi()
 			} catch (error) {
-				console.log(error.response)
+				console.log(error?.response)
+				toast.error(error?.response?.data?.message)
 			}
 		}
 	}
@@ -261,7 +264,7 @@ export default function SlideDrawer(props) {
 			}
 
 			try {
-				let response = axios.delete(url, 
+				let response = axios.delete(url,
 					{
 						headers: headers,
 						data: body
@@ -312,7 +315,7 @@ export default function SlideDrawer(props) {
 			}
 
 			try {
-				let response = axios.delete(url, 
+				let response = axios.delete(url,
 					{
 						headers: headers,
 						data: body
@@ -386,7 +389,7 @@ export default function SlideDrawer(props) {
 							<div className="cart_body">
 								{cart.map((item) => {
 									console.log(item);
-									const { id, productImageUrl, title, currentPrice, sku, qty } = item
+									const { id, productImageUrl, title, currentPrice, sku, quantity } = item
 									return (
 										<div className="item cartitem" key={id}>
 											<div className="image1">
@@ -409,7 +412,7 @@ export default function SlideDrawer(props) {
 																name="button"
 																onClick={() => {
 																	dispatch(decrementQuantity(id));
-																	updateItemQty(sku, qty - 1)
+																	updateItemQty(sku, quantity - 1)
 																	// UpdateQty(item, 0, qty);
 																}}
 
@@ -424,7 +427,7 @@ export default function SlideDrawer(props) {
 																href="#"
 																onClick={() => {
 																	dispatch(incrementQuantity(id));
-																	updateItemQty(sku, qty + 1)
+																	updateItemQty(sku, quantity + 1)
 																	// UpdateQty(item, 1, qty);
 																}}
 															>
@@ -495,20 +498,19 @@ export default function SlideDrawer(props) {
 								</div>
 
 								<div className="check_o_btn">
-									<Link href="/checkout" passHref>
-										<button onClick={() => {
-											hideSideDrawer()
-											if(token){
-												router.push('/checkout')
-												// router.reload()
-											}
-											else{
-												router.push('/login')
-											}
-										}}>
-											Check Out
-										</button>
-									</Link>
+									<button onClick={() => {
+										hideSideDrawer()
+										drawerClasses = 'side-drawer'
+										if (token) {
+											router.push('/checkout')
+											// router.reload()
+										}
+										else {
+											router.push('/login')
+										}
+									}}>
+										Check Out
+									</button>
 								</div>
 							</div>
 						</>
