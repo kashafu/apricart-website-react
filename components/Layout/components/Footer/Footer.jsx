@@ -16,11 +16,11 @@ export default function Layout(){
                   </div>
 
             <p className="footer-links">
-            <a href="#">Privacy Policy</a>
-               <a href="#">Terms of Use</a>
-               <a href="#">FAQs</a>
+            <a href="/privacy">Privacy Policy</a>
+               <a href="/termofuse">Terms of Use</a>
+               <a href="/faq">FAQs</a>
                
-               <a href="#">Contact Us</a>
+               <a href="/contactus">Contact Us</a>
             </p>
            
             
