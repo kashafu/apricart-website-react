@@ -6,7 +6,7 @@ import Pagination from "../../components/Layout/components/Pagination/pagination
 let base_url_api = "https://stag.apricart.pk/v1";
 import Link from "next/link";
 import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+// import "react-toastify/dist/ReactToastify.css";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../../redux/cart.slice";
 import Cookies from 'universal-cookie';

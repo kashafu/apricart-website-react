@@ -69,7 +69,7 @@ export default function Order() {
 			<p>
 				PENDING ORDERS
 			</p>
-			<table class="table-auto">
+			<table className="table-auto">
 				<thead>
 					<tr>
 						<th>Order Id</th>

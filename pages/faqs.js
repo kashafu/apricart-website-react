@@ -1,17 +1,17 @@
 export default function Faqs() {
     return <>
         <body>
-            <main class="main">
-                <section class="mt-50 mb-50">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-lg-9">
-                                <div class="single-page pr-30">
-                                    <div class="single-header style-2">
+            <main className="main">
+                <section className="mt-50 mb-50">
+                    <div className="container">
+                        <div className="row">
+                            <div className="col-lg-9">
+                                <div className="single-page pr-30">
+                                    <div className="single-header style-2">
                                         <h2>FAQ</h2>
 
                                     </div>
-                                    <div class="single-content">
+                                    <div className="single-content">
                                         <ol start="1">
                                             <li>Q)  Can I place order for someone else?</li>
                                             Yes. At the time of checkout, fill in the details of the person who will receive the order and their contact details.

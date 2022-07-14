@@ -111,8 +111,8 @@ export default function CategoryProducts({ products, subCategories }) {
 									{subCategories.data.map((category) => {
 										let { id, name, image } = category
 										return (
-											<Link href={'/category/' + id} passHref>
-												<button key={id} className='flex flex-col items-center'>
+											<Link href={'/category/' + id} passHref key={id}>
+												<button className='flex flex-col items-center'>
 													<p className="font-lato text-main-blue text-lg font-bold">
 														{name}
 													</p>
