@@ -36,8 +36,11 @@ export default function Login(){
                 }
             )
             console.log(response.data)
+           if (response.data.status==1){
             toast.success(response.data.message);
-
+         
+            setresetpwdcreen(false); 
+           }
         }
         catch(e){
 
@@ -98,6 +101,7 @@ export default function Login(){
             )
             if(response.data.status == 1){
             setresetpwdcreen(true); 
+            toast.success(response.data.message);
             }
             else{
                 toast.error(response.data.message)
