@@ -145,7 +145,7 @@ export default function Login(){
             <div className="w-3/4">
                 <SubmitButton
                     text={"Reset Password"}
-                    onClick={loginApi}
+                    onClick={Resetapi}
                 />
             </div>
             <ErrorText
