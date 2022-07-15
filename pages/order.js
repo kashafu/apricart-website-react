@@ -37,8 +37,9 @@ export default function Order() {
 	const handleCancel = async (e) => {
 		e.preventDefault();
 		try {
+			let url = base_url_api + '/order/checkout/cancel?id=${cancelid}&client_type=apricart'
 			const response = await axios.get(
-				`https://stag.apricart.pk/v1/order/checkout/cancel?id=${cancelid}`, {
+				url, {
 				headers: {
 					'Accept': 'application/json',
 					'Content-Type': 'application/json',

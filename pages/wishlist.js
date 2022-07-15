@@ -14,7 +14,7 @@ import axios from "axios";
 import Cookies from 'universal-cookie';
 import { getGeneralApiParams } from "../helpers/ApiHelpers";
 import HeadTag from "../components/Layout/components/Head/HeadTag";
-let base_url_api = "https://stag.apricart.pk/v1";
+import { base_url_api } from '../information.json'
 //none
 const Wishpage = () => {
   const cookies = new Cookies();
@@ -86,7 +86,7 @@ const Wishpage = () => {
     var data =JSON.stringify({sku:[wish.sku]}); //  method: 'delete',
 
    
-      let url='https://stag.apricart.pk/v1/watchlist/delete?city=karachi&lang=en';
+      let url= base_url_api + '/watchlist/delete?city=karachi&lang=en&client_type=apricart';
     
    if (token){
     const response = axios.delete(url,{headers:headers,data:data})
@@ -95,7 +95,9 @@ const Wishpage = () => {
   Wishall = async () => {
     if (token){
     //${cookies.get("cookies-userId")}& &userid=${userI {cookies.get("cookies-userId")}
-    const response = await axios.get('https://stag.apricart.pk/v1/watchlist/all?guestuserid=abc123&city=karachi&lang=en',{headers:headers});
+    let {userId} = getGeneralApiParams()
+    let url = base_url_api + '/watchlist/all?guestuserid=' + userId +'&city=karachi&lang=en&client_type=apricart'
+    const response = await axios.get(url,{headers:headers});
 
     let Data1 = response.data.data;
     setData(Data1);

@@ -4,7 +4,8 @@ import Slider from "react-slick";
 import Link from "next/link";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../../../../redux/cart.slice";
-let base_url_api = "https://stag.apricart.pk/v1";
+import { base_url_api } from '../../../../information.json'
+// let base_url_api = "https://stag.apricart.pk/v1";
 import Cookies from 'universal-cookie';
 import ScrollingProducts from '../Products/ScrollingProducts'
 

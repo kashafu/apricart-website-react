@@ -14,7 +14,7 @@ export const postRegister = (state) => {
 		
 		dispatch({ type: SET_LOADER });
 		try {
-			const { data } = await axios.post('https://stag.apricart.pk/v1/auth/open/register', state);
+			const { data } = await axios.post('https://cbe.apricart.pk/auth/open/register', state);
 			dispatch({ type: CLOSE_LOADER });
 			localStorage.setItem('token', data.data.token);
 			dispatch({ type: SET_TOKEN, payload: data.token });
@@ -40,7 +40,7 @@ export const postLogin = (state) => {
 		//https://stag.apricart.pk/v1/auth/open/login
 		try {
 			dispatch({ type: SET_LOADER });
-			const { data } = await axios.post('https://stag.apricart.pk/v1/auth/login', state, config);
+			const { data } = await axios.post('https://cbe.apricart.pk/auth/login', state, config);
 			dispatch({ type: CLOSE_LOADER });
 			localStorage.setItem('token', data.data.token);
 			dispatch({ type: SET_TOKEN, payload: data.data.token });

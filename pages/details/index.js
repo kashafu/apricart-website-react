@@ -3,8 +3,7 @@ import Link from "next/link";
 import axios from "axios";
 import Catagory1 from '../../components/Layout/components/Categories/Categories'
 
-
-let base_url_api = "https://stag.apricart.pk/v1";
+import { base_url_api } from '../../information.json'
 
 export default function Posts({ posts }) {
   return (

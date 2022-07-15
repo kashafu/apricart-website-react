@@ -3,6 +3,7 @@ import Cookies from "universal-cookie";
 import axios from "axios";
 import { getGeneralApiParams } from '../helpers/ApiHelpers'
 import HeadTag from "../components/Layout/components/Head/HeadTag";
+import { base_url_api } from '../information.json'
 
 export default function GroceryList(){
 	let { token, userId, city } = getGeneralApiParams()
@@ -21,8 +22,9 @@ export default function GroceryList(){
 	const handleOrder = async (e) => {
 		e.preventDefault();
 		try {
+			let url = base_url_api + '/order/checkout/manual'
 			const response = await axios.post(
-				`https://stag.apricart.pk/v1/order/checkout/manual`,
+				url,
 				userData,
 				{
 					headers: {
