@@ -227,7 +227,7 @@ export default function Post({ product }) {
 												</div>
 											</section>
 										</>
-										<RelatedProduct />
+										{/* <RelatedProduct /> */}
 									</div>
 								</div>
 							</div>

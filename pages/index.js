@@ -57,9 +57,9 @@ export default function Home() {
 
 	return (
 		<>
-			<p>
+			{/* <p>
 				{homeData.nearestWareHouse}
-			</p>
+			</p> */}
 			{/* TODO IMPLEMENT HEAD WITH ICON AND NAME */}
 			<Head>Apricart</Head>
 			{/* BANNERS SECTION */}
