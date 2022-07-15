@@ -6,6 +6,7 @@ import { useDispatch } from "react-redux";
 import { addToCart } from "../../../../redux/cart.slice";
 let base_url_api = "https://stag.apricart.pk/v1";
 import Cookies from 'universal-cookie';
+import ScrollingProducts from '../Products/ScrollingProducts'
 
 export default function RecommendedProducts() {
   const dispatch = useDispatch();
@@ -76,7 +77,10 @@ export default function RecommendedProducts() {
         <div className="row">
           <div className="col-12 col-sm-12  col-md-12  col-lg-12  col-xl-12  col-xxl-12">
             <section>
-              <Slider {...settings}>
+              <ScrollingProducts
+                products={users}
+              />
+              {/* <Slider {...settings}>
                 {users.map((curElem) => {
                   const { id, productImageUrl, title } = curElem;
                   return (
@@ -141,7 +145,7 @@ export default function RecommendedProducts() {
                     </div>
                   );
                 })}
-              </Slider>
+              </Slider> */}
             </section>
           </div>
         </div>
