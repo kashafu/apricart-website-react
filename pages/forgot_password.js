@@ -9,6 +9,7 @@ import { getGeneralApiParams } from '../helpers/ApiHelpers'
 import PageHeading from "../components/Layout/components/Typography/PageHeading";
 import ErrorText from "../components/Layout/components/Typography/ErrorText";
 import SuccessText from "../components/Layout/components/Typography/SuccessText";
+import HeadTag from "../components/Layout/components/Head/HeadTag";
 
 export default function ForgotPassword(){
 	const router = useRouter()
@@ -81,6 +82,7 @@ export default function ForgotPassword(){
 
 	return(
 		<div className="flex flex-col w-screen items-center justify-center">
+			<HeadTag title={'Forgot Password'}/>
 			<div className="mt-4 mb-12">
 				<PageHeading
 					text={"Forgot Password"}

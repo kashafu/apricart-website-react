@@ -7,6 +7,7 @@ import { ToastContainer, toast } from "react-toastify";
 import { getGeneralApiParams } from '../helpers/ApiHelpers';
 import {base_url_api} from "../information.json";
 import axios from "axios"
+import HeadTag from '../components/Layout/components/Head/HeadTag';
 export default function Register(){
     const router = useRouter();
     const [userData, setUserData] = useState({
@@ -52,6 +53,7 @@ export default function Register(){
     const [otpCode, setOtpCode] = useState("");
     return(
         <div>
+            <HeadTag title={'Register'}/>
             {showOTPScreen ? (
                 <div>
                     <p>Check 0{userData.phoneNumber} for otp code</p>

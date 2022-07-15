@@ -1,10 +1,12 @@
 import PageHeading from '../components/Layout/components/Typography/PageHeading'
 import Heading from '../components/Layout/components/Typography/Heading'
 import Paragraph from '../components/Layout/components/Typography/Paragraph'
+import HeadTag from '../components/Layout/components/Head/HeadTag'
 
 export default function Privacy() {
 	return (
 		<div>
+			<HeadTag title={'Privacy Policy'}/>
 			<PageHeading
 				text={'Privacy Policy'}
 			/>

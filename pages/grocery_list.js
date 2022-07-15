@@ -2,6 +2,7 @@ import { useState } from "react";
 import Cookies from "universal-cookie";
 import axios from "axios";
 import { getGeneralApiParams } from '../helpers/ApiHelpers'
+import HeadTag from "../components/Layout/components/Head/HeadTag";
 
 export default function GroceryList(){
 	let { token, userId, city } = getGeneralApiParams()
@@ -45,6 +46,7 @@ export default function GroceryList(){
 
 	return (
 		<>
+			<HeadTag title={'Grocery List'}/>
 			<section className="grocery_sec">
 				<div className="container-fluid">
 					<div className="row">

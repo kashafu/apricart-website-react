@@ -13,6 +13,7 @@ import { addToWish,updatedwish, Initilaize} from "../redux/wish.slice";
 import axios from "axios";
 import Cookies from 'universal-cookie';
 import { getGeneralApiParams } from "../helpers/ApiHelpers";
+import HeadTag from "../components/Layout/components/Head/HeadTag";
 let base_url_api = "https://stag.apricart.pk/v1";
 //none
 const Wishpage = () => {
@@ -121,6 +122,7 @@ else {
 // for push
   return (
     <div>
+      <HeadTag title={'Shopping List'}/>
       {wish.length === 0 ? (
         <h5>Your Wish is Empty!</h5>
       ) : (

@@ -8,6 +8,7 @@ import SingleProduct from "../../components/Layout/components/Products/SinglePro
 import PageHeading from '../../components/Layout/components/Typography/PageHeading'
 import Image from "next/image";
 import Link from "next/link";
+import HeadTag from "../../components/Layout/components/Head/HeadTag";
 
 export default function CategoryProducts({ products, subCategories }) {
 	const router = useRouter()
@@ -86,12 +87,7 @@ export default function CategoryProducts({ products, subCategories }) {
 
 	return (
 		<div>
-			{/* <p>
-				{JSON.stringify(products)}
-			</p> */}
-			{/* <PageHeading
-				text={products.data[0].categoryleafName}
-			/> */}
+			<HeadTag title={'Category'}/>
 			<div className="grid grid-cols-5 gap-8">
 				{/* CATEGORIES SECTION */}
 				<section className="hidden lg:col-span-1 lg:block">

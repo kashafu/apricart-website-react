@@ -11,8 +11,9 @@ let base_url_api = "https://stag.apricart.pk/v1";
 import axios from 'axios'
 import Cookies from 'universal-cookie';
 import { getGeneralApiParams } from "../helpers/ApiHelpers";
+import HeadTag from "../components/Layout/components/Head/HeadTag";
 
-export default function ProfileUser(){
+export default function ProfileUser() {
 	const cookies = new Cookies();
 	const router = useRouter();
 	let { token } = getGeneralApiParams()
@@ -46,6 +47,7 @@ export default function ProfileUser(){
 		cookies.get('guestUserId', 'desktopuser_' + d.getTime(), 30);
 		return (
 			<>
+				<HeadTag title={'Profile'} />
 				<h5 className='login-token'>Please Login first</h5>
 			</>
 		)
@@ -53,6 +55,7 @@ export default function ProfileUser(){
 
 	return (
 		<>
+			<HeadTag title={'Profile'} />
 			<section className="profile_sec">
 				<div className="container">
 					<div className="row">

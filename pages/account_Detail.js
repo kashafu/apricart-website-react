@@ -1,7 +1,8 @@
 import Link from 'next/link';
+import HeadTag from '../components/Layout/components/Head/HeadTag';
 import { getGeneralApiParams } from '../helpers/ApiHelpers';
 
-export default function Account_Detail(){
+export default function AccountDetail(){
 	let { token } = getGeneralApiParams()
 
 	if(!token) {
@@ -12,6 +13,7 @@ export default function Account_Detail(){
 
 	return (
 		<>
+			<HeadTag title={'My Account'} />
 			<section className="popular_sec">
 				<div className="container">
 					<div className="row">

@@ -1,5 +1,8 @@
+import HeadTag from "../components/Layout/components/Head/HeadTag";
+
 export default function PageContact() {
     return <>
+        <HeadTag title={'Contact Us'}/>
         <body className="bg-emerald-200">
             <div className="hero-content">
                 <div className="container">

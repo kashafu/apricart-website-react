@@ -3,6 +3,7 @@ import Link from 'next/link';
 import axios from 'axios';
 import { getGeneralApiParams } from '../helpers/ApiHelpers';
 import { base_url_api } from '../information.json'
+import HeadTag from '../components/Layout/components/Head/HeadTag';
 
 export default function Order() {
 	let { token } = getGeneralApiParams()
@@ -59,6 +60,7 @@ export default function Order() {
 	if (!token) {
 		return (
 			<>
+				<HeadTag title={'Order'} />
 				<h5 className='login-token'>Please Login first</h5>
 			</>
 		)
@@ -66,6 +68,7 @@ export default function Order() {
 
 	return (
 		<>
+			<HeadTag title={'Order'} />
 			{/* <p>
 				PENDING ORDERS
 			</p>

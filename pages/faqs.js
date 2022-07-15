@@ -1,5 +1,8 @@
+import HeadTag from "../components/Layout/components/Head/HeadTag";
+
 export default function Faqs() {
     return <>
+        <HeadTag title={'FAQS'} />
         <body>
             <main className="main">
                 <section className="mt-50 mb-50">

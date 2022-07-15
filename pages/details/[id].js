@@ -8,6 +8,7 @@ import Cookies from 'universal-cookie';
 import { base_url_api } from '../../information.json'
 import { getGeneralApiParams } from '../../helpers/ApiHelpers'
 import axios from "axios";
+import HeadTag from "../../components/Layout/components/Head/HeadTag";
 
 export default function Post({ product }) {
 	let [num, setNum] = useState(1);
@@ -131,6 +132,7 @@ export default function Post({ product }) {
 
 	return (
 		<div>
+			<HeadTag title={'Product'}/>
 			{product.data.length > 0 ?
 				(
 					<div>

@@ -23,6 +23,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { incrementQuantity, decrementQuantity, removeFromCart, updatedcart } from "../redux/cart.slice";
 import SectionHeading from "../components/Layout/components/Typography/SectionHeading";
 import InputLabelText from "../components/Layout/components/Typography/InputLabelText";
+import HeadTag from "../components/Layout/components/Head/HeadTag";
 
 export default function Checkout() {
 	let { token, selectedAddress } = getGeneralApiParams()
@@ -729,18 +730,25 @@ export default function Checkout() {
 
 	if (!token) {
 		return (
-			<h5 className='login-token'> Please Login First</h5>
+			<>
+				<HeadTag title={'Checkout'} />
+				<h5 className='login-token'> Please Login First</h5>
+			</>
 		)
 	}
 
 	if (cart.length == 0) {
 		return (
-			<h5 className='login-token'>YOUR CART IS EMPTY</h5>
+			<>
+				<HeadTag title={'Checkout'} />
+				<h5 className='login-token'>YOUR CART IS EMPTY</h5>
+			</>
 		)
 	}
 
 	return (
 		<div>
+			<HeadTag title={'Checkout'} />
 			<div className="flex flex-col lg:grid lg:grid-cols-5 2xl:grid 2xl:grid-cols-6 gap-28">
 				<div className="lg:col-span-3 2xl:col-span-4 space-y-12">
 					<ProgressBar

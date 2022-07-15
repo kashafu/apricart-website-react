@@ -9,6 +9,7 @@ import TextField from "../components/Layout/components/Input/TextField"
 import SubmitButton from "../components/Layout/components/Buttons/SubmitButton"
 import ErrorText from "../components/Layout/components/Typography/ErrorText"
 import PageHeading from "../components/Layout/components/Typography/PageHeading"
+import HeadTag from "../components/Layout/components/Head/HeadTag"
 
 export default function Login(){
     const router = useRouter();
@@ -64,6 +65,7 @@ export default function Login(){
             className="flex justify-center w-full"
             onKeyDown={onEnterPress}
         >
+            <HeadTag title={'Login'}/>
             <div className="flex flex-col p-8 space-y-6 lg:w-1/3 items-center align-center bg-slate-100 shadow rounded-3xl">
                 <PageHeading
                     text={"LOGIN"}

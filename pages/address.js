@@ -7,6 +7,7 @@ import axios from "axios";
 import { base_url_api } from '../information.json'
 import { getGeneralApiParams } from "../helpers/ApiHelpers";
 import SelectAddress from '../components/Layout/components/Address/SelectAddress'
+import HeadTag from "../components/Layout/components/Head/HeadTag";
 
 export default function Address() {
 	let { token } = getGeneralApiParams()
@@ -17,6 +18,7 @@ export default function Address() {
 
 	return (
 		<>
+			<HeadTag title={'Address'} />
 			<section className="popular_sec">
 				<div className="container">
 					<div className="row">

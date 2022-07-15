@@ -12,6 +12,7 @@ import MainProducts from '../components/Layout/components/Products/MainProducts'
 import Link from "next/link";
 import { useDispatch } from "react-redux";
 import { updateTicker } from "../redux/general.slice";
+import HeadTag from "../components/Layout/components/Head/HeadTag";
 
 export default function Home() {
 	const cookies = new Cookies();
@@ -57,11 +58,7 @@ export default function Home() {
 
 	return (
 		<>
-			{/* <p>
-				{homeData.nearestWareHouse}
-			</p> */}
-			{/* TODO IMPLEMENT HEAD WITH ICON AND NAME */}
-			<Head>Apricart</Head>
+			<HeadTag title={'APRICART'}/>
 			{/* BANNERS SECTION */}
 			<section className="w-full">
 				<Banner
