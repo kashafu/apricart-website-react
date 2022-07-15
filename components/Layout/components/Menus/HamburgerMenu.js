@@ -38,105 +38,114 @@ export default function HamburgerMenu({ }) {
                 />
             </button>
             {showMenu && (
-                <div className="fixed top-0 flex flex-col py-4 px-2 left-0 w-3/4 h-screen bg-white z-10 justify-between rounded-r-2xl">
-                    <div className="space-y-4">
-                        <div className="flex flex-row justify-between items-center">
-                            <div className="w-1/2">
-                                <Logo />
-                            </div>
-                            <button
-                                onClick={() => {
-                                    setShowMenu(!showMenu)
-                                }}
-                            >
-                                <Image
-                                    src={crossIcon}
-                                    alt={'cross icon'}
-                                    width={20}
-                                    height={20}
-                                />
-                            </button>
-                        </div>
-                        {token && (
-                            <p>
-                                Welcome, {name}
-                            </p>
-                        )}
-                        <div className="items-center align-center space-y-2">
-                            <LinkButton
-                                text={"View Categories"}
-                                path={'/category'}
-                                onClick={() => {
-                                    setShowMenu(!showMenu)
-                                }}
-                            />
-                            <LinkButton
-                                text={"Shopping List"}
-                                path={'/wishlist'}
-                                onClick={() => {
-                                    setShowMenu(!showMenu)
-                                }}
-                            />
-                            <LinkButton
-                                text={"Order Manually"}
-                                path={'/grocery_list'}
-                                onClick={() => {
-                                    setShowMenu(!showMenu)
-                                }}
-                            />
-                        </div>
-                    </div>
-                    {token ? (
-                        <div className="flex flex-col space-y-2">
-                            {/* <div className="flex flex-row">
-                                <Image
-                                    src={profileIcon}
-                                    alt={'icon'}
-                                    height={20}
-                                    width={20}
-                                />
-                                <div className="flex flex-col">
-                                    <p>
-                                        {name}
-                                    </p>
-                                    <p>
-                                        {email}
-                                    </p>
-                                    <p>
-                                        {phoneNumber}
-                                    </p>
+                <div className="w-full h-screen">
+                    <div className="fixed top-0 flex flex-col py-4 px-2 left-0 w-3/4 h-screen bg-white z-10 justify-between rounded-r-2xl">
+                        <div className="space-y-4">
+                            <div className="flex flex-row justify-between items-center">
+                                <div className="w-1/2">
+                                    <Logo />
                                 </div>
-                            </div> */}
-                            <SubmitButton
-                                text={"ACCOUNT"}
-                                onClick={()=>{
-                                    setShowMenu(!showMenu)
-                                    router.push('/account_detail')
-                                }}
-                            />
-                            <SubmitButton
-                                text={"LOGOUT"}
-                                onClick={logout}
-                            />
+                                <button
+                                    onClick={() => {
+                                        setShowMenu(!showMenu)
+                                    }}
+                                >
+                                    <Image
+                                        src={crossIcon}
+                                        alt={'cross icon'}
+                                        width={20}
+                                        height={20}
+                                    />
+                                </button>
+                            </div>
+                            {token && (
+                                <p>
+                                    Welcome, {name}
+                                </p>
+                            )}
+                            <div className="items-center align-center space-y-2">
+                                <LinkButton
+                                    text={"View Categories"}
+                                    path={'/category'}
+                                    onClick={() => {
+                                        setShowMenu(!showMenu)
+                                    }}
+                                />
+                                <LinkButton
+                                    text={"Shopping List"}
+                                    path={'/wishlist'}
+                                    onClick={() => {
+                                        setShowMenu(!showMenu)
+                                    }}
+                                />
+                                <LinkButton
+                                    text={"Order Manually"}
+                                    path={'/grocery_list'}
+                                    onClick={() => {
+                                        setShowMenu(!showMenu)
+                                    }}
+                                />
+                            </div>
                         </div>
-                    ) : (
-                        <div className="space-y-2">
-                            <SubmitButton
-                                text={"LOGIN"}
-                                onClick={() => {
-                                    setShowMenu(!showMenu)
-                                    router.push('/login')
-                                }}
-                            />
-                            <SubmitButton
-                                text={"REGISTER"}
-                                onClick={() => {
-                                    setShowMenu(!showMenu)
-                                    router.push('/register')
-                                }}
-                            />
-                        </div>
-                    )}
+                        {token ? (
+                            <div className="flex flex-col space-y-2">
+                                {/* <div className="flex flex-row">
+                                        <Image
+                                            src={profileIcon}
+                                            alt={'icon'}
+                                            height={20}
+                                            width={20}
+                                        />
+                                        <div className="flex flex-col">
+                                            <p>
+                                                {name}
+                                            </p>
+                                            <p>
+                                                {email}
+                                            </p>
+                                            <p>
+                                                {phoneNumber}
+                                            </p>
+                                        </div>
+                                    </div> */}
+                                <SubmitButton
+                                    text={"ACCOUNT"}
+                                    onClick={() => {
+                                        setShowMenu(!showMenu)
+                                        router.push('/account_detail')
+                                    }}
+                                />
+                                <SubmitButton
+                                    text={"LOGOUT"}
+                                    onClick={logout}
+                                />
+                            </div>
+                        ) : (
+                            <div className="space-y-2">
+                                <SubmitButton
+                                    text={"LOGIN"}
+                                    onClick={() => {
+                                        setShowMenu(!showMenu)
+                                        router.push('/login')
+                                    }}
+                                />
+                                <SubmitButton
+                                    text={"REGISTER"}
+                                    onClick={() => {
+                                        setShowMenu(!showMenu)
+                                        router.push('/register')
+                                    }}
+                                />
+                            </div>
+                        )}
+                    </div>
+                    {/* BACKDROP */}
+                    <div className="fixed top-0 right-0 h-screen w-1/4 z-10"
+                        onClick={()=>{
+                            setShowMenu(!showMenu)
+                        }}
+                    >
+                    </div>
                 </div>
             )}
         </div>
