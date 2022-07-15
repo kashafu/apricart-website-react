@@ -74,7 +74,7 @@ export default function Home() {
 
 	return (
 		<>
-			<HeadTag title={'APRICART'}/>
+			<HeadTag title={'APRICART'} />
 			{/* BANNERS SECTION */}
 			<section className="w-full">
 				<Banner
@@ -99,7 +99,7 @@ export default function Home() {
 						/>
 					</section> */}
 					{homeData.products.map((product) => {
-						let { bannerImageWeb, data, name } = product
+						let { bannerImageWeb, data, name, offerId } = product
 
 						// If the name is 'Upload Grocery List', we have to return a button which allows to upload grocery list
 						if (name === 'Upload Grocery List') {
@@ -118,11 +118,21 @@ export default function Home() {
 							// TODO get a unique id from api, using name for now
 							<section key={name} className='space-y-4'>
 								<div className="relative w-full h-[90px] md:h-[150px] lg:h-[350px] rounded-xl overflow-hidden">
-									<Image
-										src={bannerImageWeb}
-										layout={'fill'}
-										alt={"banner image"}
-									/>
+									<Link href="/offers/[id]"
+										as={
+											"/offers/" + offerId
+										}
+										passHref
+										key={offerId}
+									>
+										<a>
+											<Image
+												src={bannerImageWeb}
+												layout={'fill'}
+												alt={"banner image"}
+											/>
+										</a>
+									</Link>
 								</div>
 								<p className="text-2xl">
 									{name}

@@ -17,7 +17,6 @@ export default function Banner({ banners }) {
         <div className="scale-y-75 md:scale-100">
             <Carousel autoPlay={true} infiniteLoop={true} swipeable={true} showArrows={true} interval={5000}>
                 {banners.map((banner) => {
-                    console.log(banner);
                     let { id, bannerUrlWeb } = banner
                     return (
                         <Link href="/offers/[id]"
@@ -27,14 +26,9 @@ export default function Banner({ banners }) {
                             passHref
                             key={id}
                         >
-                            <button className="carousel-inner"
-                                onClick={() => {
-
-                                }
-                                }>
+                            <button className="carousel-inner">
                                 <img
                                     src={bannerUrlWeb}
-                                    // className="h-[100px] w-full"
                                     alt=""
                                 />
                             </button>
