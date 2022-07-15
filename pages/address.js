@@ -1,6 +1,4 @@
-import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import Cookies from "universal-cookie";
 import { useRouter } from "next/router";
 import axios from "axios";
 // import MapPicker from 'react-google-map-picker'
@@ -8,13 +6,17 @@ import { base_url_api } from '../information.json'
 import { getGeneralApiParams } from "../helpers/ApiHelpers";
 import SelectAddress from '../components/Layout/components/Address/SelectAddress'
 import HeadTag from "../components/Layout/components/Head/HeadTag";
+import { useEffect } from "react";
 
 export default function Address() {
+	const router = useRouter()
 	let { token } = getGeneralApiParams()
 
-	if (!token) {
-		return <h5 className='login-token'>Please Login First</h5>
-	}
+	useEffect(() => {
+		if(!token){
+			router.push('/login')
+		}
+	}, [])
 
 	return (
 		<>
@@ -38,11 +40,11 @@ export default function Address() {
 
 							</div>
 						</div>
-							<div>
-								<SelectAddress
-									type={'manage'}
-								/>
-							</div>
+						<div>
+							<SelectAddress
+								type={'manage'}
+							/>
+						</div>
 					</div>
 				</div>
 			</section>

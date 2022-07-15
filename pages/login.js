@@ -15,42 +15,15 @@ import { toast } from "react-toastify";
 export default function Login() {
     const router = useRouter();
     const cookies = new Cookies();
+    let { city, headers, userId } = getGeneralApiParams();
 
     const [phoneNumber, setPhoneNumber] = useState('')
     const [password, setPassword] = useState('')
     const [errorMessage, setErrorMessage] = useState('')
     const [resetpwdScreen, setresetpwdcreen] = useState(false);
     const [otp, setotp] = useState();
-    let { city, headers, userId } = getGeneralApiParams();
-    const Resetapi = async () => {
-
-        let url = base_url_api + "/auth/open/login?city=" + city + "&lang=en&client_type=apricart"
-        let body = {
-
-            "username": '92' + phoneNumber,
-            "password": password,
-            "otp": otp
-        }
-        try {
-            let response = await axios.post(url, body,
-                {
-                    headers: headers
-                }
-            )
-            if (response.data.status == 1) {
-                toast.success(response.data.message);
-
-                setresetpwdcreen(false);
-            }
-        }
-        catch (e) {
-
-        }
-
-    }
 
     const loginApi = async () => {
-
         let url = base_url_api + "/auth/open/login?city=" + city + "&lang=en&client_type=apricart"
         let body = {
             "guestuserid": userId,
@@ -83,12 +56,32 @@ export default function Login() {
         }
     }
 
-    const onEnterPress = async (e) => {
-        if (e.key === 'Enter') {
-            await loginApi()
+    const resetPasswordApi = async () => {
+        let url = base_url_api + "/auth/open/password/forgot?lang=en&client_type=apricart"
+        let body = {
+            "phoneNumber": '92' + phoneNumber,
+            "password": password,
+            "otp": otp
         }
+        try {
+            let response = await axios.post(url, body,
+                {
+                    headers: headers
+                }
+            )
+            if (response.data.status == 1) {
+                toast.success(response.data.message);
+                setresetpwdcreen(false);
+            }
+        }
+        catch (error) {
+            console.log(error?.response)
+            toast.error(error?.response?.message)
+        }
+
     }
-    const resetpass = async () => {
+
+    const sendOtpApi = async () => {
         const url = base_url_api + "/auth/open/otp"
         let body = {
             "phoneNumber": '92' + phoneNumber
@@ -112,6 +105,12 @@ export default function Login() {
             console.log(e)
         }
 
+    }
+
+    const onEnterPress = async (e) => {
+        if (e.key === 'Enter') {
+            await loginApi()
+        }
     }
 
     return (
@@ -150,7 +149,7 @@ export default function Login() {
                             <div className="w-3/4">
                                 <SubmitButton
                                     text={"Reset Password"}
-                                    onClick={Resetapi}
+                                    onClick={resetPasswordApi}
                                 />
                             </div>
                             <ErrorText
@@ -196,8 +195,8 @@ export default function Login() {
                             <ErrorText
                                 text={errorMessage}
                             />
-                            <p> <button onClick={resetpass}>Reset Password</button></p>
-                            <p>Don't have an Account ?  <Link href="/register">
+                            <p> <button onClick={sendOtpApi}>Reset Password</button></p>
+                            <p>Don't have an Account ?  <Link href="/register" passHref>
                                 <a>Sign Up</a>
                             </Link> </p>
                         </div>
@@ -207,4 +206,3 @@ export default function Login() {
         </>
     )
 }
-//<Link> SIGNUP </Link> 
