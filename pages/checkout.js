@@ -25,7 +25,7 @@ import SectionHeading from "../components/Layout/components/Typography/SectionHe
 import InputLabelText from "../components/Layout/components/Typography/InputLabelText";
 
 export default function Checkout() {
-	let { token } = getGeneralApiParams()
+	let { token, selectedAddress } = getGeneralApiParams()
 	const cart = useSelector((state) => state.cart)
 	const dispatch = useDispatch()
 
@@ -38,7 +38,7 @@ export default function Checkout() {
 		"notes": '',
 		"paymentMethod": 'cash'
 	})
-	const [checkoutAddress, setCheckoutAddress] = useState(null)
+	const [checkoutAddress, setCheckoutAddress] = useState(selectedAddress ? selectedAddress : null)
 	const [checkoutErrorMessage, setCheckoutErrorMessage] = useState('')
 	const [addressErrorMessage, setAddressErrorMessage] = useState('')
 	const [cartErrorMessage, setCartErrorMessage] = useState('')
@@ -74,13 +74,24 @@ export default function Checkout() {
 
 	const getCartDataApi = async () => {
 		let { headers, city, userId } = getGeneralApiParams()
-		let lat = checkoutAddress ? JSON.parse(checkoutAddress).mapLat : '0'
-		let long = checkoutAddress ? JSON.parse(checkoutAddress).mapLong : '0'
+		let lat = 0
+		let long = 0
+		let addressId = 0
+		if(typeof(checkoutAddress) === 'object'){
+			lat = checkoutAddress ? checkoutAddress.mapLat : '0'
+			long = checkoutAddress ? checkoutAddress.mapLong : '0'
+			addressId = checkoutAddress ? checkoutAddress.id : ''
+		}
+		else{
+			lat = checkoutAddress ? JSON.parse(checkoutAddress).mapLat : '0'
+			long = checkoutAddress ? JSON.parse(checkoutAddress).mapLong : '0'
+			addressId = checkoutAddress ? JSON.parse(checkoutAddress).id : ''
+		}
 		let body = {
 			"coupon": '',
 			"notes": '',
 			"paymentMethod": 'cash',
-			'address': checkoutAddress ? JSON.parse(checkoutAddress).id : '',
+			'address': addressId,
 			'showProducts': true,
 			'verify': true,
 			"prodType": "cus",
@@ -216,11 +227,22 @@ export default function Checkout() {
 	*/
 	const checkoutApi = async () => {
 		let { headers, city, userId } = getGeneralApiParams()
-		let lat = checkoutAddress ? JSON.parse(checkoutAddress).mapLat : ''
-		let long = checkoutAddress ? JSON.parse(checkoutAddress).mapLong : ''
+		let lat = 0
+		let long = 0
+		let addressId = 0
+		if(typeof(checkoutAddress) === 'object'){
+			lat = checkoutAddress ? checkoutAddress.mapLat : '0'
+			long = checkoutAddress ? checkoutAddress.mapLong : '0'
+			addressId = checkoutAddress ? checkoutAddress.id : ''
+		}
+		else{
+			lat = checkoutAddress ? JSON.parse(checkoutAddress).mapLat : '0'
+			long = checkoutAddress ? JSON.parse(checkoutAddress).mapLong : '0'
+			addressId = checkoutAddress ? JSON.parse(checkoutAddress).id : ''
+		}
 		let body = {
 			...checkoutData,
-			'address': checkoutAddress ? JSON.parse(checkoutAddress).id : '',
+			'address': addressId,
 			'showProducts': true,
 			'verify': false,
 			"prodType": "cus",
@@ -487,7 +509,7 @@ export default function Checkout() {
 			)
 		}
 
-		if (currentState === 'payment' || currentState === 'review') {
+		if (currentState === 'payment') {
 			let { subtotal, tax, shipping_amount, grand_total, shipment_message, base_currency_code } = cartData
 			return (
 				<div className="flex flex-col w-full h-full justify-between bg-white rounded-3xl">
@@ -498,7 +520,7 @@ export default function Checkout() {
 								<div key={id} className='flex flex-row space-x-2 shadow rounded-3xl overflow-hidden p-2'>
 									<div className="relative h-[100px] w-[100px]">
 										<Image
-											src={productImageUrlThumbnail ? productImageUrlThumbnail : productImageUrl}
+											src={productImageUrlThumbnail ? productImageUrlThumbnail : (productImageUrl ? productImageUrl : missingImageIcon)}
 											layout={'fill'}
 										/>
 									</div>
@@ -593,6 +615,116 @@ export default function Checkout() {
 				</div>
 			)
 		}
+
+		if (currentState === 'review') {
+			let { subtotal, tax, shipping_amount, grand_total, shipment_message, base_currency_code } = cartData
+			return (
+				<div className="flex flex-col w-full h-full justify-between bg-white rounded-3xl">
+					<div className="overflow-y-auto p-4 h-96 space-y-4">
+						{cartData.products.map((item) => {
+							let { title, qty, currentPrice, id, productImageUrlThumbnail, productImageUrl, sku } = item
+							return (
+								<div key={id} className='flex flex-row space-x-2 shadow rounded-3xl overflow-hidden p-2'>
+									<div className="relative h-[100px] w-[100px]">
+										<Image
+											src={productImageUrlThumbnail ? productImageUrlThumbnail : (productImageUrl ? productImageUrl : missingImageIcon)}
+											layout={'fill'}
+										/>
+									</div>
+									<div className="flex flex-col justify-between">
+										<p>
+											{title}
+										</p>
+										<div className="flex flex-row space-x-4">
+											<button
+												disabled={true}
+												onClick={() => {
+													// dispatch(decrementQuantity(id))
+													decrementItemQty(sku, qty, id)
+												}}
+											>
+												<Image
+													src={minusIcon}
+													height={20}
+													width={20}
+												/>
+											</button>
+											<p>
+												{qty}
+											</p>
+											<button
+												disabled={true}
+												onClick={() => {
+													// dispatch(incrementQuantity(id))
+													incrementItemQty(sku, qty, id)
+												}}
+											>
+												<Image
+													src={plusIcon}
+													height={20}
+													width={20}
+												/>
+											</button>
+											<button
+												disabled={true}
+												onClick={() => {
+													dispatch(removeFromCart(id))
+													deleteItem(sku)
+												}}
+											>
+												<Image
+													src={trashIcon}
+													height={20}
+													width={20}
+												/>
+											</button>
+											<p>
+												x RS. {currentPrice}
+											</p>
+										</div>
+										<p>
+											RS. {currentPrice}
+										</p>
+									</div>
+								</div>
+							)
+						})}
+					</div>
+					<div className="grid grid-cols-2 gap-2 font-lato items-center border-t-2 px-4 py-2">
+						<p className={pLeft}>
+							SubTotal
+						</p>
+						<p className={pRight}>
+							{subtotal}
+						</p>
+						<p className={pLeft}>
+							Tax
+						</p>
+						<p className={pRight}>
+							{base_currency_code} {tax}
+						</p>
+						<p className={pLeft}>
+							Shipping
+						</p>
+						<p className={pRight}>
+							{parse(shipment_message)}
+						</p>
+						<p className={pLeft}>
+							Shipping Amount
+						</p>
+						<p className={pRight}>
+							{base_currency_code} {shipping_amount}
+						</p>
+						<p className={pLeft}>
+							Total
+						</p>
+						<p className={pRight}>
+							{base_currency_code} {grand_total}
+						</p>
+					</div>
+				</div>
+			)
+		}
 	}
 
 	if (!token) {
@@ -609,43 +741,6 @@ export default function Checkout() {
 
 	return (
 		<div>
-			{/* <button
-				onClick={async () => {
-					let { headers, city, userId } = getGeneralApiParams()
-					let lat = checkoutAddress ? JSON.parse(checkoutAddress).mapLat : '0'
-					let long = checkoutAddress ? JSON.parse(checkoutAddress).mapLong : '0'
-					let body = {
-						"coupon": '',
-						"notes": '',
-						"paymentMethod": 'cash',
-						'address': '0',
-						'showProducts': true,
-						'verify': true,
-						"prodType": "cus",
-						"day": "",
-						"startTime": "",
-						"endTime": "",
-						"clientType": "apricart",
-						"orderType": "delivery",
-					}
-					let url = base_url_api + '/order/cart/checkout?city=' + city + '&userid=' + userId + '&client_lat=' + lat + '&client_long=' + long + '&lang=en&client_type=apricart'
-
-					try {
-						let response = await axios.post(url, body, {
-							headers: headers
-						})
-						// console.log("API CART", response.data.data)
-						// setAddressErrorMessage('')
-						// setCartData(response.data.data)
-					} catch (error) {
-						// console.log("API ERROR",error)
-						// setAddressErrorMessage(error.response.data.message)
-						// setCartData(null)
-					}
-				}}
-			>
-				SHOW SHIT
-			</button> */}
 			<div className="flex flex-col lg:grid lg:grid-cols-5 2xl:grid 2xl:grid-cols-6 gap-28">
 				<div className="lg:col-span-3 2xl:col-span-4 space-y-12">
 					<ProgressBar
@@ -721,17 +816,17 @@ export default function Checkout() {
 						</section>
 					)}
 					{viewState == 'review' && (
-						<section className="flex flex-col items-center justify-center align-center m-auto">
+						<section className="flex flex-col items-center justify-center align-center m-auto space-y-2">
 							<div className="text-center">
 								{parse(successResponse.message)}
 							</div>
-							<div className="h-[100px] w-[100px]">
+							<div className="h-[120px] w-[450px]">
 								<Image
 									src={successResponse.data.thankyou_image}
 									layout={'responsive'}
 									alt={"Thank You Image"}
-									width={100}
-									height={100}
+									width={450}
+									height={120}
 								/>
 							</div>
 						</section>

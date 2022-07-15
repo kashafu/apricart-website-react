@@ -87,7 +87,7 @@ export default function HamburgerMenu({ }) {
                         </div>
                     </div>
                     {token ? (
-                        <div className="flex flex-col">
+                        <div className="flex flex-col space-y-2">
                             {/* <div className="flex flex-row">
                                 <Image
                                     src={profileIcon}
@@ -107,6 +107,13 @@ export default function HamburgerMenu({ }) {
                                     </p>
                                 </div>
                             </div> */}
+                            <SubmitButton
+                                text={"ACCOUNT"}
+                                onClick={()=>{
+                                    setShowMenu(!showMenu)
+                                    router.push('/account_detail')
+                                }}
+                            />
                             <SubmitButton
                                 text={"LOGOUT"}
                                 onClick={logout}

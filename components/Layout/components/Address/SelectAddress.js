@@ -76,9 +76,10 @@ export default function SelectAddress({ type, setAddress, dropDownSelectedAddres
                             Select Address
                         </option>
                         {savedAddresses.map((option) => {
+                            let tempSelectedAddress = typeof(dropDownSelectedAddress) === 'object' ? dropDownSelectedAddress : JSON.parse(dropDownSelectedAddress)
                             return (
                                 <option
-                                    selected={dropDownSelectedAddress ? JSON.parse(dropDownSelectedAddress).id == option.id : false}
+                                    selected={dropDownSelectedAddress ? tempSelectedAddress.id == option.id : false}
                                     key={option.id}
                                     value={JSON.stringify(option)}
                                 >
