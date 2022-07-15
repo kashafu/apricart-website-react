@@ -84,9 +84,11 @@ export default function Home() {
 			<div className="grid grid-cols-5 gap-8">
 				{/* CATEGORIES SECTION */}
 				<section className="hidden lg:col-span-1 lg:block">
-					<Categories
-						categories={categories}
-					/>
+					{categories && (
+						<Categories
+							categories={categories}
+						/>
+					)}
 				</section>
 				{/* PRODUCTS SECTION */}
 				<section className="col-span-5 lg:col-span-4 space-y-12">
@@ -115,7 +117,7 @@ export default function Home() {
 						return (
 							// TODO get a unique id from api, using name for now
 							<section key={name} className='space-y-4'>
-								<div className="relative w-full h-[90px] md:h-[150px] lg:h-[250px] rounded-xl overflow-hidden">
+								<div className="relative w-full h-[90px] md:h-[150px] lg:h-[350px] rounded-xl overflow-hidden">
 									<Image
 										src={bannerImageWeb}
 										layout={'fill'}

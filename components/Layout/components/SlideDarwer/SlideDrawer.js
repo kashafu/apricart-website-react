@@ -387,7 +387,7 @@ export default function SlideDrawer(props) {
 								{cart.map((item) => {
 									const { id, productImageUrl, title, currentPrice, sku, quantity } = item
 									return (
-										<div className="item cartitem" key={id}>
+										<div className="item cartitem space-x-12" key={id}>
 											<div className="image1">
 												{" "}
 												<img
