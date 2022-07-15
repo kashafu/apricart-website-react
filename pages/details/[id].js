@@ -16,7 +16,6 @@ export default function Post({ product }) {
 	let isLoggedIn = cookies.get('cookies-token') != null 
 	const router = useRouter()
 	const { id } = router.query
-	console.log(router.query)
 
 	const [categories, setCategories] = useState(null)
 	const [inStock, setInStock] = useState(true)
@@ -79,34 +78,6 @@ export default function Post({ product }) {
 			setNum(num - 1);
 		}
 	};
-
-	// const Cartapi = (list) => {
-	// 	const data =
-	// 	{
-	// 		cart:
-	// 			[
-	// 				{
-	// 					sku: list.sku,
-	// 					qty: "1"
-	// 				}
-	// 			]
-	// 	}
-	// 	console.log(data.cart)
-
-	// 	if (token) {
-	// 		console.log("AVG ")
-	// 		console.log(list.sku);
-	// 		const response = axios.post('https://stag.apricart.pk/v1/order/cart/save?city=karachi&lang=en', data, {
-	// 			headers: {
-	// 				"Content-Type": "application/json",
-	// 				Authorization: "Bearer " + cookies.get("cookies-token"),
-	// 			},
-	// 		}
-
-	// 		);
-	// 	}
-
-	// }
 
 	const addToCartHandler = async (item) => {
         let { city, userId, headers } = getGeneralApiParams()
@@ -276,9 +247,32 @@ export default function Post({ product }) {
 	);
 }
 
+// export async function getStaticPaths() {
+// 	let { headers } = getGeneralApiParams()
+// 	let city = 'karachi'
+// 	let url = base_url_api + '/catalog/products?size=200&sortType=&sortDirection=desc&lang=en&client_type=apricart&page=1&city=' + city
+// 	let paths = []
+
+// 	try {
+// 		let response = await axios.get(url, {
+// 			headers: headers
+// 		})
+
+// 		paths = response.data.data.map((detailId) => {
+// 			{
+// 				params: { id: detailId.sku }
+// 			}
+// 		})
+// 	} catch (error) {
+// 		console.log(error)
+// 	}
+
+// 	return { paths, fallback: 'blocking' };
+// }
+
 export async function getStaticPaths() {
-	const paths = ["/details/[id]", "/details/[slug]"];
-	return { paths, fallback: 'blocking' };
+  const paths = ["/details/APRA-SK02-03"];
+  return { paths, fallback: true };
 }
 
 export async function getStaticProps({ query, params }) {

@@ -66,7 +66,7 @@ export default function Order() {
 
 	return (
 		<>
-			<p>
+			{/* <p>
 				PENDING ORDERS
 			</p>
 			<table className="table-auto">
@@ -107,7 +107,7 @@ export default function Order() {
 						<td>1961</td>
 					</tr>
 				</tbody>
-			</table>
+			</table> */}
 			<section className="popular_sec">
 				<div className="container">
 					<div className="row">

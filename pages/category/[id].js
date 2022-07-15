@@ -182,6 +182,8 @@ export async function getStaticPaths() {
 				params: { id: categoryId.id }
 			}
 		})
+		console.log("heeelo")
+		console.log(paths);
 	} catch (error) {
 		console.log(error.response)
 	}
