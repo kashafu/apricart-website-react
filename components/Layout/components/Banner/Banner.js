@@ -13,7 +13,7 @@ export default function Banner({banners}){
     }
 
     return(
-        <div className="">
+        <div className="scale-y-75 md:scale-100">
             <Carousel autoPlay={true} infiniteLoop={true} swipeable={true} showArrows={true} interval={5000}>
                 {banners.map((banner)=>{
                     return(
@@ -22,7 +22,7 @@ export default function Banner({banners}){
                         }}>
                             <img
                                 src={banner.bannerUrlWeb}    
-                                className=""
+                                // className="h-[100px] w-full"
                                 alt=""
                             />
                         </button>

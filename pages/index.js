@@ -1,4 +1,3 @@
-import Head from "next/head";
 import Image from "next/image";
 import Categories from "../components/Layout/components/Categories/Categories";
 import Cookies from 'universal-cookie';
@@ -92,11 +91,11 @@ export default function Home() {
 				{/* PRODUCTS SECTION */}
 				<section className="col-span-5 lg:col-span-4 space-y-12">
 					{/* WEB PRODUCTS SECTION */}
-					<section className="col-span-5 lg:col-span-4 space-y-12">
+					{/* <section className="col-span-5 lg:col-span-4 space-y-12">
 						<MainProducts
 							products={homeData.webProducts}
 						/>
-					</section>
+					</section> */}
 					{homeData.products.map((product) => {
 						let { bannerImageWeb, data, name } = product
 
@@ -116,7 +115,7 @@ export default function Home() {
 						return (
 							// TODO get a unique id from api, using name for now
 							<section key={name} className='space-y-4'>
-								<div className="relative w-full h-[100px] md:h-[150px] lg:h-[250px] rounded-xl overflow-hidden">
+								<div className="relative w-full h-[90px] md:h-[150px] lg:h-[250px] rounded-xl overflow-hidden">
 									<Image
 										src={bannerImageWeb}
 										layout={'fill'}
