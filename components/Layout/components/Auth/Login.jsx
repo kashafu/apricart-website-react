@@ -52,7 +52,6 @@ export default function Login(){
     }
 
     const onEnterPress = async (e)=>{
-        console.log("pressed")
         if(e.key === 'Enter'){
             await loginApi()
         }

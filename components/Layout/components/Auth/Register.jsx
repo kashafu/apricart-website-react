@@ -43,9 +43,8 @@ const Register = () => {
             setCookie("register");
             setCookie("token", response.data.data.token, { path: "/address" });
         } catch (err) {
-            //const Error = err.response.data;
-            console.log(err.response);
-            toast.error(Error.message);
+            console.log(err?.response);
+            toast.error(err?.response?.data);
         }
     };
 
@@ -61,7 +60,6 @@ const Register = () => {
             let response = await axios.post(url, body, {
                 headers: headers,
             });
-            console.log(response);
             router.push("/");
         } catch (error) {
             console.log(error);

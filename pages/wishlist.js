@@ -82,7 +82,6 @@ const Wishpage = () => {
 	}, [])
 
   const  removewish=(wish)=>{
-    console.log(wish.sku);
     var data =JSON.stringify({sku:[wish.sku]}); //  method: 'delete',
 
    
@@ -108,7 +107,6 @@ const Wishpage = () => {
 
     setTotal(response.data.total)
     // console.log(response.data.data);
-    console.log(Data1)
     let total1 = response.data.total;
     total = total1;
     // setDiscount(response.data.message);   

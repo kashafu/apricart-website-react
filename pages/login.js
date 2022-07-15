@@ -37,7 +37,6 @@ export default function Login() {
                     headers: headers
                 }
             )
-            console.log(response.data)
             if (response.data.status == 1) {
                 toast.success(response.data.message);
 
@@ -85,7 +84,6 @@ export default function Login() {
     }
 
     const onEnterPress = async (e) => {
-        console.log("pressed")
         if (e.key === 'Enter') {
             await loginApi()
         }

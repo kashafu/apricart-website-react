@@ -68,12 +68,10 @@ export default function ForgotPassword(){
 			let response = await axios.post(url, body, {
 				headers: headers
 			})
-			console.log(response)
 
 			setButtonDisabled(true)
 			setErrorMessage('')
 			setSuccessMessage(response.data.message)
-			console.log(response.data.message)
 			// router.push('/')
 		} catch (error) {
 			setErrorMessage(error.response.data.message)

@@ -109,8 +109,6 @@ export default function AddressCard({ type, previousAddress, updateSavedAddresse
                 'mapLong': mapLong,
                 'googleAddress': googleAddress,
             }
-            console.log(body)
-
             const response = await axios.post(
                 url, body,
                 {

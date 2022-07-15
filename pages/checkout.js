@@ -136,7 +136,6 @@ export default function Checkout() {
 
 			dispatch(incrementQuantity(id))
 			if (viewState != 'shipping') {
-				console.log(response)
 				getCartDataApi()
 			}
 		} catch (error) {
@@ -305,19 +304,8 @@ export default function Checkout() {
 			<div className="grid grid-cols-3 justify-items-center border-b-2 p-4">
 				<button className={divStyle}
 					onClick={() => {
-						console.log('clikc');
 						onClick('shipping')
 					}}
-					// disabled={() => {
-					// 	if (currentState == 'review') {
-					// 		console.log('disables');
-					// 		return true
-					// 	}
-					// 	else{
-					// 		console.log('not disables');
-					// 		return false
-					// 	}
-					// }}
 				>
 					<Image
 						src={currentState === 'shipping' ? blueCircleIcon : blackCircleIcon}

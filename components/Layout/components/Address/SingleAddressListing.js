@@ -33,7 +33,7 @@ export default function SingleAddressListing({listing, isSelected, setAddress, u
 
             updateSavedAddresses()
         } catch (error) {
-            console.log(error.response)
+            console.log(error?.response)
         }
     }
 

@@ -18,7 +18,6 @@ export default function Banner({banners}){
                 {banners.map((banner)=>{
                     return(
                         <button key={banner.id} className="carousel-inner" onClick={()=>{
-                            console.log(banner.id)
                         }}>
                             <img
                                 src={banner.bannerUrlWeb}    

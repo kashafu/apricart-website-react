@@ -34,13 +34,11 @@ export default function GroceryList(){
 					},
 				}
 			);
-			console.log("Checkout Data", response.data);
 			alert(response.data.message);
 		} catch (err) {
 			const Error = err.response.data;
 		}
 	};
-	console.log("My Data", userData);
 
 	if (!token) {
 		return <h5 className="login-token">Please Login First</h5>;

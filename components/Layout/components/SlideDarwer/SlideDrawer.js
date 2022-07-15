@@ -329,7 +329,6 @@ export default function SlideDrawer(props) {
 
 	//const[qty,setqty] = useState();
 	useCallback(() => {
-		console.log('Clicked!');
 	}, []);
 	const UpdateQty = useCallback((item, val, qty) => {
 		console.log(qty);
@@ -356,7 +355,6 @@ export default function SlideDrawer(props) {
 					'Authorization': 'Bearer ' + cookies.get("cookies-token")
 				}
 			}).then(function (response) {
-				console.log(response);
 				// console.log(JSON.stringify(response.data));
 			})
 				.catch(function (error) {
@@ -387,7 +385,6 @@ export default function SlideDrawer(props) {
 						<>
 							<div className="cart_body">
 								{cart.map((item) => {
-									console.log(item);
 									const { id, productImageUrl, title, currentPrice, sku, quantity } = item
 									return (
 										<div className="item cartitem" key={id}>
