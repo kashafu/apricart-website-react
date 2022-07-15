@@ -19,12 +19,13 @@ export default function Home() {
 	const dispatch = useDispatch();
 	let token = cookies.get('cookies-token')
 
-
+	const [categories, setCategories] = useState(null)
 	const [homeData, setHomeData] = useState(null)
 	const [errorMessage, setErrorMessage] = useState('Loading');
 
 	useEffect(() => {
 		getHomeDataApi()
+		getCategoriesApi()
 	}, [])
 
 	const getHomeDataApi = async () => {
@@ -43,6 +44,22 @@ export default function Home() {
 			dispatch(updateTicker(response.data.data.ticker));
 		} catch (error) {
 			setErrorMessage(error.message)
+		}
+	}
+
+	const getCategoriesApi = async () => {
+		let { city, headers } = getGeneralApiParams()
+		let url = base_url_api + '/catalog/categories?level=all&client_type=apricart&city=' + city
+
+		try {
+			let response = await axios.get(url,
+				{
+					headers: headers
+				}
+			)
+			setCategories(response.data.data)
+		} catch (error) {
+			console.log(error)
 		}
 	}
 
@@ -69,7 +86,7 @@ export default function Home() {
 				{/* CATEGORIES SECTION */}
 				<section className="hidden lg:col-span-1 lg:block">
 					<Categories
-						categories={homeData.categories}
+						categories={categories}
 					/>
 				</section>
 				{/* PRODUCTS SECTION */}
