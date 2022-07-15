@@ -8,7 +8,7 @@ export default function Faqs() {
                 <h2 className="text-center text-6xl text-indigo-900 font-bold">FAQ's</h2>
 
             </div>
-            <div class="text-stone-900">
+            <div className="text-stone-900">
                 <ol start="1">
                     <li className="text-2xl text-indigo-900 py-2">Q)  Can I place order for someone else?</li>
                     Yes. At the time of checkout, fill in the details of the person who will receive the order and their contact details.
