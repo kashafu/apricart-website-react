@@ -350,7 +350,7 @@ export default function SlideDrawer(props) {
 			]
 		}
 		if (token) {
-			axios.post('https://cbe.apricart.pk/order/cart/updateqty?city=karachi&lang=en&client_type=apricart', udat, {
+			axios.post('https://cbe.apricart.pk/v1/order/cart/updateqty?city=karachi&lang=en&client_type=apricart', udat, {
 				headers: {
 					'Content-Type': 'application/json',
 					'Authorization': 'Bearer ' + cookies.get("cookies-token")

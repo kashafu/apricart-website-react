@@ -1,9 +1,9 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {
+module.exports = {
   reactStrictMode: true,
   images: {
-    domains: ['157.175.131.28']
+    domains: ['cbe.apricart.pk']
   }
 }
 
-module.exports = nextConfig
+// module.exports = nextConfig
