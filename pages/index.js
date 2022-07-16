@@ -117,7 +117,7 @@ export default function Home() {
 						return (
 							// TODO get a unique id from api, using name for now
 							<section key={name} className='space-y-4'>
-								<div className="relative w-full h-[90px] md:h-[150px] lg:h-[350px] rounded-xl overflow-hidden">
+								<div className="relative w-full h-[90px] md:h-[150px] lg:h-[250px] rounded-xl overflow-hidden">
 									<Link href="/offers/[id]"
 										as={
 											"/offers/" + offerId
