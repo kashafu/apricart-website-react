@@ -18,10 +18,10 @@ export default function Layout() {
                     </div>
 
                     <p className="footer-links">
-                        <Link href={"/privacypolicy"} passHref>
+                        <Link href={"/privacy-policy"} passHref>
                             <a>Privacy Policy</a>
                         </Link>
-                        <Link href={"/term-of-use"} passHref>
+                        <Link href={"/terms-of-use"} passHref>
                             <a>Terms of Use</a>
                         </Link>
                         <Link href={"/faqs"} passHref>
