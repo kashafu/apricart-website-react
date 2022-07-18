@@ -118,6 +118,7 @@ h5.h5tot {
     margin-top: 15px !important;
 }
 .copytext {
+    color:#ffd54c;
     padding-top: 10px;
 }
 a.btn.btn.chane.secondary {
@@ -5703,7 +5704,7 @@ select.filterElements.form-control.catagory12 {
     text-decoration: none;}
 /*account sec end*/
 section.mainfooter {
-    background: #ffd54C;
+    background:  #ccc;
      padding: 55px 50px;
      margin-left: -12px;
      margin-right: -12px;
@@ -6285,7 +6286,7 @@ span.close-icon {
     color: #000;
 }
 section.mainfooter {
-    background: #fded00;
+    background: #ccc;
     padding: 10px 30px;
     margin-left: -10px;
     margin-right: -10px;

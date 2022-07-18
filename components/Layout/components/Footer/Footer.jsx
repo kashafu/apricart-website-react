@@ -34,12 +34,12 @@ export default function Layout() {
                 </div>
 
                 <div className="footer-center">
-                    <h3>Address</h3>
+                    {/* <h3>Address</h3> */}
 
                     <div>
                         <i className="fa fa-map-marker"></i>
                         <p>
-                            <span>B-191, Block No. 5,</span> Gulshan-e-Iqbal,
+                            <span> <h3>Address</h3>B-191, Block No. 5,</span> Gulshan-e-Iqbal,
                             Karachi
                         </p>
                     </div>
@@ -47,7 +47,7 @@ export default function Layout() {
                     <div>
                         <i className="fa fa-phone"></i>
                         <p>
-                            <span className="highligh1">0304-1110195</span>
+                            <span className="highligh1"><h3>Phone</h3>0304-1110195</span>
                         </p>
                     </div>
 
@@ -55,7 +55,7 @@ export default function Layout() {
                         <i className="fa fa-envelope"></i>
                         <p>
                             <a href="mailto:support@apricart.pk">
-                                support@apricart.pk
+                               <h3>E-mail</h3> support@apricart.pk
                             </a>
                         </p>
                     </div>
@@ -133,7 +133,9 @@ export default function Layout() {
                                     />
                                 </a>
                             </li>
+                    
                         </ul>
+                        <h3>Secured payment gateways</h3>
                     </div>
                     {/* <!-- <p class="footer-company-name">Apricart E-Stores Pvt Ltd    <br>  All rights reserved</p> --> */}
                 </div>
