@@ -1,58 +1,58 @@
-import React, { useState, useEffect } from "react";
-import { Button } from "react-bootstrap";
-import Image from "next/image";
-import Link from "next/link";
-import Popup from "../Popup/Popup";
-import Cookies from "universal-cookie";
-import { useRouter } from "next/router";
-import { useSelector } from "react-redux";
-import { getGeneralApiParams } from "../../../../helpers/ApiHelpers";
+import React, { useState, useEffect } from "react"
+import { Button } from "react-bootstrap"
+import Image from "next/image"
+import Link from "next/link"
+import Popup from "../Popup/Popup"
+import Cookies from "universal-cookie"
+import { useRouter } from "next/router"
+import { useSelector } from "react-redux"
+import { getGeneralApiParams } from "../../../../helpers/ApiHelpers"
 
 // IMAGES
 // import bikePNG from "../../../../public/assets/images/bike.png";
-import locationPinPNG from "../../../../public/assets/images/location.png";
-import phonePNG from "../../../../public/assets/images/phone.png";
-import logoPNG from "../../../../public/assets/images/logo.png";
+import locationPinPNG from "../../../../public/assets/images/location.png"
+import phonePNG from "../../../../public/assets/images/phone.png"
+import logoPNG from "../../../../public/assets/images/logo.png"
 
 export default function Layout() {
-    const cookies = new Cookies();
-    const router = useRouter();
+    const cookies = new Cookies()
+    const router = useRouter()
     const addressSelector = useSelector(
         (state) => state.general.selectedAddress
-    );
-    const tickerSelector = useSelector((state) => state.general.ticker);
+    )
+    const tickerSelector = useSelector((state) => state.general.ticker)
 
     let pStyle =
-        "font-lato font-bold text-sm lg:text-md text-black lg:text-base";
+        "font-lato font-bold text-sm lg:text-md text-black lg:text-base"
     // let divIconStyle = "relative w-[15px] h-[15px] lg:w-[22px] lg:h-[22px]"
-    let { city } = getGeneralApiParams();
+    let { city } = getGeneralApiParams()
 
-    const [getcity, setcity] = useState(city);
-    const [isOpen, setIsOpen] = useState(false);
+    const [getcity, setcity] = useState(city)
+    const [isOpen, setIsOpen] = useState(false)
 
     useEffect(() => {
         if (cookies.get("cities") == null) {
-            cookies.set("cities", "karachi");
-            getLocation();
+            cookies.set("cities", "karachi")
+            getLocation()
         }
-    }, []);
+    }, [])
 
     const getLocation = () => {
         if (!navigator.geolocation) {
-            return;
+            return
         }
 
         navigator.geolocation.getCurrentPosition((position) => {
-            let latitude, longitude;
-            latitude = position.coords.latitude;
-            longitude = position.coords.longitude;
+            let latitude, longitude
+            latitude = position.coords.latitude
+            longitude = position.coords.longitude
             // KARACHI
             let karachiCoords = {
                 top: [25.633730508113278, 67.36401298889072],
                 bottom: [24.806311517712324, 67.18548517144208],
                 left: [24.83871833773748, 66.65264830090317],
                 right: [25.139943073700493, 67.64691091500156],
-            };
+            }
 
             if (
                 latitude <= karachiCoords.top[0] &&
@@ -60,9 +60,9 @@ export default function Layout() {
                 longitude <= karachiCoords.right[1] &&
                 longitude >= karachiCoords.left[1]
             ) {
-                setcity("karachi");
-                cookies.set("cities", "karachi");
-                return;
+                setcity("karachi")
+                cookies.set("cities", "karachi")
+                return
             }
 
             // PESHAWAR
@@ -71,7 +71,7 @@ export default function Layout() {
                 bottom: [33.856413627696355, 71.52769413625535],
                 left: [33.99144768127041, 71.38281194594128],
                 right: [34.025599547506026, 71.75909365348681],
-            };
+            }
 
             if (
                 latitude <= peshawarCoords.top[0] &&
@@ -79,35 +79,48 @@ export default function Layout() {
                 longitude <= peshawarCoords.right[1] &&
                 longitude >= peshawarCoords.left[1]
             ) {
-                setcity("peshawar");
-                cookies.set("cities", "peshawar");
-                return;
+                setcity("peshawar")
+                cookies.set("cities", "peshawar")
+                return
             }
-        });
-    };
+        })
+    }
 
     const togglePopup = () => {
-        setIsOpen(!isOpen);
-    };
+        setIsOpen(!isOpen)
+    }
 
     const closeButton = () => {
-        setIsOpen(!isOpen);
-        window.location.reload();
-    };
+        setIsOpen(!isOpen)
+        window.location.reload()
+    }
 
     const handleCity = (event) => {
-        setcity(event.target.value);
-        cookies.set("cities", event.target.value);
-    };
+        setcity(event.target.value)
+        cookies.set("cities", event.target.value)
+    }
 
     const submitCities = (e) => {
-        e.preventDefault();
-        setcity(e.target.value);
-    };
+        e.preventDefault()
+        setcity(e.target.value)
+    }
 
     return (
         <header className="flex flex-col">
-            <div className="flex flex-row w-screen bg-main-yellow lg:justify-between p-6 items-center h-[70px]">
+            <div className="flex flex-row w-screen bg-main-yellow lg:justify-between px-12 items-center h-[50px]">
+                {/* TICKER */}
+                <div className="flex flex-row items-center h-full">
+                    <div className="flex items-center bg-main-red px-2 h-2/3">
+                        <p className="text-white font-roboto font-bold text-xl">
+                            Latest Update
+                        </p>
+                    </div>
+                    <div className="overflow-x-auto text-center">
+                        <p className="font-lato text-md font-bold text-main-blue p-2 whitespace-nowrap">
+                            {tickerSelector}
+                        </p>
+                    </div>
+                </div>
                 {/* ARPICART LOGO, LOCATION AND SELECTED ADDRESS */}
                 <div className="flex flex-row items-center justify-between">
                     {/* APRICART LOGO shown on phone, hidden on desktop*/}
@@ -136,9 +149,9 @@ export default function Layout() {
                         </p>
                     </div> */}
                     {/* LOCATION AND SELECTED ADDRESS */}
-                    <div className="flex flex-row space-x-4 lg:space-x-12 items-center">
-                        {/* LOCATION */}
-                        <div>
+                    {/* <div className="flex flex-row space-x-4 lg:space-x-12 items-center"> */}
+                    {/* LOCATION */}
+                    {/* <div>
                             <button
                                 className="flex flex-row space-x-2 items-center"
                                 onClick={togglePopup}
@@ -154,9 +167,9 @@ export default function Layout() {
                                     {getcity}
                                 </p>
                             </button>
-                        </div>
-                        {/* CURRENT SELECTED ADDRESS */}
-                        <div
+                        </div> */}
+                    {/* CURRENT SELECTED ADDRESS */}
+                    {/* <div
                             className={
                                 pStyle + " capitalize flex flex-row space-x-2"
                             }
@@ -174,14 +187,14 @@ export default function Layout() {
                                     </p>
                                 )}
                             </button>
-                        </div>
-                        {/* LANGUAGE */}
-                        {/* <div>
+                        </div> */}
+                    {/* LANGUAGE */}
+                    {/* <div>
                             <p className={pStyle}>
                                 English
                             </p>
                         </div> */}
-                    </div>
+                    {/* </div> */}
                 </div>
                 {/* PHONE NUMBER hidden on phone, shown on desktop*/}
                 <div className="hidden flex flex-row space-x-2 items-center lg:inline-flex">
@@ -192,7 +205,7 @@ export default function Layout() {
                             layout={"fill"}
                         />
                     </div>
-                    <p className={pStyle}>0304-1110195</p>
+                    <p className={pStyle}>0304-111-0195</p>
                 </div>
                 {isOpen && (
                     <div className="fixed w-1/2 bg-white h-1/6 border-8 inset-0 m-auto z-10">
@@ -241,12 +254,6 @@ export default function Layout() {
                     </div>
                 )}
             </div>
-            {/* TICKER */}
-            <div className="overflow-x-auto text-center">
-                <p className="font-lato text-md font-bold text-main-blue p-2 whitespace-nowrap">
-                    {tickerSelector}
-                </p>
-            </div>
         </header>
-    );
+    )
 }
