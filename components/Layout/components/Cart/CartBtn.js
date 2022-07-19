@@ -1,18 +1,25 @@
 import React from 'react'
 import Image from 'next/image';
+import cartIcon from '../../../../public/assets/svgs/cartIcon.svg'
+
 export default class MainPage extends React.Component {
-   render(){
-     return (
-        <div>
-          <li className="nav-item" onClick={this.props.toggle}> 
-                <a className="nav-link openbtn">
-                  <Image src="/assets/images/bag.png" 
-                  width={18} height={18}
-                  className="img-fluid" alt=''/> Cart
-                </a>
-               
-              </li>
-        </div>
-     )
-    }   
+  render() {
+    return (
+      <button onClick={this.props.toggle} className='flex items-center'>
+        <Image
+          src={cartIcon}
+          height={45}
+          width={45}
+        />
+      </button>
+      // {/* <li className="nav-item" onClick={this.props.toggle}>
+      //   <a className="nav-link openbtn">
+      //     <Image src={cartIcon}
+      //       width={45} height={45}
+      //       className="" alt=''
+      //     />
+      //   </a>
+      // </li> */}
+    )
+  }
 }

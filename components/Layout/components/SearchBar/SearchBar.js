@@ -1,13 +1,27 @@
 import axios from "axios"
-import { useState } from "react"
+import { useEffect, useState, useRef } from "react"
+import Image from "next/image"
 import { getGeneralApiParams } from "../../../../helpers/ApiHelpers"
 import { base_url_api } from '../../../../information.json'
 import SingleProduct from '../Products/SingleProduct'
+import searchIcon from '../../../../public/assets/svgs/searchIcon.svg'
 
 export default function SearchBar() {
     const [searchText, setSearchText] = useState('')
     const [searchResults, setSearchResults] = useState([])
     const [showSearchResults, setShowSearchResults] = useState(false)
+    const [categories, setCategories] = useState(null)
+    const [selectedCategory, setSelectedCategory] = useState('')
+
+    const searchIconElement = useRef()
+
+    useEffect(() => {
+        getCategoriesApi()
+    }, [])
+    
+    useEffect(() => {
+        console.log(selectedCategory)
+    }, [selectedCategory])
 
     const searchHandler = async (searchTerm) => {
         if (searchTerm.length <= 3) {
@@ -16,7 +30,7 @@ export default function SearchBar() {
             return
         }
         let { city, userId, headers } = getGeneralApiParams()
-        let url = base_url_api + '/catalog/products/search?page=1&size=20&term=' + searchTerm + '&category=&city=' + city + '&lang=en&userid=' + userId + '&client_type=apricart'
+        let url = base_url_api + '/catalog/products/search?page=1&size=20&term=' + searchTerm + '&category=' + selectedCategory + '&city=' + city + '&lang=en&userid=' + userId + '&client_type=apricart'
         let searchResponse = await axios.get(
             url,
             {
@@ -27,21 +41,77 @@ export default function SearchBar() {
         setSearchResults(searchResponse.data.data)
     }
 
+    const getCategoriesApi = async () => {
+        let { city, headers } = getGeneralApiParams()
+        let url = base_url_api + '/catalog/categories?level=all&client_type=apricart&city=' + city
+
+        try {
+            let response = await axios.get(url,
+                {
+                    headers: headers
+                }
+            )
+            setCategories(response.data.data)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     return (
         <div className="relative w-full">
-            <input
-                className="p-2 w-full bg-slate-200 rounded-xl font-bold"
-                type={'search'}
-                value={searchText}
-                onChange={(e) => {
-                    setSearchText(e.target.value)
-                    searchHandler(e.target.value)
-                }}
-                placeholder='Search'
-                onBlur={() => {
-                    setShowSearchResults(false)
-                }}
-            />
+            <div className="flex flex-row bg-main-grey-200 rounded-r-lg">
+                <select
+                    disabled= {categories == null}
+                    className="h-[40px] py-2 px-4 rounded-lg bg-main-grey"
+                    onChange={(e) => {
+                        setSelectedCategory(e.target.value)
+                    }}
+                    value={selectedCategory}
+                >
+                    <option
+                        value={''}
+                        disabled
+                        selected
+                    >
+                        Select Categories
+                    </option>
+                    {categories && categories.map((option) => {
+                        return (
+                            <option
+                                key={option.id}
+                                value={option.id}
+                            >
+                                {option.name}
+                            </option>
+                        )
+                    })}
+                </select>
+                <input
+                    ref={searchIconElement}
+                    className="p-2 w-full bg-main-grey-200 rounded-lg font-bold"
+                    type={'search'}
+                    value={searchText}
+                    onChange={(e) => {
+                        setSearchText(e.target.value)
+                        searchHandler(e.target.value)
+                    }}
+                    placeholder='Search'
+                    onBlur={() => {
+                        setShowSearchResults(false)
+                    }}
+                />
+                {/* <div className="absolute right-2 top-0 bottom-0 m-auto h-[20px]"
+                    onClick={()=>{
+                        searchIconElement.current.focus()
+                    }}
+                >
+                    <Image
+                        src={searchIcon}
+                        width={20}
+                        height={20}
+                    />
+                </div> */}
+            </div>
             {showSearchResults && (
                 <div className="absolute z-20 w-full bg-white max-h-[350px] overflow-auto">
                     {searchResults.length > 0 ? (

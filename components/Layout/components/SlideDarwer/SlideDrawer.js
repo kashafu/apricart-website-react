@@ -378,7 +378,7 @@ export default function SlideDrawer(props) {
 							<h4 className="emptyCart">No items in your cart</h4>
 							<div className="cartShoping">
 								{/* <span className="startshoping">Start Shopping</span> */}
-								<h5 className="emptyCart">Fast & Free Delivery</h5>
+								{/* <h5 className="emptyCart">Fast & Free Delivery</h5> */}
 							</div>
 						</>
 					) : (
