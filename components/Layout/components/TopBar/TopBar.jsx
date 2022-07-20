@@ -107,20 +107,20 @@ export default function Layout() {
 
     return (
         <header className="flex flex-col">
-            <div className="flex flex-row w-screen bg-main-yellow lg:justify-between px-12 items-center h-[50px]">
+            <div className="flex flex-row w-screen bg-main-yellow lg:justify-between px-2 lg:px-12 items-center h-[50px]">
                 {/* TICKER */}
-                <div className="flex flex-row items-center h-full">
-                    <div className="flex items-center bg-main-red px-2 h-2/3">
-                        <p className="text-white font-roboto font-bold text-xl">
+                {/* <div className="flex flex-row items-center h-full">
+                    <div className="hidden lg:inline flex items-center bg-main-red px-2 h-2/3">
+                        <p className="text-white font-roboto font-bold text-xs truncate md:text-xl">
                             Latest Update
                         </p>
                     </div>
                     <div className="overflow-x-auto text-center">
-                        <p className="font-lato text-md font-bold text-main-blue p-2 whitespace-nowrap">
+                        <p className="font-lato text-sm font-bold text-main-blue whitespace-nowrap">
                             {tickerSelector}
                         </p>
                     </div>
-                </div>
+                </div> */}
                 {/* ARPICART LOGO, LOCATION AND SELECTED ADDRESS */}
                 <div className="flex flex-row items-center justify-between">
                     {/* APRICART LOGO shown on phone, hidden on desktop*/}
@@ -134,6 +134,17 @@ export default function Layout() {
                                 />
                             </button>
                         </Link>
+                    </div>
+                    {/* TICKER */}
+                    <div className="flex flex-row items-center h-full md:space-x-2">
+                        <div className="hidden lg:inline flex items-center bg-main-red px-2 h-2/3">
+                            <p className="text-white font-roboto font-bold text-xs truncate md:text-lg">
+                                Latest Update
+                            </p>
+                        </div>
+                        <p className="text-center overflow-x-auto text-sm font-bold text-main-blue whitespace-nowrap">
+                            {tickerSelector}
+                        </p>
                     </div>
                     {/* DELIVERY */}
                     {/* <div className="hidden lg:inline-flex flex flex-row space-x-2 items-center">

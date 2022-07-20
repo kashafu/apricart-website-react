@@ -25,6 +25,9 @@ import Logo from "../Logo/Logo"
 import LinkText from "../Typography/LinkText"
 import Profile from "../Auth/Profile"
 import Image from "next/image"
+import HomeDeliveryCard from "../Cards/HomeDeliveryCard"
+import ClickAndCollectCard from "../Cards/ClickAndCollectCard"
+import BulkBuyCard from "../Cards/BulkBuyCard"
 
 export default function Header({}) {
     const cookies = new Cookies()
@@ -124,291 +127,125 @@ export default function Header({}) {
         setcity(e.target.value)
     }
 
-    const logout = () => {
-        cookies.remove("cookies-token")
-        cookies.remove("selected-address")
-        localStorage.clear()
-        setAuthenticated(false)
-        router.push("/")
-    }
-
-    const Links = user ? (
-        <li className="nav-item">
-            <div className="dropdown">
-                <button
-                    className="dropbtn"
-                    // data-bs-toggle="modal"
-                    // data-bs-target="#exampleModal"
-                    // data-bs-whatever="@mdo"
-                >
-                    {""}
-                    <a className="nav-link capitalize">
-                        <img
-                            src="/assets/images/user.png"
-                            className="img-fluid"
-                        />
-                        {name && <p>Welcome {name}</p>}
-                    </a>
-                </button>
-                <div className="dropdown-content">
-                    <Link href="/profile_user">
-                        <a href="#">
-                            <img
-                                src="/assets/images/user.png"
-                                className="img-fluid"
-                            />
-                            My Profile
-                        </a>
-                    </Link>
-                    <Link href="/order">
-                        <a href="#">
-                            <img
-                                src="/assets/images/bag.png"
-                                className="img-fluid"
-                            />
-                            My Orders
-                        </a>
-                    </Link>
-                    <Link href="/address">
-                        <a href="#">
-                            <img
-                                src="/assets/images/location.png"
-                                className="img-fluid"
-                            />
-                            My Address
-                        </a>
-                    </Link>
-                    <button className="logoutbtn" onClick={logout}>
-                        <a>
-                            <img
-                                src="/assets/images/logout.png"
-                                className="img-fluid"
-                            />{" "}
-                            Logout
-                        </a>
-                    </button>
-                </div>
-            </div>
-        </li>
-    ) : (
-        <li className="nav-item">
-            <div className="dropdown">
-                <WelcomeBtn className="navlink" />
-            </div>
-        </li>
-    )
-
     const cart = useSelector((state) => state.cart)
-    const wish = useSelector((state) => state.wish)
-
-    const dispatch = useDispatch()
-
-    const getTotalPrice = () => {
-        return cart.reduce(
-            (accumulator, item) => accumulator + item.quantity * item.price,
-            0
-        )
-    }
-    const cartnotify = () => {
-        if (cart.length == 0) {
-            toast.info("No Item in the Cart !")
-        }
-    }
-    const wishnotify = () => {
-        if (wish.length == 0) {
-            toast.info("No Item in Wishlist !")
-        }
-    }
-
-    let cartAll = {}
-    let mydata
-    // let Data1
-    const wishList =
-        wish.length > 0 ? (
-            <span className="heart2">
-                <AiFillHeart className="abcd" />
-            </span>
-        ) : (
-            <span className="heart1">
-                <AiOutlineHeart className="abcd" />
-            </span>
-        )
-    const config = {
-        method: "GET",
-        headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-            Authorization: "Bearer " + cookies.get("cookies-token"),
-        },
-    }
 
     return (
-        <div className="flex flex-row h-[60px] bg-white items-center py-2 px-12 space-x-4">
-            <div className="lg:hidden">
-                <HamburgerMenu />
-            </div>
-            <div className="hidden lg:block lg:w-[200px]">
-                <Logo />
-            </div>
-            <div className="grow">
-                <SearchBar />
-            </div>
-            <div className="lg:hidden flex flex-row">
-                <BtnCart />
-                {cart.length}
-            </div>
-            <div className="hidden lg:inline lg:flex lg:flex-row lg:space-x-4 lg:items-center">
-                <div className="pr-4">
-                    <button
-                        className="flex flex-row space-x-2 items-center"
-                        onClick={togglePopup}
-                    >
-                        <div className="relative w-[12px] h-[15px] lg:w-[19px] lg:h-[22px]">
-                            <Image
-                                src={locationPinPNG}
-                                alt={"location icon"}
-                                layout={"fill"}
-                            />
-                        </div>
-                        <p className={"font-bold text-sm lg:text-md text-main-grey-800 lg:text-lg capitalize"}>{getcity}</p>
-                    </button>
+        <div className="flex flex-col bg-white px-2 md:px-12 py-2 md:py-8 space-y-2">
+            <div className="flex flex-row items-center space-x-2 md:space-x-4">
+                <div className="lg:hidden">
+                    <HamburgerMenu />
                 </div>
-                <Link href={"/wishlist"} passHref>
-                    <Image src={heartIcon} width={45} height={45} />
-                </Link>
-                <div className="relative">
+                <div className="hidden lg:block lg:w-[200px]">
+                    <Logo />
+                </div>
+                <div className="grow">
+                    <SearchBar />
+                </div>
+                <div className="lg:hidden flex flex-row">
                     <BtnCart />
-                    <p className="absolute -right-2 -top-2 text-black">
-                        {cart.length}
-                    </p>
+                    {cart.length}
                 </div>
-                {token ? (
-                    <Profile />
-                ) : (
-                    <div className="flex flex-row space-x-2 items-center">
-                        <Link href={'/login'} passHref>
-                            <a className="text-xl font-main-grey-800 font-semibold">
-                                Login
-                            </a>
-                        </Link>
-                        <p className="text-3xl font-bold pb-[5px]">|</p>
-                        <Link href={'/register'} passHref>
-                            <a className="text-xl font-main-grey-800 font-semibold">
-                                Sign Up
-                            </a>
-                        </Link>
+                <div className="hidden lg:inline lg:flex lg:flex-row lg:space-x-4 lg:items-center">
+                    <div className="pr-4">
+                        <button
+                            className="flex flex-row space-x-2 items-center"
+                            onClick={togglePopup}
+                        >
+                            <div className="relative w-[12px] h-[15px] lg:w-[19px] lg:h-[22px]">
+                                <Image
+                                    src={locationPinPNG}
+                                    alt={"location icon"}
+                                    layout={"fill"}
+                                />
+                            </div>
+                            <p
+                                className={
+                                    "font-bold text-sm lg:text-md text-main-grey-800 lg:text-lg capitalize"
+                                }
+                            >
+                                {getcity}
+                            </p>
+                        </button>
+                    </div>
+                    <Link href={"/wishlist"} passHref>
+                        <Image src={heartIcon} width={45} height={45} />
+                    </Link>
+                    <div className="relative">
+                        <BtnCart />
+                        <p className="absolute -right-2 -top-2 text-black">
+                            {cart.length}
+                        </p>
+                    </div>
+                    {token ? (
+                        <Profile />
+                    ) : (
+                        <div className="flex flex-row space-x-2 items-center">
+                            <Link href={"/login"} passHref>
+                                <a className="text-xl font-main-grey-800 font-semibold">
+                                    Login
+                                </a>
+                            </Link>
+                            <p className="text-3xl font-bold pb-[5px]">|</p>
+                            <Link href={"/register"} passHref>
+                                <a className="truncate text-xl font-main-grey-800 font-semibold">
+                                    Sign Up
+                                </a>
+                            </Link>
+                        </div>
+                    )}
+                </div>
+                {isOpen && (
+                    <div className="fixed w-1/2 bg-white h-1/6 border-8 inset-0 m-auto z-10">
+                        <Popup
+                            content={
+                                <form onSubmit={submitCities}>
+                                    <label className="select_city">
+                                        Select City
+                                    </label>
+                                    <hr />
+                                    <div className="freehome_d">
+                                        <div className="freehome_title">
+                                            <input
+                                                className="radiobtn"
+                                                type="radio"
+                                                name="cities"
+                                                value="karachi"
+                                                checked={getcity === "karachi"}
+                                                onChange={handleCity}
+                                            />
+                                            Karachi
+                                        </div>
+                                        <div className="freehome_title">
+                                            <input
+                                                className="radiobtn"
+                                                type="radio"
+                                                name="cities"
+                                                value="peshawar"
+                                                checked={getcity === "peshawar"}
+                                                onChange={handleCity}
+                                            />
+                                            Peshawar
+                                        </div>
+                                    </div>
+                                    <button
+                                        className="bg-sky-600 w-[75px] rounded-full hover:bg-sky-700 text-white"
+                                        type="submit"
+                                        onClick={closeButton}
+                                    >
+                                        Submit
+                                    </button>
+                                </form>
+                            }
+                            handleClose={togglePopup}
+                        />
                     </div>
                 )}
             </div>
-            {isOpen && (
-                <div className="fixed w-1/2 bg-white h-1/6 border-8 inset-0 m-auto z-10">
-                    <Popup
-                        content={
-                            <form onSubmit={submitCities}>
-                                <label className="select_city">
-                                    Select City
-                                </label>
-                                <hr />
-                                <div className="freehome_d">
-                                    <div className="freehome_title">
-                                        <input
-                                            className="radiobtn"
-                                            type="radio"
-                                            name="cities"
-                                            value="karachi"
-                                            checked={getcity === "karachi"}
-                                            onChange={handleCity}
-                                        />
-                                        Karachi
-                                    </div>
-                                    <div className="freehome_title">
-                                        <input
-                                            className="radiobtn"
-                                            type="radio"
-                                            name="cities"
-                                            value="peshawar"
-                                            checked={getcity === "peshawar"}
-                                            onChange={handleCity}
-                                        />
-                                        Peshawar
-                                    </div>
-                                </div>
-                                <button
-                                    className="bg-sky-600 w-[75px] rounded-full hover:bg-sky-700 text-white"
-                                    type="submit"
-                                    onClick={closeButton}
-                                >
-                                    Submit
-                                </button>
-                            </form>
-                        }
-                        handleClose={togglePopup}
-                    />
-                </div>
-            )}
+            <div className="grid grid-cols-3 gap-2 lg:gap-8">
+                <HomeDeliveryCard />
+                <ClickAndCollectCard />
+                <BulkBuyCard />
+            </div>
         </div>
-        // <div className="container-fluid hae">
-        //     <nav className="navbar navbar-expand-lg navbar-light bg-light shadow">
-        //         <div className="container-fluid">
-        //             <div className="hidden lg:block">
-        //                 <Link href="/" passHref>
-        //                     <a>
-        //                         <img
-        //                             src="/assets/images/logo.png"
-        //                             // className="img-fluid"
-        //                             width="150px;"
-        //                         />
-        //                     </a>
-        //                 </Link>
-        //             </div>
-
-        //             <form
-        //                 className="d-flex ms-auto manu_cat"
-        //                 required
-        //                 onSubmit={inputData}
-        //             >
-        //                 <div className="sidebar-1">
-        //                     <a className="nav-link d-lg-none category-style">
-        //                         <CatagoryBtn />
-        //                     </a>
-        //                 </div>
-        //                 <div className=" d-md-none d-lg-none"></div>
-        //                 <div className="input-group searching_pro">
-        //                     <SearchBar />
-        //                 </div>
-        //             </form>
-
-        //             <div className="cart-header" id="navbar-content">
-        //                 <ul className="navbar-nav mr-auto mb-2 mb-lg-0 float-end">
-        //                     <li className="nav-item">
-        //                         <Link href="/grocery_list">
-        //                             <a
-        //                                 className="nav-link"
-        //                                 aria-current="page"
-        //                                 href="#"
-        //                             >
-        //                                 Order Manually
-        //                             </a>
-        //                         </Link>
-        //                     </li>
-
-        //                     <li className="nav-item" onClick={wishnotify}>
-        //                         <Link href="/wishlist">
-        //                             <a className="nav-link" href="#">
-        //                                 {wishList}
-        //                                 Shopping List
-        //                             </a>
-        //                         </Link>
-        //                     </li>
-        //                     <BtnCart />
-        //                     {cart.length}
-
-        //                     {Links}
-        //                 </ul>
-        //             </div>
-        //         </div>
-        //     </nav>
-        //     <div></div>
-        // </div>
     )
 }
