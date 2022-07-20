@@ -5,7 +5,7 @@ import Image from "next/image";
 export default function Layout() {
     return (
         <div className="bg-gray-200 inline-flex text-indigo-900 h-60 p-8 w-full">
-        <div className="w-4/12 text-indigo-900 justify-center items-center">           
+        <div className="w-4/12 mx-4 text-indigo-900 justify-center items-center">           
             <div className="inline-flex  h-1/3 my-1 justify-center items-center">
              <i className="fa fa-map-marker"></i>
              <p className="pl-2"><span className="font-bold">Address:</span><span>B-191, Block No. 5,</span> Gulshan-e-Iqbal, Karachi </p>
@@ -20,13 +20,13 @@ export default function Layout() {
               </div>
         </div>
         
-           <div className="flex-row justify-center items-center w-4/12 my-2" >
+           <div className="justify-center items-center w-4/12 my-2" >
 
-           <a  className="justify-center items-center p-4" href="/privacy-policy">Privacy Policy</a><br/> 
-               <a  className="justify-center items-center p-4 " href="/terms-of-use">Terms of Use</a><br/>
-               <a  className="justify-center items-center p-4 " href="/faqs">FAQs</a><br/>
+           <a  className="p-4" href="/privacy-policy">Privacy Policy</a><br/> 
+               <a  className="p-4 " href="/terms-of-use">Terms of Use</a><br/>
+               <a  className=" p-4 " href="/faqs">FAQs</a><br/>
                
-               <a  className="justify-center items-center p-4" href="/page-contact">Contact Us</a><br/>
+               <a  className="p-4" href="/page-contact">Contact Us</a><br/>
             
            </div>
            
