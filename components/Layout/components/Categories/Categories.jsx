@@ -5,7 +5,9 @@ import "bootstrap/dist/css/bootstrap.min.css";
 export default function Categories({categories}) {
     return (
         <div className="sidebar-navigation">
-            <strong className="title">Category</strong>
+            <p className="text-main-blue font-bold lg:text-2xl 2xl:text-4xl">
+                - SHOP BY CATEGORY
+            </p>
             <div className="sidebar">
                 {categories.map((category) => {
                     return (

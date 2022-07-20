@@ -79,7 +79,7 @@ export default function Home() {
 	};
 
 	return (
-		<div className="px-12 space-y-8">
+		<div className="space-y-8">
 			<HeadTag title={'APRICART'} />
 			{/* BANNERS SECTION */}
 			<section className="relative w-screen aspect-[16/6] grid grid-cols-2 items-center">

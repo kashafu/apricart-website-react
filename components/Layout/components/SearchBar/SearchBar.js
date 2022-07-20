@@ -23,7 +23,7 @@ export default function SearchBar() {
     }, [selectedCategory])
 
     const searchHandler = async (searchTerm) => {
-        if (searchTerm.length <= 3) {
+        if (searchTerm.length <= 2) {
             setSearchResults([])
             setShowSearchResults(false)
             return

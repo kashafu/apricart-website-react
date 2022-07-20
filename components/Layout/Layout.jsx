@@ -17,7 +17,7 @@ export default function Layout(props) {
                     <TopBar />
                     <Header />
                 </div>
-                <div className="flex-1 min-h-full min-w-full">
+                <div className="flex-1 min-h-full min-w-full px-2 md:px-8">
                 {/* <div className="p-4"> */}
                     {props.children}
                 </div>
