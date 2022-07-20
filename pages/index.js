@@ -12,6 +12,7 @@ import Link from "next/link";
 import { useDispatch } from "react-redux";
 import { updateTicker } from "../redux/general.slice";
 import HeadTag from "../components/Layout/components/Head/HeadTag";
+import storeBackgroundImage from '../public/assets/images/storeBackground.png'
 
 export default function Home() {
 	const cookies = new Cookies();
@@ -72,14 +73,39 @@ export default function Home() {
 		)
 	}
 
+	const onImgLoad = ({ target: img }) => {
+		const { offsetHeight, offsetWidth } = img;
+		console.log(offsetHeight, offsetWidth);
+	};
+
 	return (
-		<>
+		<div className="px-12 space-y-8">
 			<HeadTag title={'APRICART'} />
 			{/* BANNERS SECTION */}
-			<section className="w-full">
-				<Banner
-					banners={homeData.banners}
-				/>
+			<section className="relative w-screen aspect-[16/6] grid grid-cols-2 items-center">
+				{/* BACKGROUND IMAGE */}
+				<div className="absolute w-full h-full blur-lg">
+					<Image
+						src={storeBackgroundImage}
+						layout={'responsive'}
+						onLoad={onImgLoad}
+					/>
+				</div>
+				{/* SCROLLING BANNER */}
+				<section className="">
+					<Banner
+						banners={homeData.banners}
+					/>
+				</section>
+				{/* STATIC BANNERS */}
+				<section className="grid grid-rows-2">
+					<Banner
+						banners={homeData.banners}
+					/>
+					<Banner
+						banners={homeData.banners}
+					/>
+				</section>
 			</section>
 			<div className="grid grid-cols-5 gap-8">
 				{/* CATEGORIES SECTION */}
@@ -146,6 +172,6 @@ export default function Home() {
 				</section>
 			</div>
 
-		</>
+		</div>
 	);
 }
