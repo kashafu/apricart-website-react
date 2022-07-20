@@ -20,31 +20,31 @@ export default function Layout() {
               </div>
         </div>
         
-           <div className="justify-center items-center w-4/12 my-2" >
+           <div className="flex flex-col justify-between items-center w-4/12 " >
 
-           <a  className="p-4" href="/privacy-policy">Privacy Policy</a><br/> 
-               <a  className="p-4 " href="/terms-of-use">Terms of Use</a><br/>
-               <a  className=" p-4 " href="/faqs">FAQs</a><br/>
+           <a  className="" href="/privacy-policy">Privacy Policy</a><br/> 
+               <a  className="" href="/terms-of-use">Terms of Use</a><br/>
+               <a  className="" href="/faqs">FAQs</a><br/>
                
-               <a  className="p-4" href="/page-contact">Contact Us</a><br/>
+               <a  className="" href="/page-contact">Contact Us</a><br/>
             
            </div>
            
- <div className="w-4/12" > 
+ <div className="flex flex-col w-4/12 justify-between items-center" > 
            
-<div className="copytext">
-         <h3>Install Our App</h3>
+<div className="">
+         <h3 className="">Install Our App</h3><br/>
          <ul>
-            <li>
+            <li className="inline-flex">
                <a href="#"><img src="/assets/images/playstore-img.png"
-               // width={80} height={40} margin-right={50}
+               width={80} height={40} margin-right={50}
                className="img-fluid"
                alt=""
                /></a>
             </li>
-            <li>
+            <li className="inline-flex" >
                <a href="#"><img src="/assets/images/appstore-img.png" 
-               // width={80} height={40}
+               width={80} height={40}
                className="img-fluid king"
                alt=""
                /></a>
