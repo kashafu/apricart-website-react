@@ -3,7 +3,7 @@ import HeadTag from "../components/Layout/components/Head/HeadTag";
 export default function PageContact() {
     return <>
         <HeadTag title={'Contact Us'}/>
-        <body className="bg-emerald-200">
+        <body className="bg-gray-200">
             <div className="hero-content">
                 <div className="container">
                     <div className="text-center">
