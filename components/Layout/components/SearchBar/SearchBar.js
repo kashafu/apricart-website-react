@@ -1,10 +1,9 @@
 import axios from "axios"
 import { useEffect, useState, useRef } from "react"
-import Image from "next/image"
 import { getGeneralApiParams } from "../../../../helpers/ApiHelpers"
 import { base_url_api } from '../../../../information.json'
-import SingleProduct from '../Products/SingleProduct'
 import searchIcon from '../../../../public/assets/svgs/searchIcon.svg'
+import SingleProductList from "../Products/SingleProductList"
 
 export default function SearchBar() {
     const [searchText, setSearchText] = useState('')
@@ -62,7 +61,7 @@ export default function SearchBar() {
             <div className="flex flex-row bg-main-grey-200 rounded-lg w-full">
                 <select
                     disabled= {categories == null}
-                    className="py-2 rounded-lg bg-main-grey w-1/2"
+                    className="py-2 rounded-lg bg-main-grey w-1/2 font-bold"
                     onChange={(e) => {
                         setSelectedCategory(e.target.value)
                     }}
@@ -73,7 +72,7 @@ export default function SearchBar() {
                         disabled
                         selected
                     >
-                        Select Categories
+                        Categories
                     </option>
                     {categories && categories.map((option) => {
                         return (
@@ -96,7 +95,8 @@ export default function SearchBar() {
                         searchHandler(e.target.value)
                     }}
                     placeholder='Search'
-                    onBlur={() => {
+                    onBlur={async () => {
+                        await new Promise(r => setTimeout(r, 1000));
                         setShowSearchResults(false)
                     }}
                 />
@@ -113,14 +113,14 @@ export default function SearchBar() {
                 </div> */}
             </div>
             {showSearchResults && (
-                <div className="absolute z-20 w-full bg-white max-h-[350px] overflow-auto">
+                <div className="absolute z-20 w-full bg-white max-h-[350px] overflow-auto rounded-b-lg">
                     {searchResults.length > 0 ? (
-                        <div className='grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-3 gap-6 p-6'>
+                        <div className='flex flex-col p-2 lg:p-4 space-y-2'>
                             {searchResults.map((product) => {
                                 let { id } = product
                                 return (
                                     <div key={id}>
-                                        <SingleProduct
+                                        <SingleProductList
                                             product={product}
                                         />
                                     </div>
