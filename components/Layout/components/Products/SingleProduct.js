@@ -25,8 +25,8 @@ export default function SingleProduct({ product, isInStock }) {
     const cookies = new Cookies();
     const dispatch = useDispatch();
 
-
-    let { productImageUrl, productImageUrlThumbnail, title, currentPrice, sku, inStock, minQty, maxQty } = product
+    console.log(product.qty);
+    let { productImageUrl, productImageUrlThumbnail, title,currentPrice, sku, inStock, minQty, maxQty } = product
     if (isInStock) {
         inStock = isInStock
     }
@@ -35,7 +35,6 @@ export default function SingleProduct({ product, isInStock }) {
 
     const [innerText, setInnerText] = useState('Add to Cart')
     const [qty, setQty] = useState(minQty)
-
     const setQtyHandler = (type) => {
         if (type == 'increment') {
             if (qty == maxQty) {
@@ -53,7 +52,7 @@ export default function SingleProduct({ product, isInStock }) {
 
     const addToCartApi = async () => {
         let { city, userId, headers } = getGeneralApiParams()
-
+       
         if (isLoggedIn) {
             let data = {
                 cart: [{
@@ -105,7 +104,7 @@ export default function SingleProduct({ product, isInStock }) {
                 let cartData = {
                     ...product
                 }
-                cartData.qty = qty
+               cartData.qty = qty
 
                 dispatch(addToCart(cartData))
             } catch (error) {

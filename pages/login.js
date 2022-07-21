@@ -132,7 +132,7 @@ export default function Login() {
                                     type={'number'}
                                 />
                                 <TextField
-                                    label={"Password"}
+                                    label={"New Password"}
                                     placeHolder={"password"}
                                     onChange={setPassword}
                                     value={password}
