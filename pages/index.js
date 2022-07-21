@@ -73,11 +73,6 @@ export default function Home() {
 		)
 	}
 
-	const onImgLoad = ({ target: img }) => {
-		const { offsetHeight, offsetWidth } = img;
-		console.log(offsetHeight, offsetWidth);
-	};
-
 	return (
 		<div className="space-y-8">
 			<HeadTag title={'APRICART'} />
@@ -88,7 +83,6 @@ export default function Home() {
 					<Image
 						src={storeBackgroundImage}
 						layout={'responsive'}
-						onLoad={onImgLoad}
 					/>
 				</div>
 				{/* SCROLLING BANNER */}
