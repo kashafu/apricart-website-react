@@ -176,7 +176,7 @@ export default function Header({}) {
                             {cart.length}
                         </p>
                     </div>
-                    {token != null ? (
+                    {token ? (
                         <div>
                             <Profile />
                         </div>
