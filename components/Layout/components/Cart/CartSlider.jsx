@@ -204,7 +204,7 @@ export default function CartSlider() {
             </button>
             {showCart && (
                 <div className="w-full h-full">
-                    <div className="fixed top-0 right-0 flex flex-col items-center w-1/3 h-full bg-white shadow-2xl z-10 rounded-l-2xl overflow-hidden">
+                    <div className="fixed top-0 right-0 flex flex-col items-center w-2/3 lg:w-1/3 h-full bg-white shadow-2xl z-10 rounded-l-2xl overflow-hidden">
                         <div className="w-full p-4 bg-main-blue">
                             <p className="text-main-yellow text-xl font-bold text-center">
                                 My Cart
@@ -334,7 +334,7 @@ export default function CartSlider() {
                     </div>
                     {/* BACKDROP */}
                     <div
-                        className="fixed top-0 left-0 h-screen w-2/3 z-10"
+                        className="fixed top-0 left-0 h-screen w-1/3 lg:w-2/3 z-10"
                         onClick={() => {
                             setShowCart(!showCart)
                         }}
