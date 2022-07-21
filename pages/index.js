@@ -109,7 +109,7 @@ export default function Home() {
 					</section>
 				)}
 			</section>
-			<div className="grid grid-cols-5 gap-8">
+			<div className="grid grid-cols-5 space-x-12">
 				{/* CATEGORIES SECTION */}
 				<section className="hidden lg:col-span-1 lg:block">
 					{categories && (
