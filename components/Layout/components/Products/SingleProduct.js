@@ -74,7 +74,7 @@ export default function SingleProduct({ product, isInStock }) {
                 let cartData = {
                     ...product
                 }
-                //cartData.qty = qty
+                cartData.qty = qty
 
                 dispatch(addToCart(cartData))
             } catch (error) {
@@ -104,7 +104,7 @@ export default function SingleProduct({ product, isInStock }) {
                 let cartData = {
                     ...product
                 }
-               // cartData.qty = qty
+               cartData.qty = qty
 
                 dispatch(addToCart(cartData))
             } catch (error) {

@@ -11,12 +11,13 @@ const cartSlice = createSlice({
 		addToCart: (state, action) => {
 			console.log(action.payload);
 			const itemExists = state.find((item) => item.id === action.payload.id);
-
+            let qty = action.payload.qty;
 			if (itemExists) {
 				itemExists.quantity++;
-				//itemExists.qty = action.payload.cartQty
+				itemExists.qty = action.payload.qty
 			} else {
-				state.push({ ...action.payload, quantity: action.payload.cartQty });
+				console.log(qty);
+				state.push({ ...action.payload, quantity: qty });
 			}
 			cookies.set('cart-item', JSON.stringify(...state))
 		},
