@@ -11,7 +11,8 @@ module.exports = {
           DEFAULT: '#FFD54C'
         },
         'main-blue': {
-          DEFAULT: '#08185A'
+          DEFAULT: '#08185A',
+          '100': '#CFD4FF'
         },
         'main-red': {
           DEFAULT: '#FF1100'
