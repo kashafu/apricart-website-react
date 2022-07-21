@@ -130,7 +130,7 @@ export default function SingleProduct({ product, isInStock }) {
     }
 
     return (
-        <div className="grid grid-rows-8 bg-white rounded-t-full rounded-b-3xl h-[250px] lg:h-[350px] rounded-b-lg overflow-hidden border-main-yellow border-1 shadow">
+        <div className="grid grid-rows-10 bg-white rounded-t-full rounded-b-3xl h-[250px] lg:h-[350px] rounded-b-lg overflow-hidden border-main-yellow border-1 shadow">
             {/* IMAGE */}
             <div className="flex items-center justify-center row-span-6 w-full h-full">
                 <Link href="/details/[id]"
@@ -139,7 +139,7 @@ export default function SingleProduct({ product, isInStock }) {
                     }
                     passHref
                 >
-                    <a className="relative h-[100px] w-[100px] lg:h-[200px] lg:w-[200px]">
+                    <a className="relative h-[100px] w-[100px] lg:h-[180px] lg:w-[180px]">
                         <Image
                             src={imageUrl}
                             layout={'fill'}
@@ -149,12 +149,12 @@ export default function SingleProduct({ product, isInStock }) {
                     </a>
                 </Link>
             </div>
-            <div className="row-span-2 flex flex-col flex-1 bg-main-blue p-2 lg:py-2 lg:px-4">
+            <div className="row-span-4 grid grid-rows-3 bg-main-blue p-2 lg:py-2 lg:px-4">
                 {/* TITLE */}
-                <p className="font-lato font-bold text-left text-xs lg:text-md text-white flex-1">
+                <p className="row-span-1 font-lato font-bold text-left text-xs lg:text-md text-white flex-1">
                     {title}
                 </p>
-                <div className="space-y-4">
+                <div className="row-span-2 space-y-4">
                     {/* PRICE */}
                     <p className="text-lg lg:text-3xl text-left font-bold text-main-yellow">
                         Rs. {currentPrice}
@@ -229,61 +229,5 @@ export default function SingleProduct({ product, isInStock }) {
                 </div>
             </div>
         </div>
-        // <div className="relative flex flex-col items-center justify-between p-2 border-2 bg-white w-full rounded-t-full space-y-2">
-        //     {/* IMAGE */}
-        //     <div className="bg-white w-full overflow-hidden">
-        //         <Link href="/details/[id]"
-        //             as={
-        //                 "/details/" + sku
-        //             }
-        //             passHref
-        //         >
-        //             <a className="relative w-full overflow-hidden">
-        //                 <Image
-        //                     src={imageUrl}
-        //                     layout={'responsive'}
-        //                 />
-        //             </a>
-        //         </Link>
-        //     </div>
-        //     {/* WISHLIST */}
-        //     <div className="absolute top-1 right-1">
-        //         <button onClick={() => {
-        //             addToWishlistApi();
-        //         }}>
-        //             <Image
-        //                 src={heartimg}
-        //                 width="20"
-        //                 height="20"
-        //             />
-        //         </button>
-        //     </div>
-        //     <div className=" flex flex-col items-center">
-        //         {/* TITLE */}
-        //         <p className="font-lato font-bold text-left text-xs text-main-blue flex-1">
-        //             {title}
-        //         </p>
-        //     </div>
-        //     <div className="flex flex-col items-center w-full space-y-4">
-        //         {/* PRICE */}
-        //         <p className="font-lato text-sm text-left">
-        //             Rs. <span className="text-main-blue font-bold"> {currentPrice} </span>
-        //         </p>
-        //         {inStock ?
-        //             <button className="bg-main-blue font-lato text-sm py-2 w-5/6 rounded text-white"
-        //                 onClick={addToCartApi}
-        //             >
-        //                 {innerText}
-        //             </button>
-        //             :
-        // <button className="bg-zinc-400 font-lato text-sm py-2 w-5/6 rounded text-white"
-        //     disabled={true}
-        // >
-        //     Out of Stock
-        // </button>
-        //         }
-
-        //     </div>
-        // </div>
     )
 }
