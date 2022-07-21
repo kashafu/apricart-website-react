@@ -13,6 +13,8 @@ import { useDispatch } from "react-redux";
 import { updateTicker } from "../redux/general.slice";
 import HeadTag from "../components/Layout/components/Head/HeadTag";
 import storeBackgroundImage from '../public/assets/images/storeBackground.png'
+import lifestyle from '../public/assets/images/banners/lifestyle.jpeg'
+import nationals from '../public/assets/images/banners/nationals.jpeg'
 
 export default function Home() {
 	const cookies = new Cookies();
@@ -77,7 +79,7 @@ export default function Home() {
 		<div className="space-y-8">
 			<HeadTag title={'APRICART'} />
 			{/* BANNERS SECTION */}
-			<section className="relative w-screen aspect-[16/6] grid grid-cols-2 gap-2 items-center">
+			<section className="hidden relative w-screen aspect-[16/6] lg:grid grid-cols-2 gap-2 p-12 items-center">
 				{/* BACKGROUND IMAGE */}
 				<div className="absolute w-full h-full blur-lg">
 					<Image
@@ -92,7 +94,21 @@ export default function Home() {
 					/>
 				</section>
 				{/* STATIC BANNERS */}
-				{homeData.banners.length >= 2 && (
+				<section className="grid grid-rows-2 h-full w-full items-center space-y-8">
+						<div className="relative w-full">
+							<Image
+								src={nationals}
+								layout={'responsive'}
+							/>
+						</div>
+						<div className="relative w-full">
+							<Image
+								src={lifestyle}
+								layout={'responsive'}
+							/>
+						</div>
+					</section>
+				{/* {homeData.banners.length >= 2 && (
 					<section className="grid grid-rows-2 h-full p-8 w-full items-center">
 						<div className="relative w-full h-[150px]">
 							<Image
@@ -107,7 +123,7 @@ export default function Home() {
 							/>
 						</div>
 					</section>
-				)}
+				)} */}
 			</section>
 			<div className="grid grid-cols-5 space-x-12">
 				{/* CATEGORIES SECTION */}
