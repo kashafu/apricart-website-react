@@ -30,24 +30,19 @@ export default function SlideDrawer(props) {
 	const [total, setTotal] = useState([]);
 	const [option, setOption] = useState([]);
 
-	const [drawerStyle, setDrawerStyle] = useState(props.show ? "side-drawer open" : "side-drawer")
 
-	// var token = cookies.get("cookies-token");
 	let { token } = getGeneralApiParams()
 	let drawerClasses = "side-drawer";
 	if (props.show) {
-		// setDrawerStyle("side-drawer open")
 		drawerClasses = "side-drawer open";
 	}
 
 	useEffect(() => {
-		// cartAll();
 		getCartDataApi()
 	}, [])
 
 	const hideSideDrawer = () => {
 		handleAppState({
-			// "drawerOpen": !appState.drawerOpen
 			"drawerOpen": false
 		})
 	}
@@ -88,117 +83,11 @@ export default function SlideDrawer(props) {
 		}
 	}
 
-	// var token = cookies.get("cookies-token");
-	// const config = {
-
-	// 	headers: {
-
-	// 		'Accept': 'application/json',
-	// 		'Content-Type': 'application/json',
-	// 		'Authorization': 'Bearer ' + cookies.get('cookies-token'),
-	// 	}
-	// }
-	// let cartAll = {}
-
-	// 
-	// if (token) {
-	// 	var data = {
-	// 		"coupon": "",
-	// 		"address": 4582,
-	// 		"clientType": "apricart",
-	// 		"orderType": "delivery",
-	// 		"prodType": "cus",
-	// 		"day": "",
-	// 		"startTime": "",
-	// 		"endTime": "",
-	// 		"notes": "test order",
-	// 		"showProducts": true,
-	// 		"verify": true,
-	// 		"paymentMethod": "cash"
-	// 	};
-	// 	let userId = cookies.get('cookies-userId')
-	// 	cartAll = async () => {
-	// 		//${cookies.get("cookies-userId")}& &userid=${userI {cookies.get("cookies-userId")}
-	// 		const response = await axios.post('https://stag.apricart.pk/v1/order/cart/checkout?userid=10638&city=karachi&lang=en&client_lat=24.909230104621333&client_long=67.12185373161728', data, {
-	// 			headers: {
-	// 				'Content-Type': 'application/json',
-	// 				'Authorization': 'Bearer '
-	// 					+ token
-	// 			}
-	// 		}
-	// 		)
-
-	// 		let Data1 = response.data.data;
-	// 		setCartData(Data1.products);
-	// 		cartData = Data1.products;
-	// 		// console.log(mydata);
-	// 		//dispatch(initialize([]));
-	// 		cartData.map((item) => { dispatch(updatedcart(item)); });
-
-	// 		setTotal(response.data.total)
-	// 		// console.log(response.data.data);
-	// 		// console.log(Data1)
-	// 		let total1 = response.data.total;
-	// 		total = total1;
-	// 		// setDiscount(response.data.message);
-	// 		//dispatch(updatedcart(response.data.data));
-	// 	}
-
-	// }
-	// else {
-	// 	cartAll = async () => {
-
-	// 		const response = await axios.get(
-	// 			`https://stag.apricart.pk/v1/guest/cart/all?userid=${cookies.get('guestUserId')}&lang=en`,
-	// 			config
-	// 		);
-	// 		setCartData(response.data.data);
-	// 		let Data1 = response.data.data;
-	// 		cartData = Data1.products;
-	// 		setTotal(response.data.total)
-	// 		let total1 = response.data.total;
-	// 		total = total1;
-	// 		setDiscount(response.data.message);
-	// 	}
-
-	// }
-	// for push
-
-	// const OptionAll = async () => {
-
-	// 	const response = await axios.get(
-	// 		`https://stag.apricart.pk/v1/options/all`,
-	// 		config
-	// 	);
-	// 	setOption(response.data.data);
-
-	// 	//  console.log("Option API",option)
-
-	// }
-	// useEffect(() => {
-	// 	OptionAll();
-	// 	// cartall();
-	// }, [])
-
-	// let shippment_charged = option.find(e => e.key === 'shippment_charged_at')
-	// let shippment_waved_limit = option.find(e => e.key === 'shippment_waved_limit')
-	// let shippment_fix_amount = option.find(e => e.key === 'shippment_fix_amount')
-
-
 	const getTotalPrice = () => {
 		return cart.reduce(
 			(accumulator, item) => accumulator + item.qty * item.currentPrice, 0
 		)
 	}
-
-	// const handleDiscount = (event) => {
-	// 	setDiscount(event.target.value);
-
-	// };
-
-	// let disValue = 3;
-	// const Discount = getTotalPrice();
-	// const Avail = Discount - (Discount * disValue) / 100;
 
 	const updateItemQty = async (sku, qty) => {
 		let { token, headers, city, userId } = getGeneralApiParams()
@@ -237,6 +126,9 @@ export default function SlideDrawer(props) {
 				]
 			}
 
+			console.log("URL", url)
+			console.log("BODY", body)
+
 			try {
 				let response = await axios.post(url, body, {
 					headers: headers
@@ -272,34 +164,6 @@ export default function SlideDrawer(props) {
 			} catch (error) {
 				console.log(error)
 			}
-
-			// var data = JSON.stringify({
-			// 	"cart": [
-			// 		{
-			// 			"sku": item.sku
-			// 		}
-			// 	]
-			// });
-
-			// var conf = {
-			// 	method: 'delete',
-			// 	url: 'https://stag.apricart.pk/v1/order/cart/delete?city=karachi&lang=en&client_type=apricart',
-			// 	headers: {
-			// 		'Content-Type': 'application/json',
-			// 		'Authorization': 'Bearer ' + cookies.get("cookies-token")
-			// 	},
-			// 	data: data
-			// };
-
-			// axios(conf)
-			// 	.then(function (response) {
-			// 		// console.log(JSON.stringify(response.data));
-			// 	})
-			// 	.catch(function (error) {
-			// 		// console.log(error);
-			// 	});
-
-
 		}
 		else {
 			let { city, userId, headers } = getGeneralApiParams()
@@ -327,48 +191,11 @@ export default function SlideDrawer(props) {
 
 	}
 
-	//const[qty,setqty] = useState();
-	useCallback(() => {
-	}, []);
-	const UpdateQty = useCallback((item, val, qty) => {
-		console.log(qty);
-		let qt = item.quantity;
-		console.log(item.quantity);
-		if (val == 0) {
-			qt--;
-		}
-		else {
-			qt++
-		}
-		var udat = {
-			"cart": [
-				{
-					"sku": item.sku,
-					"qty": qt
-				}
-			]
-		}
-		if (token) {
-			axios.post('https://cbe.apricart.pk/v1/order/cart/updateqty?city=karachi&lang=en&client_type=apricart', udat, {
-				headers: {
-					'Content-Type': 'application/json',
-					'Authorization': 'Bearer ' + cookies.get("cookies-token")
-				}
-			}).then(function (response) {
-				// console.log(JSON.stringify(response.data));
-			})
-				.catch(function (error) {
-					console.log(error);
-				});
-
-		}
-	}, []);
-
 	return (
 		<>
 			<div className="sidebarD">
 				<div className={drawerClasses}>
-				{/* <div className={drawerStyle}> */}
+					{/* <div className={drawerStyle}> */}
 					<div className="cart-header1">
 						<img src="/assets/images/bag.png" className="img-fluid cartinner" alt="" />
 						<span>My Cart({cart.length})</span>
@@ -385,7 +212,7 @@ export default function SlideDrawer(props) {
 						<>
 							<div className="cart_body">
 								{cart.map((item) => {
-									const { id, productImageUrl, title, currentPrice, sku, quantity } = item
+									const { id, productImageUrl, title, currentPrice, sku, qty } = item
 									return (
 										<div className="item cartitem space-x-12" key={id}>
 											<div className="image1">
@@ -396,60 +223,52 @@ export default function SlideDrawer(props) {
 													className="img-fluid"
 												/>{" "}
 											</div>
-											<div className="description">
-												{" "}
-												<span>{title}</span>
-												<ul className="cart_page">
-													<li>
-														<div className="cart-quan">
-															<button
-																className="minus-btn"
-																type="button"
-																name="button"
-																onClick={() => {
-																	dispatch(decrementQuantity(id));
-																	updateItemQty(sku, quantity - 1)
-																	// UpdateQty(item, 0, qty);
-																}}
-
-															>
-																<i className="fa fa-minus" aria-hidden="true"></i>
-															</button>
-															<p>{item.qty}</p>
-															<button
-																className="plus-btn"
-																type="button"
-																name="button"
-																href="#"
-																onClick={() => {
-																	dispatch(incrementQuantity(id));
-																	updateItemQty(sku, quantity + 1)
-																	// UpdateQty(item, 1, qty);
-																}}
-															>
-																<i className="fa fa-plus" aria-hidden="true"></i>
-															</button>
-														</div>
-													</li>
-													{<li className="cart-total">
-														<div className="total-price1">
-															{" "}
-															RS :{item.currentPrice}
-														</div>
-													</li>}
-													<li>
-														<span
-															className="delete-btn"
+											<div className="grid grid-rows-2">
+												<p>{title}</p>
+												<div className="flex flex-row justify-between">
+													<div className="cart-quan">
+														<button
+															className="minus-btn"
+															type="button"
+															name="button"
 															onClick={() => {
-																deleteItem(item);
-																dispatch(removeFromCart(id))
-															}
-															}
+																dispatch(decrementQuantity(id));
+																updateItemQty(sku, qty - 1)
+																// UpdateQty(item, 0, qty);
+															}}
+
 														>
-															<i className="fa fa-trash" aria-hidden="true"></i>
-														</span>
-													</li>
-												</ul>
+															<i className="fa fa-minus px-1" aria-hidden="true"></i>
+														</button>
+														<p>{item.qty}</p>
+														<button
+															className="plus-btn"
+															type="button"
+															name="button"
+															href="#"
+															onClick={() => {
+																dispatch(incrementQuantity(id));
+																updateItemQty(sku, qty + 1)
+																// UpdateQty(item, 1, qty);
+															}}
+														>
+															<i className="fa fa-plus px-1" aria-hidden="true"></i>
+														</button>
+													</div>
+													<p className="">
+														RS :{currentPrice}
+													</p>
+													<span
+														className="delete-btn"
+														onClick={() => {
+															deleteItem(item);
+															dispatch(removeFromCart(id))
+														}
+														}
+													>
+														<i className="fa fa-trash" aria-hidden="true"></i>
+													</span>
+												</div>
 											</div>
 											<div className="buttons float-end">
 												{" "}
