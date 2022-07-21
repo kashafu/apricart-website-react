@@ -162,7 +162,7 @@ export default function SingleProduct({ product, isInStock }) {
                     <div className="flex flex-col lg:flex-row items-center justify-between w-full">
                         {/* QUANTITY hidden on phone */}
                         {inStock && (
-                            <div className="hidden lg:grid grid-cols-3 justify-items-center rounded overflow-hidden w-[50px] lg:w-[100px] h-[40px]">
+                            <div className="hidden lg:grid grid-cols-3 justify-items-center rounded overflow-hidden w-[50px] lg:w-full h-[40px]">
                                 <button className="relative bg-white w-full"
                                     onClick={() => {
                                         setQtyHandler('decrement')
