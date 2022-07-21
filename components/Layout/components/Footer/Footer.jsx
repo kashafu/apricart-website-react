@@ -1,27 +1,32 @@
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
+import Logo from "../Logo/Logo";
 
 export default function Layout() {
     return (
-        <div className="bg-gray-200 inline-flex text-indigo-900 h-60 p-8 w-full">
-        <div className="w-4/12 mx-4 text-indigo-900 justify-center items-center">           
-            <div className="inline-flex  h-1/3 my-1 justify-center items-center">
+        <div className="bg-gray-200 flex flex-col  text-indigo-900  p-8 w-full sm:flex-row sm:h-60">
+        <div className="mx-4 text-indigo-900 justify-center items-center sm:w-4/12">          
+            <div className="h-1/4 w-[130px] m-1">
+               <Logo/>
+            </div>
+            <div className="inline-flex  h-1/4 my-1 justify-center items-center">
+            
              <i className="fa fa-map-marker"></i>
              <p className="pl-2"><span className="font-bold">Address:</span><span>B-191, Block No. 5,</span> Gulshan-e-Iqbal, Karachi </p>
             </div> <br />
-            <div className="inline-flex h-1/3 my-1 justify-center items-center">
+            <div className="inline-flex h-1/4 my-1 justify-center items-center">
               <i className="fa fa-phone"></i>
                <p className="pl-2"><span className="font-bold">Phone:</span><span className="highligh1">0304-1110195</span></p>
           </div><br/>
-          <div className="inline-flex h-1/3 my-1 justify-center items-center">
+          <div className="inline-flex h-1/4 my-1 justify-center items-center">
                <i className="fa fa-envelope"></i>
                <p className="pl-2"><a href="mailto:support@apricart.pk"><span className="font-bold">Email:</span>support@apricart.pk</a></p><br />
               </div>
         </div>
         
-           <div className="flex flex-col justify-between items-center w-4/12 " >
-
+           <div className="flex flex-col border-y-2 border-indigo-200 justify-between items-center sm:border-x-2 sm:border-indigo-200 sm:border-y-0  sm:w-4/12" >
+              <h3 className="font-bold my-2">About Us</h3>
            <a  className="" href="/privacy-policy">Privacy Policy</a><br/> 
                <a  className="" href="/terms-of-use">Terms of Use</a><br/>
                <a  className="" href="/faqs">FAQs</a><br/>
@@ -30,11 +35,14 @@ export default function Layout() {
             
            </div>
            
- <div className="flex flex-col w-4/12 justify-between items-center" > 
+ <div className="flex flex-col  justify-between items-center sm:w-4/12" > 
            
 <div className="">
-         <h3 className="">Install Our App</h3><br/>
+       
          <ul>
+            <li className="flex justify-center">
+            <h3 className="font-bold">Install Our App</h3><br/>
+            </li>
             <li className="inline-flex">
                <a href="#"><img src="/assets/images/playstore-img.png"
                width={80} height={40} margin-right={50}
@@ -65,12 +73,15 @@ export default function Layout() {
    <a  className="mx-2" href="https://www.facebook.com/apricartonlinegrocery/"><i className="fab fa-facebook"></i></a>
    <a   className="mx-2" href="https://twitter.com/apricartpk?lang=en" ><i className="fab fa-twitter"></i></a>
    <a  className="mx-2" href="https://pk.linkedin.com/company/apricartestores"><i className="fab fa-linkedin"></i></a>
-   <a  className="mx-2" href="#"><i className="fab fa-github"></i></a>
-   <a  className="mx-2" href="#"><i className="fab fa-instagram"></i></a>
-</div>
-{/* <!-- <p class="footer-company-name">Apricart E-Stores Pvt Ltd    <br>  All rights reserved</p> --> */}
-</div>
 
+   <a  className="mx-2" href="https://www.instagram.com/apricart.pk/?hl=en"><i className="fab fa-instagram"></i></a>
+</div>
+{/* <!-- <p className="bg-white">Apricart E-Stores Pvt Ltd    <br>  All rights reserved</p> --> */}
+</div>
+  
+{/* <div className="flex bg-white justify-center items-center h-[50px]">
+               <p className="font-bold">Apricart E-Stores Pvt Ltd All Rights Reserved</p> 
+            </div> */}
 
 
 </div>        
