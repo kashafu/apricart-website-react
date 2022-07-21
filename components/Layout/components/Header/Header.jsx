@@ -18,6 +18,7 @@ import Image from "next/image"
 import HomeDeliveryCard from "../Cards/HomeDeliveryCard"
 import ClickAndCollectCard from "../Cards/ClickAndCollectCard"
 import BulkBuyCard from "../Cards/BulkBuyCard"
+import CartSlider from "../Cart/CartSlider"
 
 export default function Header({}) {
     const cookies = new Cookies()
@@ -113,8 +114,6 @@ export default function Header({}) {
         setcity(e.target.value)
     }
 
-    const cart = useSelector((state) => state.cart)
-
     return (
         <div className="flex flex-col bg-white px-2 md:px-12 py-2 md:py-8 space-y-2">
             <div className="flex flex-row items-center space-x-2 md:space-x-4">
@@ -128,8 +127,7 @@ export default function Header({}) {
                     <SearchBar />
                 </div>
                 <div className="lg:hidden flex flex-row">
-                    <BtnCart />
-                    {cart.length}
+                    <CartSlider />
                 </div>
                 <div className="hidden lg:inline lg:flex lg:flex-row lg:space-x-4 lg:items-center">
                     <div className="pr-4">
@@ -157,10 +155,7 @@ export default function Header({}) {
                         <Image src={heartIcon} width={45} height={45} />
                     </Link>
                     <div className="relative">
-                        <BtnCart />
-                        <p className="absolute -right-2 -top-2 text-black">
-                            {cart.length}
-                        </p>
+                        <CartSlider />
                     </div>
                     {token ? (
                         <div>

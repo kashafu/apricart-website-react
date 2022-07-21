@@ -1697,7 +1697,7 @@
   "resolved" "https://registry.npmjs.org/csstype/-/csstype-2.6.20.tgz"
   "version" "2.6.20"
 
-"csstype@^3.0.10", "csstype@^3.0.2":
+"csstype@^3.0.2":
   "integrity" "sha512-2u44ZG2OcNUO9HDp/Jl8C07x6pU/eTR3ncV91SiK3dhG9TWvRVsCoJw14Ckx5DgWkzGA3waZWO3d7pgqpUI/XA=="
   "resolved" "https://registry.npmjs.org/csstype/-/csstype-3.0.10.tgz"
   "version" "3.0.10"
@@ -2657,11 +2657,6 @@
     "ignore" "^5.2.0"
     "merge2" "^1.4.1"
     "slash" "^3.0.0"
-
-"goober@^2.1.1":
-  "integrity" "sha512-S0C85gCzcfFCMSdjD/CxyQMt1rbf2qEg6hmDzxk2FfD7+7Ogk55m8ZFUMtqNaZM4VVX/qaU9AzSORG+Gf4ZpAQ=="
-  "resolved" "https://registry.npmjs.org/goober/-/goober-2.1.8.tgz"
-  "version" "2.1.8"
 
 "graceful-fs@^4.1.11", "graceful-fs@^4.1.2", "graceful-fs@^4.1.4":
   "integrity" "sha512-9ByhssR2fPVsNZj478qUUbKfmL0+t5BDVyjShtyZZLiK7ZDAArFFfopyOTj0M05wE2tJPisA4iTnnXl2YoPvOA=="
@@ -4455,13 +4450,6 @@
     "react-only-when" "^1.0.2"
     "react-swipeable" "^5.5.1"
     "resize-observer-polyfill" "1.5.0"
-
-"react-hot-toast@^2.2.0":
-  "integrity" "sha512-248rXw13uhf/6TNDVzagX+y7R8J183rp7MwUMNkcrBRyHj/jWOggfXTGlM8zAOuh701WyVW+eUaWG2LeSufX9g=="
-  "resolved" "https://registry.npmjs.org/react-hot-toast/-/react-hot-toast-2.2.0.tgz"
-  "version" "2.2.0"
-  dependencies:
-    "goober" "^2.1.1"
 
 "react-icons@^4.3.1":
   "integrity" "sha512-cB10MXLTs3gVuXimblAdI71jrJx8njrJZmNMEMC+sQu5B/BIOmlsAjskdqpn81y8UBVEGuHODd7/ci5DvoSzTQ=="
