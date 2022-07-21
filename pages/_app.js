@@ -1,7 +1,5 @@
 import Layout from "../components/Layout/Layout";
 import "../styles/custom.css";
-// import "../styles/globals.css";
-// import "../styles/new.css";
 import { Provider } from "react-redux";
 import store from '../redux/store';           // Importing redux store
 import { ToastContainer, Slide } from 'react-toastify';

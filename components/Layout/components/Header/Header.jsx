@@ -1,17 +1,8 @@
 import Link from "next/link"
-import PhoneInput from "react-phone-input-2"
-import "react-phone-input-2/lib/style.css"
-import axios from "axios"
-import { toast } from "react-toastify"
-// import "react-toastify/dist/ReactToastify.css";
-import React, { useContext, useEffect, useState } from "react"
-import { useSelector, useDispatch } from "react-redux"
-import { AiFillHeart, AiOutlineHeart } from "react-icons/ai"
+import { useEffect, useState } from "react"
+import { useSelector } from "react-redux"
 import BtnCart from "../test"
-import WelcomeBtn from "../Auth/Test"
-import { useRouter } from "next/router"
 import Cookies from "universal-cookie"
-import CatagoryBtn from "../test1"
 import verticleLineIcon from "../../../../public/assets/svgs/verticalLine.svg"
 import heartIcon from "../../../../public/assets/svgs/heartIcon.svg"
 import locationPinPNG from "../../../../public/assets/images/location.png"
@@ -22,7 +13,6 @@ import SearchBar from "../SearchBar/SearchBar"
 import Popup from "../Popup/Popup"
 import HamburgerMenu from "../Menus/HamburgerMenu"
 import Logo from "../Logo/Logo"
-import LinkText from "../Typography/LinkText"
 import Profile from "../Auth/Profile"
 import Image from "next/image"
 import HomeDeliveryCard from "../Cards/HomeDeliveryCard"
@@ -31,15 +21,11 @@ import BulkBuyCard from "../Cards/BulkBuyCard"
 
 export default function Header({}) {
     const cookies = new Cookies()
-    const router = useRouter()
 
     let { token, city } = getGeneralApiParams()
 
-    const [user, setAuthenticated] = useState(false)
     const [getcity, setcity] = useState(city)
     const [isOpen, setIsOpen] = useState(false)
-
-    var name = cookies.get("cookies-name")
 
     if (!cookies.get("guestUserId")) {
         const d = new Date()
