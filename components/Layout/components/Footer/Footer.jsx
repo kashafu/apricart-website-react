@@ -2,7 +2,8 @@ import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import Logo from "../Logo/Logo";
-
+// import add from "../../../../public/assets/images/Group 72"
+    // layout="fill" Group 72
 export default function Layout() {
     return (
         <div className="bg-gray-200 flex flex-col  text-indigo-900  p-8 w-full sm:flex-row sm:h-60">
@@ -11,16 +12,28 @@ export default function Layout() {
                <Logo/>
             </div>
             <div className="inline-flex  h-1/4 my-1 justify-between items-center">
-            
-             <i className="fa fa-map-marker"></i>
+            <Image src="/assets/images/Group 72.svg"
+               width={40} height={40} 
+               // className="img-fluid"
+               alt=""
+               />
              <p className="pl-2"><span className="font-bold">Address:</span><span>B-191, Block No. 5,</span> Gulshan-e-Iqbal, Karachi </p>
             </div> <br />
             <div className="inline-flex h-1/4 my-1 justify-center items-center">
-              <i className="fa fa-phone"></i>
+            <Image src="/assets/images/Group 65.svg"
+               width={30} height={30} 
+               // className="img-fluid"
+               alt=""
+               />
                <p className="pl-2"><span className="font-bold">Phone:</span><span className="highligh1">0304-1110195</span></p>
           </div><br/>
           <div className="inline-flex h-1/4 my-1 justify-center items-center">
-               <i className="fa fa-envelope"></i>
+               
+          <Image src="/assets/images/Group 68.svg"
+               width={40} height={40} 
+               // className="img-fluid"
+               alt=""
+               />
                <p className="pl-2"><a href="mailto:support@apricart.pk"><span className="font-bold">Email:</span>support@apricart.pk</a></p><br />
               </div>
         </div>
