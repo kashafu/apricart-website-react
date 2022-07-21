@@ -176,8 +176,10 @@ export default function Header({}) {
                             {cart.length}
                         </p>
                     </div>
-                    {token ? (
-                        <Profile />
+                    {token != null ? (
+                        <div>
+                            <Profile />
+                        </div>
                     ) : (
                         <div className="flex flex-row space-x-2 items-center">
                             <Link href={"/login"} passHref>

@@ -79,7 +79,7 @@ export default function Home() {
 		<div className="space-y-8">
 			<HeadTag title={'APRICART'} />
 			{/* BANNERS SECTION */}
-			<section className="hidden relative w-screen aspect-[16/6] lg:grid grid-cols-2 gap-2 p-12 items-center">
+			<section className="hidden relative w-screen aspect-[16/6] lg:grid grid-cols-2 items-center">
 				{/* BACKGROUND IMAGE */}
 				<div className="absolute w-full h-full blur-lg">
 					<Image
@@ -95,16 +95,16 @@ export default function Home() {
 				</section>
 				{/* STATIC BANNERS */}
 				<section className="grid grid-rows-2 h-full w-full items-center space-y-8">
-						<div className="relative w-full">
+						<div className="relative w-[500px] h-[190px]">
 							<Image
 								src={nationals}
-								layout={'responsive'}
+								layout={'fill'}
 							/>
 						</div>
-						<div className="relative w-full">
+						<div className="relative w-[500px] h-[190px]">
 							<Image
 								src={lifestyle}
-								layout={'responsive'}
+								layout={'fill'}
 							/>
 						</div>
 					</section>
