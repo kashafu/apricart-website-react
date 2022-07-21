@@ -24,15 +24,18 @@ export default function Layout() {
                <p className="pl-2"><a href="mailto:support@apricart.pk"><span className="font-bold">Email:</span>support@apricart.pk</a></p><br />
               </div>
         </div>
-        
-           <div className="flex flex-col border-y-2 border-indigo-200 justify-between items-center sm:border-x-2 sm:border-indigo-200 sm:border-y-0  sm:w-4/12" >
-              <h3 className="font-bold my-2">About Us</h3>
-           <a  className="" href="/privacy-policy">Privacy Policy</a><br/> 
-               <a  className="" href="/terms-of-use">Terms of Use</a><br/>
-               <a  className="" href="/faqs">FAQs</a><br/>
+        {/* grid grid-cols-2 sm:flex sm:flex-col  */}
+           <div className="flex flex-col sm:flex sm:flex-col border-y-2 border-indigo-200 justify-between items-center sm:border-x-2 sm:border-indigo-200 sm:border-y-0  sm:w-4/12" >
+              <h3 className="font-bold">About Us</h3>
+          <div className="grid grid-cols-2 gap-y-4 gap-x-6 justify-between items-center  sm:flex sm:flex-col">
+      
+           <a  className="" href="/privacy-policy">Privacy Policy</a> 
+               <a  className="" href="/terms-of-use">Terms of Use</a>
+               <a  className="" href="/faqs">FAQs</a>
                
-               <a  className="" href="/page-contact">Contact Us</a><br/>
-            
+               <a  className="" href="/page-contact">Contact Us</a>
+          
+            </div>
            </div>
            
  <div className="flex flex-col  justify-between items-center sm:w-4/12" > 
