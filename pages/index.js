@@ -33,7 +33,7 @@ export default function Home() {
 	const getHomeDataApi = async () => {
 		let { city, latitude, longitude, userId, headers } = getGeneralApiParams()
 
-		let url = base_url_api + '/home/all?client_lat=' + latitude + '&client_long=' + longitude + '&city=' + city + '&lang=en&userid=' + userId + '&web=false&client_type=apricart'
+		let url = base_url_api + '/home/all?client_lat=' + latitude + '&client_long=' + longitude + '&city=' + city + '&lang=en&userid=' + userId + '&web=false&client_type=apricart&prod_type=cus&order_type=delivery' 
 		try {
 			let response = await axios.get(
 				url,
@@ -94,7 +94,7 @@ export default function Home() {
 					/>
 				</section>
 				{/* STATIC BANNERS */}
-				<section className="grid grid-rows-2 h-full w-full items-center space-y-8">
+				<section className="grid grid-rows-2 h-full w-full justify-center items-center space-y-8">
 						<div className="relative w-[500px] h-[190px]">
 							<Image
 								src={nationals}
@@ -192,6 +192,7 @@ export default function Home() {
 							// 	/>
 							// </section>
 							<MainProducts
+								key={offerId}
 								section={product}
 							/>
 						)

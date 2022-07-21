@@ -53,7 +53,7 @@ export default function Categories({ categories }) {
                                         {childrenData.map((subCategory) => {
                                             let { id, name } = subCategory
                                             return (
-                                                <div className="flex flex-row w-full items-center py-2">
+                                                <div key={id} className="flex flex-row w-full items-center py-2">
                                                     <Link
                                                         href="/category/[id]"
                                                         as={"/category/" + id}

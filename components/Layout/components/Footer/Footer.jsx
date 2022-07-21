@@ -61,19 +61,18 @@ export default function Layout() {
             <div className="flex flex-col sm:flex sm:flex-col border-y-2 border-indigo-200 justify-between items-center sm:border-x-2 sm:border-indigo-200 sm:border-y-0  sm:w-4/12">
                 <h3 className="font-bold">About Us</h3>
                 <div className="grid grid-cols-2 gap-y-4 gap-x-6 justify-between items-center  sm:flex sm:flex-col">
-                    <a className="" href="/privacy-policy">
-                        Privacy Policy
-                    </a>
-                    <a className="" href="/terms-of-use">
-                        Terms of Use
-                    </a>
-                    <a className="" href="/faqs">
-                        FAQs
-                    </a>
-
-                    <a className="" href="/page-contact">
-                        Contact Us
-                    </a>
+                    <Link href="/privacy-policy" passHref>
+                        <a>Privacy Policy</a>
+                    </Link>
+                    <Link href="/terms-of-use" passHref>
+                        <a>Terms of Use</a>
+                    </Link>
+                    <Link href="/faqs" passHref>
+                        <a>FAQs</a>
+                    </Link>
+                    <Link href={"/page-contact"} passHref>
+                        <a>Contact Us</a>
+                    </Link>
                 </div>
             </div>
 
@@ -85,16 +84,18 @@ export default function Layout() {
                             <br />
                         </li>
                         <li className="inline-flex">
-                            <a href="#">
-                                <img
-                                    src="/assets/images/playstore-img.png"
-                                    width={80}
-                                    height={40}
-                                    margin-right={50}
-                                    className="img-fluid"
-                                    alt=""
-                                />
-                            </a>
+                            <Link href={""} passHref>
+                                <a>
+                                    <img
+                                        src="/assets/images/playstore-img.png"
+                                        width={80}
+                                        height={40}
+                                        margin-right={50}
+                                        className="img-fluid"
+                                        alt=""
+                                    />
+                                </a>
+                            </Link>
                         </li>
                         <li className="inline-flex">
                             <a href="#">
