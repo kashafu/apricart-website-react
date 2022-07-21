@@ -71,12 +71,13 @@ export default function SingleProduct({ product, isInStock }) {
                         headers: headers,
                     }
                 )
-                setInnerText("ADDED")
                 toast.success("Added to Cart")
-                dispatch(addToCart({
-                    ...product,
-                    'cartQty': qty
-                }))
+                let cartData = {
+                    ...product
+                }
+                cartData.qty = qty
+
+                dispatch(addToCart(cartData))
             } catch (error) {
                 console.log(error?.response)
                 toast.error(error?.response?.data?.message)
@@ -100,7 +101,13 @@ export default function SingleProduct({ product, isInStock }) {
                         headers: headers
                     }
                 )
-                dispatch(addToCart(product))
+                toast.success("Added to Cart")
+                let cartData = {
+                    ...product
+                }
+                cartData.qty = qty
+
+                dispatch(addToCart(cartData))
             } catch (error) {
                 console.log(error?.response)
                 toast.error(error?.response?.data?.message)

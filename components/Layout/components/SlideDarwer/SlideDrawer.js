@@ -212,7 +212,6 @@ export default function SlideDrawer(props) {
 						<>
 							<div className="cart_body">
 								{cart.map((item) => {
-									console.log(item);
 									const { id, productImageUrl, title, currentPrice, sku, qty } = item
 									return (
 										<div className="item cartitem space-x-12" key={id}>
@@ -257,7 +256,7 @@ export default function SlideDrawer(props) {
 														</button>
 													</div>
 													<p className="">
-														RS :{item.currentPrice}
+														RS :{currentPrice}
 													</p>
 													<span
 														className="delete-btn"
