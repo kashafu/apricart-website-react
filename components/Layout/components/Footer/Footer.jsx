@@ -6,11 +6,11 @@ import Logo from "../Logo/Logo";
 export default function Layout() {
     return (
         <div className="bg-gray-200 flex flex-col  text-indigo-900  p-8 w-full sm:flex-row sm:h-60">
-        <div className="mx-4 text-indigo-900 justify-center items-center sm:w-4/12">          
-            <div className="h-1/4 w-[130px] m-1">
+        <div className="flex flex-col mx-4 text-indigo-900 justify-center items-center sm:w-4/12">          
+            <div className="h-1/4 w-1/2 mx-1/4">
                <Logo/>
             </div>
-            <div className="inline-flex  h-1/4 my-1 justify-center items-center">
+            <div className="inline-flex  h-1/4 my-1 justify-between items-center">
             
              <i className="fa fa-map-marker"></i>
              <p className="pl-2"><span className="font-bold">Address:</span><span>B-191, Block No. 5,</span> Gulshan-e-Iqbal, Karachi </p>
