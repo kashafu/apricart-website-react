@@ -130,11 +130,17 @@ export default function Home() {
 						// If the name is 'Upload Grocery List', we have to return a button which allows to upload grocery list
 						if (name === 'Upload Grocery List') {
 							return (
-								<div className="flex align-center">
-									<Link href={'/grocery_list'} passHref>
-										<a className="w-full bg-main-blue text-white p-4 text-xl rounded-xl text-center">
-											Manual Order
+								<div className="mb-2 mt-8 flex flex-row w-full rounded-xl p-2 bg-main-yellow items-center align-center justify-around">
+									<Link href={'/grocery_list'} passHref
+									>
+										<a className="text-main-blue font-bold text-lg w-full text-center">
+											UPLOAD your GROCERY LIST
 										</a>
+										{/* <Link href={'/grocery_list'} passHref>
+											<a className="w-full bg-main-blue text-white p-4 text-xl rounded-xl text-center">
+												Manual Order
+											</a>
+										</Link> */}
 									</Link>
 								</div>
 							)
@@ -142,31 +148,34 @@ export default function Home() {
 
 						return (
 							// TODO get a unique id from api, using name for now
-							<section key={name} className='space-y-4'>
-								<div className="relative w-full h-[90px] md:h-[150px] lg:h-[250px] rounded-xl overflow-hidden">
-									<Link href="/offers/[id]"
-										as={
-											"/offers/" + offerId
-										}
-										passHref
-										key={offerId}
-									>
-										<a>
-											<Image
-												src={bannerImageWeb}
-												layout={'fill'}
-												alt={"banner image"}
-											/>
-										</a>
-									</Link>
-								</div>
-								<p className="text-2xl">
-									{name}
-								</p>
-								<ScrollingProducts
-									products={data}
-								/>
-							</section>
+							// <section key={name} className='space-y-4'>
+							// 	<div className="relative w-full h-[90px] md:h-[150px] lg:h-[250px] rounded-xl overflow-hidden">
+							// 		<Link href="/offers/[id]"
+							// 			as={
+							// 				"/offers/" + offerId
+							// 			}
+							// 			passHref
+							// 			key={offerId}
+							// 		>
+							// 			<a>
+							// 				<Image
+							// 					src={bannerImageWeb}
+							// 					layout={'fill'}
+							// 					alt={"banner image"}
+							// 				/>
+							// 			</a>
+							// 		</Link>
+							// 	</div>
+							// 	<p className="text-2xl">
+							// 		{name}
+							// 	</p>
+							// 	<ScrollingProducts
+							// 		products={data}
+							// 	/>
+							// </section>
+							<MainProducts
+								section={product}
+							/>
 						)
 					})}
 				</section>

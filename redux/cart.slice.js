@@ -15,7 +15,7 @@ const cartSlice = createSlice({
 			if (itemExists) {
 				itemExists.quantity++;
 			} else {
-				state.push({ ...action.payload, quantity: 1 });
+				state.push({ ...action.payload, quantity: action.payload.cartQty });
 			}
 			cookies.set('cart-item', JSON.stringify(...state))
 		},
