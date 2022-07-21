@@ -1,28 +1,21 @@
-import react from 'react';
-import { useSelector ,useDispatch } from 'react-redux';
 import { useRouter } from 'next/router';
-import { useEffect,useState } from 'react';
-import { ToastContainer, toast } from "react-toastify";
-// import "react-toastify/dist/ReactToastify.css";
+import { useState } from 'react';
+import { toast } from "react-toastify";
 import { getGeneralApiParams } from '../helpers/ApiHelpers';
-import {base_url_api} from "../information.json";
+import { base_url_api } from "../information.json";
 import axios from "axios"
 import HeadTag from '../components/Layout/components/Head/HeadTag';
-export default function Register(){
-    const router = useRouter();
+
+export default function Register() {
     const [userData, setUserData] = useState({
         name: "",
         email: "",
         phoneNumber: "",
         password: "",
-    });
-    //empty push
-    
-    const [showOTPScreen, setShowOTPScreen] = useState(false);
+    })
+    const [showOTPScreen, setShowOTPScreen] = useState(false)
+    const [otpCode, setOtpCode] = useState("")
 
-    var myHeaders = new Headers();
-    myHeaders.append("Content-Type", "application/json");
-    
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
@@ -44,16 +37,16 @@ export default function Register(){
             console.log(err);
             toast.error(Error.message);
         }
-    };
+    }
+
     const handleChange = (e) => {
         const { name, value } = e.target;
         setUserData({ ...userData, [name]: value });
     };
 
-    const [otpCode, setOtpCode] = useState("");
-    return(
+    return (
         <div>
-            <HeadTag title={'Register'}/>
+            <HeadTag title={'Register'} />
             {showOTPScreen ? (
                 <div>
                     <p>Check 0{userData.phoneNumber} for otp code</p>
@@ -153,7 +146,7 @@ export default function Register(){
                     </form>
                 </div>
             )}
-   
+
         </div>
     )
 }

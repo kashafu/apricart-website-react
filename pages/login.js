@@ -117,91 +117,88 @@ export default function Login() {
         <>
             <HeadTag title={'Login'} />
             {resetpwdScreen ? (
-                <div>
-                    <div className="flex justify-center w-full" onKeyDown={onEnterPress}    >
-                        <div className="flex flex-col p-8 space-y-6 lg:w-1/3 items-center align-center bg-slate-100 shadow rounded-3xl">
-                            <PageHeading
-                                text={"LOGIN"}
+                <div className="flex justify-center w-full"
+                    onKeyDown={onEnterPress}
+                >
+                    <div className="flex flex-col p-8 space-y-6 lg:w-1/3 items-center align-center bg-slate-100 shadow rounded-3xl">
+                        <PageHeading
+                            text={"LOGIN"}
+                        />
+                        <div className="space-y-2">
+                            <TextField
+                                label={"Phone Number"}
+                                placeHolder={"3301234567"}
+                                onChange={setPhoneNumber}
+                                value={phoneNumber}
+                                type={'number'}
                             />
-                            <div className="space-y-2">
-                                <TextField
-                                    label={"Phone Number"}
-                                    placeHolder={"3301234567"}
-                                    onChange={setPhoneNumber}
-                                    value={phoneNumber}
-                                    type={'number'}
-                                />
-                                <TextField
-                                    label={"New Password"}
-                                    placeHolder={"password"}
-                                    onChange={setPassword}
-                                    value={password}
-                                    type={'password'}
-                                />
-                                <TextField
-                                    label={"OTP"}
-                                    placeHolder={"OTP"}
-                                    onChange={setotp}
-                                    value={otp}
-                                    type={'number'}
-                                />
-                            </div>
-                            <div className="w-3/4">
-                                <SubmitButton
-                                    text={"Reset Password"}
-                                    onClick={resetPasswordApi}
-                                />
-                            </div>
-                            <ErrorText
-                                text={errorMessage}
+                            <TextField
+                                label={"New Password"}
+                                placeHolder={"password"}
+                                onChange={setPassword}
+                                value={password}
+                                type={'password'}
                             />
-
+                            <TextField
+                                label={"OTP"}
+                                placeHolder={"OTP"}
+                                onChange={setotp}
+                                value={otp}
+                                type={'number'}
+                            />
                         </div>
+                        <div className="w-3/4">
+                            <SubmitButton
+                                text={"Reset Password"}
+                                onClick={resetPasswordApi}
+                            />
+                        </div>
+                        <ErrorText
+                            text={errorMessage}
+                        />
+
                     </div>
                 </div>
-            )
-                : (
-
-                    <div
-                        className="flex justify-center w-full"
-                        onKeyDown={onEnterPress}
-                    >
-                        <div className="flex flex-col p-8 space-y-6 lg:w-1/3 items-center align-center bg-slate-100 shadow rounded-3xl">
-                            <PageHeading
-                                text={"LOGIN"}
+            ) : (
+                <div
+                    className="flex justify-center w-full"
+                    onKeyDown={onEnterPress}
+                >
+                    <div className="flex flex-col p-8 space-y-6 lg:w-1/3 items-center align-center bg-slate-100 shadow rounded-3xl">
+                        <PageHeading
+                            text={"LOGIN"}
+                        />
+                        <div className="space-y-2">
+                            <TextField
+                                label={"Phone Number"}
+                                placeHolder={"3301234567"}
+                                onChange={setPhoneNumber}
+                                value={phoneNumber}
+                                type={'number'}
                             />
-                            <div className="space-y-2">
-                                <TextField
-                                    label={"Phone Number"}
-                                    placeHolder={"3301234567"}
-                                    onChange={setPhoneNumber}
-                                    value={phoneNumber}
-                                    type={'number'}
-                                />
-                                <TextField
-                                    label={"Password"}
-                                    placeHolder={"password"}
-                                    onChange={setPassword}
-                                    value={password}
-                                    type={'password'}
-                                />
-                            </div>
-                            <div className="w-3/4">
-                                <SubmitButton
-                                    text={"LOGIN"}
-                                    onClick={loginApi}
-                                />
-                            </div>
-                            <ErrorText
-                                text={errorMessage}
+                            <TextField
+                                label={"Password"}
+                                placeHolder={"password"}
+                                onChange={setPassword}
+                                value={password}
+                                type={'password'}
                             />
-                            <p> <button onClick={sendOtpApi}>Reset Password</button></p>
-                            <p>Don't have an Account ?  <Link href="/register" passHref>
-                                <a>Sign Up</a>
-                            </Link> </p>
                         </div>
-
-                    </div>)
+                        <div className="w-3/4">
+                            <SubmitButton
+                                text={"LOGIN"}
+                                onClick={loginApi}
+                            />
+                        </div>
+                        <ErrorText
+                            text={errorMessage}
+                        />
+                        <p> <button onClick={sendOtpApi}>Reset Password</button></p>
+                        <p>Don't have an Account ?  <Link href="/register" passHref>
+                            <a>Sign Up</a>
+                        </Link> </p>
+                    </div>
+                </div>)
             }
         </>
     )
