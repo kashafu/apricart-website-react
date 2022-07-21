@@ -77,7 +77,7 @@ export default function Home() {
 		<div className="space-y-8">
 			<HeadTag title={'APRICART'} />
 			{/* BANNERS SECTION */}
-			<section className="relative w-screen aspect-[16/6] grid grid-cols-2 items-center">
+			<section className="relative w-screen aspect-[16/6] grid grid-cols-2 gap-2 items-center">
 				{/* BACKGROUND IMAGE */}
 				<div className="absolute w-full h-full blur-lg">
 					<Image
@@ -92,14 +92,22 @@ export default function Home() {
 					/>
 				</section>
 				{/* STATIC BANNERS */}
-				<section className="grid grid-rows-2">
-					<Banner
-						banners={homeData.banners}
-					/>
-					<Banner
-						banners={homeData.banners}
-					/>
-				</section>
+				{homeData.banners.length >= 2 && (
+					<section className="grid grid-rows-2 h-full p-8 w-full items-center">
+						<div className="relative w-full h-[150px]">
+							<Image
+								src={homeData.banners[0].bannerUrlWeb[0]}
+								layout={'fill'}
+							/>
+						</div>
+						<div className="relative w-full h-[150px]">
+							<Image
+								src={homeData.banners[1].bannerUrlWeb[0]}
+								layout={'fill'}
+							/>
+						</div>
+					</section>
+				)}
 			</section>
 			<div className="grid grid-cols-5 gap-8">
 				{/* CATEGORIES SECTION */}
