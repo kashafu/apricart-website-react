@@ -1,51 +1,106 @@
-import Link from "next/link";
-import { Button, Dropdown } from "react-bootstrap";
-import "bootstrap/dist/css/bootstrap.min.css";
+import Link from "next/link"
+import { useState } from "react"
+import Image from "next/image"
+import upArrowIcon from "../../../../public/assets/svgs/upArrowIcon.svg"
+import downArrowIcon from "../../../../public/assets/svgs/downArrowIcon.svg"
 
-export default function Categories({categories}) {
+export default function Categories({ categories }) {
+    const [isSelected, setIsSelected] = useState("")
+
     return (
-        <div className="sidebar-navigation">
+        <div className="space-y-4">
             <p className="text-main-blue font-bold lg:text-2xl 2xl:text-4xl">
-                - SHOP BY CATEGORY
+                - CATEGORIES
             </p>
-            <div className="sidebar">
+            <div className="grid grid-flow-row divide-y">
                 {categories.map((category) => {
+                    let { id, name, childrenData } = category
                     return (
-                        <Dropdown key={category.id} className="dropdown1">
-                            <Dropdown.Toggle id="dropdown-basic">
-                                <i className="fas fa-plus"></i>
+                        <div key={id} className="w-full">
+                            {isSelected == id ? (
+                                <div className="grid grid-flow-row">
+                                    <div className="grid grid-cols-5 py-2 pl-4 bg-main-blue items-center rounded-t-lg">
+                                        <Link
+                                            href="/category/[id]"
+                                            as={"/category/" + id}
+                                            passHref
+                                        >
+                                            <a className="text-white font-bold col-span-4">
+                                                {name}
+                                            </a>
+                                        </Link>
+                                        <button
+                                            onClick={() => {
+                                                if (isSelected == id) {
+                                                    setIsSelected("")
+                                                } else {
+                                                    setIsSelected(id)
+                                                }
+                                            }}
+                                        >
+                                            <Image
+                                                src={
+                                                    isSelected == id
+                                                        ? upArrowIcon
+                                                        : downArrowIcon
+                                                }
+                                                width={20}
+                                                height={20}
+                                            />
+                                        </button>
+                                    </div>
+                                    <div className="bg-main-blue rounded-b-lg px-6 divide-y">
+                                        {childrenData.map((subCategory) => {
+                                            let { id, name } = subCategory
+                                            return (
+                                                <div className="flex flex-row w-full items-center py-2">
+                                                    <Link
+                                                        href="/category/[id]"
+                                                        as={"/category/" + id}
+                                                        passHref
+                                                    >
+                                                        <a className="font-bold text-main-yellow">
+                                                            {name}
+                                                        </a>
+                                                    </Link>
+                                                </div>
+                                            )
+                                        })}
+                                    </div>
+                                </div>
+                            ) : (
+                                <div className="grid grid-cols-5 py-2 pl-4 bg-white items-center rounded-lg">
+                                    <Link
+                                        href="/category/[id]"
+                                        as={"/category/" + id}
+                                        passHref
+                                    >
+                                        <a className="text-main-blue col-span-4">
+                                            {name}
+                                        </a>
+                                    </Link>
 
-                                <Link
-                                    href="/category/[id]"
-                                    as={"/category/" + category.id}
-                                    passHref
-                                >
-                                    <span className="forpadding">
-                                        {" "}
-                                        {category.name}
-                                    </span>
-                                </Link>
-                            </Dropdown.Toggle>
-                            {category.childrenData.map((sub) => {
-                                return (
-                                    <Dropdown.Menu key={sub.id}>
-                                        <Dropdown.Item>
-                                            <Link
-                                                href="/category/[id]"
-                                                as={"/category/" + sub.id}
-                                            >
-                                                <a className="subcatagory">
-                                                    {sub.name}
-                                                </a>
-                                            </Link>
-                                        </Dropdown.Item>
-                                    </Dropdown.Menu>
-                                );
-                            })}
-                        </Dropdown>
-                    );
+                                    <button
+                                        onClick={() => {
+                                            setIsSelected(id)
+                                        }}
+                                    >
+                                        <Image
+                                            src={
+                                                isSelected == id
+                                                    ? upArrowIcon
+                                                    : downArrowIcon
+                                            }
+                                            width={20}
+                                            height={20}
+                                        />
+                                    </button>
+                                </div>
+                            )}
+                        </div>
+                    )
                 })}
             </div>
         </div>
-    );
+    )
 }
