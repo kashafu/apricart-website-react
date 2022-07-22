@@ -35,7 +35,7 @@ export default function MainProducts({ section }) {
                     - {name}
                 </p>
             </div>
-            <section className="grid grid-cols-2 lg:grid-cols-4 gap-6">
+            <section className="grid grid-cols-2 lg:grid-cols-4 gap-2">
                 {data.map((product) => {
                     let { id } = product
                     return (
