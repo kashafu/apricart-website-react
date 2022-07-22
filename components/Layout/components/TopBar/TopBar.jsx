@@ -7,6 +7,7 @@ import Cookies from "universal-cookie"
 import { useRouter } from "next/router"
 import { useSelector } from "react-redux"
 import { getGeneralApiParams } from "../../../../helpers/ApiHelpers"
+import Ticker from "react-ticker"
 
 // IMAGES
 // import bikePNG from "../../../../public/assets/images/bike.png";
@@ -143,6 +144,14 @@ export default function Layout() {
                             </p>
                         </div>
                         <p className="text-center overflow-x-auto text-sm font-bold text-main-blue whitespace-nowrap">
+                            {/* <Ticker
+                                direction="toRight"
+                                offset="run-in"
+                                speed={10}
+                                move={true}
+                            >
+                                <h1>{tickerSelector}</h1>
+                            </Ticker> */}
                             {tickerSelector}
                         </p>
                     </div>
