@@ -1,4 +1,6 @@
 import SingleProduct from "./SingleProduct"
+import Link from "next/link"
+import Image from "next/image"
 
 export default function MainProducts({ section }) {
     let { bannerImageWeb, data, name, offerId } = section
@@ -13,7 +15,7 @@ export default function MainProducts({ section }) {
 
     return (
         <section key={name} className='space-y-4'>
-            {/* <div className="relative w-full h-[90px] md:h-[150px] lg:h-[250px] rounded-xl overflow-hidden">
+            {/* <div className="lg:hidden relative w-full h-[90px] md:h-[150px] lg:h-[250px] rounded-xl overflow-hidden">
                 <Link href="/offers/[id]"
                     as={
                         "/offers/" + offerId

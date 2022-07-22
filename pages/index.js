@@ -34,7 +34,7 @@ export default function Home() {
 	const getHomeDataApi = async () => {
 		let { city, latitude, longitude, userId, headers } = getGeneralApiParams()
 
-		let url = base_url_api + '/home/all?client_lat=' + latitude + '&client_long=' + longitude + '&city=' + city + '&lang=en&userid=' + userId + '&web=false&client_type=apricart&prod_type=cus&order_type=delivery' 
+		let url = base_url_api + '/home/all?client_lat=' + latitude + '&client_long=' + longitude + '&city=' + city + '&lang=en&userid=' + userId + '&web=false&client_type=apricart&prod_type=cus&order_type=delivery'
 		try {
 			let response = await axios.get(
 				url,
@@ -79,7 +79,7 @@ export default function Home() {
 	return (
 		<div className="space-y-8">
 			<HeadTag title={'APRICART'} />
-			{/* BANNERS SECTION */}
+			{/* BANNERS SECTION hidden on phone */}
 			<section className="hidden relative w-screen aspect-[16/6] lg:grid grid-cols-12 items-center">
 				{/* BACKGROUND IMAGE */}
 				<div className="absolute w-full h-full blur-lg">
@@ -102,19 +102,52 @@ export default function Home() {
 				</section>
 				{/* STATIC BANNERS */}
 				<section className="col-span-5 grid grid-rows-2 h-full w-full justify-start items-center space-y-8">
-						<div className="relative w-[500px] h-[200px]">
+					<div className="relative w-[500px] h-[200px]">
+						<Image
+							src={nationals}
+							layout={'fill'}
+						/>
+					</div>
+					<div className="relative w-[500px] h-[200px]">
+						<Image
+							src={lifestyle}
+							layout={'fill'}
+						/>
+					</div>
+				</section>
+				{/* {homeData.banners.length >= 2 && (
+					<section className="grid grid-rows-2 h-full p-8 w-full items-center">
+						<div className="relative w-full h-[150px]">
 							<Image
-								src={nationals}
+								src={homeData.banners[0].bannerUrlWeb[0]}
 								layout={'fill'}
 							/>
 						</div>
-						<div className="relative w-[500px] h-[200px]">
+						<div className="relative w-full h-[150px]">
 							<Image
-								src={lifestyle}
+								src={homeData.banners[1].bannerUrlWeb[0]}
 								layout={'fill'}
 							/>
 						</div>
 					</section>
+				)} */}
+			</section>
+			{/* BANNERS SECTION hidden on desktop */}
+			<section className="lg:hidden relative w-screen aspect-[16/6] items-center">
+				{/* BACKGROUND IMAGE */}
+				<div className="absolute w-full h-full blur-lg">
+					<Image
+						src={storeBackgroundImage}
+						layout={'responsive'}
+					/>
+				</div>
+				{/* MAIN BANNER */}
+				<section className="w-full">
+					<Image
+						src={mainBanner}
+						layout={'responsive'}
+					/>
+				</section>
 				{/* {homeData.banners.length >= 2 && (
 					<section className="grid grid-rows-2 h-full p-8 w-full items-center">
 						<div className="relative w-full h-[150px]">
@@ -149,8 +182,8 @@ export default function Home() {
 							products={homeData.webProducts}
 						/>
 					</section> */}
-					{homeData.products.map((product) => {
-						let { bannerImageWeb, data, name, offerId } = product
+					{homeData.products.map((product, index) => {
+						let { name, offerId } = product
 
 						// If the name is 'Upload Grocery List', we have to return a button which allows to upload grocery list
 						if (name === 'Upload Grocery List') {
@@ -167,10 +200,32 @@ export default function Home() {
 						}
 
 						return (
-							<MainProducts
-								key={offerId}
-								section={product}
-							/>
+							<section>
+								{/* STATIC BANNERS for mobile */}
+								{index % 2 == 0 ? (
+									<section className="lg:hidden relative space-y-6 items-center">
+										<section className="w-full">
+											<Image
+												src={lifestyle}
+												layout={'responsive'}
+											/>
+										</section>
+									</section>
+								) : (
+									<section className="lg:hidden relative space-y-6 items-center">
+										<section className="w-full">
+											<Image
+												src={nationals}
+												layout={'responsive'}
+											/>
+										</section>
+									</section>
+								)}
+								<MainProducts
+									key={offerId}
+									section={product}
+								/>
+							</section>
 						)
 					})}
 				</section>
