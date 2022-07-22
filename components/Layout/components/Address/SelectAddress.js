@@ -58,12 +58,12 @@ export default function SelectAddress({ type, setAddress, dropDownSelectedAddres
     return (
         <div className="w-full space-y-2">
             {type === 'checkout' && (
-                <div className="grid grid-cols-5 items-center gap-4">
-                    <p className="col-span-1 font-lato text-main-blue font-semibold">
+                <div className="grid grid-cols-6 items-center gap-4">
+                    <p className="col-span-2 font-lato text-main-blue font-semibold">
                         Select Address
                     </p>
                     <select
-                        className="col-span-3 h-full py-2 px-4 rounded-lg"
+                        className="col-span-2 h-full py-2 lg:px-4 rounded-lg"
                         disabled={false}
                         onChange={handleSavedAddressChange}
                         value={selectedAddress}
@@ -88,7 +88,7 @@ export default function SelectAddress({ type, setAddress, dropDownSelectedAddres
                             )
                         })}
                     </select>
-                    <div>
+                    <div className="col-span-2">
                         <SubmitButton
                             text={"Add Address"}
                             onClick={() => {

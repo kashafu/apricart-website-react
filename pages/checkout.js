@@ -78,12 +78,12 @@ export default function Checkout() {
 		let lat = 0
 		let long = 0
 		let addressId = 0
-		if(typeof(checkoutAddress) === 'object'){
+		if (typeof (checkoutAddress) === 'object') {
 			lat = checkoutAddress ? checkoutAddress.mapLat : '0'
 			long = checkoutAddress ? checkoutAddress.mapLong : '0'
 			addressId = checkoutAddress ? checkoutAddress.id : ''
 		}
-		else{
+		else {
 			lat = checkoutAddress ? JSON.parse(checkoutAddress).mapLat : '0'
 			long = checkoutAddress ? JSON.parse(checkoutAddress).mapLong : '0'
 			addressId = checkoutAddress ? JSON.parse(checkoutAddress).id : ''
@@ -230,12 +230,12 @@ export default function Checkout() {
 		let lat = 0
 		let long = 0
 		let addressId = 0
-		if(typeof(checkoutAddress) === 'object'){
+		if (typeof (checkoutAddress) === 'object') {
 			lat = checkoutAddress ? checkoutAddress.mapLat : '0'
 			long = checkoutAddress ? checkoutAddress.mapLong : '0'
 			addressId = checkoutAddress ? checkoutAddress.id : ''
 		}
-		else{
+		else {
 			lat = checkoutAddress ? JSON.parse(checkoutAddress).mapLat : '0'
 			long = checkoutAddress ? JSON.parse(checkoutAddress).mapLong : '0'
 			addressId = checkoutAddress ? JSON.parse(checkoutAddress).id : ''
@@ -297,27 +297,27 @@ export default function Checkout() {
 	}
 
 	const ProgressBar = ({ currentState, onClick }) => {
-		let pStyle = 'font-lato text-md text-main-blue font-semibold'
+		let pStyle = 'font-lato text-md font-semibold'
 		let divStyle = 'justify-self-center place-self-end'
 
 		return (
-			<div className="grid grid-cols-3 justify-items-center border-b-2 p-4">
-				<button className={divStyle}
+			<div className="grid grid-cols-3 justify-items-center border-b-2 pb-2">
+				<button className={currentState == 'shipping' ? {divStyle} + ' bg-main-yellow text-main-blue px-2 rounded-xl' : {divStyle}}
 					onClick={() => {
 						onClick('shipping')
 					}}
 				>
-					<Image
+					{/* <Image
 						src={currentState === 'shipping' ? blueCircleIcon : blackCircleIcon}
 						alt={"icons"}
 						height={20}
 						width={20}
-					/>
+					/> */}
 					<p className={pStyle}>
 						SHIPPING
 					</p>
 				</button>
-				<button className={divStyle}
+				<button className={currentState == 'payment' ? {divStyle} + ' bg-main-yellow text-main-blue px-2 rounded-xl' : {divStyle}}
 					onClick={() => {
 						onClick('payment')
 					}}
@@ -327,17 +327,17 @@ export default function Checkout() {
 						}
 					}}
 				>
-					<Image
+					{/* <Image
 						src={currentState === 'payment' ? blueCircleIcon : blackCircleIcon}
 						alt={"icons"}
 						height={20}
 						width={20}
-					/>
+					/> */}
 					<p className={pStyle}>
 						PAYMENT
 					</p>
 				</button>
-				<button className={divStyle}
+				<button className={currentState == 'review' ? {divStyle} + ' bg-main-yellow text-main-blue px-2 rounded-xl' : {divStyle}}
 					onClick={() => {
 						onClick('review')
 					}}
@@ -347,12 +347,12 @@ export default function Checkout() {
 						}
 					}}
 				>
-					<Image
+					{/* <Image
 						src={currentState === 'review' ? blueCircleIcon : blackCircleIcon}
 						alt={"icons"}
 						height={20}
 						width={20}
-					/>
+					/> */}
 					<p className={pStyle}>
 						REVIEW
 					</p>
@@ -545,6 +545,9 @@ export default function Checkout() {
 													width={20}
 												/>
 											</button>
+											<p>
+												x RS. {currentPrice}
+											</p>
 											<button
 												onClick={() => {
 													dispatch(removeFromCart(id))
@@ -557,9 +560,6 @@ export default function Checkout() {
 													width={20}
 												/>
 											</button>
-											<p>
-												x RS. {currentPrice}
-											</p>
 										</div>
 										<p>
 											RS. {currentPrice}
@@ -737,7 +737,7 @@ export default function Checkout() {
 	return (
 		<div>
 			<HeadTag title={'Checkout'} />
-			<div className="flex flex-col lg:grid lg:grid-cols-5 2xl:grid 2xl:grid-cols-6 gap-28">
+			<div className="flex flex-col lg:grid lg:grid-cols-5 2xl:grid 2xl:grid-cols-6 gap-2 divide-y lg:gap-28">
 				<div className="lg:col-span-3 2xl:col-span-4 space-y-12">
 					<ProgressBar
 						currentState={viewState}
@@ -746,7 +746,7 @@ export default function Checkout() {
 					{viewState == 'shipping' && (
 						<section className="flex flex-col space-y-4">
 							<SectionHeading
-								text={"DELIVERY ADDRESS"}
+								text={"Delivery Details"}
 							/>
 							<SelectAddress
 								type={'checkout'}
@@ -764,13 +764,13 @@ export default function Checkout() {
 								name={'notes'}
 								value={checkoutData.notes}
 							/>
-							<SubmitButton
+							{/* <SubmitButton
 								text={"CONTINUE TO PAYMENT"}
 								onClick={() => {
 									setViewState('payment')
 								}}
 								disabled={cartData == null}
-							/>
+							/> */}
 						</section>
 					)}
 					{viewState === 'payment' && (
@@ -782,9 +782,12 @@ export default function Checkout() {
 								<InputLabelText
 									text={"Payment Method"}
 								/>
-								<div className="flex flex-row space-x-4">
+								<div className="flex flex-col space-y-2">
 									{paymentMethods.map((method) => {
 										let { id, name, key } = method
+										if(key === 'jswallet'){
+											return(<div></div>)
+										}
 										return (
 											<div key={id}>
 												<input
@@ -802,13 +805,13 @@ export default function Checkout() {
 									})}
 								</div>
 							</div>
-							<SubmitButton
+							{/* <SubmitButton
 								text={"CHECKOUT"}
 								onClick={checkoutApi}
 							/>
 							<ErrorText
 								text={checkoutErrorMessage}
-							/>
+							/> */}
 						</section>
 					)}
 					{viewState == 'review' && (
@@ -834,6 +837,28 @@ export default function Checkout() {
 						currentState={viewState}
 					/>
 				</div>
+				{viewState === 'shipping' && (
+					<div>
+						<SubmitButton
+							text={cartData ? "CONTINUE TO PAYMENT" : "SELECT ADDRESS"}
+							onClick={() => {
+								setViewState('payment')
+							}}
+							disabled={cartData == null}
+						/>
+					</div>
+				)}
+				{viewState === 'payment' && (
+					<div>
+						<SubmitButton
+							text={"CHECKOUT"}
+							onClick={checkoutApi}
+						/>
+						<ErrorText
+							text={checkoutErrorMessage}
+						/>
+					</div>
+				)}
 				{/* <section className="popular_sec">
 					<div className="container-fluid">
 						<div className="row">
