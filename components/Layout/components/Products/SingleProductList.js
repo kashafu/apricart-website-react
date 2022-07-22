@@ -25,13 +25,13 @@ export default function SingleProductList({ product, isInStock }) {
                             layout={'fill'}
                         />
                     </div>
-                    <div className="relative flex flex-col items-center justify-between w-full rounded-2xl space-y-2 py-2">
-                        <div className=" flex flex-col items-center">
+                    <div className="relative flex flex-col items-center justify-between w-full rounded-2xl pl-2 py-2">
+                        <div className="flex flex-row w-full justify-left">
                             <p className="font-lato font-bold text-left text-xs text-main-blue flex-1">
                                 {title}
                             </p>
                         </div>
-                        <div className="flex flex-col items-center w-full">
+                        <div className="flex flex-row w-full justify-left">
                             <p className="font-lato text-sm text-left">
                                 Rs. <span className="text-main-blue font-bold"> {currentPrice} </span>
                             </p>

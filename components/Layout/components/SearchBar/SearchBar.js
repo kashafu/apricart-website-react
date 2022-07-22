@@ -1,4 +1,5 @@
 import axios from "axios"
+import { useRouter } from "next/router"
 import { useEffect, useState, useRef } from "react"
 import { getGeneralApiParams } from "../../../../helpers/ApiHelpers"
 import { base_url_api } from '../../../../information.json'
@@ -13,10 +14,17 @@ export default function SearchBar() {
     const [selectedCategory, setSelectedCategory] = useState('')
 
     const searchIconElement = useRef()
+    const router = useRouter()
 
     useEffect(() => {
         getCategoriesApi()
     }, [])
+
+    useEffect(()=>{
+        if(selectedCategory !== ''){
+            router.push('/category/' + selectedCategory)
+        }
+    }, [selectedCategory])
 
     const searchHandler = async (searchTerm) => {
         if (searchTerm.length <= 2) {
