@@ -36,9 +36,28 @@ export default function Register() {
         } catch (err) {
             //const Error = err.response.data;
             console.log(err);
-            toast.error(Error.message);
+            toast.error(err.message);
         }
     }
+
+    const otpCodeApiHandler = async (code) => {
+        let { headers } = getGeneralApiParams();
+
+        let url = base_url_api + "/auth/open/otp/verify?&client_type=apricart";
+        let body = {
+            phoneNumber: "92" + userData.phoneNumber,
+            otp: code,
+        };
+        try {
+            let response = await axios.post(url, body, {
+                headers: headers,
+            });
+            router.push("/");
+        } catch (error) {
+            console.log(error);
+            toast.error(error.message)
+        }
+    };
 
     const handleChange = (e) => {
         const { name, value } = e.target;
