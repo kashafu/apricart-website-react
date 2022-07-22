@@ -97,7 +97,8 @@ export default function Login() {
                 toast.success(response.data.message);
             }
             else {
-                toast.error(response.data.message)
+                toast.error(response.data.message);
+                toast.error("enter a phone number for otp request to reset password")
             }
 
         }

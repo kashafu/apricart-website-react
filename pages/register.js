@@ -1,15 +1,24 @@
-import react from 'react';
-import { useSelector ,useDispatch } from 'react-redux';
-import { useRouter } from 'next/router';
-import { useEffect,useState } from 'react';
-import { ToastContainer, toast } from "react-toastify";
-// import "react-toastify/dist/ReactToastify.css";
-import { getGeneralApiParams } from '../helpers/ApiHelpers';
-import {base_url_api} from "../information.json";
 import axios from "axios"
-import HeadTag from '../components/Layout/components/Head/HeadTag';
+import { useRouter } from "next/router"
+import { useState } from "react"
+import Link from "next/link"
+import Cookies from "universal-cookie"
+import { getGeneralApiParams } from "../helpers/ApiHelpers"
+import { base_url_api } from '../information.json'
+import TextField from "../components/Layout/components/Input/TextField"
+import SubmitButton from "../components/Layout/components/Buttons/SubmitButton"
+import ErrorText from "../components/Layout/components/Typography/ErrorText"
+import PageHeading from "../components/Layout/components/Typography/PageHeading"
+import HeadTag from "../components/Layout/components/Head/HeadTag"
+import { toast } from "react-toastify";
 export default function Register(){
     const router = useRouter();
+    const [phoneNumber, setPhoneNumber] = useState('')
+    const [password, setPassword] = useState('')
+    const [errorMessage, setErrorMessage] = useState('')
+    const [name, setname] = useState("");
+    const [email, setemail] = useState("");
+    const [otp, setotp] = useState();
     const [userData, setUserData] = useState({
         name: "",
         email: "",
@@ -22,32 +31,70 @@ export default function Register(){
 
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
-    
+    let Data={
+        "name":name,
+        "phoneNumber":phoneNumber,
+        "email":email ,
+        "password":password 
+    }
     const handleSubmit = async (e) => {
-        e.preventDefault();
+       // e.preventDefault();
+      
         try {
             let { userId, headers } = getGeneralApiParams();
             let url = base_url_api + "/auth/open/register?city=karachi&lang=en";
+            // let body = {
+            //     ...userData,
+            //     guestuserid: userId,
+            // }
             let body = {
-                ...userData,
-                guestuserid: userId,
+                "email":email ,
+                "name":name,
+                "phoneNumber": '92' + phoneNumber,
+                "password": password,
+                "guestuserid": userId,
+                
             }
+            console.log(body)
             const response = await axios.post(url, body, {
                 headers: headers,
             });
             toast.success(response.data.message);
             setShowOTPScreen(true);
-            setCookie("register");
-            setCookie("token", response.data.data.token, { path: "/address" });
+            // setCookie("register");
+            // setCookie("token", response.data.data.token, { path: "/address" });
         } catch (err) {
             //const Error = err.response.data;
             console.log(err);
-            toast.error(Error.message);
+            toast.error(err.message);
         }
     };
     const handleChange = (e) => {
         const { name, value } = e.target;
         setUserData({ ...userData, [name]: value });
+    };
+    const onEnterPress = async (e) => {
+        if (e.key === 'Enter') {
+            await handleSubmit()
+        }
+    }
+    const otpCodeApiHandler = async (code) => {
+        let { headers } = getGeneralApiParams();
+
+        let url = base_url_api + "/auth/open/otp/verify";
+        let body = {
+            phoneNumber: "92" + userData.phoneNumber,
+            otp: code,
+        };
+        try {
+            let response = await axios.post(url, body, {
+                headers: headers,
+            });
+            router.push("/");
+        } catch (error) {
+            console.log(error);
+            toast.error(error)
+        }
     };
 
     const [otpCode, setOtpCode] = useState("");
@@ -57,101 +104,86 @@ export default function Register(){
             {showOTPScreen ? (
                 <div>
                     <p>Check 0{userData.phoneNumber} for otp code</p>
-                    <input
+                    <TextField
+                                label={"otp"}
+                                placeHolder={"OTP"}
+                                onChange={setotp}
+                                value={otp}
+                                type={'number'}
+                            />
+                    {/* <input
                         type={"number"}
                         value={otpCode}
                         onChange={(e) => {
                             setOtpCode(e.target.value);
                         }}
-                    />
-                    <button
+                    /> */}
+                    <SubmitButton
+                                text={"Register"}
+                                onClick={() => {
+                                    otpCodeApiHandler(otp);
+                                }}
+                            />
+                    {/* <button
                         onClick={() => {
-                            otpCodeApiHandler(otpCode);
+                            otpCodeApiHandler(otp);
                         }}
                     >
                         Verify OTP
-                    </button>
+                    </button> */}
                 </div>
             ) : (
+                // 
                 <div>
-                    <form onSubmit={handleSubmit}>
-                        <div className="mb-3">
-                            <label
-                                htmlFor="recipient-name"
-                                className="col-form-label label-left"
-                            >
-                                Full Name
-                            </label>
-                            <input
-                                type="text"
-                                className="form-control"
-                                name="name"
-                                onChange={(e) => handleChange(e)}
+                <div className="flex justify-center w-full" onKeyDown={onEnterPress}    >
+                    <div className="flex flex-col p-8 space-y-6 lg:w-1/3 items-center align-center bg-slate-100 shadow rounded-3xl">
+                        <PageHeading
+                            text={"Register"}
+                        />
+                        <div className="space-y-2">
+                        <TextField
+                                label={"name"}
+                                placeHolder={"name"}
+                                onChange={setname}
+                                value={name}
+                                type={'String'}
+                            />
+                             <TextField
+                                label={"Email"}
+                                placeHolder={"Email"}
+                                onChange={setemail}
+                                value={email}
+                                type={'String'}
+                            />
+                            <TextField
+                                label={"Phone Number"}
+                                placeHolder={"3301234567"}
+                                onChange={setPhoneNumber}
+                                value={phoneNumber}
+                                type={'number'}
+                            />
+                            <TextField
+                                label={"New Password"}
+                                placeHolder={"password"}
+                                onChange={setPassword}
+                                value={password}
+                                type={'password'}
+                            />
+                           
+                        </div>
+                        <div className="w-3/4">
+                            <SubmitButton
+                                text={"Register"}
+                                onClick={handleSubmit}
                             />
                         </div>
-                        <div className="mb-3">
-                            <label
-                                htmlFor="recipient-name"
-                                className="col-form-label label-left"
-                            >
-                                Email
-                            </label>
-                            <input
-                                type="email"
-                                className="form-control"
-                                name="email"
-                                onChange={(e) => handleChange(e)}
-                            />
-                        </div>
-                        <label
-                            htmlFor="exampleFormControlInput1"
-                            className="label-left"
-                        >
-                            Phone
-                        </label>
-                        <div className="input-group mb-3">
-                            <span
-                                className="input-group-text"
-                                id="inputGroup-sizing-sm"
-                            >
-                                +92
-                            </span>
-                            <input
-                                type="tel"
-                                className="form-control"
-                                id="exampleFormControlInput1"
-                                placeholder=""
-                                name="phoneNumber"
-                                onChange={(e) => handleChange(e)}
-                                required
-                            />
-                        </div>
-                        <div className="input-group mb-3">
-                            {/* <PhoneInput
-							country="pk"
-							value={PhoneInput.value}
-							onChange={(e) => setPhone(e.target.value)}
-						/> */}
-                        </div>
-                        <div className="mb-3">
-                            <label
-                                htmlFor="recipient-name"
-                                className="col-form-label label-left"
-                            >
-                                Password
-                            </label>
-                            <input
-                                type="password"
-                                className="form-control"
-                                name="password"
-                                onChange={(e) => handleChange(e)}
-                            />
-                        </div>
-                        <div className="mb-3">
-                            <button className="btn3">Register</button>
-                        </div>
-                    </form>
+                        <ErrorText
+                            text={errorMessage}
+                        />
+
+                    </div>
                 </div>
+            </div>
             )}
    
         </div>
