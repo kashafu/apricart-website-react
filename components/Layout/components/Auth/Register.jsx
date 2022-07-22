@@ -48,7 +48,8 @@ const Register = () => {
         }
     };
 
-    const otpCodeApiHandler = async (code) => {
+    
+const otpCodeApiHandler = async (code) => {
         let { headers } = getGeneralApiParams();
 
         let url = base_url_api + "/auth/open/otp/verify?&client_type=apricart";
@@ -65,7 +66,6 @@ const Register = () => {
             console.log(error);
         }
     };
-
   c
 
     return (
