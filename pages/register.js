@@ -5,6 +5,7 @@ import { getGeneralApiParams } from '../helpers/ApiHelpers';
 import { base_url_api } from "../information.json";
 import axios from "axios"
 import HeadTag from '../components/Layout/components/Head/HeadTag';
+import PageHeading from '../components/Layout/components/Typography/PageHeading';
 
 export default function Register() {
     const [userData, setUserData] = useState({
@@ -45,10 +46,10 @@ export default function Register() {
     };
 
     return (
-        <div>
+        <div className='flex flex-row justify-center w-full'>
             <HeadTag title={'Register'} />
             {showOTPScreen ? (
-                <div>
+                <div className='bg-slate-100 p-8 shadow rounded-3xl'>
                     <p>Check 0{userData.phoneNumber} for otp code</p>
                     <input
                         type={"number"}
@@ -66,7 +67,12 @@ export default function Register() {
                     </button>
                 </div>
             ) : (
-                <div>
+                <div className='bg-slate-100 p-8 shadow rounded-3xl'>
+                    <div className='text-center'>
+                        <PageHeading
+                            text={"REGISTER"}
+                        />
+                    </div>
                     <form onSubmit={handleSubmit}>
                         <div className="mb-3">
                             <label

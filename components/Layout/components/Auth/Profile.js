@@ -17,7 +17,6 @@ export default function Profile({ }) {
     const logout = () => {
         logOutRemoveCookies()
         router.push("/")
-        router.reload()
     }
 
     return (

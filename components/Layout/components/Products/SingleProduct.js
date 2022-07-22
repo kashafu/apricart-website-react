@@ -145,7 +145,7 @@ export default function SingleProduct({ product, isInStock }) {
                     }
                     passHref
                 >
-                    <a className="relative h-[100px] w-[100px] lg:h-[180px] lg:w-[180px]">
+                    <a className="relative h-[110px] w-[110px] lg:h-[150px] lg:w-[150px]">
                         <Image
                             src={imageUrl}
                             layout={'fill'}

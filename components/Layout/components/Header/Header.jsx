@@ -38,12 +38,6 @@ export default function Header({}) {
             cookies.set("cities", "karachi")
             getLocation()
         }
-        if (token) {
-            setAuthenticated(true)
-        }
-        return () => {
-            token
-        }
     }, [])
 
     const getLocation = () => {

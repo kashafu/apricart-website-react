@@ -123,7 +123,7 @@ export default function Order() {
 								<Link href='/address' passHref>
 									<button className="tablinks" >My Address</button>
 								</Link>
-								<Link href='/account_Detail' passHref>
+								<Link href='/account_detail' passHref>
 									<button className="tablinks">Account details</button>
 								</Link>
 

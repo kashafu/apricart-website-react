@@ -125,7 +125,7 @@ export default function Home() {
 					</section>
 				)} */}
 			</section>
-			<div className="grid grid-cols-5 space-x-12">
+			<div className="grid grid-cols-5 gap-12">
 				{/* CATEGORIES SECTION */}
 				<section className="hidden lg:col-span-1 lg:block">
 					{categories && (
@@ -154,43 +154,12 @@ export default function Home() {
 										<a className="text-main-blue font-bold text-lg w-full text-center">
 											UPLOAD your GROCERY LIST
 										</a>
-										{/* <Link href={'/grocery_list'} passHref>
-											<a className="w-full bg-main-blue text-white p-4 text-xl rounded-xl text-center">
-												Manual Order
-											</a>
-										</Link> */}
 									</Link>
 								</div>
 							)
 						}
 
 						return (
-							// TODO get a unique id from api, using name for now
-							// <section key={name} className='space-y-4'>
-							// 	<div className="relative w-full h-[90px] md:h-[150px] lg:h-[250px] rounded-xl overflow-hidden">
-							// 		<Link href="/offers/[id]"
-							// 			as={
-							// 				"/offers/" + offerId
-							// 			}
-							// 			passHref
-							// 			key={offerId}
-							// 		>
-							// 			<a>
-							// 				<Image
-							// 					src={bannerImageWeb}
-							// 					layout={'fill'}
-							// 					alt={"banner image"}
-							// 				/>
-							// 			</a>
-							// 		</Link>
-							// 	</div>
-							// 	<p className="text-2xl">
-							// 		{name}
-							// 	</p>
-							// 	<ScrollingProducts
-							// 		products={data}
-							// 	/>
-							// </section>
 							<MainProducts
 								key={offerId}
 								section={product}

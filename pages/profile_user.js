@@ -108,7 +108,7 @@ export default function ProfileUser() {
 
 
 											<div className="form-group">
-												<Link href='/account_Detail'>
+												<Link href='/account_detail'>
 													<button>Profile Details</button>
 												</Link>
 											</div>
