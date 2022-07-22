@@ -138,7 +138,7 @@ export default function SingleProduct({ product, isInStock }) {
     }
 
     return (
-        <div className="grid grid-rows-10 bg-white rounded-t-full rounded-b-3xl h-[250px] lg:h-[350px] rounded-b-lg overflow-hidden border-main-yellow border-1 shadow">
+        <div className="grid grid-rows-10 bg-white rounded-t-full rounded-b-3xl h-[250px] lg:h-[350px] overflow-hidden border-main-yellow border-1 shadow">
             {/* IMAGE */}
             <div className="flex items-center justify-center row-span-6 w-full h-full">
                 <Link href="/details/[id]"
@@ -147,7 +147,7 @@ export default function SingleProduct({ product, isInStock }) {
                     }
                     passHref
                 >
-                    <a className="relative h-[110px] w-[110px] lg:h-[150px] lg:w-[150px]">
+                    <a className="relative h-[100px] w-[100px] lg:h-[150px] lg:w-[150px]">
                         <Image
                             src={imageUrl}
                             layout={'fill'}
@@ -162,9 +162,9 @@ export default function SingleProduct({ product, isInStock }) {
                 <p className="row-span-1 font-lato font-bold text-left text-xs lg:text-md text-white flex-1">
                     {title}
                 </p>
-                <div className="row-span-2 space-y-4">
+                <div className="row-span-2 space-y-2 lg:space-y-4">
                     {/* PRICE */}
-                    <p className="text-lg lg:text-3xl text-left font-bold text-main-yellow">
+                    <p className="text-md lg:text-3xl text-left font-bold text-main-yellow">
                         Rs. {currentPrice}
                     </p>
                     <div className="flex flex-col lg:flex-row items-center justify-between w-full">
@@ -199,19 +199,6 @@ export default function SingleProduct({ product, isInStock }) {
                             </div>
                         )}
                         <div className="relative flex flex-row items-center justify-around lg:justify-end space-x-2 h-full w-full">
-                            {/* WISHLIST */}
-                            <button className="flex items-center h-[40px]"
-                                onClick={() => {
-                                    addToWishlistApi()
-                                }}
-                            >
-                                <Image
-                                    src={wishlistIcon}
-                                    height={40}
-                                    width={40}
-                                // layout={'fill'}
-                                />
-                            </button>
                             {inStock ? (
                                 // {/* ADD TO CART */}
                                 <button className="flex items-center h-[40px]"
@@ -226,12 +213,25 @@ export default function SingleProduct({ product, isInStock }) {
                                     />
                                 </button>
                             ) : (
-                                <button className="h-[40px] px-2 bg-zinc-400 font-bold text-md rounded text-white"
+                                <button className="h-[40px] px-2 bg-zinc-400 font-bold text-xs lg:text-md rounded text-white"
                                     disabled={true}
                                 >
                                     Out of Stock
                                 </button>
                             )}
+                            {/* WISHLIST */}
+                            <button className="flex items-center h-[40px]"
+                                onClick={() => {
+                                    addToWishlistApi()
+                                }}
+                            >
+                                <Image
+                                    src={wishlistIcon}
+                                    height={40}
+                                    width={40}
+                                // layout={'fill'}
+                                />
+                            </button>
                         </div>
                     </div>
                 </div>

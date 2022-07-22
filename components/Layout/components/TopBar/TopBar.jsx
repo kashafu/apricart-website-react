@@ -208,7 +208,7 @@ export default function Layout() {
                     {/* </div> */}
                 </div>
                 {/* PHONE NUMBER hidden on phone, shown on desktop*/}
-                <div className="hidden flex flex-row space-x-2 items-center lg:inline-flex">
+                <div className="hidden flex flex-row space-x-2 items-center lg:inline-flex pl-2 pr-4">
                     <div className="relative w-[15px] h-[15px] lg:w-[22px] lg:h-[22px]">
                         <Image
                             src={phonePNG}

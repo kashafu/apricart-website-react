@@ -216,7 +216,7 @@ export default function CartSlider() {
                             </p>
                         ) : (
                             <div className="space-y-2 flex flex-col h-full py-2">
-                                <div className="overflow-y-auto">
+                                <div className="overflow-y-auto flex-1 divide-y">
                                     {reduxCart.map((item) => {
                                         const {
                                             id,
@@ -229,9 +229,9 @@ export default function CartSlider() {
                                         return (
                                             <div
                                                 key={id}
-                                                className="grid grid-cols-4"
+                                                className="grid grid-cols-4 p-2"
                                             >
-                                                <div className="relative col-span-1 min-w-[100px] min-h-[100px]">
+                                                <div className="relative col-span-1 w-[60px] h-[60px] lg:w-[100px] lg:h-[100px]">
                                                     <Image
                                                         src={productImageUrl}
                                                         alt={title}
@@ -239,56 +239,51 @@ export default function CartSlider() {
                                                     />
                                                 </div>
                                                 <div className="col-span-3 grid grid-rows-2">
-                                                    <p className="">{title}</p>
+                                                    <p className="text-main-blue font-semibold">{title}</p>
                                                     <div className="flex flex-row justify-around">
-                                                        <div className="cart-quan">
-                                                            <button
-                                                                onClick={() => {
-                                                                    dispatch(
-                                                                        decrementQuantity(
-                                                                            id
-                                                                        )
+                                                        <button
+                                                            onClick={() => {
+                                                                dispatch(
+                                                                    decrementQuantity(
+                                                                        id
                                                                     )
-                                                                    updateItemQty(
-                                                                        sku,
-                                                                        qty - 1
-                                                                    )
-                                                                }}
-                                                            >
-                                                                <Image
-                                                                    src={
-                                                                        minusIcon
-                                                                    }
-                                                                    alt=""
-                                                                />
-                                                            </button>
-                                                            <p>{item.qty}</p>
-                                                            <button
-                                                                onClick={() => {
-                                                                    dispatch(
-                                                                        incrementQuantity(
-                                                                            id
-                                                                        )
-                                                                    )
-                                                                    updateItemQty(
-                                                                        sku,
-                                                                        qty + 1
-                                                                    )
-                                                                }}
-                                                            >
-                                                                <Image
-                                                                    src={
-                                                                        plusIcon
-                                                                    }
-                                                                    alt=""
-                                                                />
-                                                            </button>
-                                                        </div>
-                                                        <p className="">
-                                                            RS :{currentPrice}
+                                                                )
+                                                                updateItemQty(
+                                                                    sku,
+                                                                    qty - 1
+                                                                )
+                                                            }}
+                                                            className={'flex flex-row items-center'}
+                                                        >
+                                                            <Image
+                                                                src={minusIcon}
+                                                                alt=""
+                                                            />
+                                                        </button>
+                                                        <p className="flex flex-col mb-auto mt-auto">
+                                                            {item.qty}
                                                         </p>
                                                         <button
-                                                            className="delete-btn"
+                                                            onClick={() => {
+                                                                dispatch(
+                                                                    incrementQuantity(
+                                                                        id
+                                                                    )
+                                                                )
+                                                                updateItemQty(
+                                                                    sku,
+                                                                    qty + 1
+                                                                )
+                                                            }}
+                                                            className={'flex flex-row items-center'}
+                                                        >
+                                                            <Image
+                                                                src={plusIcon}
+                                                                alt=""
+                                                            />
+                                                        </button>
+                                                        <button
+                                                            className=""
                                                             onClick={() => {
                                                                 deleteItem(item)
                                                                 dispatch(
@@ -303,31 +298,36 @@ export default function CartSlider() {
                                                                 aria-hidden="true"
                                                             ></i>
                                                         </button>
+                                                        <p className="flex flex-col mb-auto mt-auto">
+                                                            RS :{currentPrice}
+                                                        </p>
                                                     </div>
                                                 </div>
                                             </div>
                                         )
                                     })}
                                 </div>
-                                <div className="mt-auto flex flex-row items-center space-x-2">
-                                    <p className="">Sub Total:</p>
-                                    <p className="text-lg font-bold text-main-blue">
-                                        RS. {getTotalPrice()}
-                                    </p>
-                                </div>
-                                <div className="">
-                                    <SubmitButton
-                                        text={'CHECKOUT'}
-                                        onClick={()=>{
-                                            if (token) {
-                                                setShowCart(false)
-                                                router.push("/checkout")
-                                            } else {
-                                                setShowCart(false)
-                                                router.push("/login")
-                                            }
-                                        }}
-                                    />
+                                <div className="mt-auto flex flex-col px-2 space-y-2">
+                                    <div className="flex flex-row items-center space-x-2">
+                                        <p className="">Sub Total:</p>
+                                        <p className="text-lg font-bold text-main-blue">
+                                            RS. {getTotalPrice()}
+                                        </p>
+                                    </div>
+                                    <div className="">
+                                        <SubmitButton
+                                            text={"CHECKOUT"}
+                                            onClick={() => {
+                                                if (token) {
+                                                    setShowCart(false)
+                                                    router.push("/checkout")
+                                                } else {
+                                                    setShowCart(false)
+                                                    router.push("/login")
+                                                }
+                                            }}
+                                        />
+                                    </div>
                                 </div>
                             </div>
                         )}
