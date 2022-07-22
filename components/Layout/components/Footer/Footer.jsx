@@ -25,7 +25,7 @@ export default function Layout() {
                // className="img-fluid"
                alt=""
                />
-               <p className="pl-2"><span className="font-bold">Phone:</span><span className="highligh1">0304-1110195</span></p>
+               <p className="pl-2 pt-2 sm:pt-0"><span className="font-bold">Phone:</span><span className="highligh1">0304-1110195</span></p>
           </div><br/>
           <div className="inline-flex h-1/4 my-2 sm:justify-center sm:items-center">
                
@@ -34,14 +34,14 @@ export default function Layout() {
                // className="img-fluid"
                alt=""
                />
-               <p className="pl-2"><a href="mailto:support@apricart.pk"><span className="font-bold">Email:</span>support@apricart.pk</a></p><br />
+               <p className="pl-2 pt-2 sm:pt-0"><a href="mailto:support@apricart.pk"><span className="font-bold">Email:</span>support@apricart.pk</a></p><br />
               </div>
         </div>
         {/* grid grid-cols-2 sm:flex sm:flex-col  */}
            <div className="flex flex-col my-2.5 sm:flex sm:flex-col border-y-2 border-indigo-200 sm:justify-between sm:items-center sm:border-x-2 sm:border-indigo-200 sm:border-y-0  sm:w-4/12" >
               <p className="font-bold">About Us</p>
               {/* grid grid-cols-2 gap-y-4 gap-x-6 */}
-          <div className="flex flex-col p-4 sm:justify-between sm:items-center  sm:flex sm:flex-col">
+          <div className="flex flex-col py-4 sm:justify-between sm:items-center  sm:flex sm:flex-col">
       
            <a  className="p-1" href="/privacy-policy">Privacy Policy</a> 
                <a  className="p-1" href="/terms-of-use">Terms of Use</a>
