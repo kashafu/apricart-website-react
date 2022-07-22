@@ -86,6 +86,7 @@ export default function Home() {
 					<Image
 						src={storeBackgroundImage}
 						layout={'responsive'}
+						alt='banner'
 					/>
 				</div>
 				{/* SCROLLING BANNER */}
@@ -94,6 +95,7 @@ export default function Home() {
 						<Image
 							src={mainBanner}
 							layout={'responsive'}
+							alt='banner'
 						/>
 					</div>
 					{/* <Banner
@@ -106,12 +108,14 @@ export default function Home() {
 						<Image
 							src={nationals}
 							layout={'fill'}
+							alt='banner'
 						/>
 					</div>
 					<div className="relative w-[500px] h-[200px]">
 						<Image
 							src={lifestyle}
 							layout={'fill'}
+							alt='banner'
 						/>
 					</div>
 				</section>
@@ -139,6 +143,7 @@ export default function Home() {
 					<Image
 						src={storeBackgroundImage}
 						layout={'responsive'}
+						alt=''
 					/>
 				</div>
 				{/* MAIN BANNER */}
@@ -146,6 +151,7 @@ export default function Home() {
 					<Image
 						src={mainBanner}
 						layout={'responsive'}
+						alt='banner'
 					/>
 				</section>
 				{/* {homeData.banners.length >= 2 && (
@@ -200,7 +206,7 @@ export default function Home() {
 						}
 
 						return (
-							<section>
+							<section key={offerId}>
 								{/* STATIC BANNERS for mobile */}
 								{index % 2 == 0 ? (
 									<section className="lg:hidden relative space-y-6 items-center">
@@ -208,6 +214,7 @@ export default function Home() {
 											<Image
 												src={lifestyle}
 												layout={'responsive'}
+												alt=''
 											/>
 										</section>
 									</section>
@@ -217,6 +224,7 @@ export default function Home() {
 											<Image
 												src={nationals}
 												layout={'responsive'}
+												alt=''
 											/>
 										</section>
 									</section>
