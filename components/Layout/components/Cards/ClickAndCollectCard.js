@@ -32,13 +32,31 @@ export default function ClickAndCollectCard() {
                 <Popup
                     content={
                         <div className='flex flex-col h-full'>
-                            <div className='mt-auto mb-auto'>
+                            <div className='mt-auto mb-auto flex flex-col space-y-4'>
                                 <p className='text-main-blue text-xl font-bold'>
-                                    Please Continue in our app to Click & Collect
+                                    Please continue in our app to Click & Collect
                                 </p>
-                                <p>
-                                    {/* MOHSIN INSERT LINK TO APPS */}
-                                </p>
+                                <div className='flex flex-row w-full justify-center'>
+                                    <a href="https://play.google.com/store/apps/details?id=com.assorttech.airoso_app&hl=en&gl=US">
+                                        <img
+                                            src="/assets/images/playstore-img.png"
+                                            width={120}
+                                            height={40}
+                                            margin-right={50}
+                                            className="img-fluid"
+                                            alt=""
+                                        />
+                                    </a>
+                                    <a href="https://apps.apple.com/us/app/apricart/id1562353936?platform=iphone">
+                                        <img
+                                            src="/assets/images/appstore-img.png"
+                                            width={120}
+                                            height={40}
+                                            className="img-fluid king"
+                                            alt=""
+                                        />
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     }

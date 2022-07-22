@@ -115,22 +115,25 @@ export default function SingleProduct({ product, isInStock }) {
 
     const addToWishlistApi = async () => {
         let { token, headers } = getGeneralApiParams();
-        //  dispatch(addToWish(product));
         let body = { sku: [product.sku] }
         if (token) {
             let url = base_url_api + '/watchlist/save?city=karachi&lang=en'
-
+            
             try {
                 let response = await axios.post(url, body,
                     {
                         headers: headers
                     }
-
-                )
-
-            } catch (error) {
+                    
+                    )
+                    toast.success("Added to Shopping List")
+                    dispatch(addToWish(product));
+                } catch (error) {
                 console.log(error)
             }
+        }
+        else{
+            toast.error('Login first')
         }
     }
 

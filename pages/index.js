@@ -15,6 +15,7 @@ import HeadTag from "../components/Layout/components/Head/HeadTag";
 import storeBackgroundImage from '../public/assets/images/storeBackground.png'
 import lifestyle from '../public/assets/images/banners/lifestyle.jpeg'
 import nationals from '../public/assets/images/banners/nationals.jpeg'
+import mainBanner from '../public/assets/images/banners/mainBanner.png'
 
 export default function Home() {
 	const cookies = new Cookies();
@@ -79,7 +80,7 @@ export default function Home() {
 		<div className="space-y-8">
 			<HeadTag title={'APRICART'} />
 			{/* BANNERS SECTION */}
-			<section className="hidden relative w-screen aspect-[16/6] lg:grid grid-cols-2 items-center">
+			<section className="hidden relative w-screen aspect-[16/6] lg:grid grid-cols-12 items-center">
 				{/* BACKGROUND IMAGE */}
 				<div className="absolute w-full h-full blur-lg">
 					<Image
@@ -88,20 +89,26 @@ export default function Home() {
 					/>
 				</div>
 				{/* SCROLLING BANNER */}
-				<section className="">
-					<Banner
+				<section className="col-span-7">
+					<div className="w-full">
+						<Image
+							src={mainBanner}
+							layout={'responsive'}
+						/>
+					</div>
+					{/* <Banner
 						banners={homeData.banners}
-					/>
+					/> */}
 				</section>
 				{/* STATIC BANNERS */}
-				<section className="grid grid-rows-2 h-full w-full justify-center items-center space-y-8">
-						<div className="relative w-[500px] h-[190px]">
+				<section className="col-span-5 grid grid-rows-2 h-full w-full justify-start items-center space-y-8">
+						<div className="relative w-[500px] h-[200px]">
 							<Image
 								src={nationals}
 								layout={'fill'}
 							/>
 						</div>
-						<div className="relative w-[500px] h-[190px]">
+						<div className="relative w-[500px] h-[200px]">
 							<Image
 								src={lifestyle}
 								layout={'fill'}
