@@ -19,9 +19,11 @@ import HomeDeliveryCard from "../Cards/HomeDeliveryCard"
 import ClickAndCollectCard from "../Cards/ClickAndCollectCard"
 import BulkBuyCard from "../Cards/BulkBuyCard"
 import CartSlider from "../Cart/CartSlider"
+import { useRouter } from "next/router"
 
 export default function Header({}) {
     const cookies = new Cookies()
+    const router = useRouter()
 
     let { token, city } = getGeneralApiParams()
 
@@ -109,7 +111,7 @@ export default function Header({}) {
     }
 
     return (
-        <div className="flex flex-col bg-white px-2 md:px-12 py-2 md:py-8 space-y-2">
+        <div className="flex flex-col bg-white px-2 md:px-12 py-2 md:py-8 space-y-2 border-b">
             <div className="flex flex-row items-center space-x-2 md:space-x-4">
                 <div className="lg:hidden">
                     <HamburgerMenu />
@@ -218,11 +220,13 @@ export default function Header({}) {
                     </div>
                 )}
             </div>
-            <div className="grid grid-cols-3 gap-2 lg:gap-8">
-                <HomeDeliveryCard />
-                <ClickAndCollectCard />
-                <BulkBuyCard />
-            </div>
+            {router.pathname === '/' && (
+                <div className="grid grid-cols-3 gap-2 lg:gap-8">
+                    <HomeDeliveryCard />
+                    <ClickAndCollectCard />
+                    <BulkBuyCard />
+                </div>
+            )}
         </div>
     )
 }

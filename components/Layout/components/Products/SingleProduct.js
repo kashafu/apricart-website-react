@@ -25,7 +25,6 @@ export default function SingleProduct({ product, isInStock }) {
     const cookies = new Cookies();
     const dispatch = useDispatch();
 
-    console.log(product.qty);
     let { productImageUrl, productImageUrlThumbnail, title,currentPrice, sku, inStock, minQty, maxQty } = product
     if (isInStock) {
         inStock = isInStock

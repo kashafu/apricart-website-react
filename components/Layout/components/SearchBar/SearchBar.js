@@ -17,10 +17,6 @@ export default function SearchBar() {
     useEffect(() => {
         getCategoriesApi()
     }, [])
-    
-    useEffect(() => {
-        console.log(selectedCategory)
-    }, [selectedCategory])
 
     const searchHandler = async (searchTerm) => {
         if (searchTerm.length <= 2) {

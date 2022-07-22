@@ -85,7 +85,7 @@ export default function Layout() {
                         </li>
                         <li className="inline-flex">
                             <Link href={""} passHref>
-                                <a>
+                                <a href="https://play.google.com/store/apps/details?id=com.assorttech.airoso_app&hl=en&gl=US">
                                     <img
                                         src="/assets/images/playstore-img.png"
                                         width={80}
@@ -98,7 +98,7 @@ export default function Layout() {
                             </Link>
                         </li>
                         <li className="inline-flex">
-                            <a href="#">
+                            <a href="https://apps.apple.com/us/app/apricart/id1562353936?platform=iphone">
                                 <img
                                     src="/assets/images/appstore-img.png"
                                     width={80}

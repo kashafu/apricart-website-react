@@ -19,10 +19,10 @@ export default function SingleProductList({ product, isInStock }) {
                 passHref
             >
                 <a className="flex flex-row w-full items-center">
-                    <div className="w-1/6 p-2">
+                    <div className="relative w-[50px] h-[50px] lg:w-[100px] lg:h-[100px] p-2">
                         <Image
                             src={imageUrl}
-                            layout={'responsive'}
+                            layout={'fill'}
                         />
                     </div>
                     <div className="relative flex flex-col items-center justify-between w-full rounded-2xl space-y-2 py-2">

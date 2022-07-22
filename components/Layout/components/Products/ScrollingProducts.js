@@ -56,7 +56,7 @@ export default function ScrollingProducts({ products }) {
                 {products.map((product)=>{
                     let {id} = product
                     return(
-                        <section key={id}>
+                        <section key={id} className='lg:px-4'>
                             <SingleProduct
                                 product={product}
                             />
