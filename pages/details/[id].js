@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import Image from "next/image";
 import { useRouter } from "next/router";
 import Categories from "../../components/Layout/components/Categories/Categories";
 import RelatedProduct from "../../components/Layout/components/RelatedProduct/RelatedProduct";
@@ -7,31 +8,50 @@ import { addToCart } from "../../redux/cart.slice";
 import Cookies from 'universal-cookie';
 import { base_url_api } from '../../information.json'
 import { getGeneralApiParams } from '../../helpers/ApiHelpers'
+import { toast } from 'react-toastify'
 import axios from "axios";
 import HeadTag from "../../components/Layout/components/Head/HeadTag";
+import minusIcon from '../../public/assets/svgs/minusIcon.svg'
+import plusIcon from '../../public/assets/svgs/plusIcon.svg'
 
 export default function Post({ product }) {
 	let [num, setNum] = useState(1);
 	const dispatch = useDispatch();
 	const cookies = new Cookies();
-	let isLoggedIn = cookies.get('cookies-token') != null 
+	let isLoggedIn = cookies.get('cookies-token') != null
 	const router = useRouter()
 	const { id } = router.query
 
 	const [categories, setCategories] = useState(null)
 	const [inStock, setInStock] = useState(true)
+	const [qty, setQty] = useState(1)
 
-	useEffect(()=>{
+	const setQtyHandler = (type) => {
+		if (type == 'increment') {
+			if (qty == product.data[0].maxQty) {
+				return
+			}
+			setQty(qty + 1)
+		}
+		else if (type == 'decrement') {
+			if (qty == product.data[0].minQty) {
+				return
+			}
+			setQty(qty - 1)
+		}
+	}
+
+	useEffect(() => {
 		getCategoriesApi()
 		getInStockApi()
 	}, [])
 
 	const getCategoriesApi = async () => {
-		let {city, headers} = getGeneralApiParams()
+		let { city, headers } = getGeneralApiParams()
 		let url = base_url_api + '/catalog/categories?level=all&client_type=apricart&city=' + city
-		
+
 		try {
-			let response = await axios.get(url, 
+			let response = await axios.get(url,
 				{
 					headers: headers
 				}
@@ -43,17 +63,17 @@ export default function Post({ product }) {
 	}
 
 	const getInStockApi = async () => {
-		let {city, headers, userId} = getGeneralApiParams()
+		let { city, headers, userId } = getGeneralApiParams()
 		let url = base_url_api + '/catalog/products/detail?id=' + id + '&city=' + city + '&lang=en&client_type=apricart&userid=' + userId
 		// console.log(url)
 		try {
-			let response = await axios.get(url, 
+			let response = await axios.get(url,
 				{
 					headers: headers
 				}
 			)
 			// console.log(response.data)
-			if(response.data.data.length > 0){
+			if (response.data.data.length > 0) {
 				setInStock(response.data.data[0].inStock)
 			}
 		} catch (error) {
@@ -80,48 +100,71 @@ export default function Post({ product }) {
 		}
 	};
 
-	const addToCartHandler = async (item) => {
-        let { city, userId, headers } = getGeneralApiParams()
+	const addToCartApi = async () => {
+		let { city, userId, headers } = getGeneralApiParams()
 
-        if(isLoggedIn){
-            let data = {
-                cart: [{
-					'sku': item.sku,
-					'qty': "1",
-                }]
-            }
+		if (isLoggedIn) {
+			let data = {
+				cart: [{
+					'sku': product.data[0].sku,
+					'qty': qty,
+				}]
+			}
+			let url = base_url_api + "/order/cart/save?city=" + city + "&lang=en&client_type=apricart"
 
-            let url = base_url_api + "/order/cart/save?city=" + city + "&lang=en&client_type=apricart"
-            let response = await axios.post(
-                url,
-                data,
-                {
-                    headers: headers,
-                }
-            )
-        }
-        else{
-            let data = {
-                userId: userId,
-                cart: [{
-                        'sku': item.sku,
-                        'qty': "1",
-                }]
-            }
+			try {
+				let response = await axios.post(
+					url,
+					data,
+					{
+						headers: headers,
+					}
+				)
+				toast.success("Added to Cart")
+				let cartData = {
+					...product.data[0]
+				}
+				cartData.qty = qty
+				dispatch(addToCart(cartData))
+			} catch (error) {
+				console.log(error?.response)
+				toast.error(error?.response?.data?.message)
+			}
+		}
+		else {
+			let data = {
+				userId: userId,
+				cart: [{
+					'sku': product.data[0].sku,
+					'qty': qty,
+				}]
+			}
+			let url = base_url_api + "/guest/cart/save?city=" + city + "&lang=en&client_type=apricart"
 
-            let url = base_url_api + "/guest/cart/save?city=" + city + "&lang=en&client_type=apricart"
-            let response = await axios.post(
-                url,
-                data,
-                {
-                    headers: headers
-                }
-            )
-        }
-    }
+			try {
+				let response = await axios.post(
+					url,
+					data,
+					{
+						headers: headers
+					}
+				)
+				toast.success("Added to Cart")
+				let cartData = {
+					...product.data[0]
+				}
+				cartData.qty = qty
 
-	if(!product){
-		return(
+				dispatch(addToCart(cartData))
+			} catch (error) {
+				console.log(error?.response)
+				toast.error(error?.response?.data?.message)
+			}
+		}
+	}
+
+	if (!product) {
+		return (
 			<div>
 				<p>
 					Item does not exist
@@ -132,7 +175,7 @@ export default function Post({ product }) {
 
 	return (
 		<div>
-			<HeadTag title={'Product'}/>
+			<HeadTag title={'Product'} />
 			{product.data.length > 0 ?
 				(
 					<div>
@@ -150,19 +193,16 @@ export default function Post({ product }) {
 									</div>
 									<div className="col-12 col-sm-12  col-md-10  col-lg-9  col-xl-10  col-xxl-10 parot">
 										<>
-											<section className="ContentSec">
+											<section className="ContentSec -m-[20px]">
 												<div className="container-fluid">
 													<div className="prothreeHead">
 														<ol className="breadcrumb">
 															<li>
 																{" "}
-																<a passHref="">Home</a>{" "}
+																<a passHref="/">Home</a>{" "}
 															</li>
 															<li>
-																<a passHref="">{product.data[0].categoryleafName}</a>
-															</li>
-															<li>
-																<a passHref="">{product.data[0].title}</a>
+																<a passHref="/category/">{product.data[0].categoryleafName}</a>
 															</li>
 														</ol>
 													</div>
@@ -190,9 +230,61 @@ export default function Post({ product }) {
 																	<p>{product.data[0].description}</p>
 																	<span>{product.data[0].sku}</span>
 																</div>
-																<ul className="detail-pro">
-																	<li>
-																		{inStock == true ? (
+																<div className="py-4">
+																	<div className="flex flex-row w-full justify-between lg:justify-start lg:space-x-4">
+																		{inStock && (
+																			<div className="grid grid-cols-3 justify-items-center rounded overflow-hidden w-[100px] h-[40px] border-2">
+																				<button className="relative bg-white w-full"
+																					onClick={() => {
+																						setQtyHandler('decrement')
+																					}}
+																				>
+																					<Image
+																						src={minusIcon}
+																						layout={'fill'}
+																					/>
+																				</button>
+																				<div className="flex flex-col bg-main-yellow font-bold w-full text-main-blue text-2xl text-center">
+																					<p className="mt-auto mb-auto">
+																						{qty}
+																					</p>
+																				</div>
+																				<button className="relative bg-white w-full"
+																					onClick={() => {
+																						setQtyHandler('increment')
+																					}}
+																				>
+																					<Image
+																						src={plusIcon}
+																						layout={'fill'}
+																					/>
+																				</button>
+																			</div>
+																		)}
+																		{inStock ? (
+																			// {/* ADD TO CART */}
+																			<button className="flex items-center h-[40px]"
+																				onClick={() => {
+																					addToCartApi()
+																				}}
+																			>
+																				{/* <Image
+																					src={addToCartIcon}
+																					height={40}
+																					width={40}
+																				/> */}
+																				<p className="text-white font-bold bg-main-blue py-2 px-4 rounded-xl">
+																					ADD TO CART
+																				</p>
+																			</button>
+																		) : (
+																			<button className="w-1/2 h-[40px] px-2 bg-zinc-400 font-bold text-xs lg:text-md rounded text-white"
+																				disabled={true}
+																			>
+																				Out of Stock
+																			</button>
+																		)}
+																		{/* {inStock == true ? (
 																			<div
 																				className="pro_btn2"
 																				onClick={() => {
@@ -220,9 +312,9 @@ export default function Post({ product }) {
 																					</a>
 																				</div>
 																			</>
-																		)}
-																	</li>
-																</ul>
+																		)} */}
+																	</div>
+																</div>
 															</div>
 														</div>
 													</div>
@@ -273,8 +365,8 @@ export default function Post({ product }) {
 // }
 
 export async function getStaticPaths() {
-  const paths = ["/details/APRA-SK02-03"];
-  return { paths, fallback: true };
+	const paths = ["/details/APRA-SK02-03"];
+	return { paths, fallback: true };
 }
 
 export async function getStaticProps({ query, params }) {

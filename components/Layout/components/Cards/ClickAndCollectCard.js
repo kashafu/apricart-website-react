@@ -33,8 +33,11 @@ export default function ClickAndCollectCard() {
                     content={
                         <div className='flex flex-col h-full'>
                             <div className='mt-auto mb-auto flex flex-col space-y-4'>
-                                <p className='text-main-blue text-xl font-bold'>
-                                    Please continue in our app to Click & Collect
+                                <p className='text-main-blue text-sm lg:text-2xl font-bold'>
+                                    Click from Home and Collect at Store!
+                                </p>
+                                <p className='text-main-blue text-xs lg:text-xl font-bold'>
+                                    Use our APP to place your Click & Collect order.
                                 </p>
                                 <div className='flex flex-row w-full justify-center'>
                                     <a href="https://play.google.com/store/apps/details?id=com.assorttech.airoso_app&hl=en&gl=US">

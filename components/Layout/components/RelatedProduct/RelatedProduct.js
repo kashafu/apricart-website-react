@@ -77,7 +77,10 @@ export default function RecommendedProducts() {
       <div className="container">
         <div className="row">
           <div className="col-12 col-sm-12  col-md-12  col-lg-12  col-xl-12  col-xxl-12">
-            <section>
+            <section className="space-y-2 flex flex-col">
+              <p className="font-bold w-full text-center text-main-blue text-lg lg:text-3xl border-t-2 pt-4">
+                People also buy
+              </p>
               <ScrollingProducts
                 products={users}
               />

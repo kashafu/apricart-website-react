@@ -34,6 +34,7 @@ export default function SingleProduct({ product, isInStock }) {
 
     const [innerText, setInnerText] = useState('Add to Cart')
     const [qty, setQty] = useState(minQty)
+    
     const setQtyHandler = (type) => {
         if (type == 'increment') {
             if (qty == maxQty) {

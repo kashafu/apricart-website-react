@@ -198,7 +198,7 @@ export default function CartSlider() {
                 }}
             >
                 <Image src={cartIcon} alt={"icon"} width={45} height={45} />
-                <p className="absolute -top-1 -right-1 font-bold">
+                <p className="absolute -top-2 -right-2 font-bold">
                     {reduxCart.length}
                 </p>
             </button>
