@@ -370,7 +370,8 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ query, params }) {
-	const { id } = query || params;
+	const { id, title } = query || params;
+	console.log(id, title);
 	let { headers } = getGeneralApiParams()
 	let city = 'karachi'
 	let url = base_url_api + '/catalog/products/detail?id=' + id + '&city=' + city + '&lang=en&client_type=apricart'

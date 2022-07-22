@@ -16,6 +16,7 @@ import { base_url_api } from '../../../../information.json'
 import { getGeneralApiParams } from "../../../../helpers/ApiHelpers";
 import { useState } from "react";
 import { toast } from "react-toastify";
+var kebabCase = require("kebab-case");
 
 /*
     isInStock is being passed where static site generation is being used
@@ -25,7 +26,7 @@ export default function SingleProduct({ product, isInStock }) {
     const cookies = new Cookies();
     const dispatch = useDispatch();
 
-    let { productImageUrl, productImageUrlThumbnail, title,currentPrice, sku, inStock, minQty, maxQty } = product
+    let { productImageUrl, productImageUrlThumbnail, title, currentPrice, sku, inStock, minQty, maxQty } = product
     if (isInStock) {
         inStock = isInStock
     }
@@ -34,7 +35,7 @@ export default function SingleProduct({ product, isInStock }) {
 
     const [innerText, setInnerText] = useState('Add to Cart')
     const [qty, setQty] = useState(minQty)
-    
+
     const setQtyHandler = (type) => {
         if (type == 'increment') {
             if (qty == maxQty) {
@@ -52,7 +53,7 @@ export default function SingleProduct({ product, isInStock }) {
 
     const addToCartApi = async () => {
         let { city, userId, headers } = getGeneralApiParams()
-       
+
         if (isLoggedIn) {
             let data = {
                 cart: [{
@@ -104,7 +105,7 @@ export default function SingleProduct({ product, isInStock }) {
                 let cartData = {
                     ...product
                 }
-               cartData.qty = qty
+                cartData.qty = qty
 
                 dispatch(addToCart(cartData))
             } catch (error) {
@@ -119,21 +120,21 @@ export default function SingleProduct({ product, isInStock }) {
         let body = { sku: [product.sku] }
         if (token) {
             let url = base_url_api + '/watchlist/save?city=karachi&lang=en'
-            
+
             try {
                 let response = await axios.post(url, body,
                     {
                         headers: headers
                     }
-                    
-                    )
-                    toast.success("Added to Shopping List")
-                    dispatch(addToWish(product));
-                } catch (error) {
+
+                )
+                toast.success("Added to Shopping List")
+                dispatch(addToWish(product));
+            } catch (error) {
                 console.log(error)
             }
         }
-        else{
+        else {
             toast.error('Login first')
         }
     }
@@ -142,11 +143,19 @@ export default function SingleProduct({ product, isInStock }) {
         <div className="grid grid-rows-10 bg-white rounded-t-full rounded-b-3xl h-[250px] lg:h-[350px] overflow-hidden border-main-yellow border-1 shadow">
             {/* IMAGE */}
             <div className="flex items-center justify-center row-span-6 w-full h-full">
-                <Link href="/details/[id]"
+                <Link
+                    href={{
+                        pathname: "/details/[title]",
+                        query: {
+                            id: sku,
+                            title: title
+                        }
+                    }}
                     as={
                         "/details/" + sku
                     }
                     passHref
+                // as={`details/${title}-${sku}`}
                 >
                     <a className="relative h-[100px] w-[100px] lg:h-[150px] lg:w-[150px]">
                         <Image
