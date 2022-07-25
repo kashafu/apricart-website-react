@@ -10,7 +10,7 @@ export default function Categories({ categories }) {
 
 	return (
 		<div className="space-y-4">
-			<p className="text-main-blue font-bold lg:text-2xl 2xl:text-4xl">
+			<p className="text-main-blue font-bold lg:text-2xl 2xl:text-3xl">
 				- CATEGORIES
 			</p>
 			<div className="grid grid-flow-row divide-y">
@@ -113,6 +113,7 @@ export default function Categories({ categories }) {
 											}
 											width={20}
 											height={20}
+											alt={'icon'}
 										/>
 									</button>
 								</div>

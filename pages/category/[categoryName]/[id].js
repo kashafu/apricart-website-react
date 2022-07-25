@@ -104,33 +104,34 @@ export default function CategoryProducts({ products, subCategories }) {
 					{subCategories && (
 						<section>
 							{subCategories.data.length > 0 && (
-								<div className="flex flex-row overflow-y-auto w-full space-x-4">
+								<div className="grid grid-flow-col overflow-y-auto w-full gap-4 py-8">
 									{subCategories.data.map((category) => {
 										let { id, name, image } = category
 										return (
-											<Link
-												href="/category/[categoryName]/[id]"
-												as={
-													"/category/" +
-													toKebabCase(name) +
-													"/" +
-													id
-												}
-												passHref
-												key={id}
-											>
-												<a className="flex flex-col items-center">
-													<p className="font-lato text-main-blue text-lg font-bold">
-														{name}
-													</p>
-													<Image
-														src={image}
-														height={100}
-														width={100}
-														alt={"category image"}
-													/>
-												</a>
-											</Link>
+											<div key={id} className='border rounded shadow'>
+												<Link
+													href="/category/[categoryName]/[id]"
+													as={
+														"/category/" +
+														toKebabCase(name) +
+														"/" +
+														id
+													}
+													passHref
+												>
+													<a className="flex flex-col items-center">
+														<p className="font-lato text-main-blue text-lg font-bold">
+															{name}
+														</p>
+														<Image
+															src={image}
+															height={100}
+															width={100}
+															alt={"category image"}
+														/>
+													</a>
+												</Link>
+											</div>
 										)
 									})}
 								</div>

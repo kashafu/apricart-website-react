@@ -51,7 +51,7 @@ export default function SingleProduct({ product, isInStock }) {
 	const [qty, setQty] = useState(minQty)
 	const [showAddToCart, setShowAddToCart] = useState(false)
 
-	let divStyle = showAddToCart ? "drop-shadow-xl" : "border-r-2 border-b-2"
+	let divStyle = showAddToCart ? "drop-shadow-xl z-10" : "border-r-2 border-b-2"
 
 	const setQtyHandler = (type) => {
 		if (type == "increment") {
@@ -155,7 +155,7 @@ export default function SingleProduct({ product, isInStock }) {
 	}
 
 	return (
-		<>
+		<div>
 			{/* DESKTOP VIEW */}
 			<div
 				className={
@@ -198,9 +198,6 @@ export default function SingleProduct({ product, isInStock }) {
 						className="absolute z-10 bg-white drop-shadow-[0_35px_35px_35px_rgba(0,0,0,0.25)] bottom-[-35px] py-2 row-span-1 flex flex-col lg:flex-row items-center justify-between w-full"
 						onMouseEnter={() => {
 							setShowAddToCart(true)
-						}}
-						onMouseLeave={() => {
-							setShowAddToCart(false)
 						}}
 					>
 						{/* QUANTITY hidden on phone */}
@@ -392,6 +389,6 @@ export default function SingleProduct({ product, isInStock }) {
 					</div>
 				</div>
 			</div>
-		</>
+		</div>
 	)
 }
