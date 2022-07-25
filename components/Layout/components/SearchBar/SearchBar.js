@@ -11,7 +11,8 @@ export default function SearchBar() {
     const [searchResults, setSearchResults] = useState([])
     const [showSearchResults, setShowSearchResults] = useState(false)
     const [categories, setCategories] = useState(null)
-    const [selectedCategory, setSelectedCategory] = useState('')
+    const [selectedCategoryId, setSelectedCategoryId] = useState('')
+    const [selectedCategoryName, setSelectedCategoryName] = useState('')
 
     const searchIconElement = useRef()
     const router = useRouter()
@@ -20,11 +21,11 @@ export default function SearchBar() {
         getCategoriesApi()
     }, [])
 
-    useEffect(()=>{
-        if(selectedCategory !== ''){
-            router.push('/category/' + selectedCategory)
-        }
-    }, [selectedCategory])
+    // useEffect(()=>{
+    //     if(selectedCategoryId !== ''){
+    //         router.push('/category/' + selectedCategoryId + '/' + selectedCategoryName)
+    //     }
+    // }, [selectedCategoryId])
 
     const searchHandler = async (searchTerm) => {
         if (searchTerm.length <= 2) {
@@ -33,7 +34,7 @@ export default function SearchBar() {
             return
         }
         let { city, userId, headers } = getGeneralApiParams()
-        let url = base_url_api + '/catalog/products/search?page=1&size=20&term=' + searchTerm + '&category=' + selectedCategory + '&city=' + city + '&lang=en&userid=' + userId + '&client_type=apricart'
+        let url = base_url_api + '/catalog/products/search?page=1&size=20&term=' + searchTerm + '&category=' + selectedCategoryId + '&city=' + city + '&lang=en&userid=' + userId + '&client_type=apricart'
         let searchResponse = await axios.get(
             url,
             {
@@ -67,9 +68,10 @@ export default function SearchBar() {
                     disabled= {categories == null}
                     className="py-2 rounded-lg bg-main-grey w-1/2 font-bold"
                     onChange={(e) => {
-                        setSelectedCategory(e.target.value)
+                        setSelectedCategoryId(e.target.value)
+                        // setSelectedCategoryName(e.target.)
                     }}
-                    value={selectedCategory}
+                    value={selectedCategoryId}
                 >
                     <option
                         value={''}

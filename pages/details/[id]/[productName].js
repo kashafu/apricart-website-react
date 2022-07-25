@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import Categories from "../../components/Layout/components/Categories/Categories";
-import RelatedProduct from "../../components/Layout/components/RelatedProduct/RelatedProduct";
+import Categories from "../../../components/Layout/components/Categories/Categories";
+import RelatedProduct from "../../../components/Layout/components/RelatedProduct/RelatedProduct";
 import { useDispatch } from "react-redux";
-import { addToCart } from "../../redux/cart.slice";
+import { addToCart } from "../../../redux/cart.slice";
 import Cookies from 'universal-cookie';
-import { base_url_api } from '../../information.json'
-import { getGeneralApiParams } from '../../helpers/ApiHelpers'
+import { base_url_api } from '../../../information.json'
+import { getGeneralApiParams } from '../../../helpers/ApiHelpers'
 import { toast } from 'react-toastify'
 import axios from "axios";
-import HeadTag from "../../components/Layout/components/Head/HeadTag";
-import minusIcon from '../../public/assets/svgs/minusIcon.svg'
-import plusIcon from '../../public/assets/svgs/plusIcon.svg'
+import HeadTag from "../../../components/Layout/components/Head/HeadTag";
+import minusIcon from '../../../public/assets/svgs/minusIcon.svg'
+import plusIcon from '../../../public/assets/svgs/plusIcon.svg'
 
 export default function Post({ product }) {
 	let [num, setNum] = useState(1);
@@ -365,15 +365,15 @@ export default function Post({ product }) {
 // }
 
 export async function getStaticPaths() {
-	const paths = ["/details/APRA-SK02-03"];
+	const paths = ["/details/APR-PT13-03/bake-parlor-tikka-macaroni---250gm"];
 	return { paths, fallback: true };
 }
 
 export async function getStaticProps({ query, params }) {
-	const { id, title } = query || params;
+	const { id, productName } = query || params;
 	let { headers } = getGeneralApiParams()
 	let city = 'karachi'
-	let url = base_url_api + '/catalog/products/detail?id=' + id + '&city=' + city + '&lang=en&client_type=apricart'
+	let url = base_url_api + '/catalog/products/detail?id=' + id + '&city=' + city + '&lang=en&client_type=apricart&userid=abc123'
 	let product = null
 	try {
 		let response = await axios.get(url,
