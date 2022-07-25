@@ -143,6 +143,7 @@ export default function SingleProduct({ product, isInStock }) {
 
     return (
         <>
+            {/* DESKTOP VIEW */}
             <div className={"hidden relative lg:grid grid-rows-6 bg-white px-2 lg:px-4 h-[250px] lg:h-[350px] rounded-br-lg " + [divStyle]}
                 onMouseEnter={() => {
                     setShowAddToCart(true)
@@ -185,7 +186,7 @@ export default function SingleProduct({ product, isInStock }) {
                     Rs. {currentPrice}
                 </p>
                 {showAddToCart && (
-                    <div className="absolute z-90 bg-white drop-shadow-[0_35px_35px_35px_rgba(0,0,0,0.25)] bottom-[-35px] py-2 row-span-1 flex flex-col lg:flex-row items-center justify-between w-full"
+                    <div className="absolute z-10 bg-white drop-shadow-[0_35px_35px_35px_rgba(0,0,0,0.25)] bottom-[-35px] py-2 row-span-1 flex flex-col lg:flex-row items-center justify-between w-full"
                         onMouseEnter={() => {
                             setShowAddToCart(true)
                         }}
@@ -264,6 +265,7 @@ export default function SingleProduct({ product, isInStock }) {
                     </div>
                 )}
             </div>
+            {/* MOBILE VIEW */}
             <div className={"lg:hidden grid grid-flow-row bg-white px-2 lg:px-4 h-[250px] lg:h-[350px] rounded-br-lg " + [divStyle]}>
                 {/* IMAGE */}
                 <div className="row-span-4 flex items-center justify-center w-full h-full">

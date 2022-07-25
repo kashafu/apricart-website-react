@@ -1,14 +1,15 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import axios from "axios";
-import { base_url_api } from '../../information.json'
-import { getGeneralApiParams } from "../../helpers/ApiHelpers";
-import Categories from "../../components/Layout/components/Categories/Categories";
-import SingleProduct from "../../components/Layout/components/Products/SingleProduct";
-import PageHeading from '../../components/Layout/components/Typography/PageHeading'
+import { base_url_api } from '../../../information.json'
+import { getGeneralApiParams } from "../../../helpers/ApiHelpers";
+import Categories from "../../../components/Layout/components/Categories/Categories";
+import SingleProduct from "../../../components/Layout/components/Products/SingleProduct";
+import PageHeading from '../../../components/Layout/components/Typography/PageHeading'
 import Image from "next/image";
 import Link from "next/link";
-import HeadTag from "../../components/Layout/components/Head/HeadTag";
+import HeadTag from "../../../components/Layout/components/Head/HeadTag";
+import toKebabCase from "../../../helpers/toKebabCase";
 
 export default function CategoryProducts({ products, subCategories }) {
 	const router = useRouter()
@@ -187,7 +188,8 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ query, params }) {
-	const { id } = query || params;
+	const { id, categoryName } = query || params;
+	console.log(id, categoryName);
 	let { headers } = getGeneralApiParams()
 	let city = 'karachi'
 	let url = base_url_api + '/catalog/categories/products?category=' + id + '&page=1&size=100&sortType=&sortDirection=desc&instant=3&city=' + city + '&lang=en&client_type=apricart'
