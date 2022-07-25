@@ -9,8 +9,6 @@ import { getGeneralApiParams } from "../helpers/ApiHelpers"
 import Banner from "../components/Layout/components/Banner/Banner"
 import MainProducts from "../components/Layout/components/Products/MainProducts"
 import Link from "next/link"
-import { useDispatch } from "react-redux"
-import { updateTicker } from "../redux/general.slice"
 import HeadTag from "../components/Layout/components/Head/HeadTag"
 import storeBackgroundImage from "../public/assets/images/storeBackground.png"
 import lifestyle from "../public/assets/images/banners/lifestyle.jpeg"
@@ -19,7 +17,6 @@ import mainBanner from "../public/assets/images/banners/mainBanner.png"
 
 export default function Home() {
 	const cookies = new Cookies()
-	const dispatch = useDispatch()
 	let token = cookies.get("cookies-token")
 
 	const [categories, setCategories] = useState(null)
@@ -52,7 +49,6 @@ export default function Home() {
 			})
 
 			setHomeData(response.data.data)
-			dispatch(updateTicker(response.data.data.ticker))
 		} catch (error) {
 			setErrorMessage(error.message)
 		}
