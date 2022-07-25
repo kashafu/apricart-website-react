@@ -1,6 +1,5 @@
 import Image from "next/image"
 import Categories from "../components/Layout/components/Categories/Categories"
-import Cookies from "universal-cookie"
 import { useEffect, useState } from "react"
 import { base_url_api } from "../information.json"
 import axios from "axios"
@@ -14,10 +13,10 @@ import storeBackgroundImage from "../public/assets/images/storeBackground.png"
 import lifestyle from "../public/assets/images/banners/lifestyle.jpeg"
 import nationals from "../public/assets/images/banners/nationals.jpeg"
 import mainBanner from "../public/assets/images/banners/mainBanner.png"
+import ErrorText from '../components/Layout/components/Typography/ErrorText'
 
 export default function Home() {
-	const cookies = new Cookies()
-	let token = cookies.get("cookies-token")
+	let { city } = getGeneralApiParams()
 
 	const [categories, setCategories] = useState(null)
 	const [homeData, setHomeData] = useState(null)
@@ -173,6 +172,13 @@ export default function Home() {
 				</section>
 				{/* PRODUCTS SECTION */}
 				<section className="col-span-5 lg:col-span-4 space-y-12">
+					{city === 'peshawar' && (
+						<div>
+							<ErrorText
+								text={'HOME DELIVERY IS CURRENTLY UNAVAILABLE IN PESHAWAR, PLEASE CHANGE CITY TO CONTINUE OR DOWNLOAD THE APP FOR BULK BUY'}
+							/>
+						</div>
+					)}
 					{/* WEB PRODUCTS SECTION */}
 					{/* <section className="col-span-5 lg:col-span-4 space-y-12">
 						<MainProducts
