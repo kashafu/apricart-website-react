@@ -51,7 +51,9 @@ export default function SingleProduct({ product, isInStock }) {
 	const [qty, setQty] = useState(minQty)
 	const [showAddToCart, setShowAddToCart] = useState(false)
 
-	let divStyle = showAddToCart ? "drop-shadow-xl z-10" : "border-r-2 border-b-2"
+	let divStyle = showAddToCart
+		? "drop-shadow-xl z-10"
+		: "border-r-2 border-b-2"
 
 	const setQtyHandler = (type) => {
 		if (type == "increment") {
@@ -284,16 +286,9 @@ export default function SingleProduct({ product, isInStock }) {
 				{/* IMAGE */}
 				<div className="row-span-4 flex items-center justify-center w-full h-full">
 					<Link
-						href={{
-							pathname: "/details/[title]",
-							query: {
-								id: sku,
-								title: title,
-							},
-						}}
-						as={"/details/" + sku}
+						href="/details/[id]/[productName]"
+						as={"/details/" + sku + "/" + toKebabCase(title)}
 						passHref
-						// as={`details/${title}-${sku}`}
 					>
 						<a className="relative h-[100px] w-[100px] lg:h-[150px] lg:w-[150px]">
 							<Image
