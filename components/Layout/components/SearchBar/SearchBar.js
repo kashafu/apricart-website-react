@@ -132,8 +132,8 @@ export default function SearchBar() {
                             })}
                         </div>
                     ) : (
-                        <p>
-                            Sorry, item does not exist
+                        <p className="text-main-blue p-2 font-bold text-center">
+                            Could not find item
                         </p>
                     )}
                 </div>

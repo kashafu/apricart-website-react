@@ -2,7 +2,7 @@ import Image from "next/image"
 import Link from "next/link"
 import Cookies from "universal-cookie";
 import axios from "axios";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { addToCart } from "../../../../redux/cart.slice";
 import { addToWish } from "../../../../redux/wish.slice";
 import heartimg from "../../../../public/assets/images/heart.png";
@@ -171,6 +171,7 @@ export default function SingleProduct({ product, isInStock }) {
                             <Image
                                 src={imageUrl}
                                 layout={'fill'}
+                                alt={'product image'}
                             />
                         </a>
                     </Link>
@@ -203,6 +204,7 @@ export default function SingleProduct({ product, isInStock }) {
                                     <Image
                                         src={minusIcon}
                                         layout={'fill'}
+                                        alt={'icon'}
                                     />
                                 </button>
                                 <div className="flex flex-col bg-main-yellow font-bold w-full text-main-blue text-2xl text-center">
@@ -218,6 +220,7 @@ export default function SingleProduct({ product, isInStock }) {
                                     <Image
                                         src={plusIcon}
                                         layout={'fill'}
+                                        alt={'icon'}
                                     />
                                 </button>
                             </div>
@@ -234,6 +237,7 @@ export default function SingleProduct({ product, isInStock }) {
                                         src={addToCartIcon}
                                         height={40}
                                         width={40}
+                                        alt={'icon'}
                                     />
                                 </button>
                             ) : (
@@ -253,6 +257,7 @@ export default function SingleProduct({ product, isInStock }) {
                                     src={wishlistIcon}
                                     height={40}
                                     width={40}
+                                    alt={'icon'}
                                 />
                             </button>
                         </div>
@@ -280,6 +285,7 @@ export default function SingleProduct({ product, isInStock }) {
                             <Image
                                 src={imageUrl}
                                 layout={'fill'}
+                                alt={'icon'}
                             />
                         </a>
                     </Link>
@@ -311,6 +317,7 @@ export default function SingleProduct({ product, isInStock }) {
                                 <Image
                                     src={minusIcon}
                                     layout={'fill'}
+                                    alt={'icon'}
                                 />
                             </button>
                             <div className="flex flex-col bg-main-yellow font-bold w-full text-main-blue text-2xl text-center">
@@ -326,6 +333,7 @@ export default function SingleProduct({ product, isInStock }) {
                                 <Image
                                     src={plusIcon}
                                     layout={'fill'}
+                                    alt={'icon'}
                                 />
                             </button>
                         </div>
@@ -357,6 +365,7 @@ export default function SingleProduct({ product, isInStock }) {
                                 src={wishlistIcon}
                                 height={40}
                                 width={40}
+                                alt={'icon'}
                             />
                         </button>
                     </div>
