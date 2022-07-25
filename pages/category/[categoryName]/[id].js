@@ -109,17 +109,17 @@ export default function CategoryProducts({ products, subCategories }) {
 										let { id, name, image } = category
 										return (
 											<Link
-												href="/category/[id]/[categoryName]"
+												href="/category/[categoryName]/[id]"
 												as={
 													"/category/" +
-													id +
+													toKebabCase(name) +
 													"/" +
-													toKebabCase(name)
+													id
 												}
 												passHref
 												key={id}
 											>
-												<button className="flex flex-col items-center">
+												<a className="flex flex-col items-center">
 													<p className="font-lato text-main-blue text-lg font-bold">
 														{name}
 													</p>
@@ -127,9 +127,9 @@ export default function CategoryProducts({ products, subCategories }) {
 														src={image}
 														height={100}
 														width={100}
-														alt={'category image'}
+														alt={"category image"}
 													/>
-												</button>
+												</a>
 											</Link>
 										)
 									})}
