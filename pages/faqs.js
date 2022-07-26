@@ -3,7 +3,7 @@ import HeadTag from "../components/Layout/components/Head/HeadTag";
 export default function Faqs() {
     return <>
         <HeadTag title={'FAQS'} />
-        <body className="text-stone-900">
+        <body className="px-5">
             <div >
                 <h2 className="text-center text-6xl text-indigo-900 font-bold">FAQ's</h2>
 

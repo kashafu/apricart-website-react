@@ -5,7 +5,7 @@ import HeadTag from '../components/Layout/components/Head/HeadTag'
 
 export default function Privacy() {
 	return (
-		<div>
+		<div className='px-5'>
 			<HeadTag title={'Privacy Policy'}/>
 			<PageHeading
 				text={'Privacy Policy'}

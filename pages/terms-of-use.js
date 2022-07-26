@@ -6,7 +6,7 @@ import HeadTag from '../components/Layout/components/Head/HeadTag'
 
 export default function TermOfUse() {
 	return (
-		<div>
+		<div  className='px-5'>
 			<HeadTag title={'Terms Of Use'}/>
 			<PageHeading
 				text={'Terms of Use'}
