@@ -85,13 +85,11 @@ export async function getStaticProps() {
 		"&lang=en"
 	let products = null
 
-    console.log(url);
 	try {
 		let response = await axios.get(url, {
 			headers: headers,
 		})
 
-        console.log(response)
 		products = response.data
 	} catch (err) {
 		console.log(err)
