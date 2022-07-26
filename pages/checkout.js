@@ -197,7 +197,7 @@ export default function Checkout() {
 		}
 	}
 
-	const deleteItem = (sku) => {
+	const deleteItem = (sku, id) => {
 		if (token) {
 			let { city, headers } = getGeneralApiParams()
 			let url =
@@ -218,6 +218,7 @@ export default function Checkout() {
 					headers: headers,
 					data: body,
 				})
+				dispatch(removeFromCart(id))
 			} catch (error) {
 				console.log(error)
 				toast.error(error?.response?.data?.message)
@@ -243,6 +244,7 @@ export default function Checkout() {
 					headers: headers,
 					data: body,
 				})
+				dispatch(removeFromCart(id))
 			} catch (error) {
 				console.log(error)
 				toast.error(error?.response?.data?.message)
@@ -484,7 +486,6 @@ export default function Checkout() {
 										<div className="flex flex-row space-x-4">
 											<button
 												onClick={() => {
-													// dispatch(decrementQuantity(id))
 													decrementItemQty(
 														sku,
 														qty,
@@ -502,7 +503,6 @@ export default function Checkout() {
 											<p>{qty}</p>
 											<button
 												onClick={() => {
-													// dispatch(incrementQuantity(id))
 													incrementItemQty(
 														sku,
 														qty,
@@ -519,7 +519,6 @@ export default function Checkout() {
 											</button>
 											<button
 												onClick={() => {
-													dispatch(removeFromCart(id))
 													deleteItem(sku)
 												}}
 											>
@@ -543,13 +542,13 @@ export default function Checkout() {
 						<p className={pRight}>PKR {getTotalPrice()}</p>
 						<p className={pLeft}>Shipping</p>
 						{getTotalPrice() < shipmentChargedAt ? (
-							<p className={pRight}>
+							<p className={[pRight] + ' text-red-700'}>
 								Add items worth PKR{" "}
 								{shipmentChargedAt - getTotalPrice()} more to
 								avail free shipping
 							</p>
 						) : (
-							<p className={pRight}>Free Shipping</p>
+							<p className={[pRight] + ' text-green-700'}>Free Shipping</p>
 						)}
 						<p className={pLeft}>Shipping Amount</p>
 						{getTotalPrice() < shipmentChargedAt ? (
@@ -609,7 +608,6 @@ export default function Checkout() {
 										<div className="flex flex-row space-x-4">
 											<button
 												onClick={() => {
-													// dispatch(decrementQuantity(id))
 													decrementItemQty(
 														sku,
 														qty,
@@ -627,7 +625,6 @@ export default function Checkout() {
 											<p>{qty}</p>
 											<button
 												onClick={() => {
-													// dispatch(incrementQuantity(id))
 													incrementItemQty(
 														sku,
 														qty,
@@ -645,7 +642,6 @@ export default function Checkout() {
 											<p>x RS. {currentPrice}</p>
 											<button
 												onClick={() => {
-													dispatch(removeFromCart(id))
 													deleteItem(sku)
 												}}
 											>
@@ -709,7 +705,6 @@ export default function Checkout() {
 											<button
 												disabled={true}
 												onClick={() => {
-													// dispatch(decrementQuantity(id))
 													decrementItemQty(sku, qty, id)
 												}}
 											>
@@ -726,7 +721,6 @@ export default function Checkout() {
 											<button
 												disabled={true}
 												onClick={() => {
-													// dispatch(incrementQuantity(id))
 													incrementItemQty(sku, qty, id)
 												}}
 											>
@@ -740,7 +734,6 @@ export default function Checkout() {
 											<button
 												disabled={true}
 												onClick={() => {
-													dispatch(removeFromCart(id))
 													deleteItem(sku)
 												}}
 											>
