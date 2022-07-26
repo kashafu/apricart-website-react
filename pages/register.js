@@ -98,9 +98,11 @@ export default function Register(){
     };
 
     return (
+        <>
+        <HeadTag title={'Register'} />
+        {showOTPScreen ? (
         <div className='flex flex-row justify-center w-full'>
-            <HeadTag title={'Register'} />
-            {showOTPScreen ? (
+           
                 <div className='bg-slate-100 p-8 shadow rounded-3xl'>
                     <p>Check 0{userData.phoneNumber} for otp code</p>
                     <TextField
@@ -131,8 +133,9 @@ export default function Register(){
                         Verify OTP
                     </button> */}
                 </div>
+                </div>
             ) : (
-                // 
+                 
                 <div>
                 <div className="flex justify-center w-full" onKeyDown={onEnterPress}    >
                     <div className="flex flex-col p-8 space-y-6 lg:w-1/3 items-center align-center bg-slate-100 shadow rounded-3xl">
@@ -141,7 +144,7 @@ export default function Register(){
                         />
                         <div className="space-y-2">
                         <TextField
-                                label={"name"}
+                                label={"Name"}
                                 placeHolder={"name"}
                                 onChange={setname}
                                 value={name}
@@ -183,8 +186,11 @@ export default function Register(){
                     </div>
                 </div>
             </div>
-            )}
+           
+            )
+        }
 
-        </div>
+       
+        </>
     )
 }

@@ -13,15 +13,14 @@ export default function Layout() {
 	return (
 		<div className="bg-gray-200 flex flex-col  text-indigo-900  p-8 w-full sm:flex-row sm:h-80">
 			<div className="flex flex-col my-2.5 text-indigo-900 sm:justify-center sm:items-center sm:w-4/12">
-				<div className="h-1/4 w-1/2  mb-4">
+				<div className="h-1/4 w-1/2 mb-4">
 					<Logo />
 				</div>
 				<div className="inline-flex  h-1/4 mb-1 pb-2 sm:justify-between sm:items-center">
 					<Image src={addressIcon} width={40} height={40} alt="" />
 					<p className="pl-2">
 						<span className="font-bold">Address:</span>
-						<span>B-191, Block No. 5,</span> Gulshan-e-Iqbal,
-						Karachi{" "}
+						<span>Office No 106,Emarah Suites, Main Shahrah-e-Faisal, Sindhi Muslim Co-operative Housing Society, Karachi{" "}</span>
 					</p>
 				</div>{" "}
 				<br />
@@ -45,10 +44,14 @@ export default function Layout() {
 				</div>
 			</div>
 			{/* grid grid-cols-2 sm:flex sm:flex-col  */}
-			<div className="flex flex-col my-2.5 sm:flex sm:flex-col border-y-2 border-indigo-200 sm:justify-between sm:items-center sm:border-x-2 sm:border-indigo-200 sm:border-y-0  sm:w-4/12">
-				<p className="font-bold">About Us</p>
+			<div className="flex flex-col my-4 sm:flex sm:flex-col border-y-2 border-indigo-200 sm:justify-between sm:items-center sm:border-x-2 sm:border-indigo-200 sm:border-y-0  sm:w-4/12">
+			<Link href={"/"} passHref>
+						<a className="font-bold p-1">About Us</a>
+					</Link>
+				{/* <a className=""></a> */}
 				{/* grid grid-cols-2 gap-y-4 gap-x-6 */}
-				<div className="flex flex-col py-4 sm:justify-between sm:items-center  sm:flex sm:flex-col">
+				{/*  sm:justify-between sm:items-center  sm:flex sm:flex-col */}
+				<div className="flex flex-col py-4">
 					<Link href={"/privacy-policy"} passHref>
 						<a className="p-1">Privacy Policy</a>
 					</Link>
