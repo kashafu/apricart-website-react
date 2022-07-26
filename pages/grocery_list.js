@@ -1,11 +1,13 @@
 import { useState } from "react";
-import Cookies from "universal-cookie";
+import { useRouter } from "next/router";
 import axios from "axios";
 import { getGeneralApiParams } from '../helpers/ApiHelpers'
 import HeadTag from "../components/Layout/components/Head/HeadTag";
 import { base_url_api } from '../information.json'
 
 export default function GroceryList(){
+	const router = useRouter()
+
 	let { token, userId, city } = getGeneralApiParams()
 
 	const [userData, setUserData] = useState({
@@ -41,7 +43,7 @@ export default function GroceryList(){
 	};
 
 	if (!token) {
-		return <h5 className="login-token">Please Login First</h5>;
+		router.push('/login')
 	}
 
 	return (

@@ -13,7 +13,7 @@ import storeBackgroundImage from "../public/assets/images/storeBackground.png"
 import lifestyle from "../public/assets/images/banners/lifestyle.jpeg"
 import nationals from "../public/assets/images/banners/nationals.jpeg"
 import mainBanner from "../public/assets/images/banners/mainBanner.png"
-import ErrorText from '../components/Layout/components/Typography/ErrorText'
+import ErrorText from "../components/Layout/components/Typography/ErrorText"
 
 export default function Home() {
 	let { city } = getGeneralApiParams()
@@ -173,10 +173,12 @@ export default function Home() {
 				</section>
 				{/* PRODUCTS SECTION */}
 				<section className="col-span-5 lg:col-span-4 space-y-12">
-					{city === 'peshawar' && (
+					{city === "peshawar" && (
 						<div>
 							<ErrorText
-								text={'HOME DELIVERY IS CURRENTLY UNAVAILABLE IN PESHAWAR, PLEASE CHANGE CITY TO CONTINUE OR DOWNLOAD THE APP FOR BULK BUY'}
+								text={
+									"HOME DELIVERY IS CURRENTLY UNAVAILABLE IN PESHAWAR, PLEASE CHANGE CITY TO CONTINUE OR DOWNLOAD THE APP FOR BULK BUY"
+								}
 							/>
 						</div>
 					)}
@@ -190,16 +192,12 @@ export default function Home() {
 						let { name, offerId } = product
 
 						// If the name is 'Upload Grocery List', we have to return a button which allows to upload grocery list
-						if (name === "Upload Grocery List") {
+						{
+							/* if (name === "Upload Grocery List") {
 							return (
-								<div className="mb-2 mt-8 flex flex-row w-full rounded-xl p-2 bg-main-yellow items-center align-center justify-around">
-									<Link href={"/grocery_list"} passHref>
-										<a className="text-main-blue font-bold text-lg w-full text-center">
-											UPLOAD your GROCERY LIST
-										</a>
-									</Link>
-								</div>
+								<></>
 							)
+						} */
 						}
 
 						return (
@@ -230,6 +228,14 @@ export default function Home() {
 							</section>
 						)
 					})}
+					{/* MANUAL ORDER SECTION */}
+					<section className="mb-2 mt-8 flex flex-row w-full rounded-xl p-2 bg-main-yellow items-center align-center justify-around">
+						<Link href={"/grocery_list"} passHref>
+							<a className="text-main-blue font-bold text-lg w-full text-center">
+								UPLOAD YOUR GROCERY LIST
+							</a>
+						</Link>
+					</section>
 				</section>
 			</div>
 		</div>
