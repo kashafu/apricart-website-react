@@ -104,11 +104,11 @@ export default function CategoryProducts({ products, subCategories }) {
 					{subCategories && (
 						<section>
 							{subCategories.data.length > 0 && (
-								<div className="grid grid-flow-col overflow-y-auto w-full gap-4 py-8">
+								<div className="grid grid-flow-col overflow-y-auto h-full w-full gap-4 py-8">
 									{subCategories.data.map((category) => {
 										let { id, name, image } = category
 										return (
-											<div key={id} className='border rounded shadow'>
+											<div key={id} className='border rounded-md shadow w-[150px]'>
 												<Link
 													href="/category/[categoryName]/[id]"
 													as={
@@ -119,8 +119,8 @@ export default function CategoryProducts({ products, subCategories }) {
 													}
 													passHref
 												>
-													<a className="flex flex-col items-center">
-														<p className="font-lato text-main-blue text-lg font-bold">
+													<a className="flex flex-col h-full w-full items-center">
+														<p className="font-lato text-center text-main-blue text-lg font-bold py-2">
 															{name}
 														</p>
 														<Image
@@ -130,6 +130,19 @@ export default function CategoryProducts({ products, subCategories }) {
 															alt={"category image"}
 														/>
 													</a>
+													{/* <a className="grid grid-rows-2 w-full items-center">
+														<p className="font-lato text-main-blue text-center text-lg font-bold flex flex-1">
+															{name}
+														</p>
+														<div className="mt-">
+															<Image
+																src={image}
+																height={100}
+																width={100}
+																alt={"category image"}
+															/>
+														</div>
+													</a> */}
 												</Link>
 											</div>
 										)
