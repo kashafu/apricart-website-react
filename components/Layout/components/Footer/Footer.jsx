@@ -13,7 +13,7 @@ export default function Layout() {
 	return (
 		<div className="bg-gray-200 flex flex-col  text-indigo-900  p-8 w-full sm:flex-row sm:h-80">
 			<div className="flex flex-col my-2.5 text-indigo-900 sm:justify-center sm:items-center sm:w-4/12">
-				<div className="h-1/4 w-1/2 mb-4">
+				<div className="h-1/5 w-1/2 mb-11">
 					<Logo />
 				</div>
 				<div className="inline-flex  h-1/4 mb-1 pb-2 sm:justify-between sm:items-center">

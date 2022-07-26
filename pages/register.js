@@ -83,7 +83,7 @@ export default function Register(){
 
         let url = base_url_api + "/auth/open/otp/verify";
         let body = {
-            phoneNumber: "92" + userData.phoneNumber,
+            phoneNumber: "92" + phoneNumber,
             otp: code,
         };
         try {
@@ -91,6 +91,7 @@ export default function Register(){
                 headers: headers,
             });
             router.push("/");
+            toast.success(response.data.message);
         } catch (error) {
             console.log(error);
             toast.error(error)
@@ -104,7 +105,7 @@ export default function Register(){
         <div className='flex flex-row justify-center w-full'>
            
                 <div className='bg-slate-100 p-8 shadow rounded-3xl'>
-                    <p>Check 0{userData.phoneNumber} for otp code</p>
+                    <p>Check 0{phoneNumber} for otp code</p>
                     <TextField
                                 label={"otp"}
                                 placeHolder={"OTP"}
