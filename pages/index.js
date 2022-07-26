@@ -16,7 +16,7 @@ import mainBanner from "../public/assets/images/banners/mainBanner.png"
 import ErrorText from "../components/Layout/components/Typography/ErrorText"
 
 export default function Home() {
-	let { city } = getGeneralApiParams()
+	let { city, token } = getGeneralApiParams()
 
 	const [categories, setCategories] = useState(null)
 	const [homeData, setHomeData] = useState(null)
@@ -230,7 +230,7 @@ export default function Home() {
 					})}
 					{/* MANUAL ORDER SECTION */}
 					<section className="mb-2 mt-8 flex flex-row w-full rounded-xl p-2 bg-main-yellow items-center align-center justify-around">
-						<Link href={"/grocery_list"} passHref>
+						<Link href={token ? '/grocery_list' : '/login'} passHref>
 							<a className="text-main-blue font-bold text-lg w-full text-center">
 								UPLOAD YOUR GROCERY LIST
 							</a>

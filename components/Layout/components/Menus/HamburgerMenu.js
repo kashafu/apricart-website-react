@@ -80,7 +80,7 @@ export default function HamburgerMenu({ }) {
                                 />
                                 <LinkButton
                                     text={"Order Manually"}
-                                    path={'/grocery_list'}
+                                    path={token ? '/grocery_list' : '/login'}
                                     onClick={() => {
                                         setShowMenu(!showMenu)
                                     }}

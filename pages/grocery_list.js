@@ -1,13 +1,10 @@
-import { useState } from "react";
-import { useRouter } from "next/router";
-import axios from "axios";
-import { getGeneralApiParams } from '../helpers/ApiHelpers'
-import HeadTag from "../components/Layout/components/Head/HeadTag";
-import { base_url_api } from '../information.json'
+import { useState } from "react"
+import axios from "axios"
+import { getGeneralApiParams } from "../helpers/ApiHelpers"
+import HeadTag from "../components/Layout/components/Head/HeadTag"
+import { base_url_api } from "../information.json"
 
-export default function GroceryList(){
-	const router = useRouter()
-
+export default function GroceryList() {
 	let { token, userId, city } = getGeneralApiParams()
 
 	const [userData, setUserData] = useState({
@@ -19,46 +16,42 @@ export default function GroceryList(){
 		files: "[]",
 		storeid: 1,
 		payment: "cash",
-	});
+	})
 
 	const handleOrder = async (e) => {
-		e.preventDefault();
+		e.preventDefault()
 		try {
-			let url = base_url_api + '/order/checkout/manual'
-			const response = await axios.post(
-				url,
-				userData,
-				{
-					headers: {
-						Accept: "application/json",
-						"Content-Type": "application/json",
-						Authorization: "Bearer " + cookies.get("cookies-token"),
-					},
-				}
-			);
-			alert(response.data.message);
+			let url = base_url_api + "/order/checkout/manual"
+			const response = await axios.post(url, userData, {
+				headers: {
+					Accept: "application/json",
+					"Content-Type": "application/json",
+					Authorization: "Bearer " + cookies.get("cookies-token"),
+				},
+			})
+			alert(response.data.message)
 		} catch (err) {
-			const Error = err.response.data;
+			const Error = err.response.data
 		}
-	};
-
-	if (!token) {
-		router.push('/login')
 	}
 
 	return (
 		<>
-			<HeadTag title={'Grocery List'}/>
+			<HeadTag title={"Grocery List"} />
 			<section className="grocery_sec">
 				<div className="container-fluid">
 					<div className="row">
 						<div className="col-12 col-sm-12  col-md-12  col-lg-12  col-xl-12  col-xxl-12">
 							<div className="grocery_upload">
 								<h2>Type Or Upload Your Grocery List</h2>
-								<h3>Disclaimer: Delivery only in Karachi and Peshawar</h3>
+								<h3>
+									Disclaimer: Delivery only in Karachi and
+									Peshawar
+								</h3>
 								<p>
-									For online payments, a payment link is shared with you once
-									your order has been <br /> Purchased.
+									For online payments, a payment link is
+									shared with you once your order has been{" "}
+									<br /> Purchased.
 								</p>
 								<p className="happy_shop">Happy Shopping!</p>
 							</div>
@@ -84,7 +77,9 @@ export default function GroceryList(){
 												className="form-select"
 												aria-label="Default select example"
 											>
-												<option selected>Open this select menu</option>
+												<option selected>
+													Open this select menu
+												</option>
 												<option value="1">One</option>
 												<option value="2">Two</option>
 												<option value="3">Three</option>
@@ -115,9 +110,12 @@ export default function GroceryList(){
 												className="form-select"
 												aria-label="Default select example"
 											>
-												<option selected>Open this select menu</option>
+												<option selected>
+													Open this select menu
+												</option>
 												<option value="1">
-													Cash On Delivery ~ Cash On Delivery
+													Cash On Delivery ~ Cash On
+													Delivery
 												</option>
 												<option value="2">Two</option>
 												<option value="3">Three</option>
@@ -140,7 +138,9 @@ export default function GroceryList(){
 
 							<div className="col-8">
 								<div className="form-group">
-									<button onClick={handleOrder}>Submit</button>
+									<button onClick={handleOrder}>
+										Submit
+									</button>
 								</div>
 							</div>
 						</div>
