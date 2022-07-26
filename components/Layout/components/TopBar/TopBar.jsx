@@ -165,13 +165,11 @@ export default function Layout() {
 								Latest Update
 							</p>
 						</div>
-						<p className="text-center overflow-x-auto text-sm font-bold text-main-blue whitespace-nowrap">
-							<Marquee
-								speed={50}
-							>
+						<Marquee speed={50} className='overflow-hidden'>
+							<p className="text-center text-sm font-bold text-main-blue">
 								{tickerSelector}
-							</Marquee>
-						</p>
+							</p>
+						</Marquee>
 					</div>
 					{/* DELIVERY */}
 					{/* <div className="hidden lg:inline-flex flex flex-row space-x-2 items-center">
@@ -243,7 +241,7 @@ export default function Layout() {
 							layout={"fill"}
 						/>
 					</div>
-					<p className={pStyle}>0304-111-0195</p>
+					<p className={[pStyle] + " truncate"}>0304-111-0195</p>
 				</div>
 				{isOpen && (
 					<div className="fixed w-1/2 bg-white h-1/6 border-8 inset-0 m-auto z-10">

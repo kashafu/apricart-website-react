@@ -4,9 +4,8 @@ import Image from "next/image"
 import { useState } from "react"
 
 export default function MainProducts({ section }) {
-	let { bannerImageWeb, data, name, offerId } = section
+	let { bannerImageWeb, data, name, offerId, identifier } = section
 
-	const [showViewMore, setShowViewMore] = useState(false)
 	const [numberOfProductsMobile, setNumberOfProductsMobile] = useState(4)
 	const [numberOfProductsLaptop, setNumberOfProductsLaptop] = useState(8)
 	const [numberOfProductsDesktop, setNumberOfProductsDesktop] = useState(10)
@@ -39,43 +38,24 @@ export default function MainProducts({ section }) {
 					<p className="text-2xl text-main-blue font-bold">
 						- {name}
 					</p>
-					{name === "People Also Buy" && (
+					{identifier === "mostviewed" && (
 						<Link href={"/products/most-viewed"} passHref>
-							<a className="bg-main-blue px-2 rounded-xl flex items-center">
+							<a className="bg-main-blue px-4 rounded-xl flex items-center">
 								<p className="text-white font-bold text-md lg:text-lg">
 									View All
 								</p>
 							</a>
 						</Link>
 					)}
-                    {name === "Best Seller" && (
+                    {identifier === "recommended" && (
 						<Link href={"/products/recommended"} passHref>
-							<a className="bg-main-blue px-2 rounded-xl flex items-center">
+							<a className="bg-main-blue px-4 rounded-xl flex items-center">
 								<p className="text-white font-bold text-md lg:text-lg">
 									View All
 								</p>
 							</a>
 						</Link>
 					)}
-					{/* <button className="bg-main-blue px-2 rounded-xl"
-                        onClick={()=>{
-                            setShowViewMore(!showViewMore)
-                            if(showViewMore){
-                                setNumberOfProductsMobile(20)
-                                setNumberOfProductsLaptop(20)
-                                setNumberOfProductsDesktop(20)
-                            }
-                            else{
-                                setNumberOfProductsMobile(4)
-                                setNumberOfProductsLaptop(8)
-                                setNumberOfProductsDesktop(10)
-                            }
-                        }}
-                    >
-                        <p className="text-white font-bold text-md lg:text-lg">
-                            {showViewMore ? 'View Less':'View More'}
-                        </p>
-                    </button> */}
 				</div>
 			</div>
 			{/* MOBILE VIEW PRODUCTS */}
