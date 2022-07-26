@@ -45,10 +45,14 @@ export default function Layout() {
 				</div>
 			</div>
 			{/* grid grid-cols-2 sm:flex sm:flex-col  */}
-			<div className="flex flex-col my-2.5 sm:flex sm:flex-col border-y-2 border-indigo-200 sm:justify-between sm:items-center sm:border-x-2 sm:border-indigo-200 sm:border-y-0  sm:w-4/12">
-				<p className="font-bold">About Us</p>
+			<div className="flex flex-col my-4 sm:flex sm:flex-col border-y-2 border-indigo-200 sm:justify-between sm:items-center sm:border-x-2 sm:border-indigo-200 sm:border-y-0  sm:w-4/12">
+			<Link href={"/"} passHref>
+						<a className="font-bold p-1">About Us</a>
+					</Link>
+				{/* <a className=""></a> */}
 				{/* grid grid-cols-2 gap-y-4 gap-x-6 */}
-				<div className="flex flex-col py-4 sm:justify-between sm:items-center  sm:flex sm:flex-col">
+				{/*  sm:justify-between sm:items-center  sm:flex sm:flex-col */}
+				<div className="flex flex-col py-4">
 					<Link href={"/privacy-policy"} passHref>
 						<a className="p-1">Privacy Policy</a>
 					</Link>

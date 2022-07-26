@@ -20,7 +20,7 @@ export default function PageContact() {
                     </div>
                 </div>
             </div>
-            <div className="container  left-1/4">
+            <div className="flex flex-col  justify-between items-center">
 
                 <h3 className="">Drop Us a Line</h3>
                 <p className="">Please direct all inquiries via email to: support@apricart.pk</p>
