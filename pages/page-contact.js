@@ -3,11 +3,10 @@ import HeadTag from "../components/Layout/components/Head/HeadTag";
 export default function PageContact() {
     return <>
         <HeadTag title={'Contact Us'}/>
-        <body className="bg-gray-200">
-            <div className="hero-content">
-                <div className="container">
+        <body className="">
+          
                     <div className="text-center">
-                        <h4 className="text-brand mb-5">Get in touch</h4>
+                        <h4 className="text-brand mb-2">Get in touch</h4>
                         {/* <h1 className="mb-2 wow fadeIn animated font-xxl fw-900">
                             Let's Talk  <br />
                             <span className="text-style-1"></span>
@@ -18,8 +17,7 @@ export default function PageContact() {
                             <a className="btn btn-outline btn-lg btn-brand-outline font-weight-bold text-brand bg-white text-hover-white ml-15 border-radius-5 btn-shadow-brand hover-up">Support Center</a>
                         </p>  */}
                     </div>
-                </div>
-            </div>
+           
             <div className="flex flex-col  justify-between items-center">
 
                 <h3 className="">Drop Us a Line</h3>
