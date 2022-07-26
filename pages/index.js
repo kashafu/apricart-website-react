@@ -41,7 +41,8 @@ export default function Home() {
 			city +
 			"&lang=en&userid=" +
 			userId +
-			"&web=false&client_type=apricart&prod_type=cus&order_type=delivery"
+			"&web=true&client_type=apricart&prod_type=cus&order_type=delivery"
+
 		try {
 			let response = await axios.get(url, {
 				headers: headers,

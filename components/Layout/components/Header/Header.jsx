@@ -22,7 +22,7 @@ import CartSlider from "../Cart/CartSlider"
 import { useRouter } from "next/router"
 import SubmitButton from "../Buttons/SubmitButton"
 
-export default function Header({}) {
+export default function Header() {
 	const cookies = new Cookies()
 	const router = useRouter()
 
@@ -229,7 +229,7 @@ export default function Header({}) {
 				)}
 			</div>
 			{router.pathname === "/" && (
-				<div className="grid grid-cols-3 gap-2 lg:gap-8">
+				<div className="grid grid-cols-3 lg:gap-12 lg:px-28 gap-2">
 					<HomeDeliveryCard />
 					<ClickAndCollectCard />
 					<BulkBuyCard />
