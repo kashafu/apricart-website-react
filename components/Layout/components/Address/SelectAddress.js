@@ -63,7 +63,7 @@ export default function SelectAddress({ type, setAddress, dropDownSelectedAddres
                         Select Address
                     </p>
                     <select
-                        className="col-span-2 h-full py-2 lg:px-4 rounded-lg"
+                        className="col-span-2 h-full py-2 lg:px-4 text-xs lg:text-lg rounded-lg"
                         disabled={false}
                         onChange={handleSavedAddressChange}
                         value={selectedAddress}

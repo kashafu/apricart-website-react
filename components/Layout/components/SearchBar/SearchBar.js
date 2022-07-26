@@ -3,7 +3,7 @@ import { useRouter } from "next/router"
 import { useEffect, useState, useRef } from "react"
 import { getGeneralApiParams } from "../../../../helpers/ApiHelpers"
 import { base_url_api } from "../../../../information.json"
-import searchIcon from "../../../../public/assets/svgs/searchIcon.svg"
+import Marquee from 'react-fast-marquee'
 import SingleProductList from "../Products/SingleProductList"
 
 export default function SearchBar() {
@@ -76,7 +76,7 @@ export default function SearchBar() {
 			<div className="flex flex-row bg-main-grey-200 rounded-lg w-full">
 				<select
 					disabled={categories == null}
-					className="py-2 rounded-lg bg-main-grey w-1/2 font-bold"
+					className="py-2 rounded-lg bg-main-grey w-1/2 font-bold text-xs"
 					onChange={(e) => {
 						setSelectedCategoryId(e.target.value)
 						categories.find((item) => {
