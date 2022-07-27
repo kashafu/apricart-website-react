@@ -58,7 +58,7 @@ export default function SelectAddress({ type, setAddress, dropDownSelectedAddres
     return (
         <div className="w-full space-y-2">
             {type === 'checkout' && (
-                <div className="grid grid-cols-6 items-center gap-4">
+                <div className="grid grid-cols-6 items-center gap-4 border-y py-1">
                     <p className="col-span-2 font-lato text-main-blue font-semibold">
                         Select Address
                     </p>
