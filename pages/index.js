@@ -1,5 +1,5 @@
 import Image from "next/image"
-import {useRouter} from 'next/router'
+import { useRouter } from "next/router"
 import Categories from "../components/Layout/components/Categories/Categories"
 import { useEffect, useState } from "react"
 import { base_url_api } from "../information.json"
@@ -88,20 +88,21 @@ export default function Home() {
 			<HeadTag title={"APRICART"} />
 			{/* POPUP AD */}
 			{showPopupAd && (
-				<div className="fixed w-3/4 h-3/4 z-20 inset-0 m-auto shadow-2xl"
-					onClick={()=>{
-						router.push('/offers/' + homeData.dialogValue)
-					}}
-				>
-					<div className="relative w-full h-full">
+				<div className="fixed w-3/4 h-3/4 z-10 inset-0 m-auto shadow-2xl">
+					<div
+						className="relative w-full h-full"
+					>
 						<Image
 							src={homeData.dialogImageUrl}
 							layout="fill"
 							alt="popup banner"
+							// onClick={() => {
+							// 	router.push("/offers/" + homeData.dialogValue)
+							// }}
 						/>
 					</div>
-					<div
-						className="absolute top-[-10px] right-[-10px]"
+					<button
+						className="absolute top-[-10px] right-[-10px] z-20"
 						onClick={() => {
 							setShowPopupAd(false)
 						}}
@@ -112,7 +113,7 @@ export default function Home() {
 							width={20}
 							alt="icon"
 						/>
-					</div>
+					</button>
 				</div>
 			)}
 			<div className="space-y-8">
