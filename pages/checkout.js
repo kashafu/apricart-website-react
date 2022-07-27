@@ -38,7 +38,8 @@ export default function Checkout() {
 	const [shipmentChargedAt, setShipmentChargedAt] = useState(0)
 	const [shipmentFixAmount, setShipmentFixAmount] = useState(0)
 	const [paymentMethods, setPaymentMethods] = useState([])
-	const [cartData, setCartData] = useState(null)
+	const [checkoutCartData, setCheckoutCartData] = useState(null)
+	const [shippingCartData, setShippingCartData] = useState(null)
 	const [checkoutData, setCheckOutData] = useState({
 		coupon: "",
 		notes: "",
@@ -61,7 +62,7 @@ export default function Checkout() {
 
 	useEffect(() => {
 		if (checkoutAddress) {
-			getCartDataApi()
+			getCheckoutCartDataApi()
 		}
 	}, [checkoutAddress])
 
@@ -80,7 +81,7 @@ export default function Checkout() {
 		}
 	}
 
-	const getCartDataApi = async () => {
+	const getShippingCartDataApi = async () => {
 		let { headers, city, userId } = getGeneralApiParams()
 		let lat = 0
 		let long = 0
@@ -126,10 +127,63 @@ export default function Checkout() {
 			})
 
 			setAddressErrorMessage("")
-			setCartData(response.data.data)
+			setCheckoutCartData(response.data.data)
 		} catch (error) {
 			setAddressErrorMessage(error?.response?.data?.message)
-			setCartData(null)
+			setCheckoutCartData(null)
+		}
+	}
+
+	const getCheckoutCartDataApi = async () => {
+		let { headers, city, userId } = getGeneralApiParams()
+		let lat = 0
+		let long = 0
+		let addressId = 0
+		if (typeof checkoutAddress === "object") {
+			lat = checkoutAddress ? checkoutAddress.mapLat : "0"
+			long = checkoutAddress ? checkoutAddress.mapLong : "0"
+			addressId = checkoutAddress ? checkoutAddress.id : ""
+		} else {
+			lat = checkoutAddress ? JSON.parse(checkoutAddress).mapLat : "0"
+			long = checkoutAddress ? JSON.parse(checkoutAddress).mapLong : "0"
+			addressId = checkoutAddress ? JSON.parse(checkoutAddress).id : ""
+		}
+		let body = {
+			coupon: "",
+			notes: "",
+			paymentMethod: "cash",
+			address: addressId,
+			showProducts: true,
+			verify: true,
+			prodType: "cus",
+			day: "",
+			startTime: "",
+			endTime: "",
+			clientType: "apricart",
+			orderType: "delivery",
+		}
+		let url =
+			base_url_api +
+			"/order/cart/checkout?city=" +
+			city +
+			"&userid=" +
+			userId +
+			"&client_lat=" +
+			lat +
+			"&client_long=" +
+			long +
+			"&lang=en&client_type=apricart"
+
+		try {
+			let response = await axios.post(url, body, {
+				headers: headers,
+			})
+
+			setAddressErrorMessage("")
+			setCheckoutCartData(response.data.data)
+		} catch (error) {
+			setAddressErrorMessage(error?.response?.data?.message)
+			setCheckoutCartData(null)
 		}
 	}
 
@@ -161,7 +215,7 @@ export default function Checkout() {
 		}
 
 		if (viewState != "shipping") {
-			getCartDataApi()
+			getCheckoutCartDataApi()
 		}
 	}
 
@@ -193,7 +247,7 @@ export default function Checkout() {
 		}
 
 		if (viewState != "shipping") {
-			getCartDataApi()
+			getCheckoutCartDataApi()
 		}
 	}
 
@@ -252,7 +306,7 @@ export default function Checkout() {
 		}
 
 		if (viewState != "shipping") {
-			getCartDataApi()
+			getCheckoutCartDataApi()
 		}
 	}
 
@@ -573,11 +627,11 @@ export default function Checkout() {
 				grand_total,
 				shipment_message,
 				base_currency_code,
-			} = cartData
+			} = checkoutCartData
 			return (
 				<div className="flex flex-col w-full h-full justify-between bg-white rounded-3xl">
 					<div className="overflow-y-auto p-4 h-96 space-y-4">
-						{cartData.products.map((item) => {
+						{checkoutCartData.products.map((item) => {
 							let {
 								title,
 								qty,
@@ -691,11 +745,11 @@ export default function Checkout() {
 				grand_total,
 				shipment_message,
 				base_currency_code,
-			} = cartData
+			} = checkoutCartData
 			return (
 				<div className="hidden lg:flex flex-col w-full h-full justify-between bg-white rounded-3xl">
 					<div className="overflow-y-auto p-4 h-96 space-y-4">
-						{cartData.products.map((item) => {
+						{checkoutCartData.products.map((item) => {
 							let {
 								title,
 								qty,
@@ -927,14 +981,14 @@ export default function Checkout() {
 						<div>
 							<SubmitButton
 								text={
-									cartData
+									checkoutCartData
 										? "CONTINUE TO PAYMENT"
 										: "SELECT ADDRESS"
 								}
 								onClick={() => {
 									setViewState("payment")
 								}}
-								disabled={cartData == null}
+								disabled={checkoutCartData == null}
 							/>
 						</div>
 					)}

@@ -35,8 +35,11 @@ export default function OfferId() {
 	}
 
 	const getCategoriesApi = async () => {
-		let { city, headers } = getGeneralApiParams()
-		let url = base_url_api + '/catalog/categories?level=all&client_type=apricart&city=' + city
+		let { city, headers, userId } = getGeneralApiParams()
+		let url =
+			base_url_api +
+			"/catalog/categories?level=all&client_type=apricart&city=" +
+			city + "&userid=" + userId 
 
 		try {
 			let response = await axios.get(url,

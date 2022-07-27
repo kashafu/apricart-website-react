@@ -55,11 +55,11 @@ export default function SearchBar() {
 	}
 
 	const getCategoriesApi = async () => {
-		let { city, headers } = getGeneralApiParams()
+		let { city, headers, userId } = getGeneralApiParams()
 		let url =
 			base_url_api +
 			"/catalog/categories?level=all&client_type=apricart&city=" +
-			city
+			city + "&userid=" + userId 
 
 		try {
 			let response = await axios.get(url, {
