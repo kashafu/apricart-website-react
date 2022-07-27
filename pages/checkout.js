@@ -402,12 +402,6 @@ export default function Checkout() {
 						onClick("shipping")
 					}}
 				>
-					{/* <Image
-						src={currentState === 'shipping' ? blueCircleIcon : blackCircleIcon}
-						alt={"icons"}
-						height={20}
-						width={20}
-					/> */}
 					<p className={pStyle}>SHIPPING</p>
 				</button>
 				<button
@@ -429,12 +423,6 @@ export default function Checkout() {
 						}
 					}}
 				>
-					{/* <Image
-						src={currentState === 'payment' ? blueCircleIcon : blackCircleIcon}
-						alt={"icons"}
-						height={20}
-						width={20}
-					/> */}
 					<p className={pStyle}>PAYMENT</p>
 				</button>
 				<button
@@ -456,29 +444,8 @@ export default function Checkout() {
 						}
 					}}
 				>
-					{/* <Image
-						src={currentState === 'review' ? blueCircleIcon : blackCircleIcon}
-						alt={"icons"}
-						height={20}
-						width={20}
-					/> */}
 					<p className={pStyle}>COMPLETE</p>
 				</button>
-				{/* <button className={divStyle}
-					onClick={() => {
-						onClick('details')
-					}}
-				>
-					<Image
-						src={currentState === 'details' ? blueCircleIcon : blackCircleIcon}
-						alt={"icons"}
-						height={20}
-						width={20}
-					/>
-					<p className={pStyle}>
-						DETAILS
-					</p>
-				</button> */}
 			</div>
 		)
 	}
@@ -869,8 +836,8 @@ export default function Checkout() {
 		)
 	}
 
-	if (!shippingCartData){
-		return(
+	if (!shippingCartData) {
+		return (
 			<div>
 				<HeadTag title={"Checkout"} />
 				<h5 className="login-token">YOUR CART IS EMPTY</h5>
@@ -908,13 +875,6 @@ export default function Checkout() {
 									value={checkoutData.notes}
 								/>
 							</div>
-							{/* <SubmitButton
-								text={"CONTINUE TO PAYMENT"}
-								onClick={() => {
-									setViewState('payment')
-								}}
-								disabled={cartData == null}
-							/> */}
 						</section>
 					)}
 					{viewState === "payment" && (
@@ -988,6 +948,11 @@ export default function Checkout() {
 								}
 								onClick={() => {
 									setViewState("payment")
+									window.scroll({
+										top: 0,
+										left: 0,
+										behavior: "smooth",
+									})
 								}}
 								disabled={checkoutCartData == null}
 							/>
@@ -997,7 +962,14 @@ export default function Checkout() {
 						<div>
 							<SubmitButton
 								text={"CHECKOUT"}
-								onClick={checkoutApi}
+								onClick={()=>{
+									checkoutApi()
+									window.scroll({
+										top: 0,
+										left: 0,
+										behavior: "smooth",
+									})
+								}}
 							/>
 							<ErrorText text={checkoutErrorMessage} />
 						</div>
