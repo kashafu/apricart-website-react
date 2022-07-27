@@ -72,16 +72,6 @@ export default function CategoryProducts({ products, subCategories }) {
 		)
 	}
 
-	// if (!products || products?.data?.length == 0) {
-	// 	return (
-	// 		<div>
-	// 			<p>
-	// 				NO ITEMS EXIST
-	// 			</p>
-	// 		</div>
-	// 	)
-	// }
-
 	if (products.status != 1) {
 		return (
 			<div>
@@ -222,7 +212,7 @@ export async function getStaticProps({ query, params }) {
 		id +
 		"&page=1&size=100&sortType=&sortDirection=desc&instant=3&city=" +
 		city +
-		"&lang=en&client_type=apricart"
+		"&lang=en&client_type=apricart&userid=abc123"
 	let products = null
 
 	try {
@@ -239,7 +229,7 @@ export async function getStaticProps({ query, params }) {
 		base_url_api +
 		"/catalog/categories/detail?id=" +
 		id +
-		"&lang=en&client_type=apricart"
+		"&lang=en&client_type=apricart&userid=abc123"
 	let subCategories = null
 
 	try {

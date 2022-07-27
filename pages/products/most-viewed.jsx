@@ -82,7 +82,7 @@ export async function getStaticProps() {
 		base_url_api +
 		"/catalog/mostviewed?page=1&size=10&city=" +
 		city +
-		"&lang=en"
+		"&lang=en&userid=abc123"
 	let products = null
 
 	try {
