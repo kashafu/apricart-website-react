@@ -58,6 +58,7 @@ export default function Checkout() {
 	useEffect(() => {
 		getPaymentMethodsApi()
 		getOptionsDataApi()
+		getShippingCartDataApi()
 	}, [])
 
 	useEffect(() => {
@@ -86,15 +87,6 @@ export default function Checkout() {
 		let lat = 0
 		let long = 0
 		let addressId = 0
-		if (typeof checkoutAddress === "object") {
-			lat = checkoutAddress ? checkoutAddress.mapLat : "0"
-			long = checkoutAddress ? checkoutAddress.mapLong : "0"
-			addressId = checkoutAddress ? checkoutAddress.id : ""
-		} else {
-			lat = checkoutAddress ? JSON.parse(checkoutAddress).mapLat : "0"
-			long = checkoutAddress ? JSON.parse(checkoutAddress).mapLong : "0"
-			addressId = checkoutAddress ? JSON.parse(checkoutAddress).id : ""
-		}
 		let body = {
 			coupon: "",
 			notes: "",
@@ -127,10 +119,10 @@ export default function Checkout() {
 			})
 
 			setAddressErrorMessage("")
-			setCheckoutCartData(response.data.data)
+			setShippingCartData(response.data.data)
 		} catch (error) {
 			setAddressErrorMessage(error?.response?.data?.message)
-			setCheckoutCartData(null)
+			setShippingCartData(null)
 		}
 	}
 
@@ -613,7 +605,7 @@ export default function Checkout() {
 							<p className={pRight}>Free Shipping</p>
 						)}
 						<p className={pLeft}>Total</p>
-						<p className={pRight}>PKR --</p>
+						<p className={pRight}>PKR {getTotalPrice()}</p>
 					</div>
 				</div>
 			)
@@ -874,6 +866,15 @@ export default function Checkout() {
 				<HeadTag title={"Checkout"} />
 				<h5 className="login-token">YOUR CART IS EMPTY</h5>
 			</>
+		)
+	}
+
+	if (!shippingCartData){
+		return(
+			<div>
+				<HeadTag title={"Checkout"} />
+				<h5 className="login-token">YOUR CART IS EMPTY</h5>
+			</div>
 		)
 	}
 
