@@ -1,4 +1,5 @@
 import Image from "next/image"
+import {useRouter} from 'next/router'
 import Categories from "../components/Layout/components/Categories/Categories"
 import { useEffect, useState } from "react"
 import { base_url_api } from "../information.json"
@@ -15,6 +16,8 @@ import ErrorText from "../components/Layout/components/Typography/ErrorText"
 import crossIcon from "../public/assets/svgs/crossIcon.svg"
 
 export default function Home() {
+	const router = useRouter()
+
 	let { city, token } = getGeneralApiParams()
 
 	const [categories, setCategories] = useState(null)
@@ -85,7 +88,11 @@ export default function Home() {
 			<HeadTag title={"APRICART"} />
 			{/* POPUP AD */}
 			{showPopupAd && (
-				<div className="fixed w-3/4 h-3/4 z-20 inset-0 m-auto shadow-2xl">
+				<div className="fixed w-3/4 h-3/4 z-20 inset-0 m-auto shadow-2xl"
+					onClick={()=>{
+						router.push('/offers/' + homeData.dialogValue)
+					}}
+				>
 					<div className="relative w-full h-full">
 						<Image
 							src={homeData.dialogImageUrl}
