@@ -12,6 +12,7 @@ import lifestyle from "../public/assets/images/banners/lifestyle.jpeg"
 import nationals from "../public/assets/images/banners/nationals.jpeg"
 import mainBanner from "../public/assets/images/banners/mainBanner.png"
 import ErrorText from "../components/Layout/components/Typography/ErrorText"
+import crossIcon from "../public/assets/svgs/crossIcon.svg"
 
 export default function Home() {
 	let { city, token } = getGeneralApiParams()
@@ -19,6 +20,7 @@ export default function Home() {
 	const [categories, setCategories] = useState(null)
 	const [homeData, setHomeData] = useState(null)
 	const [errorMessage, setErrorMessage] = useState("Loading")
+	const [showPopupAd, setShowPopupAd] = useState(false)
 
 	useEffect(() => {
 		getHomeDataApi()
@@ -47,6 +49,7 @@ export default function Home() {
 			})
 
 			setHomeData(response.data.data)
+			setShowPopupAd(response.data.data.dialog)
 		} catch (error) {
 			setErrorMessage(error.message)
 		}
@@ -80,6 +83,31 @@ export default function Home() {
 	return (
 		<div className="">
 			<HeadTag title={"APRICART"} />
+			{/* POPUP AD */}
+			{showPopupAd && (
+				<div className="fixed w-3/4 h-3/4 z-20 inset-0 m-auto shadow-2xl">
+					<div className="relative w-full h-full">
+						<Image
+							src={homeData.dialogImageUrl}
+							layout="fill"
+							alt="popup banner"
+						/>
+					</div>
+					<div
+						className="absolute top-[-10px] right-[-10px]"
+						onClick={() => {
+							setShowPopupAd(false)
+						}}
+					>
+						<Image
+							src={crossIcon}
+							height={20}
+							width={20}
+							alt="icon"
+						/>
+					</div>
+				</div>
+			)}
 			<div className="space-y-8">
 				{/* BANNERS SECTION hidden on phone */}
 				<section className="hidden lg:relative lg:w-screen lg:aspect-[16/6] lg:grid grid-cols-12 items-center">
