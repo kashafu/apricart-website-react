@@ -12,14 +12,14 @@ html, body {
     margin: 0;
     font-size: 16px;
     line-height: 1.4;
-    scroll-behavior: smooth;
+    /* scroll-behavior: smooth; */
     text-rendering: optimizeSpeed;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     -webkit-text-size-adjust: 100%;
     -webkit-tap-highlight-color: transparent;
     color: #333;
-    overflow-x: hidden;
+    /* overflow-x: hidden; */
 }
 /* body.open {
     overflow-y: hidden;
