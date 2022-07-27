@@ -11,18 +11,59 @@ import { base_url_api } from '../information.json'
 import axios from 'axios'
 import Cookies from 'universal-cookie';
 import { getGeneralApiParams } from "../helpers/ApiHelpers";
+import TextField from "../components/Layout/components/Input/TextField"
+import SubmitButton from "../components/Layout/components/Buttons/SubmitButton"
+import ErrorText from "../components/Layout/components/Typography/ErrorText"
+ import PageHeading from "../components/Layout/components/Typography/PageHeading"
+// import HeadTag from "../components/Layout/components/Head/HeadTag"
+import { toast } from "react-toastify";
 import HeadTag from "../components/Layout/components/Head/HeadTag";
 
 export default function ProfileUser() {
 	const cookies = new Cookies();
 	const router = useRouter();
-	let { token } = getGeneralApiParams()
+	let { token,headers } = getGeneralApiParams()
+	const [name, setname] = useState("");
+    const [email, setemail] = useState("");
+	const [address, setaddress] = useState("");
 
 	const [profile, setProfile] = useState([]);
-
+	const [updateshow,setupdateshow] =useState(true);
 	useEffect(() => {
 		getProfile();
 	}, [])
+    const updateprofile =async () =>{
+		const url = base_url_api + "/home/profile/save"
+        let body = {
+			"name":name,
+			"email": email,
+		
+			"address":address
+        }
+        try {
+            let response = await axios.post(url, body,
+                {
+                    headers: headers
+                }
+            )
+            if (response.data.status == 1) {
+                setupdateshow(true);
+                toast.success(response.data.message);
+            }
+            else {
+                toast.error(response.data.message);
+                toast.error("enter a phone number for otp request to reset password")
+            }
+
+        }
+        catch (e) {
+            console.log(e)
+        }
+
+    }
+
+
+		
 
 	const getProfile = async () => {
 		const config = {
@@ -57,7 +98,9 @@ export default function ProfileUser() {
 	return (
 		<>
 			<HeadTag title={'Profile'} />
+			
 			<section className="profile_sec">
+			{ updateshow ? (
 				<div className="container">
 					<div className="row">
 						<div className="col-12 col-sm-12 col-md-1 col-lg-1 col-xl-1 col-xxl-1">
@@ -108,8 +151,9 @@ export default function ProfileUser() {
 
 
 											<div className="form-group">
-												<Link href='/account_detail'>
-													<button>Profile Details</button>
+												<Link href='#'>
+													<button onClick={()=>{setupdateshow(false)}}>Profile Details</button>
+													{/* /account_detail */}
 												</Link>
 											</div>
 										</div>
@@ -122,8 +166,56 @@ export default function ProfileUser() {
 						</div>
 					</div>
 				</div>
-
+			):(
+         <div className="flex justify-center w-full">    
+        <div className="flex flex-col  justify-center items-center align-center sm:w-1/2  bg-slate-100 shadow rounded-3xl">
+				
+				  <PageHeading
+			 text={"UPDATE PROFILE"}
+		 />
+		 <div className="space-y-2">
+			 <TextField
+				 label={"Name"}
+				 placeHolder={""}
+				 onChange={setname}
+				 value={name}
+				 type={'string'}
+			 />
+			 <TextField
+				 label={"Email"}
+				 placeHolder={"someone@example.com"}
+				 onChange={setemail}
+				 value={email}
+				 type={'password'}
+			 />
+			  <TextField
+				 label={"Address"}
+				 placeHolder={"street address, block,city,country"}
+				 onChange={setaddress}
+				 value={address}
+				 type={'password'}
+			 />
+			 
+		 </div>
+		 <div className="flex flex-col w-1/2 my-2 space-y-2  justify-between align-center items-center">
+			 <SubmitButton
+			 className="p-4"
+				 text={"UPDATE PROFILE"}
+				 onClick={updateprofile}
+			 />
+			  <SubmitButton className="p-4" onClick={()=>{setupdateshow(true)}}   text={"Goback"}/>
+		 </div>
+                
+											
+		
+			  </div>
+           
+			  </div> 
+				
+			) }
 			</section>
+
+
 		</>
 	)
 }
