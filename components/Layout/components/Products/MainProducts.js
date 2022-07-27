@@ -1,21 +1,22 @@
 import SingleProduct from "./SingleProduct"
 import Link from "next/link"
 import Image from "next/image"
+import { useState } from "react"
 
 export default function MainProducts({ section }) {
-    let { bannerImageWeb, data, name, offerId } = section
+	let { bannerImageWeb, data, name, offerId, identifier } = section
 
-    if (!section) {
-        return (
-            <div>
-                Loading
-            </div>
-        )
-    }
+	const [numberOfProductsMobile, setNumberOfProductsMobile] = useState(4)
+	const [numberOfProductsLaptop, setNumberOfProductsLaptop] = useState(8)
+	const [numberOfProductsDesktop, setNumberOfProductsDesktop] = useState(10)
 
-    return (
-        <section key={name} className='space-y-4'>
-            {/* <div className="lg:hidden relative w-full h-[90px] md:h-[150px] lg:h-[250px] rounded-xl overflow-hidden">
+	if (!section) {
+		return <div>Loading</div>
+	}
+
+	return (
+		<section key={name} className="space-y-4 px-2">
+			{/* <div className="lg:hidden relative w-full h-[90px] md:h-[150px] lg:h-[250px] rounded-xl overflow-hidden">
                 <Link href="/offers/[id]"
                     as={
                         "/offers/" + offerId
@@ -32,34 +33,64 @@ export default function MainProducts({ section }) {
                     </a>
                 </Link>
             </div> */}
-            <div className="w-full border-b border-main-blue-100 py-4">
-                <p className="text-2xl text-main-blue font-bold">
-                    - {name}
-                </p>
-            </div>
-            <section className="grid grid-cols-2 lg:grid-cols-4 gap-2">
-                {data.map((product) => {
-                    let { id } = product
-                    return (
-                        <div key={id}>
-                            <SingleProduct
-                                product={product}
-                            />
-                        </div>
-                    )
-                })}
-            </section>
-        </section>
-        // <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
-        //     {section.map((product)=>{
-        // return(
-        //     <div key={product.id}>
-        //         <SingleProduct
-        //             product={data}
-        //         />
-        //     </div>
-        // )
-        //     })}
-        // </div>
-    )
+			<div className="w-full border-b border-main-blue-100 py-4">
+				<div className="flex flex-row items-stretch w-full justify-between">
+					<p className="text-2xl text-main-blue font-bold">
+						- {name}
+					</p>
+					{identifier === "mostviewed" && (
+						<Link href={"/products/most-viewed"} passHref>
+							<a className="bg-main-blue px-4 rounded-xl flex items-center">
+								<p className="text-white font-bold text-md lg:text-lg">
+									View All
+								</p>
+							</a>
+						</Link>
+					)}
+                    {identifier === "recommended" && (
+						<Link href={"/products/recommended"} passHref>
+							<a className="bg-main-blue px-4 rounded-xl flex items-center">
+								<p className="text-white font-bold text-md lg:text-lg">
+									View All
+								</p>
+							</a>
+						</Link>
+					)}
+				</div>
+			</div>
+			{/* MOBILE VIEW PRODUCTS */}
+			<section className="grid grid-cols-2 lg:hidden gap-2">
+				{data.slice(0, numberOfProductsMobile).map((product) => {
+					let { id } = product
+					return (
+						<div key={id}>
+							<SingleProduct product={product} />
+						</div>
+					)
+				})}
+			</section>
+			{/* LAPTOP VIEW PRODUCTS */}
+			<section className="hidden lg:grid lg:grid-cols-4 gap-2 2xl:hidden">
+				{data.slice(0, numberOfProductsLaptop).map((product) => {
+					let { id } = product
+					return (
+						<div key={id}>
+							<SingleProduct product={product} />
+						</div>
+					)
+				})}
+			</section>
+			{/* DESKTOP VIEW PRODUCTS */}
+			<section className="hidden 2xl:grid 2xl:grid-cols-5 gap-2">
+				{data.slice(0, numberOfProductsDesktop).map((product) => {
+					let { id } = product
+					return (
+						<div key={id}>
+							<SingleProduct product={product} />
+						</div>
+					)
+				})}
+			</section>
+		</section>
+	)
 }

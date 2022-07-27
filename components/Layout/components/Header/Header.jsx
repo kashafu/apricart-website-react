@@ -22,7 +22,7 @@ import CartSlider from "../Cart/CartSlider"
 import { useRouter } from "next/router"
 import SubmitButton from "../Buttons/SubmitButton"
 
-export default function Header({}) {
+export default function Header() {
 	const cookies = new Cookies()
 	const router = useRouter()
 
@@ -123,7 +123,7 @@ export default function Header({}) {
 				<div className="grow">
 					<SearchBar />
 				</div>
-				<div className="lg:hidden flex flex-row pr-2">
+				<div className="lg:hidden flex flex-row pr-4">
 					<CartSlider />
 				</div>
 				<div className="hidden lg:inline lg:flex lg:flex-row lg:space-x-4 lg:items-center">
@@ -229,7 +229,7 @@ export default function Header({}) {
 				)}
 			</div>
 			{router.pathname === "/" && (
-				<div className="grid grid-cols-3 gap-2 lg:gap-8">
+				<div className="grid grid-cols-3 lg:gap-12 lg:px-28 gap-2">
 					<HomeDeliveryCard />
 					<ClickAndCollectCard />
 					<BulkBuyCard />

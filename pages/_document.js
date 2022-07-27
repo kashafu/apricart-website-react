@@ -24,8 +24,8 @@ class MyDocument extends Document {
 			<Html>
 				<Head>
 					<meta httpEquiv="X-UA-Compatible" content="IE=edge" />
-					<meta name="viewport" content="width=device-width, initial-scale=1" />
-					<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+					{/* <meta name="viewport" content="width=device-width, initial-scale=1" />
+					<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" /> */}
 					<script
 						src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
 						integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
@@ -52,8 +52,8 @@ class MyDocument extends Document {
 						crossOrigin="anonymous"
 					/>
 
-					<link rel="stylesheet" type="text/css" href="assets/css/custom.css" />
-					<link rel="stylesheet" type="text/css" href="style/globals.css" />
+					{/* <link rel="stylesheet" type="text/css" href="assets/css/custom.css" />
+					<link rel="stylesheet" type="text/css" href="style/globals.css" /> */}
 
 					<link
 						rel="stylesheet"
@@ -79,7 +79,7 @@ class MyDocument extends Document {
 
 
 
-					<link rel="stylesheet" type="text/css" href="assets/css/animate.css" />
+					{/* <link rel="stylesheet" type="text/css" href="assets/css/animate.css" /> */}
 					<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossOrigin="anonymous" />
 					<link rel="stylesheet" type="text/css" href="https://rawgit.com/kenwheeler/slick/master/slick/slick.css" />
 					<link rel="stylesheet" type="text/css" href="https://rawgit.com/kenwheeler/slick/master/slick/slick-theme.css" />
@@ -106,8 +106,8 @@ class MyDocument extends Document {
 						type="text/javascript"
 						src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"
 					/>
-					<script src="assets/js/bootstrap.bundle.js" />
-					<script src="assets/js/custom.js" />
+					{/* <script src="assets/js/bootstrap.bundle.js" />
+					<script src="assets/js/custom.js" /> */}
 					<script
 						type="text/javascript"
 						src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"
@@ -116,10 +116,10 @@ class MyDocument extends Document {
 						type="text/javascript"
 						src="https://kenwheeler.github.io/slick/slick/slick.js"
 					/>
-					<script src="assets/js/wow.min.js" />
+					{/* <script src="assets/js/wow.min.js" /> */}
 					{/* <script src="assets/js/customAjax.js"/> */}
-					<script src="assets/js/custom.js" />
-					<script src="assets/js/customcategories.js" />
+					{/* <script src="assets/js/custom.js" />
+					<script src="assets/js/customcategories.js" /> */}
 					<script
 						src="https://unpkg.com/react/umd/react.production.min.js"
 						crossOrigin
@@ -142,8 +142,8 @@ class MyDocument extends Document {
 						type="text/javascript"
 						src="https://kenwheeler.github.io/slick/slick/slick.js"
 					/>
-					<script src="assets/js/wow.min.js" />
-					<script type="text/javascript" src="assets/js/newJS.Js" />
+					{/* <script src="assets/js/wow.min.js" /> */}
+					{/* <script type="text/javascript" src="assets/js/newJS.Js" /> */}
 					{/* <script type="text/javascript" src="assets/js/customAjax.Js"/> */}
 
 

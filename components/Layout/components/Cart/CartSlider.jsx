@@ -198,7 +198,7 @@ export default function CartSlider() {
                 }}
             >
                 <Image src={cartIcon} alt={"icon"} width={45} height={45} />
-                <p className="absolute -top-2 -right-2 font-bold">
+                <p className="absolute -top-2 -right-4 font-bold">
                     {reduxCart.length}
                 </p>
             </button>
@@ -215,8 +215,8 @@ export default function CartSlider() {
                                 No items in your cart
                             </p>
                         ) : (
-                            <div className="space-y-2 flex flex-col h-full py-2">
-                                <div className="overflow-y-auto flex-1 divide-y">
+                            <div className="space-y-2 overflow-y-auto flex flex-col py-2">
+                                <div className="divide-y">
                                     {reduxCart.map((item) => {
                                         const {
                                             id,
