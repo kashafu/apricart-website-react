@@ -1,6 +1,35 @@
-import HeadTag from "../components/Layout/components/Head/HeadTag";
 
+import axios from "axios"
+import { useRouter } from "next/router"
+import { useState } from "react"
+import Link from "next/link"
+import Cookies from "universal-cookie"
+import { getGeneralApiParams } from "../helpers/ApiHelpers"
+import { base_url_api } from '../information.json'
+import TextField from "../components/Layout/components/Input/TextField"
+import SubmitButton from "../components/Layout/components/Buttons/SubmitButton"
+import ErrorText from "../components/Layout/components/Typography/ErrorText"
+import PageHeading from "../components/Layout/components/Typography/PageHeading"
+import HeadTag from "../components/Layout/components/Head/HeadTag"
+import { toast } from "react-toastify";
+import { useEffect } from 'react'
 export default function PageContact() {
+  
+    useEffect(()=>{
+        if(!window.location.hash) {
+			window.location = window.location + '#loaded';
+			window.location.reload();}
+	},[])
+    let { token } = getGeneralApiParams()
+	const router = useRouter();
+    const cookies = new Cookies();
+    let { city, headers, userId } = getGeneralApiParams();
+    const [name, setname] = useState("");
+    const [email, setemail] = useState("");
+	const [address, setaddress] = useState("");
+    const [subject, setsubject] = useState("");
+
+
     return <>
         <HeadTag title={'Contact Us'}/>
         <body className="">
@@ -18,43 +47,42 @@ export default function PageContact() {
                         </p>  */}
                     </div>
            
-            <div className="flex flex-col  justify-between items-center">
+            <div className="flex flex-col gap-y-4 justify-between items-center">
 
                 <h3 className="">Drop Us a Line</h3>
+                
                 <p className="">Please direct all inquiries via email to: support@apricart.pk</p>
-                {/* <form className="" id="contact-form" action="#" method="post">
-                    <div className="relative wd-120">
-                        <div className="absolute left-0 m-2.5">
-                            <span>First Name</span> <br />
-                            <input name="name" placeholder="First Name" type="text" />
-                        </div>
-                        <div className="absolute left-1/3">
-                            <span >EMAIL</span> <br />
-                            <input name="email" placeholder="Your Email" type="email" />
-                        </div>
-                        <br />
-                        <br />
-
-                        <div className="absolute left-0 m-2.5">
-                            <span >telephone</span> <br />
-                            <input name="telephone" placeholder="Your Phone" type="tel" />
-
-                        </div>
-                        <div className="absolute left-1/3">
-                            <span >SUBJECT</span> <br />
-                            <input name="subject" placeholder="Subject" type="text" />
-                        </div>
-                        <br />
-                        <br />
-                        <br />
-                        <div className="absolute left-1/6">
-                            <textarea name="message" placeholder="Message"></textarea>
-                        </div><br />
-                        <br />
-                        <button className="absolute left-1/6" type="submit">Send message</button>
-                    </div>
-                </form>
-                <p className="form-messege"></p> */}
+                {/* <TextField
+				 label={"Name"}
+				 placeHolder={""}
+				 onChange={setname}
+				 value={name}
+				 type={'string'}
+			 />
+			 <TextField
+				 label={"Email"}
+				 placeHolder={"someone@example.com"}
+				 onChange={setemail}
+				 value={email}
+				 type={'string'}
+			 />
+			  <TextField
+				 label={"Address"}
+				 placeHolder={"street address, block,city,country"}
+				 onChange={setaddress}
+				 value={address}
+				 type={'string'}
+			 />
+               <TextField
+				 label={"Subject"}
+				 placeHolder={"Your Query"}
+				 onChange={setsubject}
+				 value={subject}
+				 type={'text-area'}
+			 />
+			 
+             <SubmitButton className="w-1/3 p-4"    text={"SEND MESSAGE"}/>    */}
+                
             </div>
         </body>
     </>

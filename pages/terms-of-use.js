@@ -3,8 +3,16 @@ import Heading from '../components/Layout/components/Typography/Heading'
 import Paragraph from '../components/Layout/components/Typography/Paragraph'
 import BulletPoints from '../components/Layout/components/Typography/BulletPoints'
 import HeadTag from '../components/Layout/components/Head/HeadTag'
-
+import { useEffect } from 'react'
 export default function TermOfUse() {
+	
+
+	useEffect(()=>{
+		if(!window.location.hash) {
+			window.location = window.location + '#loaded';
+			window.location.reload();}
+	
+	},[])
 	return (
 		<div  className='px-5'>
 			<HeadTag title={'Terms Of Use'}/>

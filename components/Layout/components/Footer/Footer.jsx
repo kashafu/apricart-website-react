@@ -8,8 +8,18 @@ import addressIcon from "../../../../public/assets/svgs/addressIcon.svg"
 import playstoreImg from "../../../../public/assets/images/playstore-img.png"
 import appstoreImg from "../../../../public/assets/images/appstore-img.png"
 import paymentMethodsIcon from '../../../../public/assets/svgs/paymentMethods.svg'
-
+import { useEffect  } from "react"
+import { useRouter } from 'next/router'
+import ScrollToTop from "react-scroll-to-top";
 export default function Layout() {
+	const router =useRouter();
+	useEffect(()=>{
+	window.scrollTo(0, 0);});
+	// 	const handleRouteChange = () => {
+	// 		document.getElementById('top').scrollIntoView();
+	//   }
+	//   router.events.on('routeChangeComplete', handleRouteChange)
+	//   }
 	return (
 		<div className="bg-gray-200 flex flex-col  text-indigo-900  p-8 w-full sm:flex-row sm:h-80">
 			<div className="flex flex-col my-2.5 text-indigo-900 sm:justify-center sm:items-center sm:w-4/12">
@@ -45,23 +55,25 @@ export default function Layout() {
 			</div>
 			{/* grid grid-cols-2 sm:flex sm:flex-col  */}
 			<div className="flex flex-col my-4 sm:flex sm:flex-col border-y-2 border-indigo-200 sm:justify-between sm:items-center sm:border-x-2 sm:border-indigo-200 sm:border-y-0  sm:w-4/12">
-			<Link href={"/"} passHref>
+			<Link href={"/"} passHref scroll={true}>
 						<a className="font-bold p-1">About Us</a>
 					</Link>
 				{/* <a className=""></a> */}
 				{/* grid grid-cols-2 gap-y-4 gap-x-6 */}
 				{/*  sm:justify-between sm:items-center  sm:flex sm:flex-col */}
 				<div className="flex flex-col py-4">
-					<Link href={"/privacy-policy"} passHref>
+				<ScrollToTop smooth />
+					<Link href={"/privacy-policy"} passHref onClick="">
+						{/* window.location.reload() */}
 						<a className="p-1">Privacy Policy</a>
 					</Link>
-					<Link href="/terms-of-use" passHref>
+					<Link href="/terms-of-use" passHref >
 						<a className="p-1">Terms of Use</a>
 					</Link>
-					<Link href="/faqs" passHref>
+					<Link href="/faqs" passHref >
 						<a className="p-1">FAQs</a>
 					</Link>
-					<Link href="/page-contact" passHref>
+					<Link href="/page-contact" passHref >
 						<a className="p-1">Contact Us</a>
 					</Link>
 				</div>

@@ -1,6 +1,12 @@
 import HeadTag from "../components/Layout/components/Head/HeadTag";
-
+import { useEffect } from "react";
 export default function Faqs() {
+    
+    useEffect(()=>{
+        if(!window.location.hash) {
+			window.location = window.location + '#loaded';
+			window.location.reload();}
+	},[])
     return <>
         <HeadTag title={'FAQS'} />
         <body className="px-5">

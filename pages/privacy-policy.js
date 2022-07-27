@@ -2,8 +2,14 @@ import PageHeading from '../components/Layout/components/Typography/PageHeading'
 import Heading from '../components/Layout/components/Typography/Heading'
 import Paragraph from '../components/Layout/components/Typography/Paragraph'
 import HeadTag from '../components/Layout/components/Head/HeadTag'
-
+import { useEffect } from 'react'
 export default function Privacy() {
+	
+	useEffect(()=>{
+		if(!window.location.hash) {
+			window.location = window.location + '#loaded';
+			window.location.reload();}
+	},[])
 	return (
 		<div className='px-5'>
 			<HeadTag title={'Privacy Policy'}/>

@@ -76,7 +76,13 @@ export default function Home() {
 			</div>
 		)
 	}
-
+	useEffect(()=>{
+		const handleRouteChange = () => {
+			document.getElementById('top').scrollIntoView();
+	  }
+	  router.events.on('routeChangeComplete', handleRouteChange)
+	  },[]);
+  
 	return (
 		<div className="">
 			<HeadTag title={"APRICART"} />
