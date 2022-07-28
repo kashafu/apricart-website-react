@@ -247,6 +247,6 @@ export async function getStaticProps({ query, params }) {
 			products,
 			subCategories,
 		},
-		revalidate: 200,
+		// revalidate: 200,
 	}
 }

@@ -15,7 +15,6 @@ import minusIcon from '../../../public/assets/svgs/minusIcon.svg'
 import plusIcon from '../../../public/assets/svgs/plusIcon.svg'
 
 export default function Post({ product }) {
-	let [num, setNum] = useState(1);
 	const dispatch = useDispatch();
 	const cookies = new Cookies();
 	let isLoggedIn = cookies.get('cookies-token') != null
@@ -25,6 +24,11 @@ export default function Post({ product }) {
 	const [categories, setCategories] = useState(null)
 	const [inStock, setInStock] = useState(true)
 	const [qty, setQty] = useState(1)
+	
+	useEffect(() => {
+		getCategoriesApi()
+		getInStockApi()
+	}, [])
 
 	const setQtyHandler = (type) => {
 		if (type == 'increment') {
@@ -40,11 +44,6 @@ export default function Post({ product }) {
 			setQty(qty - 1)
 		}
 	}
-
-	useEffect(() => {
-		getCategoriesApi()
-		getInStockApi()
-	}, [])
 
 	const getCategoriesApi = async () => {
 		let { city, headers, userId } = getGeneralApiParams()
@@ -91,17 +90,6 @@ export default function Post({ product }) {
 			</div>
 		);
 	}
-
-	let incNum = () => {
-		if (num < 5) {
-			setNum(Number(num) + 1);
-		}
-	};
-	let decNum = () => {
-		if (num > 0) {
-			setNum(num - 1);
-		}
-	};
 
 	const addToCartApi = async () => {
 		let { city, userId, headers } = getGeneralApiParams()
@@ -271,11 +259,6 @@ export default function Post({ product }) {
 																					addToCartApi()
 																				}}
 																			>
-																				{/* <Image
-																					src={addToCartIcon}
-																					height={40}
-																					width={40}
-																				/> */}
 																				<p className="text-white font-bold bg-main-blue py-2 px-4 rounded-xl">
 																					ADD TO CART
 																				</p>
@@ -287,35 +270,6 @@ export default function Post({ product }) {
 																				Out of Stock
 																			</button>
 																		)}
-																		{/* {inStock == true ? (
-																			<div
-																				className="pro_btn2"
-																				onClick={() => {
-																					addToCartHandler(product.data[0]);
-																					dispatch(addToCart(product.data[0]))
-																				}
-																				}
-																			>
-																				<a
-																					href="#"
-																					className="btn btn-primary chane chane1"
-																				>
-																					Add to Cart
-																				</a>
-																			</div>
-																		) : (
-																			<>
-																				<div className="pro_btn2">
-																					<a
-																						passHref="#"
-																						className="btn btn chane chane1 secondary"
-																						disabled
-																					>
-																						Out of stock
-																					</a>
-																				</div>
-																			</>
-																		)} */}
 																	</div>
 																</div>
 															</div>
@@ -392,6 +346,6 @@ export async function getStaticProps({ query, params }) {
 		props: {
 			product,
 		},
-		revalidate: 200
+		// revalidate: 200
 	};
 }
