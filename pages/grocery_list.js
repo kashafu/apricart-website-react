@@ -2,150 +2,90 @@ import { useState } from "react"
 import axios from "axios"
 import { getGeneralApiParams } from "../helpers/ApiHelpers"
 import HeadTag from "../components/Layout/components/Head/HeadTag"
+import SelectAddress from "../components/Layout/components/Address/SelectAddress"
+import PageHeading from "../components/Layout/components/Typography/PageHeading"
+import Paragraph from "../components/Layout/components/Typography/Paragraph"
 import { base_url_api } from "../information.json"
+import { toast } from "react-toastify"
+import TextArea from "../components/Layout/components/Input/TextArea"
+import SubmitButton from "../components/Layout/components/Buttons/SubmitButton"
 
 export default function GroceryList() {
-	let { token, userId, city } = getGeneralApiParams()
+	let { selectedAddress } = getGeneralApiParams()
 
-	const [userData, setUserData] = useState({
-		city: city,
-		userid: userId,
-		address: 5828,
-		notes: "test order",
-		coupon: "",
-		files: "[]",
-		storeid: 1,
-		payment: "cash",
-	})
+	const [address, setAddress] = useState(
+		selectedAddress ? selectedAddress : null
+	)
+	const [list, setList] = useState("")
 
-	const handleOrder = async (e) => {
-		e.preventDefault()
+	const placeOrderApi = async () => {
+		let { userId, headers, city } = getGeneralApiParams()
+		let url =
+			base_url_api +
+			"/order/checkout/manual?client_type=apricart&userid=" +
+			userId
+		let addressId = 0
+		if (typeof address === "object") {
+			addressId = address ? address.id : ""
+		} else {
+			addressId = address ? JSON.parse(address).id : ""
+		}
+		let body = {
+			city: city,
+			lang: 'en',
+			userid: userId,
+			address: addressId,
+			coupon: "",
+			files: "[]",
+			storeid: 1,
+			payment: "cash",
+			orderType: "pickup",
+			notes: list
+		}
+
+		console.log(body);
+		toast.info("Placing Order")
 		try {
-			let url = base_url_api + "/order/checkout/manual"
-			const response = await axios.post(url, userData, {
-				headers: {
-					Accept: "application/json",
-					"Content-Type": "application/json",
-					Authorization: "Bearer " + cookies.get("cookies-token"),
-				},
-			})
-			alert(response.data.message)
-		} catch (err) {
-			const Error = err.response.data
+			let response = await axios.post(url, body, { headers: headers })
+
+			toast.success(response.data?.message)
+			console.log(response.data)
+		} catch (error) {
+			toast.error(error.response?.data?.message)
+			console.log(error.response)
 		}
 	}
 
 	return (
 		<>
 			<HeadTag title={"Grocery List"} />
-			<section className="grocery_sec">
-				<div className="container-fluid">
-					<div className="row">
-						<div className="col-12 col-sm-12  col-md-12  col-lg-12  col-xl-12  col-xxl-12">
-							<div className="grocery_upload">
-								<h2>Type Or Upload Your Grocery List</h2>
-								<h3>
-									Disclaimer: Delivery only in Karachi and
-									Peshawar
-								</h3>
-								<p>
-									For online payments, a payment link is
-									shared with you once your order has been{" "}
-									<br /> Purchased.
-								</p>
-								<p className="happy_shop">Happy Shopping!</p>
-							</div>
-						</div>
-					</div>
-				</div>
-			</section>
-			<section className="grocery_sec2">
-				<div className="container-fluid">
-					<div className="row">
-						<div className="col-12 col-sm-12  col-md-8  col-lg-8  col-xl-8  col-xxl-8 d-block m-auto">
-							<div className="row">
-								<div className="col-12 col-sm-12  col-md-6  col-lg-6  col-xl-6  col-xxl-6">
-									<div className="selectadd">
-										<div className="mb-3">
-											<label
-												htmlFor="exampleFormControlInput1"
-												className="form-label text-center"
-											>
-												Select Address
-											</label>
-											<select
-												className="form-select"
-												aria-label="Default select example"
-											>
-												<option selected>
-													Open this select menu
-												</option>
-												<option value="1">One</option>
-												<option value="2">Two</option>
-												<option value="3">Three</option>
-											</select>
-										</div>
-										<div className="mb-3">
-											<label
-												htmlFor="exampleFormControlInput1"
-												className="form-label"
-											>
-												Coupon(If available)
-											</label>
-											<input
-												type="email"
-												className="form-control"
-												id="exampleFormControlInput1"
-												placeholder="coupon"
-											/>
-										</div>
-										<div className="mb-3">
-											<label
-												htmlFor="exampleFormControlInput1"
-												className="form-label text-center"
-											>
-												Select payment
-											</label>
-											<select
-												className="form-select"
-												aria-label="Default select example"
-											>
-												<option selected>
-													Open this select menu
-												</option>
-												<option value="1">
-													Cash On Delivery ~ Cash On
-													Delivery
-												</option>
-												<option value="2">Two</option>
-												<option value="3">Three</option>
-											</select>
-										</div>
-									</div>
-								</div>
-								<div className="col-12 col-sm-12  col-md-6  col-lg-6  col-xl-6  col-xxl-6"></div>
-							</div>
-							<div className="textarea_ma">
-								<div className="mb-3">
-									<textarea
-										className="form-control"
-										id="exampleFormControlTextarea1"
-										rows="3"
-										placeholder="Type-in or paste your grocery items here."
-									></textarea>
-								</div>
-							</div>
-
-							<div className="col-8">
-								<div className="form-group">
-									<button onClick={handleOrder}>
-										Submit
-									</button>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
+			<section className="flex flex-col p-2 space-y-4 lg:w-1/3 items-center align-center bg-slate-100 shadow rounded-3xl">
+				<PageHeading text={"Type Your Grocery List"} />
+				{/* <div>
+					<Paragraph
+						text={
+							"Disclaimer: Delivery only in Karachi and Peshawar"
+						}
+					/>
+					<Paragraph
+						text={
+							"For online payments, a payment link is shared with you once your order has been Purchased."
+						}
+					/>
+				</div> */}
+				<SelectAddress
+					setAddress={setAddress}
+					type={"checkout"}
+					dropDownSelectedAddress={address}
+				/>
+				<TextArea
+					label={"Grocery List"}
+					placeHolder={"Type in or paste your grocery list here"}
+					onChange={setList}
+					value={list}
+					type={"textarea"}
+				/>
+				<SubmitButton text={"Place Order"} onClick={placeOrderApi} />
 			</section>
 		</>
 	)
