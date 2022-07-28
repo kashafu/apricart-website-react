@@ -2,14 +2,14 @@ import Image from "next/image"
 import { useState } from "react"
 import { useRouter } from "next/router"
 import menuIcon from '../../../../public/assets/svgs/menuIcon.svg'
-import crossIcon from '../../../../public/assets/svgs/crossIcon.svg'
+import crossIcon from '../../../../public/assets/svgs/cross2Icon.svg'
 import profileIcon from '../../../../public/assets/svgs/profileIcon.svg'
 import Logo from "../Logo/Logo"
 import { getGeneralApiParams, logOutRemoveCookies, getGeneralCookies } from "../../../../helpers/ApiHelpers"
 import SubmitButton from "../Buttons/SubmitButton"
 import LinkButton from "../Buttons/LinkButton"
 
-export default function HamburgerMenu({ }) {
+export default function HamburgerMenu() {
     const router = useRouter()
 
     let { token } = getGeneralApiParams()
