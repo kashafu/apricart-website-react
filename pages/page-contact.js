@@ -63,7 +63,7 @@ export default function PageContact() {
                             Let's Talk  <br />
                             <span className="text-style-1"></span>
                         </h1> */}
-         <p className="w-50 m-auto mb-50 wow fadeIn animated">We love hearing from you, our Apricart customers. Please contact us about anything at all. Your experience or request for a specific product. We’ll do everything we can to make your experience unforgettable every time. Reach us however you like.</p>
+                       <p className="w-50 m-auto mb-50 wow fadeIn animated">We love hearing from you, our Apricart customers. Please contact us about anything at all. Your experience or request for a specific product. We’ll do everything we can to make your experience unforgettable every time. Reach us however you like.</p>
                         {/* <p className="wow fadeIn animated">
                             <a className="btn btn-brand btn-lg font-weight-bold text-white border-radius-5 btn-shadow-brand hover-up" href="page-about.html">About Us</a>
                             <a className="btn btn-outline btn-lg btn-brand-outline font-weight-bold text-brand bg-white text-hover-white ml-15 border-radius-5 btn-shadow-brand hover-up">Support Center</a>
@@ -73,7 +73,7 @@ export default function PageContact() {
                 <p className="my-4 justify-between items-center">Please direct all inquiries via email to: support@apricart.pk</p>
                     </div>
            
-            <div className="flex flex-col gap-y-4 justify-between items-center">
+            <div className="flex flex-col p-4 w-1/2 gap-y-4   items-center bg-slate-100 shadow rounded-3xl">
 
              
                 <TextField
