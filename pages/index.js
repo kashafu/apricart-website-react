@@ -118,7 +118,7 @@ export default function Home() {
 			)}
 			<div className="space-y-8">
 				{/* BANNERS SECTION hidden on phone */}
-				<section className="hidden lg:relative lg:w-screen lg:aspect-[16/6] lg:grid grid-cols-12 items-center">
+				<section className="hidden lg:relative lg:w-full lg:aspect-[16/6] lg:grid grid-cols-12 items-center">
 					{/* BACKGROUND IMAGE */}
 					<div className="absolute w-full h-full blur-lg">
 						<Image
