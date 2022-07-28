@@ -154,7 +154,7 @@ export default function ProfileUser() {
 
 											<div className="form-group">
 												<Link href='#'>
-													<button onClick={()=>{setupdateshow(false)}}>Profile Details</button>
+													<button onClick={()=>{setupdateshow(false)}}>Update Profile Details</button>
 													{/* /account_detail */}
 												</Link>
 											</div>
@@ -199,12 +199,14 @@ export default function ProfileUser() {
 			 />
 			 
 		 </div>
-		 <div className="flex flex-col w-1/2 my-2 space-y-2  justify-between align-center items-center">
+		 <div className="flex flex-col w-1/3 my-2  space-y-2  justify-between align-center items-center">
+			 
 			 <SubmitButton
-			 className="p-4"
+			 className="p-4 h-[10px]"
 				 text={"UPDATE PROFILE"}
 				 onClick={updateprofile}
 			 />
+		
 			  <SubmitButton className="p-4" onClick={()=>{setupdateshow(true)}}   text={"Goback"}/>
 		 </div>
                 
