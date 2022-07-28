@@ -48,62 +48,65 @@ export default function PageContact() {
       toast.error(e)
     }
    }
-   const handleChange = (e) => {
-    const {value } = e.target;
-   setsubject(value)
+   const handlesubject = (e) => {
+    const {value,name } = e.target;
+   setsubject(value);
+};
+const handleemail = (e) => {
+    const {value,name } = e.target;
+   setemail(value);
+};
+const handlename = (e) => {
+    const {value,name } = e.target;
+   setname(value);
+};
+const handlePhone = (e) => {
+    const {value,name } = e.target;
+   setphoneNumber(value);
 };
 
     return <>
         <HeadTag title={'Contact Us'}/>
         <body className="">
-          
-                    <div className="text-center  text-main-blue font-bold">
-                        <h4 className="text-brand text-5xl text-main-blue font-bold mb-2">Contact Us</h4>
-                     
-                    </div>
+        <div className="flex justify-center w-full">
+                
            
-            <div className="flex flex-col w-full gap-y-4 justify-between items-center ">
-
+        <div className="flex flex-col p-8 space-y-6 w-full lg:w-1/2 items-center align-center bg-slate-100 shadow rounded-3xl">
+                        <PageHeading
+                            text={"Contact Us"}
+                        />
+             <input
+                className="col-span-2 w-2/3 h-[40px] py-2 px-2 rounded-lg bg-slate-200"
+              
+                placeholder="email"
+                value={email}
+               
+       
+                onChange={handleemail}
+            />
+              <input
+                className="col-span-2 w-2/3 h-[40px] py-2 px-2 rounded-lg bg-slate-200"
+               
+                placeholder="Name"
+                value={name}
+                onChange={handlename}/>
+                  <input
+                className="col-span-2 w-2/3 h-[40px] py-2 px-2 rounded-lg bg-slate-200"
              
-                <TextField
-				 label={"Name"}
-				 placeHolder={""}
-				 onChange={setname}
-				 value={name}
-				 type={'string'}
-			 />
-			 <TextField
-				 label={"Email"}
-				 placeHolder={"someone@example.com"}
-				 onChange={setemail}
-				 value={email}
-				 type={'string'}
-			 />
-			  <TextField
-				 label={"phoneNumber"}
-				 placeHolder={"3138876659"}
-				 onChange={setphoneNumber}
-				 value={phoneNumber}
-				 type={'string'}
-			 />
-              <div className="grid grid-cols-3 gap-4 items-center">
-            {/* <p className="col-span-1 font-lato text-main-blue font-semibold">
-                Subject
-            </p>
-                <input
-                type="textarea"
-                className="col-span-2 h-[100px] py-2 px-4 rounded-lg"  placeholder="Input Query"
-                value={subject}
-                name="subject"/>  */}
-        {/* <label for="w3review">Review of W3Schools:</label> */}
-            <p className="col-span-1 font-lato text-main-blue font-semibold">
-                Subject
-            </p>
-            <textarea id="w3review" onChange={handleChange} value={subject} className="col-span-2 h-[100px] py-2 px-4 rounded-lg overflow-hidden" >
-           
+                placeholder="3112220090"
+                value={phoneNumber}
+                onChange={handlePhone}/>
+          
+            <textarea    id="w3review" onChange={handlesubject} value={subject} placeholder="SUBJECT" className="col-span-2 w-2/3 h-[100px] py-2 px-2 rounded-lg bg-slate-200 overflow-hidden"  >
+              Subject
             </textarea>
+          
 
-			 </div>
+         <div className="flex flex-col gap-1 items-center">
+          
+        {/* <label for="w3review">Review of W3Schools:</label> */}
+        
+         </div>
              <div className="w-1/2 p-4">
              <SubmitButton  onClick={() => {
                                    pContactus();
@@ -111,7 +114,7 @@ export default function PageContact() {
                 
                 </div>
             </div>
-            
+            </div> 
         </body>
     </>
 }
