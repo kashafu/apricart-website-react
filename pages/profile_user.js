@@ -155,7 +155,7 @@ export default function ProfileUser() {
 											<div className="form-group">
 												<Link href='#'>
 													<button onClick={()=>{setupdateshow(false)}}>Profile Details</button>
-													{/* /account_detail */}
+													{/* /profile_user */}
 												</Link>
 											</div>
 										</div>

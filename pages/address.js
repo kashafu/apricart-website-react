@@ -34,7 +34,7 @@ export default function Address() {
 								<Link href="/address" passHref>
 									<button className="tablinks active">My Address</button>
 								</Link>
-								<Link href="/account_detail" passHref>
+								<Link href="/profile_user" passHref>
 									<button className="tablinks">Account details</button>
 								</Link>
 

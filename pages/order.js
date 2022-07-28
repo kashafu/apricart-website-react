@@ -121,7 +121,7 @@ export default function Order() {
 										My Address
 									</button>
 								</Link>
-								<Link href="/account_detail" passHref>
+								<Link href="/profile_user" passHref>
 									<button className="tablinks">
 										Account details
 									</button>
