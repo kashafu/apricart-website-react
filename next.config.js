@@ -4,7 +4,6 @@ module.exports = {
   images: {
     domains: ['cbe.apricart.pk', '15.184.248.248', 'staging.apricart.pk']
   },
-  basePath: '/web'
 }
 
 // module.exports = nextConfig

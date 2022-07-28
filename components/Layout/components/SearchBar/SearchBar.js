@@ -110,13 +110,13 @@ export default function SearchBar() {
 					}}
 					placeholder="Search"
 					onBlur={async () => {
-						await new Promise((r) => setTimeout(r, 1000))
+						await new Promise((r) => setTimeout(r, 500))
 						setShowSearchResults(false)
 					}}
 					onKeyPress={async (e)=>{
 						if(e.key === 'Enter'){
 							router.push('/products/search/' + e.target.value)
-							await new Promise((r) => setTimeout(r, 1000))
+							await new Promise((r) => setTimeout(r, 100))
 							setShowSearchResults(false)
 						}
 					}}
