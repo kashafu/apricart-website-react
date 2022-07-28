@@ -399,6 +399,7 @@ export default function Checkout() {
 			long +
 			"&lang=en&client_type=apricart"
 
+		toast.info('Processing Order')
 		try {
 			let response = await axios.post(url, body, {
 				headers: headers,
@@ -414,6 +415,7 @@ export default function Checkout() {
 		} catch (error) {
 			console.log(error)
 			setCheckoutErrorMessage(error?.response?.data?.message)
+			toast.error(error?.response?.data?.message)
 		}
 	}
 

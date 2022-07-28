@@ -115,14 +115,14 @@ export default function Layout() {
 					</ul>
 				</div>
 				<br />
-				<p className="mb-2">Secured payment gateways</p>
+				{/* <p className="mb-2">Secured payment gateways</p>
 				<Image
 					src={paymentMethodsIcon}
 					className="mb-3"
 					alt=""
 					width={280}
 					height={80}
-				/>
+				/> */}
 
 				<div className="inline-flex">
 					<a
