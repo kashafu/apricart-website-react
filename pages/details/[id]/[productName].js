@@ -29,7 +29,6 @@ export default function ProductDetail() {
 	
 	useEffect(() => {
 		if(router.isReady){
-			console.log(id, productName);
 			getProductDetailsApi()
 		}
 		getCategoriesApi()
