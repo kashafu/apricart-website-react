@@ -121,11 +121,12 @@ export default function PageContact() {
             </textarea>
 
 			 </div>
-
-             <SubmitButton className="w-1/3 p-4" onClick={() => {
+             <div className="w-1/4 p-4">
+             <SubmitButton  onClick={() => {
                                    pContactus();
                                 }   }    text={"SEND MESSAGE"}/>   
                 
+                </div>
             </div>
         </body>
     </>
