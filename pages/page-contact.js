@@ -75,13 +75,14 @@ export default function PageContact() {
                             <a className="btn btn-brand btn-lg font-weight-bold text-white border-radius-5 btn-shadow-brand hover-up" href="page-about.html">About Us</a>
                             <a className="btn btn-outline btn-lg btn-brand-outline font-weight-bold text-brand bg-white text-hover-white ml-15 border-radius-5 btn-shadow-brand hover-up">Support Center</a>
                         </p>  */}
+                         <h3 className="my-4 justify-between items-center">Drop Us a Line</h3>
+                
+                <p className="my-4 justify-between items-center">Please direct all inquiries via email to: support@apricart.pk</p>
                     </div>
            
             <div className="flex flex-col gap-y-4 justify-between items-center">
 
-                <h3 className="">Drop Us a Line</h3>
-                
-                <p className="">Please direct all inquiries via email to: support@apricart.pk</p>
+             
                 <TextField
 				 label={"Name"}
 				 placeHolder={""}
@@ -121,13 +122,14 @@ export default function PageContact() {
             </textarea>
 
 			 </div>
-             <div className="w-1/4 p-4">
+             <div className="w-1/2 p-4">
              <SubmitButton  onClick={() => {
                                    pContactus();
                                 }   }    text={"SEND MESSAGE"}/>   
                 
                 </div>
             </div>
+            
         </body>
     </>
 }
