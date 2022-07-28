@@ -72,7 +72,8 @@ export default function ForgotPassword(){
 			setButtonDisabled(true)
 			setErrorMessage('')
 			setSuccessMessage(response.data.message)
-			// router.push('/')
+			await new Promise((r) => setTimeout(r, 1000))
+			router.push('/login')
 		} catch (error) {
 			setErrorMessage(error.response.data.message)
 		}
@@ -81,80 +82,82 @@ export default function ForgotPassword(){
 	return(
 		<div className="flex flex-col w-screen items-center justify-center">
 			<HeadTag title={'Forgot Password'}/>
-			<div className="mt-4 mb-12">
-				<PageHeading
-					text={"Forgot Password"}
-				/>
-			</div>
-			<div className="w-1/2">
-				{viewState == 'otp' && (
-					<div className="space-y-6">
-						<TextField
-							label={'Enter Registered Phone Number'}
-							placeHolder={'3301234567'}
-							onChange={setPhoneNumber}
-							value={phoneNumber}
-							type={'number'}
-						/>
-						{errorMessage != '' && (
-							<ErrorText
-								text={errorMessage}
+			<div className="flex flex-col p-8 space-y-6 lg:w-1/3 items-center align-center bg-slate-100 shadow rounded-3xl">
+				<div className="mt-4 mb-12">
+					<PageHeading
+						text={"Forgot Password"}
+					/>
+				</div>
+				<div className="">
+					{viewState == 'otp' && (
+						<div className="space-y-6">
+							<TextField
+								label={'Enter Registered Phone Number'}
+								placeHolder={'3301234567'}
+								onChange={setPhoneNumber}
+								value={phoneNumber}
+								type={'number'}
 							/>
-						)}
-						<SubmitButton
-							disabled={buttonDisabled}
-							text={'Send OTP'}
-							onClick={getOtpApi}
-						/>
-					</div>
-				)}
-				{viewState == 'verify' && (
-					<div className="space-y-6">
-						<div className="flex flex-row space-x-2 justify-center">
-							<p className="text-center">
-								OTP sent to {phoneNumber}
-							</p>
-							<button
-								onClick={()=>{
-									setViewState('otp')
-								}}
-							>
-								<p>
-									Wrong Number?
-								</p>
-							</button>
+							{errorMessage != '' && (
+								<ErrorText
+									text={errorMessage}
+								/>
+							)}
+							<SubmitButton
+								disabled={buttonDisabled}
+								text={'Send OTP'}
+								onClick={getOtpApi}
+							/>
 						</div>
-						<TextField
-							label={'Enter New Password'}
-							placeHolder={'password'}
-							onChange={setNewPassword}
-							value={newPassword}
-							type={'text'}
-						/>
-						<TextField
-							label={'Enter OTP'}
-							placeHolder={'1234'}
-							onChange={setOtp}
-							value={otp}
-							type={'number'}
-						/>
-						{errorMessage != '' && (
-							<ErrorText
-								text={errorMessage}
+					)}
+					{viewState == 'verify' && (
+						<div className="space-y-6">
+							<div className="flex flex-row space-x-2 justify-center">
+								<p className="text-center">
+									OTP sent to {phoneNumber}
+								</p>
+								<button
+									onClick={()=>{
+										setViewState('otp')
+									}}
+								>
+									<p>
+										Wrong Number?
+									</p>
+								</button>
+							</div>
+							<TextField
+								label={'Enter New Password'}
+								placeHolder={'password'}
+								onChange={setNewPassword}
+								value={newPassword}
+								type={'text'}
 							/>
-						)}
-						{successMessage != '' && (
-							<SuccessText
-								text={errorMessage}
+							<TextField
+								label={'Enter OTP'}
+								placeHolder={'1234'}
+								onChange={setOtp}
+								value={otp}
+								type={'number'}
 							/>
-						)}
-						<SubmitButton
-							disabled={buttonDisabled}
-							text={'Change Password'}
-							onClick={changePasswordApi}
-						/>
-					</div>
-				)}
+							{errorMessage != '' && (
+								<ErrorText
+									text={errorMessage}
+								/>
+							)}
+							{successMessage != '' && (
+								<SuccessText
+									text={successMessage}
+								/>
+							)}
+							<SubmitButton
+								disabled={buttonDisabled}
+								text={'Change Password'}
+								onClick={changePasswordApi}
+							/>
+						</div>
+					)}
+				</div>
 			</div>
 		</div>
 	)
