@@ -15,7 +15,7 @@ export default function Layout(props) {
     return (
         <AppContext.Provider value={{ appState, handleAppState }}>
             <div className="flex flex-col min-h-screen max-w-screen">
-                {!(router.pathname === "/privacy-policy-mobile" || router.pathname === "/terms-of-use-mobile") && (
+                {!(router.pathname === "/privacy-policy-mobile" || router.pathname === "/terms-of-use-mobile" || router.pathname === "/faqs-mobile") && (
                     <div>
                         <TopBar />
                         <Header />
@@ -25,7 +25,7 @@ export default function Layout(props) {
                 {/* <div className="p-4"> */}
                     {props.children}
                 </div>
-                {!(router.pathname === "/privacy-policy-mobile" || router.pathname === "/terms-of-use-mobile") && (
+                {!(router.pathname === "/privacy-policy-mobile" || router.pathname === "/terms-of-use-mobile" || router.pathname === "/faqs-mobile") && (
                     <div className="mt-auto">
                         <Footer />
                         <Copyrights />
