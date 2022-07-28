@@ -12,15 +12,8 @@ import ErrorText from "../components/Layout/components/Typography/ErrorText"
 import PageHeading from "../components/Layout/components/Typography/PageHeading"
 import HeadTag from "../components/Layout/components/Head/HeadTag"
 import { toast } from "react-toastify";
-import { useEffect } from 'react';
 
 export default function PageContact() {
-   
-    useEffect(()=>{
-        // if(!window.location.hash) {
-		// 	window.location = window.location + '#loaded';
-		// 	window.location.reload();}
-	},[])
     let { token } = getGeneralApiParams()
 	const router = useRouter();
     const cookies = new Cookies();
