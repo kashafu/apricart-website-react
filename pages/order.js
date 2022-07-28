@@ -38,6 +38,7 @@ export default function Order() {
 		let { headers } = getGeneralApiParams()
 		let url = base_url_api + '/order/checkout/cancel?client_type=apricart&id=' + id
 
+		toast.info('Cancelling order')
 		try {
 			let response = await axios.get(url, {headers: headers})
 

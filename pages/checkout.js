@@ -51,6 +51,7 @@ export default function Checkout() {
 	const [checkoutErrorMessage, setCheckoutErrorMessage] = useState("")
 	const [addressErrorMessage, setAddressErrorMessage] = useState("")
 	const [cartErrorMessage, setCartErrorMessage] = useState("")
+	const [couponCodeMessage, setCouponCodeMessage] = useState('')
 	// view state can be either 'shipping', 'payment', 'review'
 	const [viewState, setViewState] = useState("shipping")
 	const [successResponse, setSuccessResponse] = useState(null)
@@ -141,7 +142,61 @@ export default function Checkout() {
 			addressId = checkoutAddress ? JSON.parse(checkoutAddress).id : ""
 		}
 		let body = {
-			coupon: "",
+			coupon: '',
+			notes: "",
+			paymentMethod: "cash",
+			address: addressId,
+			showProducts: true,
+			verify: true,
+			prodType: "cus",
+			day: "",
+			startTime: "",
+			endTime: "",
+			clientType: "apricart",
+			orderType: "delivery",
+		}
+		let url =
+			base_url_api +
+			"/order/cart/checkout?city=" +
+			city +
+			"&userid=" +
+			userId +
+			"&client_lat=" +
+			lat +
+			"&client_long=" +
+			long +
+			"&lang=en&client_type=apricart"
+
+		try {
+			let response = await axios.post(url, body, {
+				headers: headers,
+			})
+
+			console.log(response.data);
+			setAddressErrorMessage("")
+			setCheckoutCartData(response.data.data)
+		} catch (error) {
+			setAddressErrorMessage(error?.response?.data?.message)
+			setCheckoutCartData(null)
+		}
+	}
+
+	const getCheckoutCouponCartDataApi = async () => {
+		let { headers, city, userId } = getGeneralApiParams()
+		let lat = 0
+		let long = 0
+		let addressId = 0
+		if (typeof checkoutAddress === "object") {
+			lat = checkoutAddress ? checkoutAddress.mapLat : "0"
+			long = checkoutAddress ? checkoutAddress.mapLong : "0"
+			addressId = checkoutAddress ? checkoutAddress.id : ""
+		} else {
+			lat = checkoutAddress ? JSON.parse(checkoutAddress).mapLat : "0"
+			long = checkoutAddress ? JSON.parse(checkoutAddress).mapLong : "0"
+			addressId = checkoutAddress ? JSON.parse(checkoutAddress).id : ""
+		}
+		let body = {
+			coupon: checkoutData.coupon,
 			notes: "",
 			paymentMethod: "cash",
 			address: addressId,
@@ -173,6 +228,7 @@ export default function Checkout() {
 
 			setAddressErrorMessage("")
 			setCheckoutCartData(response.data.data)
+			setCouponCodeMessage(response.data.data.couponMessage)
 		} catch (error) {
 			setAddressErrorMessage(error?.response?.data?.message)
 			setCheckoutCartData(null)
@@ -586,6 +642,7 @@ export default function Checkout() {
 				grand_total,
 				shipment_message,
 				base_currency_code,
+				couponDiscountAmount
 			} = checkoutCartData
 			return (
 				<div className="flex flex-col w-full h-full justify-between bg-white rounded-3xl">
@@ -598,7 +655,7 @@ export default function Checkout() {
 								id,
 								productImageUrlThumbnail,
 								productImageUrl,
-								sku,
+								sku
 							} = item
 							return (
 								<div
@@ -620,7 +677,7 @@ export default function Checkout() {
 									</div>
 									<div className="flex flex-col justify-between">
 										<p>{title}</p>
-										<div className="flex flex-row space-x-4">
+										<div className="flex flex-row space-x-2 lg:space-x-4 items-center">
 											<button
 												onClick={() => {
 													decrementItemQty(
@@ -687,6 +744,10 @@ export default function Checkout() {
 						<p className={pRight}>
 							{base_currency_code} {shipping_amount}
 						</p>
+						<p className={pLeft}>Coupon Discount Amount</p>
+						<p className={pRight}>
+							{base_currency_code} {couponDiscountAmount}
+						</p>
 						<p className={pLeft}>Total</p>
 						<p className={pRight}>
 							{base_currency_code} {grand_total}
@@ -704,6 +765,7 @@ export default function Checkout() {
 				grand_total,
 				shipment_message,
 				base_currency_code,
+				couponDiscountAmount
 			} = checkoutCartData
 			return (
 				<div className="hidden lg:flex flex-col w-full h-full justify-between bg-white rounded-3xl">
@@ -738,7 +800,7 @@ export default function Checkout() {
 									</div>
 									<div className="flex flex-col justify-between">
 										<p>{title}</p>
-										<div className="flex flex-row space-x-4">
+										<div className="flex flex-row space-x-2 lg:space-x-4 items-center">
 											<button
 												disabled={true}
 												onClick={() => {
@@ -807,6 +869,10 @@ export default function Checkout() {
 						<p className={pLeft}>Shipping Amount</p>
 						<p className={pRight}>
 							{base_currency_code} {shipping_amount}
+						</p>
+						<p className={pLeft}>Coupon Discount Amount</p>
+						<p className={pRight}>
+							{base_currency_code} {couponDiscountAmount}
 						</p>
 						<p className={pLeft}>Total</p>
 						<p className={pRight}>
@@ -920,7 +986,7 @@ export default function Checkout() {
 							<div className="text-center">
 								{parse(successResponse.message)}
 							</div>
-							<div className="h-[120px] w-[450px]">
+							<div className="h-[120px] w-full">
 								<Image
 									src={successResponse.data.thankyou_image}
 									layout={"responsive"}
@@ -959,7 +1025,31 @@ export default function Checkout() {
 						</div>
 					)}
 					{viewState === "payment" && (
-						<div>
+						<div className="space-y-4">
+							{/* PROMO CODE */}
+							<div className="flex flex-row w-full items-center space-x-4">
+								<div className="w-4/6">
+									<TextField
+										label={'Promo Code'}
+										placeHolder={'Enter Code'}
+										customOnChange={true}
+										onChange={handleCheckoutDataChange}
+										name={'coupon'}
+										value={checkoutData.coupon}
+									/>
+								</div>
+								<div className="w-2/6">
+									<SubmitButton
+										text={'Apply'}
+										onClick={()=>{
+											getCheckoutCouponCartDataApi()
+										}}
+									/>
+								</div>
+							</div>
+							<p>
+								{couponCodeMessage}
+							</p>
 							<SubmitButton
 								text={"CHECKOUT"}
 								onClick={()=>{

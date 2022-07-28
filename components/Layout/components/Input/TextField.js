@@ -7,7 +7,7 @@ export default function TextField({label, placeHolder, onChange, value, name, ty
                 {label}
             </p>
             <input
-                className="col-span-2 h-[40px] py-2 px-4 rounded-lg"
+                className="col-span-2 h-[40px] py-2 px-2 rounded-lg bg-slate-200"
                 disabled={disabled}
                 type={type}
                 placeholder={placeHolder}
