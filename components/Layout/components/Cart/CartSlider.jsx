@@ -231,7 +231,7 @@ export default function CartSlider() {
                                                 key={id}
                                                 className="grid grid-cols-4 p-2"
                                             >
-                                                <div className="relative col-span-1 w-[60px] h-[60px] lg:w-[100px] lg:h-[100px]">
+                                                <div className="relative col-span-1 w-[50px] h-[50px] lg:w-[80px] lg:h-[80px] 2xl:[100px] 2xl:[100px]">
                                                     <Image
                                                         src={productImageUrl}
                                                         alt={title}

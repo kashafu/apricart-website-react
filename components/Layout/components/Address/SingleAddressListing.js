@@ -48,8 +48,8 @@ export default function SingleAddressListing({
 	}
 
 	return (
-		<div className="flex flex-col border-2 rounded-2xl mx-4">
-			<button onClick={onClickHandle} className={[style] + ' p-2 space-y-2'}>
+		<div className="flex flex-col border-2 rounded-2xl mx-4 overflow-hidden space-y-2">
+			<button onClick={onClickHandle} className={[style] + ' p-2 space-y-2 rounded-lg'}>
 				<p className="text-lg font-bold">
 					{name}, {phoneNumber}
 				</p>
@@ -58,20 +58,22 @@ export default function SingleAddressListing({
 					{address}, {area}, {city}
 				</p>
 			</button>
-			<button
-				onClick={() => {
-					setShowEdit(!showEdit)
-				}}
-				className="bg-main-yellow w-full py-2"
-			>
-				<p className="text-white font-bold">EDIT</p>
-			</button>
-			<button
-				onClick={deleteAddressApi}
-				className="bg-red-500 w-full py-2 rounded-b-lg"
-			>
-				<p className="text-white font-bold">DELETE</p>
-			</button>
+			<div className="w-full flex flex-row justify-around space-x-12 px-4">
+				<button
+					onClick={() => {
+						setShowEdit(!showEdit)
+					}}
+					className="bg-main-yellow w-full py-2 rounded-lg"
+				>
+					<p className="text-white font-bold">EDIT</p>
+				</button>
+				<button
+					onClick={deleteAddressApi}
+					className="bg-red-500 w-full py-2 rounded-lg"
+				>
+					<p className="text-white font-bold">DELETE</p>
+				</button>
+			</div>
 			{showEdit && (
 				<AddressCard
 					type={"edit"}
