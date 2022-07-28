@@ -48,14 +48,14 @@ export default function CategoryProducts() {
 	}
 
 	const getCategoryProducts = async () => {
-		let { headers, city } = getGeneralApiParams()
+		let { headers, city, userId } = getGeneralApiParams()
 		let url =
 			base_url_api +
 			"/catalog/categories/products?category=" +
 			categoryId +
 			"&page=1&size=100&sortType=&sortDirection=desc&instant=3&city=" +
 			city +
-			"&lang=en&client_type=apricart"
+			"&lang=en&client_type=apricart&userid=" + userId 
 
 		try {
 			let response = await axios.get(url, {
