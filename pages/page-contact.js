@@ -57,8 +57,8 @@ export default function PageContact() {
         <HeadTag title={'Contact Us'}/>
         <body className="">
           
-                    <div className="text-center">
-                        <h4 className="text-brand mb-2">Get in touch</h4>
+                    <div className="text-center  text-main-blue font-bold">
+                        <h4 className="text-brand text-5xl text-main-blue font-bold mb-2">Get in touch</h4>
                         {/* <h1 className="mb-2 wow fadeIn animated font-xxl fw-900">
                             Let's Talk  <br />
                             <span className="text-style-1"></span>
@@ -73,7 +73,7 @@ export default function PageContact() {
                 <p className="my-4 justify-between items-center">Please direct all inquiries via email to: support@apricart.pk</p>
                     </div>
            
-            <div className="flex flex-col gap-y-4 justify-between items-center">
+            <div className="flex flex-col gap-y-4 justify-between items-center ">
 
              
                 <TextField
