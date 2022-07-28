@@ -113,7 +113,9 @@ const handlePhone = (e) => {
                                 }   }    text={"SEND MESSAGE"}/>   
                 
                 </div>
+                <p className="text-main-blue font-bold text-center items-center" >Please direct all inquiries via email to: support@apricart.pk</p>
             </div>
+           
             </div> 
         </body>
     </>
