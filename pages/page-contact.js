@@ -1,6 +1,58 @@
-import HeadTag from "../components/Layout/components/Head/HeadTag";
+
+import axios from "axios"
+import { useRouter } from "next/router"
+import { useState } from "react"
+import Link from "next/link"
+import Cookies from "universal-cookie"
+import { getGeneralApiParams } from "../helpers/ApiHelpers"
+import { base_url_api } from '../information.json'
+import TextField from "../components/Layout/components/Input/TextField"
+import SubmitButton from "../components/Layout/components/Buttons/SubmitButton"
+import ErrorText from "../components/Layout/components/Typography/ErrorText"
+import PageHeading from "../components/Layout/components/Typography/PageHeading"
+import HeadTag from "../components/Layout/components/Head/HeadTag"
+import { toast } from "react-toastify";
 
 export default function PageContact() {
+    let { token } = getGeneralApiParams()
+	const router = useRouter();
+    const cookies = new Cookies();
+    let { city, headers, userId } = getGeneralApiParams();
+    const [name, setname] = useState("");
+    const [email, setemail] = useState("");
+	const [address, setaddress] = useState("");
+    const [subject, setsubject] = useState("");
+    const [phoneNumber, setphoneNumber] = useState('')
+   const pContactus =async()=>{
+    let url = base_url_api + "/home/contactus/save" 
+    let body = {
+        "name":name,
+        "phoneNumber":"92" +phoneNumber ,
+        "email":email,
+        "file":"http://file.pdf",
+         "text":subject
+    }
+    console.log(body);
+    try {
+        let response = await axios.post(url, body,
+            {
+                headers: headers
+            }
+        )
+        console.log(response.data);
+        if (response.data.status == 1) {
+            toast.success(response.data.message);
+        }
+    }
+    catch(e){
+      toast.error(e)
+    }
+   }
+   const handleChange = (e) => {
+    const {value } = e.target;
+   setsubject(value)
+};
+
     return <>
         <HeadTag title={'Contact Us'}/>
         <body className="">
@@ -16,46 +68,61 @@ export default function PageContact() {
                             <a className="btn btn-brand btn-lg font-weight-bold text-white border-radius-5 btn-shadow-brand hover-up" href="page-about.html">About Us</a>
                             <a className="btn btn-outline btn-lg btn-brand-outline font-weight-bold text-brand bg-white text-hover-white ml-15 border-radius-5 btn-shadow-brand hover-up">Support Center</a>
                         </p>  */}
+                         <h3 className="my-4 justify-between items-center">Drop Us a Line</h3>
+                
+                <p className="my-4 justify-between items-center">Please direct all inquiries via email to: support@apricart.pk</p>
                     </div>
            
-            <div className="flex flex-col  justify-between items-center">
+            <div className="flex flex-col gap-y-4 justify-between items-center">
 
-                <h3 className="">Drop Us a Line</h3>
-                <p className="">Please direct all inquiries via email to: support@apricart.pk</p>
-                {/* <form className="" id="contact-form" action="#" method="post">
-                    <div className="relative wd-120">
-                        <div className="absolute left-0 m-2.5">
-                            <span>First Name</span> <br />
-                            <input name="name" placeholder="First Name" type="text" />
-                        </div>
-                        <div className="absolute left-1/3">
-                            <span >EMAIL</span> <br />
-                            <input name="email" placeholder="Your Email" type="email" />
-                        </div>
-                        <br />
-                        <br />
+             
+                <TextField
+				 label={"Name"}
+				 placeHolder={""}
+				 onChange={setname}
+				 value={name}
+				 type={'string'}
+			 />
+			 <TextField
+				 label={"Email"}
+				 placeHolder={"someone@example.com"}
+				 onChange={setemail}
+				 value={email}
+				 type={'string'}
+			 />
+			  <TextField
+				 label={"phoneNumber"}
+				 placeHolder={"3138876659"}
+				 onChange={setphoneNumber}
+				 value={phoneNumber}
+				 type={'string'}
+			 />
+              <div className="grid grid-cols-3 gap-4 items-center">
+            {/* <p className="col-span-1 font-lato text-main-blue font-semibold">
+                Subject
+            </p>
+                <input
+                type="textarea"
+                className="col-span-2 h-[100px] py-2 px-4 rounded-lg"  placeholder="Input Query"
+                value={subject}
+                name="subject"/>  */}
+        {/* <label for="w3review">Review of W3Schools:</label> */}
+            <p className="col-span-1 font-lato text-main-blue font-semibold">
+                Subject
+            </p>
+            <textarea id="w3review" onChange={handleChange} value={subject} className="col-span-2 h-[100px] py-2 px-4 rounded-lg overflow-hidden" >
+           
+            </textarea>
 
-                        <div className="absolute left-0 m-2.5">
-                            <span >telephone</span> <br />
-                            <input name="telephone" placeholder="Your Phone" type="tel" />
-
-                        </div>
-                        <div className="absolute left-1/3">
-                            <span >SUBJECT</span> <br />
-                            <input name="subject" placeholder="Subject" type="text" />
-                        </div>
-                        <br />
-                        <br />
-                        <br />
-                        <div className="absolute left-1/6">
-                            <textarea name="message" placeholder="Message"></textarea>
-                        </div><br />
-                        <br />
-                        <button className="absolute left-1/6" type="submit">Send message</button>
-                    </div>
-                </form>
-                <p className="form-messege"></p> */}
+			 </div>
+             <div className="w-1/2 p-4">
+             <SubmitButton  onClick={() => {
+                                   pContactus();
+                                }   }    text={"SEND MESSAGE"}/>   
+                
+                </div>
             </div>
+            
         </body>
     </>
 }

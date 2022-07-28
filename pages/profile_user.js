@@ -18,6 +18,7 @@ import ErrorText from "../components/Layout/components/Typography/ErrorText"
 // import HeadTag from "../components/Layout/components/Head/HeadTag"
 import { toast } from "react-toastify";
 import HeadTag from "../components/Layout/components/Head/HeadTag";
+import { ToastHeader } from "react-bootstrap";
 
 export default function ProfileUser() {
 	const cookies = new Cookies();
@@ -49,6 +50,7 @@ export default function ProfileUser() {
             if (response.data.status == 1) {
                 setupdateshow(true);
                 toast.success(response.data.message);
+				toast.success("Login again to see changes")
             }
             else {
                 toast.error(response.data.message);
@@ -186,7 +188,7 @@ export default function ProfileUser() {
 				 placeHolder={"someone@example.com"}
 				 onChange={setemail}
 				 value={email}
-				 type={'password'}
+				 type={'string'}
 			 />
 			  <TextField
 				 label={"Address"}

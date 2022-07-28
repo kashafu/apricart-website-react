@@ -82,7 +82,8 @@ export default function Home() {
 			</div>
 		)
 	}
-
+	
+  
 	return (
 		<div className="">
 			<HeadTag title={"APRICART"} />
