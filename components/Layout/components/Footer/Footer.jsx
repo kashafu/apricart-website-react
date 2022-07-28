@@ -71,14 +71,15 @@ export default function Layout() {
 				</div>
 			</div>
 
-			<div className="flex flex-col my-2.5 sm:justify-between sm:items-center sm:w-4/12">
-				<div className="">
+			<div className="flex flex-col my-[30px] sm:justify-between sm:items-center sm:w-1/3">
+				
 					<ul>
-						<li className="flex sm:justify-center">
+						<li className="flex flex-col sm:justify-between sm:items-center ">
 							<h3 className="font-bold">Install Our App</h3>
 							<br />
 						</li>
-						<li className="inline-flex pr-4">
+                        <div className="">
+						<li className="inline-flex">
 							<Link
 								href={
 									"https://play.google.com/store/apps/details?id=com.assorttech.airoso_app&hl=en&gl=US"
@@ -95,7 +96,7 @@ export default function Layout() {
 								</a>
 							</Link>
 						</li>
-						<li className="inline-flex">
+						<li className="inline-flex   justify-between items-center">
 							<Link
 								href={
 									"https://apps.apple.com/us/app/apricart/id1562353936?platform=iphone"
@@ -112,8 +113,9 @@ export default function Layout() {
 								</a>
 							</Link>
 						</li>
+						</div>
 					</ul>
-				</div>
+			
 				<br />
 				{/* <p className="mb-2">Secured payment gateways</p>
 				<Image
@@ -124,7 +126,7 @@ export default function Layout() {
 					height={80}
 				/> */}
 
-				<div className="inline-flex">
+				<div className="inline-flex   mb-[50px] sm:mb-[50px]">
 					<a
 						className="mx-2"
 						href="https://www.facebook.com/apricartonlinegrocery/"
