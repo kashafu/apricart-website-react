@@ -107,7 +107,7 @@ const handlePhone = (e) => {
         {/* <label for="w3review">Review of W3Schools:</label> */}
         
          </div>
-             <div className="w-1/2 p-4">
+             <div className="w-1/2 p-[4px]">
              <SubmitButton  onClick={() => {
                                    pContactus();
                                 }   }    text={"SEND MESSAGE"}/>   
