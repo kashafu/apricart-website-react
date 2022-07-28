@@ -202,7 +202,7 @@ export default function Header() {
 											Karachi
 										</p>
 									</div>
-									<div className="flex flex-row space-x-2 items-center">
+									{/* <div className="flex flex-row space-x-2 items-center">
 										<input
 											className=""
 											type="radio"
@@ -214,8 +214,11 @@ export default function Header() {
 										<p className="text-main-bue font-bold">
 											Peshawar
 										</p>
-									</div>
+									</div> */}
 								</div>
+								<p className="text-main-blue font-bold text-md">
+									Home Delivery is currently unavailable in Peshawar, please install our app for Bulk Buy in Peshawar
+								</p>
 								<div className="w-3/4">
 									<SubmitButton
 										text={"Change City"}
