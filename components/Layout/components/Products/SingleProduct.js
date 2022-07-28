@@ -35,16 +35,23 @@ export default function SingleProduct({ product, isInStock }) {
 		inStock,
 		minQty,
 		maxQty,
+		categoryleafName,
+		categoryIds
 	} = product
+
 	if (isInStock) {
 		inStock = isInStock
 	}
+
 	let imageUrl =
 		productImageUrlThumbnail != ""
 			? productImageUrlThumbnail
 			: productImageUrl != ""
 			? productImageUrl
 			: missingImageIcon
+
+	let immediateCategoryName = categoryleafName.split("|")[0].trim()
+	let immediateCategoryId = categoryIds.replace(/\s+/g, '').split("|")[0]
 	let isLoggedIn = cookies.get("cookies-token") != null
 
 	const [innerText, setInnerText] = useState("Add to Cart")
@@ -174,8 +181,8 @@ export default function SingleProduct({ product, isInStock }) {
 				{/* IMAGE */}
 				<div className="row-span-4 flex items-center justify-center w-full h-full">
 					<Link
-						href="/details/[id]/[productName]"
-						as={"/details/" + sku + "/" + toKebabCase(title)}
+						href='/category/[categoryName]/[categoryId]/[productName]/[productId]'
+						as={"/category/" + toKebabCase(immediateCategoryName) + "/" + immediateCategoryId + "/" + toKebabCase(title) + "/" + sku}
 						passHref
 					>
 						<a className="relative h-[100px] w-[100px] lg:h-[150px] lg:w-[150px]">
@@ -286,8 +293,8 @@ export default function SingleProduct({ product, isInStock }) {
 				{/* IMAGE */}
 				<div className="row-span-4 flex items-center justify-center w-full h-full">
 					<Link
-						href="/details/[id]/[productName]"
-						as={"/details/" + sku + "/" + toKebabCase(title)}
+						href='/category/[categoryName]/[categoryId]/[productName]/[productId]'
+						as={"/category/" + toKebabCase(immediateCategoryName) + "/" + immediateCategoryId + "/" + toKebabCase(title) + "/" + sku}
 						passHref
 					>
 						<a className="relative h-[100px] w-[100px] lg:h-[150px] lg:w-[150px]">
