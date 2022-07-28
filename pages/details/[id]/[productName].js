@@ -14,21 +14,26 @@ import HeadTag from "../../../components/Layout/components/Head/HeadTag";
 import minusIcon from '../../../public/assets/svgs/minusIcon.svg'
 import plusIcon from '../../../public/assets/svgs/plusIcon.svg'
 
-export default function Post({ product }) {
+export default function Post() {
 	const dispatch = useDispatch();
 	const cookies = new Cookies();
 	let isLoggedIn = cookies.get('cookies-token') != null
 	const router = useRouter()
-	const { id } = router.query
+	const { id, productName } = router.query
 
+	const [message, setMessage] = useState('Loading')
+	const [product, setProduct] = useState(null)
 	const [categories, setCategories] = useState(null)
 	const [inStock, setInStock] = useState(true)
 	const [qty, setQty] = useState(1)
 	
 	useEffect(() => {
+		if(router.isReady){
+			console.log(id, productName);
+			getProductDetailsApi()
+		}
 		getCategoriesApi()
-		getInStockApi()
-	}, [])
+	}, [router.query])
 
 	const setQtyHandler = (type) => {
 		if (type == 'increment') {
@@ -64,7 +69,7 @@ export default function Post({ product }) {
 		}
 	}
 
-	const getInStockApi = async () => {
+	const getProductDetailsApi = async () => {
 		let { city, headers, userId } = getGeneralApiParams()
 		let url = base_url_api + '/catalog/products/detail?id=' + id + '&city=' + city + '&lang=en&client_type=apricart&userid=' + userId
 		// console.log(url)
@@ -76,20 +81,25 @@ export default function Post({ product }) {
 			)
 			// console.log(response.data)
 			if (response.data.data.length > 0) {
-				setInStock(response.data.data[0].inStock)
+				setProduct(response.data)
+			}
+			else{
+				setMessage('Item does not exist')
 			}
 		} catch (error) {
+			toast.error(error?.response?.data?.message)
 			console.log(error)
+			setMessage('Item does not exist')
 		}
 	}
 
-	if (router.isFallback) {
-		return (
-			<div>
-				<h2>Loading Page Data...</h2>
-			</div>
-		);
-	}
+	// if (router.isFallback) {
+	// 	return (
+	// 		<div>
+	// 			<h2>Loading Page Data...</h2>
+	// 		</div>
+	// 	);
+	// }
 
 	const addToCartApi = async () => {
 		let { city, userId, headers } = getGeneralApiParams()
@@ -158,7 +168,7 @@ export default function Post({ product }) {
 		return (
 			<div>
 				<p>
-					Item does not exist
+					{message}
 				</p>
 			</div>
 		)
@@ -321,31 +331,31 @@ export default function Post({ product }) {
 // 	return { paths, fallback: 'blocking' };
 // }
 
-export async function getStaticPaths() {
-	const paths = ["/details/APR-PT13-03/bake-parlor-tikka-macaroni---250gm"];
-	return { paths, fallback: true };
-}
+// export async function getStaticPaths() {
+// 	const paths = ["/details/APR-PT13-03/bake-parlor-tikka-macaroni---250gm"];
+// 	return { paths, fallback: true };
+// }
 
-export async function getStaticProps({ query, params }) {
-	const { id, productName } = query || params;
-	let { headers } = getGeneralApiParams()
-	let city = 'karachi'
-	let url = base_url_api + '/catalog/products/detail?id=' + id + '&city=' + city + '&lang=en&client_type=apricart&userid=abc123'
-	let product = null
-	try {
-		let response = await axios.get(url,
-			{
-				headers: headers
-			})
-		product = response.data;
-	} catch (error) {
-		console.log(error)
-	}
+// export async function getStaticProps({ query, params }) {
+// 	const { id, productName } = query || params;
+// 	let { headers } = getGeneralApiParams()
+// 	let city = 'karachi'
+// 	let url = base_url_api + '/catalog/products/detail?id=' + id + '&city=' + city + '&lang=en&client_type=apricart&userid=abc123'
+// 	let product = null
+// 	try {
+// 		let response = await axios.get(url,
+// 			{
+// 				headers: headers
+// 			})
+// 		product = response.data;
+// 	} catch (error) {
+// 		console.log(error)
+// 	}
 
-	return {
-		props: {
-			product,
-		},
-		// revalidate: 200
-	};
-}
+// 	return {
+// 		props: {
+// 			product,
+// 		},
+// 		// revalidate: 200
+// 	};
+// }
