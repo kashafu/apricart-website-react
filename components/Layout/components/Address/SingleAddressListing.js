@@ -68,7 +68,7 @@ export default function SingleAddressListing({
 			</button>
 			<button
 				onClick={deleteAddressApi}
-				className="bg-red-500 w-full py-2"
+				className="bg-red-500 w-full py-2 rounded-b-lg"
 			>
 				<p className="text-white font-bold">DELETE</p>
 			</button>

@@ -8,7 +8,7 @@ import locationIcon from '../../../../public/assets/svgs/locationPinIcon.svg'
 import SubmitButton from "../Buttons/SubmitButton";
 import { useRouter } from "next/router";
 
-export default function Profile({ }) {
+export default function Profile() {
     const router = useRouter()
 
     let { name } = getGeneralCookies()
@@ -21,7 +21,7 @@ export default function Profile({ }) {
 
     return (
         <div className="relative">
-            <Link href={'/account_detail'} passHref>
+            <Link href={'/profile_user'} passHref>
                 <a className="flex flex-row w-full items-center whitespace-nowrap space-x-px font-lato text-main-blue font-semibold"
                     onMouseEnter={() => {
                         setShowDropdown(true)
