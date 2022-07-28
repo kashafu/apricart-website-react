@@ -1,19 +1,19 @@
 import { useEffect, useState } from "react"
 import { useRouter } from "next/router"
 import axios from "axios"
-import { base_url_api } from "../../../information.json"
-import { getGeneralApiParams } from "../../../helpers/ApiHelpers"
-import Categories from "../../../components/Layout/components/Categories/Categories"
-import SingleProduct from "../../../components/Layout/components/Products/SingleProduct"
-import PageHeading from "../../../components/Layout/components/Typography/PageHeading"
+import { base_url_api } from "../../../../information.json"
+import { getGeneralApiParams } from "../../../../helpers/ApiHelpers"
+import Categories from "../../../../components/Layout/components/Categories/Categories"
+import SingleProduct from "../../../../components/Layout/components/Products/SingleProduct"
+import PageHeading from "../../../../components/Layout/components/Typography/PageHeading"
 import Image from "next/image"
 import Link from "next/link"
-import HeadTag from "../../../components/Layout/components/Head/HeadTag"
-import toKebabCase from "../../../helpers/toKebabCase"
+import HeadTag from "../../../../components/Layout/components/Head/HeadTag"
+import toKebabCase from "../../../../helpers/toKebabCase"
 
 export default function CategoryProducts() {
 	const router = useRouter()
-	const { id, categoryName } = router.query
+	const { categoryId, categoryName } = router.query
 
 	const [products, setProducts] = useState(null)
 	const [subCategories, setSubCategories] = useState(null)
@@ -52,7 +52,7 @@ export default function CategoryProducts() {
 		let url =
 			base_url_api +
 			"/catalog/categories/products?category=" +
-			id +
+			categoryId +
 			"&page=1&size=100&sortType=&sortDirection=desc&instant=3&city=" +
 			city +
 			"&lang=en&client_type=apricart"
@@ -75,7 +75,7 @@ export default function CategoryProducts() {
 		let url =
 			base_url_api +
 			"/catalog/categories/detail?id=" +
-			id +
+			categoryId +
 			"&lang=en&client_type=apricart&userid=" + userId
 			
 		try {

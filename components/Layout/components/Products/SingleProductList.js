@@ -11,10 +11,14 @@ export default function SingleProductList({ product, isInStock }) {
 		currentPrice,
 		sku,
 		inStock,
+		categoryleafName,
+		categoryIds,
 	} = product
+
 	if (isInStock) {
 		inStock = isInStock
 	}
+
 	let imageUrl =
 		productImageUrlThumbnail != ""
 			? productImageUrlThumbnail
@@ -22,11 +26,23 @@ export default function SingleProductList({ product, isInStock }) {
 			? productImageUrl
 			: missingImageIcon
 
+	let immediateCategoryName = categoryleafName.split("|")[0].trim()
+	let immediateCategoryId = categoryIds.replace(/\s+/g, "").split("|")[0]
+
 	return (
 		<div className="flex flex-row w-full bg-white rounded-lg items-center shadow overflow-hidden">
 			<Link
-				href="/details/[id]/[productName]"
-				as={"/details/" + sku + "/" + toKebabCase(title)}
+				href="/category/[categoryName]/[categoryId]/[productName]/[productId]"
+				as={
+					"/category/" +
+					toKebabCase(immediateCategoryName) +
+					"/" +
+					immediateCategoryId +
+					"/" +
+					toKebabCase(title) +
+					"/" +
+					sku
+				}
 				passHref
 			>
 				<a className="flex flex-row w-full items-center">

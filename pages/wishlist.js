@@ -15,6 +15,7 @@ import Cookies from "universal-cookie"
 import { getGeneralApiParams } from "../helpers/ApiHelpers"
 import HeadTag from "../components/Layout/components/Head/HeadTag"
 import { base_url_api } from "../information.json"
+import toKebabCase from "../helpers/toKebabCase"
 //none
 const Wishpage = () => {
 	const cookies = new Cookies()
@@ -146,7 +147,13 @@ const Wishpage = () => {
 										productImageUrl,
 										title,
 										currentPrice,
+										categoryleafName,
+										categoryIds
 									} = wish
+									
+									let immediateCategoryName = categoryleafName.split("|")[0].trim()
+									let immediateCategoryId = categoryIds.replace(/\s+/g, '').split("|")[0]
+
 									return (
 										<div className="col" key={id}>
 											<div className="p-3 border bg-light btnchan">
@@ -155,16 +162,11 @@ const Wishpage = () => {
 													// onClick={}
 												></div>
 												<div className="pro_img">
-													<Link
-														href="/details/[id]/[productName]"
-														as={
-															"/details/" +
-															sku +
-															"/" +
-															toKebabCase(title)
-														}
-														passHref
-													>
+												<Link
+													href='/category/[categoryName]/[categoryId]/[productName]/[productId]'
+													as={"/category/" + toKebabCase(immediateCategoryName) + "/" + immediateCategoryId + "/" + toKebabCase(title) + "/" + sku}
+													passHref
+												>
 														<img
 															src={
 																productImageUrl

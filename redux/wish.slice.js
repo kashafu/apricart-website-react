@@ -23,7 +23,7 @@ const wishSlice = createSlice({
       state.push({ ...action.payload, quantity: 1 });
     },
     Initilaize(state,action){
-      state = {...action.payload}
+      state.splice(0, state.length)
     }
     ,
     decrementwishQuantity: (state, action) => {
