@@ -12,13 +12,14 @@ import ErrorText from "../components/Layout/components/Typography/ErrorText"
 import PageHeading from "../components/Layout/components/Typography/PageHeading"
 import HeadTag from "../components/Layout/components/Head/HeadTag"
 import { toast } from "react-toastify";
-import { useEffect } from 'react'
+import { useEffect } from 'react';
+
 export default function PageContact() {
-  
+   
     useEffect(()=>{
-        if(!window.location.hash) {
-			window.location = window.location + '#loaded';
-			window.location.reload();}
+        // if(!window.location.hash) {
+		// 	window.location = window.location + '#loaded';
+		// 	window.location.reload();}
 	},[])
     let { token } = getGeneralApiParams()
 	const router = useRouter();
@@ -28,7 +29,36 @@ export default function PageContact() {
     const [email, setemail] = useState("");
 	const [address, setaddress] = useState("");
     const [subject, setsubject] = useState("");
-
+    const [phoneNumber, setphoneNumber] = useState('')
+   const pContactus =async()=>{
+    let url = base_url_api + "/home/contactus/save" 
+    let body = {
+        "name":name,
+        "phoneNumber":"92" +phoneNumber ,
+        "email":email,
+        "file":"http://file.pdf",
+         "text":subject
+    }
+    console.log(body);
+    try {
+        let response = await axios.post(url, body,
+            {
+                headers: headers
+            }
+        )
+        console.log(response.data);
+        if (response.data.status == 1) {
+            toast.success(response.data.message);
+        }
+    }
+    catch(e){
+      toast.error(e)
+    }
+   }
+   const handleChange = (e) => {
+    const {value } = e.target;
+   setsubject(value)
+};
 
     return <>
         <HeadTag title={'Contact Us'}/>
@@ -52,7 +82,7 @@ export default function PageContact() {
                 <h3 className="">Drop Us a Line</h3>
                 
                 <p className="">Please direct all inquiries via email to: support@apricart.pk</p>
-                {/* <TextField
+                <TextField
 				 label={"Name"}
 				 placeHolder={""}
 				 onChange={setname}
@@ -67,21 +97,34 @@ export default function PageContact() {
 				 type={'string'}
 			 />
 			  <TextField
-				 label={"Address"}
-				 placeHolder={"street address, block,city,country"}
-				 onChange={setaddress}
-				 value={address}
+				 label={"phoneNumber"}
+				 placeHolder={"3138876659"}
+				 onChange={setphoneNumber}
+				 value={phoneNumber}
 				 type={'string'}
 			 />
-               <TextField
-				 label={"Subject"}
-				 placeHolder={"Your Query"}
-				 onChange={setsubject}
-				 value={subject}
-				 type={'text-area'}
-			 />
-			 
-             <SubmitButton className="w-1/3 p-4"    text={"SEND MESSAGE"}/>    */}
+              <div className="grid grid-cols-3 gap-4 items-center">
+            {/* <p className="col-span-1 font-lato text-main-blue font-semibold">
+                Subject
+            </p>
+                <input
+                type="textarea"
+                className="col-span-2 h-[100px] py-2 px-4 rounded-lg"  placeholder="Input Query"
+                value={subject}
+                name="subject"/>  */}
+        {/* <label for="w3review">Review of W3Schools:</label> */}
+            <p className="col-span-1 font-lato text-main-blue font-semibold">
+                Subject
+            </p>
+            <textarea id="w3review" onChange={handleChange} value={subject} className="col-span-2 h-[100px] py-2 px-4 rounded-lg overflow-hidden" >
+           
+            </textarea>
+
+			 </div>
+
+             <SubmitButton className="w-1/3 p-4" onClick={() => {
+                                   pContactus();
+                                }   }    text={"SEND MESSAGE"}/>   
                 
             </div>
         </body>

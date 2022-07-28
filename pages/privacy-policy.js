@@ -6,9 +6,9 @@ import { useEffect } from 'react'
 export default function Privacy() {
 	
 	useEffect(()=>{
-		if(!window.location.hash) {
-			window.location = window.location + '#loaded';
-			window.location.reload();}
+		// if(!window.location.hash) {
+		// 	window.location = window.location + '#loaded';
+		// 	window.location.reload();}
 	},[])
 	return (
 		<div className='px-5'>

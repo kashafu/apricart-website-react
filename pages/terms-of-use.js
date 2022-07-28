@@ -8,9 +8,9 @@ export default function TermOfUse() {
 	
 
 	useEffect(()=>{
-		if(!window.location.hash) {
-			window.location = window.location + '#loaded';
-			window.location.reload();}
+		// if(!window.location.hash) {
+		// 	window.location = window.location + '#loaded';
+		// 	window.location.reload();}
 	
 	},[])
 	return (
