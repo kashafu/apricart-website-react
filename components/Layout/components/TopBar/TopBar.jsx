@@ -130,7 +130,7 @@ export default function Layout() {
 
 	return (
 		<header className="flex flex-col">
-			<div className="flex flex-row w-screen bg-main-yellow lg:justify-between px-2 lg:px-12 items-center h-[50px]">
+			<div className="flex flex-row w-full bg-main-yellow lg:justify-between px-2 lg:px-12 items-center h-[50px]">
 				{/* TICKER */}
 				{/* <div className="flex flex-row items-center h-full">
                     <div className="hidden lg:inline flex items-center bg-main-red px-2 h-2/3">

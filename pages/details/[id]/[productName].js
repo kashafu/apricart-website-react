@@ -14,17 +14,25 @@ import HeadTag from "../../../components/Layout/components/Head/HeadTag";
 import minusIcon from '../../../public/assets/svgs/minusIcon.svg'
 import plusIcon from '../../../public/assets/svgs/plusIcon.svg'
 
-export default function Post({ product }) {
-	let [num, setNum] = useState(1);
+export default function ProductDetail() {
 	const dispatch = useDispatch();
 	const cookies = new Cookies();
 	let isLoggedIn = cookies.get('cookies-token') != null
 	const router = useRouter()
-	const { id } = router.query
+	const { id, productName } = router.query
 
+	const [message, setMessage] = useState('Loading')
+	const [product, setProduct] = useState(null)
 	const [categories, setCategories] = useState(null)
 	const [inStock, setInStock] = useState(true)
 	const [qty, setQty] = useState(1)
+	
+	useEffect(() => {
+		if(router.isReady){
+			getProductDetailsApi()
+		}
+		getCategoriesApi()
+	}, [router.query])
 
 	const setQtyHandler = (type) => {
 		if (type == 'increment') {
@@ -41,14 +49,12 @@ export default function Post({ product }) {
 		}
 	}
 
-	useEffect(() => {
-		getCategoriesApi()
-		getInStockApi()
-	}, [])
-
 	const getCategoriesApi = async () => {
-		let { city, headers } = getGeneralApiParams()
-		let url = base_url_api + '/catalog/categories?level=all&client_type=apricart&city=' + city
+		let { city, headers, userId } = getGeneralApiParams()
+		let url =
+			base_url_api +
+			"/catalog/categories?level=all&client_type=apricart&city=" +
+			city + "&userid=" + userId 
 
 		try {
 			let response = await axios.get(url,
@@ -62,7 +68,7 @@ export default function Post({ product }) {
 		}
 	}
 
-	const getInStockApi = async () => {
+	const getProductDetailsApi = async () => {
 		let { city, headers, userId } = getGeneralApiParams()
 		let url = base_url_api + '/catalog/products/detail?id=' + id + '&city=' + city + '&lang=en&client_type=apricart&userid=' + userId
 		// console.log(url)
@@ -74,31 +80,17 @@ export default function Post({ product }) {
 			)
 			// console.log(response.data)
 			if (response.data.data.length > 0) {
-				setInStock(response.data.data[0].inStock)
+				setProduct(response.data)
+			}
+			else{
+				setMessage('Item does not exist')
 			}
 		} catch (error) {
+			toast.error(error?.response?.data?.message)
 			console.log(error)
+			setMessage('Item does not exist')
 		}
 	}
-
-	if (router.isFallback) {
-		return (
-			<div>
-				<h2>Loading Page Data...</h2>
-			</div>
-		);
-	}
-
-	let incNum = () => {
-		if (num < 5) {
-			setNum(Number(num) + 1);
-		}
-	};
-	let decNum = () => {
-		if (num > 0) {
-			setNum(num - 1);
-		}
-	};
 
 	const addToCartApi = async () => {
 		let { city, userId, headers } = getGeneralApiParams()
@@ -167,7 +159,7 @@ export default function Post({ product }) {
 		return (
 			<div>
 				<p>
-					Item does not exist
+					{message}
 				</p>
 			</div>
 		)
@@ -268,11 +260,6 @@ export default function Post({ product }) {
 																					addToCartApi()
 																				}}
 																			>
-																				{/* <Image
-																					src={addToCartIcon}
-																					height={40}
-																					width={40}
-																				/> */}
 																				<p className="text-white font-bold bg-main-blue py-2 px-4 rounded-xl">
 																					ADD TO CART
 																				</p>
@@ -284,35 +271,6 @@ export default function Post({ product }) {
 																				Out of Stock
 																			</button>
 																		)}
-																		{/* {inStock == true ? (
-																			<div
-																				className="pro_btn2"
-																				onClick={() => {
-																					addToCartHandler(product.data[0]);
-																					dispatch(addToCart(product.data[0]))
-																				}
-																				}
-																			>
-																				<a
-																					href="#"
-																					className="btn btn-primary chane chane1"
-																				>
-																					Add to Cart
-																				</a>
-																			</div>
-																		) : (
-																			<>
-																				<div className="pro_btn2">
-																					<a
-																						passHref="#"
-																						className="btn btn chane chane1 secondary"
-																						disabled
-																					>
-																						Out of stock
-																					</a>
-																				</div>
-																			</>
-																		)} */}
 																	</div>
 																</div>
 															</div>
@@ -339,56 +297,4 @@ export default function Post({ product }) {
 			}
 		</div>
 	);
-}
-
-// export async function getStaticPaths() {
-// 	let { headers } = getGeneralApiParams()
-// 	let city = 'karachi'
-// 	let url = base_url_api + '/catalog/products?size=200&sortType=&sortDirection=desc&lang=en&client_type=apricart&page=1&city=' + city
-// 	let paths = []
-
-// 	try {
-// 		let response = await axios.get(url, {
-// 			headers: headers
-// 		})
-
-// 		paths = response.data.data.map((detailId) => {
-// 			{
-// 				params: { id: detailId.sku }
-// 			}
-// 		})
-// 	} catch (error) {
-// 		console.log(error)
-// 	}
-
-// 	return { paths, fallback: 'blocking' };
-// }
-
-export async function getStaticPaths() {
-	const paths = ["/details/APR-PT13-03/bake-parlor-tikka-macaroni---250gm"];
-	return { paths, fallback: true };
-}
-
-export async function getStaticProps({ query, params }) {
-	const { id, productName } = query || params;
-	let { headers } = getGeneralApiParams()
-	let city = 'karachi'
-	let url = base_url_api + '/catalog/products/detail?id=' + id + '&city=' + city + '&lang=en&client_type=apricart&userid=abc123'
-	let product = null
-	try {
-		let response = await axios.get(url,
-			{
-				headers: headers
-			})
-		product = response.data;
-	} catch (error) {
-		console.log(error)
-	}
-
-	return {
-		props: {
-			product,
-		},
-		revalidate: 200
-	};
 }

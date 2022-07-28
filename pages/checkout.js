@@ -38,7 +38,8 @@ export default function Checkout() {
 	const [shipmentChargedAt, setShipmentChargedAt] = useState(0)
 	const [shipmentFixAmount, setShipmentFixAmount] = useState(0)
 	const [paymentMethods, setPaymentMethods] = useState([])
-	const [cartData, setCartData] = useState(null)
+	const [checkoutCartData, setCheckoutCartData] = useState(null)
+	const [shippingCartData, setShippingCartData] = useState(null)
 	const [checkoutData, setCheckOutData] = useState({
 		coupon: "",
 		notes: "",
@@ -57,11 +58,12 @@ export default function Checkout() {
 	useEffect(() => {
 		getPaymentMethodsApi()
 		getOptionsDataApi()
+		getShippingCartDataApi()
 	}, [])
 
 	useEffect(() => {
 		if (checkoutAddress) {
-			getCartDataApi()
+			getCheckoutCartDataApi()
 		}
 	}, [checkoutAddress])
 
@@ -80,7 +82,51 @@ export default function Checkout() {
 		}
 	}
 
-	const getCartDataApi = async () => {
+	const getShippingCartDataApi = async () => {
+		let { headers, city, userId } = getGeneralApiParams()
+		let lat = 0
+		let long = 0
+		let addressId = 0
+		let body = {
+			coupon: "",
+			notes: "",
+			paymentMethod: "cash",
+			address: addressId,
+			showProducts: true,
+			verify: true,
+			prodType: "cus",
+			day: "",
+			startTime: "",
+			endTime: "",
+			clientType: "apricart",
+			orderType: "delivery",
+		}
+		let url =
+			base_url_api +
+			"/order/cart/checkout?city=" +
+			city +
+			"&userid=" +
+			userId +
+			"&client_lat=" +
+			lat +
+			"&client_long=" +
+			long +
+			"&lang=en&client_type=apricart"
+
+		try {
+			let response = await axios.post(url, body, {
+				headers: headers,
+			})
+
+			setAddressErrorMessage("")
+			setShippingCartData(response.data.data)
+		} catch (error) {
+			setAddressErrorMessage(error?.response?.data?.message)
+			setShippingCartData(null)
+		}
+	}
+
+	const getCheckoutCartDataApi = async () => {
 		let { headers, city, userId } = getGeneralApiParams()
 		let lat = 0
 		let long = 0
@@ -126,10 +172,10 @@ export default function Checkout() {
 			})
 
 			setAddressErrorMessage("")
-			setCartData(response.data.data)
+			setCheckoutCartData(response.data.data)
 		} catch (error) {
 			setAddressErrorMessage(error?.response?.data?.message)
-			setCartData(null)
+			setCheckoutCartData(null)
 		}
 	}
 
@@ -161,7 +207,7 @@ export default function Checkout() {
 		}
 
 		if (viewState != "shipping") {
-			getCartDataApi()
+			getCheckoutCartDataApi()
 		}
 	}
 
@@ -193,7 +239,7 @@ export default function Checkout() {
 		}
 
 		if (viewState != "shipping") {
-			getCartDataApi()
+			getCheckoutCartDataApi()
 		}
 	}
 
@@ -252,7 +298,7 @@ export default function Checkout() {
 		}
 
 		if (viewState != "shipping") {
-			getCartDataApi()
+			getCheckoutCartDataApi()
 		}
 	}
 
@@ -356,12 +402,6 @@ export default function Checkout() {
 						onClick("shipping")
 					}}
 				>
-					{/* <Image
-						src={currentState === 'shipping' ? blueCircleIcon : blackCircleIcon}
-						alt={"icons"}
-						height={20}
-						width={20}
-					/> */}
 					<p className={pStyle}>SHIPPING</p>
 				</button>
 				<button
@@ -383,12 +423,6 @@ export default function Checkout() {
 						}
 					}}
 				>
-					{/* <Image
-						src={currentState === 'payment' ? blueCircleIcon : blackCircleIcon}
-						alt={"icons"}
-						height={20}
-						width={20}
-					/> */}
 					<p className={pStyle}>PAYMENT</p>
 				</button>
 				<button
@@ -410,29 +444,8 @@ export default function Checkout() {
 						}
 					}}
 				>
-					{/* <Image
-						src={currentState === 'review' ? blueCircleIcon : blackCircleIcon}
-						alt={"icons"}
-						height={20}
-						width={20}
-					/> */}
 					<p className={pStyle}>COMPLETE</p>
 				</button>
-				{/* <button className={divStyle}
-					onClick={() => {
-						onClick('details')
-					}}
-				>
-					<Image
-						src={currentState === 'details' ? blueCircleIcon : blackCircleIcon}
-						alt={"icons"}
-						height={20}
-						width={20}
-					/>
-					<p className={pStyle}>
-						DETAILS
-					</p>
-				</button> */}
 			</div>
 		)
 	}
@@ -483,7 +496,7 @@ export default function Checkout() {
 									</div>
 									<div className="flex flex-col justify-between">
 										<p>{title}</p>
-										<div className="flex flex-row space-x-4">
+										<div className="flex flex-row space-x-2 lg:space-x-4 items-center">
 											<button
 												onClick={() => {
 													decrementItemQty(
@@ -542,13 +555,15 @@ export default function Checkout() {
 						<p className={pRight}>PKR {getTotalPrice()}</p>
 						<p className={pLeft}>Shipping</p>
 						{getTotalPrice() < shipmentChargedAt ? (
-							<p className={[pRight] + ' text-red-700'}>
+							<p className={[pRight] + " text-red-700"}>
 								Add items worth PKR{" "}
 								{shipmentChargedAt - getTotalPrice()} more to
 								avail free shipping
 							</p>
 						) : (
-							<p className={[pRight] + ' text-green-700'}>Free Shipping</p>
+							<p className={[pRight] + " text-green-700"}>
+								Free Shipping
+							</p>
 						)}
 						<p className={pLeft}>Shipping Amount</p>
 						{getTotalPrice() < shipmentChargedAt ? (
@@ -557,7 +572,7 @@ export default function Checkout() {
 							<p className={pRight}>Free Shipping</p>
 						)}
 						<p className={pLeft}>Total</p>
-						<p className={pRight}>PKR --</p>
+						<p className={pRight}>PKR {getTotalPrice()}</p>
 					</div>
 				</div>
 			)
@@ -571,11 +586,11 @@ export default function Checkout() {
 				grand_total,
 				shipment_message,
 				base_currency_code,
-			} = cartData
+			} = checkoutCartData
 			return (
 				<div className="flex flex-col w-full h-full justify-between bg-white rounded-3xl">
 					<div className="overflow-y-auto p-4 h-96 space-y-4">
-						{cartData.products.map((item) => {
+						{checkoutCartData.products.map((item) => {
 							let {
 								title,
 								qty,
@@ -682,53 +697,81 @@ export default function Checkout() {
 		}
 
 		if (currentState === "review") {
-			let { subtotal, tax, shipping_amount, grand_total, shipment_message, base_currency_code } = cartData
+			let {
+				subtotal,
+				tax,
+				shipping_amount,
+				grand_total,
+				shipment_message,
+				base_currency_code,
+			} = checkoutCartData
 			return (
 				<div className="hidden lg:flex flex-col w-full h-full justify-between bg-white rounded-3xl">
 					<div className="overflow-y-auto p-4 h-96 space-y-4">
-						{cartData.products.map((item) => {
-							let { title, qty, currentPrice, id, productImageUrlThumbnail, productImageUrl, sku } = item
+						{checkoutCartData.products.map((item) => {
+							let {
+								title,
+								qty,
+								currentPrice,
+								id,
+								productImageUrlThumbnail,
+								productImageUrl,
+								sku,
+							} = item
 							return (
-								<div key={id} className='flex flex-row space-x-2 shadow rounded-3xl overflow-hidden p-2'>
+								<div
+									key={id}
+									className="flex flex-row space-x-2 shadow rounded-3xl overflow-hidden p-2"
+								>
 									<div className="relative h-[100px] w-[100px]">
 										<Image
-											src={productImageUrlThumbnail ? productImageUrlThumbnail : (productImageUrl ? productImageUrl : missingImageIcon)}
-											layout={'fill'}
-											alt='thumbnail'
+											src={
+												productImageUrlThumbnail
+													? productImageUrlThumbnail
+													: productImageUrl
+													? productImageUrl
+													: missingImageIcon
+											}
+											layout={"fill"}
+											alt="thumbnail"
 										/>
 									</div>
 									<div className="flex flex-col justify-between">
-										<p>
-											{title}
-										</p>
+										<p>{title}</p>
 										<div className="flex flex-row space-x-4">
 											<button
 												disabled={true}
 												onClick={() => {
-													decrementItemQty(sku, qty, id)
+													decrementItemQty(
+														sku,
+														qty,
+														id
+													)
 												}}
 											>
 												<Image
 													src={minusIcon}
 													height={20}
 													width={20}
-													alt='icon'
+													alt="icon"
 												/>
 											</button>
-											<p>
-												{qty}
-											</p>
+											<p>{qty}</p>
 											<button
 												disabled={true}
 												onClick={() => {
-													incrementItemQty(sku, qty, id)
+													incrementItemQty(
+														sku,
+														qty,
+														id
+													)
 												}}
 											>
 												<Image
 													src={plusIcon}
 													height={20}
 													width={20}
-													alt='icon'
+													alt="icon"
 												/>
 											</button>
 											<button
@@ -741,49 +784,31 @@ export default function Checkout() {
 													src={trashIcon}
 													height={20}
 													width={20}
-													alt='icon'
+													alt="icon"
 												/>
 											</button>
-											<p>
-												x RS. {currentPrice}
-											</p>
+											<p>x RS. {currentPrice}</p>
 										</div>
-										<p>
-											RS. {currentPrice}
-										</p>
+										<p>RS. {currentPrice}</p>
 									</div>
 								</div>
 							)
 						})}
 					</div>
 					<div className="grid grid-cols-2 gap-2 font-lato items-center border-t-2 px-4 py-2">
-						<p className={pLeft}>
-							SubTotal
-						</p>
-						<p className={pRight}>
-							{subtotal}
-						</p>
-						<p className={pLeft}>
-							Tax
-						</p>
+						<p className={pLeft}>SubTotal</p>
+						<p className={pRight}>{subtotal}</p>
+						<p className={pLeft}>Tax</p>
 						<p className={pRight}>
 							{base_currency_code} {tax}
 						</p>
-						<p className={pLeft}>
-							Shipping
-						</p>
-						<p className={pRight}>
-							{parse(shipment_message)}
-						</p>
-						<p className={pLeft}>
-							Shipping Amount
-						</p>
+						<p className={pLeft}>Shipping</p>
+						<p className={pRight}>{parse(shipment_message)}</p>
+						<p className={pLeft}>Shipping Amount</p>
 						<p className={pRight}>
 							{base_currency_code} {shipping_amount}
 						</p>
-						<p className={pLeft}>
-							Total
-						</p>
+						<p className={pLeft}>Total</p>
 						<p className={pRight}>
 							{base_currency_code} {grand_total}
 						</p>
@@ -811,44 +836,52 @@ export default function Checkout() {
 		)
 	}
 
+	if (!shippingCartData) {
+		return (
+			<div>
+				<HeadTag title={"Checkout"} />
+				<h5 className="login-token">YOUR CART IS EMPTY</h5>
+			</div>
+		)
+	}
+
 	return (
 		<div>
 			<HeadTag title={"Checkout"} />
-			<div className="flex flex-col lg:grid lg:grid-cols-5 2xl:grid 2xl:grid-cols-6 gap-2 divide-y lg:gap-28">
+			<div className="flex flex-col w-full lg:grid lg:grid-cols-5 2xl:grid 2xl:grid-cols-6 gap-2 divide-y lg:gap-28">
 				<div className="lg:col-span-3 2xl:col-span-4 space-y-12">
 					<ProgressBar
 						currentState={viewState}
 						onClick={setViewState}
 					/>
 					{viewState == "shipping" && (
-						<section className="flex flex-col space-y-4">
-							<SectionHeading text={"Delivery Details"} />
+						<section className="flex flex-col space-y-4 w-full">
+							<div className="text-center">
+								<SectionHeading text={"Delivery Details"} />
+							</div>
 							<SelectAddress
 								type={"checkout"}
 								setAddress={setCheckoutAddress}
 								dropDownSelectedAddress={checkoutAddress}
 							/>
 							<ErrorText text={addressErrorMessage} />
-							<TextField
-								label={"Special Instructions"}
-								placeHolder={"instructions"}
-								customOnChange={true}
-								onChange={handleCheckoutDataChange}
-								name={"notes"}
-								value={checkoutData.notes}
-							/>
-							{/* <SubmitButton
-								text={"CONTINUE TO PAYMENT"}
-								onClick={() => {
-									setViewState('payment')
-								}}
-								disabled={cartData == null}
-							/> */}
+							<div className="border-y py-1">
+								<TextField
+									label={"Special Instructions"}
+									placeHolder={"instructions"}
+									customOnChange={true}
+									onChange={handleCheckoutDataChange}
+									name={"notes"}
+									value={checkoutData.notes}
+								/>
+							</div>
 						</section>
 					)}
 					{viewState === "payment" && (
 						<section className="space-y-6">
-							<SectionHeading text={"PAYMENT SELECTION"} />
+							<div className="text-center">
+								<SectionHeading text={"PAYMENT SELECTION"} />
+							</div>
 							<div className="space-y-2">
 								<InputLabelText text={"Payment Method"} />
 								<div className="flex flex-col space-y-2">
@@ -879,9 +912,7 @@ export default function Checkout() {
 									})}
 								</div>
 							</div>
-							<ErrorText
-								text={checkoutErrorMessage}
-							/>
+							<ErrorText text={checkoutErrorMessage} />
 						</section>
 					)}
 					{viewState == "review" && (
@@ -905,27 +936,45 @@ export default function Checkout() {
 				<div className="lg:col-span-2 2xl:col-span-2 h-full">
 					<Cart currentState={viewState} />
 				</div>
-				{viewState === "shipping" && (
-					<div>
-						<SubmitButton
-							text={
-								cartData
-									? "CONTINUE TO PAYMENT"
-									: "SELECT ADDRESS"
-							}
-							onClick={() => {
-								setViewState("payment")
-							}}
-							disabled={cartData == null}
-						/>
-					</div>
-				)}
-				{viewState === "payment" && (
-					<div>
-						<SubmitButton text={"CHECKOUT"} onClick={checkoutApi} />
-						<ErrorText text={checkoutErrorMessage} />
-					</div>
-				)}
+				{/* CHECKOUT BUTTON DIV */}
+				<div className="col-span-5">
+					{viewState === "shipping" && (
+						<div>
+							<SubmitButton
+								text={
+									checkoutCartData
+										? "CONTINUE TO PAYMENT"
+										: "SELECT ADDRESS"
+								}
+								onClick={() => {
+									setViewState("payment")
+									window.scroll({
+										top: 0,
+										left: 0,
+										behavior: "smooth",
+									})
+								}}
+								disabled={checkoutCartData == null}
+							/>
+						</div>
+					)}
+					{viewState === "payment" && (
+						<div>
+							<SubmitButton
+								text={"CHECKOUT"}
+								onClick={()=>{
+									checkoutApi()
+									window.scroll({
+										top: 0,
+										left: 0,
+										behavior: "smooth",
+									})
+								}}
+							/>
+							<ErrorText text={checkoutErrorMessage} />
+						</div>
+					)}
+				</div>
 			</div>
 		</div>
 	)

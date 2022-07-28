@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react"
-import { useRouter } from "next/router"
 import axios from "axios"
 import HeadTag from "../../components/Layout/components/Head/HeadTag"
 import Categories from "../../components/Layout/components/Categories/Categories"
@@ -8,21 +7,42 @@ import PageHeading from '../../components/Layout/components/Typography/PageHeadi
 import { getGeneralApiParams } from "../../helpers/ApiHelpers"
 import { base_url_api } from "../../information.json"
 
-export default function Recommended({ products }) {
-	const router = useRouter()
-
+export default function Recommended() {
+	const [products, setProducts] = useState(null)
 	const [categories, setCategories] = useState(null)
 
 	useEffect(() => {
 		getCategoriesApi()
+		getPoductsApi()
 	}, [])
 
+	const getPoductsApi = async () => {
+		let { headers, city, userId } = getGeneralApiParams()
+		let url =
+			base_url_api +
+			"/catalog/recommended?page=1&size=20&city=" +
+			city +
+			"&lang=en&client_type=apricart&userid=" + userId
+
+		try {
+			let response = await axios.get(url, {
+				headers: headers,
+			})
+
+			setProducts(response.data)
+		} catch (err) {
+			console.log(err)
+		}
+	}
+
 	const getCategoriesApi = async () => {
-		let { city, headers } = getGeneralApiParams()
+		let { city, headers, userId } = getGeneralApiParams()
 		let url =
 			base_url_api +
 			"/catalog/categories?level=all&client_type=apricart&city=" +
-			city
+			city +
+			"&userid=" +
+			userId
 
 		try {
 			let response = await axios.get(url, {
@@ -34,10 +54,10 @@ export default function Recommended({ products }) {
 		}
 	}
 
-	if (router.isFallback) {
+	if (!products) {
 		return (
 			<div>
-				<h2>Loading Page Data...</h2>
+				<p>Loading</p>
 			</div>
 		)
 	}
@@ -73,32 +93,4 @@ export default function Recommended({ products }) {
 			</div>
 		</div>
 	)
-}
-
-export async function getStaticProps() {
-	let { headers } = getGeneralApiParams()
-	let city = "karachi"
-	let url =
-		base_url_api +
-		"/catalog/recommended?page=1&size=10&city=" +
-		city +
-		"&lang=en"
-	let products = null
-
-	try {
-		let response = await axios.get(url, {
-			headers: headers,
-		})
-
-		products = response.data
-	} catch (err) {
-		console.log(err)
-	}
-
-	return {
-		props: {
-			products,
-		},
-		revalidate: 200,
-	}
 }

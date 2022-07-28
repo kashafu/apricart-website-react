@@ -29,7 +29,7 @@ export default function SearchBar() {
 		}
 	}, [selectedCategoryId])
 
-	const searchHandler = async (searchTerm) => {
+	const getSearchResultsApi = async (searchTerm) => {
 		if (searchTerm.length <= 2) {
 			setSearchResults([])
 			setShowSearchResults(false)
@@ -38,7 +38,7 @@ export default function SearchBar() {
 		let { city, userId, headers } = getGeneralApiParams()
 		let url =
 			base_url_api +
-			"/catalog/products/search?page=1&size=20&term=" +
+			"/catalog/products/search?page=1&size=10&term=" +
 			searchTerm +
 			"&category=" +
 			selectedCategoryId +
@@ -55,11 +55,11 @@ export default function SearchBar() {
 	}
 
 	const getCategoriesApi = async () => {
-		let { city, headers } = getGeneralApiParams()
+		let { city, headers, userId } = getGeneralApiParams()
 		let url =
 			base_url_api +
 			"/catalog/categories?level=all&client_type=apricart&city=" +
-			city
+			city + "&userid=" + userId 
 
 		try {
 			let response = await axios.get(url, {
@@ -106,25 +106,21 @@ export default function SearchBar() {
 					value={searchText}
 					onChange={(e) => {
 						setSearchText(e.target.value)
-						searchHandler(e.target.value)
+						getSearchResultsApi(e.target.value)
 					}}
 					placeholder="Search"
 					onBlur={async () => {
 						await new Promise((r) => setTimeout(r, 1000))
 						setShowSearchResults(false)
 					}}
+					onKeyPress={async (e)=>{
+						if(e.key === 'Enter'){
+							router.push('/products/search/' + e.target.value)
+							await new Promise((r) => setTimeout(r, 1000))
+							setShowSearchResults(false)
+						}
+					}}
 				/>
-				{/* <div className="absolute right-2 top-0 bottom-0 m-auto h-[20px]"
-                    onClick={()=>{
-                        searchIconElement.current.focus()
-                    }}
-                >
-                    <Image
-                        src={searchIcon}
-                        width={20}
-                        height={20}
-                    />
-                </div> */}
 			</div>
 			{showSearchResults && (
 				<div className="absolute z-20 w-full bg-white max-h-[350px] overflow-auto rounded-b-lg">

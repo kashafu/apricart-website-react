@@ -1,4 +1,5 @@
 import Image from "next/image"
+import { useRouter } from "next/router"
 import Categories from "../components/Layout/components/Categories/Categories"
 import { useEffect, useState } from "react"
 import { base_url_api } from "../information.json"
@@ -12,13 +13,17 @@ import lifestyle from "../public/assets/images/banners/lifestyle.jpeg"
 import nationals from "../public/assets/images/banners/nationals.jpeg"
 import mainBanner from "../public/assets/images/banners/mainBanner.png"
 import ErrorText from "../components/Layout/components/Typography/ErrorText"
+import crossIcon from "../public/assets/svgs/crossIcon.svg"
 
 export default function Home() {
+	const router = useRouter()
+
 	let { city, token } = getGeneralApiParams()
 
 	const [categories, setCategories] = useState(null)
 	const [homeData, setHomeData] = useState(null)
 	const [errorMessage, setErrorMessage] = useState("Loading")
+	const [showPopupAd, setShowPopupAd] = useState(false)
 
 	useEffect(() => {
 		getHomeDataApi()
@@ -47,17 +52,18 @@ export default function Home() {
 			})
 
 			setHomeData(response.data.data)
+			setShowPopupAd(response.data.data.dialog)
 		} catch (error) {
 			setErrorMessage(error.message)
 		}
 	}
 
 	const getCategoriesApi = async () => {
-		let { city, headers } = getGeneralApiParams()
+		let { city, headers, userId } = getGeneralApiParams()
 		let url =
 			base_url_api +
 			"/catalog/categories?level=all&client_type=apricart&city=" +
-			city
+			city + "&userid=" + userId 
 
 		try {
 			let response = await axios.get(url, {
@@ -86,9 +92,39 @@ export default function Home() {
 	return (
 		<div className="">
 			<HeadTag title={"APRICART"} />
+			{/* POPUP AD */}
+			{showPopupAd && (
+				<div className="lg:hidden fixed w-3/4 h-3/4 z-10 inset-0 m-auto shadow-2xl">
+					<div
+						className="relative w-full h-full"
+					>
+						<Image
+							src={homeData.dialogImageUrl}
+							layout="fill"
+							alt="popup banner"
+							// onClick={() => {
+							// 	router.push("/offers/" + homeData.dialogValue)
+							// }}
+						/>
+					</div>
+					<button
+						className="absolute top-[-10px] right-[-10px] z-20"
+						onClick={() => {
+							setShowPopupAd(false)
+						}}
+					>
+						<Image
+							src={crossIcon}
+							height={20}
+							width={20}
+							alt="icon"
+						/>
+					</button>
+				</div>
+			)}
 			<div className="space-y-8">
 				{/* BANNERS SECTION hidden on phone */}
-				<section className="hidden lg:relative lg:w-screen lg:aspect-[16/6] lg:grid grid-cols-12 items-center">
+				<section className="hidden lg:relative lg:w-full lg:aspect-[16/6] lg:grid grid-cols-12 items-center">
 					{/* BACKGROUND IMAGE */}
 					<div className="absolute w-full h-full blur-lg">
 						<Image

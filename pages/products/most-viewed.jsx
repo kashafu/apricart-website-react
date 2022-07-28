@@ -1,28 +1,48 @@
 import { useState, useEffect } from "react"
-import { useRouter } from "next/router"
 import axios from "axios"
 import HeadTag from "../../components/Layout/components/Head/HeadTag"
 import Categories from "../../components/Layout/components/Categories/Categories"
 import SingleProduct from "../../components/Layout/components/Products/SingleProduct"
-import PageHeading from '../../components/Layout/components/Typography/PageHeading'
+import PageHeading from "../../components/Layout/components/Typography/PageHeading"
 import { getGeneralApiParams } from "../../helpers/ApiHelpers"
 import { base_url_api } from "../../information.json"
 
-export default function MostViewed({ products }) {
-	const router = useRouter()
-
+export default function MostViewed() {
+	const [products, setProducts] = useState(null)
 	const [categories, setCategories] = useState(null)
 
 	useEffect(() => {
 		getCategoriesApi()
+		getPoductsApi()
 	}, [])
 
+	const getPoductsApi = async () => {
+		let { headers, city, userId } = getGeneralApiParams()
+		let url =
+			base_url_api +
+			"/catalog/mostviewed?page=1&size=20&city=" +
+			city +
+			"&lang=en&client_type=apricart&userid=" + userId
+
+		try {
+			let response = await axios.get(url, {
+				headers: headers,
+			})
+
+			setProducts(response.data)
+		} catch (err) {
+			console.log(err)
+		}
+	}
+
 	const getCategoriesApi = async () => {
-		let { city, headers } = getGeneralApiParams()
+		let { city, headers, userId } = getGeneralApiParams()
 		let url =
 			base_url_api +
 			"/catalog/categories?level=all&client_type=apricart&city=" +
-			city
+			city +
+			"&userid=" +
+			userId
 
 		try {
 			let response = await axios.get(url, {
@@ -34,10 +54,10 @@ export default function MostViewed({ products }) {
 		}
 	}
 
-	if (router.isFallback) {
+	if (!products) {
 		return (
 			<div>
-				<h2>Loading Page Data...</h2>
+				<p>Loading</p>
 			</div>
 		)
 	}
@@ -52,9 +72,7 @@ export default function MostViewed({ products }) {
 				</section>
 				{/* PRODUCTS SECTION */}
 				<section className="col-span-5 lg:col-span-4 space-y-12">
-                    <PageHeading
-                        text='MOST VIEWED PRODUCTS'
-                    />
+					<PageHeading text="MOST VIEWED PRODUCTS" />
 					{products == null || products?.data?.length == 0 ? (
 						<div>NO ITEMS EXIST</div>
 					) : (
@@ -73,32 +91,4 @@ export default function MostViewed({ products }) {
 			</div>
 		</div>
 	)
-}
-
-export async function getStaticProps() {
-	let { headers } = getGeneralApiParams()
-	let city = "karachi"
-	let url =
-		base_url_api +
-		"/catalog/mostviewed?page=1&size=10&city=" +
-		city +
-		"&lang=en"
-	let products = null
-
-	try {
-		let response = await axios.get(url, {
-			headers: headers,
-		})
-
-		products = response.data
-	} catch (err) {
-		console.log(err)
-	}
-
-	return {
-		props: {
-			products,
-		},
-		revalidate: 200,
-	}
 }

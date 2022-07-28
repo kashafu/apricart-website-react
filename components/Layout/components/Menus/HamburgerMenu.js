@@ -59,7 +59,7 @@ export default function HamburgerMenu({ }) {
                                 </button>
                             </div>
                             {token && (
-                                <p>
+                                <p className="text-main-blue font-bold text-lg capitalize">
                                     Welcome, {name}
                                 </p>
                             )}
@@ -112,7 +112,14 @@ export default function HamburgerMenu({ }) {
                                     text={"ACCOUNT"}
                                     onClick={() => {
                                         setShowMenu(!showMenu)
-                                        router.push('/account_detail')
+                                        router.push('/profile_user')
+                                    }}
+                                />
+                                <SubmitButton
+                                    text={'ORDERS'}
+                                    onClick={()=>{
+                                        setShowMenu(!showMenu)
+                                        router.push('/order')
                                     }}
                                 />
                                 <SubmitButton
