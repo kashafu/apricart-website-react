@@ -6,7 +6,6 @@ import Cookies from "universal-cookie"
 import verticleLineIcon from "../../../../public/assets/svgs/verticalLine.svg"
 import heartIcon from "../../../../public/assets/svgs/heartIcon.svg"
 import locationPinPNG from "../../../../public/assets/images/location.png"
-
 import { base_url_api } from "../../../../information.json"
 import { getGeneralApiParams } from "../../../../helpers/ApiHelpers"
 import SearchBar from "../SearchBar/SearchBar"
