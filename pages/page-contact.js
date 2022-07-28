@@ -59,21 +59,10 @@ export default function PageContact() {
           
                     <div className="text-center  text-main-blue font-bold">
                         <h4 className="text-brand text-5xl text-main-blue font-bold mb-2">Contact Us</h4>
-                        {/* <h1 className="mb-2 wow fadeIn animated font-xxl fw-900">
-                            Let's Talk  <br />
-                            <span className="text-style-1"></span>
-                        </h1> */}
-         <p className="w-50 m-auto mb-50 wow fadeIn animated">We love hearing from you, our Apricart customers. Please contact us about anything at all. Your experience or request for a specific product. We’ll do everything we can to make your experience unforgettable every time. Reach us however you like.</p>
-                        {/* <p className="wow fadeIn animated">
-                            <a className="btn btn-brand btn-lg font-weight-bold text-white border-radius-5 btn-shadow-brand hover-up" href="page-about.html">About Us</a>
-                            <a className="btn btn-outline btn-lg btn-brand-outline font-weight-bold text-brand bg-white text-hover-white ml-15 border-radius-5 btn-shadow-brand hover-up">Support Center</a>
-                        </p>  */}
-                         <h3 className="my-4 justify-between items-center">Drop Us a Line</h3>
-                
-                <p className="my-4 justify-between items-center">Please direct all inquiries via email to: support@apricart.pk</p>
+                     
                     </div>
            
-            <div className="flex flex-col gap-y-4 justify-between items-center ">
+            <div className="flex flex-col w-full gap-y-4 justify-between items-center ">
 
              
                 <TextField
