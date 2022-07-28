@@ -12,8 +12,8 @@ export default function Popup({content, handleClose}){
                 >
                     <Image
                         src={crossIcon}
-                        width={10}
-                        height={10}
+                        width={20}
+                        height={20}
                         alt='icon'
                     />
                 </button>

@@ -3,6 +3,7 @@ import { getGeneralApiParams } from "../../helpers/ApiHelpers"
 import { base_url_api } from '../../information.json'
 import MainProducts from '../../components/Layout/components/Products/MainProducts'
 import Categories from '../../components/Layout/components/Categories/Categories'
+import PageHeading from '../../components/Layout/components/Typography/PageHeading'
 import { useRouter } from 'next/router'
 import axios from "axios"
 
@@ -28,7 +29,9 @@ export default function OfferId() {
 					headers: headers
 				}
 			)
-			setOfferItems(response.data.data)
+			if(response.data.data.length > 0){
+				setOfferItems(response.data.data)
+			}
 		} catch (error) {
 			console.log(error)
 		}
@@ -56,9 +59,9 @@ export default function OfferId() {
 	if (!offerItems) {
 		return (
 			<div>
-				<p>
-					Items do not exist
-				</p>
+				<PageHeading
+					text={'No items at the moment'}
+				/>
 			</div>
 		)
 	}

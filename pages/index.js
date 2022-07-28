@@ -97,9 +97,9 @@ export default function Home() {
 							src={homeData.dialogImageUrl}
 							layout="fill"
 							alt="popup banner"
-							// onClick={() => {
-							// 	router.push("/offers/" + homeData.dialogValue)
-							// }}
+							onClick={() => {
+								router.push("/offers/" + homeData.dialogValue)
+							}}
 						/>
 					</div>
 					<button
