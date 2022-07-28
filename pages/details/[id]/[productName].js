@@ -14,7 +14,7 @@ import HeadTag from "../../../components/Layout/components/Head/HeadTag";
 import minusIcon from '../../../public/assets/svgs/minusIcon.svg'
 import plusIcon from '../../../public/assets/svgs/plusIcon.svg'
 
-export default function Post() {
+export default function ProductDetail() {
 	const dispatch = useDispatch();
 	const cookies = new Cookies();
 	let isLoggedIn = cookies.get('cookies-token') != null
@@ -92,14 +92,6 @@ export default function Post() {
 			setMessage('Item does not exist')
 		}
 	}
-
-	// if (router.isFallback) {
-	// 	return (
-	// 		<div>
-	// 			<h2>Loading Page Data...</h2>
-	// 		</div>
-	// 	);
-	// }
 
 	const addToCartApi = async () => {
 		let { city, userId, headers } = getGeneralApiParams()
@@ -307,55 +299,3 @@ export default function Post() {
 		</div>
 	);
 }
-
-// export async function getStaticPaths() {
-// 	let { headers } = getGeneralApiParams()
-// 	let city = 'karachi'
-// 	let url = base_url_api + '/catalog/products?size=200&sortType=&sortDirection=desc&lang=en&client_type=apricart&page=1&city=' + city
-// 	let paths = []
-
-// 	try {
-// 		let response = await axios.get(url, {
-// 			headers: headers
-// 		})
-
-// 		paths = response.data.data.map((detailId) => {
-// 			{
-// 				params: { id: detailId.sku }
-// 			}
-// 		})
-// 	} catch (error) {
-// 		console.log(error)
-// 	}
-
-// 	return { paths, fallback: 'blocking' };
-// }
-
-// export async function getStaticPaths() {
-// 	const paths = ["/details/APR-PT13-03/bake-parlor-tikka-macaroni---250gm"];
-// 	return { paths, fallback: true };
-// }
-
-// export async function getStaticProps({ query, params }) {
-// 	const { id, productName } = query || params;
-// 	let { headers } = getGeneralApiParams()
-// 	let city = 'karachi'
-// 	let url = base_url_api + '/catalog/products/detail?id=' + id + '&city=' + city + '&lang=en&client_type=apricart&userid=abc123'
-// 	let product = null
-// 	try {
-// 		let response = await axios.get(url,
-// 			{
-// 				headers: headers
-// 			})
-// 		product = response.data;
-// 	} catch (error) {
-// 		console.log(error)
-// 	}
-
-// 	return {
-// 		props: {
-// 			product,
-// 		},
-// 		// revalidate: 200
-// 	};
-// }
