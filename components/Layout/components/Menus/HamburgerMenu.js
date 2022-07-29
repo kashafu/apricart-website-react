@@ -122,6 +122,13 @@ export default function HamburgerMenu() {
                                         router.push('/order')
                                     }}
                                 />
+                                  <SubmitButton
+                                    text={'ADDRESS'}
+                                    onClick={()=>{
+                                        setShowMenu(!showMenu)
+                                        router.push('/address')
+                                    }}
+                                />
                                 <SubmitButton
                                     text={"LOGOUT"}
                                     onClick={logout}
