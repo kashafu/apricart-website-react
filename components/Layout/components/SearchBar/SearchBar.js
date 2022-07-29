@@ -3,7 +3,6 @@ import { useRouter } from "next/router"
 import { useEffect, useState, useRef } from "react"
 import { getGeneralApiParams } from "../../../../helpers/ApiHelpers"
 import { base_url_api } from "../../../../information.json"
-import Marquee from 'react-fast-marquee'
 import SingleProductList from "../Products/SingleProductList"
 
 export default function SearchBar() {
