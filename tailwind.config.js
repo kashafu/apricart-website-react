@@ -27,7 +27,10 @@ module.exports = {
       },
       fontFamily: {
         lato: ['Lato', 'sans-serif']
-      }
+      },
+      screens: {
+        '3xl': '1920px',
+      },
     },
   },
   plugins: [
