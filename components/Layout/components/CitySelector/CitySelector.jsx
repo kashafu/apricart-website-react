@@ -29,7 +29,7 @@ const CitySelector = () => {
 
 	return (
 		<div className="flex w-full justify-center">
-			<div className="">
+			<div className="bg-slate-100 rounded-xl py-2 px-4">
 				<button
 					className="flex flex-row space-x-2 items-center"
 					onClick={togglePopup}
