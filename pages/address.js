@@ -39,13 +39,12 @@ export default function Address() {
 								</Link>
 
 							</div>
-							<div>
+						</div>
+						<div>
 							<SelectAddress
 								type={'manage'}
 							/>
 						</div>
-						</div>
-						
 					</div>
 				</div>
 			</section>

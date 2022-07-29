@@ -170,7 +170,7 @@ export default function ProfileUser() {
 				</div>
 			):(
          <div className="flex justify-center w-full">    
-        <div className="flex flex-col  justify-center items-center align-center sm:w-1/2  bg-slate-100 shadow rounded-3xl">
+        <div className="flex flex-col w-full  justify-center items-center align-center sm:w-1/2  bg-slate-100 shadow rounded-3xl">
 				
 				  <PageHeading
 			 text={"UPDATE PROFILE"}
@@ -199,7 +199,7 @@ export default function ProfileUser() {
 			 />
 			 
 		 </div>
-		 <div className="flex flex-col w-1/3 my-2  space-y-2  justify-between align-center items-center">
+		 <div className="flex flex-col w-3/4 sm:w-1/3 my-2  space-y-2  justify-between align-center items-center">
 			 
 			 <SubmitButton
 			 className="p-4 h-[10px]"
