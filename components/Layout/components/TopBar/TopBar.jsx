@@ -30,16 +30,8 @@ export default function Layout() {
 
 	let pStyle =
 		"font-lato font-bold text-sm lg:text-md text-black lg:text-base"
-	let { city } = getGeneralApiParams()
-
-	const [getcity, setcity] = useState(city)
-	const [isOpen, setIsOpen] = useState(false)
 
 	useEffect(() => {
-		if (cookies.get("cities") == null) {
-			cookies.set("cities", "karachi")
-			getLocation()
-		}
 		getOptionsDataApi()
 	}, [])
 
@@ -60,90 +52,9 @@ export default function Layout() {
 		}
 	}
 
-	const getLocation = () => {
-		if (!navigator.geolocation) {
-			return
-		}
-
-		navigator.geolocation.getCurrentPosition((position) => {
-			let latitude, longitude
-			latitude = position.coords.latitude
-			longitude = position.coords.longitude
-			// KARACHI
-			let karachiCoords = {
-				top: [25.633730508113278, 67.36401298889072],
-				bottom: [24.806311517712324, 67.18548517144208],
-				left: [24.83871833773748, 66.65264830090317],
-				right: [25.139943073700493, 67.64691091500156],
-			}
-
-			if (
-				latitude <= karachiCoords.top[0] &&
-				latitude >= karachiCoords.bottom[0] &&
-				longitude <= karachiCoords.right[1] &&
-				longitude >= karachiCoords.left[1]
-			) {
-				setcity("karachi")
-				cookies.set("cities", "karachi")
-				return
-			}
-
-			// PESHAWAR
-			let peshawarCoords = {
-				top: [34.1040966916378, 71.56477299064852],
-				bottom: [33.856413627696355, 71.52769413625535],
-				left: [33.99144768127041, 71.38281194594128],
-				right: [34.025599547506026, 71.75909365348681],
-			}
-
-			if (
-				latitude <= peshawarCoords.top[0] &&
-				latitude >= peshawarCoords.bottom[0] &&
-				longitude <= peshawarCoords.right[1] &&
-				longitude >= peshawarCoords.left[1]
-			) {
-				setcity("peshawar")
-				cookies.set("cities", "peshawar")
-				return
-			}
-		})
-	}
-
-	const togglePopup = () => {
-		setIsOpen(!isOpen)
-	}
-
-	const closeButton = () => {
-		setIsOpen(!isOpen)
-		window.location.reload()
-	}
-
-	const handleCity = (event) => {
-		setcity(event.target.value)
-		cookies.set("cities", event.target.value)
-	}
-
-	const submitCities = (e) => {
-		e.preventDefault()
-		setcity(e.target.value)
-	}
-
 	return (
 		<header className="flex flex-col">
 			<div className="flex flex-row w-full bg-main-yellow lg:justify-between px-2 lg:px-12 items-center h-[50px]">
-				{/* TICKER */}
-				{/* <div className="flex flex-row items-center h-full">
-                    <div className="hidden lg:inline flex items-center bg-main-red px-2 h-2/3">
-                        <p className="text-white font-roboto font-bold text-xs truncate md:text-xl">
-                            Latest Update
-                        </p>
-                    </div>
-                    <div className="overflow-x-auto text-center">
-                        <p className="font-lato text-sm font-bold text-main-blue whitespace-nowrap">
-                            {tickerSelector}
-                        </p>
-                    </div>
-                </div> */}
 				{/* ARPICART LOGO, LOCATION AND SELECTED ADDRESS */}
 				<div className="flex flex-row items-center justify-between">
 					{/* APRICART LOGO shown on phone, hidden on desktop*/}
@@ -165,7 +76,7 @@ export default function Layout() {
 								Latest Update
 							</p>
 						</div>
-						<Marquee speed={50} className='overflow-hidden'>
+						<Marquee speed={50} className="overflow-hidden">
 							<p className="text-center text-sm font-bold text-main-blue">
 								{tickerSelector}
 							</p>
@@ -186,24 +97,6 @@ export default function Layout() {
                     </div> */}
 					{/* LOCATION AND SELECTED ADDRESS */}
 					{/* <div className="flex flex-row space-x-4 lg:space-x-12 items-center"> */}
-					{/* LOCATION */}
-					{/* <div>
-                            <button
-                                className="flex flex-row space-x-2 items-center"
-                                onClick={togglePopup}
-                            >
-                                <div className="relative w-[12px] h-[15px] lg:w-[19px] lg:h-[22px]">
-                                    <Image
-                                        src={locationPinPNG}
-                                        alt={"location icon"}
-                                        layout={"fill"}
-                                    />
-                                </div>
-                                <p className={pStyle + " capitalize"}>
-                                    {getcity}
-                                </p>
-                            </button>
-                        </div> */}
 					{/* CURRENT SELECTED ADDRESS */}
 					{/* <div
                             className={
@@ -243,54 +136,6 @@ export default function Layout() {
 					</div>
 					<p className={[pStyle] + " truncate"}>0304-111-0195</p>
 				</div>
-				{isOpen && (
-					<div className="fixed w-1/2 bg-white h-1/6 border-8 inset-0 m-auto z-10">
-						<Popup
-							content={
-								<div className="flex flex-col items-center w-full h-full justify-around">
-									<p className="text-main-blue font-bold text-xl">
-										Select City
-									</p>
-									<div className="flex flex-col space-y-2">
-										<div className="flex flex-row space-x-2 items-center">
-											<input
-												className=""
-												type="radio"
-												name="cities"
-												value="karachi"
-												checked={getcity === "karachi"}
-												onChange={handleCity}
-											/>
-											<p className="text-main-bue font-bold">
-												Karachi
-											</p>
-										</div>
-										<div className="flex flex-row space-x-2 items-center">
-											<input
-												className=""
-												type="radio"
-												name="cities"
-												value="peshawar"
-												checked={getcity === "peshawar"}
-												onChange={handleCity}
-											/>
-											<p className="text-main-bue font-bold">
-												Peshawar
-											</p>
-										</div>
-									</div>
-									<div className="w-3/4">
-										<SubmitButton
-											text={"Change City"}
-											onClick={closeButton}
-										/>
-									</div>
-								</div>
-							}
-							handleClose={togglePopup}
-						/>
-					</div>
-				)}
 			</div>
 		</header>
 	)
