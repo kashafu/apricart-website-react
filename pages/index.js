@@ -143,14 +143,14 @@ export default function Home() {
 					</section>
 					{/* STATIC BANNERS */}
 					<section className="col-span-5 grid grid-rows-2 h-full w-full justify-start items-center space-y-8">
-						<div className="relative w-[500px] h-[180px] lg:w-[400px] lg:h-[150px] xl:w-[530px] xl:h-[190px] 2xl:w-[700px] 2xl:h-[280px]">
+						<div className="relative w-[500px] h-[180px] lg:w-[400px] lg:h-[150px] xl:w-[530px] xl:h-[190px] 2xl:w-[600px] 2xl:h-[220px]">
 							<Image
 								src={nationals}
 								layout={"fill"}
 								alt="banner"
 							/>
 						</div>
-						<div className="relative w-[500px] h-[180px] lg:w-[400px] lg:h-[150px] xl:w-[530px] xl:h-[190px] 2xl:w-[700px] 2xl:h-[280px]">
+						<div className="relative w-[500px] h-[180px] lg:w-[400px] lg:h-[150px] xl:w-[530px] xl:h-[190px] 2xl:w-[600px] 2xl:h-[220px]">
 							<Image
 								src={lifestyle}
 								layout={"fill"}
