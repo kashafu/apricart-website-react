@@ -1,23 +1,17 @@
-import { useState, useEffect } from "react"
+import { useEffect } from "react"
 import axios from "axios"
-import { Button } from "react-bootstrap"
 import Image from "next/image"
 import Link from "next/link"
-import Popup from "../Popup/Popup"
 import Cookies from "universal-cookie"
 import Marquee from "react-fast-marquee"
 import { useRouter } from "next/router"
 import { useSelector, useDispatch } from "react-redux"
 import { updateTicker } from "../../../../redux/general.slice"
-import { getGeneralApiParams } from "../../../../helpers/ApiHelpers"
 import { base_url_api } from "../../../../information.json"
 
 // IMAGES
-// import bikePNG from "../../../../public/assets/images/bike.png";
-import locationPinPNG from "../../../../public/assets/images/location.png"
 import phonePNG from "../../../../public/assets/images/phone.png"
 import logoPNG from "../../../../public/assets/images/logo.png"
-import SubmitButton from "../Buttons/SubmitButton"
 
 export default function Layout() {
 	const cookies = new Cookies()
