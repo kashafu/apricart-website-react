@@ -8,6 +8,7 @@ import Logo from "../Logo/Logo"
 import { getGeneralApiParams, logOutRemoveCookies, getGeneralCookies } from "../../../../helpers/ApiHelpers"
 import SubmitButton from "../Buttons/SubmitButton"
 import LinkButton from "../Buttons/LinkButton"
+import CitySelector from "../CitySelector/CitySelector"
 
 export default function HamburgerMenu() {
     const router = useRouter()
@@ -64,6 +65,9 @@ export default function HamburgerMenu() {
                                 </p>
                             )}
                             <div className="items-center align-center space-y-2">
+                                <div className="py-2">
+                                    <CitySelector />
+                                </div>
                                 <LinkButton
                                     text={"View Categories"}
                                     path={'/category'}
