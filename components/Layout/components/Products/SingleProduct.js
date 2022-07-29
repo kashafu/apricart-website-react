@@ -195,7 +195,7 @@ export default function SingleProduct({ product, isInStock }) {
 					</Link>
 				</div>
 				{/* TITLE */}
-				<p className="row-span-1 font-lato font-bold text-left text-xs lg:text-sm xl:text-lg text-main-blue">
+				<p className="row-span-1 font-lato font-bold text-left text-xs lg:text-sm xl:text-lg text-main-blue line-clamp-2">
 					{title}
 				</p>
 				{/* PRICE */}
@@ -307,7 +307,7 @@ export default function SingleProduct({ product, isInStock }) {
 					</Link>
 				</div>
 				{/* TITLE */}
-				<p className="row-span-1 font-lato font-bold text-left text-xs lg:text-lg text-main-blue">
+				<p className="row-span-1 font-lato font-bold text-left text-xs lg:text-lg text-main-blue line-clamp-2">
 					{title}
 				</p>
 				{/* PRICE */}
