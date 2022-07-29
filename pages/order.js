@@ -173,7 +173,7 @@ export default function Order() {
 																			</td>
 																			<td>
 																				{
-																					userOrder.receivedAt
+																					userOrder.created_at
 																				}
 																			</td>
 																			<td>
