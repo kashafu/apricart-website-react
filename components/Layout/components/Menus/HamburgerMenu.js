@@ -19,7 +19,7 @@ export default function HamburgerMenu() {
     const logout = () => {
         logOutRemoveCookies()
         router.push('/')
-        router.reload()
+        // router.reload()
     }
 
     return (
