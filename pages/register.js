@@ -41,7 +41,7 @@ export default function Register(){
       
         try {
             let { userId, headers } = getGeneralApiParams();
-            let url = base_url_api + "/auth/open/register?city=karachi&lang=en";
+            let url = base_url_api + "/auth/open/register?city=karachi&lang=en&userid=" + userId;
             // let body = {
             //     ...userData,
             //     guestuserid: userId,
@@ -79,9 +79,9 @@ export default function Register(){
         }
     }
     const otpCodeApiHandler = async (code) => {
-        let { headers } = getGeneralApiParams();
+        let { headers, userId } = getGeneralApiParams();
 
-        let url = base_url_api + "/auth/open/otp/verify";
+        let url = base_url_api + "/auth/open/otp/verify?client_type=apricart&userid=" + userId;
         let body = {
             phoneNumber: "92" + phoneNumber,
             otp: code,

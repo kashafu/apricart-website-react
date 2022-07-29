@@ -28,8 +28,8 @@ export default function SelectAddress({ type, setAddress, dropDownSelectedAddres
     }, [])
 
     const getSavedAddressesApi = async () => {
-        let { headers } = getGeneralApiParams()
-        let url = base_url_api + '/home/address/delivery?lang=en&client_type=apricart'
+        let { headers, userId } = getGeneralApiParams()
+        let url = base_url_api + '/home/address/delivery?lang=en&client_type=apricart&userid=' + userId
 
         try {
             const response = await axios.get(

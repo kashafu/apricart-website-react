@@ -23,7 +23,7 @@ export default function PageContact() {
 	const [subject, setsubject] = useState("")
 	const [phoneNumber, setphoneNumber] = useState("")
 	const pContactus = async () => {
-		let url = base_url_api + "/home/contactus/save"
+		let url = base_url_api + "/home/contactus/save?userid" + userId
 		let body = {
 			name: name,
 			phoneNumber: "92" + phoneNumber,

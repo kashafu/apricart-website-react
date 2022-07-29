@@ -49,7 +49,7 @@ const Wishpage = () => {
 				base_url_api +
 				"/order/cart/save?city=" +
 				city +
-				"&lang=en&client_type=apricart"
+				"&lang=en&client_type=apricart&userid=" + userId
 			let response = await axios.post(url, data, {
 				headers: headers,
 			})

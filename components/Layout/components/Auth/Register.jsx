@@ -30,7 +30,7 @@ const Register = () => {
         e.preventDefault();
         try {
             let { userId, headers } = getGeneralApiParams();
-            let url = base_url_api + "/auth/open/register?client_type=apricart";
+            let url = base_url_api + "/auth/open/register?client_type=apricart&userid=" + userId;
             let body = {
                 ...userData,
                 guestuserid: userId,
@@ -50,9 +50,9 @@ const Register = () => {
 
     
 const otpCodeApiHandler = async (code) => {
-        let { headers } = getGeneralApiParams();
+        let { headers, userId } = getGeneralApiParams();
 
-        let url = base_url_api + "/auth/open/otp/verify?&client_type=apricart";
+        let url = base_url_api + "/auth/open/otp/verify?&client_type=apricart&userid=" + userId
         let body = {
             phoneNumber: "92" + userData.phoneNumber,
             otp: code,

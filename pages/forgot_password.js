@@ -36,8 +36,8 @@ export default function ForgotPassword(){
 
 	const getOtpApi = async () => {
 		try {
-			let { headers } = getGeneralApiParams()
-			let url = base_url_api + '/auth/open/otp?client_type=apricart' 
+			let { headers, userId } = getGeneralApiParams()
+			let url = base_url_api + '/auth/open/otp?client_type=apricart&userid=' + userId
 			let body = {
 				'phoneNumber' : phoneNumber
 			}
@@ -58,8 +58,8 @@ export default function ForgotPassword(){
 	const changePasswordApi = async () => {
 		toast.info('Changing password, please wait')
 		try {
-			let { headers } = getGeneralApiParams()
-			let url = base_url_api + '/auth/open/password/forgot?client_type=apricart' 
+			let { headers, userId } = getGeneralApiParams()
+			let url = base_url_api + '/auth/open/password/forgot?client_type=apricart&userid=' + userId
 			let body = {
 				'phoneNumber' : phoneNumber,
 				'password': newPassword,

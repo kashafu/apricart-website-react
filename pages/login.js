@@ -24,7 +24,7 @@ export default function Login() {
     const [otp, setotp] = useState();
 
     const loginApi = async () => {
-        let url = base_url_api + "/auth/open/login?city=" + city + "&lang=en&client_type=apricart"
+        let url = base_url_api + "/auth/open/login?city=" + city + "&lang=en&client_type=apricart&userid=" + userId
         let body = {
             "guestuserid": userId,
             "username": '92' + phoneNumber,

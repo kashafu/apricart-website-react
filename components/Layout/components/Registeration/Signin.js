@@ -47,7 +47,7 @@ class LoginForm extends Component {
             e.preventDefault();
             try {
 				let {userId, headers} = getGeneralApiParams()
-				let url = base_url_api + "/auth/open/register?client_type=apricart"
+				let url = base_url_api + "/auth/open/register?client_type=apricart&userid=" + userId
 				let body = {
 					name: this.name,
 					email: this.email,

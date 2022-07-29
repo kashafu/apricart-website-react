@@ -102,7 +102,7 @@ export default function ProductDetail() {
 					'qty': qty,
 				}]
 			}
-			let url = base_url_api + "/order/cart/save?city=" + city + "&lang=en&client_type=apricart"
+			let url = base_url_api + "/order/cart/save?city=" + city + "&lang=en&client_type=apricart&userid=" + userId
 
 			try {
 				let response = await axios.post(
@@ -131,7 +131,7 @@ export default function ProductDetail() {
 					'qty': qty,
 				}]
 			}
-			let url = base_url_api + "/guest/cart/save?city=" + city + "&lang=en&client_type=apricart"
+			let url = base_url_api + "/guest/cart/save?city=" + city + "&lang=en&client_type=apricart&userid=" + userId
 
 			try {
 				let response = await axios.post(

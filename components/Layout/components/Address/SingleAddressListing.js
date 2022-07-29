@@ -22,9 +22,9 @@ export default function SingleAddressListing({
 	const [showEdit, setShowEdit] = useState(false)
 
 	const deleteAddressApi = async () => {
-		let { headers } = getGeneralApiParams()
+		let { headers, userId } = getGeneralApiParams()
 		let url =
-			base_url_api + "/home/address/delivery/delete?client_type=apricart"
+			base_url_api + "/home/address/delivery/delete?client_type=apricart&userid=" + userId
 		let body = {
 			id: listing.id,
 		}

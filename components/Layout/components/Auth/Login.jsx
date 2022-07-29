@@ -19,7 +19,7 @@ export default function Login(){
 
     const loginApi = async () => {
         let { city, headers, userId} = getGeneralApiParams();
-        let url = base_url_api + "/auth/open/login?city=" + city + "&lang=en&client_type=apricart"
+        let url = base_url_api + "/auth/open/login?city=" + city + "&lang=en&client_type=apricart&userid=" + userId
         let body = {
             "guestuserid": userId,
             "username": '92' + phoneNumber,

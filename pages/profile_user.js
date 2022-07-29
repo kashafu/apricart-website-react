@@ -23,7 +23,7 @@ import { ToastHeader } from "react-bootstrap";
 export default function ProfileUser() {
 	const cookies = new Cookies();
 	const router = useRouter();
-	let { token,headers } = getGeneralApiParams()
+	let { token,headers, userId } = getGeneralApiParams()
 	const [name, setname] = useState("");
     const [email, setemail] = useState("");
 	const [address, setaddress] = useState("");
@@ -34,7 +34,7 @@ export default function ProfileUser() {
 		getProfile();
 	}, [])
     const updateprofile =async () =>{
-		const url = base_url_api + "/home/profile/save"
+		const url = base_url_api + "/home/profile/save?client_type=apricart&userid=" + userId
         let body = {
 			"name":name,
 			"email": email,

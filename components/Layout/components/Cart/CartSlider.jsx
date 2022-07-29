@@ -89,7 +89,7 @@ export default function CartSlider() {
                 base_url_api +
                 "/order/cart/updateqty?city=" +
                 city +
-                "&lang=en&client_type=apricart"
+                "&lang=en&client_type=apricart&userid=" + userId
             let body = {
                 cart: [
                     {
@@ -145,7 +145,7 @@ export default function CartSlider() {
                 base_url_api +
                 "/order/cart/delete?city=" +
                 city +
-                "&lang=en&client_type=apricart"
+                "&lang=en&client_type=apricart&userid=" + userId
             let body = {
                 cart: [
                     {
@@ -168,7 +168,7 @@ export default function CartSlider() {
                 base_url_api +
                 "/guest/cart/delete?city=" +
                 city +
-                "&lang=en&client_type=apricart"
+                "&lang=en&client_type=apricart&userid=" + userId
             let body = {
                 userId: userId,
                 cart: [

@@ -47,8 +47,8 @@ export default function AddressCard({ type, previousAddress, updateSavedAddresse
     }
 
     const getDeliveryAreasOptionsApi = async (id) => {
-        let { headers } = getGeneralApiParams()
-        let url = base_url_api + '/home/address/areas?cityid=' + id + '&lang=en&client_type=apricart'
+        let { headers, userId } = getGeneralApiParams()
+        let url = base_url_api + '/home/address/areas?cityid=' + id + '&lang=en&client_type=apricart&userid=' + userId
 
         const response = await axios.get(
             url,
@@ -60,8 +60,8 @@ export default function AddressCard({ type, previousAddress, updateSavedAddresse
     }
 
     const getCityAreasOptionsApi = async () => {
-        let { headers } = getGeneralApiParams()
-        let url = base_url_api + '/home/address/cities?lang=en&client_type=apricart'
+        let { headers, userId } = getGeneralApiParams()
+        let url = base_url_api + '/home/address/cities?lang=en&client_type=apricart&userid=' + userId
 
         const response = await axios.get(
             url,
@@ -74,8 +74,8 @@ export default function AddressCard({ type, previousAddress, updateSavedAddresse
 
     const addAddressApi = async () => {
         try {
-            let { headers } = getGeneralApiParams()
-            let url = base_url_api + '/home/address/delivery/save?client_type=apricart'
+            let { headers, userId } = getGeneralApiParams()
+            let url = base_url_api + '/home/address/delivery/save?client_type=apricart&userid=' + userId
             let body = {
                 ...address,
                 'mapLat': mapLat,
@@ -100,8 +100,8 @@ export default function AddressCard({ type, previousAddress, updateSavedAddresse
 
     const editAddressApi = async () => {
         try {
-            let { headers } = getGeneralApiParams()
-            let url = base_url_api + '/home/address/delivery/update?client_type=apricart'
+            let { headers, userId } = getGeneralApiParams()
+            let url = base_url_api + '/home/address/delivery/update?client_type=apricart&userid=' + userId
             let body = {
                 id: previousAddress.id,
                 ...address,

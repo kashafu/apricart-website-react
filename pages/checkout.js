@@ -69,8 +69,8 @@ export default function Checkout() {
 	}, [checkoutAddress])
 
 	const getPaymentMethodsApi = async () => {
-		let { headers } = getGeneralApiParams()
-		let url = base_url_api + "/order/payment/info?client_type=apricart"
+		let { headers, userId } = getGeneralApiParams()
+		let url = base_url_api + "/order/payment/info?client_type=apricart&userid=" + userId
 
 		try {
 			let response = await axios.get(url, {
@@ -236,12 +236,12 @@ export default function Checkout() {
 	}
 
 	const incrementItemQty = async (sku, qty, id) => {
-		let { headers, city } = getGeneralApiParams()
+		let { headers, city, userId } = getGeneralApiParams()
 		let url =
 			base_url_api +
 			"/order/cart/updateqty?city=" +
 			city +
-			"&lang=en&client_type=apricart"
+			"&lang=en&client_type=apricart&userid=" + userId
 		let body = {
 			cart: [
 				{
@@ -268,12 +268,12 @@ export default function Checkout() {
 	}
 
 	const decrementItemQty = async (sku, qty, id) => {
-		let { headers, city } = getGeneralApiParams()
+		let { headers, city, userId } = getGeneralApiParams()
 		let url =
 			base_url_api +
 			"/order/cart/updateqty?city=" +
 			city +
-			"&lang=en&client_type=apricart"
+			"&lang=en&client_type=apricart&userid=" + userId
 		let body = {
 			cart: [
 				{
@@ -301,12 +301,12 @@ export default function Checkout() {
 
 	const deleteItem = (sku, id) => {
 		if (token) {
-			let { city, headers } = getGeneralApiParams()
+			let { city, headers, userId } = getGeneralApiParams()
 			let url =
 				base_url_api +
 				"/order/cart/delete?city=" +
 				city +
-				"&lang=en&client_type=apricart"
+				"&lang=en&client_type=apricart&userid=" + userId
 			let body = {
 				cart: [
 					{
@@ -331,7 +331,7 @@ export default function Checkout() {
 				base_url_api +
 				"/guest/cart/delete?city=" +
 				city +
-				"&lang=en&client_type=apricart"
+				"&lang=en&client_type=apricart&userid=" + userId
 			let body = {
 				userId: userId,
 				cart: [

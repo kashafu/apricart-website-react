@@ -20,8 +20,8 @@ export default function OfferId() {
 	}, [])
 
 	const getOfferItemsApi = async () => {
-		let { city, headers } = getGeneralApiParams()
-		let url = base_url_api + '/offers/detail?id=' + id + '&city=' + city + '&lang=en&client_type=apricart'
+		let { city, headers, userId } = getGeneralApiParams()
+		let url = base_url_api + '/offers/detail?id=' + id + '&city=' + city + '&lang=en&client_type=apricart&userid=' + userId
 
 		try {
 			let response = await axios.get(url,

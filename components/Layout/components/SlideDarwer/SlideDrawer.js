@@ -93,7 +93,7 @@ export default function SlideDrawer(props) {
 		let { token, headers, city, userId } = getGeneralApiParams()
 
 		if (token) {
-			let url = base_url_api + '/order/cart/updateqty?city=' + city + '&lang=en&client_type=apricart'
+			let url = base_url_api + '/order/cart/updateqty?city=' + city + '&lang=en&client_type=apricart&userid=' + userId
 			let body = {
 				"cart": [
 					{
@@ -145,7 +145,7 @@ export default function SlideDrawer(props) {
 	const deleteItem = (item) => {
 		if (token) {
 			let { city, userId, headers } = getGeneralApiParams()
-			let url = base_url_api + '/order/cart/delete?city=' + city + '&lang=en&client_type=apricart'
+			let url = base_url_api + '/order/cart/delete?city=' + city + '&lang=en&client_type=apricart&userid=' + userId
 			let body = {
 				"cart": [
 					{
@@ -167,7 +167,7 @@ export default function SlideDrawer(props) {
 		}
 		else {
 			let { city, userId, headers } = getGeneralApiParams()
-			let url = base_url_api + '/guest/cart/delete?city=' + city + '&lang=en&client_type=apricart'
+			let url = base_url_api + '/guest/cart/delete?city=' + city + '&lang=en&client_type=apricart&userid=' + userId
 			let body = {
 				"userId": userId,
 				"cart": [

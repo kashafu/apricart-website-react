@@ -92,7 +92,7 @@ export default function SingleProduct({ product, isInStock }) {
 				base_url_api +
 				"/order/cart/save?city=" +
 				city +
-				"&lang=en&client_type=apricart"
+				"&lang=en&client_type=apricart&userid=" + userId
 
 			try {
 				let response = await axios.post(url, data, {
@@ -144,10 +144,10 @@ export default function SingleProduct({ product, isInStock }) {
 	}
 
 	const addToWishlistApi = async () => {
-		let { token, headers } = getGeneralApiParams()
+		let { token, headers, userId } = getGeneralApiParams()
 		let body = { sku: [product.sku] }
 		if (token) {
-			let url = base_url_api + "/watchlist/save?city=karachi&lang=en"
+			let url = base_url_api + "/watchlist/save?city=karachi&lang=en&client_type=apricart&userid=" + userId
 
 			try {
 				let response = await axios.post(url, body, {

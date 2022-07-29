@@ -14,8 +14,8 @@ export default function Order() {
 	const [cancelledOrders, setCancelledOrders] = useState([])
 
 	const getOrderHistoryApi = async () => {
-		let { headers } = getGeneralApiParams()
-		let url = base_url_api + "/order/history?client_type=apricart"
+		let { headers, userId } = getGeneralApiParams()
+		let url = base_url_api + "/order/history?client_type=apricart&userid=" + userId
 
 		try {
 			let response = await axios.get(url, {
@@ -35,8 +35,8 @@ export default function Order() {
 	}, [])
 
 	const cancelOrderApi = async (id) => {
-		let { headers } = getGeneralApiParams()
-		let url = base_url_api + '/order/checkout/cancel?client_type=apricart&id=' + id
+		let { headers, userId } = getGeneralApiParams()
+		let url = base_url_api + '/order/checkout/cancel?client_type=apricart&id=' + id + '&userid=' + userId
 
 		toast.info('Cancelling order')
 		try {
