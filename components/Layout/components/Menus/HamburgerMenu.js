@@ -116,6 +116,13 @@ export default function HamburgerMenu() {
                                     }}
                                 />
                                 <SubmitButton
+                                    text={"ADDRESSES"}
+                                    onClick={() => {
+                                        setShowMenu(!showMenu)
+                                        router.push('/address')
+                                    }}
+                                />
+                                <SubmitButton
                                     text={'ORDERS'}
                                     onClick={()=>{
                                         setShowMenu(!showMenu)
