@@ -58,18 +58,18 @@ export default function SingleAddressListing({
 					{address}, {area}, {city}
 				</p>
 			</button>
-			<div className="w-full flex flex-row justify-around space-x-12 px-4">
+			<div className="w-full flex flex-row justify-center items-center space-x-12 my-2  px-4">
 				<button
 					onClick={() => {
 						setShowEdit(!showEdit)
 					}}
-					className="bg-main-yellow w-full py-2 rounded-lg"
+					className="bg-main-yellow w-full py-2 rounded-lg sm:w-1/3"
 				>
 					<p className="text-white font-bold">EDIT</p>
 				</button>
 				<button
 					onClick={deleteAddressApi}
-					className="bg-red-500 w-full py-2 rounded-lg"
+					className="bg-red-500 w-full py-2 rounded-lg sm:w-1/3"
 				>
 					<p className="text-white font-bold">DELETE</p>
 				</button>
