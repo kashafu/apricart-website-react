@@ -20,7 +20,7 @@ export default function Layout() {
 					<Logo />
 				</div>
 				<div className="inline-flex  h-1/4 my-2 px-2 sm:justify-between sm:items-center">
-					<Image src={addressIcon} width={40} height={40} alt="" />
+					<Image src={addressIcon} width={70} height={70} alt="" />
 					<p className="pl-2">
 						<span className="font-bold">Address:</span>
 						<span>
@@ -37,7 +37,7 @@ export default function Layout() {
 					</p>
 				</div>
 				<div className="inline-flex h-1/4 my-2 px-2 sm:justify-center sm:items-center">
-					<Image src={globeIcon} width={40} height={40} alt="" />
+					<Image src={globeIcon} width={30} height={30} alt="" />
 					<p className="pl-2 sm:pt-0">
 						<a href="mailto:support@apricart.pk">
 							<span className="font-bold">Email:</span>
