@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react"
 import { getGeneralApiParams } from "../../helpers/ApiHelpers"
 import { base_url_api } from '../../information.json'
-import MainProducts from '../../components/Layout/components/Products/MainProducts'
 import Categories from '../../components/Layout/components/Categories/Categories'
 import PageHeading from '../../components/Layout/components/Typography/PageHeading'
 import { useRouter } from 'next/router'
 import axios from "axios"
+import ListProducts from "../../components/Layout/components/Products/ListProducts"
 
 export default function OfferId() {
 	const router = useRouter()
@@ -15,13 +15,17 @@ export default function OfferId() {
 	const [categories, setCategories] = useState(null)
 
 	useEffect(() => {
-		getOfferItemsApi()
+		if(router.isReady){
+			getOfferItemsApi()
+		}
 		getCategoriesApi()
-	}, [])
+	}, [router.query])
 
 	const getOfferItemsApi = async () => {
 		let { city, headers, userId } = getGeneralApiParams()
 		let url = base_url_api + '/offers/detail?id=' + id + '&city=' + city + '&lang=en&client_type=apricart&userid=' + userId
+
+		console.log(url)
 
 		try {
 			let response = await axios.get(url,
@@ -32,6 +36,7 @@ export default function OfferId() {
 			if(response.data.data.length > 0){
 				setOfferItems(response.data.data)
 			}
+			console.log(response)
 		} catch (error) {
 			console.log(error)
 		}
@@ -60,7 +65,7 @@ export default function OfferId() {
 		return (
 			<div>
 				<PageHeading
-					text={'No items at the moment'}
+					text={'Loading'}
 				/>
 			</div>
 		)
@@ -76,7 +81,7 @@ export default function OfferId() {
 				)}
 			</section>
 			<section className="col-span-5 lg:col-span-4 space-y-12">
-				<MainProducts
+				<ListProducts
 					products={offerItems}
 				/>
 			</section>

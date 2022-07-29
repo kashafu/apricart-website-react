@@ -4,7 +4,9 @@ import Image from "next/image"
 import { useState } from "react"
 
 export default function MainProducts({ section }) {
-	let { bannerImageWeb, data, name, offerId, identifier } = section
+	let { data, name, offerId } = section
+	let bannerImageWeb = section?.bannerImageWeb
+	let identifier = section?.identifier
 
 	const [numberOfProductsMobile, setNumberOfProductsMobile] = useState(4)
 	const [numberOfProductsLaptop, setNumberOfProductsLaptop] = useState(8)
