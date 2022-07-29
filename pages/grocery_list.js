@@ -32,16 +32,16 @@ export default function GroceryList() {
 			addressId = address ? JSON.parse(address).id : ""
 		}
 		let formData = new FormData()
-		formData.append('city', city)
-		formData.append('lang', 'en')
-		formData.append('userid', userId)
-		formData.append('coupon', '')
-		formData.append('address', addressId)
-		formData.append('orderType', 'delivery')
-		formData.append('notes', list)
-		formData.append('files', [])
-		formData.append('storeid', 1)
-		formData.append('payment', 'cash')
+		formData.append("city", city)
+		formData.append("lang", "en")
+		formData.append("userid", userId)
+		formData.append("coupon", "")
+		formData.append("address", addressId)
+		formData.append("orderType", "delivery")
+		formData.append("notes", list)
+		formData.append("files", [])
+		formData.append("storeid", 1)
+		formData.append("payment", "cash")
 
 		toast.info("Placing Order")
 		setIsDisabled(true)
@@ -85,7 +85,11 @@ export default function GroceryList() {
 						value={list}
 						type={"textarea"}
 					/>
-					<SubmitButton text={"Place Order"} onClick={placeOrderApi}  disabled={isDisabled}/>
+					<SubmitButton
+						text={"Place Order"}
+						onClick={placeOrderApi}
+						disabled={isDisabled}
+					/>
 				</section>
 			</div>
 		</div>
