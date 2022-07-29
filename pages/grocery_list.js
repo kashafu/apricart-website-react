@@ -56,36 +56,38 @@ export default function GroceryList() {
 	}
 
 	return (
-		<>
+		<div className="p-2">
 			<HeadTag title={"Grocery List"} />
-			<section className="flex flex-col p-2 space-y-4 lg:w-1/3 items-center align-center bg-slate-100 shadow rounded-3xl">
-				<PageHeading text={"Type Your Grocery List"} />
-				{/* <div>
-					<Paragraph
-						text={
-							"Disclaimer: Delivery only in Karachi and Peshawar"
-						}
+			<div className="flex w-full justify-center">
+				<section className="flex flex-col p-2 space-y-4 lg:w-2/3 items-center align-center bg-slate-100 shadow rounded-3xl">
+					<PageHeading text={"Type Your Grocery List"} />
+					{/* <div>
+						<Paragraph
+							text={
+								"Disclaimer: Delivery only in Karachi and Peshawar"
+							}
+						/>
+						<Paragraph
+							text={
+								"For online payments, a payment link is shared with you once your order has been Purchased."
+							}
+						/>
+					</div> */}
+					<SelectAddress
+						setAddress={setAddress}
+						type={"checkout"}
+						dropDownSelectedAddress={address}
 					/>
-					<Paragraph
-						text={
-							"For online payments, a payment link is shared with you once your order has been Purchased."
-						}
+					<TextArea
+						label={"Grocery List"}
+						placeHolder={"Type in or paste your grocery list here"}
+						onChange={setList}
+						value={list}
+						type={"textarea"}
 					/>
-				</div> */}
-				<SelectAddress
-					setAddress={setAddress}
-					type={"checkout"}
-					dropDownSelectedAddress={address}
-				/>
-				<TextArea
-					label={"Grocery List"}
-					placeHolder={"Type in or paste your grocery list here"}
-					onChange={setList}
-					value={list}
-					type={"textarea"}
-				/>
-				<SubmitButton text={"Place Order"} onClick={placeOrderApi}  disabled={isDisabled}/>
-			</section>
-		</>
+					<SubmitButton text={"Place Order"} onClick={placeOrderApi}  disabled={isDisabled}/>
+				</section>
+			</div>
+		</div>
 	)
 }
