@@ -94,7 +94,7 @@ export default function PageContact() {
 							placeholder="SUBJECT"
 							className="col-span-2 w-2/3 h-[100px] py-2 px-2 rounded-lg bg-slate-200 overflow-hidden"
 						>
-							Subject
+							Type your message
 						</textarea>
 
 						<div className="flex flex-col gap-1 items-center">
