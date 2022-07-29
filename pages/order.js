@@ -85,7 +85,7 @@ export default function Order() {
 									value={userOrder.orderId}
 									onChange={handleCancelOrder}>
 									<td>{userOrder.displayOrderId}</td>
-									<td>{userOrder.receivedAt}</td>
+									<td>{userOrder.created_at}</td>
 									<td>{userOrder.addressUsed}</td>
 									<td>{userOrder.grandTotal}</td>
 									<td>{userOrder.productCount}</td>
@@ -232,7 +232,7 @@ export default function Order() {
 																			</td>
 																			<td>
 																				{
-																					userOrder.receivedAt
+																					userOrder.created_at
 																				}
 																			</td>
 																			<td>
@@ -281,7 +281,7 @@ export default function Order() {
 																			</td>
 																			<td>
 																				{
-																					userOrder.receivedAt
+																					userOrder.created_at
 																				}
 																			</td>
 																			<td>
