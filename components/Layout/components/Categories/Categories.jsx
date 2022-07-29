@@ -8,6 +8,16 @@ import toKebabCase from "../../../../helpers/toKebabCase"
 export default function Categories({ categories }) {
 	const [isSelected, setIsSelected] = useState("")
 
+	if(!categories){
+		return(
+			<div>
+				<p>
+					Loading categories
+				</p>
+			</div>
+		)
+	}
+
 	return (
 		<div className="space-y-4">
 			<p className="text-main-blue font-bold lg:text-2xl 2xl:text-3xl">

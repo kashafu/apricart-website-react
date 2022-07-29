@@ -27,7 +27,6 @@ export default function Home() {
 
 	useEffect(() => {
 		getHomeDataApi()
-		getCategoriesApi()
 	}, [])
 
 	const getHomeDataApi = async () => {
@@ -51,6 +50,7 @@ export default function Home() {
 				headers: headers,
 			})
 
+			getCategoriesApi()
 			setHomeData(response.data.data)
 			setShowPopupAd(response.data.data.dialog)
 		} catch (error) {
@@ -69,6 +69,7 @@ export default function Home() {
 			let response = await axios.get(url, {
 				headers: headers,
 			})
+
 			setCategories(response.data.data)
 		} catch (error) {
 			console.log(error)
