@@ -17,6 +17,7 @@ export default function GroceryList() {
 		selectedAddress ? selectedAddress : null
 	)
 	const [list, setList] = useState("")
+	const [isDisabled, setIsDisabled] = useState(false)
 
 	const placeOrderApi = async () => {
 		let { userId, headers, city } = getGeneralApiParams()
@@ -30,29 +31,27 @@ export default function GroceryList() {
 		} else {
 			addressId = address ? JSON.parse(address).id : ""
 		}
-		let body = {
-			city: city,
-			lang: 'en',
-			userid: userId,
-			address: addressId,
-			coupon: "",
-			files: "[]",
-			storeid: 1,
-			payment: "cash",
-			orderType: "pickup",
-			notes: list
-		}
+		let formData = new FormData()
+		formData.append('city', city)
+		formData.append('lang', 'en')
+		formData.append('userid', userId)
+		formData.append('coupon', '')
+		formData.append('address', addressId)
+		formData.append('orderType', 'delivery')
+		formData.append('notes', list)
+		formData.append('files', [])
+		formData.append('storeid', 1)
+		formData.append('payment', 'cash')
 
-		console.log(body);
 		toast.info("Placing Order")
+		setIsDisabled(true)
 		try {
-			let response = await axios.post(url, body, { headers: headers })
+			let response = await axios.post(url, formData, { headers: headers })
 
 			toast.success(response.data?.message)
-			console.log(response.data)
 		} catch (error) {
 			toast.error(error.response?.data?.message)
-			console.log(error.response)
+			setIsDisabled(false)
 		}
 	}
 
@@ -85,7 +84,7 @@ export default function GroceryList() {
 					value={list}
 					type={"textarea"}
 				/>
-				<SubmitButton text={"Place Order"} onClick={placeOrderApi} />
+				<SubmitButton text={"Place Order"} onClick={placeOrderApi}  disabled={isDisabled}/>
 			</section>
 		</>
 	)
