@@ -90,7 +90,7 @@ export default function Home() {
 			<HeadTag title={"APRICART"} />
 			{/* POPUP AD */}
 			{showPopupAd && (
-				<div className="lg:hidden fixed w-3/4 h-3/4 z-10 inset-0 m-auto shadow-2xl">
+				<div className="fixed w-3/4 h-3/4 lg:w-[500px] lg:h-[700px] z-10 inset-0 m-auto shadow-2xl">
 					<div
 						className="relative w-full h-full"
 					>
