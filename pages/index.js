@@ -204,21 +204,29 @@ export default function Home() {
 									{index % 2 == 0 ? (
 										<section className="lg:hidden relative space-y-6 items-center">
 											<section className="w-full">
-												<Image
-													src={lifestyle}
-													layout={"responsive"}
-													alt=""
-												/>
+												<Link href={'/category/home-&-lifestyle/1235'} passHref className="w-full">
+													<a className="w-full">
+														<Image
+															src={lifestyle}
+															layout={"responsive"}
+															alt=""
+														/>
+													</a>
+												</Link>
 											</section>
 										</section>
 									) : (
 										<section className="lg:hidden relative space-y-6 items-center">
 											<section className="w-full">
-												<Image
-													src={nationals}
-													layout={"responsive"}
-													alt=""
-												/>
+												<Link href={'/products/search/national'} passHref className="w-full">
+													<a className="w-full">
+														<Image
+															src={nationals}
+															layout={"responsive"}
+															alt=""
+														/>
+													</a>
+												</Link>
 											</section>
 										</section>
 									)}
