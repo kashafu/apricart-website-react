@@ -13,17 +13,17 @@ module.exports = {
 			},
 			{
 				source: "/privacy-policy.html",
-				destination: "/privacy-policy-mobile",
+				destination: "/privacy-policy",
 				permanent: true,
 			},
 			{
 				source: "/terms-of-use.html",
-				destination: "/terms-of-use-mobile",
+				destination: "/terms-of-use",
 				permanent: true,
 			},
 			{
 				source: "/faq.html",
-				destination: "/faqs-mobile",
+				destination: "/faqs",
 				permanent: true,
 			},
 		]
