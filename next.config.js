@@ -11,6 +11,21 @@ module.exports = {
 				destination: "/",
 				permanent: true,
 			},
+			{
+				source: "/privacy-policy.html",
+				destination: "/privacy-policy-mobile",
+				permanent: true,
+			},
+			{
+				source: "/terms-of-use.html",
+				destination: "/terms-of-use-mobile",
+				permanent: true,
+			},
+			{
+				source: "/faq.html",
+				destination: "/faqs-mobile",
+				permanent: true,
+			},
 		]
 	},
 	// basePath: '/web'
