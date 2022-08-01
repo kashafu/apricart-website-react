@@ -73,7 +73,7 @@ export default function CartSlider() {
 
     const getTotalPrice = () => {
         return reduxCart.reduce(
-            (accumulator, item) => accumulator + item.qty * item.currentPrice,
+            (accumulator, item) => accumulator + item.qty * (item.specialPrice > 0 ? item.specialPrice : item.currentPrice),
             0
         )
     }
@@ -220,9 +220,12 @@ export default function CartSlider() {
                                             productImageUrl,
                                             title,
                                             currentPrice,
+                                            specialPrice,
                                             sku,
                                             qty,
                                         } = item
+                                        let price = specialPrice > 0 ? specialPrice : currentPrice
+
                                         return (
                                             <div
                                                 key={id}
@@ -296,7 +299,7 @@ export default function CartSlider() {
                                                             ></i>
                                                         </button>
                                                         <p className="flex flex-col mb-auto mt-auto">
-                                                            RS :{currentPrice}
+                                                            RS :{price}
                                                         </p>
                                                     </div>
                                                 </div>

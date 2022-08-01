@@ -553,8 +553,7 @@ export default function Checkout() {
 
 		const getTotalPrice = () => {
 			return reduxCart.reduce(
-				(accumulator, item) =>
-					accumulator + item.qty * item.currentPrice,
+				(accumulator, item) => accumulator + item.qty * (item.specialPrice > 0 ? item.specialPrice : item.currentPrice),
 				0
 			)
 		}
@@ -568,6 +567,7 @@ export default function Checkout() {
 								title,
 								qty,
 								currentPrice,
+								specialPrice,
 								id,
 								productImageUrlThumbnail,
 								productImageUrl,
@@ -639,9 +639,17 @@ export default function Checkout() {
 													alt="icon"
 												/>
 											</button>
-											<p>x RS. {currentPrice}</p>
+											{specialPrice > 0 ? (
+												<p>x RS. {specialPrice}</p>
+											):(
+												<p>x RS. {currentPrice}</p>
+											)}
 										</div>
-										<p>RS. {currentPrice * qty}</p>
+										{specialPrice > 0 ? (
+											<p>x RS. {specialPrice * qty}</p>
+										):(
+											<p>x RS. {currentPrice * qty}</p>
+										)}
 									</div>
 								</div>
 							)
@@ -669,7 +677,12 @@ export default function Checkout() {
 							<p className={pRight}>Free Shipping</p>
 						)}
 						<p className={pLeft}>Total</p>
-						<p className={pRight}>PKR {getTotalPrice()}</p>
+						{getTotalPrice() < shipmentChargedAt ? (
+							<p className={pRight}>PKR {+getTotalPrice() + +shipmentFixAmount}</p>
+						) : (
+							<p className={pRight}>PKR {getTotalPrice()}</p>
+						)}
+						{/* <p className={pRight}>PKR {getTotalPrice()}</p> */}
 					</div>
 				</div>
 			)
@@ -693,6 +706,7 @@ export default function Checkout() {
 								title,
 								qty,
 								currentPrice,
+								specialPrice,
 								id,
 								productImageUrlThumbnail,
 								productImageUrl,
@@ -752,7 +766,11 @@ export default function Checkout() {
 													alt="icon"
 												/>
 											</button>
-											<p>x RS. {currentPrice}</p>
+											{specialPrice > 0 ? (
+												<p>x RS. {specialPrice}</p>
+											):(
+												<p>x RS. {currentPrice}</p>
+											)}
 											<button
 												onClick={() => {
 													deleteItem(sku)
@@ -766,7 +784,11 @@ export default function Checkout() {
 												/>
 											</button>
 										</div>
-										<p>RS. {currentPrice * qty}</p>
+										{specialPrice > 0 ? (
+											<p>x RS. {specialPrice * qty}</p>
+										):(
+											<p>x RS. {currentPrice * qty}</p>
+										)}
 									</div>
 								</div>
 							)
@@ -816,6 +838,7 @@ export default function Checkout() {
 								title,
 								qty,
 								currentPrice,
+								specialPrice,
 								id,
 								productImageUrlThumbnail,
 								productImageUrl,
@@ -890,9 +913,17 @@ export default function Checkout() {
 													alt="icon"
 												/>
 											</button>
-											<p>x RS. {currentPrice}</p>
+											{specialPrice > 0 ? (
+												<p>x RS. {specialPrice}</p>
+											):(
+												<p>x RS. {currentPrice}</p>
+											)}
 										</div>
-										<p>RS. {currentPrice}</p>
+										{specialPrice > 0 ? (
+											<p>x RS. {specialPrice * qty}</p>
+										):(
+											<p>x RS. {currentPrice * qty}</p>
+										)}
 									</div>
 								</div>
 							)
@@ -1019,7 +1050,7 @@ export default function Checkout() {
 									})}
 								</div>
 							</div>
-							<ErrorText text={checkoutErrorMessage} />
+							{/* <ErrorText text={checkoutErrorMessage} /> */}
 						</section>
 					)}
 					{viewState == "review" && (
@@ -1091,6 +1122,7 @@ export default function Checkout() {
 							<p>
 								{couponCodeMessage}
 							</p>
+							<ErrorText text={checkoutErrorMessage} />
 							<SubmitButton
 								text={"CHECKOUT"}
 								onClick={()=>{
@@ -1102,7 +1134,6 @@ export default function Checkout() {
 									})
 								}}
 							/>
-							<ErrorText text={checkoutErrorMessage} />
 						</div>
 					)}
 				</div>
