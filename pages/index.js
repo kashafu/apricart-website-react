@@ -11,9 +11,9 @@ import HeadTag from "../components/Layout/components/Head/HeadTag"
 import storeBackgroundImage from "../public/assets/images/storeBackground.png"
 import lifestyle from "../public/assets/images/banners/lifestyle.jpeg"
 import nationals from "../public/assets/images/banners/nationals.jpeg"
-import mainBanner from "../public/assets/images/banners/mainBanner.png"
 import ErrorText from "../components/Layout/components/Typography/ErrorText"
 import crossIcon from "../public/assets/svgs/crossIcon.svg"
+import Carousel from "../components/Layout/components/Banner/Carousel"
 
 export default function Home() {
 	const router = useRouter()
@@ -63,7 +63,9 @@ export default function Home() {
 		let url =
 			base_url_api +
 			"/catalog/categories?level=all&client_type=apricart&city=" +
-			city + "&userid=" + userId 
+			city +
+			"&userid=" +
+			userId
 
 		try {
 			let response = await axios.get(url, {
@@ -83,44 +85,74 @@ export default function Home() {
 			</div>
 		)
 	}
-	
-  
+
 	return (
 		<div className="">
 			<HeadTag title={"APRICART"} />
 			{/* POPUP AD */}
 			{showPopupAd && (
-				<div className="fixed w-3/4 h-3/4 lg:w-[500px] lg:h-[700px] z-10 inset-0 m-auto shadow-2xl">
-					<div
-						className="relative w-full h-full"
-					>
-						<Image
-							src={homeData.dialogImageUrl}
-							layout="fill"
-							alt="popup banner"
+				<div className="w-full">
+					{/* PHONE VIEW */}
+					<div className="fixed w-3/4 h-3/4 lg:hidden z-10 inset-0 m-auto shadow-2xl">
+						<div className="relative w-full h-full">
+							<Image
+								src={homeData.dialogImageUrl}
+								layout="fill"
+								alt="popup banner"
+								onClick={() => {
+									router.push(
+										"/offers/" + homeData.dialogValue
+									)
+								}}
+							/>
+						</div>
+						<button
+							className="absolute top-[-10px] right-[-10px] z-20"
 							onClick={() => {
-								router.push("/offers/" + homeData.dialogValue)
+								setShowPopupAd(false)
 							}}
-						/>
+						>
+							<Image
+								src={crossIcon}
+								height={20}
+								width={20}
+								alt="icon"
+							/>
+						</button>
 					</div>
-					<button
-						className="absolute top-[-10px] right-[-10px] z-20"
-						onClick={() => {
-							setShowPopupAd(false)
-						}}
-					>
-						<Image
-							src={crossIcon}
-							height={20}
-							width={20}
-							alt="icon"
-						/>
-					</button>
+					{/* DESKTOP VIEW */}
+					<div className="hidden lg:block fixed w-[700px] h-[450px] z-10 inset-0 m-auto shadow-2xl">
+						<div className="relative w-full h-full">
+							<Image
+								src={homeData.dialogImageLandscapeUrl}
+								layout='fill'
+								alt="popup banner"
+								onClick={() => {
+									router.push(
+										"/offers/" + homeData.dialogValue
+									)
+								}}
+							/>
+						</div>
+						<button
+							className="absolute top-[-10px] right-[-10px] z-20"
+							onClick={() => {
+								setShowPopupAd(false)
+							}}
+						>
+							<Image
+								src={crossIcon}
+								height={20}
+								width={20}
+								alt="icon"
+							/>
+						</button>
+					</div>
 				</div>
 			)}
 			<div className="space-y-8">
 				{/* BANNERS SECTION hidden on phone */}
-				<section className="hidden lg:relative lg:w-full lg:aspect-[16/6] lg:grid grid-cols-12 items-center">
+				<section className="hidden lg:relative lg:w-full lg:aspect-[16/6] lg:grid grid-cols-12 gap-2 p-2 items-center">
 					{/* BACKGROUND IMAGE */}
 					<div className="absolute w-full h-full blur-lg">
 						<Image
@@ -131,36 +163,32 @@ export default function Home() {
 					</div>
 					{/* SCROLLING BANNER */}
 					<section className="col-span-7">
-						<div className="w-full">
-							<Image
-								src={mainBanner}
-								layout={"responsive"}
-								alt="banner"
-							/>
-						</div>
-						{/* <Banner
-							banners={homeData.banners}
-						/> */}
+						<section className="w-full">
+							<Carousel />
+						</section>
 					</section>
 					{/* STATIC BANNERS */}
-					<section className="col-span-5 grid grid-rows-2 h-full w-full justify-start items-center space-y-8">
-						<div className="relative w-[500px] h-[180px] lg:w-[400px] lg:h-[150px] xl:w-[530px] xl:h-[190px] 2xl:w-[600px] 2xl:h-[220px] 3xl:w-[700px] 2xl:h-[270px]">
-							<Link href={'/products/search/national'} passHref>
+					<section className="col-span-5 grid grid-rows-2 h-full w-full justify-items-center align-items-center">
+						<div className="relative w-full p-2">
+							<Link href={"/products/search/national"} passHref>
 								<a>
 									<Image
 										src={nationals}
-										layout={"fill"}
+										layout={"responsive"}
 										alt="banner"
 									/>
 								</a>
 							</Link>
 						</div>
-						<div className="relative w-[500px] h-[180px] lg:w-[400px] lg:h-[150px] xl:w-[530px] xl:h-[190px] 2xl:w-[600px] 2xl:h-[220px] 3xl:w-[700px] 2xl:h-[270px]">
-							<Link href={'/category/home-&-lifestyle/1235'} passHref>
+						<div className="relative w-full p-2">
+							<Link
+								href={"/category/home-&-lifestyle/1235"}
+								passHref
+							>
 								<a>
 									<Image
 										src={lifestyle}
-										layout={"fill"}
+										layout={"responsive"}
 										alt="banner"
 									/>
 								</a>
@@ -169,14 +197,10 @@ export default function Home() {
 					</section>
 				</section>
 				{/* BANNERS SECTION hidden on desktop */}
-				<section className="lg:hidden w-screen items-center mt-0">
+				<section className="lg:hidden w-full items-center mt-0">
 					{/* MAIN BANNER */}
 					<section className="w-full">
-						<Image
-							src={mainBanner}
-							layout={"responsive"}
-							alt="banner"
-						/>
+						<Carousel />
 					</section>
 				</section>
 				<div className="grid grid-cols-5 gap-12">
@@ -204,11 +228,19 @@ export default function Home() {
 									{index % 2 == 0 ? (
 										<section className="lg:hidden relative space-y-6 items-center">
 											<section className="w-full">
-												<Link href={'/category/home-&-lifestyle/1235'} passHref className="w-full">
+												<Link
+													href={
+														"/category/home-&-lifestyle/1235"
+													}
+													passHref
+													className="w-full"
+												>
 													<a className="w-full">
 														<Image
 															src={lifestyle}
-															layout={"responsive"}
+															layout={
+																"responsive"
+															}
 															alt=""
 														/>
 													</a>
@@ -218,11 +250,19 @@ export default function Home() {
 									) : (
 										<section className="lg:hidden relative space-y-6 items-center">
 											<section className="w-full">
-												<Link href={'/products/search/national'} passHref className="w-full">
+												<Link
+													href={
+														"/products/search/national"
+													}
+													passHref
+													className="w-full"
+												>
 													<a className="w-full">
 														<Image
 															src={nationals}
-															layout={"responsive"}
+															layout={
+																"responsive"
+															}
 															alt=""
 														/>
 													</a>
