@@ -23,6 +23,9 @@ module.exports = {
           DEFAULT: '#E5E5E5',
           200: '#F1F1F1',
           800: '#363636'
+        },
+        'main-green': {
+          DEFAULT: '#00351F'
         }
       },
       fontFamily: {

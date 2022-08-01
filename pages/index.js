@@ -11,8 +11,6 @@ import HeadTag from "../components/Layout/components/Head/HeadTag"
 import storeBackgroundImage from "../public/assets/images/storeBackground.png"
 import lifestyle from "../public/assets/images/banners/lifestyle.jpeg"
 import nationals from "../public/assets/images/banners/nationals.jpeg"
-import mainBanner from "../public/assets/images/banners/mainBanner.png"
-import everythingIn75 from "../public/assets/images/banners/everythingIn75.png"
 import ErrorText from "../components/Layout/components/Typography/ErrorText"
 import crossIcon from "../public/assets/svgs/crossIcon.svg"
 import Carousel from "../components/Layout/components/Banner/Carousel"
@@ -128,8 +126,6 @@ export default function Home() {
 							<Image
 								src={homeData.dialogImageLandscapeUrl}
 								layout='fill'
-								// width={'100%'}
-								// height={'100%'}
 								alt="popup banner"
 								onClick={() => {
 									router.push(
@@ -156,7 +152,7 @@ export default function Home() {
 			)}
 			<div className="space-y-8">
 				{/* BANNERS SECTION hidden on phone */}
-				<section className="hidden lg:relative lg:w-full lg:aspect-[16/6] lg:grid grid-cols-12 items-center">
+				<section className="hidden lg:relative lg:w-full lg:aspect-[16/6] lg:grid grid-cols-12 gap-2 items-center">
 					{/* BACKGROUND IMAGE */}
 					<div className="absolute w-full h-full blur-lg">
 						<Image
@@ -167,17 +163,12 @@ export default function Home() {
 					</div>
 					{/* SCROLLING BANNER */}
 					<section className="col-span-7">
-						<Carousel />
-						{/* <div className="w-full">
-							<Image
-								src={mainBanner}
-								layout={"responsive"}
-								alt="banner"
-							/>
-						</div> */}
+						<section className="w-full">
+							<Carousel />
+						</section>
 					</section>
 					{/* STATIC BANNERS */}
-					<section className="col-span-5 grid grid-rows-2 h-full w-full justify-start items-center space-y-8">
+					<section className="col-span-5 grid grid-rows-2 h-full w-full justify-start items-center">
 						<div className="relative w-[500px] h-[180px] lg:w-[400px] lg:h-[150px] xl:w-[530px] xl:h-[190px] 2xl:w-[600px] 2xl:h-[220px] 3xl:w-[700px] 2xl:h-[270px]">
 							<Link href={"/products/search/national"} passHref>
 								<a>
@@ -209,11 +200,7 @@ export default function Home() {
 				<section className="lg:hidden w-screen items-center mt-0">
 					{/* MAIN BANNER */}
 					<section className="w-full">
-						<Image
-							src={mainBanner}
-							layout={"responsive"}
-							alt="banner"
-						/>
+						<Carousel />
 					</section>
 				</section>
 				<div className="grid grid-cols-5 gap-12">

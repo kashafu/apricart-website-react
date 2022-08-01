@@ -14,6 +14,7 @@ const Carousel = () => {
         slidesToShow: 1,
         slidesToScroll: 1,
         autoplaySpeed: 5000,
+        className: 'h-full'
         // cssEase: "linear",
         // responsive: [
         //     {
@@ -47,16 +48,18 @@ const Carousel = () => {
 
     return(
         <Slider {...settings}>
-            <Link href={'/category/just-rs.75/1242'} passHref>
-                <a className="w-full pr-4">
-                    <Image
-                        src={everythingIn75}
-                        layout={"responsive"}
-                        alt="banner"
-                    />
-                </a>
-            </Link>
-            <div className="w-full">
+            <div className='w-full h-full'>
+                <Link href={'/category/just-rs.75/1242'} passHref>
+                    <a className="w-full">
+                        <Image
+                            src={everythingIn75}
+                            layout={"responsive"}
+                            alt="banner"
+                        />
+                    </a>
+                </Link>
+            </div>
+            <div className="w-full h-full">
                 <Image
                     src={mainBanner}
                     layout={"responsive"}
