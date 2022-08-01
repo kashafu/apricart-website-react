@@ -31,6 +31,7 @@ export default function SingleProduct({ product, isInStock }) {
 		productImageUrlThumbnail,
 		title,
 		currentPrice,
+		specialPrice,
 		sku,
 		inStock,
 		minQty,
@@ -38,6 +39,8 @@ export default function SingleProduct({ product, isInStock }) {
 		categoryleafName,
 		categoryIds
 	} = product
+
+	console.log(product);
 
 	if (isInStock) {
 		inStock = isInStock
@@ -185,7 +188,7 @@ export default function SingleProduct({ product, isInStock }) {
 						as={"/category/" + toKebabCase(immediateCategoryName) + "/" + immediateCategoryId + "/" + toKebabCase(title) + "/" + sku}
 						passHref
 					>
-						<a className="relative h-[100px] w-[100px] lg:h-[150px] lg:w-[150px]">
+						<a className="relative h-[150px] w-[150px]">
 							<Image
 								src={imageUrl}
 								layout={"fill"}
@@ -195,16 +198,28 @@ export default function SingleProduct({ product, isInStock }) {
 					</Link>
 				</div>
 				{/* TITLE */}
-				<p className="row-span-1 font-lato font-bold text-left text-xs lg:text-sm xl:text-lg text-main-blue line-clamp-2">
+				<p className="row-span-1 font-lato font-bold text-left text-sm xl:text-lg text-main-blue line-clamp-2">
 					{title}
 				</p>
 				{/* PRICE */}
-				<p className="row-span-1 text-md lg:text-3xl text-left font-bold text-main-blue">
-					Rs. {currentPrice}
-				</p>
+				{specialPrice > 0 ? (
+					<div className="row-span-1 flex flex-row justify-between">
+						<p className="text-xl xl:text-2xl text-left font-bold text-main-blue line-through decoration-red-600">
+							Rs. {currentPrice}
+						</p>
+						<p className="text-2xl xl:text-3xl text-left font-bold text-main-blue xl:pr-8">
+							Rs. {specialPrice}
+						</p>
+					</div>
+				):(
+					<p className="row-span-1 text-3xl text-left font-bold text-main-blue">
+						Rs. {currentPrice}
+					</p>
+				)}
+				
 				{showAddToCart && (
 					<div
-						className="absolute z-10 bg-white drop-shadow-[0_35px_35px_35px_rgba(0,0,0,0.25)] bottom-[-35px] py-2 row-span-1 flex flex-col lg:flex-row items-center justify-between w-full"
+						className="absolute z-10 bg-white drop-shadow-[0_35px_35px_35px_rgba(0,0,0,0.25)] bottom-[-35px] py-2 row-span-1 flex flex-row items-center justify-between w-full"
 						onMouseEnter={() => {
 							setShowAddToCart(true)
 						}}
@@ -297,7 +312,7 @@ export default function SingleProduct({ product, isInStock }) {
 						as={"/category/" + toKebabCase(immediateCategoryName) + "/" + immediateCategoryId + "/" + toKebabCase(title) + "/" + sku}
 						passHref
 					>
-						<a className="relative h-[100px] w-[100px] lg:h-[150px] lg:w-[150px]">
+						<a className="relative h-[100px] w-[100px]">
 							<Image
 								src={imageUrl}
 								layout={"fill"}
@@ -307,13 +322,24 @@ export default function SingleProduct({ product, isInStock }) {
 					</Link>
 				</div>
 				{/* TITLE */}
-				<p className="row-span-1 font-lato font-bold text-left text-xs lg:text-lg text-main-blue line-clamp-2">
+				<p className="row-span-1 font-lato font-bold text-left text-xs text-main-blue line-clamp-2">
 					{title}
 				</p>
 				{/* PRICE */}
-				<p className="row-span-1 text-md lg:text-3xl text-left font-bold text-main-blue">
-					Rs. {currentPrice}
-				</p>
+				{specialPrice > 0 ? (
+					<div className="row-span-1 flex flex-row justify-between">
+						<p className="text-sm text-left font-bold text-main-blue line-through decoration-red-600">
+							Rs. {currentPrice}
+						</p>
+						<p className="text-base text-left font-bold text-main-blue pr-8">
+							Rs. {specialPrice}
+						</p>
+					</div>
+				):(
+					<p className="row-span-1 text-md text-left font-bold text-main-blue">
+						Rs. {currentPrice}
+					</p>
+				)}
 				<div
 					className="z-90 bg-white drop-shadow-[0_35px_35px_35px_rgba(0,0,0,0.25)] bottom-[-35px] py-2 row-span-1 flex flex-col lg:flex-row items-center justify-between w-full"
 					onMouseEnter={() => {
