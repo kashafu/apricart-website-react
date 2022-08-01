@@ -1,5 +1,4 @@
 import Link from "next/link"
-// import BtnCart from "../test"
 import Cookies from "universal-cookie"
 import heartIcon from "../../../../public/assets/svgs/heartIcon.svg"
 import { getGeneralApiParams } from "../../../../helpers/ApiHelpers"

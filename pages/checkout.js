@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react"
-import Link from "next/link"
 import axios from "axios"
 import { base_url_api } from "../information.json"
 import { getGeneralApiParams } from "../helpers/ApiHelpers"
@@ -12,8 +11,6 @@ import Image from "next/image"
 import { toast } from "react-toastify"
 
 // ICONS
-import blueCircleIcon from "../public/assets/svgs/circle/filledBlueCircle.svg"
-import blackCircleIcon from "../public/assets/svgs/circle/unfilledCircle.svg"
 import plusIcon from "../public/assets/svgs/plusIcon.svg"
 import minusIcon from "../public/assets/svgs/minusIcon.svg"
 import trashIcon from "../public/assets/svgs/trashIcon.svg"
@@ -24,7 +21,7 @@ import {
 	incrementQuantity,
 	decrementQuantity,
 	removeFromCart,
-	updatedcart,
+	initialize
 } from "../redux/cart.slice"
 import SectionHeading from "../components/Layout/components/Typography/SectionHeading"
 import InputLabelText from "../components/Layout/components/Typography/InputLabelText"
@@ -412,12 +409,54 @@ export default function Checkout() {
 			setCheckoutErrorMessage("")
 			setSuccessResponse(response.data)
 			setViewState("review")
+			getCartDataApi()
 		} catch (error) {
 			console.log(error)
 			setCheckoutErrorMessage(error?.response?.data?.message)
 			toast.error(error?.response?.data?.message)
 		}
 	}
+
+	const getCartDataApi = async () => {
+        let { headers, city, userId } = getGeneralApiParams()
+        let lat = 0
+        let long = 0
+        let body = {
+            coupon: "",
+            notes: "",
+            paymentMethod: "cash",
+            address: 0,
+            showProducts: true,
+            verify: true,
+            prodType: "cus",
+            day: "",
+            startTime: "",
+            endTime: "",
+            clientType: "apricart",
+            orderType: "delivery",
+        }
+        let url =
+            base_url_api +
+            "/order/cart/checkout?city=" +
+            city +
+            "&userid=" +
+            userId +
+            "&client_lat=" +
+            lat +
+            "&client_long=" +
+            long +
+            "&lang=en&client_type=apricart"
+
+        try {
+            let response = await axios.post(url, body, {
+                headers: headers,
+            })
+
+            dispatch(initialize(response.data.data.products))
+        } catch (error) {
+            console.log(error)
+        }
+    }
 
 	const getOptionsDataApi = async () => {
 		let url = base_url_api + "/options/all?client_type=apricart"
@@ -895,7 +934,7 @@ export default function Checkout() {
 		)
 	}
 
-	if (reduxCart.length == 0) {
+	if (reduxCart.length == 0 && viewState !== "review") {
 		return (
 			<>
 				<HeadTag title={"Checkout"} />
@@ -1005,7 +1044,7 @@ export default function Checkout() {
 					<Cart currentState={viewState} />
 				</div>
 				{/* CHECKOUT BUTTON DIV */}
-				<div className="col-span-5">
+				<div className="col-span-4">
 					{viewState === "shipping" && (
 						<div>
 							<SubmitButton

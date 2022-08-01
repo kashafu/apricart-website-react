@@ -145,18 +145,26 @@ export default function Home() {
 					{/* STATIC BANNERS */}
 					<section className="col-span-5 grid grid-rows-2 h-full w-full justify-start items-center space-y-8">
 						<div className="relative w-[500px] h-[180px] lg:w-[400px] lg:h-[150px] xl:w-[530px] xl:h-[190px] 2xl:w-[600px] 2xl:h-[220px] 3xl:w-[700px] 2xl:h-[270px]">
-							<Image
-								src={nationals}
-								layout={"fill"}
-								alt="banner"
-							/>
+							<Link href={'/products/search/national'} passHref>
+								<a>
+									<Image
+										src={nationals}
+										layout={"fill"}
+										alt="banner"
+									/>
+								</a>
+							</Link>
 						</div>
 						<div className="relative w-[500px] h-[180px] lg:w-[400px] lg:h-[150px] xl:w-[530px] xl:h-[190px] 2xl:w-[600px] 2xl:h-[220px] 3xl:w-[700px] 2xl:h-[270px]">
-							<Image
-								src={lifestyle}
-								layout={"fill"}
-								alt="banner"
-							/>
+							<Link href={'/category/home-&-lifestyle/1235'} passHref>
+								<a>
+									<Image
+										src={lifestyle}
+										layout={"fill"}
+										alt="banner"
+									/>
+								</a>
+							</Link>
 						</div>
 					</section>
 				</section>
@@ -196,21 +204,29 @@ export default function Home() {
 									{index % 2 == 0 ? (
 										<section className="lg:hidden relative space-y-6 items-center">
 											<section className="w-full">
-												<Image
-													src={lifestyle}
-													layout={"responsive"}
-													alt=""
-												/>
+												<Link href={'/category/home-&-lifestyle/1235'} passHref className="w-full">
+													<a className="w-full">
+														<Image
+															src={lifestyle}
+															layout={"responsive"}
+															alt=""
+														/>
+													</a>
+												</Link>
 											</section>
 										</section>
 									) : (
 										<section className="lg:hidden relative space-y-6 items-center">
 											<section className="w-full">
-												<Image
-													src={nationals}
-													layout={"responsive"}
-													alt=""
-												/>
+												<Link href={'/products/search/national'} passHref className="w-full">
+													<a className="w-full">
+														<Image
+															src={nationals}
+															layout={"responsive"}
+															alt=""
+														/>
+													</a>
+												</Link>
 											</section>
 										</section>
 									)}

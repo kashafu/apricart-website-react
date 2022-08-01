@@ -4,6 +4,7 @@ import { useEffect, useState, useRef } from "react"
 import { getGeneralApiParams } from "../../../../helpers/ApiHelpers"
 import { base_url_api } from "../../../../information.json"
 import SingleProductList from "../Products/SingleProductList"
+import toKebabCase from "../../../../helpers/toKebabCase"
 
 export default function SearchBar() {
 	const [searchText, setSearchText] = useState("")
@@ -23,7 +24,7 @@ export default function SearchBar() {
 	useEffect(() => {
 		if (selectedCategoryId !== "") {
 			router.push(
-				"/category/" + selectedCategoryName + "/" + selectedCategoryId
+				"/category/" + toKebabCase(selectedCategoryName) + "/" + selectedCategoryId
 			)
 		}
 	}, [selectedCategoryId])

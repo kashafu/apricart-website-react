@@ -32,15 +32,12 @@ export default function CartSlider() {
 
     const getCartDataApi = async () => {
         let { headers, city, userId } = getGeneralApiParams()
-        // let lat = checkoutAddress ? JSON.parse(checkoutAddress).mapLat : '0'
-        // let long = checkoutAddress ? JSON.parse(checkoutAddress).mapLong : '0'
         let lat = 0
         let long = 0
         let body = {
             coupon: "",
             notes: "",
             paymentMethod: "cash",
-            // 'address': checkoutAddress ? JSON.parse(checkoutAddress).id : '',
             address: 0,
             showProducts: true,
             verify: true,
