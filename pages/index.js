@@ -168,19 +168,19 @@ export default function Home() {
 						</section>
 					</section>
 					{/* STATIC BANNERS */}
-					<section className="col-span-5 grid grid-rows-2 h-full w-full justify-start items-center">
-						<div className="relative w-[500px] h-[180px] lg:w-[400px] lg:h-[150px] xl:w-[530px] xl:h-[190px] 2xl:w-[600px] 2xl:h-[220px] 3xl:w-[700px] 2xl:h-[270px]">
+					<section className="col-span-5 grid grid-rows-2 h-full w-full justify-items-center align-items-center">
+						<div className="relative w-full">
 							<Link href={"/products/search/national"} passHref>
 								<a>
 									<Image
 										src={nationals}
-										layout={"fill"}
+										layout={"responsive"}
 										alt="banner"
 									/>
 								</a>
 							</Link>
 						</div>
-						<div className="relative w-[500px] h-[180px] lg:w-[400px] lg:h-[150px] xl:w-[530px] xl:h-[190px] 2xl:w-[600px] 2xl:h-[220px] 3xl:w-[700px] 2xl:h-[270px]">
+						<div className="relative w-full">
 							<Link
 								href={"/category/home-&-lifestyle/1235"}
 								passHref
@@ -188,7 +188,7 @@ export default function Home() {
 								<a>
 									<Image
 										src={lifestyle}
-										layout={"fill"}
+										layout={"responsive"}
 										alt="banner"
 									/>
 								</a>
