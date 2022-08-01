@@ -215,7 +215,7 @@ export default function ProductDetail() {
 														</div>
 														<div className="col-12 col-sm-6  col-md-6  col-lg-6  col-xl-6  col-xxl-6">
 															<div className="productD_head">
-																<p className="text-main-blue font-bold text-3xl">{product.data[0].title}col-12 col-sm-4  col-md-4  col-lg-4  col-xl-4  col-xxl-4</p>
+																<p className="text-main-blue font-bold text-3xl">{product.data[0].title}</p>
 																<hr />
 																{product.data[0].specialPrice > 0 ? (
 																	<div className="flex flex-row space-x-4">
