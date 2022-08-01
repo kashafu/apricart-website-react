@@ -152,7 +152,7 @@ export default function Home() {
 			)}
 			<div className="space-y-8">
 				{/* BANNERS SECTION hidden on phone */}
-				<section className="hidden lg:relative lg:w-full lg:aspect-[16/6] lg:grid grid-cols-12 gap-2 items-center">
+				<section className="hidden lg:relative lg:w-full lg:aspect-[16/6] lg:grid grid-cols-12 gap-2 p-2 items-center">
 					{/* BACKGROUND IMAGE */}
 					<div className="absolute w-full h-full blur-lg">
 						<Image
@@ -169,7 +169,7 @@ export default function Home() {
 					</section>
 					{/* STATIC BANNERS */}
 					<section className="col-span-5 grid grid-rows-2 h-full w-full justify-items-center align-items-center">
-						<div className="relative w-full">
+						<div className="relative w-full p-2">
 							<Link href={"/products/search/national"} passHref>
 								<a>
 									<Image
@@ -180,7 +180,7 @@ export default function Home() {
 								</a>
 							</Link>
 						</div>
-						<div className="relative w-full">
+						<div className="relative w-full p-2">
 							<Link
 								href={"/category/home-&-lifestyle/1235"}
 								passHref
