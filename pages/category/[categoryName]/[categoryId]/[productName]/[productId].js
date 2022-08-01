@@ -215,9 +215,16 @@ export default function ProductDetail() {
 														</div>
 														<div className="col-12 col-sm-6  col-md-6  col-lg-6  col-xl-6  col-xxl-6">
 															<div className="productD_head">
-																<h3>{product.data[0].title}</h3>
+																<p className="text-main-blue font-bold text-3xl">{product.data[0].title}</p>
 																<hr />
-																<h4>Rs. {product.data[0].currentPrice}</h4>
+																{product.data[0].specialPrice > 0 ? (
+																	<div className="flex flex-row space-x-4">
+																		<h4 className="line-through decoration-red-600">Rs. {product.data[0].currentPrice}</h4>
+																		<h4>Rs. {product.data[0].specialPrice}</h4>
+																	</div>
+																):(
+																	<h4>Rs. {product.data[0].currentPrice}</h4>
+																)}
 																<hr />
 																<div className="productD_para">
 																	<p>{product.data[0].description}</p>
