@@ -19,7 +19,7 @@ import { useState } from "react"
 import { toast } from "react-toastify"
 import toKebabCase from "../helpers/toKebabCase"
 
-export default function Register(){
+export default function Bannershimmer(){
     const [showAddToCart, setShowAddToCart] = useState(false)
 
 	let divStyle = showAddToCart
