@@ -17,9 +17,36 @@ export const getGeneralCookies = () => {
     })
 }
 
+/*
+    city cookies is being set in CitySelector.js
+    prod_type is being set in Header.js
+*/
 export const getGeneralApiParams = () => {
+    let prodType = cookies.get('prod-type')
+    if(prodType === 'b2b'){
+        prodType = 'b2b'
+        cookies.set('prod-type', 'b2b')
+    }
+    else{
+        prodType = 'cus'
+        cookies.set('prod-type', 'cus')
+    }
+
+    let orderType = cookies.get('order-type')
+    if(orderType === 'pickup'){
+        orderType = 'pickup'
+        cookies.set('order-type', 'pickup')
+    }
+    else{
+        orderType = 'delivery'
+        cookies.set('order-type', 'delivery')
+    }
+
+    let clientType = cookies.get('client-type')
+    clientType = 'apricart'
+    cookies.set('client-type', 'apricart')
+
     let token = cookies.get('cookies-token')
-    // city cookies is being set in TopBar.js
     let city = cookies.get("cities") == null ? "karachi" : cookies.get("cities")
     let selectedAddress = cookies.get('selected-address')
     let latitude = 0
@@ -55,9 +82,6 @@ export const getGeneralApiParams = () => {
                 longitude = position.coords.longitude
             })
         }
-        // headers = {
-        //     "Content-Type": "application/json",
-        // }
     }
 
     return ({
@@ -67,7 +91,10 @@ export const getGeneralApiParams = () => {
         'longitude': longitude,
         'userId': userId,
         'headers': headers,
-        'token': token
+        'token': token,
+        'prodType' : prodType,
+        'orderType' : orderType,
+        'clientType' : clientType
     })
 }
 

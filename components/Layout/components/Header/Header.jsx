@@ -25,6 +25,18 @@ export default function Header() {
 		cookies.set("guestUserId", "desktopuser_" + d.getTime(), 30)
 	}
 
+	if(!cookies.get("prod-type")){
+		cookies.set('prod-type', 'cus')
+	}
+
+	if(!cookies.get("order-type")){
+		cookies.set('order-type', 'delivery')
+	}
+
+	if(!cookies.get("client-type")){
+		cookies.set('client-type', 'apricart')
+	}
+
 	return (
 		<div className="flex flex-col bg-white px-2 md:px-12 py-2 md:py-8 space-y-2 border-b">
 			<div className="flex flex-row items-center space-x-2 md:space-x-4">
