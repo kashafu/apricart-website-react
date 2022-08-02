@@ -1,15 +1,15 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-// import "react-toastify/dist/ReactToastify.css";
 import { getGeneralApiParams } from "../helpers/ApiHelpers";
 
-let { selectedAddress } = getGeneralApiParams()
+let { selectedAddress, selectedType } = getGeneralApiParams()
 
 const generalSlice = createSlice({
 	name: "general",
 	initialState: { 
 		selectedAddress: selectedAddress,
 		ticker: '',
-		nearestWarehouse: ''
+		nearestWarehouse: '',
+		selectedType: selectedType
 	},
 	reducers: {
 		updateSelectedAddress: (state, action) => {
@@ -17,14 +17,17 @@ const generalSlice = createSlice({
 		},
 		updateTicker: (state, action) => {
 			state.ticker = action.payload
-		}
+		},
+		updateSelectedType: (state, action) => {
+			state.selectedType = action.payload
+		},
 	}
 })
-
 
 export const generalReducer = generalSlice.reducer
 
 export const {
 	updateSelectedAddress,
-	updateTicker
+	updateTicker,
+	updateSelectedType
 } = generalSlice.actions

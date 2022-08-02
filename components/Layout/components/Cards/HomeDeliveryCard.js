@@ -1,9 +1,20 @@
 import Image from 'next/image'
 import homeDeliveryIcon from '../../../../public/assets/svgs/homeDeliveryIcon.svg'
+import { useDispatch, useSelector } from 'react-redux'
+import { updateSelectedType } from '../../../../redux/general.slice'
 
 export default function HomeDeliveryCard(){
+    const dispatch = useDispatch()
+    const selectedTypeSelector = useSelector((state) => state.general.selectedType)
+    
+    let style = selectedTypeSelector === 'home' ? 'bg-main-yellow' : ''
+
     return(
-        <button className='relative rounded-lg shadow flex flex-col grow p-2 items-center bg-main-yellow'>
+        <button className={[style] + ' relative rounded-lg shadow flex flex-col grow p-2 items-center'}
+            onClick={()=>{
+                dispatch(updateSelectedType('home'))
+            }}
+        >
             <div className='hidden absolute self-start font-bold text-main-blue lg:inline text-2xl xl:text-3xl 2xl:text-4xl'>
                 <p>
                     HOME
@@ -16,6 +27,7 @@ export default function HomeDeliveryCard(){
                 <Image
                     src={homeDeliveryIcon}
                     layout={'responsive'}
+                    alt='icon'
                 />
             </div>
             <div className='lg:hidden flex font-semibold text-main-blue text-xs'>

@@ -7,12 +7,10 @@ import HamburgerMenu from "../Menus/HamburgerMenu"
 import Logo from "../Logo/Logo"
 import Profile from "../Auth/Profile"
 import Image from "next/image"
-import HomeDeliveryCard from "../Cards/HomeDeliveryCard"
-import ClickAndCollectCard from "../Cards/ClickAndCollectCard"
-import BulkBuyCard from "../Cards/BulkBuyCard"
 import CartSlider from "../Cart/CartSlider"
 import { useRouter } from "next/router"
 import CitySelector from "../CitySelector/CitySelector"
+import TypeCardSelector from "../Cards/TypeCardSelector"
 
 export default function Header() {
 	const cookies = new Cookies()
@@ -35,6 +33,10 @@ export default function Header() {
 
 	if(!cookies.get("client-type")){
 		cookies.set('client-type', 'apricart')
+	}
+
+	if(!cookies.get("selected-type")){
+		cookies.set('selected-type', 'home')
 	}
 
 	return (
@@ -91,11 +93,7 @@ export default function Header() {
 				</div>
 			</div>
 			{router.pathname === "/" && (
-				<div className="grid grid-cols-3 lg:gap-12 lg:px-28 gap-2">
-					<HomeDeliveryCard />
-					<ClickAndCollectCard />
-					<BulkBuyCard />
-				</div>
+				<TypeCardSelector />
 			)}
 		</div>
 	)
