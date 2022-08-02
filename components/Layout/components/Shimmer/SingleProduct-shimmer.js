@@ -19,7 +19,7 @@ import { useState } from "react"
 import { toast } from "react-toastify"
 import toKebabCase from "../helpers/toKebabCase"
 
-export default function Register(){
+export default function SingleProductshimmer(){
     const [showAddToCart, setShowAddToCart] = useState(false)
 
 	let divStyle = showAddToCart
@@ -29,12 +29,22 @@ export default function Register(){
         <>
         
        
-                    <div className={"animate-pulse h-[600px] rounded-lg w-1/5 " +
+                    <div className={"animate-pulse h-[400px] rounded-lg w-1/5 " +
 					[divStyle] }>
-                    
-                    
+                        <div className="animate-pulse w-full h-2/3 bg-cyan-50 rounded-lg">
 
-                    
+                        </div>
+                        <div className="animate-pulse w-full my-2 h-[30px] rounded-lg bg-cyan-50">
+
+</div>
+<div className="animate-pulse w-3/5 my-2 h-[30px] rounded-lg bg-cyan-50">
+
+</div>
+                        <div className="animate-pulse w-3/5 my-1 h-[40px] rounded-lg bg-cyan-50">
+
+                        </div>
+
+
                     </div>
         </>
     )
