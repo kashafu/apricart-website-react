@@ -78,7 +78,7 @@ export default function Recommended() {
 					{products == null || products?.data?.length == 0 ? (
 						<div>NO ITEMS EXIST</div>
 					) : (
-						<section className="grid grid-cols-2 md:grid-cols-4 gap-4">
+						<section className="grid grid-cols-2 md:grid-cols-4 2xl:grid-cols-5 gap-4">
 							{products.data.map((product) => {
 								let { id } = product
 								return (

@@ -10,6 +10,7 @@ import Image from "next/image"
 import Link from "next/link"
 import HeadTag from "../../../../components/Layout/components/Head/HeadTag"
 import toKebabCase from "../../../../helpers/toKebabCase"
+import { fromKebabCase } from "../../../../helpers/toKebabCase"
 
 export default function CategoryProducts() {
 	const router = useRouter()
@@ -111,7 +112,7 @@ export default function CategoryProducts() {
 
 	return (
 		<div>
-			<HeadTag title={"Category"} />
+			<HeadTag title={fromKebabCase(categoryName)[0].toUpperCase() + fromKebabCase(categoryName).substring(1)}/>
 			<div className="grid grid-cols-5 gap-8">
 				{/* CATEGORIES SECTION */}
 				<section className="hidden lg:col-span-1 lg:block">
@@ -120,7 +121,7 @@ export default function CategoryProducts() {
 				{/* PRODUCTS SECTION */}
 				<section className="col-span-5 lg:col-span-4">
 					<PageHeading
-						text={categoryName.toUpperCase()}
+						text={fromKebabCase(categoryName.toUpperCase())}
 					/>
 					<section className="space-y-12">
 						{/* SUB CATEGORIES SECTION */}
@@ -171,7 +172,7 @@ export default function CategoryProducts() {
 								{products == null || products?.data?.length == 0 ? (
 									<div>NO ITEMS EXIST</div>
 								) : (
-									<section className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
+									<section className="grid grid-cols-2 md:grid-cols-4 2xl:grid-cols-5 gap-4">
 										{products.data.map((product) => {
 											let { id } = product
 											return (
