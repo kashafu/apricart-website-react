@@ -4,14 +4,14 @@ import Image from 'next/image'
 
 export default function Logo({}){
     return(
-        <div>
+        <div className=''>
             <Link href={"/"} passHref>
-                <button className="flex">
+                <a className="flex items-center justify-center">
                     <Image
                         src={logoPNG}
                         alt={"logo"}
                     />
-                </button>
+                </a>
             </Link>
         </div>
     )
