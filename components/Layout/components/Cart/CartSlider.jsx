@@ -201,7 +201,7 @@ export default function CartSlider() {
 				}}
 			>
 				<Image src={cartIcon} alt={"icon"} width={45} height={45} />
-				<p className="absolute -top-2 -right-4 font-bold">{reduxCart.length}</p>
+				<p className="absolute -top-1 p-[5px] py-0 -right-2 bg-main-blue rounded-full text-xs text-white">{reduxCart.length}</p>
 			</button>
 			{
 				<div className={" w-full h-full transition-all ease-in duration-500"}>
