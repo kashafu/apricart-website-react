@@ -40,8 +40,6 @@ export default function SingleProduct({ product, isInStock }) {
 		categoryIds
 	} = product
 
-	console.log(product);
-
 	if (isInStock) {
 		inStock = isInStock
 	}

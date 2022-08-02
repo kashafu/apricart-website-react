@@ -88,7 +88,7 @@ export default function Home() {
 
 	return (
 		<div className="">
-			<HeadTag title={"APRICART"} />
+			<HeadTag title={"Apricart | Online Grocery"} />
 			{/* POPUP AD */}
 			{showPopupAd && (
 				<div className="w-full">
