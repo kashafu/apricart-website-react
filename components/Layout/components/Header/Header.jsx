@@ -54,7 +54,7 @@ export default function Header() {
 				<div className="lg:hidden flex flex-row pr-4">
 					<CartSlider />
 				</div>
-				<div className="hidden lg:inline lg:flex lg:flex-row lg:space-x-4 lg:items-center">
+				<div className="hidden lg:inline-flex  lg:flex-row lg:space-x-4 lg:items-center">
 					<div>
 						<CitySelector />
 					</div>
