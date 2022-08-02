@@ -1,20 +1,21 @@
 import Image from "next/image"
-import Link from "next/link"
-import { useState } from "react"
 import bulkBuyIcon from "../../../../public/assets/svgs/bulkBuyIcon.svg"
-import Popup from "../Popup/Popup"
-import playstoreImg from "../../../../public/assets/images/playstore-img.png"
-import appstoreImg from "../../../../public/assets/images/appstore-img.png"
+import { useDispatch, useSelector } from 'react-redux'
+import { updateSelectedType } from '../../../../redux/general.slice'
+
 
 export default function BulkBuyCard() {
-	const [showPopup, setShowPopup] = useState(false)
+	const dispatch = useDispatch()
+    const selectedTypeSelector = useSelector((state) => state.general.selectedType)
+    
+    let style = selectedTypeSelector === 'bulk' ? 'bg-main-yellow' : ''
 
 	return (
 		<button
-			className="relative bg-white rounded-lg shadow flex flex-col grow p-2 items-center justify-between"
-			onClick={() => {
-				setShowPopup(!showPopup)
-			}}
+			className={[style] + " relative rounded-lg shadow flex flex-col grow p-2 items-center justify-between"}
+			onClick={()=>{
+                dispatch(updateSelectedType('bulk'))
+            }}
 		>
 			<div className="hidden absolute self-start font-bold text-main-blue lg:inline text-2xl xl:text-3xl 2xl:text-4xl">
 				<p>BULK BUY</p>
@@ -25,58 +26,6 @@ export default function BulkBuyCard() {
 			<div className="lg:hidden flex font-semibold text-main-blue text-xs">
 				<p>Bulk Buy</p>
 			</div>
-			{showPopup && (
-				<Popup
-					content={
-						<div className="flex flex-col h-full">
-							<div className="mt-auto mb-auto flex flex-col space-y-4">
-								<p className="text-main-blue text-sm lg:text-2xl font-bold">
-									Bigger purchase bigger discount with
-									Apricart Bulk Buy.
-								</p>
-								<p className="text-main-blue text-xs lg:text-xl font-bold">
-									Use our APP to place your Bulk order.
-								</p>
-								<div className="flex flex-row w-full justify-center">
-									<Link
-										href={
-											"https://play.google.com/store/apps/details?id=com.assorttech.airoso_app&hl=en&gl=US"
-										}
-										passHref
-									>
-										<a>
-											<Image
-												src={playstoreImg}
-												width={120}
-												height={40}
-												alt=""
-											/>
-										</a>
-									</Link>
-									<Link
-										href={
-											"https://apps.apple.com/us/app/apricart/id1562353936?platform=iphone"
-										}
-										passHref
-									>
-										<a>
-											<Image
-												src={appstoreImg}
-												width={120}
-												height={40}
-												alt=""
-											/>
-										</a>
-									</Link>
-								</div>
-							</div>
-						</div>
-					}
-					handleClose={() => {
-						setShowPopup(!showPopup)
-					}}
-				/>
-			)}
 		</button>
 	)
 }

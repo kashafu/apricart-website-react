@@ -10,16 +10,17 @@ export const getGeneralCookies = () => {
     let token = cookies.get('cookies-token')
 
     return({
-        'name': name,
-        'phoneNumber': phoneNumber,
-        'email': email,
-        'token': token
+        name,
+        phoneNumber,
+        email,
+        token
     })
 }
 
 /*
     city cookies is being set in CitySelector.js
     prod_type is being set in Header.js
+    selectedType can be either 'bulk' 'home'
 */
 export const getGeneralApiParams = () => {
     let prodType = cookies.get('prod-type')
@@ -45,6 +46,14 @@ export const getGeneralApiParams = () => {
     let clientType = cookies.get('client-type')
     clientType = 'apricart'
     cookies.set('client-type', 'apricart')
+
+    let selectedType = cookies.get('selected-type')
+    if(prodType === 'b2b'){
+        selectedType = 'bulk'
+    }
+    else if(prodType === 'cus'){
+        selectedType = 'home'
+    }
 
     let token = cookies.get('cookies-token')
     let city = cookies.get("cities") == null ? "karachi" : cookies.get("cities")
@@ -85,16 +94,17 @@ export const getGeneralApiParams = () => {
     }
 
     return ({
-        'city': city,
-        'selectedAddress': selectedAddress,
-        'latitude': latitude,
-        'longitude': longitude,
-        'userId': userId,
-        'headers': headers,
-        'token': token,
-        'prodType' : prodType,
-        'orderType' : orderType,
-        'clientType' : clientType
+        city,
+        selectedAddress,
+        latitude,
+        longitude,
+        userId,
+        headers,
+        token,
+        prodType,
+        orderType,
+        clientType,
+        selectedType
     })
 }
 
