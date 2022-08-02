@@ -6,10 +6,10 @@ import { useDispatch, useSelector } from "react-redux"
 import { updateSelectedType } from "../../../../redux/general.slice"
 
 const TypeCardSelector = () => {
-    const [isSelected, setIsSelected] = useState()
+    // const [isSelected, setIsSelected] = useState()
 
     return(
-        <div className="grid grid-cols-3 lg:gap-12 lg:px-28 gap-2">
+        <div className=" grid grid-cols-3 lg:gap-12 lg:px-28 gap-2">
             <HomeDeliveryCard />
             <ClickAndCollectCard />
             <BulkBuyCard />

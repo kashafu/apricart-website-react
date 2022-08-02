@@ -11,12 +11,14 @@ import CartSlider from "../Cart/CartSlider"
 import { useRouter } from "next/router"
 import CitySelector from "../CitySelector/CitySelector"
 import TypeCardSelector from "../Cards/TypeCardSelector"
+import { useState, useEffect } from "react"
 
 export default function Header() {
 	const cookies = new Cookies()
 	const router = useRouter()
 
 	let { token } = getGeneralApiParams()
+	const [offset, setOffset] = useState(0);
 
 	if (!cookies.get("guestUserId")) {
 		const d = new Date()
@@ -39,9 +41,21 @@ export default function Header() {
 		cookies.set('selected-type', 'home')
 	}
 
+useEffect(() => {
+	const onScroll = () => setOffset(window.pageYOffset);
+	// clean up code
+	window.removeEventListener('scroll', onScroll);
+	window.addEventListener('scroll', onScroll, { passive: true });
+	return () => window.removeEventListener('scroll', onScroll);
+}, [])
+
+
 	return (
-		<div className="flex flex-col bg-white px-2 md:px-12 py-2 md:py-8 space-y-2 border-b">
-			<div className="flex flex-row items-center space-x-2 md:space-x-4">
+		<div className="flex flex-col bg-white py-2 md:py-8 space-y-2 border-b relative">
+			
+		{/* <div className="flex flex-col bg-white px-2 md:px-12 py-2 md:py-8 space-y-2 border-b relative"> */}
+			<div className={offset>=30 ?"flex flex-row py-2 transition-all fixed top-0 duration-200 ease-linear z-10 px-2 bg-white  w-full items-center md:py-2":"flex flex-row py-2 transition-all fixed top-[50px] z-10 px-2 bg-white w-full items-center md:py-2 duration-300 ease-linear"}>
+			{/* <div className="flex flex-row fixed z-20 bg-white w-full items-center space-x-2 md:space-x-4"> */}
 				<div className="lg:hidden">
 					<HamburgerMenu />
 				</div>
@@ -92,8 +106,12 @@ export default function Header() {
 					)}
 				</div>
 			</div>
+
 			{router.pathname === "/" && (
+				<div className="pt-[3rem] lg:pt-[10rem] md:pt-[5rem] px-2">
+
 				<TypeCardSelector />
+				</div>
 			)}
 		</div>
 	)
