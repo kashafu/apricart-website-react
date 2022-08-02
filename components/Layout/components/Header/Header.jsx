@@ -54,9 +54,9 @@ useEffect(() => {
 		<div className="flex flex-col bg-white py-2 md:py-8 space-y-2 border-b relative">
 			
 		{/* <div className="flex flex-col bg-white px-2 md:px-12 py-2 md:py-8 space-y-2 border-b relative"> */}
-			<div className={offset>=30 ?"flex flex-row py-2 transition-all fixed top-0 duration-200 ease-linear z-10 px-2 bg-white  w-full items-center md:py-2":"flex flex-row py-2 transition-all fixed top-[50px] z-10 px-2 bg-white w-full items-center md:py-2 duration-300 ease-linear"}>
+			<div className={offset>=20 ?"flex flex-row py-2 transition-all fixed top-0 duration-200 ease-linear z-10 px-2 bg-white  w-full items-center md:py-2":"flex flex-row py-2 transition-all fixed top-[50px] z-10 px-2 bg-white w-full items-center md:py-2 duration-300 ease-linear"}>
 			{/* <div className="flex flex-row fixed z-20 bg-white w-full items-center space-x-2 md:space-x-4"> */}
-				<div className="lg:hidden">
+				<div className="lg:hidden pr-2">
 					<HamburgerMenu />
 				</div>
 				<div className="hidden lg:block lg:w-[200px]">
@@ -65,7 +65,7 @@ useEffect(() => {
 				<div className="grow">
 					<SearchBar />
 				</div>
-				<div className="lg:hidden flex flex-row pr-4">
+				<div className="lg:hidden px-2 flex flex-row pr-4">
 					<CartSlider />
 				</div>
 				<div className="hidden lg:inline-flex  lg:flex-row lg:space-x-4 lg:items-center">
