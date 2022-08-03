@@ -209,7 +209,7 @@ export default function CartSlider() {
 						className={
 							showCart
 								? "fixed top-0 right-0 flex ease-in duration-300 flex-col items-center w-2/3 lg:w-1/3 h-full bg-white shadow-2xl z-10 rounded-l-2xl overflow-hidden"
-								: "fixed top-0 -right-[40rem] ease-in duration-700 flex flex-col items-center w-2/3 lg:w-1/3 h-full bg-white shadow-2xl z-10 rounded-l-2xl overflow-hidden"
+								: "fixed top-0 -right-[90rem] ease-in duration-700 flex flex-col items-center w-2/3 lg:w-1/3 h-full bg-white shadow-2xl z-10 rounded-l-2xl overflow-hidden"
 						}
 					>
 						<div className="w-full p-4 bg-main-blue">
