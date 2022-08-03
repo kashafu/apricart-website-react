@@ -19,7 +19,7 @@ import { useState } from "react"
 import { toast } from "react-toastify"
 import toKebabCase from "../helpers/toKebabCase"
 
-export default function Register(){
+export default function SingleProductshimmer(){
     const [showAddToCart, setShowAddToCart] = useState(false)
 
 	let divStyle = showAddToCart
@@ -27,17 +27,136 @@ export default function Register(){
 		: "border-r-2 border-b-2"
     return(
         <>
-        {/**/}
-       <div className="animate-pulse flex flex-row mx-2 h-[600px] p-4 bg-slate-100 ">
-                   <div className="animate-pulse  w-3/5 h-3/4 my-[100px]  bg-cyan-200"></div>
-                  
-                   <div className="flex flex-col h-full w-2/5 justify-center items-center">
-                    <div className="animate-pulse w-4/5 h-1/3 my-2 bg-cyan-50"></div>
-                    <div  className="animate-pulse w-4/5 h-1/3 my-2 bg-cyan-50"></div>
-                   </div>
+        <div className="flex flex-row w-full">
+       
+                    <div className={"animate-pulse h-[400px] m-2 rounded-lg w-1/5 " +
+					[divStyle] }>
+                        <div className="animate-pulse w-full h-2/3 bg-cyan-50 rounded-lg">
+
+                        </div>
+                        <div className="animate-pulse w-full my-2 h-[30px] rounded-lg bg-cyan-50">
+
+</div>
+<div className="animate-pulse w-3/5 my-2 h-[30px] rounded-lg bg-cyan-50">
+
+</div>
+                        <div className="animate-pulse w-3/5 my-1 h-[40px] rounded-lg bg-cyan-50">
+
+                        </div>
+
+
+                    </div>
+
+
+                    <div className={"animate-pulse h-[400px] m-2 rounded-lg w-1/5 " +
+					[divStyle] }>
+                        <div className="animate-pulse w-full h-2/3 bg-cyan-50 rounded-lg">
+
+                        </div>
+                        <div className="animate-pulse w-full my-2 h-[30px] rounded-lg bg-cyan-50">
+
+</div>
+<div className="animate-pulse  w-3/5 my-2 h-[30px] rounded-lg bg-cyan-50">
+
+</div>
+                        <div className="animate-pulse w-3/5 my-1 h-[40px] rounded-lg bg-cyan-50">
+
+                        </div>
+
+
+                    </div>
+
+
+                    <div className={"animate-pulse h-[400px] m-2 rounded-lg w-1/5 " +
+					[divStyle] }>
+                        <div className="animate-pulse w-full h-2/3 bg-cyan-50 rounded-lg">
+
+                        </div>
+                        <div className="animate-pulse w-full my-2 h-[30px] rounded-lg bg-cyan-50">
+
+</div>
+<div className="animate-pulse  w-3/5 my-2 h-[30px] rounded-lg bg-cyan-50">
+
+</div>
+                        <div className="animate-pulse w-3/5 my-1 h-[40px] rounded-lg bg-cyan-50">
+
+                        </div>
+
+
+                    </div>
+
+                    <div className={"animate-pulse h-[400px] m-2 rounded-lg w-1/5 " +
+					[divStyle] }>
+                        <div className="animate-pulse w-full h-2/3 bg-cyan-50 rounded-lg">
+
+                        </div>
+                        <div className="animate-pulse w-full my-2 h-[30px] rounded-lg bg-cyan-50">
+
+</div>
+<div className="animate-pulse  w-3/5 my-2 h-[30px] rounded-lg bg-cyan-50">
+
+</div>
+                        <div className="animate-pulse w-3/5 my-1 h-[40px] rounded-lg bg-cyan-50">
+
+                        </div>
+
+
+                    </div>
+
+
+                    <div className={"animate-pulse h-[400px] m-2 rounded-lg w-1/5 " +
+					[divStyle] }>
+                        <div className="animate-pulse w-full h-2/3 bg-cyan-50 rounded-lg">
+
+                        </div>
+                        <div className="animate-pulse w-full my-2 h-[30px] rounded-lg bg-cyan-50">
+
+</div>
+<div className="animate-pulse  w-3/5 my-2 h-[30px] rounded-lg bg-cyan-50">
+
+</div>
+                        <div className="animate-pulse w-3/5 my-1 h-[40px] rounded-lg bg-cyan-50">
+
+                        </div>
+
+
+                    </div>
+
+
+
+                    <div className={"animate-pulse h-[400px] m-2 rounded-lg w-1/5 " +
+					[divStyle] }>
+                        <div className="animate-pulse w-full h-2/3 bg-cyan-50 rounded-lg">
+
+                        </div>
+                        <div className="animate-pulse w-full my-2 h-[30px] rounded-lg bg-cyan-50">
+
+</div>
+<div className="animate-pulse  w-3/5 my-2 h-[30px] rounded-lg bg-cyan-50">
+
+</div>
+                        <div className="animate-pulse w-3/5 my-1 h-[40px] rounded-lg bg-cyan-50">
+
+                        </div>
+
+
+                    </div>
+
+<br/>
+
+
+
+                 
+
+
+      
                     
-                   </div> 
-                    
-       </> 
+
+
+
+
+
+                    </div>
+        </>
     )
 }
