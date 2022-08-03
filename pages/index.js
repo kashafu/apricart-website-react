@@ -15,6 +15,7 @@ import ErrorText from "../components/Layout/components/Typography/ErrorText"
 import crossIcon from "../public/assets/svgs/crossIcon.svg"
 import Carousel from "../components/Layout/components/Banner/Carousel"
 import { useSelector } from "react-redux"
+import { useHomeApi } from "../helpers/Api"
 
 export default function Home() {
 	const router = useRouter()
@@ -23,58 +24,64 @@ export default function Home() {
 	)
 	let { city, token } = getGeneralApiParams()
 
+	// const [isLoading, isPopupAd, data, errorMessage] = useHomeApi()
+
 	const [categories, setCategories] = useState(null)
-	const [homeData, setHomeData] = useState(null)
-	const [errorMessage, setErrorMessage] = useState("Loading")
-	const [showPopupAd, setShowPopupAd] = useState(false)
+	// const [data, setHomeData] = useState(null)
+	// const [errorMessage, setErrorMessage] = useState("Loading")
+	const [showPopupAd, setShowPopupAd] = useState(isPopupAd)
 
-	useEffect(() => {
-		getHomeDataApi()
-	}, [selectedTypeSelector])
+	// useEffect(() => {
+	// 	getHomeDataApi()
+	// }, [selectedTypeSelector])
 
-	const getHomeDataApi = async () => {
-		let {
-			city,
-			latitude,
-			longitude,
-			userId,
-			headers,
-			prodType,
-			clientType,
-			orderType,
-		} = getGeneralApiParams()
+	useEffect(()=>{
+		const [isLoading, isPopupAd, data, errorMessage] = useHomeApi()
+	})
 
-		let url =
-			base_url_api +
-			"/home/all?client_lat=" +
-			latitude +
-			"&client_long=" +
-			longitude +
-			"&city=" +
-			city +
-			"&lang=en&userid=" +
-			userId +
-			"&web=true&client_type=" +
-			clientType +
-			"&prod_type=" +
-			prodType +
-			"&order_type=" +
-			orderType
+	// const getHomeDataApi = async () => {
+	// 	let {
+	// 		city,
+	// 		latitude,
+	// 		longitude,
+	// 		userId,
+	// 		headers,
+	// 		prodType,
+	// 		clientType,
+	// 		orderType,
+	// 	} = getGeneralApiParams()
 
-		console.log(url)
+	// 	let url =
+	// 		base_url_api +
+	// 		"/home/all?client_lat=" +
+	// 		latitude +
+	// 		"&client_long=" +
+	// 		longitude +
+	// 		"&city=" +
+	// 		city +
+	// 		"&lang=en&userid=" +
+	// 		userId +
+	// 		"&web=true&client_type=" +
+	// 		clientType +
+	// 		"&prod_type=" +
+	// 		prodType +
+	// 		"&order_type=" +
+	// 		orderType
 
-		try {
-			let response = await axios.get(url, {
-				headers: headers,
-			})
+	// 	console.log(url)
 
-			getCategoriesApi()
-			setHomeData(response.data.data)
-			setShowPopupAd(response.data.data.dialog)
-		} catch (error) {
-			setErrorMessage(error.message)
-		}
-	}
+	// 	try {
+	// 		let response = await axios.get(url, {
+	// 			headers: headers,
+	// 		})
+
+	// 		getCategoriesApi()
+	// 		setHomeData(response.data.data)
+	// 		setShowPopupAd(response.data.data.dialog)
+	// 	} catch (error) {
+	// 		setErrorMessage(error.message)
+	// 	}
+	// }
 
 	const getCategoriesApi = async () => {
 		let { city, headers, userId } = getGeneralApiParams()
@@ -96,10 +103,10 @@ export default function Home() {
 		}
 	}
 
-	if (!homeData) {
+	if (!data) {
 		return (
 			<div>
-				<p>{errorMessage}</p>
+				<p>Loading</p>
 			</div>
 		)
 	}
@@ -114,13 +121,11 @@ export default function Home() {
 					<div className="fixed w-3/4 h-3/4 lg:hidden z-10 inset-0 m-auto shadow-2xl">
 						<div className="relative w-full h-full">
 							<Image
-								src={homeData.dialogImageUrl}
+								src={data.dialogImageUrl}
 								layout="fill"
 								alt="popup banner"
 								onClick={() => {
-									router.push(
-										"/offers/" + homeData.dialogValue
-									)
+									router.push("/offers/" + data.dialogValue)
 								}}
 							/>
 						</div>
@@ -142,13 +147,11 @@ export default function Home() {
 					<div className="hidden lg:block fixed w-[700px] h-[450px] z-10 inset-0 m-auto shadow-2xl">
 						<div className="relative w-full h-full">
 							<Image
-								src={homeData.dialogImageLandscapeUrl}
+								src={data.dialogImageLandscapeUrl}
 								layout="fill"
 								alt="popup banner"
 								onClick={() => {
-									router.push(
-										"/offers/" + homeData.dialogValue
-									)
+									router.push("/offers/" + data.dialogValue)
 								}}
 							/>
 						</div>
@@ -237,7 +240,7 @@ export default function Home() {
 								/>
 							</div>
 						)}
-						{homeData.products.map((product, index) => {
+						{data.products.map((product, index) => {
 							let { offerId } = product
 
 							return (
