@@ -1,7 +1,10 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import Cookies from "universal-cookie";
 import { getGeneralApiParams } from "../helpers/ApiHelpers";
 
 let { selectedAddress, selectedType } = getGeneralApiParams()
+
+const cookie = new Cookies()
 
 const generalSlice = createSlice({
 	name: "general",
@@ -20,6 +23,7 @@ const generalSlice = createSlice({
 		},
 		updateSelectedType: (state, action) => {
 			state.selectedType = action.payload
+			cookie.set('selected-type', action.payload)
 		},
 	}
 })

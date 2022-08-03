@@ -25,18 +25,6 @@ export default function Header() {
 		cookies.set("guestUserId", "desktopuser_" + d.getTime(), 30)
 	}
 
-	if(!cookies.get("prod-type")){
-		cookies.set('prod-type', 'cus')
-	}
-
-	if(!cookies.get("order-type")){
-		cookies.set('order-type', 'delivery')
-	}
-
-	if(!cookies.get("client-type")){
-		cookies.set('client-type', 'apricart')
-	}
-
 	if(!cookies.get("selected-type")){
 		cookies.set('selected-type', 'home')
 	}

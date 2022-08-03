@@ -2,17 +2,20 @@ import Image from "next/image"
 import bulkBuyIcon from "../../../../public/assets/svgs/bulkBuyIcon.svg"
 import { useDispatch, useSelector } from 'react-redux'
 import { updateSelectedType } from '../../../../redux/general.slice'
-
+import { useEffect, useState } from 'react'
 
 export default function BulkBuyCard() {
-	const dispatch = useDispatch()
-    const selectedTypeSelector = useSelector((state) => state.general.selectedType)
-    
-    let style = selectedTypeSelector === 'bulk' ? 'bg-main-yellow' : ''
+    const dispatch = useDispatch()
 
-	return (
-		<button
-			className={[style] + " relative rounded-lg shadow flex flex-col grow p-2 items-center justify-between"}
+    const [style, setStlye] = useState('')
+    const selectedTypeSelector = useSelector((state) => state.general.selectedType)
+
+    useEffect(()=>{
+        setStlye(selectedTypeSelector === 'bulk' ? 'bg-main-yellow' : '')
+    },[selectedTypeSelector])
+
+    return(
+        <button className={[style] + ' relative rounded-lg shadow flex flex-col grow p-2 items-center'}
 			onClick={()=>{
                 dispatch(updateSelectedType('bulk'))
             }}

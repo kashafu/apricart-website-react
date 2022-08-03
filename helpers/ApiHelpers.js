@@ -23,36 +23,22 @@ export const getGeneralCookies = () => {
     selectedType can be either 'bulk' 'home'
 */
 export const getGeneralApiParams = () => {
-    let prodType = cookies.get('prod-type')
-    if(prodType === 'b2b'){
-        prodType = 'b2b'
-        cookies.set('prod-type', 'b2b')
-    }
-    else{
-        prodType = 'cus'
-        cookies.set('prod-type', 'cus')
-    }
-
-    let orderType = cookies.get('order-type')
-    if(orderType === 'pickup'){
-        orderType = 'pickup'
-        cookies.set('order-type', 'pickup')
-    }
-    else{
-        orderType = 'delivery'
-        cookies.set('order-type', 'delivery')
-    }
-
-    let clientType = cookies.get('client-type')
-    clientType = 'apricart'
-    cookies.set('client-type', 'apricart')
+    let clientType = 'apricart'
+    let prodType = ''
+    let orderType = ''
 
     let selectedType = cookies.get('selected-type')
-    if(prodType === 'b2b'){
+    if(selectedType === 'bulk'){
+        cookies.set('selected-type', 'bulk')
         selectedType = 'bulk'
+        prodType = 'b2b'
+        orderType = 'delivery'
     }
-    else if(prodType === 'cus'){
+    else{
+        cookies.set('selected-type', 'home')
         selectedType = 'home'
+        prodType = 'cus'
+        orderType = 'delivery'
     }
 
     let token = cookies.get('cookies-token')
