@@ -25,7 +25,7 @@ module.exports = {
           800: '#363636'
         },
         'main-green': {
-          DEFAULT: '#00351F'
+          DEFAULT: '#296118'
         }
       },
       fontFamily: {
