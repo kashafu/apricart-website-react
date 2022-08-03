@@ -16,6 +16,7 @@ export const useCategoriesApi = () => {
 	}, [])
 
 	const callApi = async () => {
+		setIsLoading(true)
 		let { city, headers, userId } = getGeneralApiParams()
 		let url =
 			base_url_api +
@@ -25,17 +26,17 @@ export const useCategoriesApi = () => {
 			userId
 
 		try {
-			setResponse(
-				await axios.get(url, {
-					headers: headers,
-				})
-			)
-			setData(response.data.data)
+			let apiResponse = await axios.get(url, {
+				headers: headers,
+			})
+			setResponse(apiResponse)
+			setData(apiResponse.data.data)
 		} catch (error) {
 			setErrorResponse(error?.response)
 			setErrorMessage(error?.response?.data?.message)
+		} finally {
+			setIsLoading(false)
 		}
-		setIsLoading(false)
 	}
 
 	return { isLoading, data, errorMessage, response, errorResponse }
@@ -47,6 +48,7 @@ export const useHomeApi = () => {
 	)
 	const [isLoading, setIsLoading] = useState(true)
 	const [data, setData] = useState(null)
+	const [categories, setCategories] = useState(null)
 	const [isPopupAd, setIsPopupAd] = useState(false)
 	const [response, setResponse] = useState(null)
 	const [errorResponse, setErrorResponse] = useState(null)
@@ -57,6 +59,7 @@ export const useHomeApi = () => {
 	}, [selectedTypeSelector])
 
 	const callApi = async () => {
+		setIsLoading(true)
 		let {
 			city,
 			latitude,
@@ -86,19 +89,20 @@ export const useHomeApi = () => {
 			orderType
 
 		try {
-			setResponse(
-				await axios.get(url, {
-					headers: headers,
-				})
-			)
-			setData(response.data.data)
-			setIsPopupAd(response.data.data.dialog)
+			let apiResponse = await axios.get(url, {
+				headers: headers,
+			})
+			setResponse(apiResponse)
+			setData(apiResponse.data.data)
+			setCategories(apiResponse.data.data.categories)
+			setIsPopupAd(apiResponse.data.data.dialog)
 		} catch (error) {
 			setErrorResponse(error?.response)
 			setErrorMessage(error?.response?.data?.message)
+		} finally {
+			setIsLoading(false)
 		}
-		setIsLoading(false)
 	}
 
-	return [isLoading, data, errorMessage, response, errorResponse, isPopupAd]
+	return { isLoading, data, errorMessage, response, errorResponse, isPopupAd, categories }
 }

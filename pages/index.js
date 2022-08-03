@@ -1,9 +1,7 @@
 import Image from "next/image"
 import { useRouter } from "next/router"
 import Categories from "../components/Layout/components/Categories/Categories"
-import { useEffect, useState } from "react"
-import { base_url_api } from "../information.json"
-import axios from "axios"
+import { useState } from "react"
 import { getGeneralApiParams } from "../helpers/ApiHelpers"
 import MainProducts from "../components/Layout/components/Products/MainProducts"
 import Link from "next/link"
@@ -14,106 +12,54 @@ import nationals from "../public/assets/images/banners/nationals.jpeg"
 import ErrorText from "../components/Layout/components/Typography/ErrorText"
 import crossIcon from "../public/assets/svgs/crossIcon.svg"
 import Carousel from "../components/Layout/components/Banner/Carousel"
-import { useSelector } from "react-redux"
 import { useHomeApi } from "../helpers/Api"
 
 export default function Home() {
 	const router = useRouter()
-	const selectedTypeSelector = useSelector(
-		(state) => state.general.selectedType
-	)
+
 	let { city, token } = getGeneralApiParams()
 
-	// const [isLoading, isPopupAd, data, errorMessage] = useHomeApi()
+	const { isLoading, isPopupAd, data, errorMessage, response, categories } =
+		useHomeApi()
 
-	const [categories, setCategories] = useState(null)
-	// const [data, setHomeData] = useState(null)
-	// const [errorMessage, setErrorMessage] = useState("Loading")
 	const [showPopupAd, setShowPopupAd] = useState(isPopupAd)
 
-	// useEffect(() => {
-	// 	getHomeDataApi()
-	// }, [selectedTypeSelector])
-
-	useEffect(()=>{
-		const [isLoading, isPopupAd, data, errorMessage] = useHomeApi()
-	})
-
-	// const getHomeDataApi = async () => {
-	// 	let {
-	// 		city,
-	// 		latitude,
-	// 		longitude,
-	// 		userId,
-	// 		headers,
-	// 		prodType,
-	// 		clientType,
-	// 		orderType,
-	// 	} = getGeneralApiParams()
-
-	// 	let url =
-	// 		base_url_api +
-	// 		"/home/all?client_lat=" +
-	// 		latitude +
-	// 		"&client_long=" +
-	// 		longitude +
-	// 		"&city=" +
-	// 		city +
-	// 		"&lang=en&userid=" +
-	// 		userId +
-	// 		"&web=true&client_type=" +
-	// 		clientType +
-	// 		"&prod_type=" +
-	// 		prodType +
-	// 		"&order_type=" +
-	// 		orderType
-
-	// 	console.log(url)
-
-	// 	try {
-	// 		let response = await axios.get(url, {
-	// 			headers: headers,
-	// 		})
-
-	// 		getCategoriesApi()
-	// 		setHomeData(response.data.data)
-	// 		setShowPopupAd(response.data.data.dialog)
-	// 	} catch (error) {
-	// 		setErrorMessage(error.message)
-	// 	}
-	// }
-
-	const getCategoriesApi = async () => {
-		let { city, headers, userId } = getGeneralApiParams()
-		let url =
-			base_url_api +
-			"/catalog/categories?level=all&client_type=apricart&city=" +
-			city +
-			"&userid=" +
-			userId
-
-		try {
-			let response = await axios.get(url, {
-				headers: headers,
-			})
-
-			setCategories(response.data.data)
-		} catch (error) {
-			console.log(error)
-		}
+	if (isLoading) {
+		return (
+			<div>
+				<HeadTag
+					title={"Apricart | Online Grocery"}
+					description={
+						"Online grocery store in Pakistan, offering bulk buy and home delivery"
+					}
+				/>
+				<p>Loading</p>
+			</div>
+		)
 	}
 
 	if (!data) {
 		return (
 			<div>
-				<p>Loading</p>
+				<HeadTag
+					title={"Apricart | Online Grocery"}
+					description={
+						"Online grocery store in Pakistan, offering bulk buy and home delivery"
+					}
+				/>
+				<p>No data</p>
 			</div>
 		)
 	}
 
 	return (
 		<div className="">
-			<HeadTag title={"Apricart | Online Grocery"} description={'Online grocery store in Pakistan, offering bulk buy and home delivery'} />
+			<HeadTag
+				title={"Apricart | Online Grocery"}
+				description={
+					"Online grocery store in Pakistan, offering bulk buy and home delivery"
+				}
+			/>
 			{/* POPUP AD */}
 			{showPopupAd && (
 				<div className="w-full">
