@@ -1,4 +1,5 @@
 import axios from "axios"
+import { useSelector } from "react-redux"
 import { useState, useEffect } from "react"
 import { base_url_api } from "../information.json"
 import { getGeneralApiParams } from "./ApiHelpers"
@@ -10,7 +11,7 @@ export const useCategoriesApi = () => {
 	const [errorResponse, setErrorResponse] = useState(null)
 	const [errorMessage, setErrorMessage] = useState("")
 
-	useEffect(()=>{
+	useEffect(() => {
 		callApi()
 	}, [])
 
@@ -22,7 +23,7 @@ export const useCategoriesApi = () => {
 			city +
 			"&userid=" +
 			userId
-	
+
 		try {
 			setResponse(
 				await axios.get(url, {
@@ -41,16 +42,19 @@ export const useCategoriesApi = () => {
 }
 
 export const useHomeApi = () => {
+	const selectedTypeSelector = useSelector(
+		(state) => state.general.selectedType
+	)
 	const [isLoading, setIsLoading] = useState(true)
 	const [data, setData] = useState(null)
-    const [showPopupAd, setShowPopupAd] = useState(false)
+	const [isPopupAd, setIsPopupAd] = useState(false)
 	const [response, setResponse] = useState(null)
 	const [errorResponse, setErrorResponse] = useState(null)
 	const [errorMessage, setErrorMessage] = useState("")
 
-	useEffect(()=>{
+	useEffect(() => {
 		callApi()
-	}, [])
+	}, [selectedTypeSelector])
 
 	const callApi = async () => {
 		let {
@@ -80,7 +84,7 @@ export const useHomeApi = () => {
 			prodType +
 			"&order_type=" +
 			orderType
-	
+
 		try {
 			setResponse(
 				await axios.get(url, {
@@ -88,7 +92,7 @@ export const useHomeApi = () => {
 				})
 			)
 			setData(response.data.data)
-            setShowPopupAd(response.data.data.dialog)
+			setIsPopupAd(response.data.data.dialog)
 		} catch (error) {
 			setErrorResponse(error?.response)
 			setErrorMessage(error?.response?.data?.message)
@@ -96,5 +100,5 @@ export const useHomeApi = () => {
 		setIsLoading(false)
 	}
 
-	return { isLoading, data, errorMessage, response, errorResponse, showPopupAd }
+	return [isLoading, data, errorMessage, response, errorResponse, isPopupAd]
 }
