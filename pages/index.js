@@ -173,7 +173,8 @@ export default function Home() {
 				<div className="grid grid-cols-5 gap-12">
 					{/* CATEGORIES SECTION */}
 					<section className="hidden lg:col-span-1 lg:block">
-						{categories && <Categories categories={categories} />}
+						{/* {categories && <Categories categories={categories} />} */}
+						<Categories />
 					</section>
 					{/* PRODUCTS SECTION */}
 					<section className="col-span-5 lg:col-span-4 space-y-12">

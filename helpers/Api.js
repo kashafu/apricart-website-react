@@ -30,7 +30,7 @@ export const useCategoriesApi = () => {
 		(state) => state.general.selectedType
 	)
 	const [isLoading, setIsLoading] = useState(true)
-	const [data, setData] = useState(null)
+	const [categories, setCategories] = useState(null)
 	const [response, setResponse] = useState(null)
 	const [errorResponse, setErrorResponse] = useState(null)
 	const [errorMessage, setErrorMessage] = useState("")
@@ -42,14 +42,14 @@ export const useCategoriesApi = () => {
 	const callApi = async () => {
 		setIsLoading(true)
 		let { headers } = getGeneralApiParams()
-		let url = base_url_api + "/catalog/categories?level=all"
+		let url = "/catalog/categories?level=all"
 
 		try {
 			let apiResponse = await axios.get(fullUrl(url), {
 				headers: headers,
 			})
 			setResponse(apiResponse)
-			setData(apiResponse.data.data)
+			setCategories(apiResponse.data.data)
 		} catch (error) {
 			setErrorResponse(error?.response)
 			setErrorMessage(error?.response?.data?.message)
@@ -58,7 +58,7 @@ export const useCategoriesApi = () => {
 		}
 	}
 
-	return { isLoading, data, errorMessage, response, errorResponse }
+	return { isLoading, categories, errorMessage, response, errorResponse }
 }
 
 export const useHomeApi = () => {
@@ -88,6 +88,8 @@ export const useHomeApi = () => {
 			longitude +
 			"&web=true"
 
+		console.log(fullUrl(url));
+		
 		try {
 			let apiResponse = await axios.get(fullUrl(url), {
 				headers: headers,

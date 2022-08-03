@@ -23,7 +23,6 @@ export default function ProductDetail() {
 
 	const [message, setMessage] = useState("Loading")
 	const [product, setProduct] = useState(null)
-	const [categories, setCategories] = useState(null)
 	const [inStock, setInStock] = useState(true)
 	const [qty, setQty] = useState(1)
 
@@ -31,7 +30,6 @@ export default function ProductDetail() {
 		if (router.isReady) {
 			getProductDetailsApi()
 		}
-		getCategoriesApi()
 	}, [router.query])
 
 	const setQtyHandler = (type) => {
@@ -45,25 +43,6 @@ export default function ProductDetail() {
 				return
 			}
 			setQty(qty - 1)
-		}
-	}
-
-	const getCategoriesApi = async () => {
-		let { city, headers, userId } = getGeneralApiParams()
-		let url =
-			base_url_api +
-			"/catalog/categories?level=all&client_type=apricart&city=" +
-			city +
-			"&userid=" +
-			userId
-
-		try {
-			let response = await axios.get(url, {
-				headers: headers,
-			})
-			setCategories(response.data.data)
-		} catch (error) {
-			console.log(error)
 		}
 	}
 
@@ -183,13 +162,9 @@ export default function ProductDetail() {
 						<div className="container-fluid">
 							<div className="row">
 								<div className="col-12 col-sm-2  col-md-2  col-lg-3  col-xl-2  col-xxl-2">
-									{categories && (
-										<div className="hidden lg:flex">
-											<Categories
-												categories={categories}
-											/>
-										</div>
-									)}
+									<div className="hidden lg:flex">
+										<Categories />
+									</div>
 								</div>
 								<div className="col-12 col-sm-12  col-md-10  col-lg-9  col-xl-10  col-xxl-10 parot">
 									<>
