@@ -19,6 +19,7 @@ export default function BulkBuyCard() {
 			onClick={()=>{
                 dispatch(updateSelectedType('bulk'))
             }}
+			disabled
 		>
 			<div className="hidden absolute self-start font-bold text-main-blue lg:inline text-2xl xl:text-3xl 2xl:text-4xl">
 				<p>BULK BUY</p>

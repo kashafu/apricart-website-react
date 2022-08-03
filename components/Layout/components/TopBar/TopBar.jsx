@@ -23,7 +23,7 @@ export default function Layout() {
 	const tickerSelector = useSelector((state) => state.general.ticker)
 
 	let pStyle =
-		"font-lato font-bold text-sm lg:text-md text-black lg:text-base"
+		"font-lato font-bold text-sm lg:text-md text-white lg:text-base"
 
 	useEffect(() => {
 		getOptionsDataApi()
@@ -48,7 +48,7 @@ export default function Layout() {
 
 	return (
 		<header className="flex flex-col">
-			<div className="flex flex-row w-full bg-main-yellow lg:justify-between px-2 lg:px-12 items-center h-[50px]">
+			<div className="flex flex-row w-full bg-main-green lg:justify-between px-2 lg:px-12 items-center h-[50px]">
 				{/* ARPICART LOGO, LOCATION AND SELECTED ADDRESS */}
 				<div className="flex flex-row items-center justify-between">
 					{/* APRICART LOGO shown on phone, hidden on desktop*/}
@@ -71,7 +71,7 @@ export default function Layout() {
 							</p>
 						</div>
 						<Marquee speed={50} className="overflow-hidden">
-							<p className="text-center text-sm font-bold text-main-blue">
+							<p className="text-center text-sm font-bold text-white">
 								{tickerSelector}
 							</p>
 						</Marquee>

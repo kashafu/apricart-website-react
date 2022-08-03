@@ -8,10 +8,12 @@ export default function HomeDeliveryCard(){
     const dispatch = useDispatch()
 
     const [style, setStlye] = useState('')
+    const [pStyle, setPStyle] = useState('')
     const selectedTypeSelector = useSelector((state) => state.general.selectedType)
 
     useEffect(()=>{
-        setStlye(selectedTypeSelector === 'home' ? 'bg-main-yellow' : '')
+        setStlye(selectedTypeSelector === 'home' ? 'bg-main-green' : '')
+        setPStyle(selectedTypeSelector === 'home' ? 'text-white' : 'text-main-blue')
     },[selectedTypeSelector])
 
     return(
@@ -20,7 +22,7 @@ export default function HomeDeliveryCard(){
                 dispatch(updateSelectedType('home'))
             }}
         >
-            <div className='hidden absolute self-start font-bold text-main-blue lg:inline text-2xl xl:text-3xl 2xl:text-4xl'>
+            <div className={[pStyle] + ' hidden absolute self-start font-bold lg:inline text-2xl xl:text-3xl 2xl:text-4xl'}>
                 <p>
                     HOME
                 </p>
@@ -35,7 +37,7 @@ export default function HomeDeliveryCard(){
                     alt='icon'
                 />
             </div>
-            <div className='lg:hidden flex font-semibold text-main-blue text-xs'>
+            <div className={[pStyle] + ' lg:hidden flex font-semibold text-xs'}>
                 <p>
                     Home Delivery
                 </p>

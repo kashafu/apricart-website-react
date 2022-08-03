@@ -113,7 +113,7 @@ export default function Home() {
 
 	return (
 		<div className="">
-			<HeadTag title={"Apricart | Online Grocery"} />
+			<HeadTag title={"Apricart | Online Grocery"} description={'Online grocery store in Pakistan, offering bulk buy and home delivery'} />
 			{/* POPUP AD */}
 			{showPopupAd && (
 				<div className="w-full">
