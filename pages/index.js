@@ -111,7 +111,7 @@ export default function Home() {
 			{showPopupAd && (
 				<div className="w-full">
 					{/* PHONE VIEW */}
-					<div className="fixed w-3/4 h-3/4 lg:hidden z-10 inset-0 m-auto shadow-2xl">
+					<div className="fixed w-3/4 h-3/4 lg:hidden z-30 inset-0 m-auto shadow-2xl">
 						<div className="relative w-full h-full">
 							<Image
 								src={homeData.dialogImageUrl}
@@ -168,7 +168,7 @@ export default function Home() {
 					</div>
 				</div>
 			)}
-			<div className="space-y-8 pt-[3rem] lg:-mt-[10rem] md:pt-[5rem]">
+			<div className="space-y-8 -mt-[1.5rem] lg:-mt-[5rem] md:pt-0">
 				{/* BANNERS SECTION hidden on phone */}
 				<section className="hidden lg:relative lg:w-full lg:aspect-[16/6] lg:grid grid-cols-12 gap-2 p-2 items-center">
 					{/* BACKGROUND IMAGE */}
