@@ -4,3 +4,12 @@ export default function toKebabCase(word) {
 		.replace(/[\s_]+/g, "-")
 		.toLowerCase()
 }
+
+export function fromKebabCase(word) {
+	let temp = word.split('-')
+	let out = ''
+	temp.forEach((item)=>{
+		out = out.concat(item + " ")
+	})
+	return out
+}
