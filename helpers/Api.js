@@ -4,7 +4,31 @@ import { useState, useEffect } from "react"
 import { base_url_api } from "../information.json"
 import { getGeneralApiParams } from "./ApiHelpers"
 
+const fullUrl = (url) => {
+	let { city, userId, clientType, orderType, prodType } =
+		getGeneralApiParams()
+
+	return (
+		base_url_api +
+		url +
+		"&city=" +
+		city +
+		"&userid=" +
+		userId +
+		"&client_type=" +
+		clientType +
+		"&prod_type=" +
+		prodType +
+		"&order_type=" +
+		orderType +
+		"&lang=en"
+	)
+}
+
 export const useCategoriesApi = () => {
+	const selectedTypeSelector = useSelector(
+		(state) => state.general.selectedType
+	)
 	const [isLoading, setIsLoading] = useState(true)
 	const [data, setData] = useState(null)
 	const [response, setResponse] = useState(null)
@@ -13,20 +37,15 @@ export const useCategoriesApi = () => {
 
 	useEffect(() => {
 		callApi()
-	}, [])
+	}, [selectedTypeSelector])
 
 	const callApi = async () => {
 		setIsLoading(true)
-		let { city, headers, userId } = getGeneralApiParams()
-		let url =
-			base_url_api +
-			"/catalog/categories?level=all&client_type=apricart&city=" +
-			city +
-			"&userid=" +
-			userId
+		let { headers } = getGeneralApiParams()
+		let url = base_url_api + "/catalog/categories?level=all"
 
 		try {
-			let apiResponse = await axios.get(url, {
+			let apiResponse = await axios.get(fullUrl(url), {
 				headers: headers,
 			})
 			setResponse(apiResponse)
@@ -47,7 +66,7 @@ export const useHomeApi = () => {
 		(state) => state.general.selectedType
 	)
 	const [isLoading, setIsLoading] = useState(true)
-	const [data, setData] = useState(null)
+	const [homeData, setHomeData] = useState(null)
 	const [categories, setCategories] = useState(null)
 	const [isPopupAd, setIsPopupAd] = useState(false)
 	const [response, setResponse] = useState(null)
@@ -60,40 +79,21 @@ export const useHomeApi = () => {
 
 	const callApi = async () => {
 		setIsLoading(true)
-		let {
-			city,
-			latitude,
-			longitude,
-			userId,
-			headers,
-			prodType,
-			clientType,
-			orderType,
-		} = getGeneralApiParams()
+		let { latitude, longitude, headers } = getGeneralApiParams()
 
 		let url =
-			base_url_api +
 			"/home/all?client_lat=" +
 			latitude +
 			"&client_long=" +
 			longitude +
-			"&city=" +
-			city +
-			"&lang=en&userid=" +
-			userId +
-			"&web=true&client_type=" +
-			clientType +
-			"&prod_type=" +
-			prodType +
-			"&order_type=" +
-			orderType
+			"&web=true"
 
 		try {
-			let apiResponse = await axios.get(url, {
+			let apiResponse = await axios.get(fullUrl(url), {
 				headers: headers,
 			})
 			setResponse(apiResponse)
-			setData(apiResponse.data.data)
+			setHomeData(apiResponse.data.data)
 			setCategories(apiResponse.data.data.categories)
 			setIsPopupAd(apiResponse.data.data.dialog)
 		} catch (error) {
@@ -104,5 +104,13 @@ export const useHomeApi = () => {
 		}
 	}
 
-	return { isLoading, data, errorMessage, response, errorResponse, isPopupAd, categories }
+	return {
+		isLoading,
+		homeData,
+		errorMessage,
+		response,
+		errorResponse,
+		isPopupAd,
+		categories,
+	}
 }

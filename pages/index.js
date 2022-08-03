@@ -19,7 +19,7 @@ export default function Home() {
 
 	let { city, token } = getGeneralApiParams()
 
-	const { isLoading, isPopupAd, data, errorMessage, response, categories } =
+	const { isLoading, isPopupAd, homeData, errorMessage, response, categories } =
 		useHomeApi()
 
 	const [showPopupAd, setShowPopupAd] = useState(isPopupAd)
@@ -38,7 +38,7 @@ export default function Home() {
 		)
 	}
 
-	if (!data) {
+	if (!homeData) {
 		return (
 			<div>
 				<HeadTag
@@ -67,11 +67,11 @@ export default function Home() {
 					<div className="fixed w-3/4 h-3/4 lg:hidden z-10 inset-0 m-auto shadow-2xl">
 						<div className="relative w-full h-full">
 							<Image
-								src={data.dialogImageUrl}
+								src={homeData.dialogImageUrl}
 								layout="fill"
 								alt="popup banner"
 								onClick={() => {
-									router.push("/offers/" + data.dialogValue)
+									router.push("/offers/" + homeData.dialogValue)
 								}}
 							/>
 						</div>
@@ -93,11 +93,11 @@ export default function Home() {
 					<div className="hidden lg:block fixed w-[700px] h-[450px] z-10 inset-0 m-auto shadow-2xl">
 						<div className="relative w-full h-full">
 							<Image
-								src={data.dialogImageLandscapeUrl}
+								src={homeData.dialogImageLandscapeUrl}
 								layout="fill"
 								alt="popup banner"
 								onClick={() => {
-									router.push("/offers/" + data.dialogValue)
+									router.push("/offers/" + homeData.dialogValue)
 								}}
 							/>
 						</div>
@@ -186,7 +186,7 @@ export default function Home() {
 								/>
 							</div>
 						)}
-						{data.products.map((product, index) => {
+						{homeData.products.map((product, index) => {
 							let { offerId } = product
 
 							return (
