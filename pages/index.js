@@ -14,10 +14,13 @@ import nationals from "../public/assets/images/banners/nationals.jpeg"
 import ErrorText from "../components/Layout/components/Typography/ErrorText"
 import crossIcon from "../public/assets/svgs/crossIcon.svg"
 import Carousel from "../components/Layout/components/Banner/Carousel"
+import { useSelector } from "react-redux"
 
 export default function Home() {
 	const router = useRouter()
-
+	const selectedTypeSelector = useSelector(
+		(state) => state.general.selectedType
+	)
 	let { city, token } = getGeneralApiParams()
 
 	const [categories, setCategories] = useState(null)
@@ -27,11 +30,19 @@ export default function Home() {
 
 	useEffect(() => {
 		getHomeDataApi()
-	}, [])
+	}, [selectedTypeSelector])
 
 	const getHomeDataApi = async () => {
-		let { city, latitude, longitude, userId, headers } =
-			getGeneralApiParams()
+		let {
+			city,
+			latitude,
+			longitude,
+			userId,
+			headers,
+			prodType,
+			clientType,
+			orderType,
+		} = getGeneralApiParams()
 
 		let url =
 			base_url_api +
@@ -43,7 +54,14 @@ export default function Home() {
 			city +
 			"&lang=en&userid=" +
 			userId +
-			"&web=true&client_type=apricart&prod_type=cus&order_type=delivery"
+			"&web=true&client_type=" +
+			clientType +
+			"&prod_type=" +
+			prodType +
+			"&order_type=" +
+			orderType
+
+		console.log(url)
 
 		try {
 			let response = await axios.get(url, {
@@ -125,7 +143,7 @@ export default function Home() {
 						<div className="relative w-full h-full">
 							<Image
 								src={homeData.dialogImageLandscapeUrl}
-								layout='fill'
+								layout="fill"
 								alt="popup banner"
 								onClick={() => {
 									router.push(
