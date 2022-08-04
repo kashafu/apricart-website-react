@@ -169,7 +169,7 @@ export default function SingleProduct({ product, isInStock }) {
 			{/* DESKTOP VIEW */}
 			<div
 				className={
-					"hidden relative lg:grid grid-rows-6 bg-white px-2 lg:px-4 h-[250px] lg:h-[350px] rounded-br-lg " +
+					"hidden relative lg:grid grid-rows-[7] bg-white px-2 lg:px-4 h-[250px] lg:h-[350px] rounded-br-lg " +
 					[divStyle]
 				}
 				onMouseEnter={() => {
@@ -196,21 +196,21 @@ export default function SingleProduct({ product, isInStock }) {
 					</Link>
 				</div>
 				{/* TITLE */}
-				<p className="row-span-1 font-lato font-bold text-left text-sm xl:text-lg text-main-blue line-clamp-2">
+				<p className="row-span-1 font-lato font-bold text-left text-sm xl:text-lg text-main-blue line-clamp-2 overflow-y-hidden">
 					{title}
 				</p>
 				{/* PRICE */}
 				{specialPrice > 0 ? (
-					<div className="row-span-1 flex flex-row justify-between">
-						<p className="text-xl xl:text-2xl text-left font-bold text-main-blue line-through decoration-red-600">
+					<div className="row-span-2 flex flex-col justify-center">
+						<p className="text-lg xl:text-xl text-left font-bold text-main-blue line-through decoration-red-600">
 							Rs. {currentPrice}
 						</p>
-						<p className="text-2xl xl:text-3xl text-left font-bold text-main-blue xl:pr-8">
+						<p className="text-3xl text-left font-bold text-main-blue">
 							Rs. {specialPrice}
 						</p>
 					</div>
 				):(
-					<p className="row-span-1 text-3xl text-left font-bold text-main-blue">
+					<p className="row-span-2 flex items-center text-3xl text-left font-bold text-main-blue">
 						Rs. {currentPrice}
 					</p>
 				)}
@@ -320,21 +320,21 @@ export default function SingleProduct({ product, isInStock }) {
 					</Link>
 				</div>
 				{/* TITLE */}
-				<p className="row-span-1 font-lato font-bold text-left text-xs text-main-blue line-clamp-2">
+				<p className="row-span-1 font-lato font-bold text-left text-xs text-main-blue line-clamp-2 overflow-y-hidden">
 					{title}
 				</p>
 				{/* PRICE */}
 				{specialPrice > 0 ? (
-					<div className="row-span-1 flex flex-row justify-between">
-						<p className="text-sm text-left font-bold text-main-blue line-through decoration-red-600">
+					<div className="row-span-1 flex flex-col">
+						<p className="text-xs text-left font-bold text-main-blue line-through decoration-red-600">
 							Rs. {currentPrice}
 						</p>
-						<p className="text-base text-left font-bold text-main-blue pr-8">
+						<p className="text-base text-left font-bold text-main-blue">
 							Rs. {specialPrice}
 						</p>
 					</div>
 				):(
-					<p className="row-span-1 text-md text-left font-bold text-main-blue">
+					<p className="row-span-1 text-base text-left font-bold text-main-blue">
 						Rs. {currentPrice}
 					</p>
 				)}
