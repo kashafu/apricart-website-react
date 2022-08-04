@@ -6,6 +6,9 @@ import { getGeneralApiParams } from "./ApiHelpers"
 import { useRouter } from "next/router"
 import { addToCart } from '../redux/cart.slice'
 import { toast } from 'react-toastify'
+import Cookies from "universal-cookie"
+
+const cookies = new Cookies()
 
 const fullUrl = (url) => {
 	let { city, userId, clientType, orderType, prodType } =
@@ -28,6 +31,30 @@ const fullUrl = (url) => {
 	)
 }
 
+const initializeUserApi = async () => {
+	let { isUserInitialized, latitude, longitude, headers } = getGeneralApiParams()
+
+	if(!isUserInitialized){
+		let url =
+			"/home/all?client_lat=" +
+			latitude +
+			"&client_long=" +
+			longitude +
+			"&web=false&hide=true"
+	
+		try {
+			await axios.get(fullUrl(url), {
+				headers: headers,
+			})
+			cookies.set('user-initialized', true)
+			console.log('USER INITIALIZED')
+			console.log("URL", fullUrl(url));
+		} catch (error) {
+			console.log(error?.response)
+		}
+	}
+}
+
 export const useInitializeUserApi = () => {
 	let { userId } = getGeneralApiParams()
 	const selectedTypeSelector = useSelector(
@@ -39,7 +66,7 @@ export const useInitializeUserApi = () => {
 	const [errorMessage, setErrorMessage] = useState("")
 
 	useEffect(() => {
-		if(!userId){
+		if (!userId) {
 			callApi()
 			const d = new Date()
 			cookies.set("guestUserId", "desktopuser_" + d.getTime(), 30)
@@ -62,6 +89,8 @@ export const useInitializeUserApi = () => {
 				headers: headers,
 			})
 			setResponse(apiResponse)
+			console.log('USER INITIALIZED')
+			console.log("URL", fullUrl(url));
 		} catch (error) {
 			setErrorResponse(error?.response)
 			setErrorMessage(error?.response?.data?.message)
@@ -185,19 +214,21 @@ export const useProductDetailsApi = () => {
 	}, [router.query])
 
 	const callApi = async () => {
+		console.log("CALLED")
 		setIsLoading(true)
+		await initializeUserApi()
+		console.log("DONE")
 		let { headers } = getGeneralApiParams()
 
 		let url = "/catalog/products/detail?id=" + productId
 
-		console.log(fullUrl(url));
 		try {
 			let apiResponse = await axios.get(fullUrl(url), {
 				headers: headers,
 			})
 			setResponse(apiResponse)
 			setProductData(apiResponse.data.data)
-			console.log(apiResponse.data);
+			console.log("API")
 		} catch (error) {
 			setErrorResponse(error?.response)
 			setErrorMessage(error?.response?.data?.message)

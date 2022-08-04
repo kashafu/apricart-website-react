@@ -52,6 +52,8 @@ export const getGeneralApiParams = () => {
         "Content-Type": "application/json",
     }
 
+    let isUserInitialized = cookies.get('user-initialized') ? true : false
+
     // if user is logged in
     if (token) {
         // if user has a selected address, use that addresses's latitude longitude
@@ -87,7 +89,8 @@ export const getGeneralApiParams = () => {
         prodType,
         orderType,
         clientType,
-        selectedType
+        selectedType,
+        isUserInitialized
     })
 }
 
