@@ -47,8 +47,6 @@ const initializeUserApi = async () => {
 				headers: headers,
 			})
 			cookies.set('user-initialized', true)
-			console.log('USER INITIALIZED')
-			console.log("URL", fullUrl(url));
 		} catch (error) {
 			console.log(error?.response)
 		}
@@ -214,10 +212,8 @@ export const useProductDetailsApi = () => {
 	}, [router.query])
 
 	const callApi = async () => {
-		console.log("CALLED")
 		setIsLoading(true)
 		await initializeUserApi()
-		console.log("DONE")
 		let { headers } = getGeneralApiParams()
 
 		let url = "/catalog/products/detail?id=" + productId
@@ -228,7 +224,6 @@ export const useProductDetailsApi = () => {
 			})
 			setResponse(apiResponse)
 			setProductData(apiResponse.data.data)
-			console.log("API")
 		} catch (error) {
 			setErrorResponse(error?.response)
 			setErrorMessage(error?.response?.data?.message)
