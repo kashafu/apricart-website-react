@@ -399,3 +399,47 @@ export const useOptionsApi = () => {
 		shipmentFixAmount,
 	}
 }
+
+export const usePaymentMethodsApi = () => {
+	const selectedTypeSelector = useSelector(
+		(state) => state.general.selectedType
+	)
+	const [isLoading, setIsLoading] = useState(true)
+	const [paymentMethodsData, setPaymentMethodsData] = useState(null)
+	const [response, setResponse] = useState(null)
+	const [errorResponse, setErrorResponse] = useState(null)
+	const [errorMessage, setErrorMessage] = useState("")
+
+	useEffect(() => {
+		callApi()
+	}, [selectedTypeSelector])
+
+	const callApi = async () => {
+		setIsLoading(true)
+		await initializeUserApi()
+		let { headers } = getGeneralApiParams()
+
+		let url = "/options/all?"
+
+		try {
+			let apiResponse = await axios.get(fullUrl(url), {
+				headers: headers,
+			})
+			setResponse(apiResponse)
+			setPaymentMethodsData(apiResponse.data.data)
+		} catch (error) {
+			setErrorResponse(error?.response)
+			setErrorMessage(error?.response?.data?.message)
+		} finally {
+			setIsLoading(false)
+		}
+	}
+
+	return {
+		isLoading,
+		paymentMethodsData,
+		errorMessage,
+		response,
+		errorResponse,
+	}
+}

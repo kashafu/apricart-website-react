@@ -26,7 +26,7 @@ import {
 import SectionHeading from "../components/Layout/components/Typography/SectionHeading"
 import InputLabelText from "../components/Layout/components/Typography/InputLabelText"
 import HeadTag from "../components/Layout/components/Head/HeadTag"
-import { useOptionsApi } from "../helpers/Api"
+import { useOptionsApi, usePaymentMethodsApi } from "../helpers/Api"
 
 export default function Checkout() {
 	let { token, selectedAddress } = getGeneralApiParams()
@@ -34,9 +34,10 @@ export default function Checkout() {
 	const dispatch = useDispatch()
 
 	const { shipmentChargedAt, shipmentFixAmount } = useOptionsApi()
+	const { paymentMethodsData } = usePaymentMethodsApi()
 	// const [shipmentChargedAt, setShipmentChargedAt] = useState(0)
 	// const [shipmentFixAmount, setShipmentFixAmount] = useState(0)
-	const [paymentMethods, setPaymentMethods] = useState([])
+	// const [paymentMethodsData, setPaymentMethods] = useState([])
 	const [checkoutCartData, setCheckoutCartData] = useState(null)
 	const [shippingCartData, setShippingCartData] = useState(null)
 	const [checkoutData, setCheckOutData] = useState({
@@ -67,20 +68,20 @@ export default function Checkout() {
 		}
 	}, [checkoutAddress])
 
-	const getPaymentMethodsApi = async () => {
-		let { headers, userId, prodType, orderType, clientType } = getGeneralApiParams()
-		let url = base_url_api + "/order/payment/info?client_type=" + clientType + "&userid=" + userId + "&order_type=" + orderType + "&prod_type=" + prodType
+	// const getPaymentMethodsApi = async () => {
+	// 	let { headers, userId, prodType, orderType, clientType } = getGeneralApiParams()
+	// 	let url = base_url_api + "/order/payment/info?client_type=" + clientType + "&userid=" + userId + "&order_type=" + orderType + "&prod_type=" + prodType
 
-		try {
-			let response = await axios.get(url, {
-				headers: headers,
-			})
+	// 	try {
+	// 		let response = await axios.get(url, {
+	// 			headers: headers,
+	// 		})
 
-			setPaymentMethods(response.data.data)
-		} catch (error) {
-			console.log(error.response)
-		}
-	}
+	// 		setPaymentMethods(response.data.data)
+	// 	} catch (error) {
+	// 		console.log(error.response)
+	// 	}
+	// }
 
 	const getShippingCartDataApi = async () => {
 		let { headers, city, userId, prodType, orderType, clientType } = getGeneralApiParams()
@@ -1025,7 +1026,7 @@ export default function Checkout() {
 							<div className="space-y-2">
 								<InputLabelText text={"Payment Method"} />
 								<div className="flex flex-col space-y-2">
-									{paymentMethods.map((method) => {
+									{paymentMethodsData.map((method) => {
 										let { id, name, key } = method
 										if (key === "jswallet") {
 											return <div key={id}></div>
