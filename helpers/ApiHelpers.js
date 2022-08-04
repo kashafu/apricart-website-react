@@ -46,7 +46,7 @@ export const getGeneralApiParams = () => {
     let selectedAddress = cookies.get('selected-address')
     let latitude = 0
     let longitude = 0
-    let userId
+    let userId = cookies.get('guestUserId')
     let headers = {
         'Accept': 'application/json',
         "Content-Type": "application/json",
@@ -54,8 +54,6 @@ export const getGeneralApiParams = () => {
 
     // if user is logged in
     if (token) {
-        // userId = cookies.get('cookies-userId')
-        userId = cookies.get('guestUserId')
         // if user has a selected address, use that addresses's latitude longitude
         if(selectedAddress){
             latitude = selectedAddress.mapLat
@@ -69,7 +67,6 @@ export const getGeneralApiParams = () => {
     }
     // if its a guest
     else {
-        userId = cookies.get('guestUserId')
         // if location enabled, use browser latitude and longitude, if not enabled, send 0 by default
         if (!isNode) {
             navigator.geolocation.getCurrentPosition((position) => {

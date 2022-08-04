@@ -10,20 +10,21 @@ import Image from "next/image"
 import CartSlider from "../Cart/CartSlider"
 import { useRouter } from "next/router"
 import CitySelector from "../CitySelector/CitySelector"
-import TypeCardSelector from "../Cards/TypeCardSelector"
 import { useState, useEffect } from "react"
+import { useInitializeUserApi } from "../../../../helpers/Api"
 
 export default function Header() {
 	const cookies = new Cookies()
 	const router = useRouter()
 
+	useInitializeUserApi()
 	let { token } = getGeneralApiParams()
 	const [offset, setOffset] = useState(0);
 
-	if (!cookies.get("guestUserId")) {
-		const d = new Date()
-		cookies.set("guestUserId", "desktopuser_" + d.getTime(), 30)
-	}
+	// if (!cookies.get("guestUserId")) {
+	// 	const d = new Date()
+	// 	cookies.set("guestUserId", "desktopuser_" + d.getTime(), 30)
+	// }
 
 	if(!cookies.get("selected-type")){
 		cookies.set('selected-type', 'home')
