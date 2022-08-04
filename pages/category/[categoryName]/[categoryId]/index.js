@@ -11,87 +11,138 @@ import Link from "next/link"
 import HeadTag from "../../../../components/Layout/components/Head/HeadTag"
 import toKebabCase from "../../../../helpers/toKebabCase"
 import { fromKebabCase } from "../../../../helpers/toKebabCase"
+import { useCategoryProductsApi, useSubCategoriesApi } from "../../../../helpers/Api"
 
 export default function CategoryProducts() {
 	const router = useRouter()
 	const { categoryId, categoryName } = router.query
 
-	const [products, setProducts] = useState(null)
-	const [subCategories, setSubCategories] = useState(null)
-	const [errorMessage, setErrorMessage] = useState("")
+	const SubCategories = () => {
+		const { isLoading, subCategories, errorMessage } = useSubCategoriesApi()
 
-	useEffect(() => {
-		if (router.isReady) {
-			getCategoryProducts()
-			getSubCategories()
+		if (isLoading) {
+			return (
+				<div>
+					<p>
+						Loading
+					</p>
+				</div>
+			)
 		}
-	}, [router.query])
 
-	const getCategoryProducts = async () => {
-		let { headers, city, userId } = getGeneralApiParams()
-		let url =
-			base_url_api +
-			"/catalog/categories/products?category=" +
-			categoryId +
-			"&page=1&size=100&sortType=&sortDirection=desc&instant=3&city=" +
-			city +
-			"&lang=en&client_type=apricart&userid=" + userId 
-
-		try {
-			let response = await axios.get(url, {
-				headers: headers,
-			})
-
-			setProducts(response.data)
-			setErrorMessage("")
-		} catch (err) {
-			console.log(err)
-			setErrorMessage(err?.response?.data?.message)
+		if (!subCategories) {
+			return (
+				<div>
+					<p>
+						{errorMessage}
+					</p>
+				</div>
+			)
 		}
-	}
 
-	const getSubCategories = async () => {
-		let { headers, userId } = getGeneralApiParams()
-		let url =
-			base_url_api +
-			"/catalog/categories/detail?id=" +
-			categoryId +
-			"&lang=en&client_type=apricart&userid=" + userId
-			
-		try {
-			let response = await axios.get(url, {
-				headers: headers,
-			})
-
-			setSubCategories(response.data) 
-			setErrorMessage("")
-		} catch (err) {
-			console.log(err)
-			setErrorMessage(err?.response?.data?.message)
-		}
-	}
-
-	if(!products){
-		return(
-			<div>
-				<p>
-					Loading
-				</p>
-			</div>
+		return (
+			<section>
+				{subCategories.length > 0 && (
+					<div className="grid grid-flow-col overflow-y-auto h-full w-full gap-4 py-8">
+						{subCategories.map((category) => {
+							let { id, name, image } = category
+							return (
+								<div
+									key={id}
+									className="border rounded-md shadow w-[150px]"
+								>
+									<Link
+										href="/category/[categoryName]/[id]"
+										as={
+											"/category/" +
+											toKebabCase(name) +
+											"/" +
+											id
+										}
+										passHref
+									>
+										<a className="flex flex-col h-full w-full items-center">
+											<p className="font-lato text-center text-main-blue text-lg font-bold py-2">
+												{name}
+											</p>
+											<Image
+												src={image}
+												height={100}
+												width={100}
+												alt={
+													"category image"
+												}
+											/>
+										</a>
+									</Link>
+								</div>
+							)
+						})}
+					</div>
+				)}
+			</section>
 		)
 	}
 
-	if (products.status != 1) {
+	const CategoryProducts = () => {
+		const { isLoading, categoryProducts, errorMessage } = useCategoryProductsApi()
+
+		if (isLoading) {
+			return (
+				<div>
+					<p>
+						Loading
+					</p>
+				</div>
+			)
+		}
+
+		if (!categoryProducts) {
+			return (
+				<div>
+					<p>
+						{errorMessage}
+					</p>
+				</div>
+			)
+		}
+
+		if (categoryProducts.length == 0) {
+			return (
+				<div>
+					<p>
+						No items to show
+					</p>
+				</div>
+			)
+		}
+
 		return (
-			<div>
-				<p>{products.message}</p>
-			</div>
+			<section className="grid grid-cols-2 md:grid-cols-4 2xl:grid-cols-5 gap-4">
+				{categoryProducts.map((product) => {
+					let { id } = product
+					return (
+						<div key={id}>
+							<SingleProduct
+								product={product}
+							// TODO call api to get updated details of product and check if it is in stock
+							/>
+						</div>
+					)
+				})}
+			</section>
+		)
+	}
+
+	if(!router.isReady){
+		return(
+			<></>
 		)
 	}
 
 	return (
 		<div>
-			<HeadTag title={fromKebabCase(categoryName)[0].toUpperCase() + fromKebabCase(categoryName).substring(1)}/>
+			<HeadTag title={fromKebabCase(categoryName)[0].toUpperCase() + fromKebabCase(categoryName).substring(1)} />
 			<div className="grid grid-cols-5 gap-8">
 				{/* CATEGORIES SECTION */}
 				<section className="hidden lg:col-span-1 lg:block">
@@ -103,72 +154,8 @@ export default function CategoryProducts() {
 						text={fromKebabCase(categoryName.toUpperCase())}
 					/>
 					<section className="space-y-12">
-						{/* SUB CATEGORIES SECTION */}
-						{subCategories && (
-							<section>
-								{subCategories.data.length > 0 && (
-									<div className="grid grid-flow-col overflow-y-auto h-full w-full gap-4 py-8">
-										{subCategories.data.map((category) => {
-											let { id, name, image } = category
-											return (
-												<div
-													key={id}
-													className="border rounded-md shadow w-[150px]"
-												>
-													<Link
-														href="/category/[categoryName]/[id]"
-														as={
-															"/category/" +
-															toKebabCase(name) +
-															"/" +
-															id
-														}
-														passHref
-													>
-														<a className="flex flex-col h-full w-full items-center">
-															<p className="font-lato text-center text-main-blue text-lg font-bold py-2">
-																{name}
-															</p>
-															<Image
-																src={image}
-																height={100}
-																width={100}
-																alt={
-																	"category image"
-																}
-															/>
-														</a>
-													</Link>
-												</div>
-											)
-										})}
-									</div>
-								)}
-							</section>
-						)}
-						{errorMessage == "" ? (
-							<div>
-								{products == null || products?.data?.length == 0 ? (
-									<div>NO ITEMS EXIST</div>
-								) : (
-									<section className="grid grid-cols-2 md:grid-cols-4 2xl:grid-cols-5 gap-4">
-										{products.data.map((product) => {
-											let { id } = product
-											return (
-												<div key={id}>
-													<SingleProduct
-														product={product}
-														// TODO call api to get updated details of product and check if it is in stock
-													/>
-												</div>
-											)
-										})}
-									</section>
-								)}
-							</div>
-						) : (
-							<p>{errorMessage}</p>
-						)}
+						<SubCategories />
+						<CategoryProducts />
 					</section>
 				</section>
 			</div>
