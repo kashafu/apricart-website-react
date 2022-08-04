@@ -26,15 +26,13 @@ import {
 import SectionHeading from "../components/Layout/components/Typography/SectionHeading"
 import InputLabelText from "../components/Layout/components/Typography/InputLabelText"
 import HeadTag from "../components/Layout/components/Head/HeadTag"
-import { useOptionsApi, usePaymentMethodsApi } from "../helpers/Api"
+import { useCheckoutApi, useOptionsApi, usePaymentMethodsApi } from "../helpers/Api"
 
 export default function Checkout() {
 	let { token, selectedAddress } = getGeneralApiParams()
 	const reduxCart = useSelector((state) => state.cart)
 	const dispatch = useDispatch()
 
-	const { shipmentChargedAt, shipmentFixAmount } = useOptionsApi()
-	const { paymentMethodsData } = usePaymentMethodsApi()
 	// const [shipmentChargedAt, setShipmentChargedAt] = useState(0)
 	// const [shipmentFixAmount, setShipmentFixAmount] = useState(0)
 	// const [paymentMethodsData, setPaymentMethods] = useState([])
@@ -47,18 +45,22 @@ export default function Checkout() {
 	})
 	const [checkoutAddress, setCheckoutAddress] = useState(
 		selectedAddress ? selectedAddress : null
-	)
-	const [checkoutErrorMessage, setCheckoutErrorMessage] = useState("")
-	const [addressErrorMessage, setAddressErrorMessage] = useState("")
+		)
+		const [checkoutErrorMessage, setCheckoutErrorMessage] = useState("")
+		const [addressErrorMessage, setAddressErrorMessage] = useState("")
 	const [cartErrorMessage, setCartErrorMessage] = useState("")
 	const [couponCodeMessage, setCouponCodeMessage] = useState('')
 	// view state can be either 'shipping', 'payment', 'review'
 	const [viewState, setViewState] = useState("shipping")
 	const [successResponse, setSuccessResponse] = useState(null)
 
+	const { shipmentChargedAt, shipmentFixAmount } = useOptionsApi()
+	const { paymentMethodsData } = usePaymentMethodsApi()
+	const { setIsCheckout } = useCheckoutApi(checkoutData, checkoutAddress)
+
 	useEffect(() => {
-		getPaymentMethodsApi()
-		getOptionsDataApi()
+		// getPaymentMethodsApi()
+		// getOptionsDataApi()
 		getShippingCartDataApi()
 	}, [])
 
@@ -361,64 +363,64 @@ export default function Checkout() {
 	/*
 		in checkout api we have to set verify 'false' and pass the selected address lat long in url params
 	*/
-	const checkoutApi = async () => {
-		let { headers, city, userId, prodType, orderType, clientType } = getGeneralApiParams()
-		let lat = 0
-		let long = 0
-		let addressId = 0
-		if (typeof checkoutAddress === "object") {
-			lat = checkoutAddress ? checkoutAddress.mapLat : "0"
-			long = checkoutAddress ? checkoutAddress.mapLong : "0"
-			addressId = checkoutAddress ? checkoutAddress.id : ""
-		} else {
-			lat = checkoutAddress ? JSON.parse(checkoutAddress).mapLat : "0"
-			long = checkoutAddress ? JSON.parse(checkoutAddress).mapLong : "0"
-			addressId = checkoutAddress ? JSON.parse(checkoutAddress).id : ""
-		}
-		let body = {
-			...checkoutData,
-			address: addressId,
-			showProducts: true,
-			verify: false,
-			prodType: "cus",
-			day: "",
-			startTime: "",
-			endTime: "",
-			clientType: "apricart",
-			orderType: "delivery",
-		}
-		let url =
-			base_url_api +
-			"/order/cart/checkout?city=" +
-			city +
-			"&userid=" +
-			userId +
-			"&client_lat=" +
-			lat +
-			"&client_long=" +
-			long +
-			"&lang=en&client_type=apricart"
+	// const checkoutApi = async () => {
+	// 	let { headers, city, userId, prodType, orderType, clientType } = getGeneralApiParams()
+	// 	let lat = 0
+	// 	let long = 0
+	// 	let addressId = 0
+	// 	if (typeof checkoutAddress === "object") {
+	// 		lat = checkoutAddress ? checkoutAddress.mapLat : "0"
+	// 		long = checkoutAddress ? checkoutAddress.mapLong : "0"
+	// 		addressId = checkoutAddress ? checkoutAddress.id : ""
+	// 	} else {
+	// 		lat = checkoutAddress ? JSON.parse(checkoutAddress).mapLat : "0"
+	// 		long = checkoutAddress ? JSON.parse(checkoutAddress).mapLong : "0"
+	// 		addressId = checkoutAddress ? JSON.parse(checkoutAddress).id : ""
+	// 	}
+	// 	let body = {
+	// 		...checkoutData,
+	// 		address: addressId,
+	// 		showProducts: true,
+	// 		verify: false,
+	// 		prodType: "cus",
+	// 		day: "",
+	// 		startTime: "",
+	// 		endTime: "",
+	// 		clientType: "apricart",
+	// 		orderType: "delivery",
+	// 	}
+	// 	let url =
+	// 		base_url_api +
+	// 		"/order/cart/checkout?city=" +
+	// 		city +
+	// 		"&userid=" +
+	// 		userId +
+	// 		"&client_lat=" +
+	// 		lat +
+	// 		"&client_long=" +
+	// 		long +
+	// 		"&lang=en&client_type=apricart"
 
-		toast.info('Processing Order')
-		try {
-			let response = await axios.post(url, body, {
-				headers: headers,
-			})
+	// 	toast.info('Processing Order')
+	// 	try {
+	// 		let response = await axios.post(url, body, {
+	// 			headers: headers,
+	// 		})
 
-			if (checkoutData.paymentMethod === "meezan") {
-				let { paymentUrl } = response.data.data
-				window.open(paymentUrl, "_blank").focus()
-			}
-			setCheckoutErrorMessage("")
-			setSuccessResponse(response.data)
-			setViewState("review")
-			getCartDataApi()
-		} catch (error) {
-			console.log(error)
-			setCheckoutErrorMessage(error?.response?.data?.message)
-			toast.error(error?.response?.data?.message)
-		}
-	}
+	// 		if (checkoutData.paymentMethod === "meezan") {
+	// 			let { paymentUrl } = response.data.data
+	// 			window.open(paymentUrl, "_blank").focus()
+	// 		}
+	// 		setCheckoutErrorMessage("")
+	// 		setSuccessResponse(response.data)
+	// 		setViewState("review")
+	// 		getCartDataApi()
+	// 	} catch (error) {
+	// 		console.log(error)
+	// 		setCheckoutErrorMessage(error?.response?.data?.message)
+	// 		toast.error(error?.response?.data?.message)
+	// 	}
+	// }
 
 	const getCartDataApi = async () => {
         let { headers, city, userId, prodType, orderType, clientType } = getGeneralApiParams()
@@ -1129,7 +1131,8 @@ export default function Checkout() {
 							<SubmitButton
 								text={"CHECKOUT"}
 								onClick={()=>{
-									checkoutApi()
+									// checkoutApi()
+									setIsCheckout(true)
 									window.scroll({
 										top: 0,
 										left: 0,

@@ -419,7 +419,7 @@ export const usePaymentMethodsApi = () => {
 		await initializeUserApi()
 		let { headers } = getGeneralApiParams()
 
-		let url = "/options/all?"
+		let url = "/order/payment/info?"
 
 		try {
 			let apiResponse = await axios.get(fullUrl(url), {
@@ -441,5 +441,79 @@ export const usePaymentMethodsApi = () => {
 		errorMessage,
 		response,
 		errorResponse,
+	}
+}
+
+export const useCheckoutApi = (checkoutData, checkoutAddress) => {
+	const [isLoading, setIsLoading] = useState(true)
+	const [response, setResponse] = useState(null)
+	const [errorResponse, setErrorResponse] = useState(null)
+	const [errorMessage, setErrorMessage] = useState("")
+	const [isCheckout, setIsCheckout] = useState(false)
+
+	let { headers, clientType, prodType, orderType } = getGeneralApiParams()
+	let lat = 0
+	let long = 0
+	let addressId = 0
+	if (typeof checkoutAddress === "object") {
+		lat = checkoutAddress ? checkoutAddress.mapLat : "0"
+		long = checkoutAddress ? checkoutAddress.mapLong : "0"
+		addressId = checkoutAddress ? checkoutAddress.id : ""
+	} else {
+		lat = checkoutAddress ? JSON.parse(checkoutAddress).mapLat : "0"
+		long = checkoutAddress ? JSON.parse(checkoutAddress).mapLong : "0"
+		addressId = checkoutAddress ? JSON.parse(checkoutAddress).id : ""
+	}
+	let body = {
+		...checkoutData,
+		address: addressId,
+		showProducts: true,
+		verify: false,
+		prodType: prodType,
+		day: "",
+		startTime: "",
+		endTime: "",
+		clientType: clientType,
+		orderType: orderType,
+	}
+	let url = "/order/cart/checkout?client_lat=" +
+		lat +
+		"&client_long=" +
+		long
+
+	useEffect(() => {
+		if (isCheckout) {
+			callApi()
+		}
+	}, [isCheckout])
+
+	const callApi = async () => {
+		setIsLoading(true)
+		toast.info('Processing Order')
+		try {
+			let apiResponse = await axios.post(fullUrl(url), body, {
+				headers: headers,
+			})
+			setResponse(apiResponse)
+			if (checkoutData.paymentMethod === "meezan") {
+				let { paymentUrl } = response.data.data
+				window.open(paymentUrl, "_blank").focus()
+			}
+		} catch (error) {
+			setErrorResponse(error?.response)
+			setErrorMessage(error?.response?.data?.message)
+			toast.error(error?.response?.data?.message)
+		} finally {
+			setIsLoading(false)
+			setIsCheckout(false)
+		}
+	}
+
+	return {
+		isLoading,
+		errorMessage,
+		response,
+		errorResponse,
+		setIsCheckout
 	}
 }
