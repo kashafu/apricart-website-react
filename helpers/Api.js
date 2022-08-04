@@ -34,14 +34,14 @@ const fullUrl = (url) => {
 const initializeUserApi = async () => {
 	let { isUserInitialized, latitude, longitude, headers } = getGeneralApiParams()
 
-	if(!isUserInitialized){
+	if (!isUserInitialized) {
 		let url =
 			"/home/all?client_lat=" +
 			latitude +
 			"&client_long=" +
 			longitude +
 			"&web=false&hide=true"
-	
+
 		try {
 			await axios.get(fullUrl(url), {
 				headers: headers,
@@ -88,6 +88,86 @@ export const useCategoriesApi = () => {
 	}
 
 	return { isLoading, categories, errorMessage, response, errorResponse }
+}
+
+export const useCategoryProductsApi = () => {
+	const router = useRouter()
+	const { categoryId, categoryName } = router.query
+
+	const [isLoading, setIsLoading] = useState(true)
+	const [categoryProducts, setCategoryProducts] = useState(null)
+	const [response, setResponse] = useState(null)
+	const [errorResponse, setErrorResponse] = useState(null)
+	const [errorMessage, setErrorMessage] = useState("")
+
+	useEffect(() => {
+		if (router.isReady) {
+			callApi()
+		}
+	}, [router.query])
+
+	const callApi = async () => {
+		setIsLoading(true)
+		await initializeUserApi()
+		let { headers } = getGeneralApiParams()
+		let url = "/catalog/categories/products?category=" +
+			categoryId +
+			"&page=1&size=100&sortType=&sortDirection=desc&instant=3"
+
+		try {
+			let apiResponse = await axios.get(fullUrl(url), {
+				headers: headers,
+			})
+			setResponse(apiResponse)
+			setCategoryProducts(apiResponse.data.data)
+		} catch (error) {
+			setErrorResponse(error?.response)
+			setErrorMessage(error?.response?.data?.message)
+		} finally {
+			setIsLoading(false)
+		}
+	}
+
+	return { isLoading, categoryProducts, errorMessage, response, errorResponse }
+}
+
+export const useSubCategoriesApi = () => {
+	const router = useRouter()
+	const { categoryId, categoryName } = router.query
+
+	const [isLoading, setIsLoading] = useState(true)
+	const [subCategories, setSubCategories] = useState(null)
+	const [response, setResponse] = useState(null)
+	const [errorResponse, setErrorResponse] = useState(null)
+	const [errorMessage, setErrorMessage] = useState("")
+
+	useEffect(() => {
+		if (router.isReady) {
+			callApi()
+		}
+	}, [router.query])
+
+	const callApi = async () => {
+		setIsLoading(true)
+		await initializeUserApi()
+		let { headers } = getGeneralApiParams()
+		let url = "/catalog/categories/detail?id=" + categoryId
+
+		try {
+			let apiResponse = await axios.get(fullUrl(url), {
+				headers: headers,
+			})
+			setResponse(apiResponse)
+			setSubCategories(apiResponse.data.data)
+		} catch (error) {
+			setErrorResponse(error?.response)
+			setErrorMessage(error?.response?.data?.message)
+		} finally {
+			setIsLoading(false)
+		}
+	}
+
+	return { isLoading, subCategories, errorMessage, response, errorResponse }
 }
 
 export const useHomeApi = () => {
