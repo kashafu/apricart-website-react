@@ -53,58 +53,6 @@ const initializeUserApi = async () => {
 	}
 }
 
-export const useInitializeUserApi = () => {
-	let { userId } = getGeneralApiParams()
-	const selectedTypeSelector = useSelector(
-		(state) => state.general.selectedType
-	)
-	const [isLoading, setIsLoading] = useState(true)
-	const [response, setResponse] = useState(null)
-	const [errorResponse, setErrorResponse] = useState(null)
-	const [errorMessage, setErrorMessage] = useState("")
-
-	useEffect(() => {
-		if (!userId) {
-			callApi()
-			const d = new Date()
-			cookies.set("guestUserId", "desktopuser_" + d.getTime(), 30)
-		}
-	}, [selectedTypeSelector])
-
-	const callApi = async () => {
-		setIsLoading(true)
-		let { latitude, longitude, headers } = getGeneralApiParams()
-
-		let url =
-			"/home/all?client_lat=" +
-			latitude +
-			"&client_long=" +
-			longitude +
-			"&web=false&hide=true"
-
-		try {
-			let apiResponse = await axios.get(fullUrl(url), {
-				headers: headers,
-			})
-			setResponse(apiResponse)
-			console.log('USER INITIALIZED')
-			console.log("URL", fullUrl(url));
-		} catch (error) {
-			setErrorResponse(error?.response)
-			setErrorMessage(error?.response?.data?.message)
-		} finally {
-			setIsLoading(false)
-		}
-	}
-
-	return {
-		isLoading,
-		errorMessage,
-		response,
-		errorResponse,
-	}
-}
-
 export const useCategoriesApi = () => {
 	const selectedTypeSelector = useSelector(
 		(state) => state.general.selectedType
@@ -121,6 +69,7 @@ export const useCategoriesApi = () => {
 
 	const callApi = async () => {
 		setIsLoading(true)
+		await initializeUserApi()
 		let { headers } = getGeneralApiParams()
 		let url = "/catalog/categories?level=all"
 
