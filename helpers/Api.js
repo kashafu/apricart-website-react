@@ -1,8 +1,11 @@
 import axios from "axios"
-import { useSelector } from "react-redux"
+import { useSelector, useDispatch } from "react-redux"
 import { useState, useEffect } from "react"
 import { base_url_api } from "../information.json"
 import { getGeneralApiParams } from "./ApiHelpers"
+import { useRouter } from "next/router"
+import { addToCart } from '../redux/cart.slice'
+import { toast } from 'react-toastify'
 
 const fullUrl = (url) => {
 	let { city, userId, clientType, orderType, prodType } =
@@ -88,8 +91,6 @@ export const useHomeApi = () => {
 			longitude +
 			"&web=true"
 
-		console.log(fullUrl(url));
-		
 		try {
 			let apiResponse = await axios.get(fullUrl(url), {
 				headers: headers,
@@ -114,5 +115,126 @@ export const useHomeApi = () => {
 		errorResponse,
 		isPopupAd,
 		categories,
+	}
+}
+
+export const useProductDetailsApi = () => {
+	const router = useRouter()
+	const { productId, productName } = router.query
+
+	const [isLoading, setIsLoading] = useState(true)
+	const [productData, setProductData] = useState(null)
+	const [response, setResponse] = useState(null)
+	const [errorResponse, setErrorResponse] = useState(null)
+	const [errorMessage, setErrorMessage] = useState("")
+
+	useEffect(() => {
+		if (router.isReady) {
+			callApi()
+		}
+	}, [router.query])
+
+	const callApi = async () => {
+		setIsLoading(true)
+		let { headers } = getGeneralApiParams()
+
+		let url = "/catalog/products/detail?id=" + productId
+
+		console.log(fullUrl(url));
+		try {
+			let apiResponse = await axios.get(fullUrl(url), {
+				headers: headers,
+			})
+			setResponse(apiResponse)
+			setProductData(apiResponse.data.data)
+			console.log(apiResponse.data);
+		} catch (error) {
+			setErrorResponse(error?.response)
+			setErrorMessage(error?.response?.data?.message)
+		} finally {
+			setIsLoading(false)
+		}
+	}
+
+	return {
+		isLoading,
+		productData,
+		errorMessage,
+		response,
+		errorResponse,
+	}
+}
+
+export const useAddToCartApi = (sku, qty, product) => {
+	const dispatch = useDispatch()
+	const [isLoading, setIsLoading] = useState(true)
+	const [response, setResponse] = useState(null)
+	const [errorResponse, setErrorResponse] = useState(null)
+	const [errorMessage, setErrorMessage] = useState("")
+	const [isPlaceOrder, setIsPlaceOrder] = useState(false)
+
+	let { headers, token, userId } = getGeneralApiParams()
+	let body
+	let url
+
+	useEffect(() => {
+		if (isPlaceOrder) {
+			callApi()
+		}
+	}, [isPlaceOrder])
+
+	const callApi = async () => {
+		if (token) {
+			body = {
+				cart: [
+					{
+						sku,
+						qty,
+					},
+				]
+			}
+			url = "/order/cart/save?"
+		}
+		else {
+			body = {
+				userId,
+				cart: [
+					{
+						sku,
+						qty,
+					},
+				]
+			}
+			url = "/guest/cart/save?"
+		}
+
+		try {
+			let apiResponse = await axios.post(fullUrl(url), body, {
+				headers: headers,
+			})
+			setResponse(apiResponse)
+			toast.success("Added to Cart")
+
+			let reduxCartData = {
+				...product
+			}
+			reduxCartData.qty = qty
+			dispatch(addToCart(reduxCartData))
+		} catch (error) {
+			setErrorResponse(error?.response)
+			setErrorMessage(error?.response?.data?.message)
+			toast.error(error?.response?.data?.message)
+		} finally {
+			setIsLoading(false)
+			setIsPlaceOrder(false)
+		}
+	}
+
+	return {
+		isLoading,
+		errorMessage,
+		response,
+		errorResponse,
+		setIsPlaceOrder
 	}
 }

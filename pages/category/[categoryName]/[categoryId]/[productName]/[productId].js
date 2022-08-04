@@ -13,6 +13,7 @@ import axios from "axios"
 import HeadTag from "../../../../../components/Layout/components/Head/HeadTag"
 import minusIcon from "../../../../../public/assets/svgs/minusIcon.svg"
 import plusIcon from "../../../../../public/assets/svgs/plusIcon.svg"
+import { useAddToCartApi, useProductDetailsApi } from "../../../../../helpers/Api"
 
 export default function ProductDetail() {
 	const dispatch = useDispatch()
@@ -21,343 +22,224 @@ export default function ProductDetail() {
 	const router = useRouter()
 	const { productId, productName } = router.query
 
-	const [message, setMessage] = useState("Loading")
-	const [product, setProduct] = useState(null)
-	const [inStock, setInStock] = useState(true)
+	const { isLoading, productData, errorMessage } = useProductDetailsApi()
 	const [qty, setQty] = useState(1)
-
-	useEffect(() => {
-		if (router.isReady) {
-			getProductDetailsApi()
-		}
-	}, [router.query])
 
 	const setQtyHandler = (type) => {
 		if (type == "increment") {
-			if (qty == product.data[0].maxQty) {
+			if (qty == productData[0].maxQty) {
 				return
 			}
 			setQty(qty + 1)
 		} else if (type == "decrement") {
-			if (qty == product.data[0].minQty) {
+			if (qty == productData[0].minQty) {
 				return
 			}
 			setQty(qty - 1)
 		}
 	}
 
-	const getProductDetailsApi = async () => {
-		let { city, headers, userId } = getGeneralApiParams()
-		let url =
-			base_url_api +
-			"/catalog/products/detail?id=" +
-			productId +
-			"&city=" +
-			city +
-			"&lang=en&client_type=apricart&userid=" +
-			userId
-		// console.log(url)
-		try {
-			let response = await axios.get(url, {
-				headers: headers,
-			})
-			// console.log(response.data)
-			if (response.data.data.length > 0) {
-				setProduct(response.data)
-				setInStock(response.data.data[0].inStock)
-			} else {
-				setMessage("Item does not exist")
-			}
-		} catch (error) {
-			toast.error(error?.response?.data?.message)
-			console.log(error)
-			setMessage("Item does not exist")
-		}
-	}
-
-	const addToCartApi = async () => {
-		let { city, userId, headers } = getGeneralApiParams()
-
-		if (isLoggedIn) {
-			let data = {
-				cart: [
-					{
-						sku: product.data[0].sku,
-						qty: qty,
-					},
-				],
-			}
-			let url =
-				base_url_api +
-				"/order/cart/save?city=" +
-				city +
-				"&lang=en&client_type=apricart&userid=" +
-				userId
-
-			try {
-				let response = await axios.post(url, data, {
-					headers: headers,
-				})
-				toast.success("Added to Cart")
-				let cartData = {
-					...product.data[0],
-				}
-				cartData.qty = qty
-				dispatch(addToCart(cartData))
-			} catch (error) {
-				console.log(error?.response)
-				toast.error(error?.response?.data?.message)
-			}
-		} else {
-			let data = {
-				userId: userId,
-				cart: [
-					{
-						sku: product.data[0].sku,
-						qty: qty,
-					},
-				],
-			}
-			let url =
-				base_url_api +
-				"/guest/cart/save?city=" +
-				city +
-				"&lang=en&client_type=apricart"
-
-			try {
-				let response = await axios.post(url, data, {
-					headers: headers,
-				})
-				toast.success("Added to Cart")
-				let cartData = {
-					...product.data[0],
-				}
-				cartData.qty = qty
-
-				dispatch(addToCart(cartData))
-			} catch (error) {
-				console.log(error?.response)
-				toast.error(error?.response?.data?.message)
-			}
-		}
-	}
-
-	if (!product) {
+	if (isLoading) {
 		return (
 			<div>
-				<p>{message}</p>
+				<p>Loading</p>
+			</div>
+		)
+	}
+
+	if (!productData) {
+		return (
+			<div>
+				<p>{errorMessage}</p>
+			</div>
+		)
+	}
+
+	if (productData.length == 0) {
+		return (
+			<div>
+				<p>Item does not exist</p>
+			</div>
+		)
+	}
+
+	const {
+		title,
+		description,
+		categoryleafName,
+		productImageUrl,
+		specialPrice,
+		currentPrice,
+		sku,
+		inStock
+	} = productData[0]
+
+	const AddToCart = () => {
+		const { setIsPlaceOrder } = useAddToCartApi(sku, qty, productData[0])
+
+		return (
+			<div className="flex flex-row w-full justify-between lg:justify-start lg:space-x-4">
+				{inStock ? (
+					<div className="flex flex-row space-x-4">
+						<div className="grid grid-cols-3 justify-items-center rounded overflow-hidden w-[100px] h-[40px] border-2">
+							<button
+								className="relative bg-white w-full"
+								onClick={() => {
+									setQtyHandler(
+										"decrement"
+									)
+								}}
+							>
+								<Image
+									src={
+										minusIcon
+									}
+									layout={
+										"fill"
+									}
+									alt='icon'
+								/>
+							</button>
+							<div className="flex flex-col bg-main-yellow font-bold w-full text-main-blue text-2xl text-center">
+								<p className="mt-auto mb-auto">
+									{
+										qty
+									}
+								</p>
+							</div>
+							<button
+								className="relative bg-white w-full"
+								onClick={() => {
+									setQtyHandler(
+										"increment"
+									)
+								}}
+							>
+								<Image
+									src={
+										plusIcon
+									}
+									layout={
+										"fill"
+									}
+									alt='icon'
+								/>
+							</button>
+						</div>
+						<div>
+							{/* ADD TO CART */}
+							<button
+								className="flex items-center h-[40px]"
+								onClick={() => {
+									setIsPlaceOrder(true)
+								}}
+							>
+								<p className="text-white font-bold bg-main-blue py-2 px-4 rounded-xl">
+									ADD TO
+									CART
+								</p>
+							</button>
+						</div>
+					</div>
+				) : (
+					<button
+						className="w-1/2 h-[40px] px-2 bg-zinc-400 font-bold text-xs lg:text-md rounded text-white"
+						disabled={
+							true
+						}
+					>
+						Out of Stock
+					</button>
+				)}
 			</div>
 		)
 	}
 
 	return (
 		<div>
-			{product.data.length > 0 ? (
-				<div>
-					<HeadTag
-						title={product.data[0].title}
-						description={product.data[0].description}
-					/>
-					<section className="popular_sec">
-						<div className="container-fluid">
-							<div className="row">
-								<div className="col-12 col-sm-2  col-md-2  col-lg-3  col-xl-2  col-xxl-2">
-									<div className="hidden lg:flex">
-										<Categories />
-									</div>
-								</div>
-								<div className="col-12 col-sm-12  col-md-10  col-lg-9  col-xl-10  col-xxl-10 parot">
-									<>
-										<section className="ContentSec -m-[20px]">
-											<div className="container-fluid">
-												<div className="prothreeHead">
-													<ol className="breadcrumb">
-														<li>
-															{" "}
-															<a passHref="/">
-																Home
-															</a>{" "}
-														</li>
-														<li>
-															<a passHref="/category/">
-																{
-																	product
-																		.data[0]
-																		.categoryleafName
-																}
-															</a>
-														</li>
-													</ol>
-												</div>
-											</div>
-										</section>
-										<section className="productdet_sec">
-											<div className="container">
-												<div className="row">
-													<div className="col-12 col-sm-4  col-md-4  col-lg-4  col-xl-4  col-xxl-4">
-														<div className="proDimg">
-															<img
-																src={
-																	product
-																		.data[0]
-																		.productImageUrl
-																}
-																classNameName="img-fluid"
-																alt=""
-															/>
-														</div>
-													</div>
-													<div className="col-12 col-sm-6  col-md-6  col-lg-6  col-xl-6  col-xxl-6">
-														<div className="productD_head">
-															<p className="text-main-blue font-bold text-3xl">
-																{
-																	product
-																		.data[0]
-																		.title
-																}
-															</p>
-															<hr />
-															{product.data[0]
-																.specialPrice >
-															0 ? (
-																<div className="flex flex-row space-x-4">
-																	<h4 className="line-through decoration-red-600">
-																		Rs.{" "}
-																		{
-																			product
-																				.data[0]
-																				.currentPrice
-																		}
-																	</h4>
-																	<h4>
-																		Rs.{" "}
-																		{
-																			product
-																				.data[0]
-																				.specialPrice
-																		}
-																	</h4>
-																</div>
-															) : (
-																<h4>
-																	Rs.{" "}
-																	{
-																		product
-																			.data[0]
-																			.currentPrice
-																	}
-																</h4>
-															)}
-															<hr />
-															<div className="productD_para">
-																<p>
-																	{
-																		product
-																			.data[0]
-																			.description
-																	}
-																</p>
-																<span>
-																	{
-																		product
-																			.data[0]
-																			.sku
-																	}
-																</span>
-															</div>
-															<div className="py-4">
-																<div className="flex flex-row w-full justify-between lg:justify-start lg:space-x-4">
-																	{inStock && (
-																		<div className="grid grid-cols-3 justify-items-center rounded overflow-hidden w-[100px] h-[40px] border-2">
-																			<button
-																				className="relative bg-white w-full"
-																				onClick={() => {
-																					setQtyHandler(
-																						"decrement"
-																					)
-																				}}
-																			>
-																				<Image
-																					src={
-																						minusIcon
-																					}
-																					layout={
-																						"fill"
-																					}
-																				/>
-																			</button>
-																			<div className="flex flex-col bg-main-yellow font-bold w-full text-main-blue text-2xl text-center">
-																				<p className="mt-auto mb-auto">
-																					{
-																						qty
-																					}
-																				</p>
-																			</div>
-																			<button
-																				className="relative bg-white w-full"
-																				onClick={() => {
-																					setQtyHandler(
-																						"increment"
-																					)
-																				}}
-																			>
-																				<Image
-																					src={
-																						plusIcon
-																					}
-																					layout={
-																						"fill"
-																					}
-																				/>
-																			</button>
-																		</div>
-																	)}
-																	{inStock ? (
-																		// {/* ADD TO CART */}
-																		<button
-																			className="flex items-center h-[40px]"
-																			onClick={() => {
-																				addToCartApi()
-																			}}
-																		>
-																			<p className="text-white font-bold bg-main-blue py-2 px-4 rounded-xl">
-																				ADD
-																				TO
-																				CART
-																			</p>
-																		</button>
-																	) : (
-																		<button
-																			className="w-1/2 h-[40px] px-2 bg-zinc-400 font-bold text-xs lg:text-md rounded text-white"
-																			disabled={
-																				true
-																			}
-																		>
-																			Out
-																			of
-																			Stock
-																		</button>
-																	)}
-																</div>
-															</div>
-														</div>
-													</div>
-												</div>
-											</div>
-										</section>
-									</>
-									<RelatedProduct />
-								</div>
+			<HeadTag title={title} description={description} />
+			<section className="popular_sec">
+				<div className="container-fluid">
+					<div className="row">
+						<div className="col-12 col-sm-2  col-md-2  col-lg-3  col-xl-2  col-xxl-2">
+							<div className="hidden lg:flex">
+								<Categories />
 							</div>
 						</div>
-					</section>
+						<div className="col-12 col-sm-12  col-md-10  col-lg-9  col-xl-10  col-xxl-10 parot">
+							<>
+								<section className="ContentSec -m-[20px]">
+									<div className="container-fluid">
+										<div className="prothreeHead">
+											<ol className="breadcrumb">
+												<li>
+													{" "}
+													<a passHref="/">
+														Home
+													</a>{" "}
+												</li>
+												<li>
+													<a passHref="/category/">
+														{categoryleafName}
+													</a>
+												</li>
+											</ol>
+										</div>
+									</div>
+								</section>
+								<section className="productdet_sec">
+									<div className="container">
+										<div className="row">
+											<div className="col-12 col-sm-4  col-md-4  col-lg-4  col-xl-4  col-xxl-4">
+												<div className="proDimg">
+													<img
+														src={productImageUrl}
+														classNameName="img-fluid"
+														alt=""
+													/>
+												</div>
+											</div>
+											<div className="col-12 col-sm-6  col-md-6  col-lg-6  col-xl-6  col-xxl-6">
+												<div className="productD_head">
+													<p className="text-main-blue font-bold text-3xl">
+														{title}
+													</p>
+													<hr />
+													{specialPrice > 0 ? (
+														<div className="flex flex-row space-x-4">
+															<h4 className="line-through decoration-red-600">
+																Rs.{" "}
+																{currentPrice}
+															</h4>
+															<h4>
+																Rs.{" "}
+																{specialPrice}
+															</h4>
+														</div>
+													) : (
+														<h4>
+															Rs. {currentPrice}
+														</h4>
+													)}
+													<hr />
+													<div className="productD_para">
+														<p>{description}</p>
+														<span>{sku}</span>
+													</div>
+													<div className="py-4">
+														<AddToCart />
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</section>
+							</>
+							<RelatedProduct />
+						</div>
+					</div>
 				</div>
-			) : (
-				<div>
-					<HeadTag title={"Item does not exist"} />
-					<p>Item does not exist</p>
-				</div>
-			)}
+			</section>
 		</div>
 	)
 }
