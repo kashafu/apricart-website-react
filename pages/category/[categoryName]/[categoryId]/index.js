@@ -1,8 +1,4 @@
-import { useEffect, useState } from "react"
 import { useRouter } from "next/router"
-import axios from "axios"
-import { base_url_api } from "../../../../information.json"
-import { getGeneralApiParams } from "../../../../helpers/ApiHelpers"
 import Categories from "../../../../components/Layout/components/Categories/Categories"
 import SingleProduct from "../../../../components/Layout/components/Products/SingleProduct"
 import PageHeading from "../../../../components/Layout/components/Typography/PageHeading"
