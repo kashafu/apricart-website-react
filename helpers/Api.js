@@ -343,3 +343,59 @@ export const useAddToCartApi = (sku, qty, product) => {
 		setIsPlaceOrder
 	}
 }
+
+export const useOptionsApi = () => {
+	const selectedTypeSelector = useSelector(
+		(state) => state.general.selectedType
+	)
+	const [isLoading, setIsLoading] = useState(true)
+	const [optionsData, setOptionsData] = useState(null)
+	const [shipmentChargedAt, setShipmentChargedAt] = useState(0)
+	const [shipmentFixAmount, setShipmentFixAmount] = useState(0)
+	const [response, setResponse] = useState(null)
+	const [errorResponse, setErrorResponse] = useState(null)
+	const [errorMessage, setErrorMessage] = useState("")
+
+	useEffect(() => {
+		callApi()
+	}, [selectedTypeSelector])
+
+	const callApi = async () => {
+		setIsLoading(true)
+		await initializeUserApi()
+		let { headers } = getGeneralApiParams()
+
+		let url = "/options/all?"
+
+		try {
+			let apiResponse = await axios.get(fullUrl(url), {
+				headers: headers,
+			})
+			setResponse(apiResponse)
+			setOptionsData(apiResponse.data.data)
+			apiResponse.data.data.forEach((item) => {
+				if (item.key === "shippment_charged_at") {
+					setShipmentChargedAt(item.value)
+				}
+				if (item.key === "shippment_fix_amount") {
+					setShipmentFixAmount(item.value)
+				}
+			})
+		} catch (error) {
+			setErrorResponse(error?.response)
+			setErrorMessage(error?.response?.data?.message)
+		} finally {
+			setIsLoading(false)
+		}
+	}
+
+	return {
+		isLoading,
+		optionsData,
+		errorMessage,
+		response,
+		errorResponse,
+		shipmentChargedAt,
+		shipmentFixAmount,
+	}
+}

@@ -26,14 +26,16 @@ import {
 import SectionHeading from "../components/Layout/components/Typography/SectionHeading"
 import InputLabelText from "../components/Layout/components/Typography/InputLabelText"
 import HeadTag from "../components/Layout/components/Head/HeadTag"
+import { useOptionsApi } from "../helpers/Api"
 
 export default function Checkout() {
 	let { token, selectedAddress } = getGeneralApiParams()
 	const reduxCart = useSelector((state) => state.cart)
 	const dispatch = useDispatch()
 
-	const [shipmentChargedAt, setShipmentChargedAt] = useState(0)
-	const [shipmentFixAmount, setShipmentFixAmount] = useState(0)
+	const { shipmentChargedAt, shipmentFixAmount } = useOptionsApi()
+	// const [shipmentChargedAt, setShipmentChargedAt] = useState(0)
+	// const [shipmentFixAmount, setShipmentFixAmount] = useState(0)
 	const [paymentMethods, setPaymentMethods] = useState([])
 	const [checkoutCartData, setCheckoutCartData] = useState(null)
 	const [shippingCartData, setShippingCartData] = useState(null)
@@ -66,8 +68,8 @@ export default function Checkout() {
 	}, [checkoutAddress])
 
 	const getPaymentMethodsApi = async () => {
-		let { headers, userId } = getGeneralApiParams()
-		let url = base_url_api + "/order/payment/info?client_type=apricart&userid=" + userId
+		let { headers, userId, prodType, orderType, clientType } = getGeneralApiParams()
+		let url = base_url_api + "/order/payment/info?client_type=" + clientType + "&userid=" + userId + "&order_type=" + orderType + "&prod_type=" + prodType
 
 		try {
 			let response = await axios.get(url, {
@@ -81,7 +83,7 @@ export default function Checkout() {
 	}
 
 	const getShippingCartDataApi = async () => {
-		let { headers, city, userId } = getGeneralApiParams()
+		let { headers, city, userId, prodType, orderType, clientType } = getGeneralApiParams()
 		let lat = 0
 		let long = 0
 		let addressId = 0
@@ -125,7 +127,7 @@ export default function Checkout() {
 	}
 
 	const getCheckoutCartDataApi = async () => {
-		let { headers, city, userId } = getGeneralApiParams()
+		let { headers, city, userId, prodType, orderType, clientType } = getGeneralApiParams()
 		let lat = 0
 		let long = 0
 		let addressId = 0
@@ -179,7 +181,7 @@ export default function Checkout() {
 	}
 
 	const getCheckoutCouponCartDataApi = async () => {
-		let { headers, city, userId } = getGeneralApiParams()
+		let { headers, city, userId, prodType, orderType, clientType } = getGeneralApiParams()
 		let lat = 0
 		let long = 0
 		let addressId = 0
@@ -233,7 +235,7 @@ export default function Checkout() {
 	}
 
 	const incrementItemQty = async (sku, qty, id) => {
-		let { headers, city, userId } = getGeneralApiParams()
+		let { headers, city, userId, prodType, orderType, clientType } = getGeneralApiParams()
 		let url =
 			base_url_api +
 			"/order/cart/updateqty?city=" +
@@ -265,7 +267,7 @@ export default function Checkout() {
 	}
 
 	const decrementItemQty = async (sku, qty, id) => {
-		let { headers, city, userId } = getGeneralApiParams()
+		let { headers, city, userId, prodType, orderType, clientType } = getGeneralApiParams()
 		let url =
 			base_url_api +
 			"/order/cart/updateqty?city=" +
@@ -298,7 +300,7 @@ export default function Checkout() {
 
 	const deleteItem = (sku, id) => {
 		if (token) {
-			let { city, headers, userId } = getGeneralApiParams()
+			let { city, headers, userId, prodType, orderType, clientType } = getGeneralApiParams()
 			let url =
 				base_url_api +
 				"/order/cart/delete?city=" +
@@ -323,7 +325,7 @@ export default function Checkout() {
 				toast.error(error?.response?.data?.message)
 			}
 		} else {
-			let { city, userId, headers } = getGeneralApiParams()
+			let { city, userId, headers, prodType, orderType, clientType } = getGeneralApiParams()
 			let url =
 				base_url_api +
 				"/guest/cart/delete?city=" +
@@ -359,7 +361,7 @@ export default function Checkout() {
 		in checkout api we have to set verify 'false' and pass the selected address lat long in url params
 	*/
 	const checkoutApi = async () => {
-		let { headers, city, userId } = getGeneralApiParams()
+		let { headers, city, userId, prodType, orderType, clientType } = getGeneralApiParams()
 		let lat = 0
 		let long = 0
 		let addressId = 0
@@ -418,7 +420,7 @@ export default function Checkout() {
 	}
 
 	const getCartDataApi = async () => {
-        let { headers, city, userId } = getGeneralApiParams()
+        let { headers, city, userId, prodType, orderType, clientType } = getGeneralApiParams()
         let lat = 0
         let long = 0
         let body = {
@@ -458,24 +460,24 @@ export default function Checkout() {
         }
     }
 
-	const getOptionsDataApi = async () => {
-		let url = base_url_api + "/options/all?client_type=apricart"
+	// const getOptionsDataApi = async () => {
+	// 	let url = base_url_api + "/options/all?client_type=apricart"
 
-		try {
-			let response = await axios.get(url)
+	// 	try {
+	// 		let response = await axios.get(url)
 
-			response.data.data.forEach((item) => {
-				if (item.key === "shippment_charged_at") {
-					setShipmentChargedAt(item.value)
-				}
-				if (item.key === "shippment_fix_amount") {
-					setShipmentFixAmount(item.value)
-				}
-			})
-		} catch (error) {
-			console.log(error)
-		}
-	}
+	// 		response.data.data.forEach((item) => {
+	// 			if (item.key === "shippment_charged_at") {
+	// 				setShipmentChargedAt(item.value)
+	// 			}
+	// 			if (item.key === "shippment_fix_amount") {
+	// 				setShipmentFixAmount(item.value)
+	// 			}
+	// 		})
+	// 	} catch (error) {
+	// 		console.log(error)
+	// 	}
+	// }
 
 	const handleCheckoutDataChange = (e) => {
 		let { name, value } = e.target
