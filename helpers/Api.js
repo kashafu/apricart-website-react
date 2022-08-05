@@ -34,23 +34,23 @@ const fullUrl = (url) => {
 const initializeUserApi = async () => {
 	let { isUserInitialized, latitude, longitude, headers } = getGeneralApiParams()
 
-	if (!isUserInitialized) {
-		let url =
-			"/home/all?client_lat=" +
-			latitude +
-			"&client_long=" +
-			longitude +
-			"&web=false&hide=true"
+	let url =
+		"/home/all?client_lat=" +
+		latitude +
+		"&client_long=" +
+		longitude +
+		"&web=false&hide=true"
 
-		try {
-			await axios.get(fullUrl(url), {
-				headers: headers,
-			})
-			cookies.set('user-initialized', true)
-		} catch (error) {
-			console.log(error?.response)
-		}
+	try {
+		await axios.get(fullUrl(url), {
+			headers: headers,
+		})
+		cookies.set('user-initialized', true)
+	} catch (error) {
+		console.log(error?.response)
 	}
+	// if (!isUserInitialized) {
+	// }
 }
 
 export const useCategoriesApi = () => {
@@ -252,6 +252,10 @@ export const useProductDetailsApi = () => {
 				headers: headers,
 			})
 			setResponse(apiResponse)
+
+			console.log("URL", fullUrl(url))
+			console.log("RESPONSE", apiResponse)
+
 			setProductData(apiResponse.data.data)
 		} catch (error) {
 			setErrorResponse(error?.response)
