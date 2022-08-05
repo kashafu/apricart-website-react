@@ -41,6 +41,7 @@ const fullUrl = (url) => {
 
 export default function CartSlider() {
 	const reduxCart = useSelector((state) => state.cart);
+	const selectedTypeSelector = useSelector((state) => state.general.selectedType)
 	const dispatch = useDispatch();
 	const router = useRouter();
 	let { token } = getGeneralApiParams();
@@ -49,7 +50,7 @@ export default function CartSlider() {
 
 	useEffect(() => {
 		getCartDataApi();
-	}, []);
+	}, [selectedTypeSelector]);
 
 	const getCartDataApi = async () => {
 		let { headers, city, userId } = getGeneralApiParams();
