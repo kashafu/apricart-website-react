@@ -45,7 +45,8 @@ const initializeUserApi = async () => {
 		await axios.get(fullUrl(url), {
 			headers: headers,
 		})
-		cookies.set('user-initialized', true)
+		cookies.remove('user-initialized', {path: '/'})
+		cookies.set('user-initialized', true, {path: '/'})
 	} catch (error) {
 		console.log(error?.response)
 	}

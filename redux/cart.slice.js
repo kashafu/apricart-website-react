@@ -19,7 +19,8 @@ const cartSlice = createSlice({
 				console.log(qty);
 				state.push({ ...action.payload, quantity: qty });
 			}
-			cookies.set('cart-item', JSON.stringify(...state))
+			cookies.remove('cart-item', {path: '/'})
+			cookies.set('cart-item', JSON.stringify(...state), {path: '/'})
 		},
 		updatedcart: (state, action) => {
 			let qty = action.payload.qty;      

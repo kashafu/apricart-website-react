@@ -23,7 +23,8 @@ export default function Header() {
 	}
 
 	if(!cookies.get("selected-type")){
-		cookies.set('selected-type', 'home')
+		cookies.remove('selected-type', {path: '/'})
+		cookies.set('selected-type', 'home', {path: '/'})
 	}
 
 useEffect(() => {

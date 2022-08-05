@@ -50,7 +50,8 @@ export default function SelectAddress({ type, setAddress, dropDownSelectedAddres
             setAddress(e.target.value)
         }
         else {
-            cookies.set('selected-address', e.target.value)
+            cookies.remove('selected-address', {path: '/'})
+            cookies.set('selected-address', e.target.value, {path: '/'})
             dispatch(updateSelectedAddress(e.target.value))
         }
     }
