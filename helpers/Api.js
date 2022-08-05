@@ -33,25 +33,25 @@ const fullUrl = (url) => {
 
 const initializeUserApi = async () => {
 	let { isUserInitialized, latitude, longitude, headers } = getGeneralApiParams()
-
-	let url =
-		"/home/all?client_lat=" +
-		latitude +
-		"&client_long=" +
-		longitude +
-		"&web=false&hide=true"
-
-	try {
-		await axios.get(fullUrl(url), {
-			headers: headers,
-		})
-		cookies.remove('user-initialized', {path: '/'})
-		cookies.set('user-initialized', true, {path: '/'})
-	} catch (error) {
-		console.log(error?.response)
+	
+	if (!isUserInitialized) {
+		let url =
+			"/home/all?client_lat=" +
+			latitude +
+			"&client_long=" +
+			longitude +
+			"&web=false&hide=true"
+	
+		try {
+			await axios.get(fullUrl(url), {
+				headers: headers,
+			})
+			cookies.remove('user-initialized', {path: '/'})
+			cookies.set('user-initialized', true, {path: '/'})
+		} catch (error) {
+			console.log(error?.response)
+		}
 	}
-	// if (!isUserInitialized) {
-	// }
 }
 
 export const useCategoriesApi = () => {
