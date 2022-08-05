@@ -19,7 +19,8 @@ const cartSlice = createSlice({
 				console.log(qty);
 				state.push({ ...action.payload, quantity: qty });
 			}
-			cookies.set('cart-item', JSON.stringify(...state))
+			cookies.remove('cart-item', {path: '/'})
+			cookies.set('cart-item', JSON.stringify(...state), {path: '/'})
 		},
 		updatedcart: (state, action) => {
 			let qty = action.payload.qty;      
@@ -36,9 +37,10 @@ const cartSlice = createSlice({
 		},
 		decrementQuantity: (state, action) => {
 			const item = state.find((item) => item.id === action.payload);
-			if (item.qty === 1) {
-				const index = state.findIndex((item) => item.id === action.payload);
-				state.splice(index, 1);
+			if (item.qty === item.minQty) {
+				// const index = state.findIndex((item) => item.id === action.payload);
+				// state.splice(index, 1);
+				return
 			} else {
 				item.qty--;
 			}

@@ -8,14 +8,11 @@ import Logo from "../Logo/Logo"
 import Profile from "../Auth/Profile"
 import Image from "next/image"
 import CartSlider from "../Cart/CartSlider"
-import { useRouter } from "next/router"
 import CitySelector from "../CitySelector/CitySelector"
-import TypeCardSelector from "../Cards/TypeCardSelector"
 import { useState, useEffect } from "react"
 
 export default function Header() {
 	const cookies = new Cookies()
-	const router = useRouter()
 
 	let { token } = getGeneralApiParams()
 	const [offset, setOffset] = useState(0);
@@ -26,7 +23,8 @@ export default function Header() {
 	}
 
 	if(!cookies.get("selected-type")){
-		cookies.set('selected-type', 'home')
+		cookies.remove('selected-type', {path: '/'})
+		cookies.set('selected-type', 'home', {path: '/'})
 	}
 
 useEffect(() => {

@@ -5,44 +5,10 @@ import { base_url_api } from '../../information.json'
 import Categories from "../../components/Layout/components/Categories/Categories";
 
 export default function Posts({ posts }) {
-	const [categories, setCategories] = useState(null)
-
-	useEffect(() => {
-		getCategoriesApi()
-	}, [])
-
-	const getCategoriesApi = async () => {
-		let { city, headers, userId } = getGeneralApiParams()
-		let url =
-			base_url_api +
-			"/catalog/categories?level=all&client_type=apricart&city=" +
-			city + "&userid=" + userId 
-		try {
-			let response = await axios.get(url,
-				{
-					headers: headers
-				}
-			)
-			setCategories(response.data.data)
-		} catch (error) {
-			console.log(error)
-		}
-	}
-
-	if (!categories) {
-		return (
-			<div>
-				Loading
-			</div>
-		)
-	}
-
 	return (
 		<div className="w-full">
 			<div className="w-full">
-				<Categories
-					categories={categories}
-				/>
+				<Categories />
 			</div>
 		</div>
 	)

@@ -23,7 +23,8 @@ const generalSlice = createSlice({
 		},
 		updateSelectedType: (state, action) => {
 			state.selectedType = action.payload
-			cookie.set('selected-type', action.payload)
+			cookie.remove('selected-type', {path: '/'})
+			cookie.set('selected-type', action.payload, {path: '/'})
 		},
 	}
 })

@@ -18,8 +18,30 @@ import plusIcon from "../../../../public/assets/svgs/plusIcon.svg";
 import SubmitButton from "../Buttons/SubmitButton";
 import { useRouter } from "next/router";
 
+const fullUrl = (url) => {
+	let { city, userId, clientType, orderType, prodType } =
+		getGeneralApiParams()
+
+	return (
+		base_url_api +
+		url +
+		"&city=" +
+		city +
+		"&userid=" +
+		userId +
+		"&client_type=" +
+		clientType +
+		"&prod_type=" +
+		prodType +
+		"&order_type=" +
+		orderType +
+		"&lang=en"
+	)
+}
+
 export default function CartSlider() {
 	const reduxCart = useSelector((state) => state.cart);
+	const selectedTypeSelector = useSelector((state) => state.general.selectedType)
 	const dispatch = useDispatch();
 	const router = useRouter();
 	let { token } = getGeneralApiParams();
@@ -28,10 +50,10 @@ export default function CartSlider() {
 
 	useEffect(() => {
 		getCartDataApi();
-	}, []);
+	}, [selectedTypeSelector]);
 
 	const getCartDataApi = async () => {
-		let { headers, city, userId } = getGeneralApiParams();
+		let { headers, city, userId, clientType, prodType, orderType } = getGeneralApiParams();
 		let lat = 0;
 		let long = 0;
 		let body = {
@@ -41,27 +63,17 @@ export default function CartSlider() {
 			address: 0,
 			showProducts: true,
 			verify: true,
-			prodType: "cus",
+			prodType,
 			day: "",
 			startTime: "",
 			endTime: "",
-			clientType: "apricart",
-			orderType: "delivery",
+			clientType,
+			orderType,
 		};
-		let url =
-			base_url_api +
-			"/order/cart/checkout?city=" +
-			city +
-			"&userid=" +
-			userId +
-			"&client_lat=" +
-			lat +
-			"&client_long=" +
-			long +
-			"&lang=en&client_type=apricart";
+		let url = "/order/cart/checkout?client_lat=" + lat + "&client_long=" + long
 
 		try {
-			let response = await axios.post(url, body, {
+			let response = await axios.post(fullUrl(url), body, {
 				headers: headers,
 			});
 
@@ -85,12 +97,7 @@ export default function CartSlider() {
 		let { token, headers, city, userId } = getGeneralApiParams();
 
 		if (token) {
-			let url =
-				base_url_api +
-				"/order/cart/updateqty?city=" +
-				city +
-				"&lang=en&client_type=apricart&userid=" +
-				userId;
+			let url = "/order/cart/updateqty?"
 			let body = {
 				cart: [
 					{
@@ -101,7 +108,7 @@ export default function CartSlider() {
 			};
 
 			try {
-				let response = await axios.post(url, body, {
+				let response = await axios.post(fullUrl(url), body, {
 					headers: headers,
 				});
 
@@ -142,12 +149,7 @@ export default function CartSlider() {
 	const deleteItem = (item) => {
 		if (token) {
 			let { city, userId, headers } = getGeneralApiParams();
-			let url =
-				base_url_api +
-				"/order/cart/delete?city=" +
-				city +
-				"&lang=en&client_type=apricart&userid=" +
-				userId;
+			let url = "/order/cart/delete?"
 			let body = {
 				cart: [
 					{
@@ -157,7 +159,7 @@ export default function CartSlider() {
 			};
 
 			try {
-				let response = axios.delete(url, {
+				let response = axios.delete(fullUrl(url), {
 					headers: headers,
 					data: body,
 				});
@@ -166,12 +168,7 @@ export default function CartSlider() {
 			}
 		} else {
 			let { city, userId, headers } = getGeneralApiParams();
-			let url =
-				base_url_api +
-				"/guest/cart/delete?city=" +
-				city +
-				"&lang=en&client_type=apricart&userid=" +
-				userId;
+			let url = "/guest/cart/delete?"
 			let body = {
 				userId: userId,
 				cart: [
@@ -182,7 +179,7 @@ export default function CartSlider() {
 			};
 
 			try {
-				let response = axios.delete(url, {
+				let response = axios.delete(fullUrl(url), {
 					headers: headers,
 					data: body,
 				});

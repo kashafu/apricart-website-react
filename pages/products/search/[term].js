@@ -14,12 +14,10 @@ const SearchResults = () => {
 
     const [results, setResults] = useState(null)
     const [errorMessage, setErrorMessage] = useState('Loading Search Data..')
-	const [categories, setCategories] = useState(null)
     const [searchTerm, setSearchTerm] = useState('')
 
 	useEffect(() => {
         // router.reload()
-		getCategoriesApi()
         if(router.isReady){
             const { term } = router.query
             console.log(term);
@@ -53,23 +51,6 @@ const SearchResults = () => {
         }
 	}
 
-	const getCategoriesApi = async () => {
-		let { city, headers, userId } = getGeneralApiParams()
-		let url =
-			base_url_api +
-			"/catalog/categories?level=all&client_type=apricart&city=" +
-			city + "&userid=" + userId 
-
-		try {
-			let response = await axios.get(url, {
-				headers: headers,
-			})
-			setCategories(response.data.data)
-		} catch (error) {
-			console.log(error)
-		}
-	}
-
     if(!results){
         return(
             <>
@@ -84,7 +65,7 @@ const SearchResults = () => {
 			<div className="grid grid-cols-5 gap-8">
 				{/* CATEGORIES SECTION */}
 				<section className="hidden lg:col-span-1 lg:block">
-					{categories && <Categories categories={categories} />}
+					<Categories />
 				</section>
 				{/* PRODUCTS SECTION */}
 				<section className="col-span-5 lg:col-span-4 space-y-12">
