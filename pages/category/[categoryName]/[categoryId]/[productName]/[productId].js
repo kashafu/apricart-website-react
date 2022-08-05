@@ -39,6 +39,12 @@ export default function ProductDetail() {
 		}
 	}
 
+	useEffect(()=>{
+		if(productData){
+			setQty(productData[0].minQty)
+		}
+	}, [productData])
+
 	if (isLoading) {
 		return (
 			<div>
@@ -71,7 +77,8 @@ export default function ProductDetail() {
 		specialPrice,
 		currentPrice,
 		sku,
-		inStock
+		inStock,
+		minQty
 	} = productData[0]
 
 	const AddToCart = () => {
