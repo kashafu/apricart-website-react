@@ -178,15 +178,15 @@ export default function Home() {
 					</section>
 					{/* PRODUCTS SECTION */}
 					<section className="col-span-5 lg:col-span-4 space-y-12">
-						{city === "peshawar" && (
+						{/* {city === "peshawar" && (
 							<div>
 								<ErrorText
 									text={
-										"HOME DELIVERY IS CURRENTLY UNAVAILABLE IN PESHAWAR, PLEASE CHANGE CITY TO CONTINUE OR DOWNLOAD THE APP FOR BULK BUY"
+										"HOME DELIVERY IS CURRENTLY UNAVAILABLE IN PESHAWAR, PLEASE CHANGE CITY TO CONTINUE OR USE BULK BUY"
 									}
 								/>
 							</div>
-						)}
+						)} */}
 						{homeData.products.map((product, index) => {
 							let { offerId } = product
 

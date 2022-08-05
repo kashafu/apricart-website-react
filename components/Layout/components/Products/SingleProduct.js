@@ -3,9 +3,7 @@ import Link from "next/link"
 import Cookies from "universal-cookie"
 import axios from "axios"
 import { useDispatch } from "react-redux"
-import { addToCart } from "../../../../redux/cart.slice"
 import { addToWish } from "../../../../redux/wish.slice"
-import heartimg from "../../../../public/assets/images/heart.png"
 import missingImageIcon from "../../../../public/assets/images/missingImage.png"
 import minusIcon from "../../../../public/assets/svgs/minusIcon.svg"
 import plusIcon from "../../../../public/assets/svgs/plusIcon.svg"
@@ -23,7 +21,6 @@ import toKebabCase from "../../../../helpers/toKebabCase"
 	to keep stock of item uptodate always
 */
 export default function SingleProduct({ product, isInStock }) {
-	const cookies = new Cookies()
 	const dispatch = useDispatch()
 
 	let {
@@ -53,9 +50,6 @@ export default function SingleProduct({ product, isInStock }) {
 
 	let immediateCategoryName = categoryleafName.split("|")[0].trim()
 	let immediateCategoryId = categoryIds.replace(/\s+/g, '').split("|")[0]
-	let isLoggedIn = cookies.get("cookies-token") != null
-
-	const [innerText, setInnerText] = useState("Add to Cart")
 	const [qty, setQty] = useState(minQty)
 	const [showAddToCart, setShowAddToCart] = useState(false)
 
