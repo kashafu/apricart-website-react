@@ -53,7 +53,7 @@ export default function CartSlider() {
 	}, [selectedTypeSelector]);
 
 	const getCartDataApi = async () => {
-		let { headers, city, userId } = getGeneralApiParams();
+		let { headers, city, userId, clientType, prodType, orderType } = getGeneralApiParams();
 		let lat = 0;
 		let long = 0;
 		let body = {
@@ -63,12 +63,12 @@ export default function CartSlider() {
 			address: 0,
 			showProducts: true,
 			verify: true,
-			prodType: "cus",
+			prodType,
 			day: "",
 			startTime: "",
 			endTime: "",
-			clientType: "apricart",
-			orderType: "delivery",
+			clientType,
+			orderType,
 		};
 		let url = "/order/cart/checkout?client_lat=" + lat + "&client_long=" + long
 

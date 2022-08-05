@@ -102,7 +102,7 @@ export default function Checkout() {
 	}
 
 	const getShippingCartDataApi = async () => {
-		let { headers, city, userId } = getGeneralApiParams()
+		let { headers, city, userId, clientType, prodType, orderType } = getGeneralApiParams()
 		let lat = 0
 		let long = 0
 		let addressId = 0
@@ -113,12 +113,12 @@ export default function Checkout() {
 			address: addressId,
 			showProducts: true,
 			verify: true,
-			prodType: "cus",
+			prodType,
 			day: "",
 			startTime: "",
 			endTime: "",
-			clientType: "apricart",
-			orderType: "delivery",
+			clientType,
+			orderType,
 		}
 		let url = "/order/cart/checkout?client_lat=" + lat + "&client_long=" + long
 
@@ -136,7 +136,7 @@ export default function Checkout() {
 	}
 
 	const getCheckoutCartDataApi = async () => {
-		let { headers, city, userId } = getGeneralApiParams()
+		let { headers, city, userId, clientType, prodType, orderType } = getGeneralApiParams()
 		let lat = 0
 		let long = 0
 		let addressId = 0
@@ -156,12 +156,12 @@ export default function Checkout() {
 			address: addressId,
 			showProducts: true,
 			verify: true,
-			prodType: "cus",
+			prodType,
 			day: "",
 			startTime: "",
 			endTime: "",
-			clientType: "apricart",
-			orderType: "delivery",
+			clientType,
+			orderType,
 		}
 		let url = "/order/cart/checkout?client_lat=" + lat + "&client_long=" + long
 
@@ -180,7 +180,7 @@ export default function Checkout() {
 	}
 
 	const getCheckoutCouponCartDataApi = async () => {
-		let { headers, city, userId } = getGeneralApiParams()
+		let { headers, city, userId, orderType, clientType, prodType } = getGeneralApiParams()
 		let lat = 0
 		let long = 0
 		let addressId = 0
@@ -200,12 +200,12 @@ export default function Checkout() {
 			address: addressId,
 			showProducts: true,
 			verify: true,
-			prodType: "cus",
+			prodType,
 			day: "",
 			startTime: "",
 			endTime: "",
-			clientType: "apricart",
-			orderType: "delivery",
+			clientType,
+			orderType,
 		}
 		let url = "/order/cart/checkout?client_lat=" + lat + "&client_long=" + long
 
@@ -334,7 +334,7 @@ export default function Checkout() {
 		in checkout api we have to set verify 'false' and pass the selected address lat long in url params
 	*/
 	const checkoutApi = async () => {
-		let { headers, city, userId } = getGeneralApiParams()
+		let { headers, city, userId, clientType, orderType, prodType } = getGeneralApiParams()
 		let lat = 0
 		let long = 0
 		let addressId = 0
@@ -352,12 +352,12 @@ export default function Checkout() {
 			address: addressId,
 			showProducts: true,
 			verify: false,
-			prodType: "cus",
+			prodType,
 			day: "",
 			startTime: "",
 			endTime: "",
-			clientType: "apricart",
-			orderType: "delivery",
+			clientType,
+			orderType,
 		}
 		let url = "/order/cart/checkout?client_lat=" + lat + "&client_long=" + long
 		
@@ -383,7 +383,7 @@ export default function Checkout() {
 	}
 
 	const getCartDataApi = async () => {
-		let { headers, city, userId } = getGeneralApiParams()
+		let { headers, city, userId, clientType, orderType, prodType } = getGeneralApiParams()
 		let lat = 0
 		let long = 0
 		let body = {
@@ -393,12 +393,12 @@ export default function Checkout() {
 			address: 0,
 			showProducts: true,
 			verify: true,
-			prodType: "cus",
+			prodType,
 			day: "",
 			startTime: "",
 			endTime: "",
-			clientType: "apricart",
-			orderType: "delivery",
+			clientType,
+			orderType,
 		}
 		let url = "/order/cart/checkout?client_lat=" + lat + "&client_long=" + long
 

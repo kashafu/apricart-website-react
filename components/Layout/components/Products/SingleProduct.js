@@ -11,7 +11,7 @@ import minusIcon from "../../../../public/assets/svgs/minusIcon.svg"
 import plusIcon from "../../../../public/assets/svgs/plusIcon.svg"
 import wishlistIcon from "../../../../public/assets/svgs/wishlistIcon.svg"
 import addToCartIcon from "../../../../public/assets/svgs/addToCartIcon.svg"
-
+import { useAddToCartApi } from "../../../../helpers/Api"
 import { base_url_api } from "../../../../information.json"
 import { getGeneralApiParams } from "../../../../helpers/ApiHelpers"
 import { useState } from "react"
@@ -19,8 +19,8 @@ import { toast } from "react-toastify"
 import toKebabCase from "../../../../helpers/toKebabCase"
 
 /*
-    isInStock is being passed where static site generation is being used
-    to keep stock of item uptodate always
+	isInStock is being passed where static site generation is being used
+	to keep stock of item uptodate always
 */
 export default function SingleProduct({ product, isInStock }) {
 	const cookies = new Cookies()
@@ -48,8 +48,8 @@ export default function SingleProduct({ product, isInStock }) {
 		productImageUrlThumbnail != ""
 			? productImageUrlThumbnail
 			: productImageUrl != ""
-			? productImageUrl
-			: missingImageIcon
+				? productImageUrl
+				: missingImageIcon
 
 	let immediateCategoryName = categoryleafName.split("|")[0].trim()
 	let immediateCategoryId = categoryIds.replace(/\s+/g, '').split("|")[0]
@@ -77,72 +77,72 @@ export default function SingleProduct({ product, isInStock }) {
 		}
 	}
 
-	const addToCartApi = async () => {
-		let { city, userId, headers } = getGeneralApiParams()
+	// const addToCartApi = async () => {
+	// 	let { city, userId, headers } = getGeneralApiParams()
 
-		if (isLoggedIn) {
-			let data = {
-				cart: [
-					{
-						sku: sku,
-						qty: qty,
-					},
-				],
-			}
-			let url =
-				base_url_api +
-				"/order/cart/save?city=" +
-				city +
-				"&lang=en&client_type=apricart&userid=" + userId
+	// 	if (isLoggedIn) {
+	// 		let data = {
+	// 			cart: [
+	// 				{
+	// 					sku: sku,
+	// 					qty: qty,
+	// 				},
+	// 			],
+	// 		}
+	// 		let url =
+	// 			base_url_api +
+	// 			"/order/cart/save?city=" +
+	// 			city +
+	// 			"&lang=en&client_type=apricart&userid=" + userId
 
-			try {
-				let response = await axios.post(url, data, {
-					headers: headers,
-				})
-				toast.success("Added to Cart")
-				let cartData = {
-					...product,
-				}
-				cartData.qty = qty
+	// 		try {
+	// 			let response = await axios.post(url, data, {
+	// 				headers: headers,
+	// 			})
+	// 			toast.success("Added to Cart")
+	// 			let cartData = {
+	// 				...product,
+	// 			}
+	// 			cartData.qty = qty
 
-				dispatch(addToCart(cartData))
-			} catch (error) {
-				console.log(error?.response)
-				toast.error(error?.response?.data?.message)
-			}
-		} else {
-			let data = {
-				userId: userId,
-				cart: [
-					{
-						sku: sku,
-						qty: qty,
-					},
-				],
-			}
-			let url =
-				base_url_api +
-				"/guest/cart/save?city=" +
-				city +
-				"&lang=en&client_type=apricart"
+	// 			dispatch(addToCart(cartData))
+	// 		} catch (error) {
+	// 			console.log(error?.response)
+	// 			toast.error(error?.response?.data?.message)
+	// 		}
+	// 	} else {
+	// 		let data = {
+	// 			userId: userId,
+	// 			cart: [
+	// 				{
+	// 					sku: sku,
+	// 					qty: qty,
+	// 				},
+	// 			],
+	// 		}
+	// 		let url =
+	// 			base_url_api +
+	// 			"/guest/cart/save?city=" +
+	// 			city +
+	// 			"&lang=en&client_type=apricart"
 
-			try {
-				let response = await axios.post(url, data, {
-					headers: headers,
-				})
-				toast.success("Added to Cart")
-				let cartData = {
-					...product,
-				}
-				cartData.qty = qty
+	// 		try {
+	// 			let response = await axios.post(url, data, {
+	// 				headers: headers,
+	// 			})
+	// 			toast.success("Added to Cart")
+	// 			let cartData = {
+	// 				...product,
+	// 			}
+	// 			cartData.qty = qty
 
-				dispatch(addToCart(cartData))
-			} catch (error) {
-				console.log(error?.response)
-				toast.error(error?.response?.data?.message)
-			}
-		}
-	}
+	// 			dispatch(addToCart(cartData))
+	// 		} catch (error) {
+	// 			console.log(error?.response)
+	// 			toast.error(error?.response?.data?.message)
+	// 		}
+	// 	}
+	// }
 
 	const addToWishlistApi = async () => {
 		let { token, headers, userId } = getGeneralApiParams()
@@ -163,6 +163,8 @@ export default function SingleProduct({ product, isInStock }) {
 			toast.error("Login first")
 		}
 	}
+
+	const { setIsPlaceOrder } = useAddToCartApi(sku, qty, product)
 
 	return (
 		<div>
@@ -209,12 +211,12 @@ export default function SingleProduct({ product, isInStock }) {
 							Rs. {specialPrice}
 						</p>
 					</div>
-				):(
+				) : (
 					<p className="row-span-2 flex items-center text-3xl text-left font-bold text-main-blue">
 						Rs. {currentPrice}
 					</p>
 				)}
-				
+
 				{showAddToCart && (
 					<div
 						className="absolute z-10 bg-white drop-shadow-[0_35px_35px_35px_rgba(0,0,0,0.25)] bottom-[-35px] py-2 row-span-1 flex flex-row items-center justify-between w-full"
@@ -260,7 +262,8 @@ export default function SingleProduct({ product, isInStock }) {
 								<button
 									className="flex items-center h-[40px]"
 									onClick={() => {
-										addToCartApi()
+										// addToCartApi()
+										setIsPlaceOrder(true)
 									}}
 								>
 									<Image
@@ -333,7 +336,7 @@ export default function SingleProduct({ product, isInStock }) {
 							Rs. {specialPrice}
 						</p>
 					</div>
-				):(
+				) : (
 					<p className="row-span-1 text-base text-left font-bold text-main-blue">
 						Rs. {currentPrice}
 					</p>
@@ -385,7 +388,8 @@ export default function SingleProduct({ product, isInStock }) {
 							<button
 								className="h-[40px] px-2 bg-main-yellow font-bold text-xs lg:text-md rounded text-main-blue"
 								onClick={() => {
-									addToCartApi()
+									// addToCartApi()
+									setIsPlaceOrder(true)
 								}}
 							>
 								Add To Cart
