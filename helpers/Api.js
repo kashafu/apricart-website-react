@@ -624,6 +624,64 @@ export const useDecrementQtyApi = (sku, qty, id) => {
 	}
 }
 
+// const updateItemQty = async (sku, qty) => {
+// 	let { token, headers, city, userId } = getGeneralApiParams();
+
+// 	if (token) {
+// 		let url =
+// 			base_url_api +
+// 			"/order/cart/updateqty?city=" +
+// 			city +
+// 			"&lang=en&client_type=apricart&userid=" +
+// 			userId;
+// 		let body = {
+// 			cart: [
+// 				{
+// 					sku: sku,
+// 					qty: qty,
+// 				},
+// 			],
+// 		};
+
+// 		try {
+// 			let response = await axios.post(url, body, {
+// 				headers: headers,
+// 			});
+
+// 			getCartDataApi();
+// 		} catch (error) {
+// 			console.log(error?.response);
+// 			toast.error(error?.response?.data?.message);
+// 		}
+// 	} else {
+// 		let url =
+// 			base_url_api +
+// 			"/guest/cart/updateqty?city=" +
+// 			city +
+// 			"&lang=en&client_type=apricart";
+// 		let body = {
+// 			userId: userId,
+// 			cart: [
+// 				{
+// 					sku: sku,
+// 					qty: qty,
+// 				},
+// 			],
+// 		};
+
+// 		try {
+// 			let response = await axios.post(url, body, {
+// 				headers: headers,
+// 			});
+
+// 			getCartDataApi();
+// 		} catch (error) {
+// 			console.log(error?.response);
+// 			toast.error(error?.response?.data?.message);
+// 		}
+// 	}
+// };
+
 export const useDeleteItemApi = (sku, id) => {
 	const dispatch = useDispatch()
 	const [isLoading, setIsLoading] = useState(true)
