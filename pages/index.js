@@ -8,7 +8,7 @@ import Link from "next/link"
 import HeadTag from "../components/Layout/components/Head/HeadTag"
 import storeBackgroundImage from "../public/assets/images/storeBackground.png"
 import lifestyle from "../public/assets/images/banners/20offHomeAndLifestyle.png"
-import nationals from "../public/assets/images/banners/nationals.jpeg"
+import roohafza from "../public/assets/images/banners/roohAfzabundle.jpeg"
 import ErrorText from "../components/Layout/components/Typography/ErrorText"
 import crossIcon from "../public/assets/svgs/crossIcon.svg"
 import Carousel from "../components/Layout/components/Banner/Carousel"
@@ -137,10 +137,10 @@ export default function Home() {
 					{/* STATIC BANNERS */}
 					<section className="col-span-5 grid grid-rows-2 h-full w-full justify-items-center align-items-center">
 						<div className="relative w-full p-2">
-							<Link href={"/products/search/national"} passHref>
+							<Link href={"/category/juices/1175/special-rooh-afza-deal/APRD-BG10-01"} passHref>
 								<a>
 									<Image
-										src={nationals}
+										src={roohafza}
 										layout={"responsive"}
 										alt="banner"
 									/>
@@ -198,14 +198,14 @@ export default function Home() {
 											<section className="w-full">
 												<Link
 													href={
-														"/category/home-&-lifestyle/1235"
+														"/category/juices/1175/special-rooh-afza-deal/APRD-BG10-01"
 													}
 													passHref
 													className="w-full"
 												>
 													<a className="w-full">
 														<Image
-															src={lifestyle}
+															src={roohafza}
 															layout={
 																"responsive"
 															}
@@ -220,14 +220,14 @@ export default function Home() {
 											<section className="w-full">
 												<Link
 													href={
-														"/products/search/national"
+														"/category/home-&-lifestyle/1235"
 													}
 													passHref
 													className="w-full"
 												>
 													<a className="w-full">
 														<Image
-															src={nationals}
+															src={lifestyle}
 															layout={
 																"responsive"
 															}
