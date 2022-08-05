@@ -27,6 +27,27 @@ import SectionHeading from "../components/Layout/components/Typography/SectionHe
 import InputLabelText from "../components/Layout/components/Typography/InputLabelText"
 import HeadTag from "../components/Layout/components/Head/HeadTag"
 
+const fullUrl = (url) => {
+	let { city, userId, clientType, orderType, prodType } =
+		getGeneralApiParams()
+
+	return (
+		base_url_api +
+		url +
+		"&city=" +
+		city +
+		"&userid=" +
+		userId +
+		"&client_type=" +
+		clientType +
+		"&prod_type=" +
+		prodType +
+		"&order_type=" +
+		orderType +
+		"&lang=en"
+	)
+}
+
 export default function Checkout() {
 	let { token, selectedAddress } = getGeneralApiParams()
 	const reduxCart = useSelector((state) => state.cart)
@@ -81,7 +102,7 @@ export default function Checkout() {
 	}
 
 	const getShippingCartDataApi = async () => {
-		let { headers, city, userId } = getGeneralApiParams()
+		let { headers, city, userId, clientType, prodType, orderType } = getGeneralApiParams()
 		let lat = 0
 		let long = 0
 		let addressId = 0
@@ -92,27 +113,17 @@ export default function Checkout() {
 			address: addressId,
 			showProducts: true,
 			verify: true,
-			prodType: "cus",
+			prodType,
 			day: "",
 			startTime: "",
 			endTime: "",
-			clientType: "apricart",
-			orderType: "delivery",
+			clientType,
+			orderType,
 		}
-		let url =
-			base_url_api +
-			"/order/cart/checkout?city=" +
-			city +
-			"&userid=" +
-			userId +
-			"&client_lat=" +
-			lat +
-			"&client_long=" +
-			long +
-			"&lang=en&client_type=apricart"
+		let url = "/order/cart/checkout?client_lat=" + lat + "&client_long=" + long
 
 		try {
-			let response = await axios.post(url, body, {
+			let response = await axios.post(fullUrl(url), body, {
 				headers: headers,
 			})
 
@@ -125,7 +136,7 @@ export default function Checkout() {
 	}
 
 	const getCheckoutCartDataApi = async () => {
-		let { headers, city, userId } = getGeneralApiParams()
+		let { headers, city, userId, clientType, prodType, orderType } = getGeneralApiParams()
 		let lat = 0
 		let long = 0
 		let addressId = 0
@@ -145,27 +156,17 @@ export default function Checkout() {
 			address: addressId,
 			showProducts: true,
 			verify: true,
-			prodType: "cus",
+			prodType,
 			day: "",
 			startTime: "",
 			endTime: "",
-			clientType: "apricart",
-			orderType: "delivery",
+			clientType,
+			orderType,
 		}
-		let url =
-			base_url_api +
-			"/order/cart/checkout?city=" +
-			city +
-			"&userid=" +
-			userId +
-			"&client_lat=" +
-			lat +
-			"&client_long=" +
-			long +
-			"&lang=en&client_type=apricart"
+		let url = "/order/cart/checkout?client_lat=" + lat + "&client_long=" + long
 
 		try {
-			let response = await axios.post(url, body, {
+			let response = await axios.post(fullUrl(url), body, {
 				headers: headers,
 			})
 
@@ -179,7 +180,7 @@ export default function Checkout() {
 	}
 
 	const getCheckoutCouponCartDataApi = async () => {
-		let { headers, city, userId } = getGeneralApiParams()
+		let { headers, city, userId, orderType, clientType, prodType } = getGeneralApiParams()
 		let lat = 0
 		let long = 0
 		let addressId = 0
@@ -199,27 +200,17 @@ export default function Checkout() {
 			address: addressId,
 			showProducts: true,
 			verify: true,
-			prodType: "cus",
+			prodType,
 			day: "",
 			startTime: "",
 			endTime: "",
-			clientType: "apricart",
-			orderType: "delivery",
+			clientType,
+			orderType,
 		}
-		let url =
-			base_url_api +
-			"/order/cart/checkout?city=" +
-			city +
-			"&userid=" +
-			userId +
-			"&client_lat=" +
-			lat +
-			"&client_long=" +
-			long +
-			"&lang=en&client_type=apricart"
+		let url = "/order/cart/checkout?client_lat=" + lat + "&client_long=" + long
 
 		try {
-			let response = await axios.post(url, body, {
+			let response = await axios.post(fullUrl(url), body, {
 				headers: headers,
 			})
 
@@ -234,11 +225,7 @@ export default function Checkout() {
 
 	const incrementItemQty = async (sku, qty, id) => {
 		let { headers, city, userId } = getGeneralApiParams()
-		let url =
-			base_url_api +
-			"/order/cart/updateqty?city=" +
-			city +
-			"&lang=en&client_type=apricart&userid=" + userId
+		let url = "/order/cart/updateqty?"
 		let body = {
 			cart: [
 				{
@@ -249,7 +236,7 @@ export default function Checkout() {
 		}
 
 		try {
-			let response = await axios.post(url, body, {
+			let response = await axios.post(fullUrl(url), body, {
 				headers: headers,
 			})
 
@@ -266,11 +253,7 @@ export default function Checkout() {
 
 	const decrementItemQty = async (sku, qty, id) => {
 		let { headers, city, userId } = getGeneralApiParams()
-		let url =
-			base_url_api +
-			"/order/cart/updateqty?city=" +
-			city +
-			"&lang=en&client_type=apricart&userid=" + userId
+		let url = "/order/cart/updateqty?"
 		let body = {
 			cart: [
 				{
@@ -281,7 +264,7 @@ export default function Checkout() {
 		}
 
 		try {
-			let response = await axios.post(url, body, {
+			let response = await axios.post(fullUrl(url), body, {
 				headers: headers,
 			})
 
@@ -299,11 +282,7 @@ export default function Checkout() {
 	const deleteItem = (sku, id) => {
 		if (token) {
 			let { city, headers, userId } = getGeneralApiParams()
-			let url =
-				base_url_api +
-				"/order/cart/delete?city=" +
-				city +
-				"&lang=en&client_type=apricart&userid=" + userId
+			let url = "/order/cart/delete?"
 			let body = {
 				cart: [
 					{
@@ -313,7 +292,7 @@ export default function Checkout() {
 			}
 
 			try {
-				let response = axios.delete(url, {
+				let response = axios.delete(fullUrl(url), {
 					headers: headers,
 					data: body,
 				})
@@ -324,11 +303,7 @@ export default function Checkout() {
 			}
 		} else {
 			let { city, userId, headers } = getGeneralApiParams()
-			let url =
-				base_url_api +
-				"/guest/cart/delete?city=" +
-				city +
-				"&lang=en&client_type=apricart&userid=" + userId
+			let url = "/guest/cart/delete?"
 			let body = {
 				userId: userId,
 				cart: [
@@ -339,7 +314,7 @@ export default function Checkout() {
 			}
 
 			try {
-				let response = axios.delete(url, {
+				let response = axios.delete(fullUrl(url), {
 					headers: headers,
 					data: body,
 				})
@@ -359,7 +334,7 @@ export default function Checkout() {
 		in checkout api we have to set verify 'false' and pass the selected address lat long in url params
 	*/
 	const checkoutApi = async () => {
-		let { headers, city, userId } = getGeneralApiParams()
+		let { headers, city, userId, clientType, orderType, prodType } = getGeneralApiParams()
 		let lat = 0
 		let long = 0
 		let addressId = 0
@@ -377,28 +352,18 @@ export default function Checkout() {
 			address: addressId,
 			showProducts: true,
 			verify: false,
-			prodType: "cus",
+			prodType,
 			day: "",
 			startTime: "",
 			endTime: "",
-			clientType: "apricart",
-			orderType: "delivery",
+			clientType,
+			orderType,
 		}
-		let url =
-			base_url_api +
-			"/order/cart/checkout?city=" +
-			city +
-			"&userid=" +
-			userId +
-			"&client_lat=" +
-			lat +
-			"&client_long=" +
-			long +
-			"&lang=en&client_type=apricart"
-
+		let url = "/order/cart/checkout?client_lat=" + lat + "&client_long=" + long
+		
 		toast.info('Processing Order')
 		try {
-			let response = await axios.post(url, body, {
+			let response = await axios.post(fullUrl(url), body, {
 				headers: headers,
 			})
 
@@ -418,51 +383,41 @@ export default function Checkout() {
 	}
 
 	const getCartDataApi = async () => {
-        let { headers, city, userId } = getGeneralApiParams()
-        let lat = 0
-        let long = 0
-        let body = {
-            coupon: "",
-            notes: "",
-            paymentMethod: "cash",
-            address: 0,
-            showProducts: true,
-            verify: true,
-            prodType: "cus",
-            day: "",
-            startTime: "",
-            endTime: "",
-            clientType: "apricart",
-            orderType: "delivery",
-        }
-        let url =
-            base_url_api +
-            "/order/cart/checkout?city=" +
-            city +
-            "&userid=" +
-            userId +
-            "&client_lat=" +
-            lat +
-            "&client_long=" +
-            long +
-            "&lang=en&client_type=apricart"
-
-        try {
-            let response = await axios.post(url, body, {
-                headers: headers,
-            })
-
-            dispatch(initialize(response.data.data.products))
-        } catch (error) {
-            console.log(error)
-        }
-    }
-
-	const getOptionsDataApi = async () => {
-		let url = base_url_api + "/options/all?client_type=apricart"
+		let { headers, city, userId, clientType, orderType, prodType } = getGeneralApiParams()
+		let lat = 0
+		let long = 0
+		let body = {
+			coupon: "",
+			notes: "",
+			paymentMethod: "cash",
+			address: 0,
+			showProducts: true,
+			verify: true,
+			prodType,
+			day: "",
+			startTime: "",
+			endTime: "",
+			clientType,
+			orderType,
+		}
+		let url = "/order/cart/checkout?client_lat=" + lat + "&client_long=" + long
 
 		try {
-			let response = await axios.get(url)
+			let response = await axios.post(fullUrl(url), body, {
+				headers: headers,
+			})
+
+			dispatch(initialize(response.data.data.products))
+		} catch (error) {
+			console.log(error)
+		}
+	}
+
+	const getOptionsDataApi = async () => {
+		let url = "/options/all?"
+
+		try {
+			let response = await axios.get(fullUrl(url))
 
 			response.data.data.forEach((item) => {
 				if (item.key === "shippment_charged_at") {
@@ -492,7 +447,7 @@ export default function Checkout() {
 					className={
 						currentState == "shipping"
 							? { divStyle } +
-							  " bg-main-yellow text-main-blue px-2 rounded-xl"
+							" bg-main-yellow text-main-blue px-2 rounded-xl"
 							: { divStyle }
 					}
 					onClick={() => {
@@ -505,7 +460,7 @@ export default function Checkout() {
 					className={
 						currentState == "payment"
 							? { divStyle } +
-							  " bg-main-yellow text-main-blue px-2 rounded-xl"
+							" bg-main-yellow text-main-blue px-2 rounded-xl"
 							: { divStyle }
 					}
 					onClick={() => {
@@ -526,7 +481,7 @@ export default function Checkout() {
 					className={
 						currentState == "review"
 							? { divStyle } +
-							  " bg-main-yellow text-main-blue px-2 rounded-xl"
+							" bg-main-yellow text-main-blue px-2 rounded-xl"
 							: { divStyle }
 					}
 					onClick={() => {
@@ -584,8 +539,8 @@ export default function Checkout() {
 												productImageUrlThumbnail
 													? productImageUrlThumbnail
 													: productImageUrl
-													? productImageUrl
-													: missingImageIcon
+														? productImageUrl
+														: missingImageIcon
 											}
 											layout={"fill"}
 											alt="thumbnail"
@@ -641,13 +596,13 @@ export default function Checkout() {
 											</button>
 											{specialPrice > 0 ? (
 												<p>x RS. {specialPrice}</p>
-											):(
+											) : (
 												<p>x RS. {currentPrice}</p>
 											)}
 										</div>
 										{specialPrice > 0 ? (
 											<p>x RS. {specialPrice * qty}</p>
-										):(
+										) : (
 											<p>x RS. {currentPrice * qty}</p>
 										)}
 									</div>
@@ -723,8 +678,8 @@ export default function Checkout() {
 												productImageUrlThumbnail
 													? productImageUrlThumbnail
 													: productImageUrl
-													? productImageUrl
-													: missingImageIcon
+														? productImageUrl
+														: missingImageIcon
 											}
 											layout={"fill"}
 											alt="thumbnail"
@@ -768,7 +723,7 @@ export default function Checkout() {
 											</button>
 											{specialPrice > 0 ? (
 												<p>x RS. {specialPrice}</p>
-											):(
+											) : (
 												<p>x RS. {currentPrice}</p>
 											)}
 											<button
@@ -786,7 +741,7 @@ export default function Checkout() {
 										</div>
 										{specialPrice > 0 ? (
 											<p>x RS. {specialPrice * qty}</p>
-										):(
+										) : (
 											<p>x RS. {currentPrice * qty}</p>
 										)}
 									</div>
@@ -855,8 +810,8 @@ export default function Checkout() {
 												productImageUrlThumbnail
 													? productImageUrlThumbnail
 													: productImageUrl
-													? productImageUrl
-													: missingImageIcon
+														? productImageUrl
+														: missingImageIcon
 											}
 											layout={"fill"}
 											alt="thumbnail"
@@ -915,13 +870,13 @@ export default function Checkout() {
 											</button>
 											{specialPrice > 0 ? (
 												<p>x RS. {specialPrice}</p>
-											):(
+											) : (
 												<p>x RS. {currentPrice}</p>
 											)}
 										</div>
 										{specialPrice > 0 ? (
 											<p>x RS. {specialPrice * qty}</p>
-										):(
+										) : (
 											<p>x RS. {currentPrice * qty}</p>
 										)}
 									</div>
@@ -1113,7 +1068,7 @@ export default function Checkout() {
 								<div className="w-2/6">
 									<SubmitButton
 										text={'Apply'}
-										onClick={()=>{
+										onClick={() => {
 											getCheckoutCouponCartDataApi()
 										}}
 									/>
@@ -1125,7 +1080,7 @@ export default function Checkout() {
 							<ErrorText text={checkoutErrorMessage} />
 							<SubmitButton
 								text={"CHECKOUT"}
-								onClick={()=>{
+								onClick={() => {
 									checkoutApi()
 									window.scroll({
 										top: 0,

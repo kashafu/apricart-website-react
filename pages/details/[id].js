@@ -22,7 +22,6 @@ export default function Post({ product }) {
 	const router = useRouter()
 	const { id } = router.query
 
-	const [categories, setCategories] = useState(null)
 	const [inStock, setInStock] = useState(true)
 	const [qty, setQty] = useState(1)
 
@@ -42,25 +41,8 @@ export default function Post({ product }) {
 	}
 
 	useEffect(() => {
-		getCategoriesApi()
 		getInStockApi()
 	}, [])
-
-	const getCategoriesApi = async () => {
-		let { city, headers } = getGeneralApiParams()
-		let url = base_url_api + '/catalog/categories?level=all&client_type=apricart&city=' + city
-
-		try {
-			let response = await axios.get(url,
-				{
-					headers: headers
-				}
-			)
-			setCategories(response.data.data)
-		} catch (error) {
-			console.log(error)
-		}
-	}
 
 	const getInStockApi = async () => {
 		let { city, headers, userId } = getGeneralApiParams()
@@ -183,13 +165,9 @@ export default function Post({ product }) {
 							<div className="container-fluid">
 								<div className="row">
 									<div className="col-12 col-sm-2  col-md-2  col-lg-3  col-xl-2  col-xxl-2">
-										{categories && (
-											<div className="hidden lg:flex">
-												<Categories
-													categories={categories}
-												/>
-											</div>
-										)}
+										<div className="hidden lg:flex">
+											<Categories />
+										</div>
 									</div>
 									<div className="col-12 col-sm-12  col-md-10  col-lg-9  col-xl-10  col-xxl-10 parot">
 										<>

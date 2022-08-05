@@ -29,13 +29,15 @@ export const getGeneralApiParams = () => {
 
     let selectedType = cookies.get('selected-type')
     if(selectedType === 'bulk'){
-        cookies.set('selected-type', 'bulk')
+        cookies.remove('selected-type', {path: '/'})
+        cookies.set('selected-type', 'bulk', {path: '/'})
         selectedType = 'bulk'
         prodType = 'b2b'
         orderType = 'delivery'
     }
     else{
-        cookies.set('selected-type', 'home')
+        cookies.remove('selected-type', {path: '/'})
+        cookies.set('selected-type', 'home', {path: '/'})
         selectedType = 'home'
         prodType = 'cus'
         orderType = 'delivery'
@@ -46,16 +48,16 @@ export const getGeneralApiParams = () => {
     let selectedAddress = cookies.get('selected-address')
     let latitude = 0
     let longitude = 0
-    let userId
+    let userId = cookies.get('guestUserId')
     let headers = {
         'Accept': 'application/json',
         "Content-Type": "application/json",
     }
 
+    let isUserInitialized = cookies.get('user-initialized') ? true : false
+
     // if user is logged in
     if (token) {
-        // userId = cookies.get('cookies-userId')
-        userId = cookies.get('guestUserId')
         // if user has a selected address, use that addresses's latitude longitude
         if(selectedAddress){
             latitude = selectedAddress.mapLat
@@ -69,7 +71,6 @@ export const getGeneralApiParams = () => {
     }
     // if its a guest
     else {
-        userId = cookies.get('guestUserId')
         // if location enabled, use browser latitude and longitude, if not enabled, send 0 by default
         if (!isNode) {
             navigator.geolocation.getCurrentPosition((position) => {
@@ -90,7 +91,8 @@ export const getGeneralApiParams = () => {
         prodType,
         orderType,
         clientType,
-        selectedType
+        selectedType,
+        isUserInitialized
     })
 }
 

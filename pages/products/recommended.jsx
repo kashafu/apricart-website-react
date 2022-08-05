@@ -9,10 +9,8 @@ import { base_url_api } from "../../information.json"
 
 export default function Recommended() {
 	const [products, setProducts] = useState(null)
-	const [categories, setCategories] = useState(null)
 
 	useEffect(() => {
-		getCategoriesApi()
 		getPoductsApi()
 	}, [])
 
@@ -35,25 +33,6 @@ export default function Recommended() {
 		}
 	}
 
-	const getCategoriesApi = async () => {
-		let { city, headers, userId } = getGeneralApiParams()
-		let url =
-			base_url_api +
-			"/catalog/categories?level=all&client_type=apricart&city=" +
-			city +
-			"&userid=" +
-			userId
-
-		try {
-			let response = await axios.get(url, {
-				headers: headers,
-			})
-			setCategories(response.data.data)
-		} catch (error) {
-			console.log(error)
-		}
-	}
-
 	if (!products) {
 		return (
 			<div>
@@ -68,7 +47,7 @@ export default function Recommended() {
 			<div className="grid grid-cols-5 gap-8">
 				{/* CATEGORIES SECTION */}
 				<section className="hidden lg:col-span-1 lg:block">
-					{categories && <Categories categories={categories} />}
+					<Categories />
 				</section>
 				{/* PRODUCTS SECTION */}
 				<section className="col-span-5 lg:col-span-4 space-y-12">

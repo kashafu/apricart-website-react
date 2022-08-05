@@ -4,16 +4,24 @@ import Image from "next/image"
 import upArrowIcon from "../../../../public/assets/svgs/upArrowIcon.svg"
 import downArrowIcon from "../../../../public/assets/svgs/downArrowIcon.svg"
 import toKebabCase from "../../../../helpers/toKebabCase"
+import { useCategoriesApi } from "../../../../helpers/Api"
 
-export default function Categories({ categories }) {
+export default function Categories() {
+	const { isLoading, categories, errorMessage } = useCategoriesApi()
 	const [isSelected, setIsSelected] = useState("")
 
-	if(!categories){
-		return(
+	if (isLoading) {
+		return (
 			<div>
-				<p>
-					Loading categories
-				</p>
+				<p>Loading categories</p>
+			</div>
+		)
+	}
+
+	if (!categories) {
+		return (
+			<div>
+				<p>{errorMessage}</p>
 			</div>
 		)
 	}
@@ -123,7 +131,7 @@ export default function Categories({ categories }) {
 											}
 											width={20}
 											height={20}
-											alt={'icon'}
+											alt={"icon"}
 										/>
 									</button>
 								</div>

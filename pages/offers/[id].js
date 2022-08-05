@@ -12,13 +12,11 @@ export default function OfferId() {
 	const { id } = router.query
 
 	const [offerItems, setOfferItems] = useState(null)
-	const [categories, setCategories] = useState(null)
 
 	useEffect(() => {
 		if(router.isReady){
 			getOfferItemsApi()
 		}
-		getCategoriesApi()
 	}, [router.query])
 
 	const getOfferItemsApi = async () => {
@@ -42,25 +40,6 @@ export default function OfferId() {
 		}
 	}
 
-	const getCategoriesApi = async () => {
-		let { city, headers, userId } = getGeneralApiParams()
-		let url =
-			base_url_api +
-			"/catalog/categories?level=all&client_type=apricart&city=" +
-			city + "&userid=" + userId 
-
-		try {
-			let response = await axios.get(url,
-				{
-					headers: headers
-				}
-			)
-			setCategories(response.data.data)
-		} catch (error) {
-			console.log(error)
-		}
-	}
-
 	if (!offerItems) {
 		return (
 			<div>
@@ -74,11 +53,7 @@ export default function OfferId() {
 	return (
 		<div className="grid grid-cols-5 gap-8">
 			<section className="hidden lg:col-span-1 lg:block">
-				{categories && (
-					<Categories
-						categories={categories}
-					/>
-				)}
+				<Categories />
 			</section>
 			<section className="col-span-5 lg:col-span-4 space-y-12">
 				<ListProducts
