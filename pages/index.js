@@ -178,7 +178,7 @@ export default function Home() {
 					</section>
 					{/* PRODUCTS SECTION */}
 					<section className="col-span-5 lg:col-span-4 space-y-12">
-						{city === "peshawar" && (
+						{/* {city === "peshawar" && (
 							<div>
 								<ErrorText
 									text={
@@ -186,7 +186,7 @@ export default function Home() {
 									}
 								/>
 							</div>
-						)}
+						)} */}
 						{homeData.products.map((product, index) => {
 							let { offerId } = product
 

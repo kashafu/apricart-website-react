@@ -4,9 +4,11 @@ import Image from "next/image"
 import SubmitButton from "../Buttons/SubmitButton"
 import { useState, useEffect } from "react"
 import { getGeneralApiParams } from "../../../../helpers/ApiHelpers"
+import Cookies from "universal-cookie"
 
 const CitySelector = () => {
 	let { city } = getGeneralApiParams()
+	const cookies = new Cookies()
 
 	const [getcity, setcity] = useState(city)
 	const [showPopup, setShowPopup] = useState(false)
@@ -21,7 +23,6 @@ const CitySelector = () => {
 
 	const handleCity = (event) => {
 		setcity(event.target.value)
-		// cookies.set("cities", event.target.value)
 	}
 
 	const togglePopup = () => {
@@ -29,9 +30,8 @@ const CitySelector = () => {
 	}
 
 	const closeButton = () => {
-		// setcity(e.target.value)
 		cookies.set("cities", getcity)
-		setIsOpen(!isOpen)
+		setShowPopup(!showPopup)
 		window.location.reload()
 	}
 
