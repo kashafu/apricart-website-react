@@ -4,7 +4,7 @@ import { useState, useEffect } from "react"
 import { base_url_api } from "../information.json"
 import { getGeneralApiParams } from "./ApiHelpers"
 import { useRouter } from "next/router"
-import { addToCart } from '../redux/cart.slice'
+import { addToCart, decrementQuantity, incrementQuantity, removeFromCart } from '../redux/cart.slice'
 import { toast } from 'react-toastify'
 import Cookies from "universal-cookie"
 
@@ -515,5 +515,315 @@ export const useCheckoutApi = (checkoutData, checkoutAddress) => {
 		response,
 		errorResponse,
 		setIsCheckout
+	}
+}
+
+export const useIncrementQtyApi = (sku, qty, id) => {
+	const dispatch = useDispatch()
+	const [isLoading, setIsLoading] = useState(true)
+	const [response, setResponse] = useState(null)
+	const [errorResponse, setErrorResponse] = useState(null)
+	const [errorMessage, setErrorMessage] = useState("")
+	const [isIncrement, setIsIncrement] = useState(false)
+
+	useEffect(() => {
+		if (isIncrement) {
+			callApi()
+		}
+	}, [isIncrement])
+
+	const callApi = async () => {
+		setIsLoading(true)
+		
+		let { headers } = getGeneralApiParams()
+		let url = "/order/cart/updateqty?"
+		let body = {
+			cart: [
+				{
+					sku: sku,
+					qty: qty + 1,
+				},
+			],
+		}
+
+		try {
+			let apiResponse = await axios.post(fullUrl(url), body, {
+				headers: headers,
+			})
+			setResponse(apiResponse)
+			dispatch(incrementQuantity(id))
+		} catch (error) {
+			setErrorResponse(error?.response)
+			setErrorMessage(error?.response?.data?.message)
+			toast.error(error?.response?.data?.message)
+		} finally {
+			setIsLoading(false)
+			setIsIncrement(false)
+		}
+	}
+
+	return {
+		isLoading,
+		errorMessage,
+		response,
+		errorResponse,
+		setIsIncrement
+	}
+}
+
+export const useDecrementQtyApi = (sku, qty, id) => {
+	const dispatch = useDispatch()
+	const [isLoading, setIsLoading] = useState(true)
+	const [response, setResponse] = useState(null)
+	const [errorResponse, setErrorResponse] = useState(null)
+	const [errorMessage, setErrorMessage] = useState("")
+	const [isDecrement, setIsDecrement] = useState(false)
+
+	useEffect(() => {
+		if (isDecrement) {
+			callApi()
+		}
+	}, [isDecrement])
+
+	const callApi = async () => {
+		setIsLoading(true)
+		
+		let { headers } = getGeneralApiParams()
+		let url = "/order/cart/updateqty?"
+		let body = {
+			cart: [
+				{
+					sku: sku,
+					qty: qty - 1,
+				},
+			],
+		}
+
+		try {
+			let apiResponse = await axios.post(fullUrl(url), body, {
+				headers: headers,
+			})
+			setResponse(apiResponse)
+			dispatch(decrementQuantity(id))
+		} catch (error) {
+			setErrorResponse(error?.response)
+			setErrorMessage(error?.response?.data?.message)
+			toast.error(error?.response?.data?.message)
+		} finally {
+			setIsLoading(false)
+			setIsDecrement(false)
+		}
+	}
+
+	return {
+		isLoading,
+		errorMessage,
+		response,
+		errorResponse,
+		setIsDecrement
+	}
+}
+
+export const useDeleteItemApi = (sku, id) => {
+	const dispatch = useDispatch()
+	const [isLoading, setIsLoading] = useState(true)
+	const [response, setResponse] = useState(null)
+	const [errorResponse, setErrorResponse] = useState(null)
+	const [errorMessage, setErrorMessage] = useState("")
+	const [isDelete, setIsDelete] = useState(false)
+
+	useEffect(() => {
+		if (isDelete) {
+			callApi()
+		}
+	}, [isDelete])
+
+	const callApi = async () => {
+		setIsLoading(true)
+		
+		let { headers, token, userId } = getGeneralApiParams()
+		let url
+		let body
+
+		if(token){
+			url = "/order/cart/delete?"
+			body = {
+				cart: [
+					{
+						sku: sku,
+					},
+				],
+			}
+		} else{
+			url = "/guest/cart/delete?"
+			body = {
+				userId,
+				cart: [
+					{
+						sku: sku,
+					},
+				],
+			}
+		}
+
+		try {
+			let apiResponse = await axios.delete(fullUrl(url), {
+				headers: headers,
+				data: body
+			})
+			setResponse(apiResponse)
+			dispatch(removeFromCart(id))
+		} catch (error) {
+			setErrorResponse(error?.response)
+			setErrorMessage(error?.response?.data?.message)
+			toast.error(error?.response?.data?.message)
+		} finally {
+			setIsLoading(false)
+			setIsDelete(false)
+		}
+	}
+
+	return {
+		isLoading,
+		errorMessage,
+		response,
+		errorResponse,
+		setIsDelete
+	}
+}
+
+export const useInitialCartDataApi = (checkoutData) => {
+	const [isLoading, setIsLoading] = useState(true)
+	const [response, setResponse] = useState(null)
+	const [initialCartData, setInitialCartData] = useState(null)
+	const [errorResponse, setErrorResponse] = useState(null)
+	const [errorMessage, setErrorMessage] = useState("")
+	const [isGetInitialCartData, setIsGetInitialCartData] = useState(false)
+
+	let { headers, clientType, prodType, orderType } = getGeneralApiParams()
+	let lat = 0
+	let long = 0
+	let addressId = 0
+	let body = {
+		...checkoutData,
+		address: addressId,
+		showProducts: true,
+		verify: true,
+		prodType: prodType,
+		day: "",
+		startTime: "",
+		endTime: "",
+		clientType: clientType,
+		orderType: orderType,
+	}
+	let url = "/order/cart/checkout?client_lat=" +
+		lat +
+		"&client_long=" +
+		long
+
+	useEffect(() => {
+		if (isGetInitialCartData) {
+			callApi()
+		}
+	}, [isGetInitialCartData])
+
+	const callApi = async () => {
+		setIsLoading(true)
+		try {
+			let apiResponse = await axios.post(fullUrl(url), body, {
+				headers: headers,
+			})
+			setResponse(apiResponse)
+			setInitialCartData(apiResponse.data.data)
+		} catch (error) {
+			setErrorResponse(error?.response)
+			setErrorMessage(error?.response?.data?.message)
+			toast.error(error?.response?.data?.message)
+		} finally {
+			setIsLoading(false)
+			setIsGetInitialCartData(false)
+		}
+	}
+
+	return {
+		isLoading,
+		errorMessage,
+		response,
+		errorResponse,
+		setIsGetInitialCartData,
+		initialCartData
+	}
+}
+
+export const useCartDataApi = (checkoutData, checkoutAddress) => {
+	const [isLoading, setIsLoading] = useState(true)
+	const [response, setResponse] = useState(null)
+	const [errorResponse, setErrorResponse] = useState(null)
+	const [cartData, setCartData] = useState(null)
+	const [errorMessage, setErrorMessage] = useState("")
+	const [isGetCartData, setIsGetCartData] = useState(false)
+
+	let { headers, clientType, prodType, orderType } = getGeneralApiParams()
+	let lat = 0
+	let long = 0
+	let addressId = 0
+	if (typeof checkoutAddress === "object") {
+		lat = checkoutAddress ? checkoutAddress.mapLat : "0"
+		long = checkoutAddress ? checkoutAddress.mapLong : "0"
+		addressId = checkoutAddress ? checkoutAddress.id : ""
+	} else {
+		lat = checkoutAddress ? JSON.parse(checkoutAddress).mapLat : "0"
+		long = checkoutAddress ? JSON.parse(checkoutAddress).mapLong : "0"
+		addressId = checkoutAddress ? JSON.parse(checkoutAddress).id : ""
+	}
+	let body = {
+		...checkoutData,
+		address: addressId,
+		showProducts: true,
+		verify: true,
+		prodType: prodType,
+		day: "",
+		startTime: "",
+		endTime: "",
+		clientType: clientType,
+		orderType: orderType,
+	}
+	let url = "/order/cart/checkout?client_lat=" +
+		lat +
+		"&client_long=" +
+		long
+
+	useEffect(() => {
+		if (isGetCartData) {
+			callApi()
+		}
+	}, [isGetCartData])
+
+	const callApi = async () => {
+		setIsLoading(true)
+		toast.info('Processing Order')
+		try {
+			let apiResponse = await axios.post(fullUrl(url), body, {
+				headers: headers,
+			})
+			setResponse(apiResponse)
+			setCartData(apiResponse.data.data)
+		} catch (error) {
+			setErrorResponse(error?.response)
+			setErrorMessage(error?.response?.data?.message)
+			toast.error(error?.response?.data?.message)
+		} finally {
+			setIsLoading(false)
+			setIsGetCartData(false)
+		}
+	}
+
+	return {
+		isLoading,
+		errorMessage,
+		response,
+		errorResponse,
+		setIsGetCartData,
+		cartData
 	}
 }
