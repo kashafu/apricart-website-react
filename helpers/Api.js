@@ -178,6 +178,7 @@ export const useHomeApi = () => {
 	const [isLoading, setIsLoading] = useState(true)
 	const [homeData, setHomeData] = useState(null)
 	const [categories, setCategories] = useState(null)
+	const [banners, setBanners] = useState(null)
 	const [isPopupAd, setIsPopupAd] = useState(false)
 	const [response, setResponse] = useState(null)
 	const [errorResponse, setErrorResponse] = useState(null)
@@ -205,6 +206,7 @@ export const useHomeApi = () => {
 			setResponse(apiResponse)
 			setHomeData(apiResponse.data.data)
 			setCategories(apiResponse.data.data.categories)
+			setBanners(apiResponse.data.data.banners)
 			setIsPopupAd(apiResponse.data.data.dialog)
 		} catch (error) {
 			setErrorResponse(error?.response)
@@ -222,6 +224,7 @@ export const useHomeApi = () => {
 		errorResponse,
 		isPopupAd,
 		categories,
+		banners
 	}
 }
 
