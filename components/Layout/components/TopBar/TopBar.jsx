@@ -11,7 +11,7 @@ import { base_url_api } from "../../../../information.json"
 
 // IMAGES
 import phonePNG from "../../../../public/assets/images/phone.png"
-import logoPNG from "../../../../public/assets/images/logo.png"
+import logoPNG from "../../../../public/assets/images/logo-white.png"
 
 export default function Layout() {
 	const cookies = new Cookies()
