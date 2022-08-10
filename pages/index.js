@@ -118,9 +118,7 @@ export default function Home() {
 				</div>
 			)}
 			<div className="space-y-8">
-				{router.pathname === "/" && (
-					<TypeCardSelector />
-				)}
+				<TypeCardSelector />
 				{/* BANNERS SECTION hidden on phone */}
 				<section className="hidden lg:relative lg:w-full lg:aspect-[16/6] lg:grid grid-cols-12 gap-2 p-2 items-center">
 					{/* BACKGROUND IMAGE */}
