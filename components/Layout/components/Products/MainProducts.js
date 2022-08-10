@@ -17,24 +17,36 @@ export default function MainProducts({ section }) {
 	}
 
 	return (
-		<section key={name} className="space-y-4 px-2">
-			{/* <div className="lg:hidden relative w-full h-[90px] md:h-[150px] lg:h-[250px] rounded-xl overflow-hidden">
-                <Link href="/offers/[id]"
-                    as={
-                        "/offers/" + offerId
-                    }
-                    passHref
-                    key={offerId}
-                >
-                    <a>
-                        <Image
-                            src={bannerImageWeb}
-                            layout={'fill'}
-                            alt={"banner image"}
-                        />
-                    </a>
-                </Link>
-            </div> */}
+		<section key={name} className="space-y-4 px-2 py-4">
+			<div className="w-full rounded-xl overflow-hidden">
+				{offerId == 0 ? (
+					<Image
+						src={bannerImageWeb}
+						layout={'responsive'}
+						alt={"banner image"}
+						width={'100%'}
+						height={20}
+					/>
+				) : (
+					<Link href="/offers/[id]"
+						as={
+							"/offers/" + offerId
+						}
+						passHref
+						key={offerId}
+					>
+						<a className="w-full">
+							<Image
+								src={bannerImageWeb}
+								layout={'responsive'}
+								alt={"banner image"}
+								width={'100%'}
+								height={20}
+							/>
+						</a>
+					</Link>
+				)}
+			</div>
 			<div className="w-full border-b border-main-blue-100 py-4">
 				<div className="flex flex-row items-stretch w-full justify-between">
 					<p className="text-2xl text-main-blue font-bold">
@@ -49,7 +61,7 @@ export default function MainProducts({ section }) {
 							</a>
 						</Link>
 					)}
-                    {identifier === "recommended" && (
+					{identifier === "recommended" && (
 						<Link href={"/products/recommended"} passHref>
 							<a className="bg-main-blue px-4 rounded-xl flex items-center">
 								<p className="text-white font-bold text-md lg:text-lg">

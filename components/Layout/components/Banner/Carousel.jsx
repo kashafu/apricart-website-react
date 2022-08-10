@@ -15,35 +15,6 @@ const Carousel = () => {
         slidesToScroll: 1,
         autoplaySpeed: 5000,
         className: 'h-full'
-        // cssEase: "linear",
-        // responsive: [
-        //     {
-        //         breakpoint: 1024,
-        //         settings: {
-        //             slidesToShow: 3,
-        //             slidesToScroll: 1,
-        //             infinite: true,
-        //             dots: false,
-        //         },
-        //     },
-        //     {
-        //         breakpoint: 600,
-        //         settings: {
-        //             slidesToShow: 2,
-        //             slidesToScroll: 1,
-        //             initialSlide: 2,
-        //             dots: false,
-        //         },
-        //     },
-        //     {
-        //         breakpoint: 480,
-        //         settings: {
-        //             slidesToShow: 2,
-        //             slidesToScroll: 1,
-        //             dots: false,
-        //         },
-        //     },
-        // ],
     }
 
     return(
