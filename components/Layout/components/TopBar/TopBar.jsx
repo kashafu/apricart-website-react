@@ -28,6 +28,7 @@ export default function TopBar() {
 						<Link href={"/"} passHref>
 							<button className="flex">
 								<Image
+								className=""
 									src={logoPNG}
 									alt={"logo"}
 								/>

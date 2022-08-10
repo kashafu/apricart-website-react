@@ -5,6 +5,7 @@ import Footer from "./components/Footer/Footer"
 import Copyrights from "./components/Footer/Copyrights"
 import { useRouter } from "next/router"
 import TypeCardSelector from "./components/Cards/TypeCardSelector"
+import FooterNew from "./components/Footer/FooterNew"
 export const AppContext = createContext()
 
 export default function Layout(props) {
@@ -37,7 +38,7 @@ export default function Layout(props) {
 					router.pathname === "/faqs-mobile"
 				) && (
 					<div className="mt-auto">
-						<Footer />
+						<FooterNew />
 						<Copyrights />
 					</div>
 				)}
