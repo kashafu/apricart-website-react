@@ -121,8 +121,8 @@ export default function CategoryProducts() {
 		)
 	}
 
-	if(!router.isReady){
-		return(
+	if (!router.isReady) {
+		return (
 			<></>
 		)
 	}
