@@ -5,9 +5,12 @@ import SubmitButton from "../Buttons/SubmitButton"
 import { useState, useEffect } from "react"
 import { getGeneralApiParams } from "../../../../helpers/ApiHelpers"
 import Cookies from "universal-cookie"
+import { useDispatch } from "react-redux"
+import { updateCity } from "../../../../redux/general.slice"
 
 const CitySelector = () => {
 	let { city } = getGeneralApiParams()
+	const dispatch = useDispatch()
 	const cookies = new Cookies()
 
 	const [getcity, setcity] = useState(city)
@@ -17,6 +20,7 @@ const CitySelector = () => {
 		if (city == null) {
 			setcity("karachi")
 			cookies.set("cities", "karachi")
+			dispatch(updateCity(karachi))
 			getLocation()
 		}
 	}, [])
@@ -31,8 +35,9 @@ const CitySelector = () => {
 
 	const closeButton = () => {
 		cookies.set("cities", getcity)
+		dispatch(updateCity(getcity))
 		setShowPopup(!showPopup)
-		window.location.reload()
+		// window.location.reload()
 	}
 
 	const getLocation = () => {
@@ -153,7 +158,10 @@ const CitySelector = () => {
 							</div>
 						</div>
 					}
-					handleClose={togglePopup}
+					handleClose={()=>{
+						closeButton()
+						togglePopup()
+					}}
 				/>
 			)}
 		</div>

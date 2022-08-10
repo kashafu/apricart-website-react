@@ -5,26 +5,27 @@ import { getGeneralApiParams } from "../../../../helpers/ApiHelpers"
 import { useEffect, useState } from "react"
 import { useDispatch } from "react-redux"
 import { updateSelectedType } from "../../../../redux/general.slice"
+import { useSelector } from "react-redux"
 
 const TypeCardSelector = () => {
     const dispatch = useDispatch()
-    const { city } = getGeneralApiParams()
+    const citySelector = useSelector((state) => state.general.city)
     const [isDisabled, setIsDisabled] = useState(false)
 
     useEffect(() => {
-        if (city === 'peshawar') {
+        if (citySelector === 'peshawar') {
             setIsDisabled(true)
             dispatch(updateSelectedType('bulk'))
         }
-        else{
+        else {
             setIsDisabled(false)
         }
-    }, [city])
+    }, [citySelector])
 
     return (
         <div className=" grid grid-cols-3 lg:gap-12 lg:px-28 gap-2 ">
-            <HomeDeliveryCard isDisabled={isDisabled}/>
-            <ClickAndCollectCard isDisabled={isDisabled}/>
+            <HomeDeliveryCard isDisabled={isDisabled} />
+            <ClickAndCollectCard isDisabled={isDisabled} />
             <BulkBuyCard />
         </div>
     )
