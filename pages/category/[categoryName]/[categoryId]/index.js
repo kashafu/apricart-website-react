@@ -44,7 +44,7 @@ export default function CategoryProducts() {
 							return (
 								<div
 									key={id}
-									className="border rounded-xl shadow-sm px-4 border-main-blue border-2"
+									className="rounded-xl shadow-sm px-4 border-main-blue border-2"
 								>
 									<Link
 										href="/category/[categoryName]/[id]"
