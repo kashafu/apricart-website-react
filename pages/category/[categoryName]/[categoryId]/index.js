@@ -44,7 +44,7 @@ export default function CategoryProducts() {
 							return (
 								<div
 									key={id}
-									className="border rounded-xl shadow-sm px-4 bg-main-blue"
+									className="border rounded-xl shadow-sm px-4 border-main-blue border-2"
 								>
 									<Link
 										href="/category/[categoryName]/[id]"
@@ -57,7 +57,7 @@ export default function CategoryProducts() {
 										passHref
 									>
 										<a className="flex flex-col h-full w-full items-center">
-											<p className="font-lato text-center text-white text-lg font-bold py-2 truncate">
+											<p className="font-lato text-center text-main-blue text-lg font-bold py-2 truncate">
 												{name}
 											</p>
 										</a>
