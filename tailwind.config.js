@@ -13,8 +13,8 @@ module.exports = {
 		extend: {
 			keyframes: {
 				dangle: {
-					"0%, 100%": { transform: "rotate(-9deg)", },
-					"50%": { transform: "rotate(9deg)" },
+					"0%, 100%": { transform: "rotate(-3deg)", },
+					"50%": { transform: "rotate(3deg)" },
 				},
 			},
 			animation: {

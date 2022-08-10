@@ -56,9 +56,9 @@ const FooterNew = () => {
 				</div>
 				{/* Divider Cart */}
 				<div className="flex divide-x-2 divide-x-black">
-                    <div className="w-1/2 ">
-					<div className="w-40 h-48 sm:w-80 sm:h-80 mx-4 sm:mx-0 relative animate-dangle ">
-						<Image src={cartOnly} layout="fill" className="rotate-45 " />
+                    <div className="w-1/2 sm:w-full flex justify-center items-center animate-dangle">
+					<div className="w-20 h-24 mx-4 sm:mx-0 relative">
+						<Image src={cartOnly} layout="fill" />
 					</div>
                     </div>
 					{/* About Us Mobile */}
@@ -130,11 +130,11 @@ const FooterNew = () => {
 				</div>
 			</div>
 
-			<div className="flex sm:flex-col">
+			<div className="flex flex-col">
 				<div className=" text-center text-main-blue font-lato p-4 flex flex-col ">
 					<div>
 						<h2 className="mb-2 text-2xl sm:text-3xl md:4xl font-lato">
-							Install Our App
+							Install Apricart
 						</h2>
 						<div className="flex justify-center items-center">
 							<div className="px-2">
