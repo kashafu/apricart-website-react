@@ -22,26 +22,23 @@ export default function Header() {
 		cookies.set("guestUserId", "desktopuser_" + d.getTime(), 30)
 	}
 
-	if(!cookies.get("selected-type")){
-		cookies.remove('selected-type', {path: '/'})
-		cookies.set('selected-type', 'home', {path: '/'})
+	if (!cookies.get("selected-type")) {
+		cookies.remove('selected-type', { path: '/' })
+		cookies.set('selected-type', 'home', { path: '/' })
 	}
 
-useEffect(() => {
-	const onScroll = () => setOffset(window.pageYOffset);
-	// clean up code
-	window.removeEventListener('scroll', onScroll);
-	window.addEventListener('scroll', onScroll, { passive: true });
-	return () => window.removeEventListener('scroll', onScroll);
-}, [])
+	useEffect(() => {
+		const onScroll = () => setOffset(window.pageYOffset);
+		// clean up code
+		window.removeEventListener('scroll', onScroll);
+		window.addEventListener('scroll', onScroll, { passive: true });
+		return () => window.removeEventListener('scroll', onScroll);
+	}, [])
 
 
 	return (
 		<div className="flex flex-col bg-white py-2 md:py-8 space-y-2 border-b relative">
-			
-		{/* <div className="flex flex-col bg-white px-2 md:px-12 py-2 md:py-8 space-y-2 border-b relative"> */}
-			<div className={offset>=20 ?" flex flex-row py-2 transition-all fixed top-0 duration-200 ease-linear z-20 px-2 bg-white  w-full items-center md:py-2":"flex flex-row py-2 transition-all fixed top-[50px] z-20 px-2 bg-white w-full items-center md:py-2 duration-300 ease-linear"}>
-			{/* <div className="flex flex-row fixed z-20 bg-white w-full items-center space-x-2 md:space-x-4"> */}
+			<div className={offset >= 20 ? " flex flex-row py-2 transition-all fixed top-0 duration-100 ease-linear z-20 px-2 bg-white  w-full items-center md:py-2" : "flex flex-row py-2 transition-all fixed top-[50px] z-20 px-2 bg-white w-full items-center md:py-2 duration-300 ease-linear"}>
 				<div className="lg:hidden pr-2">
 					<HamburgerMenu />
 				</div>
@@ -92,12 +89,6 @@ useEffect(() => {
 					)}
 				</div>
 			</div>
-
-			{/* {router.pathname === "/" && (
-				<div className="pt-[3rem] lg:pt-[10rem] md:pt-[5rem] px-2">
-				<TypeCardSelector />
-				</div>
-			)} */}
 		</div>
 	)
 }

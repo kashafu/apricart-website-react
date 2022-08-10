@@ -13,6 +13,7 @@ import ErrorText from "../components/Layout/components/Typography/ErrorText"
 import crossIcon from "../public/assets/svgs/crossIcon.svg"
 import Carousel from "../components/Layout/components/Banner/Carousel"
 import { useHomeApi } from "../helpers/Api"
+import TypeCardSelector from "../components/Layout/components/Cards/TypeCardSelector"
 
 export default function Home() {
 	const router = useRouter()
@@ -116,7 +117,10 @@ export default function Home() {
 					</div>
 				</div>
 			)}
-			<div className="space-y-8 -mt-[1.5rem] lg:-mt-[5rem] md:pt-0">
+			<div className="space-y-8">
+				{router.pathname === "/" && (
+					<TypeCardSelector />
+				)}
 				{/* BANNERS SECTION hidden on phone */}
 				<section className="hidden lg:relative lg:w-full lg:aspect-[16/6] lg:grid grid-cols-12 gap-2 p-2 items-center">
 					{/* BACKGROUND IMAGE */}
