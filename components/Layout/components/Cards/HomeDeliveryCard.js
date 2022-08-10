@@ -4,25 +4,31 @@ import { useDispatch, useSelector } from 'react-redux'
 import { updateSelectedType } from '../../../../redux/general.slice'
 import { useEffect, useState } from 'react'
 
-export default function HomeDeliveryCard(){
+export default function HomeDeliveryCard({ isDisabled }) {
     const dispatch = useDispatch()
 
     const [style, setStlye] = useState('')
     const [pStyle, setPStyle] = useState('')
+    const [disabledStyle, setDisabledStyle] = useState('')
     const selectedTypeSelector = useSelector((state) => state.general.selectedType)
 
-    useEffect(()=>{
+    useEffect(() => {
         setStlye(selectedTypeSelector === 'home' ? 'bg-main-green' : '')
         setPStyle(selectedTypeSelector === 'home' ? 'text-white' : 'text-main-blue')
-    },[selectedTypeSelector])
+    }, [selectedTypeSelector])
 
-    return(
-        <button className={[style] + ' relative rounded-lg shadow flex flex-col grow p-2 items-center'}
-            onClick={()=>{
+    useEffect(() => {
+        setDisabledStyle(isDisabled ? 'bg-main-grey grayscale' : '')
+    }, [isDisabled])
+
+    return (
+        <button className={[style] + ' relative rounded-lg shadow flex flex-col grow p-2 items-center ' + [disabledStyle]}
+            onClick={() => {
                 dispatch(updateSelectedType('home'))
             }}
+            disabled={isDisabled}
         >
-            <div className={[pStyle] + ' hidden absolute self-start font-bold lg:inline text-2xl xl:text-3xl 2xl:text-4xl'}>
+            <div className={[pStyle] + ' z-10 hidden absolute self-start font-bold lg:inline text-2xl xl:text-3xl 2xl:text-4xl'}>
                 <p>
                     HOME
                 </p>

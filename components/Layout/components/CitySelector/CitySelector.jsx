@@ -143,9 +143,7 @@ const CitySelector = () => {
 								</div>
 							</div>
 							<p className="text-main-blue font-bold text-sm">
-								Home Delivery is currently unavailable in
-								Peshawar, please install our app for Bulk Buy in
-								Peshawar
+								Only Bulk Buy is available in Peshawar
 							</p>
 							<div className="w-3/4">
 								<SubmitButton
