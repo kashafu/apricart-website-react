@@ -122,10 +122,10 @@ export default function Home() {
 				<section className="hidden lg:block lg:col-span-1">
 					<Categories />
 				</section>
-				<section className="space-y-8 lg:col-span-4">
+				<section className="space-y-8 col-span-5 lg:col-span-4">
 					<TypeCardSelector />
 					{/* BANNERS SECTION hidden on phone */}
-					<section className="hidden lg:relative lg:w-full lg:aspect-[16/6] lg:grid grid-cols-12 gap-2 p-2 items-center">
+					<section className="hidden lg:relative lg:w-full lg:aspect-[16/6] lg:grid grid-cols-12 p-2 items-center">
 						{/* BACKGROUND IMAGE */}
 						<div className="absolute w-full h-full blur-lg">
 							<Image
@@ -142,7 +142,7 @@ export default function Home() {
 						</section>
 						{/* STATIC BANNERS */}
 						<section className="col-span-5 grid grid-rows-2 h-full w-full justify-items-center align-items-center">
-							<div className="relative w-full p-2">
+							<div className="relative w-full self-end">
 								<Link href={"/category/juices/1175/special-rooh-afza-deal/APRD-BG10-01"} passHref>
 									<a>
 										<Image
@@ -153,7 +153,7 @@ export default function Home() {
 									</a>
 								</Link>
 							</div>
-							<div className="relative w-full p-2">
+							<div className="relative w-full self-start">
 								<Link
 									href={"/category/home-&-lifestyle/1235"}
 									passHref
@@ -170,7 +170,7 @@ export default function Home() {
 						</section>
 					</section>
 					{/* BANNERS SECTION hidden on desktop */}
-					<section className="lg:hidden w-full items-center mt-0">
+					<section className="lg:hidden w-full items-center mt-4">
 						{/* MAIN BANNER */}
 						<section className="w-full">
 							<Carousel />
