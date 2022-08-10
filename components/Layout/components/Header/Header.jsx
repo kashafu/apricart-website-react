@@ -45,7 +45,7 @@ useEffect(() => {
 				<div className="lg:hidden pr-2">
 					<HamburgerMenu />
 				</div>
-				<div className="hidden lg:block lg:w-[200px]">
+				<div className="hidden lg:block lg:w-[200px] px-4">
 					<Logo />
 				</div>
 				<div className="grow">

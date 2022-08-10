@@ -56,6 +56,7 @@ export default function Layout() {
 						<Link href={"/"} passHref>
 							<button className="flex">
 								<Image
+								className=""
 									src={logoPNG}
 									alt={"logo"}
 									// layout={'fill'}
