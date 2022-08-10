@@ -117,148 +117,140 @@ export default function Home() {
 					</div>
 				</div>
 			)}
-			<div className="space-y-8">
-				<TypeCardSelector />
-				{/* BANNERS SECTION hidden on phone */}
-				<section className="hidden lg:relative lg:w-full lg:aspect-[16/6] lg:grid grid-cols-12 gap-2 p-2 items-center">
-					{/* BACKGROUND IMAGE */}
-					<div className="absolute w-full h-full blur-lg">
-						<Image
-							src={storeBackgroundImage}
-							layout={"responsive"}
-							alt="banner"
-						/>
-					</div>
-					{/* SCROLLING BANNER */}
-					<section className="col-span-7">
+			<div className="grid grid-cols-5 gap-6">
+				{/* CATEGORIES SECTION */}
+				<section className="hidden lg:block lg:col-span-1">
+					<Categories />
+				</section>
+				<section className="space-y-8 lg:col-span-4">
+					<TypeCardSelector />
+					{/* BANNERS SECTION hidden on phone */}
+					<section className="hidden lg:relative lg:w-full lg:aspect-[16/6] lg:grid grid-cols-12 gap-2 p-2 items-center">
+						{/* BACKGROUND IMAGE */}
+						<div className="absolute w-full h-full blur-lg">
+							<Image
+								src={storeBackgroundImage}
+								layout={"responsive"}
+								alt="banner"
+							/>
+						</div>
+						{/* SCROLLING BANNER */}
+						<section className="col-span-7">
+							<section className="w-full">
+								<Carousel />
+							</section>
+						</section>
+						{/* STATIC BANNERS */}
+						<section className="col-span-5 grid grid-rows-2 h-full w-full justify-items-center align-items-center">
+							<div className="relative w-full p-2">
+								<Link href={"/category/juices/1175/special-rooh-afza-deal/APRD-BG10-01"} passHref>
+									<a>
+										<Image
+											src={roohafza}
+											layout={"responsive"}
+											alt="banner"
+										/>
+									</a>
+								</Link>
+							</div>
+							<div className="relative w-full p-2">
+								<Link
+									href={"/category/home-&-lifestyle/1235"}
+									passHref
+								>
+									<a>
+										<Image
+											src={lifestyle}
+											layout={"responsive"}
+											alt="banner"
+										/>
+									</a>
+								</Link>
+							</div>
+						</section>
+					</section>
+					{/* BANNERS SECTION hidden on desktop */}
+					<section className="lg:hidden w-full items-center mt-0">
+						{/* MAIN BANNER */}
 						<section className="w-full">
 							<Carousel />
 						</section>
 					</section>
-					{/* STATIC BANNERS */}
-					<section className="col-span-5 grid grid-rows-2 h-full w-full justify-items-center align-items-center">
-						<div className="relative w-full p-2">
-							<Link href={"/category/juices/1175/special-rooh-afza-deal/APRD-BG10-01"} passHref>
-								<a>
-									<Image
-										src={roohafza}
-										layout={"responsive"}
-										alt="banner"
-									/>
-								</a>
-							</Link>
-						</div>
-						<div className="relative w-full p-2">
-							<Link
-								href={"/category/home-&-lifestyle/1235"}
-								passHref
-							>
-								<a>
-									<Image
-										src={lifestyle}
-										layout={"responsive"}
-										alt="banner"
-									/>
-								</a>
-							</Link>
-						</div>
-					</section>
-				</section>
-				{/* BANNERS SECTION hidden on desktop */}
-				<section className="lg:hidden w-full items-center mt-0">
-					{/* MAIN BANNER */}
-					<section className="w-full">
-						<Carousel />
-					</section>
-				</section>
-				<div className="grid grid-cols-5 gap-12">
-					{/* CATEGORIES SECTION */}
-					<section className="hidden lg:col-span-1 lg:block">
-						{/* {categories && <Categories categories={categories} />} */}
-						<Categories />
-					</section>
-					{/* PRODUCTS SECTION */}
-					<section className="col-span-5 lg:col-span-4 space-y-12">
-						{/* {city === "peshawar" && (
-							<div>
-								<ErrorText
-									text={
-										"HOME DELIVERY IS CURRENTLY UNAVAILABLE IN PESHAWAR, PLEASE CHANGE CITY TO CONTINUE OR USE BULK BUY"
-									}
-								/>
-							</div>
-						)} */}
-						{homeData.products.map((product, index) => {
-							let { offerId } = product
+					<div className="">
+						{/* PRODUCTS SECTION */}
+						<section className="space-y-12">
+							{homeData.products.map((product, index) => {
+								let { offerId } = product
 
-							return (
-								<section key={offerId}>
-									{/* STATIC BANNERS for mobile */}
-									{index % 2 == 0 ? (
-										<section className="lg:hidden relative space-y-6 items-center">
-											<section className="w-full">
-												<Link
-													href={
-														"/category/juices/1175/special-rooh-afza-deal/APRD-BG10-01"
-													}
-													passHref
-													className="w-full"
-												>
-													<a className="w-full">
-														<Image
-															src={roohafza}
-															layout={
-																"responsive"
-															}
-															alt=""
-														/>
-													</a>
-												</Link>
+								return (
+									<section key={offerId}>
+										{/* STATIC BANNERS for mobile */}
+										{index % 2 == 0 ? (
+											<section className="lg:hidden relative space-y-6 items-center">
+												<section className="w-full">
+													<Link
+														href={
+															"/category/juices/1175/special-rooh-afza-deal/APRD-BG10-01"
+														}
+														passHref
+														className="w-full"
+													>
+														<a className="w-full">
+															<Image
+																src={roohafza}
+																layout={
+																	"responsive"
+																}
+																alt=""
+															/>
+														</a>
+													</Link>
+												</section>
 											</section>
-										</section>
-									) : (
-										<section className="lg:hidden relative space-y-6 items-center">
-											<section className="w-full">
-												<Link
-													href={
-														"/category/home-&-lifestyle/1235"
-													}
-													passHref
-													className="w-full"
-												>
-													<a className="w-full">
-														<Image
-															src={lifestyle}
-															layout={
-																"responsive"
-															}
-															alt=""
-														/>
-													</a>
-												</Link>
+										) : (
+											<section className="lg:hidden relative space-y-6 items-center">
+												<section className="w-full">
+													<Link
+														href={
+															"/category/home-&-lifestyle/1235"
+														}
+														passHref
+														className="w-full"
+													>
+														<a className="w-full">
+															<Image
+																src={lifestyle}
+																layout={
+																	"responsive"
+																}
+																alt=""
+															/>
+														</a>
+													</Link>
+												</section>
 											</section>
-										</section>
-									)}
-									<MainProducts
-										key={offerId}
-										section={product}
-									/>
-								</section>
-							)
-						})}
-						{/* MANUAL ORDER SECTION */}
-						<section className="mb-2 mt-8 flex flex-row w-full rounded-xl p-2 bg-main-yellow items-center align-center justify-around">
-							<Link
-								href={token ? "/grocery_list" : "/login"}
-								passHref
-							>
-								<a className="text-main-blue font-bold text-lg w-full text-center">
-									UPLOAD YOUR GROCERY LIST
-								</a>
-							</Link>
+										)}
+										<MainProducts
+											key={offerId}
+											section={product}
+										/>
+									</section>
+								)
+							})}
+							{/* MANUAL ORDER SECTION */}
+							<section className="mb-2 mt-8 flex flex-row w-full rounded-xl p-2 bg-main-yellow items-center align-center justify-around">
+								<Link
+									href={token ? "/grocery_list" : "/login"}
+									passHref
+								>
+									<a className="text-main-blue font-bold text-lg w-full text-center">
+										UPLOAD YOUR GROCERY LIST
+									</a>
+								</Link>
+							</section>
 						</section>
-					</section>
-				</div>
+					</div>
+				</section>
 			</div>
 		</div>
 	)
