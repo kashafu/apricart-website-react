@@ -2,7 +2,6 @@ import { useRouter } from "next/router"
 import Categories from "../../../../components/Layout/components/Categories/Categories"
 import SingleProduct from "../../../../components/Layout/components/Products/SingleProduct"
 import PageHeading from "../../../../components/Layout/components/Typography/PageHeading"
-import Image from "next/image"
 import Link from "next/link"
 import HeadTag from "../../../../components/Layout/components/Head/HeadTag"
 import toKebabCase from "../../../../helpers/toKebabCase"
@@ -39,13 +38,13 @@ export default function CategoryProducts() {
 		return (
 			<section>
 				{subCategories.length > 0 && (
-					<div className="grid grid-flow-col overflow-y-auto h-full w-full gap-4 py-8">
+					<div className="flex overflow-y-auto h-full w-full gap-4 py-4 px-2">
 						{subCategories.map((category) => {
-							let { id, name, image } = category
+							let { id, name } = category
 							return (
 								<div
 									key={id}
-									className="border rounded-md shadow w-[150px]"
+									className="border rounded-xl shadow-sm px-4 bg-main-blue"
 								>
 									<Link
 										href="/category/[categoryName]/[id]"
@@ -58,17 +57,9 @@ export default function CategoryProducts() {
 										passHref
 									>
 										<a className="flex flex-col h-full w-full items-center">
-											<p className="font-lato text-center text-main-blue text-lg font-bold py-2">
+											<p className="font-lato text-center text-white text-lg font-bold py-2 truncate">
 												{name}
 											</p>
-											<Image
-												src={image}
-												height={100}
-												width={100}
-												alt={
-													"category image"
-												}
-											/>
 										</a>
 									</Link>
 								</div>
