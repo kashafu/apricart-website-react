@@ -1,50 +1,22 @@
-import { useEffect } from "react"
-import axios from "axios"
 import Image from "next/image"
 import Link from "next/link"
-import Cookies from "universal-cookie"
 import Marquee from "react-fast-marquee"
+import { useSelector } from "react-redux"
 import { useRouter } from "next/router"
-import { useSelector, useDispatch } from "react-redux"
-import { updateTicker } from "../../../../redux/general.slice"
-import { base_url_api } from "../../../../information.json"
 
 // IMAGES
 import phonePNG from "../../../../public/assets/images/phone.png"
 import logoPNG from "../../../../public/assets/images/logo-white.png"
 
-export default function Layout() {
-	const cookies = new Cookies()
-	const dispatch = useDispatch()
+export default function TopBar() {
 	const router = useRouter()
+
 	const addressSelector = useSelector(
 		(state) => state.general.selectedAddress
 	)
 	const tickerSelector = useSelector((state) => state.general.ticker)
-
-	let pStyle =
-		"font-lato font-bold text-sm lg:text-md text-white lg:text-base"
-
-	useEffect(() => {
-		getOptionsDataApi()
-	}, [])
-
-	const getOptionsDataApi = async () => {
-		let url = base_url_api + "/options/all?client_type=apricart"
-
-		try {
-			let response = await axios.get(url)
-
-			response.data.data.forEach((item) => {
-				if (item.key === "ticker") {
-					dispatch(updateTicker(item.value))
-					return
-				}
-			})
-		} catch (error) {
-			console.log(error)
-		}
-	}
+	const selectedTypeSelector = useSelector((state) => state.general.selectedType)
+	let pStyle = "font-lato font-bold text-sm lg:text-md text-white lg:text-base"
 
 	return (
 		<header className="flex flex-col">
@@ -58,24 +30,43 @@ export default function Layout() {
 								<Image
 									src={logoPNG}
 									alt={"logo"}
-									// layout={'fill'}
 								/>
 							</button>
 						</Link>
 					</div>
-					{/* TICKER */}
-					<div className="flex flex-row items-center h-full md:space-x-2">
-						<div className="hidden lg:inline flex items-center bg-main-red px-2 h-2/3">
-							<p className="text-white font-roboto font-bold text-xs truncate md:text-lg">
-								Latest Update
-							</p>
+					{/* show TICKER on index page only, otherwise show selectedType */}
+					{router.pathname === "/" ? (
+						<div className="flex flex-row items-center h-full md:space-x-2">
+							<div className="hidden lg:inline flex items-center bg-main-red px-2 h-2/3">
+								<p className="text-white font-roboto font-bold text-xs truncate md:text-lg">
+									Latest Update
+								</p>
+							</div>
+							<Marquee speed={50} className="overflow-hidden">
+								<p className="text-center text-sm font-bold text-white">
+									{tickerSelector}
+								</p>
+							</Marquee>
 						</div>
-						<Marquee speed={50} className="overflow-hidden">
-							<p className="text-center text-sm font-bold text-white">
-								{tickerSelector}
-							</p>
-						</Marquee>
-					</div>
+					):(
+						<div>
+							{selectedTypeSelector == 'bulk' && (
+								<p className="text-white font-bold capitalize">
+									Bulk Buy
+								</p>
+							)}
+							{selectedTypeSelector == 'home' && (
+								<p className="text-white font-bold capitalize">
+									Home Delivery
+								</p>
+							)}
+							{selectedTypeSelector == 'cnc' && (
+								<p className="text-white font-bold capitalize">
+									Click n' Collect
+								</p>
+							)}
+						</div>
+					)}
 					{/* DELIVERY */}
 					{/* <div className="hidden lg:inline-flex flex flex-row space-x-2 items-center">
                         <div className="relative w-[15px] h-[15px] lg:w-[22px] lg:h-[22px]">
@@ -120,7 +111,7 @@ export default function Layout() {
 					{/* </div> */}
 				</div>
 				{/* PHONE NUMBER hidden on phone, shown on desktop*/}
-				<div className="hidden flex flex-row space-x-2 items-center lg:inline-flex pl-2 pr-4">
+				<div className="hidden space-x-2 items-center lg:inline-flex pl-2 pr-4">
 					<div className="relative w-[15px] h-[15px] lg:w-[22px] lg:h-[22px]">
 						<Image
 							src={phonePNG}

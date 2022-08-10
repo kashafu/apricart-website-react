@@ -17,10 +17,9 @@ import { useHomeApi } from "../helpers/Api"
 export default function Home() {
 	const router = useRouter()
 
-	let { city, token } = getGeneralApiParams()
+	let { token } = getGeneralApiParams()
 
-	const { isLoading, isPopupAd, homeData, errorMessage, response, categories } =
-		useHomeApi()
+	const { isLoading, isPopupAd, homeData } = useHomeApi()
 
 	const [showPopupAd, setShowPopupAd] = useState(isPopupAd)
 

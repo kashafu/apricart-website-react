@@ -5,6 +5,7 @@ import { base_url_api } from "../information.json"
 import { getGeneralApiParams } from "./ApiHelpers"
 import { useRouter } from "next/router"
 import { addToCart, decrementQuantity, incrementQuantity, removeFromCart } from '../redux/cart.slice'
+import { updateTicker } from "../redux/general.slice"
 import { toast } from 'react-toastify'
 import Cookies from "universal-cookie"
 
@@ -172,6 +173,7 @@ export const useSubCategoriesApi = () => {
 }
 
 export const useHomeApi = () => {
+	const dispatch = useDispatch()
 	const selectedTypeSelector = useSelector(
 		(state) => state.general.selectedType
 	)
@@ -179,6 +181,7 @@ export const useHomeApi = () => {
 	const [homeData, setHomeData] = useState(null)
 	const [categories, setCategories] = useState(null)
 	const [banners, setBanners] = useState(null)
+	const [ticker, setTicker] = useState('')
 	const [isPopupAd, setIsPopupAd] = useState(false)
 	const [response, setResponse] = useState(null)
 	const [errorResponse, setErrorResponse] = useState(null)
@@ -207,6 +210,8 @@ export const useHomeApi = () => {
 			setHomeData(apiResponse.data.data)
 			setCategories(apiResponse.data.data.categories)
 			setBanners(apiResponse.data.data.banners)
+			setTicker(apiResponse.data.data.ticker)
+			dispatch(updateTicker(apiResponse.data.data.ticker))
 			setIsPopupAd(apiResponse.data.data.dialog)
 		} catch (error) {
 			setErrorResponse(error?.response)
@@ -224,7 +229,8 @@ export const useHomeApi = () => {
 		errorResponse,
 		isPopupAd,
 		categories,
-		banners
+		banners,
+		ticker
 	}
 }
 
