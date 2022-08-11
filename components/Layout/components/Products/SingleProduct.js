@@ -98,15 +98,9 @@ export default function SingleProduct({ product, isInStock }) {
 			{/* DESKTOP VIEW */}
 			<div
 				className={
-					"hidden relative lg:grid grid-rows-[7] bg-white px-4 h-[350px] rounded-br-lg " +
+					"hidden relative lg:grid grid-rows-[7] bg-white px-2 h-[350px] rounded-br-lg " +
 					[divStyle]
 				}
-				onMouseEnter={() => {
-					setShowAddToCart(true)
-				}}
-				onMouseLeave={() => {
-					setShowAddToCart(false)
-				}}
 			>
 				{/* IMAGE */}
 				<div className="row-span-4 flex items-center justify-center w-full h-full">
@@ -143,17 +137,12 @@ export default function SingleProduct({ product, isInStock }) {
 						Rs. {currentPrice}
 					</p>
 				)}
-
-				{showAddToCart && (
-					<div
-						className="absolute z-10 bg-white drop-shadow-[0_35px_35px_35px_rgba(0,0,0,0.25)] bottom-[-35px] py-2 row-span-1 flex flex-row items-center justify-between w-full"
-						onMouseEnter={() => {
-							setShowAddToCart(true)
-						}}
-					>
-						{/* QUANTITY hidden on phone */}
-						{inStock && (
-							<div className="hidden lg:grid grid-cols-3 ml-2 justify-items-center rounded border-2 border-main-yellow overflow-hidden w-[50px] lg:w-full h-[40px]">
+				<div
+					className="row-span-1 h-[40px]"
+				>
+					{inStock ? (
+						<div className="relative flex flex-row items-center space-x-2 xl:space-x-6 mr-2 justify-between h-full">
+							<div className="grid grid-cols-3 justify-items-center rounded border-2 border-main-yellow h-full grow">
 								<button
 									className="relative bg-white w-full"
 									onClick={() => {
@@ -182,49 +171,61 @@ export default function SingleProduct({ product, isInStock }) {
 									/>
 								</button>
 							</div>
-						)}
-						<div className="relative flex flex-row items-center justify-around lg:justify-end space-x-2 h-full w-full mr-2">
-							{inStock ? (
-								// {/* ADD TO CART */}
+							<div className="flex space-x-1 xl:space-x-2">
 								<button
-									className="flex items-center h-[40px]"
+									className="flex items-center"
 									onClick={() => {
-										// addToCartApi()
 										setIsPlaceOrder(true)
 									}}
 								>
 									<Image
 										src={addToCartIcon}
-										height={40}
 										width={40}
+										height={40}
 										alt={"icon"}
 									/>
 								</button>
-							) : (
+								{/* WISHLIST */}
 								<button
-									className="h-[40px] px-2 bg-zinc-400 font-bold text-xs lg:text-md rounded text-white"
-									disabled={true}
+									className="flex items-center"
+									onClick={() => {
+										addToWishlistApi()
+									}}
 								>
-									Out of Stock
+									<Image
+										src={wishlistIcon}
+										width={40}
+										height={40}
+										alt={"icon"}
+									/>
 								</button>
-							)}
+							</div>
+						</div>
+					) : (
+						<div className="flex justify-between flex-row space-x-4">
+							<button
+								className="px-2 bg-zinc-400 font-bold text-xs lg:text-md rounded text-white grow"
+								disabled={true}
+							>
+								Out of Stock
+							</button>
 							{/* WISHLIST */}
 							<button
-								className="flex items-center h-[40px]"
+								className="flex items-center"
 								onClick={() => {
 									addToWishlistApi()
 								}}
 							>
 								<Image
 									src={wishlistIcon}
-									height={40}
 									width={40}
+									height={40}
 									alt={"icon"}
 								/>
 							</button>
 						</div>
-					</div>
-				)}
+					)}
+				</div>
 			</div>
 			{/* MOBILE VIEW */}
 			<div
