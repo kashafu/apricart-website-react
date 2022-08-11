@@ -1,6 +1,5 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
-import Link from "next/link";
 import Image from "next/image";
 import {
 	incrementQuantity,
