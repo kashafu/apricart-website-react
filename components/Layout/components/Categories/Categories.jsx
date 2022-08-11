@@ -74,7 +74,7 @@ export default function Categories() {
 											/>
 										</button>
 									</div>
-									<div className="bg-main-blue rounded-b-lg px-6 divide-y">
+									<div className="bg-main-blue rounded-b-lg px-6 divide-y animate-dropdown">
 										{childrenData.map((subCategory) => {
 											let { id, name } = subCategory
 											return (
