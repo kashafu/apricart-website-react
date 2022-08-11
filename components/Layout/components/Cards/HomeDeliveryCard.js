@@ -36,7 +36,7 @@ export default function HomeDeliveryCard({ isDisabled }) {
                     DELIVERY
                 </p>
             </div>
-            <div className='self-end mt-auto relative w-full lg:w-4/5 lg:pl-4'>
+            <div className='self-end mt-auto relative w-full lg:w-4/5 lg:pl-6'>
                 <Image
                     src={homeDeliveryIcon}
                     layout={'responsive'}
