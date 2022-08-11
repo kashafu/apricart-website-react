@@ -11,17 +11,12 @@ export default function SearchBar() {
 	const [searchText, setSearchText] = useState("")
 	const [searchResults, setSearchResults] = useState([])
 	const [showSearchResults, setShowSearchResults] = useState(false)
-	// const [categories, setCategories] = useState(null)
 	const [selectedCategoryId, setSelectedCategoryId] = useState("")
 	const [selectedCategoryName, setSelectedCategoryName] = useState("")
 	const { categories } = useCategoriesApi()
 
 	const searchIconElement = useRef()
 	const router = useRouter()
-
-	// useEffect(() => {
-	// 	getCategoriesApi()
-	// }, [])
 
 	useEffect(() => {
 		if (selectedCategoryId !== "") {
@@ -55,23 +50,6 @@ export default function SearchBar() {
 		setShowSearchResults(true)
 		setSearchResults(searchResponse.data.data)
 	}
-
-	// const getCategoriesApi = async () => {
-	// 	let { city, headers, userId } = getGeneralApiParams()
-	// 	let url =
-	// 		base_url_api +
-	// 		"/catalog/categories?level=all&client_type=apricart&city=" +
-	// 		city + "&userid=" + userId 
-
-	// 	try {
-	// 		let response = await axios.get(url, {
-	// 			headers: headers,
-	// 		})
-	// 		setCategories(response.data.data)
-	// 	} catch (error) {
-	// 		console.log(error)
-	// 	}
-	// }
 
 	return (
 		<div className="relative w-full">
