@@ -13,7 +13,8 @@ const generalSlice = createSlice({
 		ticker: '',
 		nearestWarehouse: '',
 		selectedType: selectedType,
-		city: city
+		city: city,
+		isUserInitialized: false
 	},
 	reducers: {
 		updateSelectedAddress: (state, action) => {
@@ -30,6 +31,9 @@ const generalSlice = createSlice({
 			cookie.remove('selected-type', { path: '/' })
 			cookie.set('selected-type', action.payload, { path: '/' })
 		},
+		updateIsUserInitialized: (state, action) => {
+			state.isUserInitialized = action.payload
+		},
 	}
 })
 
@@ -39,5 +43,6 @@ export const {
 	updateSelectedAddress,
 	updateTicker,
 	updateSelectedType,
-	updateCity
+	updateCity,
+	updateIsUserInitialized
 } = generalSlice.actions
