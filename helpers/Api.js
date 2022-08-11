@@ -56,9 +56,8 @@ const initializeUserApi = async () => {
 }
 
 export const useCategoriesApi = () => {
-	const selectedTypeSelector = useSelector(
-		(state) => state.general.selectedType
-	)
+	const selectedTypeSelector = useSelector((state) => state.general.selectedType)
+	const citySelector = useSelector((state) => state.general.city)
 	const [isLoading, setIsLoading] = useState(true)
 	const [categories, setCategories] = useState(null)
 	const [response, setResponse] = useState(null)
@@ -67,7 +66,7 @@ export const useCategoriesApi = () => {
 
 	useEffect(() => {
 		callApi()
-	}, [selectedTypeSelector])
+	}, [selectedTypeSelector, citySelector])
 
 	const callApi = async () => {
 		setIsLoading(true)
@@ -177,6 +176,7 @@ export const useHomeApi = () => {
 	const selectedTypeSelector = useSelector(
 		(state) => state.general.selectedType
 	)
+	const citySelector = useSelector((state) => state.general.city)
 	const [isLoading, setIsLoading] = useState(true)
 	const [homeData, setHomeData] = useState(null)
 	const [categories, setCategories] = useState(null)
@@ -189,7 +189,7 @@ export const useHomeApi = () => {
 
 	useEffect(() => {
 		callApi()
-	}, [selectedTypeSelector])
+	}, [selectedTypeSelector, citySelector])
 
 	const callApi = async () => {
 		setIsLoading(true)
