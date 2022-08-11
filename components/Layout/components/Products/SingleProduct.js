@@ -71,73 +71,6 @@ export default function SingleProduct({ product, isInStock }) {
 		}
 	}
 
-	// const addToCartApi = async () => {
-	// 	let { city, userId, headers } = getGeneralApiParams()
-
-	// 	if (isLoggedIn) {
-	// 		let data = {
-	// 			cart: [
-	// 				{
-	// 					sku: sku,
-	// 					qty: qty,
-	// 				},
-	// 			],
-	// 		}
-	// 		let url =
-	// 			base_url_api +
-	// 			"/order/cart/save?city=" +
-	// 			city +
-	// 			"&lang=en&client_type=apricart&userid=" + userId
-
-	// 		try {
-	// 			let response = await axios.post(url, data, {
-	// 				headers: headers,
-	// 			})
-	// 			toast.success("Added to Cart")
-	// 			let cartData = {
-	// 				...product,
-	// 			}
-	// 			cartData.qty = qty
-
-	// 			dispatch(addToCart(cartData))
-	// 		} catch (error) {
-	// 			console.log(error?.response)
-	// 			toast.error(error?.response?.data?.message)
-	// 		}
-	// 	} else {
-	// 		let data = {
-	// 			userId: userId,
-	// 			cart: [
-	// 				{
-	// 					sku: sku,
-	// 					qty: qty,
-	// 				},
-	// 			],
-	// 		}
-	// 		let url =
-	// 			base_url_api +
-	// 			"/guest/cart/save?city=" +
-	// 			city +
-	// 			"&lang=en&client_type=apricart"
-
-	// 		try {
-	// 			let response = await axios.post(url, data, {
-	// 				headers: headers,
-	// 			})
-	// 			toast.success("Added to Cart")
-	// 			let cartData = {
-	// 				...product,
-	// 			}
-	// 			cartData.qty = qty
-
-	// 			dispatch(addToCart(cartData))
-	// 		} catch (error) {
-	// 			console.log(error?.response)
-	// 			toast.error(error?.response?.data?.message)
-	// 		}
-	// 	}
-	// }
-
 	const addToWishlistApi = async () => {
 		let { token, headers, userId } = getGeneralApiParams()
 		let body = { sku: [product.sku] }
@@ -165,7 +98,7 @@ export default function SingleProduct({ product, isInStock }) {
 			{/* DESKTOP VIEW */}
 			<div
 				className={
-					"hidden relative lg:grid grid-rows-[7] bg-white px-2 lg:px-4 h-[250px] lg:h-[350px] rounded-br-lg " +
+					"hidden relative lg:grid grid-rows-[7] bg-white px-4 h-[350px] rounded-br-lg " +
 					[divStyle]
 				}
 				onMouseEnter={() => {
@@ -296,7 +229,7 @@ export default function SingleProduct({ product, isInStock }) {
 			{/* MOBILE VIEW */}
 			<div
 				className={
-					"lg:hidden grid grid-flow-row bg-white px-2 lg:px-4 h-[250px] lg:h-[350px] rounded-br-lg " +
+					"lg:hidden grid grid-flow-row bg-white px-2 h-[250px] rounded-br-lg " +
 					[divStyle]
 				}
 			>
