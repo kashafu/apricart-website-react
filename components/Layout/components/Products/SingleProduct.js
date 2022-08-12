@@ -65,6 +65,7 @@ export default function SingleProduct({ product, isInStock }) {
 			setQty(qty + 1)
 		} else if (type == "decrement") {
 			if (qty == minQty) {
+				toast.error("Cannot order less than minimum quantity")
 				return
 			}
 			setQty(qty - 1)

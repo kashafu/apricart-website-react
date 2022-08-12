@@ -33,6 +33,7 @@ export default function ProductDetail() {
 			setQty(qty + 1)
 		} else if (type == "decrement") {
 			if (qty == productData[0].minQty) {
+				toast.error("Cannot order less than minimum quantity")
 				return
 			}
 			setQty(qty - 1)
