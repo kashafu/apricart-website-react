@@ -6,9 +6,11 @@ import { useEffect, useState } from "react"
 import { useDispatch } from "react-redux"
 import { updateSelectedType } from "../../../../redux/general.slice"
 import { useSelector } from "react-redux"
+import Cookies from "universal-cookie"
 
 const TypeCardSelector = () => {
     const dispatch = useDispatch()
+    const cookies = new Cookies()
     const citySelector = useSelector((state) => state.general.city)
     const [isDisabled, setIsDisabled] = useState(false)
 
@@ -16,6 +18,8 @@ const TypeCardSelector = () => {
         if (citySelector === 'peshawar') {
             setIsDisabled(true)
             dispatch(updateSelectedType('bulk'))
+            cookies.remove('selected-type', {path: '/'})
+            cookies.set('selected-type', 'bulk', {path: '/'})
         }
         else {
             setIsDisabled(false)

@@ -29,15 +29,15 @@ export const getGeneralApiParams = () => {
 
     let selectedType = cookies.get('selected-type')
     if(selectedType === 'bulk'){
-        cookies.remove('selected-type', {path: '/'})
-        cookies.set('selected-type', 'bulk', {path: '/'})
+        // cookies.remove('selected-type', {path: '/'})
+        // cookies.set('selected-type', 'bulk', {path: '/'})
         selectedType = 'bulk'
         prodType = 'b2b'
         orderType = 'delivery'
     }
     else{
-        cookies.remove('selected-type', {path: '/'})
-        cookies.set('selected-type', 'home', {path: '/'})
+        // cookies.remove('selected-type', {path: '/'})
+        // cookies.set('selected-type', 'home', {path: '/'})
         selectedType = 'home'
         prodType = 'cus'
         orderType = 'delivery'
