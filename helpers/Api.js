@@ -262,10 +262,6 @@ export const useProductDetailsApi = () => {
 				headers: headers,
 			})
 			setResponse(apiResponse)
-
-			console.log("URL", fullUrl(url))
-			console.log("RESPONSE", apiResponse)
-
 			setProductData(apiResponse.data.data)
 		} catch (error) {
 			setErrorResponse(error?.response)

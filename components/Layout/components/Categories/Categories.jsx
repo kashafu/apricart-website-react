@@ -40,8 +40,7 @@ export default function Categories() {
 								<div className="grid grid-flow-row">
 									<div className="grid grid-cols-5 py-2 pl-4 bg-main-blue items-center rounded-t-lg">
 										<Link
-											href="/category/[categoryName]/[id]"
-											as={
+											href={
 												"/category/" +
 												toKebabCase(name) +
 												"/" +
@@ -83,8 +82,7 @@ export default function Categories() {
 													className="flex flex-row w-full items-center py-2"
 												>
 													<Link
-														href="/category/[categoryName]/[id]"
-														as={
+														href={
 															"/category/" +
 															toKebabCase(name) +
 															"/" +
@@ -104,8 +102,7 @@ export default function Categories() {
 							) : (
 								<div className="grid grid-cols-5 py-2 pl-4 bg-white items-center rounded-lg">
 									<Link
-										href="/category/[categoryName]/[id]"
-										as={
+										href={
 											"/category/" +
 											toKebabCase(name) +
 											"/" +

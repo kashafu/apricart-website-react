@@ -106,8 +106,7 @@ export default function SingleProduct({ product, isInStock }) {
 				{/* IMAGE */}
 				<div className="row-span-4 flex items-center justify-center w-full h-full">
 					<Link
-						href='/category/[categoryName]/[categoryId]/[productName]/[productId]'
-						as={"/category/" + toKebabCase(immediateCategoryName) + "/" + immediateCategoryId + "/" + toKebabCase(title) + "/" + sku}
+						href={"/category/" + toKebabCase(immediateCategoryName) + "/" + immediateCategoryId + "/" + toKebabCase(title) + "/" + sku}
 						passHref
 					>
 						<a className="relative h-[150px] w-[150px]">
@@ -238,8 +237,7 @@ export default function SingleProduct({ product, isInStock }) {
 				{/* IMAGE */}
 				<div className="row-span-4 flex items-center justify-center w-full h-full">
 					<Link
-						href='/category/[categoryName]/[categoryId]/[productName]/[productId]'
-						as={"/category/" + toKebabCase(immediateCategoryName) + "/" + immediateCategoryId + "/" + toKebabCase(title) + "/" + sku}
+						href={"/category/" + toKebabCase(immediateCategoryName) + "/" + immediateCategoryId + "/" + toKebabCase(title) + "/" + sku}
 						passHref
 					>
 						<a className="relative h-[100px] w-[100px]">

@@ -47,8 +47,7 @@ export default function CategoryProducts() {
 									className="rounded-xl shadow-sm px-4 border-main-blue border-2"
 								>
 									<Link
-										href="/category/[categoryName]/[id]"
-										as={
+										href={
 											"/category/" +
 											toKebabCase(name) +
 											"/" +

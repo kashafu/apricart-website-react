@@ -88,7 +88,7 @@ export default function ProfileUser() {
 
 	if (!token) {
 		const d = new Date();
-		cookies.get('guestUserId', 'desktopuser_' + d.getTime(), 30);
+		cookies.get('guestUserId', 'desktopuser_' + d.getTime());
 		return (
 			<>
 				<HeadTag title={'Profile'} />

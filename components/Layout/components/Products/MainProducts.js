@@ -28,8 +28,8 @@ export default function MainProducts({ section }) {
 						height={20}
 					/>
 				) : (
-					<Link href="/offers/[id]"
-						as={
+					<Link
+						href={
 							"/offers/" + offerId
 						}
 						passHref

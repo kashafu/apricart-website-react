@@ -13,21 +13,22 @@ import { useState, useEffect } from "react"
 
 export default function Header() {
 	const cookies = new Cookies()
-
 	let { token } = getGeneralApiParams()
 	const [offset, setOffset] = useState(0);
-
-	if (!cookies.get("guestUserId")) {
-		const d = new Date()
-		cookies.set("guestUserId", "desktopuser_" + d.getTime(), 30)
-	}
-
-	if (!cookies.get("selected-type")) {
-		cookies.remove('selected-type', { path: '/' })
-		cookies.set('selected-type', 'home', { path: '/' })
-	}
-
+	
 	useEffect(() => {
+		if (!cookies.get("guestUserId")) {
+			const d = new Date()
+			// cookies.set("guestUserId", "desktopuser_" + d.getTime(), {path: '/'})
+			let temp = "desktopuser_" + d.getTime()
+			document.cookie = "guestUserId=" + temp
+		}
+	
+		if (!cookies.get("selected-type")) {
+			cookies.remove('selected-type', { path: '/' })
+			cookies.set('selected-type', 'home', { path: '/' })
+		}
+
 		const onScroll = () => setOffset(window.pageYOffset);
 		// clean up code
 		window.removeEventListener('scroll', onScroll);

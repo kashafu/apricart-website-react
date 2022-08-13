@@ -163,8 +163,7 @@ const Wishpage = () => {
 												></div>
 												<div className="pro_img">
 												<Link
-													href='/category/[categoryName]/[categoryId]/[productName]/[productId]'
-													as={"/category/" + toKebabCase(immediateCategoryName) + "/" + immediateCategoryId + "/" + toKebabCase(title) + "/" + sku}
+													href={"/category/" + toKebabCase(immediateCategoryName) + "/" + immediateCategoryId + "/" + toKebabCase(title) + "/" + sku}
 													passHref
 												>
 														<img

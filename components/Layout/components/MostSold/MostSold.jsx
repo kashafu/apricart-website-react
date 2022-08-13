@@ -160,8 +160,7 @@ export default function RecommendedProducts() {
                                                 </div>
                                                 <div className="pro_img">
                                                     <Link
-                                                        href="/details/[id]"
-                                                        as={
+                                                        href={
                                                             "/details/" +
                                                             curElem.sku
                                                         }
