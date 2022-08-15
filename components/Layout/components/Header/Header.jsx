@@ -1,5 +1,5 @@
 import Link from "next/link"
-import Cookies from "universal-cookie"
+import { setCookie, getCookie } from "../../../../helpers/Cookies"
 import heartIcon from "../../../../public/assets/svgs/heartIcon.svg"
 import { getGeneralApiParams } from "../../../../helpers/ApiHelpers"
 import SearchBar from "../SearchBar/SearchBar"
@@ -12,21 +12,17 @@ import CitySelector from "../CitySelector/CitySelector"
 import { useState, useEffect } from "react"
 
 export default function Header() {
-	const cookies = new Cookies()
 	let { token } = getGeneralApiParams()
 	const [offset, setOffset] = useState(0);
 	
 	useEffect(() => {
-		if (!cookies.get("guestUserId")) {
+		if (!getCookie("guestUserId")) {
 			const d = new Date()
-			// cookies.set("guestUserId", "desktopuser_" + d.getTime(), {path: '/'})
-			let temp = "desktopuser_" + d.getTime()
-			document.cookie = "guestUserId=" + temp
+			setCookie("guestUserId", "desktopuser_" + d.getTime())
 		}
 	
-		if (!cookies.get("selected-type")) {
-			cookies.remove('selected-type', { path: '/' })
-			cookies.set('selected-type', 'home', { path: '/' })
+		if (!getCookie("selected-type")) {
+			setCookie('selected-type', 'home')
 		}
 
 		const onScroll = () => setOffset(window.pageYOffset);

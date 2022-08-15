@@ -1,25 +1,17 @@
 import { useSelector, useDispatch } from "react-redux"
-import {
-	incrementwishQuantity,
-	decrementwishQuantity,
-	removeFromWish,
-} from "../redux/wish.slice"
 import { useRouter } from "next/router"
-import React, { useEffect, useState, useContext, useCallback } from "react"
-import { AiOutlineHeart } from "react-icons/ai"
+import React, { useEffect, useState } from "react"
 import Link from "next/link"
 import { addToCart } from "../redux/cart.slice"
-import { addToWish, updatedwish, Initilaize } from "../redux/wish.slice"
+import { updatedwish, Initilaize, removeFromWish } from "../redux/wish.slice"
 import axios from "axios"
-import Cookies from "universal-cookie"
+import { getCookie } from "../helpers/Cookies"
 import { getGeneralApiParams } from "../helpers/ApiHelpers"
 import HeadTag from "../components/Layout/components/Head/HeadTag"
 import { base_url_api } from "../information.json"
 import toKebabCase from "../helpers/toKebabCase"
-//none
+
 const Wishpage = () => {
-	const cookies = new Cookies()
-	// var token = cookies.get("cookies-token");
 	const wish = useSelector((state) => state.wish)
 	const dispatch = useDispatch()
 	const router = useRouter()
@@ -28,7 +20,7 @@ const Wishpage = () => {
 	const [mydata, setData] = useState([])
 	const [total, setTotal] = useState([])
 	const [option, setOption] = useState([])
-	let isLoggedIn = cookies.get("cookies-token") != null
+	let isLoggedIn = getCookie("cookies-token") != null
 
 	const addToCartApi = async (wish) => {
 		dispatch(addToCart(wish))
@@ -99,7 +91,6 @@ const Wishpage = () => {
 	let Wishall = {}
 	Wishall = async () => {
 		if (token) {
-			//${cookies.get("cookies-userId")}& &userid=${userI {cookies.get("cookies-userId")}
 			let { userId } = getGeneralApiParams()
 			let url =
 				base_url_api +
@@ -111,22 +102,17 @@ const Wishpage = () => {
 			let Data1 = response.data.data
 			setData(Data1)
 			mydata = Data1
-			// console.log(mydata);
 			dispatch(Initilaize(null))
 			mydata.map((item) => {
 				dispatch(updatedwish(item))
 			})
 
 			setTotal(response.data.total)
-			// console.log(response.data.data);
 			let total1 = response.data.total
 			total = total1
-			// setDiscount(response.data.message);
-			//dispatch(updatedcart(response.data.data));
 		} else {
 		}
 	}
-	// for push
 	return (
 		<div>
 			<HeadTag title={"Shopping List"} />
@@ -181,13 +167,6 @@ const Wishpage = () => {
 															{currentPrice}
 														</strong>
 													</h4>
-													{/* <div className="pro_btn1">
-                            <select name="product" id="product">
-                              <option value="1">1 KG</option>
-                              <option value="2">2 KG</option>
-                              <option value="3">3 KG</option>
-                            </select>
-                          </div> */}
 
 													{wish.inStock == true ? (
 														<div
@@ -239,11 +218,6 @@ const Wishpage = () => {
 									)
 								})}
 							</div>
-							{/* <div className="removeList">
-                <button onClick={() => dispatch(removeFromWish(wish.id))}>
-                  Remove from list
-                </button>
-              </div> */}
 						</div>
 					</div>
 				</>

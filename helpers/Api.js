@@ -7,9 +7,7 @@ import { useRouter } from "next/router"
 import { addToCart, decrementQuantity, incrementQuantity, removeFromCart } from '../redux/cart.slice'
 import { updateTicker } from "../redux/general.slice"
 import { toast } from 'react-toastify'
-import Cookies from "universal-cookie"
-
-const cookies = new Cookies()
+import { setCookie } from "./Cookies"
 
 const fullUrl = (url) => {
 	let { city, userId, clientType, orderType, prodType } =
@@ -47,8 +45,7 @@ const initializeUserApi = async () => {
 			await axios.get(fullUrl(url), {
 				headers: headers,
 			})
-			cookies.remove('user-initialized', {path: '/'})
-			cookies.set('user-initialized', true, {path: '/'})
+			setCookie('user-initialized', true)
 		} catch (error) {
 			console.log(error?.response)
 		}

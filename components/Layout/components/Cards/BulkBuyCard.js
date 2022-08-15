@@ -3,11 +3,10 @@ import bulkBuyIcon from "../../../../public/assets/svgs/bulkBuyIcon.svg"
 import { useDispatch, useSelector } from 'react-redux'
 import { updateSelectedType } from '../../../../redux/general.slice'
 import { useEffect, useState } from 'react'
-import Cookies from "universal-cookie"
+import { setCookie } from "../../../../helpers/Cookies"
 
 export default function BulkBuyCard() {
     const dispatch = useDispatch()
-	const cookies = new Cookies()
 
     const [style, setStlye] = useState('')
 	const [pStyle, setPStyle] = useState('')
@@ -22,8 +21,7 @@ export default function BulkBuyCard() {
         <button className={[style] + ' relative rounded-lg shadow flex flex-col grow p-2 items-center'}
 			onClick={()=>{
                 dispatch(updateSelectedType('bulk'))
-				cookies.remove('selected-type', {path: '/'})
-				cookies.set('selected-type', 'bulk', {path: '/'})
+				setCookie('selected-type', 'bulk')
             }}
 		>
 			<div className={[pStyle] + " hidden absolute self-start font-bold text-main-blue lg:inline text-2xl xl:text-3xl 2xl:text-4xl"}>

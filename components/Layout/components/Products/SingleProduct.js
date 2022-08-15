@@ -1,6 +1,5 @@
 import Image from "next/image"
 import Link from "next/link"
-import Cookies from "universal-cookie"
 import axios from "axios"
 import { useDispatch } from "react-redux"
 import { addToWish } from "../../../../redux/wish.slice"

@@ -1,11 +1,7 @@
-import Link from "next/link";
-import PhoneInput from "react-phone-input-2";
-import { useCallback, useState } from "react";
+import { useState } from "react";
 import { useRouter } from "next/router";
 import axios from "axios";
-import { ToastContainer, toast } from "react-toastify";
-// import "react-toastify/dist/ReactToastify.css";
-//du
+import { toast } from "react-toastify";
 import { base_url_api } from "../../../../information.json";
 import { getGeneralApiParams } from "../../../../helpers/ApiHelpers";
 
@@ -40,7 +36,6 @@ const Register = () => {
             });
             toast.success(response.data.message);
             setShowOTPScreen(true);
-            setCookie("register");
             setCookie("token", response.data.data.token, { path: "/address" });
         } catch (err) {
             console.log(err?.response);

@@ -6,11 +6,10 @@ import { ToastContainer, Slide } from 'react-toastify';
 import { CookiesProvider } from 'react-cookie';
 import 'react-toastify/dist/ReactToastify.min.css';
 import axios from 'axios';
-import Cookies from 'universal-cookie';
+import { getCookie } from "../helpers/Cookies";
 
 function MyApp({ Component, pageProps }) {
-  const cookies = new Cookies();
-  axios.defaults.headers.common['Authorization'] = 'Bearer' + cookies.get('cookies-token');
+  axios.defaults.headers.common['Authorization'] = 'Bearer' + getCookie('cookies-token');
   return (
     <Provider store={store}>
       <CookiesProvider>

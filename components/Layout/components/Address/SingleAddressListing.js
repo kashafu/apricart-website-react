@@ -1,11 +1,11 @@
 import { useState } from "react"
-import Cookies from "universal-cookie"
 import AddressCard from "./AddressCard"
 import { getGeneralApiParams } from "../../../../helpers/ApiHelpers"
 import { base_url_api } from "../../../../information.json"
 import axios from "axios"
 import { useDispatch } from "react-redux"
 import { updateSelectedAddress } from "../../../../redux/general.slice"
+import { setCookie } from "../../../../helpers/Cookies"
 
 export default function SingleAddressListing({
 	listing,
@@ -13,7 +13,6 @@ export default function SingleAddressListing({
 	setAddress,
 	updateSavedAddresses,
 }) {
-	const cookies = new Cookies()
 	const dispatch = useDispatch()
 
 	let { address, area, city, name, phoneNumber, email } = listing
@@ -42,7 +41,7 @@ export default function SingleAddressListing({
 	}
 
 	const onClickHandle = () => {
-		cookies.set("selected-address", listing)
+		setCookie("selected-address", listing)
 		dispatch(updateSelectedAddress(listing))
 		setAddress(listing)
 	}

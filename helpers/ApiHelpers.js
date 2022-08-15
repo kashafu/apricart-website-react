@@ -1,13 +1,14 @@
 import Cookies from 'universal-cookie';
 let isNode = require('detect-node')
+import { getCookie } from './Cookies';
 
 const cookies = new Cookies();
 
 export const getGeneralCookies = () => {
-    let name = cookies.get('cookies-name')
-    let phoneNumber = cookies.get('cookies-phoneNumber')
-    let email = cookies.get('cookies-email')
-    let token = cookies.get('cookies-token')
+    let name = getCookie('cookies-name')
+    let phoneNumber = getCookie('cookies-phoneNumber')
+    let email = getCookie('cookies-email')
+    let token = getCookie('cookies-token')
 
     return({
         name,
@@ -27,34 +28,30 @@ export const getGeneralApiParams = () => {
     let prodType = ''
     let orderType = ''
 
-    let selectedType = cookies.get('selected-type')
+    let selectedType = getCookie('selected-type')
     if(selectedType === 'bulk'){
-        // cookies.remove('selected-type', {path: '/'})
-        // cookies.set('selected-type', 'bulk', {path: '/'})
         selectedType = 'bulk'
         prodType = 'b2b'
         orderType = 'delivery'
     }
     else{
-        // cookies.remove('selected-type', {path: '/'})
-        // cookies.set('selected-type', 'home', {path: '/'})
         selectedType = 'home'
         prodType = 'cus'
         orderType = 'delivery'
     }
 
-    let token = cookies.get('cookies-token')
-    let city = cookies.get("cities") == null ? "karachi" : cookies.get("cities")
-    let selectedAddress = cookies.get('selected-address')
+    let token = getCookie('cookies-token')
+    let city = getCookie("cities") == null ? "karachi" : getCookie("cities")
+    let selectedAddress = getCookie('selected-address')
     let latitude = 0
     let longitude = 0
-    let userId = cookies.get('guestUserId')
+    let userId = getCookie('guestUserId')
     let headers = {
         'Accept': 'application/json',
         "Content-Type": "application/json",
     }
 
-    let isUserInitialized = cookies.get('user-initialized') ? true : false
+    let isUserInitialized = getCookie('user-initialized') ? true : false
 
     // if user is logged in
     if (token) {

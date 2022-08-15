@@ -1,20 +1,18 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import Cookies from "universal-cookie";
-import { getGeneralApiParams } from "../helpers/ApiHelpers";
+import { createSlice } from "@reduxjs/toolkit"
+import { setCookie, removeCookie } from "../helpers/Cookies"
+import { getGeneralApiParams } from "../helpers/ApiHelpers"
 
 let { selectedAddress, selectedType, city } = getGeneralApiParams()
-
-const cookie = new Cookies()
 
 const generalSlice = createSlice({
 	name: "general",
 	initialState: {
 		selectedAddress: selectedAddress,
-		ticker: '',
-		nearestWarehouse: '',
+		ticker: "",
+		nearestWarehouse: "",
 		selectedType: selectedType,
 		city: city,
-		isUserInitialized: false
+		isUserInitialized: false,
 	},
 	reducers: {
 		updateSelectedAddress: (state, action) => {
@@ -28,13 +26,12 @@ const generalSlice = createSlice({
 		},
 		updateSelectedType: (state, action) => {
 			state.selectedType = action.payload
-			cookie.remove('selected-type', { path: '/' })
-			cookie.set('selected-type', action.payload, { path: '/' })
+			setCookie("selected-type", action.payload)
 		},
 		updateIsUserInitialized: (state, action) => {
 			state.isUserInitialized = action.payload
 		},
-	}
+	},
 })
 
 export const generalReducer = generalSlice.reducer
@@ -44,5 +41,5 @@ export const {
 	updateTicker,
 	updateSelectedType,
 	updateCity,
-	updateIsUserInitialized
+	updateIsUserInitialized,
 } = generalSlice.actions

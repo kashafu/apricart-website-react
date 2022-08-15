@@ -7,14 +7,13 @@ import { addToCart } from "../../../../redux/cart.slice";
 import { addToWish } from "../../../../redux/wish.slice";
 import { AiOutlineHeart } from "react-icons/ai";
 import { current } from "@reduxjs/toolkit";
-import Cookies from "universal-cookie";
 import Image from "next/image";
+import { getCookie } from "../../../../helpers/Cookies";
 
 import { base_url_api } from "../../../../information.json";
 
 export default function RecommendedProducts() {
-    const cookies = new Cookies();
-    var token = cookies.get("cookies-token");
+    const token = getCookie("cookies-token");
 
     const settings = {
         dots: false,
@@ -57,7 +56,7 @@ export default function RecommendedProducts() {
     const getPopularitems = async () => {
         const response = await axios.get(
             base_url_api +
-                `/catalog/mostviewed?page=1&size=20&city=${cookies.get(
+                `/catalog/mostviewed?page=1&size=20&city=${getCookie(
                     "cities"
                 )}&lang=en`
         );
@@ -80,7 +79,7 @@ export default function RecommendedProducts() {
                 {
                     headers: {
                         "Content-Type": "application/json",
-                        Authorization: "Bearer " + cookies.get("cookies-token"),
+                        Authorization: "Bearer " + getCookie("cookies-token"),
                     },
                 }
             );
@@ -107,7 +106,7 @@ export default function RecommendedProducts() {
                 {
                     headers: {
                         "Content-Type": "application/json",
-                        Authorization: "Bearer " + cookies.get("cookies-token"),
+                        Authorization: "Bearer " + getCookie("cookies-token"),
                     },
                 }
             );

@@ -4,14 +4,13 @@ import Image from "next/image"
 import SubmitButton from "../Buttons/SubmitButton"
 import { useState, useEffect } from "react"
 import { getGeneralApiParams } from "../../../../helpers/ApiHelpers"
-import Cookies from "universal-cookie"
+import { setCookie } from "../../../../helpers/Cookies"
 import { useDispatch } from "react-redux"
 import { updateCity } from "../../../../redux/general.slice"
 
 const CitySelector = () => {
 	let { city } = getGeneralApiParams()
 	const dispatch = useDispatch()
-	const cookies = new Cookies()
 
 	const [getcity, setcity] = useState(city)
 	const [showPopup, setShowPopup] = useState(false)
@@ -19,7 +18,7 @@ const CitySelector = () => {
 	useEffect(() => {
 		if (city == null) {
 			setcity("karachi")
-			cookies.set("cities", "karachi")
+			setCookie("cities", "karachi")
 			dispatch(updateCity(karachi))
 			getLocation()
 		}
@@ -34,7 +33,7 @@ const CitySelector = () => {
 	}
 
 	const closeButton = () => {
-		cookies.set("cities", getcity)
+		setCookie("cities", getcity)
 		dispatch(updateCity(getcity))
 		setShowPopup(!showPopup)
 		// window.location.reload()
@@ -64,7 +63,7 @@ const CitySelector = () => {
 				longitude >= karachiCoords.left[1]
 			) {
 				setcity("karachi")
-				cookies.set("cities", "karachi")
+				setCookie("cities", "karachi")
 				return
 			}
 
@@ -83,7 +82,7 @@ const CitySelector = () => {
 				longitude >= peshawarCoords.left[1]
 			) {
 				setcity("peshawar")
-				cookies.set("cities", "peshawar")
+				setCookie("cities", "peshawar")
 				return
 			}
 		})
