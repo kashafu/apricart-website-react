@@ -7,10 +7,12 @@ import { getGeneralApiParams } from "../../../../helpers/ApiHelpers"
 import { setCookie } from "../../../../helpers/Cookies"
 import { useDispatch } from "react-redux"
 import { updateCity } from "../../../../redux/general.slice"
+import { useRouter } from "next/router"
 
 const CitySelector = () => {
 	let { city } = getGeneralApiParams()
 	const dispatch = useDispatch()
+	const router = useRouter()
 
 	const [getcity, setcity] = useState(city)
 	const [showPopup, setShowPopup] = useState(false)
@@ -36,7 +38,7 @@ const CitySelector = () => {
 		setCookie("cities", getcity)
 		dispatch(updateCity(getcity))
 		setShowPopup(!showPopup)
-		// window.location.reload()
+		router.push('/')
 	}
 
 	const getLocation = () => {
@@ -157,7 +159,7 @@ const CitySelector = () => {
 							</div>
 						</div>
 					}
-					handleClose={()=>{
+					handleClose={() => {
 						closeButton()
 						togglePopup()
 					}}
