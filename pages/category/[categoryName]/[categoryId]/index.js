@@ -51,12 +51,10 @@ export default function CategoryProducts() {
 									}
 									passHref
 								>
-									<a className="transition-all duration-100 rounded-xl shadow-sm px-4 border-main-blue border-2 hover:border-main-yellow">
-										<a className="flex flex-col h-full w-full items-center">
-											<p className="font-lato text-center text-main-blue text-lg font-bold py-2 truncate">
-												{name}
-											</p>
-										</a>
+									<a className="transition-all duration-100 rounded-xl shadow-sm px-4 border-main-blue border-2 hover:bg-main-blue text-main-blue hover:text-white">
+										<p className="flex flex-col h-full w-full items-center font-lato text-center text-lg font-bold py-2 truncate">
+											{name}
+										</p>
 									</a>
 								</Link>
 							)

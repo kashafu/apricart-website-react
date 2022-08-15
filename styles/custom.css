@@ -36,11 +36,17 @@ align-items: center;
 justify-content: center;
 } */
 
-a.subcatagory:hover {
+/* a.subcatagory:hover {
     background-color: #08185a;
     padding: 10px 30px;
     color: #fff !important;
+} */
+
+a:hover {
+    color: unset;
+    cursor: pointer;
 }
+
 button#dropdown-basic:hover {
     background-color: #08185a;
     color: #fff;
