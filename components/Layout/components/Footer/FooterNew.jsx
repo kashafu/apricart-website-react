@@ -2,7 +2,6 @@ import React from "react";
 import Logo from "../Logo/Logo";
 import phoneIcon from "../../../../public/assets/svgs/phoneIcon.svg";
 import globeIcon from "../../../../public/assets/svgs/globeIcon.svg";
-import addressIcon from "../../../../public/assets/svgs/addressIcon.svg";
 import playstoreImg from "../../../../public/assets/images/playstore-img.png";
 import appstoreImg from "../../../../public/assets/images/appstore-img.png";
 import cartOnly from "../../../../public/assets/images/cartonly.png";
@@ -98,7 +97,7 @@ const FooterNew = () => {
 				{/* Privacy on the right side */}
 				<div className="md:w-1/2 hidden  px-3 text-left sm:text-center justify-between sm:justify-start sm:flex sm:flex-col  text-main-blue font-lato">
 					<div>
-						<Link passHref href={"/"}>
+						<Link passHref href={"/about-us"}>
 							<h2 className="cursor-pointer hover:brightness-[5] font-lato duration-300 text-xl sm:text-3xl md:text-4xl pb-8">
 								About Us
 							</h2>
