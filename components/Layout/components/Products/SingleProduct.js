@@ -33,7 +33,7 @@ export default function SingleProduct({ product, isInStock }) {
 		minQty,
 		maxQty,
 		categoryleafName,
-		categoryIds
+		categoryIds,
 	} = product
 
 	if (isInStock) {
@@ -44,17 +44,12 @@ export default function SingleProduct({ product, isInStock }) {
 		productImageUrlThumbnail != ""
 			? productImageUrlThumbnail
 			: productImageUrl != ""
-				? productImageUrl
-				: missingImageIcon
+			? productImageUrl
+			: missingImageIcon
 
 	let immediateCategoryName = categoryleafName.split("|")[0].trim()
-	let immediateCategoryId = categoryIds.replace(/\s+/g, '').split("|")[0]
+	let immediateCategoryId = categoryIds.replace(/\s+/g, "").split("|")[0]
 	const [qty, setQty] = useState(minQty)
-	const [showAddToCart, setShowAddToCart] = useState(false)
-
-	let divStyle = showAddToCart
-		? "drop-shadow-xl z-10"
-		: "border-r-2 border-b-2"
 
 	const setQtyHandler = (type) => {
 		if (type == "increment") {
@@ -75,10 +70,13 @@ export default function SingleProduct({ product, isInStock }) {
 		let { token, headers, userId } = getGeneralApiParams()
 		let body = { sku: [product.sku] }
 		if (token) {
-			let url = base_url_api + "/watchlist/save?city=karachi&lang=en&client_type=apricart&userid=" + userId
+			let url =
+				base_url_api +
+				"/watchlist/save?city=karachi&lang=en&client_type=apricart&userid=" +
+				userId
 
 			try {
-				let response = await axios.post(url, body, {
+				await axios.post(url, body, {
 					headers: headers,
 				})
 				toast.success("Added to Shopping List")
@@ -96,16 +94,20 @@ export default function SingleProduct({ product, isInStock }) {
 	return (
 		<div>
 			{/* DESKTOP VIEW */}
-			<div
-				className={
-					"hidden relative lg:grid grid-rows-[7] bg-white px-2 h-[350px] rounded-br-lg " +
-					[divStyle]
-				}
-			>
+			<div className="hidden relative lg:grid grid-rows-[7] bg-white px-2 h-[350px] rounded-br-lg border-b-2 border-r-2 duration-75 hover:scale-110 ease-out">
 				{/* IMAGE */}
 				<div className="row-span-4 flex items-center justify-center w-full h-full">
 					<Link
-						href={"/category/" + toKebabCase(immediateCategoryName) + "/" + immediateCategoryId + "/" + toKebabCase(title) + "/" + sku}
+						href={
+							"/category/" +
+							toKebabCase(immediateCategoryName) +
+							"/" +
+							immediateCategoryId +
+							"/" +
+							toKebabCase(title) +
+							"/" +
+							sku
+						}
 						passHref
 					>
 						<a className="relative h-[150px] w-[150px]">
@@ -136,9 +138,7 @@ export default function SingleProduct({ product, isInStock }) {
 						Rs. {currentPrice}
 					</p>
 				)}
-				<div
-					className="row-span-1 h-[40px]"
-				>
+				<div className="row-span-1 h-[40px]">
 					{inStock ? (
 						<div className="relative flex flex-row items-center space-x-2 xl:space-x-6 mr-2 justify-between h-full">
 							<div className="grid grid-cols-3 justify-items-center rounded border-2 border-main-yellow h-full grow">
@@ -227,16 +227,20 @@ export default function SingleProduct({ product, isInStock }) {
 				</div>
 			</div>
 			{/* MOBILE VIEW */}
-			<div
-				className={
-					"lg:hidden grid grid-flow-row bg-white px-2 h-[250px] rounded-br-lg " +
-					[divStyle]
-				}
-			>
+			<div className="lg:hidden grid grid-flow-row bg-white px-2 h-[250px] rounded-br-lg border-b-2 border-r-2 duration-75 hover:scale-110 ease-out">
 				{/* IMAGE */}
 				<div className="row-span-4 flex items-center justify-center w-full h-full">
 					<Link
-						href={"/category/" + toKebabCase(immediateCategoryName) + "/" + immediateCategoryId + "/" + toKebabCase(title) + "/" + sku}
+						href={
+							"/category/" +
+							toKebabCase(immediateCategoryName) +
+							"/" +
+							immediateCategoryId +
+							"/" +
+							toKebabCase(title) +
+							"/" +
+							sku
+						}
 						passHref
 					>
 						<a className="relative h-[100px] w-[100px]">
@@ -269,12 +273,6 @@ export default function SingleProduct({ product, isInStock }) {
 				)}
 				<div
 					className="z-90 bg-white drop-shadow-[0_35px_35px_35px_rgba(0,0,0,0.25)] bottom-[-35px] py-2 row-span-1 flex flex-col lg:flex-row items-center justify-between w-full"
-					onMouseEnter={() => {
-						setShowAddToCart(true)
-					}}
-					onMouseLeave={() => {
-						setShowAddToCart(false)
-					}}
 				>
 					{/* QUANTITY hidden on phone */}
 					{inStock && (
@@ -310,7 +308,6 @@ export default function SingleProduct({ product, isInStock }) {
 					)}
 					<div className="relative flex flex-row items-center justify-around lg:justify-end space-x-2 h-full w-full mr-2">
 						{inStock ? (
-							// {/* ADD TO CART */}
 							<button
 								className="h-[40px] px-2 bg-main-yellow font-bold text-xs lg:text-md rounded text-main-blue"
 								onClick={() => {
