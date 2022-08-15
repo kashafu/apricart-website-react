@@ -94,7 +94,7 @@ export default function SingleProduct({ product, isInStock }) {
 	return (
 		<div>
 			{/* DESKTOP VIEW */}
-			<div className="hidden relative lg:grid grid-rows-[7] bg-white px-2 h-[350px] rounded-br-lg border-b-2 border-r-2 duration-75 hover:scale-110 ease-out">
+			<div className="hidden relative lg:grid grid-rows-[7] bg-white px-2 h-[350px] rounded-br-lg border-b-2 border-r-2 duration-75 hover:scale-105 ease-out hover:z-20 hover:border-main-blue hover:shadow-2xl hover:shadow-main-yellow hover:border-2 hover:rounded-lg">
 				{/* IMAGE */}
 				<div className="row-span-4 flex items-center justify-center w-full h-full">
 					<Link
@@ -141,7 +141,7 @@ export default function SingleProduct({ product, isInStock }) {
 				<div className="row-span-1 h-[40px]">
 					{inStock ? (
 						<div className="relative flex flex-row items-center space-x-2 xl:space-x-6 mr-2 justify-between h-full">
-							<div className="grid grid-cols-3 justify-items-center rounded border-2 border-main-yellow h-full grow">
+							<div className="grid grid-cols-3 justify-items-center rounded border-2 border-main-blue h-full grow">
 								<button
 									className="relative bg-white w-full"
 									onClick={() => {
@@ -154,7 +154,7 @@ export default function SingleProduct({ product, isInStock }) {
 										alt={"icon"}
 									/>
 								</button>
-								<div className="flex flex-col bg-main-yellow font-bold w-full text-main-blue text-2xl text-center">
+								<div className="flex flex-col bg-main-yellow font-bold w-full text-main-blue text-2xl text-center border-x-2 border-main-blue">
 									<p className="mt-auto mb-auto">{qty}</p>
 								</div>
 								<button
@@ -172,7 +172,7 @@ export default function SingleProduct({ product, isInStock }) {
 							</div>
 							<div className="flex space-x-1 xl:space-x-2">
 								<button
-									className="flex items-center"
+									className="flex items-center border-2 border-main-blue rounded-full overflow-hidden"
 									onClick={() => {
 										setIsPlaceOrder(true)
 									}}
@@ -186,7 +186,7 @@ export default function SingleProduct({ product, isInStock }) {
 								</button>
 								{/* WISHLIST */}
 								<button
-									className="flex items-center"
+									className="flex items-center border-2 border-main-blue rounded-lg"
 									onClick={() => {
 										addToWishlistApi()
 									}}

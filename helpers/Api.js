@@ -8,6 +8,7 @@ import { addToCart, decrementQuantity, incrementQuantity, removeFromCart } from 
 import { updateTicker } from "../redux/general.slice"
 import { toast } from 'react-toastify'
 import { setCookie } from "./Cookies"
+import { updateCategories } from "../redux/data.slice"
 
 const fullUrl = (url) => {
 	let { city, userId, clientType, orderType, prodType } =
@@ -206,6 +207,7 @@ export const useHomeApi = () => {
 			setResponse(apiResponse)
 			setHomeData(apiResponse.data.data)
 			setCategories(apiResponse.data.data.categories)
+			dispatch(updateCategories(apiResponse.data.data.categories))
 			setBanners(apiResponse.data.data.banners)
 			setTicker(apiResponse.data.data.ticker)
 			dispatch(updateTicker(apiResponse.data.data.ticker))
