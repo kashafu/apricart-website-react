@@ -32,8 +32,10 @@ export default function SearchBar() {
 	}, [selectedCategoryId])
 
 	useEffect(()=>{
-		if(categories && categoriesSelector){
-			dispatch(updateCategories(categories))
+		if(categories){
+			if(categoriesSelector.length == 0){
+				dispatch(updateCategories(categories))
+			}
 		}
 	}, [categories, categoriesSelector])
 
