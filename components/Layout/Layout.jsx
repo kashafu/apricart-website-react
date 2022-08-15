@@ -1,11 +1,9 @@
 import React, { createContext, useState } from "react"
 import TopBar from "./components/TopBar/TopBar"
 import Header from "./components/Header/Header"
-import Footer from "./components/Footer/Footer"
 import Copyrights from "./components/Footer/Copyrights"
 import { useRouter } from "next/router"
-import TypeCardSelector from "./components/Cards/TypeCardSelector"
-import FooterNew from "./components/Footer/FooterNew"
+import Footer from "./components/Footer/Footer"
 export const AppContext = createContext()
 
 export default function Layout(props) {
@@ -38,7 +36,7 @@ export default function Layout(props) {
 					router.pathname === "/faqs-mobile"
 				) && (
 					<div className="mt-auto">
-						<FooterNew />
+						<Footer />
 						<Copyrights />
 					</div>
 				)}
