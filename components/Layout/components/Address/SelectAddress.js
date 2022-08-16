@@ -6,7 +6,7 @@ import SubmitButton from "../Buttons/SubmitButton"
 import AddressCard from "./AddressCard"
 import SingleAddressListing from "./SingleAddressListing"
 import { useDispatch } from "react-redux";
-import { updateSelectedAddress } from "../../../../redux/general.slice"
+import { updateCity, updateSelectedAddress } from "../../../../redux/general.slice"
 import { setCookie } from "../../../../helpers/Cookies"
 
 /*
@@ -49,8 +49,9 @@ export default function SelectAddress({ type, setAddress, dropDownSelectedAddres
         }
         else {
             setCookie('selected-address', e.target.value)
-            setCookie("cities", e.target.value?.city)
             dispatch(updateSelectedAddress(e.target.value))
+            setCookie("cities", e.target.value?.city.toLowerCase())
+            dispatch(updateCity(e.target.value?.city.toLowerCase()))
         }
     }
 
