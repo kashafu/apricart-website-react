@@ -1,5 +1,5 @@
 import Link from "next/link"
-import Cookies from "universal-cookie"
+import { setCookie, getCookie } from "../../../../helpers/Cookies"
 import heartIcon from "../../../../public/assets/svgs/heartIcon.svg"
 import { getGeneralApiParams } from "../../../../helpers/ApiHelpers"
 import SearchBar from "../SearchBar/SearchBar"
@@ -8,44 +8,39 @@ import Logo from "../Logo/Logo"
 import Profile from "../Auth/Profile"
 import Image from "next/image"
 import CartSlider from "../Cart/CartSlider"
-import CitySelector from "../CitySelector/CitySelector"
+import CitySelector from "../Selectors/CitySelector"
 import { useState, useEffect } from "react"
+import AddressSelector from "../Selectors/AddressSelector"
 
 export default function Header() {
-	const cookies = new Cookies()
-
 	let { token } = getGeneralApiParams()
 	const [offset, setOffset] = useState(0);
 
-	if (!cookies.get("guestUserId")) {
-		const d = new Date()
-		cookies.set("guestUserId", "desktopuser_" + d.getTime(), 30)
-	}
+	useEffect(() => {
+		if (!getCookie("guestUserId")) {
+			const d = new Date()
+			setCookie("guestUserId", "desktopuser_" + d.getTime())
+		}
 
-	if(!cookies.get("selected-type")){
-		cookies.remove('selected-type', {path: '/'})
-		cookies.set('selected-type', 'home', {path: '/'})
-	}
+		if (!getCookie("selected-type")) {
+			setCookie('selected-type', 'home')
+		}
 
-useEffect(() => {
-	const onScroll = () => setOffset(window.pageYOffset);
-	// clean up code
-	window.removeEventListener('scroll', onScroll);
-	window.addEventListener('scroll', onScroll, { passive: true });
-	return () => window.removeEventListener('scroll', onScroll);
-}, [])
+		const onScroll = () => setOffset(window.pageYOffset);
+		// clean up code
+		window.removeEventListener('scroll', onScroll);
+		window.addEventListener('scroll', onScroll, { passive: true });
+		return () => window.removeEventListener('scroll', onScroll);
+	}, [])
 
 
 	return (
-		<div className="flex flex-col bg-white py-2 md:py-8 space-y-2 border-b relative">
-			
-		{/* <div className="flex flex-col bg-white px-2 md:px-12 py-2 md:py-8 space-y-2 border-b relative"> */}
-			<div className={offset>=20 ?" flex flex-row py-2 transition-all fixed top-0 duration-200 ease-linear z-20 px-2 bg-white  w-full items-center md:py-2":"flex flex-row py-2 transition-all fixed top-[50px] z-20 px-2 bg-white w-full items-center md:py-2 duration-300 ease-linear"}>
-			{/* <div className="flex flex-row fixed z-20 bg-white w-full items-center space-x-2 md:space-x-4"> */}
+		<div className="flex flex-col py-2 md:py-8 space-y-2 border-b relative h-[45px]">
+			<div className={offset >= 20 ? "flex flex-row py-2 transition-all fixed top-0 duration-100 ease-linear z-20 px-2 bg-slate-100 w-full items-center md:py-2" : "flex flex-row py-2 transition-all fixed top-[50px] z-20 px-2 bg-slate-100 w-full items-center md:py-2 duration-300 ease-linear"}>
 				<div className="lg:hidden pr-2">
 					<HamburgerMenu />
 				</div>
-				<div className="hidden lg:block lg:w-[200px]">
+				<div className="hidden lg:block lg:w-[200px] px-4">
 					<Logo />
 				</div>
 				<div className="grow">
@@ -54,16 +49,21 @@ useEffect(() => {
 				<div className="lg:hidden px-2 flex flex-row pr-4">
 					<CartSlider />
 				</div>
-				<div className="hidden lg:inline-flex  lg:flex-row lg:space-x-4 lg:items-center">
+				<div className="h-full hidden lg:inline-flex  lg:flex-row lg:space-x-4 lg:items-center">
 					<div>
-						<CitySelector />
+						{token ? (
+							<AddressSelector />
+						) : (
+							<CitySelector />
+						)}
 					</div>
 					<Link href={"/wishlist"} passHref>
-						<a className="flex items-center">
+						<a className="flex items-center relative w-[45px] h-[45px]">
 							<Image
 								src={heartIcon}
-								width={45}
-								height={45}
+								// width={45}
+								// height={45}
+								layout='fixed'
 								alt="wishlist icon"
 							/>
 						</a>
@@ -72,7 +72,7 @@ useEffect(() => {
 						<CartSlider />
 					</div>
 					{token ? (
-						<div>
+						<div className="flex-col h-full">
 							<Profile />
 						</div>
 					) : (
@@ -92,12 +92,6 @@ useEffect(() => {
 					)}
 				</div>
 			</div>
-
-			{/* {router.pathname === "/" && (
-				<div className="pt-[3rem] lg:pt-[10rem] md:pt-[5rem] px-2">
-				<TypeCardSelector />
-				</div>
-			)} */}
 		</div>
 	)
 }

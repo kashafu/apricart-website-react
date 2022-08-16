@@ -4,11 +4,15 @@ import Image from "next/image"
 import SubmitButton from "../Buttons/SubmitButton"
 import { useState, useEffect } from "react"
 import { getGeneralApiParams } from "../../../../helpers/ApiHelpers"
-import Cookies from "universal-cookie"
+import { setCookie } from "../../../../helpers/Cookies"
+import { useDispatch } from "react-redux"
+import { updateCity } from "../../../../redux/general.slice"
+import { useRouter } from "next/router"
 
 const CitySelector = () => {
 	let { city } = getGeneralApiParams()
-	const cookies = new Cookies()
+	const dispatch = useDispatch()
+	const router = useRouter()
 
 	const [getcity, setcity] = useState(city)
 	const [showPopup, setShowPopup] = useState(false)
@@ -16,7 +20,8 @@ const CitySelector = () => {
 	useEffect(() => {
 		if (city == null) {
 			setcity("karachi")
-			cookies.set("cities", "karachi")
+			setCookie("cities", "karachi")
+			dispatch(updateCity(karachi))
 			getLocation()
 		}
 	}, [])
@@ -30,9 +35,10 @@ const CitySelector = () => {
 	}
 
 	const closeButton = () => {
-		cookies.set("cities", getcity)
+		setCookie("cities", getcity)
+		dispatch(updateCity(getcity))
 		setShowPopup(!showPopup)
-		window.location.reload()
+		router.push('/')
 	}
 
 	const getLocation = () => {
@@ -59,7 +65,7 @@ const CitySelector = () => {
 				longitude >= karachiCoords.left[1]
 			) {
 				setcity("karachi")
-				cookies.set("cities", "karachi")
+				setCookie("cities", "karachi")
 				return
 			}
 
@@ -78,7 +84,7 @@ const CitySelector = () => {
 				longitude >= peshawarCoords.left[1]
 			) {
 				setcity("peshawar")
-				cookies.set("cities", "peshawar")
+				setCookie("cities", "peshawar")
 				return
 			}
 		})
@@ -128,24 +134,22 @@ const CitySelector = () => {
 										Karachi
 									</p>
 								</div>
-								{/* <div className="flex flex-row space-x-2 items-center">
-										<input
-											className=""
-											type="radio"
-											name="cities"
-											value="peshawar"
-											checked={getcity === "peshawar"}
-											onChange={handleCity}
-										/>
-										<p className="text-main-bue font-bold">
-											Peshawar
-										</p>
-									</div> */}
+								<div className="flex flex-row space-x-2 items-center">
+									<input
+										className=""
+										type="radio"
+										name="cities"
+										value="peshawar"
+										checked={getcity === "peshawar"}
+										onChange={handleCity}
+									/>
+									<p className="text-main-bue font-bold">
+										Peshawar
+									</p>
+								</div>
 							</div>
 							<p className="text-main-blue font-bold text-sm">
-								Home Delivery is currently unavailable in
-								Peshawar, please install our app for Bulk Buy in
-								Peshawar
+								Only Bulk Buy is available in Peshawar
 							</p>
 							<div className="w-3/4">
 								<SubmitButton
@@ -155,7 +159,10 @@ const CitySelector = () => {
 							</div>
 						</div>
 					}
-					handleClose={togglePopup}
+					handleClose={() => {
+						closeButton()
+						togglePopup()
+					}}
 				/>
 			)}
 		</div>

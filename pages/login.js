@@ -2,7 +2,7 @@ import axios from "axios"
 import { useRouter } from "next/router"
 import { useState } from "react"
 import Link from "next/link"
-import Cookies from "universal-cookie"
+import { setCookie } from "../helpers/Cookies"
 import { getGeneralApiParams } from "../helpers/ApiHelpers"
 import { base_url_api } from '../information.json'
 import TextField from "../components/Layout/components/Input/TextField"
@@ -14,7 +14,6 @@ import { toast } from "react-toastify";
 
 export default function Login() {
     const router = useRouter();
-    const cookies = new Cookies();
     let { city, headers, userId } = getGeneralApiParams();
 
     const [phoneNumber, setPhoneNumber] = useState('')
@@ -39,12 +38,12 @@ export default function Login() {
             )
 
             if (response.data.status == 1) {
-                cookies.set("cookies-message", response.data.message)
-                cookies.set("cookies-token", response.data.data.token)
-                cookies.set("cookies-name", response.data.data.name)
-                cookies.set("cookies-email", response.data.data.email)
-                cookies.set("cookies-phoneNumber", response.data.data.phoneNumber)
-                cookies.set("cookies-userId", response.data.data.userId)
+                setCookie("cookies-message", response.data.message)
+                setCookie("cookies-token", response.data.data.token)
+                setCookie("cookies-name", response.data.data.name)
+                setCookie("cookies-email", response.data.data.email)
+                setCookie("cookies-phoneNumber", response.data.data.phoneNumber)
+                setCookie("cookies-userId", response.data.data.userId)
                 setErrorMessage('')
                 router.push('/')
             }

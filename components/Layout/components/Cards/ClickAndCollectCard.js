@@ -1,20 +1,38 @@
 import Image from "next/image"
 import Link from "next/link"
 import clickAndCollectIcon from "../../../../public/assets/svgs/clickAndCollectIcon.svg"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import Popup from "../Popup/Popup"
 import playstoreImg from "../../../../public/assets/images/playstore-img.png"
 import appstoreImg from "../../../../public/assets/images/appstore-img.png"
+import { useDispatch, useSelector } from "react-redux"
 
-export default function ClickAndCollectCard() {
+export default function ClickAndCollectCard({ isDisabled }) {
 	const [showPopup, setShowPopup] = useState(false)
+
+	const dispatch = useDispatch()
+
+	const [style, setStlye] = useState('')
+	const [pStyle, setPStyle] = useState('')
+	const [disabledStyle, setDisabledStyle] = useState('')
+	const selectedTypeSelector = useSelector((state) => state.general.selectedType)
+
+	useEffect(() => {
+		setStlye(selectedTypeSelector === 'cnc' ? 'bg-main-green' : '')
+		setPStyle(selectedTypeSelector === 'cnc' ? 'text-white' : 'text-main-blue')
+	}, [selectedTypeSelector])
+
+	useEffect(() => {
+		setDisabledStyle(isDisabled ? 'bg-main-grey grayscale' : '')
+	}, [isDisabled])
 
 	return (
 		<button
-			className="relative bg-white rounded-lg shadow flex flex-col grow p-2 items-center"
+			className={[style] + ' relative rounded-lg shadow flex flex-col grow p-2 items-center ' + [disabledStyle]}
 			onClick={() => {
 				setShowPopup(!showPopup)
 			}}
+			disabled={isDisabled}
 		>
 			<div className="hidden absolute self-start font-bold text-main-blue lg:inline text-2xl xl:text-3xl 2xl:text-4xl">
 				<p>CLICK & COLLECT</p>

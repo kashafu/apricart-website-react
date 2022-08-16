@@ -2,12 +2,14 @@ import { useRouter } from "next/router"
 import Categories from "../../../../components/Layout/components/Categories/Categories"
 import SingleProduct from "../../../../components/Layout/components/Products/SingleProduct"
 import PageHeading from "../../../../components/Layout/components/Typography/PageHeading"
-import Image from "next/image"
 import Link from "next/link"
 import HeadTag from "../../../../components/Layout/components/Head/HeadTag"
 import toKebabCase from "../../../../helpers/toKebabCase"
 import { fromKebabCase } from "../../../../helpers/toKebabCase"
-import { useCategoryProductsApi, useSubCategoriesApi } from "../../../../helpers/Api"
+import {
+	useCategoryProductsApi,
+	useSubCategoriesApi,
+} from "../../../../helpers/Api"
 
 export default function CategoryProducts() {
 	const router = useRouter()
@@ -19,9 +21,7 @@ export default function CategoryProducts() {
 		if (isLoading) {
 			return (
 				<div>
-					<p>
-						Loading
-					</p>
+					<p>Loading</p>
 				</div>
 			)
 		}
@@ -29,9 +29,7 @@ export default function CategoryProducts() {
 		if (!subCategories) {
 			return (
 				<div>
-					<p>
-						{errorMessage}
-					</p>
+					<p>{errorMessage}</p>
 				</div>
 			)
 		}
@@ -39,39 +37,26 @@ export default function CategoryProducts() {
 		return (
 			<section>
 				{subCategories.length > 0 && (
-					<div className="grid grid-flow-col overflow-y-auto h-full w-full gap-4 py-8">
+					<div className="flex overflow-y-auto h-full w-full gap-4 py-4 px-2">
 						{subCategories.map((category) => {
-							let { id, name, image } = category
+							let { id, name } = category
 							return (
-								<div
+								<Link
 									key={id}
-									className="border rounded-md shadow w-[150px]"
+									href={
+										"/category/" +
+										toKebabCase(name) +
+										"/" +
+										id
+									}
+									passHref
 								>
-									<Link
-										href="/category/[categoryName]/[id]"
-										as={
-											"/category/" +
-											toKebabCase(name) +
-											"/" +
-											id
-										}
-										passHref
-									>
-										<a className="flex flex-col h-full w-full items-center">
-											<p className="font-lato text-center text-main-blue text-lg font-bold py-2">
-												{name}
-											</p>
-											<Image
-												src={image}
-												height={100}
-												width={100}
-												alt={
-													"category image"
-												}
-											/>
-										</a>
-									</Link>
-								</div>
+									<a className="transition-all duration-100 rounded-xl shadow-sm px-4 border-main-blue border-2 hover:bg-main-blue text-main-blue hover:text-white">
+										<p className="flex flex-col h-full w-full items-center font-lato text-center text-lg font-bold py-2 truncate">
+											{name}
+										</p>
+									</a>
+								</Link>
 							)
 						})}
 					</div>
@@ -81,14 +66,13 @@ export default function CategoryProducts() {
 	}
 
 	const CategoryProducts = () => {
-		const { isLoading, categoryProducts, errorMessage } = useCategoryProductsApi()
+		const { isLoading, categoryProducts, errorMessage } =
+			useCategoryProductsApi()
 
 		if (isLoading) {
 			return (
 				<div>
-					<p>
-						Loading
-					</p>
+					<p>Loading</p>
 				</div>
 			)
 		}
@@ -96,9 +80,7 @@ export default function CategoryProducts() {
 		if (!categoryProducts) {
 			return (
 				<div>
-					<p>
-						{errorMessage}
-					</p>
+					<p>{errorMessage}</p>
 				</div>
 			)
 		}
@@ -106,9 +88,7 @@ export default function CategoryProducts() {
 		if (categoryProducts.length == 0) {
 			return (
 				<div>
-					<p>
-						No items to show
-					</p>
+					<p>No items to show</p>
 				</div>
 			)
 		}
@@ -121,7 +101,7 @@ export default function CategoryProducts() {
 						<div key={id}>
 							<SingleProduct
 								product={product}
-							// TODO call api to get updated details of product and check if it is in stock
+								// TODO call api to get updated details of product and check if it is in stock
 							/>
 						</div>
 					)
@@ -130,15 +110,18 @@ export default function CategoryProducts() {
 		)
 	}
 
-	if(!router.isReady){
-		return(
-			<></>
-		)
+	if (!router.isReady) {
+		return <></>
 	}
 
 	return (
 		<div>
-			<HeadTag title={fromKebabCase(categoryName)[0].toUpperCase() + fromKebabCase(categoryName).substring(1)} />
+			<HeadTag
+				title={
+					fromKebabCase(categoryName)[0].toUpperCase() +
+					fromKebabCase(categoryName).substring(1)
+				}
+			/>
 			<div className="grid grid-cols-5 gap-8">
 				{/* CATEGORIES SECTION */}
 				<section className="hidden lg:col-span-1 lg:block">

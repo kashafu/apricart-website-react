@@ -1,6 +1,5 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
-import Link from "next/link";
 import Image from "next/image";
 import {
 	incrementQuantity,
@@ -53,7 +52,7 @@ export default function CartSlider() {
 	}, [selectedTypeSelector]);
 
 	const getCartDataApi = async () => {
-		let { headers, city, userId, clientType, prodType, orderType } = getGeneralApiParams();
+		let { headers, clientType, prodType, orderType } = getGeneralApiParams();
 		let lat = 0;
 		let long = 0;
 		let body = {
@@ -88,7 +87,7 @@ export default function CartSlider() {
 			(accumulator, item) =>
 				accumulator +
 				item.qty *
-					(item.specialPrice > 0 ? item.specialPrice : item.currentPrice),
+				(item.specialPrice > 0 ? item.specialPrice : item.currentPrice),
 			0
 		);
 	};
@@ -197,8 +196,14 @@ export default function CartSlider() {
 					setShowCart(!showCart);
 				}}
 			>
-				<Image src={cartIcon} alt={"icon"} width={45} height={45} />
-				<p className="absolute -top-1 p-[5px] py-0 -right-2 bg-main-blue rounded-full text-xs text-white">{reduxCart.length}</p>
+				<div className="w-[45] h-[45] flex items-center">
+					<Image src={cartIcon} alt={"icon"} width={45} height={45} layout='fixed' />
+					<p className="absolute -top-1 p-[5px] py-0 -right-2 bg-main-blue rounded-full text-xs text-white">{reduxCart.length}</p>
+					{/* <div className="absolute mx-auto left-0 right-0 -bottom-4 flex items-center">
+						<p className="text-xs font-bold text-main-blue whitespace-nowrap">RS. {getTotalPrice()}</p>
+					</div> */}
+					{/* <p className="absolute top-[50%] left-[50%] translate-x-[50%] translate-y-[50%] text-[5px]">0</p> */}
+				</div>
 			</button>
 			{
 				<div className={" w-full h-full transition-all ease-in duration-500"}>

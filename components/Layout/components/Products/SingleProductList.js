@@ -32,8 +32,7 @@ export default function SingleProductList({ product, isInStock }) {
 	return (
 		<div className="flex flex-row w-full bg-white rounded-lg items-center shadow overflow-hidden">
 			<Link
-				href="/category/[categoryName]/[categoryId]/[productName]/[productId]"
-				as={
+				href={
 					"/category/" +
 					toKebabCase(immediateCategoryName) +
 					"/" +

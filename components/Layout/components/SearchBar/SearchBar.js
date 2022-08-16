@@ -6,22 +6,22 @@ import { base_url_api } from "../../../../information.json"
 import SingleProductList from "../Products/SingleProductList"
 import toKebabCase from "../../../../helpers/toKebabCase"
 import { useCategoriesApi } from "../../../../helpers/Api"
+import { useSelector } from "react-redux"
+import { useDispatch } from "react-redux"
+import { updateCategories } from "../../../../redux/data.slice"
 
 export default function SearchBar() {
 	const [searchText, setSearchText] = useState("")
 	const [searchResults, setSearchResults] = useState([])
 	const [showSearchResults, setShowSearchResults] = useState(false)
-	// const [categories, setCategories] = useState(null)
 	const [selectedCategoryId, setSelectedCategoryId] = useState("")
 	const [selectedCategoryName, setSelectedCategoryName] = useState("")
 	const { categories } = useCategoriesApi()
 
+	const dispatch = useDispatch()
 	const searchIconElement = useRef()
 	const router = useRouter()
-
-	// useEffect(() => {
-	// 	getCategoriesApi()
-	// }, [])
+	const categoriesSelector = useSelector((state) => state.data.categories)
 
 	useEffect(() => {
 		if (selectedCategoryId !== "") {
@@ -30,6 +30,14 @@ export default function SearchBar() {
 			)
 		}
 	}, [selectedCategoryId])
+
+	useEffect(() => {
+		if (categories) {
+			if (categoriesSelector.length == 0) {
+				dispatch(updateCategories(categories))
+			}
+		}
+	}, [categories, categoriesSelector])
 
 	const getSearchResultsApi = async (searchTerm) => {
 		if (searchTerm.length <= 2) {
@@ -56,32 +64,15 @@ export default function SearchBar() {
 		setSearchResults(searchResponse.data.data)
 	}
 
-	// const getCategoriesApi = async () => {
-	// 	let { city, headers, userId } = getGeneralApiParams()
-	// 	let url =
-	// 		base_url_api +
-	// 		"/catalog/categories?level=all&client_type=apricart&city=" +
-	// 		city + "&userid=" + userId 
-
-	// 	try {
-	// 		let response = await axios.get(url, {
-	// 			headers: headers,
-	// 		})
-	// 		setCategories(response.data.data)
-	// 	} catch (error) {
-	// 		console.log(error)
-	// 	}
-	// }
-
 	return (
 		<div className="relative w-full">
-			<div className="flex flex-row bg-main-grey-200 rounded-lg w-full">
+			<div className="flex flex-row bg-slate-300 rounded-lg w-full">
 				<select
-					disabled={categories == null}
+					disabled={categoriesSelector == null}
 					className="py-2 rounded-lg bg-main-grey w-1/2 font-bold text-xs"
 					onChange={(e) => {
 						setSelectedCategoryId(e.target.value)
-						categories.find((item) => {
+						categoriesSelector.find((item) => {
 							if (item.id == e.target.value) {
 								setSelectedCategoryName(item.name)
 							}
@@ -92,8 +83,8 @@ export default function SearchBar() {
 					<option value={""} disabled selected>
 						Categories
 					</option>
-					{categories &&
-						categories.map((option) => {
+					{categoriesSelector &&
+						categoriesSelector.map((option) => {
 							return (
 								<option key={option.id} value={option.id}>
 									{option.name}
@@ -103,7 +94,7 @@ export default function SearchBar() {
 				</select>
 				<input
 					ref={searchIconElement}
-					className="p-2 w-full bg-main-grey-200 rounded-lg font-bold"
+					className="p-2 w-full bg-slate-300 rounded-lg font-bold"
 					type={"search"}
 					value={searchText}
 					onChange={(e) => {

@@ -1,10 +1,9 @@
 import React, { createContext, useState } from "react"
 import TopBar from "./components/TopBar/TopBar"
 import Header from "./components/Header/Header"
-import Footer from "./components/Footer/Footer"
 import Copyrights from "./components/Footer/Copyrights"
 import { useRouter } from "next/router"
-import TypeCardSelector from "./components/Cards/TypeCardSelector"
+import Footer from "./components/Footer/Footer"
 export const AppContext = createContext()
 
 export default function Layout(props) {
@@ -24,16 +23,10 @@ export default function Layout(props) {
 					<div>
 						<TopBar />
 						<Header />
-						{router.pathname === "/" && (
-							<div className="pt-[3rem] lg:pt-[6rem] md:pt-[5rem]  bg-white">
-								<TypeCardSelector />
-							</div>
-						)}
 					</div>
 				)}
-				<div className="flex-1 min-h-full min-w-full py-2 px-2 md:px-8 bg-white">
-					{/* <div className="p-4"> */}
-					<div className="pt-[3rem] lg:pt-[7rem] md:pt-[5rem]">
+				<div className="flex-1 min-h-full min-w-full pt-2 pb-10 px-2 md:px-8 bg-white">
+					<div className="pt-[3rem] lg:pt-[5rem]">
 						{props.children}
 					</div>
 				</div>

@@ -12,7 +12,8 @@ import {
 } from "../../../../helpers/ApiHelpers"
 import SubmitButton from "../Buttons/SubmitButton"
 import LinkButton from "../Buttons/LinkButton"
-import CitySelector from "../CitySelector/CitySelector"
+import CitySelector from "../Selectors/CitySelector"
+import AddressSelector from "../Selectors/AddressSelector"
 
 export default function HamburgerMenu() {
 	const router = useRouter()
@@ -64,8 +65,14 @@ export default function HamburgerMenu() {
 								</p>
 							)}
 							<div className="items-center align-center space-y-2">
-								<div className="py-2">
-									<CitySelector />
+								<div className="py-2" onClick={() => {
+									setShowMenu(!showMenu)
+								}}>
+									{token ? (
+										<AddressSelector />
+									) : (
+										<CitySelector />)
+									}
 								</div>
 								<LinkButton
 									text={"View Categories"}
@@ -115,7 +122,7 @@ export default function HamburgerMenu() {
 									text={"ACCOUNT"}
 									onClick={() => {
 										setShowMenu(!showMenu)
-										router.push("/profile_user")
+										router.push("/profile")
 									}}
 								/>
 								<SubmitButton
@@ -140,6 +147,7 @@ export default function HamburgerMenu() {
 									}}
 								/>
 								<SubmitButton
+									bgColor={'bg-red-600'}
 									text={"LOGOUT"}
 									onClick={() => {
 										logout()

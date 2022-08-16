@@ -1,24 +1,15 @@
-import React, { useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import Image from "next/image"
 import { useRouter } from "next/router"
 import Categories from "../../../../../components/Layout/components/Categories/Categories"
 import RelatedProduct from "../../../../../components/Layout/components/RelatedProduct/RelatedProduct"
-import { useDispatch } from "react-redux"
-import { addToCart } from "../../../../../redux/cart.slice"
-import Cookies from "universal-cookie"
-import { base_url_api } from "../../../../../information.json"
-import { getGeneralApiParams } from "../../../../../helpers/ApiHelpers"
 import { toast } from "react-toastify"
-import axios from "axios"
 import HeadTag from "../../../../../components/Layout/components/Head/HeadTag"
 import minusIcon from "../../../../../public/assets/svgs/minusIcon.svg"
 import plusIcon from "../../../../../public/assets/svgs/plusIcon.svg"
 import { useAddToCartApi, useProductDetailsApi } from "../../../../../helpers/Api"
 
 export default function ProductDetail() {
-	const dispatch = useDispatch()
-	const cookies = new Cookies()
-	let isLoggedIn = cookies.get("cookies-token") != null
 	const router = useRouter()
 	const { productId, productName } = router.query
 
@@ -33,6 +24,7 @@ export default function ProductDetail() {
 			setQty(qty + 1)
 		} else if (type == "decrement") {
 			if (qty == productData[0].minQty) {
+				toast.error("Cannot order less than minimum quantity")
 				return
 			}
 			setQty(qty - 1)

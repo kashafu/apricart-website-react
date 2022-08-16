@@ -2,13 +2,12 @@ import { useEffect, useState } from "react"
 import { getGeneralApiParams } from "../../../../helpers/ApiHelpers"
 import { base_url_api } from '../../../../information.json'
 import axios from "axios"
-import Cookies from "universal-cookie"
 import SubmitButton from "../Buttons/SubmitButton"
 import AddressCard from "./AddressCard"
 import SingleAddressListing from "./SingleAddressListing"
 import { useDispatch } from "react-redux";
-import { updateSelectedAddress } from "../../../../redux/general.slice"
-const cookies = new Cookies();
+import { updateCity, updateSelectedAddress } from "../../../../redux/general.slice"
+import { setCookie } from "../../../../helpers/Cookies"
 
 /*
     type can be 'checkout', 'manage' 
@@ -21,7 +20,6 @@ export default function SelectAddress({ type, setAddress, dropDownSelectedAddres
     const [selectedAddress, setSelectedAddress] = useState(getGeneralApiParams().selectedAddress)
     const [showAddressCard, setShowAddressCard] = useState(false)
     const dispatch = useDispatch()
-    // const generalStore = useSelector((state)=>state.general)
 
     useEffect(() => {
         getSavedAddressesApi()
@@ -50,9 +48,10 @@ export default function SelectAddress({ type, setAddress, dropDownSelectedAddres
             setAddress(e.target.value)
         }
         else {
-            cookies.remove('selected-address', {path: '/'})
-            cookies.set('selected-address', e.target.value, {path: '/'})
+            setCookie('selected-address', e.target.value)
             dispatch(updateSelectedAddress(e.target.value))
+            setCookie("cities", e.target.value?.city.toLowerCase())
+            dispatch(updateCity(e.target.value?.city.toLowerCase()))
         }
     }
 
@@ -77,7 +76,7 @@ export default function SelectAddress({ type, setAddress, dropDownSelectedAddres
                             Select Address
                         </option>
                         {savedAddresses.map((option) => {
-                            let tempSelectedAddress = typeof(dropDownSelectedAddress) === 'object' ? dropDownSelectedAddress : JSON.parse(dropDownSelectedAddress)
+                            let tempSelectedAddress = typeof (dropDownSelectedAddress) === 'object' ? dropDownSelectedAddress : JSON.parse(dropDownSelectedAddress)
                             return (
                                 <option
                                     selected={dropDownSelectedAddress ? tempSelectedAddress.id == option.id : false}
@@ -122,13 +121,6 @@ export default function SelectAddress({ type, setAddress, dropDownSelectedAddres
                     />
                 </div>
             )}
-
-            {/* <SubmitButton
-                text={"Add Address"}
-                onClick={() => {
-                    setShowAddressCard(!showAddressCard)
-                }}
-            /> */}
             {showAddressCard && (
                 <AddressCard
                     type={'add'}

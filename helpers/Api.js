@@ -5,10 +5,10 @@ import { base_url_api } from "../information.json"
 import { getGeneralApiParams } from "./ApiHelpers"
 import { useRouter } from "next/router"
 import { addToCart, decrementQuantity, incrementQuantity, removeFromCart } from '../redux/cart.slice'
+import { updateTicker } from "../redux/general.slice"
 import { toast } from 'react-toastify'
-import Cookies from "universal-cookie"
-
-const cookies = new Cookies()
+import { setCookie } from "./Cookies"
+import { updateCategories } from "../redux/data.slice"
 
 const fullUrl = (url) => {
 	let { city, userId, clientType, orderType, prodType } =
@@ -46,8 +46,7 @@ const initializeUserApi = async () => {
 			await axios.get(fullUrl(url), {
 				headers: headers,
 			})
-			cookies.remove('user-initialized', {path: '/'})
-			cookies.set('user-initialized', true, {path: '/'})
+			setCookie('user-initialized', true)
 		} catch (error) {
 			console.log(error?.response)
 		}
@@ -55,9 +54,8 @@ const initializeUserApi = async () => {
 }
 
 export const useCategoriesApi = () => {
-	const selectedTypeSelector = useSelector(
-		(state) => state.general.selectedType
-	)
+	const selectedTypeSelector = useSelector((state) => state.general.selectedType)
+	const citySelector = useSelector((state) => state.general.city)
 	const [isLoading, setIsLoading] = useState(true)
 	const [categories, setCategories] = useState(null)
 	const [response, setResponse] = useState(null)
@@ -66,7 +64,7 @@ export const useCategoriesApi = () => {
 
 	useEffect(() => {
 		callApi()
-	}, [selectedTypeSelector])
+	}, [selectedTypeSelector, citySelector])
 
 	const callApi = async () => {
 		setIsLoading(true)
@@ -172,13 +170,16 @@ export const useSubCategoriesApi = () => {
 }
 
 export const useHomeApi = () => {
+	const dispatch = useDispatch()
 	const selectedTypeSelector = useSelector(
 		(state) => state.general.selectedType
 	)
+	const citySelector = useSelector((state) => state.general.city)
 	const [isLoading, setIsLoading] = useState(true)
 	const [homeData, setHomeData] = useState(null)
 	const [categories, setCategories] = useState(null)
 	const [banners, setBanners] = useState(null)
+	const [ticker, setTicker] = useState('')
 	const [isPopupAd, setIsPopupAd] = useState(false)
 	const [response, setResponse] = useState(null)
 	const [errorResponse, setErrorResponse] = useState(null)
@@ -186,7 +187,7 @@ export const useHomeApi = () => {
 
 	useEffect(() => {
 		callApi()
-	}, [selectedTypeSelector])
+	}, [selectedTypeSelector, citySelector])
 
 	const callApi = async () => {
 		setIsLoading(true)
@@ -206,7 +207,10 @@ export const useHomeApi = () => {
 			setResponse(apiResponse)
 			setHomeData(apiResponse.data.data)
 			setCategories(apiResponse.data.data.categories)
+			dispatch(updateCategories(apiResponse.data.data.categories))
 			setBanners(apiResponse.data.data.banners)
+			setTicker(apiResponse.data.data.ticker)
+			dispatch(updateTicker(apiResponse.data.data.ticker))
 			setIsPopupAd(apiResponse.data.data.dialog)
 		} catch (error) {
 			setErrorResponse(error?.response)
@@ -224,7 +228,8 @@ export const useHomeApi = () => {
 		errorResponse,
 		isPopupAd,
 		categories,
-		banners
+		banners,
+		ticker
 	}
 }
 
@@ -256,10 +261,6 @@ export const useProductDetailsApi = () => {
 				headers: headers,
 			})
 			setResponse(apiResponse)
-
-			console.log("URL", fullUrl(url))
-			console.log("RESPONSE", apiResponse)
-
 			setProductData(apiResponse.data.data)
 		} catch (error) {
 			setErrorResponse(error?.response)
