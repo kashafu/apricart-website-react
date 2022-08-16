@@ -7,7 +7,7 @@ import MainProducts from "../components/Layout/components/Products/MainProducts"
 import Link from "next/link"
 import HeadTag from "../components/Layout/components/Head/HeadTag"
 import storeBackgroundImage from "../public/assets/images/storeBackground.png"
-import staticBanner1 from "../public/assets/images/banners/20offHomeAndLifestyle.png"
+import staticBanner1 from "../public/assets/images/banners/harLamhaBanner.jpg"
 import staticBanner2 from "../public/assets/images/banners/haleemwebbanner.png"
 import crossIcon from "../public/assets/svgs/crossIcon.svg"
 import Carousel from "../components/Layout/components/Banner/Carousel"
@@ -145,7 +145,7 @@ export default function Home() {
 						</div>
 						<div className="relative w-full p-2">
 							<Link
-								href={"/category/home-&-lifestyle/1235"}
+								href={"/offers/14"}
 								passHref
 							>
 								<a>
@@ -203,9 +203,7 @@ export default function Home() {
 										<section className="lg:hidden relative space-y-6 items-center">
 											<section className="w-full">
 												<Link
-													href={
-														"/category/home-&-lifestyle/1235"
-													}
+													href={"/offers/14"}
 													passHref
 													className="w-full"
 												>
