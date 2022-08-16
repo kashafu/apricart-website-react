@@ -1,19 +1,20 @@
-import React, { createContext, useState } from "react"
-import TopBar from "./components/TopBar/TopBar"
-import Header from "./components/Header/Header"
-import Footer from "./components/Footer/Footer"
-import Copyrights from "./components/Footer/Copyrights"
-import { useRouter } from "next/router"
-import TypeCardSelector from "./components/Cards/TypeCardSelector"
-import FooterNew from "./components/Footer/FooterNew"
-export const AppContext = createContext()
+import React, { createContext, useState } from "react";
+import TopBar from "./components/TopBar/TopBar";
+import Header from "./components/Header/Header";
+import Footer from "./components/Footer/Footer";
+import Copyrights from "./components/Footer/Copyrights";
+import { useRouter } from "next/router";
+import TypeCardSelector from "./components/Cards/TypeCardSelector";
+import FooterNew from "./components/Footer/FooterNew";
+import FooterSleek from "./components/Footer/FooterSleek";
+export const AppContext = createContext();
 
 export default function Layout(props) {
-	const router = useRouter()
-	const [appState, setAppState] = useState({ sideDrawerStatus: false })
+	const router = useRouter();
+	const [appState, setAppState] = useState({ sideDrawerStatus: false });
 	const handleAppState = (newState) => {
-		setAppState({ ...appState, ...newState })
-	}
+		setAppState({ ...appState, ...newState });
+	};
 	return (
 		<AppContext.Provider value={{ appState, handleAppState }}>
 			<div className="flex flex-col min-h-screen max-w-screen">
@@ -44,11 +45,11 @@ export default function Layout(props) {
 					router.pathname === "/faqs-mobile"
 				) && (
 					<div className="mt-auto">
-						<FooterNew />
+						<FooterSleek />
 						<Copyrights />
 					</div>
 				)}
 			</div>
 		</AppContext.Provider>
-	)
+	);
 }
