@@ -29,7 +29,7 @@ export default function Profile() {
 				setShowDropdown(false)
 			}}
 		>
-			<Link href={"/profile_user"} passHref>
+			<Link href={"/profile"} passHref>
 				<a className="flex flex-row w-full items-center whitespace-nowrap space-x-px font-lato text-main-blue font-semibold">
 					<p className="capitalize">Welcome, {name}</p>
 				</a>
@@ -40,7 +40,7 @@ export default function Profile() {
 				}
 			>
 				<div className="flex flex-col items-center space-y-4">
-					<LinkText text={"My Profile"} path={"/profile_user"} />
+					<LinkText text={"My Profile"} path={"/profile"} />
 					<LinkText text={"My Orders"} path={"/order"} />
 					<LinkText text={"My Addresses"} path={"/address"} />
 				</div>

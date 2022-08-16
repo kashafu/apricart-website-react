@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react"
-import Link from "next/link"
 import axios from "axios"
 import { getGeneralApiParams } from "../helpers/ApiHelpers"
 import { base_url_api } from "../information.json"
 import HeadTag from "../components/Layout/components/Head/HeadTag"
 import { toast } from 'react-toastify'
+import ProfileNavigationMenu from "../components/Layout/components/Menus/ProfileNavigationMenu"
 
 export default function Order() {
 	let { token } = getGeneralApiParams()
@@ -40,7 +40,7 @@ export default function Order() {
 
 		toast.info('Cancelling order')
 		try {
-			let response = await axios.get(url, {headers: headers})
+			let response = await axios.get(url, { headers: headers })
 
 			console.log(response.data)
 			getOrderHistoryApi()
@@ -60,282 +60,219 @@ export default function Order() {
 	}
 
 	return (
-		<>
+		<div>
 			<HeadTag title={"Order"} />
-			{/* <p>
-				PENDING ORDERS
-			</p>
-			<table className="table-auto">
-				<thead>
-					<tr>
-						<th>Order Id</th>
-						<th>Date</th>
-						<th>Address</th>
-						<th>Amount</th>
-						<th>Products</th>
-						<th>Coupon</th>
-						<th>Status</th>
-					</tr>
-				</thead>
-				<tbody>
-					{pendingOrders.map((userOrder) => {
-						return (
-							<>
-								<tr key={userOrder.orderId} name="cancelid"
-									value={userOrder.orderId}
-									onChange={handleCancelOrder}>
-									<td>{userOrder.displayOrderId}</td>
-									<td>{userOrder.created_at}</td>
-									<td>{userOrder.addressUsed}</td>
-									<td>{userOrder.grandTotal}</td>
-									<td>{userOrder.productCount}</td>
-									<td>{userOrder.couponsUsed}</td>
-									<td>{userOrder.status}</td>
-									<td style={{ color: "red", cursor: "pointer" }} onClick={handleCancel}>cancel</td>
-									<td></td>
-								</tr>
-							</>
-						)
-					})}
-					<tr>
-						<td>The Sliding Mr. Bones (Next Stop, Pottersville)</td>
-						<td>Malcolm Lockyer</td>
-						<td>1961</td>
-					</tr>
-				</tbody>
-			</table> */}
-			<section className="popular_sec">
-				<div className="container">
-					<div className="row">
-						<div className="col-12 col-sm-12  col-md-12  col-lg-12  col-xl-12  col-xxl-12">
-							<div className="tab">
-								<Link href="/order" passHref>
-									<button
-										className="tablinks active"
-										id="defaultOpen"
-									>
-										Orders
-									</button>
-								</Link>
-								<Link href="/address" passHref>
-									<button className="tablinks">
-										My Address
-									</button>
-								</Link>
-								<Link href="/profile_user" passHref>
-									<button className="tablinks">
-										Account details
-									</button>
-								</Link>
-							</div>
-							<div id="London" className="tabcontent">
-								<div className="card">
-									<div className="card-header">
-										<h3 className="card-title">
-											My Orders
-										</h3>
-									</div>
-									<div className="card-body">
-										<div className="container">
-											<div>
-												<table className="table table-striped mt32 customers-list">
-													<thead>
-														<tr>
-															<th>Order Id</th>
-															<th>Date</th>
-															<th>Address</th>
-															<th>Amount</th>
-															<th>Products</th>
-															<th>Coupon</th>
-															<th>Status</th>
-															<th>Cancel</th>
-															<th>Reorder</th>
-														</tr>
-													</thead>
-													<tbody>
-														{pendingOrders.map(
-															(userOrder) => {
-																return (
-																	<>
-																		<tr
-																			key={
-																				userOrder.orderId
-																			}
-																			name="cancelid"
-																			value={
-																				userOrder.orderId
-																			}
-																		>
-																			<td>
-																				{
-																					userOrder.displayOrderId
-																				}
-																			</td>
-																			<td>
-																				{
-																					userOrder.created_at
-																				}
-																			</td>
-																			<td>
-																				{
-																					userOrder.addressUsed
-																				}
-																			</td>
-																			<td>
-																				{
-																					userOrder.grandTotal
-																				}
-																			</td>
-																			<td>
-																				{
-																					userOrder.productCount
-																				}
-																			</td>
-																			<td>
-																				{
-																					userOrder.couponsUsed
-																				}
-																			</td>
-																			<td>
-																				{
-																					userOrder.status
-																				}
-																			</td>
-																			<td
-																				style={{
-																					color: "red",
-																					cursor: "pointer",
-																				}}
-																				onClick={() => {
-																					cancelOrderApi(userOrder.orderId)
-																				}}
-																			>
-																				cancel
-																			</td>
-																			<td></td>
-																		</tr>
-																	</>
-																)
-															}
-														)}
-													</tbody>
-													<tbody>
-														{cancelledOrders.map(
-															(userOrder) => {
-																return (
-																	<>
-																		<tr>
-																			<td>
-																				{
-																					userOrder.displayOrderId
-																				}
-																			</td>
-																			<td>
-																				{
-																					userOrder.created_at
-																				}
-																			</td>
-																			<td>
-																				{
-																					userOrder.addressUsed
-																				}
-																			</td>
-																			<td>
-																				{
-																					userOrder.grandTotal
-																				}
-																			</td>
-																			<td>
-																				{
-																					userOrder.productCount
-																				}
-																			</td>
-																			<td>
-																				{
-																					userOrder.couponsUsed
-																				}
-																			</td>
-																			<td>
-																				{
-																					userOrder.status
-																				}
-																			</td>
-
-																			<td></td>
-																		</tr>
-																	</>
-																)
-															}
-														)}
-													</tbody>
-													<tbody>
-														{completedOrders.map(
-															(userOrder) => {
-																return (
-																	<>
-																		<tr>
-																			<td>
-																				{
-																					userOrder.displayOrderId
-																				}
-																			</td>
-																			<td>
-																				{
-																					userOrder.created_at
-																				}
-																			</td>
-																			<td>
-																				{
-																					userOrder.addressUsed
-																				}
-																			</td>
-																			<td>
-																				{
-																					userOrder.grandTotal
-																				}
-																			</td>
-																			<td>
-																				{
-																					userOrder.productCount
-																				}
-																			</td>
-																			<td>
-																				{
-																					userOrder.couponsUsed
-																				}
-																			</td>
-																			<td>
-																				{
-																					userOrder.status
-																				}
-																			</td>
-																			<td
-																				style={{
-																					color: "red",
-																				}}
-																			>
-																				cancel
-																			</td>
-																			<td></td>
-																		</tr>
-																	</>
-																)
-															}
-														)}
-													</tbody>
-												</table>
-											</div>
-										</div>
-									</div>
-									{/* <!-- /.card-body --> */}
-								</div>
-								{/* <!-- /.card -->
-                     <!-- /.content --> */}
-							</div>
-						</div>
-					</div>
+			<div className="flex flex-col lg:flex-row w-full space-y-6 lg:space-y-0 lg:space-x-4">
+				<div className="w-full lg:w-1/5">
+					<ProfileNavigationMenu />
 				</div>
-			</section>
-		</>
+				<section className="w-full lg:w-4/5">
+					<div id="London" className="tabcontent">
+						<div className="card">
+							<div className="card-header">
+								<h3 className="card-title">
+									My Orders
+								</h3>
+							</div>
+							<div className="card-body">
+								<div className="container">
+									<div>
+										<table className="table table-striped mt32 customers-list">
+											<thead>
+												<tr>
+													<th>Order Id</th>
+													<th>Date</th>
+													<th>Address</th>
+													<th>Amount</th>
+													<th>Products</th>
+													<th>Coupon</th>
+													<th>Status</th>
+													<th>Cancel</th>
+													<th>Reorder</th>
+												</tr>
+											</thead>
+											<tbody>
+												{pendingOrders.map(
+													(userOrder) => {
+														return (
+															<>
+																<tr
+																	key={
+																		userOrder.orderId
+																	}
+																	name="cancelid"
+																	value={
+																		userOrder.orderId
+																	}
+																>
+																	<td>
+																		{
+																			userOrder.displayOrderId
+																		}
+																	</td>
+																	<td>
+																		{
+																			userOrder.created_at
+																		}
+																	</td>
+																	<td>
+																		{
+																			userOrder.addressUsed
+																		}
+																	</td>
+																	<td>
+																		{
+																			userOrder.grandTotal
+																		}
+																	</td>
+																	<td>
+																		{
+																			userOrder.productCount
+																		}
+																	</td>
+																	<td>
+																		{
+																			userOrder.couponsUsed
+																		}
+																	</td>
+																	<td>
+																		{
+																			userOrder.status
+																		}
+																	</td>
+																	<td
+																		style={{
+																			color: "red",
+																			cursor: "pointer",
+																		}}
+																		onClick={() => {
+																			cancelOrderApi(userOrder.orderId)
+																		}}
+																	>
+																		cancel
+																	</td>
+																	<td></td>
+																</tr>
+															</>
+														)
+													}
+												)}
+											</tbody>
+											<tbody>
+												{cancelledOrders.map(
+													(userOrder) => {
+														return (
+															<>
+																<tr>
+																	<td>
+																		{
+																			userOrder.displayOrderId
+																		}
+																	</td>
+																	<td>
+																		{
+																			userOrder.created_at
+																		}
+																	</td>
+																	<td>
+																		{
+																			userOrder.addressUsed
+																		}
+																	</td>
+																	<td>
+																		{
+																			userOrder.grandTotal
+																		}
+																	</td>
+																	<td>
+																		{
+																			userOrder.productCount
+																		}
+																	</td>
+																	<td>
+																		{
+																			userOrder.couponsUsed
+																		}
+																	</td>
+																	<td>
+																		{
+																			userOrder.status
+																		}
+																	</td>
+
+																	<td></td>
+																</tr>
+															</>
+														)
+													}
+												)}
+											</tbody>
+											<tbody>
+												{completedOrders.map(
+													(userOrder) => {
+														return (
+															<>
+																<tr>
+																	<td>
+																		{
+																			userOrder.displayOrderId
+																		}
+																	</td>
+																	<td>
+																		{
+																			userOrder.created_at
+																		}
+																	</td>
+																	<td>
+																		{
+																			userOrder.addressUsed
+																		}
+																	</td>
+																	<td>
+																		{
+																			userOrder.grandTotal
+																		}
+																	</td>
+																	<td>
+																		{
+																			userOrder.productCount
+																		}
+																	</td>
+																	<td>
+																		{
+																			userOrder.couponsUsed
+																		}
+																	</td>
+																	<td>
+																		{
+																			userOrder.status
+																		}
+																	</td>
+																	<td
+																		style={{
+																			color: "red",
+																		}}
+																	>
+																		cancel
+																	</td>
+																	<td></td>
+																</tr>
+															</>
+														)
+													}
+												)}
+											</tbody>
+										</table>
+									</div>
+								</div>
+							</div>
+							{/* <!-- /.card-body --> */}
+						</div>
+						{/* <!-- /.card -->
+                     <!-- /.content --> */}
+					</div>
+				</section>
+			</div>
+		</div>
 	)
 }

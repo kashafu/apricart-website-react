@@ -122,7 +122,7 @@ export default function HamburgerMenu() {
 									text={"ACCOUNT"}
 									onClick={() => {
 										setShowMenu(!showMenu)
-										router.push("/profile_user")
+										router.push("/profile")
 									}}
 								/>
 								<SubmitButton
