@@ -65,7 +65,7 @@ export default function SearchBar() {
 	}
 
 	return (
-		<div className="relative w-full">
+		<div className="relative w-full z-30">
 			<div className="flex flex-row bg-slate-300 rounded-lg w-full">
 				<select
 					disabled={categoriesSelector == null}
@@ -116,7 +116,7 @@ export default function SearchBar() {
 				/>
 			</div>
 			{showSearchResults && (
-				<div className="absolute z-20 w-full bg-white max-h-[350px] overflow-auto rounded-b-lg">
+				<div className="absolute z-30 w-full bg-white max-h-[350px] overflow-auto rounded-b-lg">
 					{searchResults.length > 0 ? (
 						<div className="flex flex-col p-2 lg:p-4 space-y-2">
 							{searchResults.map((product) => {

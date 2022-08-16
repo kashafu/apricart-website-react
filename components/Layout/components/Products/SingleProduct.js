@@ -44,8 +44,8 @@ export default function SingleProduct({ product, isInStock }) {
 		productImageUrlThumbnail != ""
 			? productImageUrlThumbnail
 			: productImageUrl != ""
-			? productImageUrl
-			: missingImageIcon
+				? productImageUrl
+				: missingImageIcon
 
 	let immediateCategoryName = categoryleafName.split("|")[0].trim()
 	let immediateCategoryId = categoryIds.replace(/\s+/g, "").split("|")[0]
@@ -272,7 +272,7 @@ export default function SingleProduct({ product, isInStock }) {
 					</p>
 				)}
 				<div
-					className="z-90 bg-white drop-shadow-[0_35px_35px_35px_rgba(0,0,0,0.25)] bottom-[-35px] py-2 row-span-1 flex flex-col lg:flex-row items-center justify-between w-full"
+					className="z-20 bg-white drop-shadow-[0_35px_35px_35px_rgba(0,0,0,0.25)] bottom-[-35px] py-2 row-span-1 flex flex-col lg:flex-row items-center justify-between w-full"
 				>
 					{/* QUANTITY hidden on phone */}
 					{inStock && (
