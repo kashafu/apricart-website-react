@@ -49,6 +49,7 @@ export default function SelectAddress({ type, setAddress, dropDownSelectedAddres
         }
         else {
             setCookie('selected-address', e.target.value)
+            setCookie("cities", e.target.value?.city)
             dispatch(updateSelectedAddress(e.target.value))
         }
     }
@@ -74,7 +75,7 @@ export default function SelectAddress({ type, setAddress, dropDownSelectedAddres
                             Select Address
                         </option>
                         {savedAddresses.map((option) => {
-                            let tempSelectedAddress = typeof(dropDownSelectedAddress) === 'object' ? dropDownSelectedAddress : JSON.parse(dropDownSelectedAddress)
+                            let tempSelectedAddress = typeof (dropDownSelectedAddress) === 'object' ? dropDownSelectedAddress : JSON.parse(dropDownSelectedAddress)
                             return (
                                 <option
                                     selected={dropDownSelectedAddress ? tempSelectedAddress.id == option.id : false}

@@ -25,7 +25,7 @@ const AddressSelector = () => {
                                 "font-bold text-base truncate max-w-[150px] xl:max-w-xs text-main-grey-800 lg:text-lg capitalize"
                             }
                         >
-                            {selectedAddressSelector.address}
+                            {selectedAddressSelector ? [selectedAddressSelector.address] : "Select Address"}
                         </p>
                     </a>
                 </div>
