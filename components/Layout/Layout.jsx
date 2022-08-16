@@ -5,7 +5,6 @@ import Footer from "./components/Footer/Footer";
 import Copyrights from "./components/Footer/Copyrights";
 import { useRouter } from "next/router";
 import TypeCardSelector from "./components/Cards/TypeCardSelector";
-import FooterNew from "./components/Footer/FooterNew";
 import FooterSleek from "./components/Footer/FooterSleek";
 export const AppContext = createContext();
 
