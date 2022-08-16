@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
-import { setCookie } from "../helpers/Cookies";
+// import { setCookie } from "../helpers/Cookies";
 
 const cartSlice = createSlice({
 	name: "cart",
@@ -17,7 +17,7 @@ const cartSlice = createSlice({
 				console.log(qty);
 				state.push({ ...action.payload, quantity: qty });
 			}
-			setCookie('cart-item', JSON.stringify(...state))
+			// setCookie('cart-item', JSON.stringify(...state))
 		},
 		updatedcart: (state, action) => {
 			let qty = action.payload.qty;      
