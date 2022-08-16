@@ -20,10 +20,15 @@ module.exports = {
 					"0%": { opacity: 0, transform: "translateY(-10px)"},
 					"100%": { opacity: 100, transform: "translateY(0px)" },
 				},
+				'dropdown-inverse': {
+					"0%": { opacity: 100, display:"flex", transform: "translateY(0px)" },
+					"100%": { opacity: 0, display:"hidden", transform: "translateY(-10px)"},
+				}
 			},
 			animation: {
 				dangle: "dangle infinite 3s ease-in",
 				dropdown: "dropdown 0.25s ease-in-out",
+				'dropdown-inverse': "dropdown-inverse 2s ease-in",
 			},
 			colors: {
 				"main-yellow": {

@@ -34,8 +34,8 @@ export default function Header() {
 
 
 	return (
-		<div className="flex flex-col bg-white py-2 md:py-8 space-y-2 border-b relative">
-			<div className={offset >= 20 ? " flex flex-row py-2 transition-all fixed top-0 duration-100 ease-linear z-20 px-2 bg-white  w-full items-center md:py-2" : "flex flex-row py-2 transition-all fixed top-[50px] z-20 px-2 bg-white w-full items-center md:py-2 duration-300 ease-linear"}>
+		<div className="flex flex-col py-2 md:py-8 space-y-2 border-b relative h-[45px]">
+			<div className={offset >= 20 ? "flex flex-row py-2 transition-all fixed top-0 duration-100 ease-linear z-20 px-2 bg-slate-100 w-full items-center md:py-2" : "flex flex-row py-2 transition-all fixed top-[50px] z-20 px-2 bg-slate-100 w-full items-center md:py-2 duration-300 ease-linear"}>
 				<div className="lg:hidden pr-2">
 					<HamburgerMenu />
 				</div>
@@ -48,7 +48,7 @@ export default function Header() {
 				<div className="lg:hidden px-2 flex flex-row pr-4">
 					<CartSlider />
 				</div>
-				<div className="hidden lg:inline-flex  lg:flex-row lg:space-x-4 lg:items-center">
+				<div className="h-full hidden lg:inline-flex  lg:flex-row lg:space-x-4 lg:items-center">
 					<div>
 						<CitySelector />
 					</div>
@@ -66,7 +66,7 @@ export default function Header() {
 						<CartSlider />
 					</div>
 					{token ? (
-						<div>
+						<div className="flex-col h-full">
 							<Profile />
 						</div>
 					) : (

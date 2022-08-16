@@ -1,72 +1,52 @@
-import Link from "next/link";
-import { useState } from "react";
-import { getGeneralCookies, logOutRemoveCookies } from "../../../../helpers/ApiHelpers";
-import LinkText from "../Typography/LinkText";
-import profileIcon from '../../../../public/assets/svgs/profileIcon.svg'
-import bagIcon from '../../../../public/assets/svgs/shoppingBagIcon.svg'
-import locationIcon from '../../../../public/assets/svgs/locationPinIcon.svg'
-import SubmitButton from "../Buttons/SubmitButton";
-import { useRouter } from "next/router";
+import Link from "next/link"
+import { useState } from "react"
+import {
+	getGeneralCookies,
+	logOutRemoveCookies,
+} from "../../../../helpers/ApiHelpers"
+import LinkText from "../Typography/LinkText"
+import SubmitButton from "../Buttons/SubmitButton"
+import { useRouter } from "next/router"
 
 export default function Profile() {
-    const router = useRouter()
+	const router = useRouter()
 
-    let { name } = getGeneralCookies()
-    const [showDropdown, setShowDropdown] = useState(false)
+	let { name } = getGeneralCookies()
+	const [showDropdown, setShowDropdown] = useState(false)
+	// const [animateStyle, setAnimateStyle] = useState("opacity-0")
 
-    const logout = () => {
-        logOutRemoveCookies()
-        router.push("/")
-    }
+	const logout = () => {
+		logOutRemoveCookies()
+		router.push("/")
+	}
 
-    return (
-        <div className="relative">
-            <Link href={'/profile_user'} passHref>
-                <a className="flex flex-row w-full items-center whitespace-nowrap space-x-px font-lato text-main-blue font-semibold"
-                    onMouseEnter={() => {
-                        setShowDropdown(true)
-                    }}
-                    onMouseLeave={() => {
-                        setShowDropdown(false)
-                    }}
-                >
-                    <p className="capitalize">
-                        Welcome, {name}
-                    </p>
-                </a>
-            </Link>
-            {showDropdown && (
-                <div className="flex flex-col items-center absolute z-10 w-full p-4 bg-white rounded-b-xl space-y-6"
-                    onMouseEnter={() => {
-                        setShowDropdown(true)
-                    }}
-                    onMouseLeave={() => {
-                        setShowDropdown(false)
-                    }}
-                >
-                    <div className="flex flex-col items-center space-y-4">
-                        <LinkText
-                            text={'My Profile'}
-                            path={'/profile_user'}
-                            icon={profileIcon}
-                        />
-                        <LinkText
-                            text={'My Orders'}
-                            path={'/order'}
-                            icon={bagIcon}
-                        />
-                        <LinkText
-                            text={'My Addresses'}
-                            path={'/address'}
-                            icon={locationIcon}
-                        />
-                    </div>
-                    <SubmitButton
-                        text={'LOGOUT'}
-                        onClick={logout}
-                    />
-                </div>
-            )}
-        </div>
-    )
+	return (
+		<div
+			className="relative h-[45px] flex items-center"
+			onMouseEnter={() => {
+				setShowDropdown(true)
+			}}
+			onMouseLeave={() => {
+				setShowDropdown(false)
+			}}
+		>
+			<Link href={"/profile_user"} passHref>
+				<a className="flex flex-row w-full items-center whitespace-nowrap space-x-px font-lato text-main-blue font-semibold">
+					<p className="capitalize">Welcome, {name}</p>
+				</a>
+			</Link>
+			<div
+				className={
+					"flex flex-col items-center absolute right-0 top-[45px] z-10 w-[200px] p-4 bg-slate-100 rounded-b-xl space-y-6 " + [showDropdown ? "animate-dropdown transition-none":"opacity-0 duration-200 delay-1000 invisible"]
+				}
+			>
+				<div className="flex flex-col items-center space-y-4">
+					<LinkText text={"My Profile"} path={"/profile_user"} />
+					<LinkText text={"My Orders"} path={"/order"} />
+					<LinkText text={"My Addresses"} path={"/address"} />
+				</div>
+				<SubmitButton text={"LOGOUT"} onClick={logout} />
+			</div>
+		</div>
+	)
 }

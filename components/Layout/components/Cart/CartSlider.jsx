@@ -196,7 +196,7 @@ export default function CartSlider() {
 					setShowCart(!showCart);
 				}}
 			>
-				<div className="w-[45] h-[45]">
+				<div className="w-[45] h-[45] flex items-center">
 					<Image src={cartIcon} alt={"icon"} width={45} height={45} />
 					<p className="absolute -top-1 p-[5px] py-0 -right-2 bg-main-blue rounded-full text-xs text-white">{reduxCart.length}</p>
 					{/* <div className="absolute mx-auto left-0 right-0 -bottom-4 flex items-center">

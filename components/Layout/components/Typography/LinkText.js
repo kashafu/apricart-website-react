@@ -12,7 +12,7 @@ export default function LinkText({ text, path, onClick, icon }) {
                     onClick
                 }}
             >
-                <div className="flex flex-row w-full items-center whitespace-nowrap space-x-px font-lato text-main-blue font-semibold">
+                <div className="flex flex-row w-full items-center whitespace-nowrap space-x-px font-lato text-main-blue font-semibold text-center">
                     {icon && (
                         <Image
                             src={icon}
@@ -21,7 +21,7 @@ export default function LinkText({ text, path, onClick, icon }) {
                             width={25}
                         />
                     )}
-                    <p>
+                    <p className="text-center">
                         {text}
                     </p>
                 </div>
@@ -31,7 +31,7 @@ export default function LinkText({ text, path, onClick, icon }) {
 
     return (
         <Link href={path} passHref>
-            <a className="flex flex-row w-full items-center whitespace-nowrap space-x-px font-lato text-main-blue font-semibold">
+            <a className="flex flex-row w-full items-center whitespace-nowrap space-x-px font-lato text-main-blue font-semibold text-center">
                 {icon && (
                     <Image
                         src={icon}
@@ -40,7 +40,7 @@ export default function LinkText({ text, path, onClick, icon }) {
                         width={25}
                     />
                 )}
-                <p>
+                <p className="text-center">
                     {text}
                 </p>
             </a>
