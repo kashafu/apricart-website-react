@@ -31,9 +31,9 @@ export default function SearchBar() {
 		}
 	}, [selectedCategoryId])
 
-	useEffect(()=>{
-		if(categories){
-			if(categoriesSelector.length == 0){
+	useEffect(() => {
+		if (categories) {
+			if (categoriesSelector.length == 0) {
 				dispatch(updateCategories(categories))
 			}
 		}
@@ -66,7 +66,7 @@ export default function SearchBar() {
 
 	return (
 		<div className="relative w-full">
-			<div className="flex flex-row bg-main-grey-200 rounded-lg w-full">
+			<div className="flex flex-row bg-slate-300 rounded-lg w-full">
 				<select
 					disabled={categoriesSelector == null}
 					className="py-2 rounded-lg bg-main-grey w-1/2 font-bold text-xs"
@@ -94,7 +94,7 @@ export default function SearchBar() {
 				</select>
 				<input
 					ref={searchIconElement}
-					className="p-2 w-full bg-main-grey-200 rounded-lg font-bold"
+					className="p-2 w-full bg-slate-300 rounded-lg font-bold"
 					type={"search"}
 					value={searchText}
 					onChange={(e) => {

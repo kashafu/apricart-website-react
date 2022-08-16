@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit"
-import { setCookie, removeCookie } from "../helpers/Cookies"
+import { setCookie } from "../helpers/Cookies"
 import { getGeneralApiParams } from "../helpers/ApiHelpers"
 
 let { selectedAddress, selectedType, city } = getGeneralApiParams()

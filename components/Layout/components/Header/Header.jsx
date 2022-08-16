@@ -8,19 +8,20 @@ import Logo from "../Logo/Logo"
 import Profile from "../Auth/Profile"
 import Image from "next/image"
 import CartSlider from "../Cart/CartSlider"
-import CitySelector from "../CitySelector/CitySelector"
+import CitySelector from "../Selectors/CitySelector"
 import { useState, useEffect } from "react"
+import AddressSelector from "../Selectors/AddressSelector"
 
 export default function Header() {
 	let { token } = getGeneralApiParams()
 	const [offset, setOffset] = useState(0);
-	
+
 	useEffect(() => {
 		if (!getCookie("guestUserId")) {
 			const d = new Date()
 			setCookie("guestUserId", "desktopuser_" + d.getTime())
 		}
-	
+
 		if (!getCookie("selected-type")) {
 			setCookie('selected-type', 'home')
 		}
@@ -50,14 +51,19 @@ export default function Header() {
 				</div>
 				<div className="h-full hidden lg:inline-flex  lg:flex-row lg:space-x-4 lg:items-center">
 					<div>
-						<CitySelector />
+						{token ? (
+							<AddressSelector />
+						) : (
+							<CitySelector />
+						)}
 					</div>
 					<Link href={"/wishlist"} passHref>
-						<a className="flex items-center">
+						<a className="flex items-center relative w-[45px] h-[45px]">
 							<Image
 								src={heartIcon}
-								width={45}
-								height={45}
+								// width={45}
+								// height={45}
+								layout='fixed'
 								alt="wishlist icon"
 							/>
 						</a>

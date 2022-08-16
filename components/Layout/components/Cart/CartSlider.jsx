@@ -87,7 +87,7 @@ export default function CartSlider() {
 			(accumulator, item) =>
 				accumulator +
 				item.qty *
-					(item.specialPrice > 0 ? item.specialPrice : item.currentPrice),
+				(item.specialPrice > 0 ? item.specialPrice : item.currentPrice),
 			0
 		);
 	};
@@ -197,7 +197,7 @@ export default function CartSlider() {
 				}}
 			>
 				<div className="w-[45] h-[45] flex items-center">
-					<Image src={cartIcon} alt={"icon"} width={45} height={45} />
+					<Image src={cartIcon} alt={"icon"} width={45} height={45} layout='fixed' />
 					<p className="absolute -top-1 p-[5px] py-0 -right-2 bg-main-blue rounded-full text-xs text-white">{reduxCart.length}</p>
 					{/* <div className="absolute mx-auto left-0 right-0 -bottom-4 flex items-center">
 						<p className="text-xs font-bold text-main-blue whitespace-nowrap">RS. {getTotalPrice()}</p>

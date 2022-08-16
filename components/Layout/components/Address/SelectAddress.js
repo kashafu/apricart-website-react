@@ -20,7 +20,6 @@ export default function SelectAddress({ type, setAddress, dropDownSelectedAddres
     const [selectedAddress, setSelectedAddress] = useState(getGeneralApiParams().selectedAddress)
     const [showAddressCard, setShowAddressCard] = useState(false)
     const dispatch = useDispatch()
-    // const generalStore = useSelector((state)=>state.general)
 
     useEffect(() => {
         getSavedAddressesApi()
@@ -120,13 +119,6 @@ export default function SelectAddress({ type, setAddress, dropDownSelectedAddres
                     />
                 </div>
             )}
-
-            {/* <SubmitButton
-                text={"Add Address"}
-                onClick={() => {
-                    setShowAddressCard(!showAddressCard)
-                }}
-            /> */}
             {showAddressCard && (
                 <AddressCard
                     type={'add'}
