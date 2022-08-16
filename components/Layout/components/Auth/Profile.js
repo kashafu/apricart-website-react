@@ -36,7 +36,7 @@ export default function Profile() {
 			</Link>
 			<div
 				className={
-					"flex flex-col items-center absolute right-0 top-[45px] z-10 w-[200px] p-4 bg-slate-100 rounded-b-xl space-y-6 " + [showDropdown ? "animate-dropdown transition-none":"opacity-0 duration-200 delay-1000 invisible"]
+					"flex flex-col items-center absolute right-0 top-[45px] z-10 w-[200px] p-4 bg-slate-100 rounded-b-xl space-y-6 " + [showDropdown ? "animate-dropdown transition-none" : "opacity-0 duration-200 delay-1000 invisible"]
 				}
 			>
 				<div className="flex flex-col items-center space-y-4">
@@ -44,7 +44,7 @@ export default function Profile() {
 					<LinkText text={"My Orders"} path={"/order"} />
 					<LinkText text={"My Addresses"} path={"/address"} />
 				</div>
-				<SubmitButton text={"LOGOUT"} onClick={logout} />
+				<SubmitButton text={"LOGOUT"} onClick={logout} bgColor={"bg-red-600"} />
 			</div>
 		</div>
 	)
