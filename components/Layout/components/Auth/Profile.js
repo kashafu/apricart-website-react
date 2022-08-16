@@ -13,7 +13,6 @@ export default function Profile() {
 
 	let { name } = getGeneralCookies()
 	const [showDropdown, setShowDropdown] = useState(false)
-	// const [animateStyle, setAnimateStyle] = useState("opacity-0")
 
 	const logout = () => {
 		logOutRemoveCookies()
