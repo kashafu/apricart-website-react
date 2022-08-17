@@ -78,5 +78,6 @@ module.exports = {
 				h4: { fontSize: theme("fontSize.xl") },
 			});
 		}),
+		require('@tailwindcss/line-clamp')
 	],
 };

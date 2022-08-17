@@ -96,20 +96,21 @@ export default function SingleProduct({ product, isInStock }) {
 		}
 
 		return (
-			<div className="row-span-1 h-[40px]">
+			<div className="h-full w-full">
 				{inStock ? (
 					<div className="relative flex flex-row items-center h-full w-full">
 						{showQty ? (
 							<div className="animate-fade-in grid grid-cols-3 justify-items-center rounded border-2 border-main-blue h-full grow overflow-hidden">
 								<button
-									className="relative w-1/3 bg-white hover:scale-125 duration-100"
+									className="flex items-center relative bg-white hover:scale-125 duration-100 my-1"
 									onClick={() => {
 										setQtyHandler("decrement")
 									}}
 								>
 									<Image
+										height={15}
+										width={15}
 										src={minusIcon}
-										layout={"fill"}
 										alt={"icon"}
 									/>
 								</button>
@@ -117,14 +118,15 @@ export default function SingleProduct({ product, isInStock }) {
 									<p className="mt-auto mb-auto">{qty}</p>
 								</div>
 								<button
-									className="relative w-1/3 bg-white hover:scale-125 duration-100"
+									className="flex items-center relative bg-white hover:scale-125 duration-100 my-1"
 									onClick={() => {
 										setQtyHandler("increment")
 									}}
 								>
 									<Image
+										height={15}
+										width={15}
 										src={plusIcon}
-										layout={"fill"}
 										alt={"icon"}
 									/>
 								</button>
@@ -144,9 +146,9 @@ export default function SingleProduct({ product, isInStock }) {
 						)}
 					</div>
 				) : (
-					<div className="flex justify-between flex-row space-x-4">
+					<div className="relative flex flex-row items-center h-full w-full">
 						<button
-							className="px-2 bg-zinc-400 font-bold text-xs lg:text-md rounded text-white grow"
+							className="bg-zinc-400 font-bold text-xs lg:text-md rounded text-white h-full w-full"
 							disabled={true}
 						>
 							Out of Stock
@@ -174,99 +176,51 @@ export default function SingleProduct({ product, isInStock }) {
 
 
 	return (
-		<div>
-			{/* DESKTOP VIEW */}
-			<div className="hidden relative lg:grid grid-rows-[7] bg-white px-2 h-[350px] rounded-br-lg border-b-2 border-r-2 duration-75 hover:scale-105 ease-out hover:z-20 hover:border-main-blue hover:shadow-2xl hover:shadow-main-yellow hover:border-2 hover:rounded-lg">
-				{/* IMAGE */}
-				<div className="row-span-4 flex items-center justify-center w-full h-full">
-					<Link
-						href={
-							"/category/" +
-							toKebabCase(immediateCategoryName) +
-							"/" +
-							immediateCategoryId +
-							"/" +
-							toKebabCase(title) +
-							"/" +
-							sku
-						}
-						passHref
-					>
-						<a className="relative h-[150px] w-[150px]">
-							<Image
-								src={imageUrl}
-								layout={"fill"}
-								alt={"product image"}
-							/>
-						</a>
-					</Link>
-				</div>
-				{/* TITLE */}
-				<p className="row-span-1 font-lato font-bold text-left text-sm xl:text-lg text-main-blue line-clamp-2 overflow-y-hidden">
-					{title}
-				</p>
-				{/* PRICE */}
-				{specialPrice > 0 ? (
-					<div className="row-span-2 flex flex-col justify-center">
-						<p className="text-lg xl:text-xl text-left font-bold text-main-blue line-through decoration-red-600">
-							Rs. {currentPrice}
-						</p>
-						<p className="text-3xl text-left font-bold text-main-blue">
-							Rs. {specialPrice}
-						</p>
-					</div>
-				) : (
-					<p className="row-span-2 flex items-center text-3xl text-left font-bold text-main-blue">
-						Rs. {currentPrice}
-					</p>
-				)}
-				<AddToCart />
+		<div className="relative grid grid-rows-[7] bg-white px-2 h-[350px] rounded-br-lg border-b-2 border-r-2 duration-75 hover:scale-105 ease-out hover:z-20 hover:border-main-blue hover:shadow-2xl hover:shadow-main-yellow hover:border-2 hover:rounded-lg">
+			{/* IMAGE */}
+			<div className="row-span-4 flex items-center justify-center w-full h-full">
+				<Link
+					href={
+						"/category/" +
+						toKebabCase(immediateCategoryName) +
+						"/" +
+						immediateCategoryId +
+						"/" +
+						toKebabCase(title) +
+						"/" +
+						sku
+					}
+					passHref
+				>
+					<a className="relative h-[150px] w-[150px]">
+						<Image
+							src={imageUrl}
+							layout={"fill"}
+							alt={"product image"}
+						/>
+					</a>
+				</Link>
 			</div>
-			{/* MOBILE VIEW */}
-			<div className="lg:hidden grid grid-flow-row bg-white px-2 h-[250px] rounded-br-lg border-b-2 border-r-2 duration-75 hover:scale-110 ease-out">
-				{/* IMAGE */}
-				<div className="row-span-4 flex items-center justify-center w-full h-full">
-					<Link
-						href={
-							"/category/" +
-							toKebabCase(immediateCategoryName) +
-							"/" +
-							immediateCategoryId +
-							"/" +
-							toKebabCase(title) +
-							"/" +
-							sku
-						}
-						passHref
-					>
-						<a className="relative h-[100px] w-[100px]">
-							<Image
-								src={imageUrl}
-								layout={"fill"}
-								alt={"icon"}
-							/>
-						</a>
-					</Link>
-				</div>
-				{/* TITLE */}
-				<p className="row-span-1 font-lato font-bold text-left text-xs text-main-blue line-clamp-2 overflow-y-hidden">
-					{title}
-				</p>
-				{/* PRICE */}
-				{specialPrice > 0 ? (
-					<div className="row-span-1 flex flex-col">
-						<p className="text-xs text-left font-bold text-main-blue line-through decoration-red-600">
-							Rs. {currentPrice}
-						</p>
-						<p className="text-base text-left font-bold text-main-blue">
-							Rs. {specialPrice}
-						</p>
-					</div>
-				) : (
-					<p className="row-span-1 text-base text-left font-bold text-main-blue">
+			{/* TITLE */}
+			<p className="row-span-1 font-lato font-bold text-left text-sm xl:text-lg text-main-blue line-clamp-2 overflow-y-hidden">
+				{title}
+			</p>
+			{/* PRICE */}
+			{specialPrice > 0 ? (
+				<div className="row-span-2 flex flex-col justify-center">
+					<p className="text-sm lg:text-xl text-left font-bold text-main-blue line-through decoration-red-600">
 						Rs. {currentPrice}
 					</p>
-				)}
+					<p className="text-2xl lg:text-3xl text-left font-bold text-main-blue">
+						Rs. {specialPrice}
+					</p>
+				</div>
+			) : (
+				<p className="row-span-2 flex items-center text-2xl lg:text-3xl text-left font-bold text-main-blue">
+					Rs. {currentPrice}
+				</p>
+			)}
+			<div className="row-span-1 h-[40px] self-end mb-2">
 				<AddToCart />
 			</div>
 		</div>
