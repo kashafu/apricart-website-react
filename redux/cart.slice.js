@@ -1,26 +1,22 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
-// import { setCookie } from "../helpers/Cookies";
 
 const cartSlice = createSlice({
 	name: "cart",
 	initialState: [],
 	reducers: {
 		addToCart: (state, action) => {
-			console.log(action.payload);
 			const itemExists = state.find((item) => item.id === action.payload.id);
-            let qty = action.payload.qty;
+			let qty = action.payload.qty;
 			if (itemExists) {
 				itemExists.quantity++;
 				itemExists.qty = action.payload.qty
 			} else {
-				console.log(qty);
 				state.push({ ...action.payload, quantity: qty });
 			}
-			// setCookie('cart-item', JSON.stringify(...state))
 		},
 		updatedcart: (state, action) => {
-			let qty = action.payload.qty;      
+			let qty = action.payload.qty;
 			state.push({ ...action.payload, quantity: qty });
 		},
 		incrementQuantity: (state, action) => {
@@ -35,17 +31,14 @@ const cartSlice = createSlice({
 		decrementQuantity: (state, action) => {
 			const item = state.find((item) => item.id === action.payload);
 			if (item.qty === item.minQty) {
-				// const index = state.findIndex((item) => item.id === action.payload);
-				// state.splice(index, 1);
 				return
 			} else {
 				item.qty--;
 			}
 		},
 		initialize: (state, action) => {
-			// state.push({ undefined, action })
 			state.splice(0, state.length)
-			action.payload.forEach((item)=>{
+			action.payload.forEach((item) => {
 				state.push(item)
 			})
 		},
@@ -55,11 +48,11 @@ const cartSlice = createSlice({
 			toast.info("Item Removed !");
 		},
 		getCartTotal: (state, action) => {
-		  let total = 0
-		  state.forEach((item)=>{
-		    total += item.currentPrice
-		  })
-		  return total
+			let total = 0
+			state.forEach((item) => {
+				total += item.currentPrice
+			})
+			return total
 		}
 	},
 });

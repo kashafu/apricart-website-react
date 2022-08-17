@@ -36,7 +36,7 @@ export default function Layout(props) {
 						</div>
 					)}
 				<div className="flex-1 min-h-full min-w-full pt-2 pb-10 px-2 md:px-8 bg-white">
-					<div className="pt-[3rem] lg:pt-[5rem]">{props.children}</div>
+					<div className="pt-6 lg:pt-10">{props.children}</div>
 				</div>
 				{!(
 					router.pathname === "/privacy-policy-mobile" ||

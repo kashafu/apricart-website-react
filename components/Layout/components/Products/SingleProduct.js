@@ -49,22 +49,6 @@ export default function SingleProduct({ product, isInStock }) {
 
 	let immediateCategoryName = categoryleafName.split("|")[0].trim()
 	let immediateCategoryId = categoryIds.replace(/\s+/g, "").split("|")[0]
-	const [qty, setQty] = useState(minQty)
-
-	const setQtyHandler = (type) => {
-		if (type == "increment") {
-			if (qty == maxQty) {
-				return
-			}
-			setQty(qty + 1)
-		} else if (type == "decrement") {
-			if (qty == minQty) {
-				toast.error("Cannot order less than minimum quantity")
-				return
-			}
-			setQty(qty - 1)
-		}
-	}
 
 	const addToWishlistApi = async () => {
 		let { token, headers, userId } = getGeneralApiParams()
@@ -89,258 +73,154 @@ export default function SingleProduct({ product, isInStock }) {
 		}
 	}
 
-	const { setIsPlaceOrder } = useAddToCartApi(sku, qty, product)
+	const AddToCart = () => {
+		const [qty, setQty] = useState(minQty)
+		const [showQty, setShowQty] = useState(false)
+		const { setIsPlaceOrder } = useAddToCartApi(sku, qty, product)
 
-	return (
-		<div>
-			{/* DESKTOP VIEW */}
-			<div className="hidden relative lg:grid grid-rows-[7] bg-white px-2 h-[350px] rounded-br-lg border-b-2 border-r-2 duration-75 hover:scale-105 ease-out hover:z-20 hover:border-main-blue hover:shadow-2xl hover:shadow-main-yellow hover:border-2 hover:rounded-lg">
-				{/* IMAGE */}
-				<div className="row-span-4 flex items-center justify-center w-full h-full">
-					<Link
-						href={
-							"/category/" +
-							toKebabCase(immediateCategoryName) +
-							"/" +
-							immediateCategoryId +
-							"/" +
-							toKebabCase(title) +
-							"/" +
-							sku
-						}
-						passHref
-					>
-						<a className="relative h-[150px] w-[150px]">
-							<Image
-								src={imageUrl}
-								layout={"fill"}
-								alt={"product image"}
-							/>
-						</a>
-					</Link>
-				</div>
-				{/* TITLE */}
-				<p className="row-span-1 font-lato font-bold text-left text-sm xl:text-lg text-main-blue line-clamp-2 overflow-y-hidden">
-					{title}
-				</p>
-				{/* PRICE */}
-				{specialPrice > 0 ? (
-					<div className="row-span-2 flex flex-col justify-center">
-						<p className="text-lg xl:text-xl text-left font-bold text-main-blue line-through decoration-red-600">
-							Rs. {currentPrice}
-						</p>
-						<p className="text-3xl text-left font-bold text-main-blue">
-							Rs. {specialPrice}
-						</p>
-					</div>
-				) : (
-					<p className="row-span-2 flex items-center text-3xl text-left font-bold text-main-blue">
-						Rs. {currentPrice}
-					</p>
-				)}
-				<div className="row-span-1 h-[40px]">
-					{inStock ? (
-						<div className="relative flex flex-row items-center space-x-2 xl:space-x-6 mr-2 justify-between h-full">
-							<div className="grid grid-cols-3 justify-items-center rounded border-2 border-main-blue h-full grow">
+		const setQtyHandler = (type) => {
+			if (type == "increment") {
+				if (qty == maxQty) {
+					return
+				}
+				setQty(prevqty => prevqty + 1)
+				setIsPlaceOrder(true)
+			} else if (type == "decrement") {
+				if (qty == minQty) {
+					toast.error("Cannot order less than minimum quantity")
+					return
+				}
+				setQty(prevqty => prevqty - 1)
+				setIsPlaceOrder(true)
+			}
+		}
+
+		return (
+			<div className="h-full w-full">
+				{inStock ? (
+					<div className="relative flex flex-row items-center h-full w-full">
+						{showQty ? (
+							<div className="animate-fade-in grid grid-cols-3 justify-items-center bg-slate-200 rounded-full h-full grow overflow-hidden">
 								<button
-									className="relative bg-white w-full"
+									className="flex items-center relative transition-none hover:scale-125 duration-100 my-1"
 									onClick={() => {
 										setQtyHandler("decrement")
 									}}
 								>
 									<Image
+										height={10}
+										width={10}
 										src={minusIcon}
-										layout={"fill"}
 										alt={"icon"}
 									/>
 								</button>
-								<div className="flex flex-col bg-main-yellow font-bold w-full text-main-blue text-2xl text-center border-x-2 border-main-blue">
+								<div className="flex flex-col font-bold w-full text-main-blue text-2xl text-center">
 									<p className="mt-auto mb-auto">{qty}</p>
 								</div>
 								<button
-									className="relative bg-white w-full"
+									className="flex items-center relative transition-none hover:scale-125 duration-100 my-1"
 									onClick={() => {
 										setQtyHandler("increment")
 									}}
 								>
 									<Image
+										height={10}
+										width={10}
 										src={plusIcon}
-										layout={"fill"}
 										alt={"icon"}
 									/>
 								</button>
 							</div>
-							<div className="flex space-x-1 xl:space-x-2">
-								<button
-									className="flex items-center border-2 border-main-blue rounded-full overflow-hidden"
-									onClick={() => {
-										setIsPlaceOrder(true)
-									}}
-								>
-									<Image
-										src={addToCartIcon}
-										width={40}
-										height={40}
-										alt={"icon"}
-									/>
-								</button>
-								{/* WISHLIST */}
-								<button
-									className="flex items-center border-2 border-main-blue rounded-lg"
-									onClick={() => {
-										addToWishlistApi()
-									}}
-								>
-									<Image
-										src={wishlistIcon}
-										width={40}
-										height={40}
-										alt={"icon"}
-									/>
-								</button>
-							</div>
-						</div>
-					) : (
-						<div className="flex justify-between flex-row space-x-4">
-							<button
-								className="px-2 bg-zinc-400 font-bold text-xs lg:text-md rounded text-white grow"
-								disabled={true}
-							>
-								Out of Stock
-							</button>
-							{/* WISHLIST */}
-							<button
-								className="flex items-center"
-								onClick={() => {
-									addToWishlistApi()
-								}}
-							>
-								<Image
-									src={wishlistIcon}
-									width={40}
-									height={40}
-									alt={"icon"}
-								/>
-							</button>
-						</div>
-					)}
-				</div>
-			</div>
-			{/* MOBILE VIEW */}
-			<div className="lg:hidden grid grid-flow-row bg-white px-2 h-[250px] rounded-br-lg border-b-2 border-r-2 duration-75 hover:scale-110 ease-out">
-				{/* IMAGE */}
-				<div className="row-span-4 flex items-center justify-center w-full h-full">
-					<Link
-						href={
-							"/category/" +
-							toKebabCase(immediateCategoryName) +
-							"/" +
-							immediateCategoryId +
-							"/" +
-							toKebabCase(title) +
-							"/" +
-							sku
-						}
-						passHref
-					>
-						<a className="relative h-[100px] w-[100px]">
-							<Image
-								src={imageUrl}
-								layout={"fill"}
-								alt={"icon"}
-							/>
-						</a>
-					</Link>
-				</div>
-				{/* TITLE */}
-				<p className="row-span-1 font-lato font-bold text-left text-xs text-main-blue line-clamp-2 overflow-y-hidden">
-					{title}
-				</p>
-				{/* PRICE */}
-				{specialPrice > 0 ? (
-					<div className="row-span-1 flex flex-col">
-						<p className="text-xs text-left font-bold text-main-blue line-through decoration-red-600">
-							Rs. {currentPrice}
-						</p>
-						<p className="text-base text-left font-bold text-main-blue">
-							Rs. {specialPrice}
-						</p>
-					</div>
-				) : (
-					<p className="row-span-1 text-base text-left font-bold text-main-blue">
-						Rs. {currentPrice}
-					</p>
-				)}
-				<div
-					className="z-20 bg-white drop-shadow-[0_35px_35px_35px_rgba(0,0,0,0.25)] bottom-[-35px] py-2 row-span-1 flex flex-col lg:flex-row items-center justify-between w-full"
-				>
-					{/* QUANTITY hidden on phone */}
-					{inStock && (
-						<div className="hidden lg:grid grid-cols-3 ml-2 justify-items-center rounded border-2 border-main-yellow overflow-hidden w-[50px] lg:w-full h-[40px]">
-							<button
-								className="relative bg-white w-full"
-								onClick={() => {
-									setQtyHandler("decrement")
-								}}
-							>
-								<Image
-									src={minusIcon}
-									layout={"fill"}
-									alt={"icon"}
-								/>
-							</button>
-							<div className="flex flex-col bg-main-yellow font-bold w-full text-main-blue text-2xl text-center">
-								<p className="mt-auto mb-auto">{qty}</p>
-							</div>
-							<button
-								className="relative bg-white w-full"
-								onClick={() => {
-									setQtyHandler("increment")
-								}}
-							>
-								<Image
-									src={plusIcon}
-									layout={"fill"}
-									alt={"icon"}
-								/>
-							</button>
-						</div>
-					)}
-					<div className="relative flex flex-row items-center justify-around lg:justify-end space-x-2 h-full w-full mr-2">
-						{inStock ? (
-							<button
-								className="h-[40px] px-2 bg-main-yellow font-bold text-xs lg:text-md rounded text-main-blue"
-								onClick={() => {
-									// addToCartApi()
-									setIsPlaceOrder(true)
-								}}
-							>
-								Add To Cart
-							</button>
 						) : (
 							<button
-								className="h-[40px] px-2 bg-zinc-400 font-bold text-xs lg:text-md rounded text-white"
-								disabled={true}
+								className="flex justify-center items-center w-full h-full bg-main-blue rounded-full overflow-hidden hover:scale-105 duration-100 hover:text-black text-white"
+								onClick={() => {
+									setIsPlaceOrder(true)
+									setShowQty(true)
+								}}
 							>
-								Out of Stock
+								<p className="font-bold">
+									Add To Cart
+								</p>
 							</button>
 						)}
-						{/* WISHLIST */}
+					</div>
+				) : (
+					<div className="relative flex flex-row items-center h-full w-full">
 						<button
-							className="flex items-center h-[40px]"
-							onClick={() => {
-								addToWishlistApi()
-							}}
+							className="bg-zinc-400 font-bold text-xs lg:text-md rounded text-white h-full w-full"
+							disabled={true}
 						>
-							<Image
-								src={wishlistIcon}
-								height={40}
-								width={40}
-								alt={"icon"}
-							/>
+							Out of Stock
 						</button>
 					</div>
+				)}
+			</div>
+		)
+	}
+
+	return (
+		<div className="relative grid grid-rows-[7] bg-white px-2 h-[350px] rounded-br-lg border-b-2 border-r-2 duration-75 hover:scale-[1.02] ease-out hover:z-20 hover:border-main-blue hover:drop-shadow-2xl hover:border-2 hover:rounded-lg">
+			{/* WISHLIST */}
+			<button
+				className="absolute z-10 right-1 top-1 flex items-center rounded-lg"
+				onClick={() => {
+					addToWishlistApi()
+				}}
+			>
+				<Image
+					src={wishlistIcon}
+					width={40}
+					height={40}
+					alt={"icon"}
+				/>
+			</button>
+
+			{/* IMAGE */}
+			<div className="row-span-4 flex items-center justify-center w-full h-full">
+				<Link
+					href={
+						"/category/" +
+						toKebabCase(immediateCategoryName) +
+						"/" +
+						immediateCategoryId +
+						"/" +
+						toKebabCase(title) +
+						"/" +
+						sku
+					}
+					passHref
+				>
+					<a className="relative h-[130px] w-[130px] lg:h-[150px] lg:w-[150px]">
+						<Image
+							src={imageUrl}
+							layout={"fill"}
+							alt={"product image"}
+						/>
+					</a>
+				</Link>
+			</div>
+			{/* TITLE */}
+			<p className="row-span-1 font-lato font-bold text-left text-sm xl:text-lg text-main-blue line-clamp-2 overflow-y-hidden">
+				{title}
+			</p>
+			{/* PRICE */}
+			{specialPrice > 0 ? (
+				<div className="row-span-2 flex flex-col justify-center">
+					<p className="text-sm lg:text-xl text-left font-bold text-main-blue line-through decoration-red-600">
+						Rs. {currentPrice}
+					</p>
+					<p className="text-2xl lg:text-3xl text-left font-bold text-main-blue">
+						Rs. {specialPrice}
+					</p>
 				</div>
+			) : (
+				<p className="row-span-2 flex items-center text-2xl lg:text-3xl text-left font-bold text-main-blue">
+					Rs. {currentPrice}
+				</p>
+			)}
+			<div className="row-span-1 h-[32px] self-end mb-2">
+				<AddToCart />
 			</div>
 		</div>
 	)
