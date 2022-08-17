@@ -100,32 +100,32 @@ export default function SingleProduct({ product, isInStock }) {
 				{inStock ? (
 					<div className="relative flex flex-row items-center h-full w-full">
 						{showQty ? (
-							<div className="animate-fade-in grid grid-cols-3 justify-items-center rounded border-2 border-main-blue h-full grow overflow-hidden">
+							<div className="animate-fade-in grid grid-cols-3 justify-items-center bg-slate-200 rounded-full h-full grow overflow-hidden">
 								<button
-									className="flex items-center relative bg-white hover:scale-125 duration-100 my-1"
+									className="flex items-center relative transition-none hover:scale-125 duration-100 my-1"
 									onClick={() => {
 										setQtyHandler("decrement")
 									}}
 								>
 									<Image
-										height={15}
-										width={15}
+										height={10}
+										width={10}
 										src={minusIcon}
 										alt={"icon"}
 									/>
 								</button>
-								<div className="flex flex-col bg-main-yellow font-bold w-full text-main-blue text-2xl text-center border-x-2 border-main-blue">
+								<div className="flex flex-col font-bold w-full text-main-blue text-2xl text-center">
 									<p className="mt-auto mb-auto">{qty}</p>
 								</div>
 								<button
-									className="flex items-center relative bg-white hover:scale-125 duration-100 my-1"
+									className="flex items-center relative transition-none hover:scale-125 duration-100 my-1"
 									onClick={() => {
 										setQtyHandler("increment")
 									}}
 								>
 									<Image
-										height={15}
-										width={15}
+										height={10}
+										width={10}
 										src={plusIcon}
 										alt={"icon"}
 									/>
@@ -133,7 +133,7 @@ export default function SingleProduct({ product, isInStock }) {
 							</div>
 						) : (
 							<button
-								className="flex justify-center items-center w-full h-full bg-main-blue rounded-full overflow-hidden hover:bg-main-yellow duration-100 hover:text-black text-white"
+								className="flex justify-center items-center w-full h-full bg-main-blue rounded-full overflow-hidden hover:scale-105 duration-100 hover:text-black text-white"
 								onClick={() => {
 									setIsPlaceOrder(true)
 									setShowQty(true)
@@ -160,7 +160,7 @@ export default function SingleProduct({ product, isInStock }) {
 	}
 
 	return (
-		<div className="relative grid grid-rows-[7] bg-white px-2 h-[350px] rounded-br-lg border-b-2 border-r-2 duration-75 hover:scale-105 ease-out hover:z-20 hover:border-main-blue hover:shadow-2xl hover:shadow-main-yellow hover:border-2 hover:rounded-lg">
+		<div className="relative grid grid-rows-[7] bg-white px-2 h-[350px] rounded-br-lg border-b-2 border-r-2 duration-75 hover:scale-[1.02] ease-out hover:z-20 hover:border-main-blue hover:drop-shadow-2xl hover:border-2 hover:rounded-lg">
 			{/* WISHLIST */}
 			<button
 				className="absolute z-10 right-1 top-1 flex items-center rounded-lg"
@@ -219,7 +219,7 @@ export default function SingleProduct({ product, isInStock }) {
 					Rs. {currentPrice}
 				</p>
 			)}
-			<div className="row-span-1 h-[40px] self-end mb-2">
+			<div className="row-span-1 h-[32px] self-end mb-2">
 				<AddToCart />
 			</div>
 		</div>
