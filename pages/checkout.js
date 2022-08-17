@@ -360,7 +360,7 @@ export default function Checkout() {
 			orderType,
 		}
 		let url = "/order/cart/checkout?client_lat=" + lat + "&client_long=" + long
-		
+
 		toast.info('Processing Order')
 		try {
 			let response = await axios.post(fullUrl(url), body, {
@@ -560,8 +560,8 @@ export default function Checkout() {
 											>
 												<Image
 													src={minusIcon}
-													height={20}
-													width={20}
+													height={10}
+													width={10}
 													alt="icon"
 												/>
 											</button>
@@ -577,8 +577,8 @@ export default function Checkout() {
 											>
 												<Image
 													src={plusIcon}
-													height={20}
-													width={20}
+													height={12}
+													width={12}
 													alt="icon"
 												/>
 											</button>
@@ -699,8 +699,8 @@ export default function Checkout() {
 											>
 												<Image
 													src={minusIcon}
-													height={20}
-													width={20}
+													height={10}
+													width={10}
 													alt="icon"
 												/>
 											</button>
@@ -716,8 +716,8 @@ export default function Checkout() {
 											>
 												<Image
 													src={plusIcon}
-													height={20}
-													width={20}
+													height={12}
+													width={12}
 													alt="icon"
 												/>
 											</button>
@@ -832,8 +832,8 @@ export default function Checkout() {
 											>
 												<Image
 													src={minusIcon}
-													height={20}
-													width={20}
+													height={10}
+													width={10}
 													alt="icon"
 												/>
 											</button>
@@ -850,8 +850,8 @@ export default function Checkout() {
 											>
 												<Image
 													src={plusIcon}
-													height={20}
-													width={20}
+													height={12}
+													width={12}
 													alt="icon"
 												/>
 											</button>

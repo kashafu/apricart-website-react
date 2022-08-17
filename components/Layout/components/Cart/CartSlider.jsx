@@ -263,7 +263,7 @@ export default function CartSlider() {
 															}}
 															className={"flex flex-row items-center"}
 														>
-															<Image src={minusIcon} alt="" />
+															<Image src={minusIcon} width={10} height={10} alt="" />
 														</button>
 														<p className="flex flex-col mb-auto mt-auto">
 															{item.qty}
@@ -275,7 +275,7 @@ export default function CartSlider() {
 															}}
 															className={"flex flex-row items-center"}
 														>
-															<Image src={plusIcon} alt="" />
+															<Image src={plusIcon} width={10} height={10} alt="" />
 														</button>
 														<button
 															className=""

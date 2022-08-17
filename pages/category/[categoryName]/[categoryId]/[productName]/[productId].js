@@ -31,8 +31,8 @@ export default function ProductDetail() {
 		}
 	}
 
-	useEffect(()=>{
-		if(productData){
+	useEffect(() => {
+		if (productData) {
 			setQty(productData[0].minQty)
 		}
 	}, [productData])
@@ -82,7 +82,7 @@ export default function ProductDetail() {
 					<div className="flex flex-row space-x-4">
 						<div className="grid grid-cols-3 justify-items-center rounded overflow-hidden w-[100px] h-[40px] border-2">
 							<button
-								className="relative bg-white w-full"
+								className="relative bg-white w-1/2"
 								onClick={() => {
 									setQtyHandler(
 										"decrement"
@@ -107,7 +107,7 @@ export default function ProductDetail() {
 								</p>
 							</div>
 							<button
-								className="relative bg-white w-full"
+								className="relative bg-white w-1/2"
 								onClick={() => {
 									setQtyHandler(
 										"increment"
