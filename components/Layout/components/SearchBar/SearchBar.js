@@ -66,10 +66,10 @@ export default function SearchBar() {
 
 	return (
 		<div className="relative w-full z-30">
-			<div className="flex flex-row bg-slate-300 rounded-lg w-full">
+			<div className="flex flex-row space-x-1 rounded-lg w-full">
 				<select
 					disabled={categoriesSelector == null}
-					className="py-2 rounded-lg bg-main-grey w-1/2 font-bold text-xs"
+					className="py-2 rounded-lg bg-slate-200 w-1/2 lg:w-1/4 font-bold text-xs"
 					onChange={(e) => {
 						setSelectedCategoryId(e.target.value)
 						categoriesSelector.find((item) => {
