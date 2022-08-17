@@ -19,7 +19,7 @@ export default function Home() {
 
 	let { token } = getGeneralApiParams()
 
-	const { isLoading, isPopupAd, homeData } = useHomeApi()
+	const { isLoading, isPopupAd, homeData, banners } = useHomeApi()
 
 	const [showPopupAd, setShowPopupAd] = useState(isPopupAd)
 

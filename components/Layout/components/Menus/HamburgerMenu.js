@@ -65,11 +65,13 @@ export default function HamburgerMenu() {
 								</p>
 							)}
 							<div className="items-center align-center space-y-2">
-								<div className="py-2" onClick={() => {
-									setShowMenu(!showMenu)
-								}}>
+								<div className="py-2">
 									{token ? (
-										<AddressSelector />
+										<div onClick={() => {
+											setShowMenu(!showMenu)
+										}}>
+											<AddressSelector />
+										</div>
 									) : (
 										<CitySelector />)
 									}
@@ -99,25 +101,6 @@ export default function HamburgerMenu() {
 						</div>
 						{token ? (
 							<div className="flex flex-col space-y-2">
-								{/* <div className="flex flex-row">
-                                        <Image
-                                            src={profileIcon}
-                                            alt={'icon'}
-                                            height={20}
-                                            width={20}
-                                        />
-                                        <div className="flex flex-col">
-                                            <p>
-                                                {name}
-                                            </p>
-                                            <p>
-                                                {email}
-                                            </p>
-                                            <p>
-                                                {phoneNumber}
-                                            </p>
-                                        </div>
-                                    </div> */}
 								<SubmitButton
 									text={"ACCOUNT"}
 									onClick={() => {

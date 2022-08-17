@@ -154,7 +154,10 @@ const CitySelector = () => {
 							<div className="w-3/4">
 								<SubmitButton
 									text={"Change City"}
-									onClick={closeButton}
+									onClick={() => {
+										closeButton()
+										// togglePopup()
+									}}
 								/>
 							</div>
 						</div>
