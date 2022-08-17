@@ -28,7 +28,7 @@ module.exports = {
 			},
 		]
 	},
-	// basePath: '/web'
+	basePath: '/web'
 }
 
 // module.exports = nextConfig
