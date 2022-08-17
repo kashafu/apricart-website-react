@@ -215,7 +215,7 @@ export default function CartSlider() {
 								: "fixed top-0 -right-[100rem] ease-in duration-700 flex flex-col items-center w-2/3 lg:w-1/3 h-full bg-white shadow-2xl z-50 rounded-l-2xl overflow-hidden"
 						}
 					>
-						<div className="w-full p-4 bg-main-blue">
+						<div className="w-full py-2 bg-main-blue">
 							<p className="text-main-yellow text-xl font-bold text-center">
 								My Cart
 							</p>
