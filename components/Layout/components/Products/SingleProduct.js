@@ -100,9 +100,9 @@ export default function SingleProduct({ product, isInStock }) {
 				{inStock ? (
 					<div className="relative flex flex-row items-center h-full w-full">
 						{showQty ? (
-							<div className="animate-fade-in grid grid-cols-3 justify-items-center rounded border-2 border-main-blue h-full grow">
+							<div className="animate-fade-in grid grid-cols-3 justify-items-center rounded border-2 border-main-blue h-full grow overflow-hidden">
 								<button
-									className="relative bg-white w-full"
+									className="relative w-1/3 bg-white hover:scale-125 duration-100"
 									onClick={() => {
 										setQtyHandler("decrement")
 									}}
@@ -117,7 +117,7 @@ export default function SingleProduct({ product, isInStock }) {
 									<p className="mt-auto mb-auto">{qty}</p>
 								</div>
 								<button
-									className="relative bg-white w-full"
+									className="relative w-1/3 bg-white hover:scale-125 duration-100"
 									onClick={() => {
 										setQtyHandler("increment")
 									}}
@@ -131,13 +131,13 @@ export default function SingleProduct({ product, isInStock }) {
 							</div>
 						) : (
 							<button
-								className="flex justify-center items-center w-full h-full bg-main-blue rounded-full overflow-hidden"
+								className="flex justify-center items-center w-full h-full bg-main-blue rounded-full overflow-hidden hover:bg-main-yellow duration-100 hover:text-black text-white"
 								onClick={() => {
 									setIsPlaceOrder(true)
 									setShowQty(true)
 								}}
 							>
-								<p className="text-white font-bold">
+								<p className="font-bold">
 									Add To Cart
 								</p>
 							</button>
