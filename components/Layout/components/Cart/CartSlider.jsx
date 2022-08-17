@@ -16,6 +16,7 @@ import minusIcon from "../../../../public/assets/svgs/minusIcon.svg";
 import plusIcon from "../../../../public/assets/svgs/plusIcon.svg";
 import SubmitButton from "../Buttons/SubmitButton";
 import { useRouter } from "next/router";
+import missingImageIcon from "../../../../public/assets/images/missingImage.png"
 
 const fullUrl = (url) => {
 	let { city, userId, clientType, orderType, prodType } =
@@ -224,7 +225,7 @@ export default function CartSlider() {
 								No items in your cart
 							</p>
 						) : (
-							<div className="space-y-2 overflow-y-auto flex flex-col py-2">
+							<div className="overflow-y-auto grid grid-flow-row w-full lg:px-4 2xl:px-12 py-2">
 								<div className="divide-y">
 									{reduxCart.map((item) => {
 										const {
@@ -235,14 +236,21 @@ export default function CartSlider() {
 											specialPrice,
 											sku,
 											qty,
+											productImageUrlThumbnail,
 										} = item;
 										let price = specialPrice > 0 ? specialPrice : currentPrice;
+										let imageUrl =
+											productImageUrlThumbnail != ""
+												? productImageUrlThumbnail
+												: productImageUrl != ""
+													? productImageUrl
+													: missingImageIcon
 
 										return (
 											<div key={id} className="grid grid-cols-4 p-2">
 												<div className="relative col-span-1 w-[50px] h-[50px] lg:w-[80px] lg:h-[80px] 2xl:[100px] 2xl:[100px]">
 													<Image
-														src={productImageUrl}
+														src={imageUrl}
 														alt={title}
 														layout={"fill"}
 													/>
