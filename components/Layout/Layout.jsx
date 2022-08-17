@@ -17,10 +17,10 @@ export default function Layout(props) {
 		setAppState({ ...appState, ...newState });
 	};
 
-	if (token && !selectedAddress) {
-		toast.warn("Please select your delivery address")
-		console.log("Please select your delivery address")
-	}
+	// if (token && !selectedAddress) {
+	// 	toast.warn("Please select your delivery address")
+	// 	console.log("Please select your delivery address")
+	// }
 
 	return (
 		<AppContext.Provider value={{ appState, handleAppState }}>
