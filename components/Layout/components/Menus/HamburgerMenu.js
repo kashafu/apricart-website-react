@@ -40,7 +40,7 @@ export default function HamburgerMenu() {
 			</button>
 			{showMenu && (
 				<div className="w-full h-full">
-					<div className="fixed top-0 flex flex-col py-4 px-2 left-0 w-3/4 h-full bg-white z-10 justify-between rounded-r-2xl">
+					<div className="fixed top-0 flex flex-col py-4 px-2 left-0 w-3/4 h-full bg-white z-50 justify-between rounded-r-2xl">
 						<div className="space-y-4">
 							<div className="flex flex-row justify-between items-center">
 								<div className="w-1/2">
@@ -176,7 +176,7 @@ export default function HamburgerMenu() {
 					</div>
 					{/* BACKDROP */}
 					<div
-						className="fixed top-0 right-0 h-screen w-1/4 z-10"
+						className="fixed top-0 right-0 h-screen w-1/4 z-50"
 						onClick={() => {
 							setShowMenu(!showMenu)
 						}}
