@@ -159,24 +159,23 @@ export default function SingleProduct({ product, isInStock }) {
 		)
 	}
 
-	{/* WISHLIST */ }
-	{/* <button
-									className="flex items-center border-2 border-main-blue rounded-lg"
-									onClick={() => {
-										addToWishlistApi()
-									}}
-								>
-									<Image
-										src={wishlistIcon}
-										width={40}
-										height={40}
-										alt={"icon"}
-									/>
-								</button> */}
-
-
 	return (
 		<div className="relative grid grid-rows-[7] bg-white px-2 h-[350px] rounded-br-lg border-b-2 border-r-2 duration-75 hover:scale-105 ease-out hover:z-20 hover:border-main-blue hover:shadow-2xl hover:shadow-main-yellow hover:border-2 hover:rounded-lg">
+			{/* WISHLIST */}
+			<button
+				className="absolute z-10 right-1 top-1 flex items-center rounded-lg"
+				onClick={() => {
+					addToWishlistApi()
+				}}
+			>
+				<Image
+					src={wishlistIcon}
+					width={40}
+					height={40}
+					alt={"icon"}
+				/>
+			</button>
+
 			{/* IMAGE */}
 			<div className="row-span-4 flex items-center justify-center w-full h-full">
 				<Link
@@ -192,7 +191,7 @@ export default function SingleProduct({ product, isInStock }) {
 					}
 					passHref
 				>
-					<a className="relative h-[150px] w-[150px]">
+					<a className="relative h-[130px] w-[130px] lg:h-[150px] lg:w-[150px]">
 						<Image
 							src={imageUrl}
 							layout={"fill"}
