@@ -49,22 +49,6 @@ export default function SingleProduct({ product, isInStock }) {
 
 	let immediateCategoryName = categoryleafName.split("|")[0].trim()
 	let immediateCategoryId = categoryIds.replace(/\s+/g, "").split("|")[0]
-	const [qty, setQty] = useState(minQty)
-
-	const setQtyHandler = (type) => {
-		if (type == "increment") {
-			if (qty == maxQty) {
-				return
-			}
-			setQty(qty + 1)
-		} else if (type == "decrement") {
-			if (qty == minQty) {
-				toast.error("Cannot order less than minimum quantity")
-				return
-			}
-			setQty(qty - 1)
-		}
-	}
 
 	const addToWishlistApi = async () => {
 		let { token, headers, userId } = getGeneralApiParams()
@@ -89,7 +73,105 @@ export default function SingleProduct({ product, isInStock }) {
 		}
 	}
 
-	const { setIsPlaceOrder } = useAddToCartApi(sku, qty, product)
+	const AddToCart = () => {
+		const [qty, setQty] = useState(minQty)
+		const [showQty, setShowQty] = useState(false)
+		const { setIsPlaceOrder } = useAddToCartApi(sku, qty, product)
+
+		const setQtyHandler = (type) => {
+			if (type == "increment") {
+				if (qty == maxQty) {
+					return
+				}
+				setQty(prevqty => prevqty + 1)
+				setIsPlaceOrder(true)
+			} else if (type == "decrement") {
+				if (qty == minQty) {
+					toast.error("Cannot order less than minimum quantity")
+					return
+				}
+				setQty(prevqty => prevqty - 1)
+				setIsPlaceOrder(true)
+			}
+		}
+
+		return (
+			<div className="row-span-1 h-[40px]">
+				{inStock ? (
+					<div className="relative flex flex-row items-center h-full w-full">
+						{showQty ? (
+							<div className="animate-fade-in grid grid-cols-3 justify-items-center rounded border-2 border-main-blue h-full grow">
+								<button
+									className="relative bg-white w-full"
+									onClick={() => {
+										setQtyHandler("decrement")
+									}}
+								>
+									<Image
+										src={minusIcon}
+										layout={"fill"}
+										alt={"icon"}
+									/>
+								</button>
+								<div className="flex flex-col bg-main-yellow font-bold w-full text-main-blue text-2xl text-center border-x-2 border-main-blue">
+									<p className="mt-auto mb-auto">{qty}</p>
+								</div>
+								<button
+									className="relative bg-white w-full"
+									onClick={() => {
+										setQtyHandler("increment")
+									}}
+								>
+									<Image
+										src={plusIcon}
+										layout={"fill"}
+										alt={"icon"}
+									/>
+								</button>
+							</div>
+						) : (
+							<button
+								className="flex justify-center items-center w-full h-full bg-main-blue rounded-full overflow-hidden"
+								onClick={() => {
+									setIsPlaceOrder(true)
+									setShowQty(true)
+								}}
+							>
+								<p className="text-white font-bold">
+									Add To Cart
+								</p>
+							</button>
+						)}
+					</div>
+				) : (
+					<div className="flex justify-between flex-row space-x-4">
+						<button
+							className="px-2 bg-zinc-400 font-bold text-xs lg:text-md rounded text-white grow"
+							disabled={true}
+						>
+							Out of Stock
+						</button>
+					</div>
+				)}
+			</div>
+		)
+	}
+
+	{/* WISHLIST */ }
+	{/* <button
+									className="flex items-center border-2 border-main-blue rounded-lg"
+									onClick={() => {
+										addToWishlistApi()
+									}}
+								>
+									<Image
+										src={wishlistIcon}
+										width={40}
+										height={40}
+										alt={"icon"}
+									/>
+								</button> */}
+
 
 	return (
 		<div>
@@ -138,93 +220,7 @@ export default function SingleProduct({ product, isInStock }) {
 						Rs. {currentPrice}
 					</p>
 				)}
-				<div className="row-span-1 h-[40px]">
-					{inStock ? (
-						<div className="relative flex flex-row items-center space-x-2 xl:space-x-6 mr-2 justify-between h-full">
-							<div className="grid grid-cols-3 justify-items-center rounded border-2 border-main-blue h-full grow">
-								<button
-									className="relative bg-white w-full"
-									onClick={() => {
-										setQtyHandler("decrement")
-									}}
-								>
-									<Image
-										src={minusIcon}
-										layout={"fill"}
-										alt={"icon"}
-									/>
-								</button>
-								<div className="flex flex-col bg-main-yellow font-bold w-full text-main-blue text-2xl text-center border-x-2 border-main-blue">
-									<p className="mt-auto mb-auto">{qty}</p>
-								</div>
-								<button
-									className="relative bg-white w-full"
-									onClick={() => {
-										setQtyHandler("increment")
-									}}
-								>
-									<Image
-										src={plusIcon}
-										layout={"fill"}
-										alt={"icon"}
-									/>
-								</button>
-							</div>
-							<div className="flex space-x-1 xl:space-x-2">
-								<button
-									className="flex items-center border-2 border-main-blue rounded-full overflow-hidden"
-									onClick={() => {
-										setIsPlaceOrder(true)
-									}}
-								>
-									<Image
-										src={addToCartIcon}
-										width={40}
-										height={40}
-										alt={"icon"}
-									/>
-								</button>
-								{/* WISHLIST */}
-								<button
-									className="flex items-center border-2 border-main-blue rounded-lg"
-									onClick={() => {
-										addToWishlistApi()
-									}}
-								>
-									<Image
-										src={wishlistIcon}
-										width={40}
-										height={40}
-										alt={"icon"}
-									/>
-								</button>
-							</div>
-						</div>
-					) : (
-						<div className="flex justify-between flex-row space-x-4">
-							<button
-								className="px-2 bg-zinc-400 font-bold text-xs lg:text-md rounded text-white grow"
-								disabled={true}
-							>
-								Out of Stock
-							</button>
-							{/* WISHLIST */}
-							<button
-								className="flex items-center"
-								onClick={() => {
-									addToWishlistApi()
-								}}
-							>
-								<Image
-									src={wishlistIcon}
-									width={40}
-									height={40}
-									alt={"icon"}
-								/>
-							</button>
-						</div>
-					)}
-				</div>
+				<AddToCart />
 			</div>
 			{/* MOBILE VIEW */}
 			<div className="lg:hidden grid grid-flow-row bg-white px-2 h-[250px] rounded-br-lg border-b-2 border-r-2 duration-75 hover:scale-110 ease-out">
@@ -271,76 +267,7 @@ export default function SingleProduct({ product, isInStock }) {
 						Rs. {currentPrice}
 					</p>
 				)}
-				<div
-					className="z-20 bg-white drop-shadow-[0_35px_35px_35px_rgba(0,0,0,0.25)] bottom-[-35px] py-2 row-span-1 flex flex-col lg:flex-row items-center justify-between w-full"
-				>
-					{/* QUANTITY hidden on phone */}
-					{inStock && (
-						<div className="hidden lg:grid grid-cols-3 ml-2 justify-items-center rounded border-2 border-main-yellow overflow-hidden w-[50px] lg:w-full h-[40px]">
-							<button
-								className="relative bg-white w-full"
-								onClick={() => {
-									setQtyHandler("decrement")
-								}}
-							>
-								<Image
-									src={minusIcon}
-									layout={"fill"}
-									alt={"icon"}
-								/>
-							</button>
-							<div className="flex flex-col bg-main-yellow font-bold w-full text-main-blue text-2xl text-center">
-								<p className="mt-auto mb-auto">{qty}</p>
-							</div>
-							<button
-								className="relative bg-white w-full"
-								onClick={() => {
-									setQtyHandler("increment")
-								}}
-							>
-								<Image
-									src={plusIcon}
-									layout={"fill"}
-									alt={"icon"}
-								/>
-							</button>
-						</div>
-					)}
-					<div className="relative flex flex-row items-center justify-around lg:justify-end space-x-2 h-full w-full mr-2">
-						{inStock ? (
-							<button
-								className="h-[40px] px-2 bg-main-yellow font-bold text-xs lg:text-md rounded text-main-blue"
-								onClick={() => {
-									// addToCartApi()
-									setIsPlaceOrder(true)
-								}}
-							>
-								Add To Cart
-							</button>
-						) : (
-							<button
-								className="h-[40px] px-2 bg-zinc-400 font-bold text-xs lg:text-md rounded text-white"
-								disabled={true}
-							>
-								Out of Stock
-							</button>
-						)}
-						{/* WISHLIST */}
-						<button
-							className="flex items-center h-[40px]"
-							onClick={() => {
-								addToWishlistApi()
-							}}
-						>
-							<Image
-								src={wishlistIcon}
-								height={40}
-								width={40}
-								alt={"icon"}
-							/>
-						</button>
-					</div>
-				</div>
+				<AddToCart />
 			</div>
 		</div>
 	)

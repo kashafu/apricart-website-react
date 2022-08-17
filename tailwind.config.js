@@ -17,18 +17,28 @@ module.exports = {
 					"50%": { transform: "rotate(3deg)" },
 				},
 				dropdown: {
-					"0%": { opacity: 0, transform: "translateY(-10px)"},
+					"0%": { opacity: 0, transform: "translateY(-10px)" },
 					"100%": { opacity: 100, transform: "translateY(0px)" },
 				},
 				'dropdown-inverse': {
-					"0%": { opacity: 100, display:"flex", transform: "translateY(0px)" },
-					"100%": { opacity: 0, display:"hidden", transform: "translateY(-10px)"},
-				}
+					"0%": { opacity: 100, display: "flex", transform: "translateY(0px)" },
+					"100%": { opacity: 0, display: "hidden", transform: "translateY(-10px)" },
+				},
+				"fade-in": {
+					"0%": { opacity: 0 },
+					"100%": { opacity: 100 },
+				},
+				"fade-out": {
+					"0%": { opacity: 100 },
+					"100%": { opacity: 0 },
+				},
 			},
 			animation: {
 				dangle: "dangle infinite 3s ease-in",
 				dropdown: "dropdown 0.25s ease-in-out",
 				'dropdown-inverse': "dropdown-inverse 2s ease-in",
+				'fade-in': "fade-in 0.25s ease-in",
+				'fade-out': "fade-out 0.5s ease-out",
 			},
 			colors: {
 				"main-yellow": {
