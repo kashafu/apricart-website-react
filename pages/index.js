@@ -7,9 +7,8 @@ import MainProducts from "../components/Layout/components/Products/MainProducts"
 import Link from "next/link"
 import HeadTag from "../components/Layout/components/Head/HeadTag"
 import storeBackgroundImage from "../public/assets/images/storeBackground.png"
-import lifestyle from "../public/assets/images/banners/20offHomeAndLifestyle.png"
-import roohafza from "../public/assets/images/banners/roohAfzabundle.jpeg"
-import ErrorText from "../components/Layout/components/Typography/ErrorText"
+import staticBanner1 from "../public/assets/images/banners/harLamhaBanner.jpg"
+import staticBanner2 from "../public/assets/images/banners/haleemwebbanner.png"
 import crossIcon from "../public/assets/svgs/crossIcon.svg"
 import Carousel from "../components/Layout/components/Banner/Carousel"
 import { useHomeApi } from "../helpers/Api"
@@ -142,25 +141,25 @@ export default function Home() {
 						</section>
 						{/* STATIC BANNERS */}
 						<section className="col-span-5 grid grid-rows-2 h-full w-full justify-items-center align-items-center">
-							<div className="relative w-full self-end">
-								<Link href={"/category/juices/1175/special-rooh-afza-deal/APRD-BG10-01"} passHref>
+							<div className="relative w-full p-2">
+								<Link href={"/offers/39"} passHref>
 									<a>
 										<Image
-											src={roohafza}
+											src={staticBanner2}
 											layout={"responsive"}
 											alt="banner"
 										/>
 									</a>
 								</Link>
 							</div>
-							<div className="relative w-full self-start">
+							<div className="relative w-full p-2">
 								<Link
-									href={"/category/home-&-lifestyle/1235"}
+									href={"/offers/14"}
 									passHref
 								>
 									<a>
 										<Image
-											src={lifestyle}
+											src={staticBanner1}
 											layout={"responsive"}
 											alt="banner"
 										/>
@@ -189,15 +188,13 @@ export default function Home() {
 											<section className="lg:hidden relative space-y-6 items-center">
 												<section className="w-full">
 													<Link
-														href={
-															"/category/juices/1175/special-rooh-afza-deal/APRD-BG10-01"
-														}
+														href={"/offers/39"}
 														passHref
 														className="w-full"
 													>
 														<a className="w-full">
 															<Image
-																src={roohafza}
+																src={staticBanner2}
 																layout={
 																	"responsive"
 																}
@@ -211,15 +208,13 @@ export default function Home() {
 											<section className="lg:hidden relative space-y-6 items-center">
 												<section className="w-full">
 													<Link
-														href={
-															"/category/home-&-lifestyle/1235"
-														}
+														href={"/offers/14"}
 														passHref
 														className="w-full"
 													>
 														<a className="w-full">
 															<Image
-																src={lifestyle}
+																src={staticBanner1}
 																layout={
 																	"responsive"
 																}
