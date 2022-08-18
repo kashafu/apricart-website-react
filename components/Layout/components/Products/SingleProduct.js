@@ -14,6 +14,7 @@ import { getGeneralApiParams } from "../../../../helpers/ApiHelpers"
 import { useState, useRef, useEffect } from "react"
 import { toast } from "react-toastify"
 import toKebabCase from "../../../../helpers/toKebabCase"
+import styles from './singleProduct.module.css'
 
 /*
 	isInStock is being passed where static site generation is being used
@@ -27,17 +28,92 @@ export default function SingleProduct({ product, isInStock }) {
 	const [imagePostion, setImagePostion] = useState()
 	const [floatImagePostion, setFloatImagePostion] = useState()
 	const [showFloatAnimation, setShowFloatAnimation] = useState(false)
-	const [floatStyle, setFloatStyle] = useState("absolute z-10 top-0 left-0 right-0 m-auto w-[50px] h-[50px] flex items-center overflow-hidden rounded-full")
+	const [floatStyle, setFloatStyle] = useState("fixed top-0 left-0 z-50 w-[50px] h-[50px]")
 
 	useEffect(() => {
+		// let style = `hidden z-[90] top-0 left-0 w-[50px] h-[50px] flex items-center overflow-hidden rounded-full duration-[1s]`
+		// setFloatStyle(style)
+
 		setFloatImagePostion(floatImageRef.current.getBoundingClientRect())
 		setImagePostion(imageRef.current.getBoundingClientRect())
 
 		if (showFloatAnimation) {
-			let top = imagePostion.height / 2
-			let style = "absolute z-10 left-0 right-0 m-auto w-[50px] h-[50px] flex items-center overflow-hidden rounded-full " + "top-[" + top + "px]"
-			setFloatStyle(style)
-			console.log(cartIconRefSelector.current.getBoundingClientRect())
+			let viewCart = cartIconRefSelector.current
+			let imgToDrag = floatImageRef.current
+			let imgToDragImage = floatImageRef.current
+
+			let disLeft = imgToDrag.getBoundingClientRect().left;
+			let disTop = imgToDrag.getBoundingClientRect().top;
+			let cartLeft = viewCart.getBoundingClientRect().left;
+			let cartTop = viewCart.getBoundingClientRect().top;
+			let image = imgToDragImage.cloneNode(true);
+			image.style =
+				'z-index: 11111; width: 100px;opacity:1; position:fixed; top:' +
+				disTop +
+				'px;left:' +
+				disLeft +
+				'px;transition: left 1s, top 1s, width 1s, opacity 1s cubic-bezier(1, 1, 1, 1);border-radius: 50px; overflow: hidden; box-shadow: 0 21px 36px rgba(0,0,0,0.1)';
+			let reChange = document.body.appendChild(image);
+			setTimeout(function () {
+				image.style.left = cartLeft + 'px';
+				image.style.top = cartTop + 'px';
+				image.style.width = '40px';
+				image.style.opacity = '0';
+			}, 200);
+			setTimeout(function () {
+				reChange.parentNode.removeChild(reChange);
+			}, 1000);
+
+
+			// let top = imagePostion.bottom + imagePostion.height / 2
+			// let top = window.scrollY
+			// // console.log(top)
+			// let left = 0
+			// // let left = imagePostion.left + imagePostion.width / 2
+			// // let style = `fixed z-[90] top-[${top}px] left-[${left}px] w-[50px] h-[50px] flex items-center overflow-hidden rounded-full`
+			// let style = `hidden z-[90] top-0 left-0 w-[50px] h-[50px] flex items-center overflow-hidden rounded-full duration-[1s]`
+
+			// setFloatStyle(style)
+
+			// // final position would be 
+			// let cartX = cartIconRefSelector.current.getBoundingClientRect().x
+			// let cartY = cartIconRefSelector.current.getBoundingClientRect().y
+
+			// let floatX = floatImagePostion.x
+			// let floatY = floatImagePostion.y
+
+			// let diffX = cartX - floatX
+			// let diffY = cartY - floatY
+
+
+			// cartIconRefSelector.current.appendTo(floatImageRef)
+
+
+			// console.log(diffX, diffY);
+			// console.log(window.scrollY);
+
+			// floatImageRef.current.animate([
+			// 	{
+			// 		transform: 'translateY(0px) translateX(0px)',
+			// 	},
+			// 	{
+			// 		// transform: `translateY(${cartY}px) translateX(${cartX}px)`
+			// 		transform: 'translateY(9px) translateX(900px)'
+			// 	}
+			// ], {
+			// 	duration: 1000,
+			// 	iterations: Infinity
+			// })
+
+			// floatImageRef.current.animate([
+			// 	{ transform: 'translateY(0px)' },
+			// 	{ transform: `translateY(${diffY}px) translateX(${diffX}px)` }
+			// ], {
+			// 	// timing options
+			// 	duration: 4000,
+			// 	iterations: Infinity
+			// });
+			// console.log(cartIconRefSelector.current.getBoundingClientRect())
 		}
 	}, [showFloatAnimation])
 
@@ -179,23 +255,8 @@ export default function SingleProduct({ product, isInStock }) {
 	}
 
 	return (
-		<div className="relative grid grid-rows-[7] bg-white px-2 h-[350px] rounded-br-lg border-b-2 border-r-2 duration-75 hover:scale-[1.02] ease-out hover:z-20 hover:border-main-blue hover:drop-shadow-2xl hover:border-2 hover:rounded-lg">
-			{/* ABSOLUTE Wishlist*/}
-			<button
-				className="absolute z-10 right-1 top-1 flex items-center rounded-lg"
-				onClick={() => {
-					addToWishlistApi()
-				}}
-			>
-				<Image
-					src={wishlistIcon}
-					width={40}
-					height={40}
-					alt={"icon"}
-				/>
-			</button>
-			{/* ABSOLUTE image float*/}
-			{/* {showFloatAnimation && ( */}
+		<div className="">
+			{/* FIXED image float*/}
 			<div className={floatStyle}
 				ref={floatImageRef}
 			>
@@ -205,54 +266,69 @@ export default function SingleProduct({ product, isInStock }) {
 					alt={"product image"}
 				/>
 			</div>
-			{/* )} */}
-			{/* IMAGE */}
-			<div className="row-span-4 flex items-center justify-center w-full h-full">
-				<Link
-					href={
-						"/category/" +
-						toKebabCase(immediateCategoryName) +
-						"/" +
-						immediateCategoryId +
-						"/" +
-						toKebabCase(title) +
-						"/" +
-						sku
-					}
-					passHref
+			<div className="relative grid grid-rows-[7] bg-white px-2 h-[350px] rounded-br-lg border-b-2 border-r-2 duration-75 hover:scale-[1.02] ease-out hover:z-20 hover:border-main-blue hover:drop-shadow-2xl hover:border-2 hover:rounded-lg">
+				{/* ABSOLUTE Wishlist*/}
+				<button
+					className="absolute z-10 right-1 top-1 flex items-center rounded-lg"
+					onClick={() => {
+						addToWishlistApi()
+					}}
 				>
-					<a className="relative h-[130px] w-[130px] lg:h-[150px] lg:w-[150px]"
-						ref={imageRef}
+					<Image
+						src={wishlistIcon}
+						width={40}
+						height={40}
+						alt={"icon"}
+					/>
+				</button>
+				{/* IMAGE */}
+				<div className="row-span-4 flex items-center justify-center w-full h-full">
+					<Link
+						href={
+							"/category/" +
+							toKebabCase(immediateCategoryName) +
+							"/" +
+							immediateCategoryId +
+							"/" +
+							toKebabCase(title) +
+							"/" +
+							sku
+						}
+						passHref
 					>
-						<Image
-							src={imageUrl}
-							layout={"fill"}
-							alt={"product image"}
-						/>
-					</a>
-				</Link>
-			</div>
-			{/* TITLE */}
-			<p className="row-span-1 font-lato font-bold text-left text-sm xl:text-lg text-main-blue line-clamp-2 overflow-y-hidden">
-				{title}
-			</p>
-			{/* PRICE */}
-			{specialPrice > 0 ? (
-				<div className="row-span-2 flex flex-col justify-center">
-					<p className="text-sm lg:text-xl text-left font-bold text-main-blue line-through decoration-red-600">
+						<a className="relative h-[130px] w-[130px] lg:h-[150px] lg:w-[150px]"
+							ref={imageRef}
+						>
+							<Image
+								src={imageUrl}
+								layout={"fill"}
+								alt={"product image"}
+							/>
+						</a>
+					</Link>
+				</div>
+				{/* TITLE */}
+				<p className="row-span-1 font-lato font-bold text-left text-sm xl:text-lg text-main-blue line-clamp-2 overflow-y-hidden">
+					{title}
+				</p>
+				{/* PRICE */}
+				{specialPrice > 0 ? (
+					<div className="row-span-2 flex flex-col justify-center">
+						<p className="text-sm lg:text-xl text-left font-bold text-main-blue line-through decoration-red-600">
+							Rs. {currentPrice}
+						</p>
+						<p className="text-2xl lg:text-3xl text-left font-bold text-main-blue">
+							Rs. {specialPrice}
+						</p>
+					</div>
+				) : (
+					<p className="row-span-2 flex items-center text-2xl lg:text-3xl text-left font-bold text-main-blue">
 						Rs. {currentPrice}
 					</p>
-					<p className="text-2xl lg:text-3xl text-left font-bold text-main-blue">
-						Rs. {specialPrice}
-					</p>
+				)}
+				<div className="row-span-1 h-[32px] self-end mb-2">
+					<AddToCart />
 				</div>
-			) : (
-				<p className="row-span-2 flex items-center text-2xl lg:text-3xl text-left font-bold text-main-blue">
-					Rs. {currentPrice}
-				</p>
-			)}
-			<div className="row-span-1 h-[32px] self-end mb-2">
-				<AddToCart />
 			</div>
 		</div>
 	)
