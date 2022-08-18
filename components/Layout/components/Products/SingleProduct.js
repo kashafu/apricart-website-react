@@ -11,7 +11,7 @@ import addToCartIcon from "../../../../public/assets/svgs/addToCartIcon.svg"
 import { useAddToCartApi } from "../../../../helpers/Api"
 import { base_url_api } from "../../../../information.json"
 import { getGeneralApiParams } from "../../../../helpers/ApiHelpers"
-import { useState } from "react"
+import { useState, useRef, useEffect } from "react"
 import { toast } from "react-toastify"
 import toKebabCase from "../../../../helpers/toKebabCase"
 
@@ -21,6 +21,23 @@ import toKebabCase from "../../../../helpers/toKebabCase"
 */
 export default function SingleProduct({ product, isInStock }) {
 	const dispatch = useDispatch()
+	const imageRef = useRef()
+	const floatImageRef = useRef()
+	const [imagePostion, setImagePostion] = useState()
+	const [floatImagePostion, setFloatImagePostion] = useState()
+	const [showFloatAnimation, setShowFloatAnimation] = useState(false)
+	const [floatStyle, setFloatStyle] = useState("absolute z-10 top-0 left-0 right-0 m-auto w-[50px] h-[50px] flex items-center overflow-hidden rounded-full")
+
+	useEffect(() => {
+		setFloatImagePostion(floatImageRef.current.getBoundingClientRect())
+		setImagePostion(imageRef.current.getBoundingClientRect())
+
+		if (showFloatAnimation) {
+			let top = imagePostion.height / 2
+			let style = "absolute z-10 left-0 right-0 m-auto w-[50px] h-[50px] flex items-center overflow-hidden rounded-full " + "top-[" + top + "px]"
+			setFloatStyle(style)
+		}
+	}, [showFloatAnimation])
 
 	let {
 		productImageUrl,
@@ -46,7 +63,6 @@ export default function SingleProduct({ product, isInStock }) {
 			: productImageUrl != ""
 				? productImageUrl
 				: missingImageIcon
-
 	let immediateCategoryName = categoryleafName.split("|")[0].trim()
 	let immediateCategoryId = categoryIds.replace(/\s+/g, "").split("|")[0]
 
@@ -135,8 +151,9 @@ export default function SingleProduct({ product, isInStock }) {
 							<button
 								className="flex justify-center items-center w-full h-full bg-main-blue rounded-full overflow-hidden hover:scale-105 duration-100 hover:text-black text-white"
 								onClick={() => {
-									setIsPlaceOrder(true)
-									setShowQty(true)
+									// setIsPlaceOrder(true)
+									setShowFloatAnimation(true)
+									// setShowQty(true)
 								}}
 							>
 								<p className="font-bold">
@@ -161,7 +178,7 @@ export default function SingleProduct({ product, isInStock }) {
 
 	return (
 		<div className="relative grid grid-rows-[7] bg-white px-2 h-[350px] rounded-br-lg border-b-2 border-r-2 duration-75 hover:scale-[1.02] ease-out hover:z-20 hover:border-main-blue hover:drop-shadow-2xl hover:border-2 hover:rounded-lg">
-			{/* WISHLIST */}
+			{/* ABSOLUTE Wishlist*/}
 			<button
 				className="absolute z-10 right-1 top-1 flex items-center rounded-lg"
 				onClick={() => {
@@ -175,7 +192,18 @@ export default function SingleProduct({ product, isInStock }) {
 					alt={"icon"}
 				/>
 			</button>
-
+			{/* ABSOLUTE image float*/}
+			{/* {showFloatAnimation && ( */}
+			<div className={floatStyle}
+				ref={floatImageRef}
+			>
+				<Image
+					src={imageUrl}
+					layout='fill'
+					alt={"product image"}
+				/>
+			</div>
+			{/* )} */}
 			{/* IMAGE */}
 			<div className="row-span-4 flex items-center justify-center w-full h-full">
 				<Link
@@ -191,7 +219,9 @@ export default function SingleProduct({ product, isInStock }) {
 					}
 					passHref
 				>
-					<a className="relative h-[130px] w-[130px] lg:h-[150px] lg:w-[150px]">
+					<a className="relative h-[130px] w-[130px] lg:h-[150px] lg:w-[150px]"
+						ref={imageRef}
+					>
 						<Image
 							src={imageUrl}
 							layout={"fill"}
