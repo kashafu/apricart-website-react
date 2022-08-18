@@ -1,122 +1,24 @@
 import Image from "next/image"
 import Link from "next/link"
 import axios from "axios"
-import { useDispatch, useSelector } from "react-redux"
+import { useDispatch } from "react-redux"
 import { addToWish } from "../../../../redux/wish.slice"
 import missingImageIcon from "../../../../public/assets/images/missingImage.png"
 import minusIcon from "../../../../public/assets/svgs/minusIcon.svg"
 import plusIcon from "../../../../public/assets/svgs/plusIcon.svg"
 import wishlistIcon from "../../../../public/assets/svgs/wishlistIcon.svg"
-import addToCartIcon from "../../../../public/assets/svgs/addToCartIcon.svg"
 import { useAddToCartApi } from "../../../../helpers/Api"
 import { base_url_api } from "../../../../information.json"
 import { getGeneralApiParams } from "../../../../helpers/ApiHelpers"
-import { useState, useRef, useEffect } from "react"
+import { useState, useRef, useEffect, useLayoutEffect } from "react"
 import { toast } from "react-toastify"
 import toKebabCase from "../../../../helpers/toKebabCase"
-import styles from './singleProduct.module.css'
 
 /*
 	isInStock is being passed where static site generation is being used
 	to keep stock of item uptodate always
 */
 export default function SingleProduct({ product, isInStock }) {
-	const dispatch = useDispatch()
-	const cartIconRefSelector = useSelector(state => state.page.cartIconRef)
-	const imageRef = useRef()
-	const floatImageRef = useRef()
-	const [imagePostion, setImagePostion] = useState()
-	const [floatImagePostion, setFloatImagePostion] = useState()
-	const [showFloatAnimation, setShowFloatAnimation] = useState(false)
-	const [floatStyle, setFloatStyle] = useState("fixed top-0 left-0 z-50 w-[50px] h-[50px]")
-
-	useEffect(() => {
-		// let style = `hidden z-[90] top-0 left-0 w-[50px] h-[50px] flex items-center overflow-hidden rounded-full duration-[1s]`
-		// setFloatStyle(style)
-
-		setFloatImagePostion(floatImageRef.current.getBoundingClientRect())
-		setImagePostion(imageRef.current.getBoundingClientRect())
-
-		if (showFloatAnimation) {
-			let viewCart = cartIconRefSelector.current
-			let imgToDrag = floatImageRef.current
-			let imgToDragImage = floatImageRef.current
-
-			let disLeft = imgToDrag.getBoundingClientRect().left;
-			let disTop = imgToDrag.getBoundingClientRect().top;
-			let cartLeft = viewCart.getBoundingClientRect().left;
-			let cartTop = viewCart.getBoundingClientRect().top;
-			let image = imgToDragImage.cloneNode(true);
-			image.style =
-				'z-index: 11111; width: 100px;opacity:1; position:fixed; top:' +
-				disTop +
-				'px;left:' +
-				disLeft +
-				'px;transition: left 1s, top 1s, width 1s, opacity 1s cubic-bezier(1, 1, 1, 1);border-radius: 50px; overflow: hidden; box-shadow: 0 21px 36px rgba(0,0,0,0.1)';
-			let reChange = document.body.appendChild(image);
-			setTimeout(function () {
-				image.style.left = cartLeft + 'px';
-				image.style.top = cartTop + 'px';
-				image.style.width = '40px';
-				image.style.opacity = '0';
-			}, 200);
-			setTimeout(function () {
-				reChange.parentNode.removeChild(reChange);
-			}, 1000);
-
-
-			// let top = imagePostion.bottom + imagePostion.height / 2
-			// let top = window.scrollY
-			// // console.log(top)
-			// let left = 0
-			// // let left = imagePostion.left + imagePostion.width / 2
-			// // let style = `fixed z-[90] top-[${top}px] left-[${left}px] w-[50px] h-[50px] flex items-center overflow-hidden rounded-full`
-			// let style = `hidden z-[90] top-0 left-0 w-[50px] h-[50px] flex items-center overflow-hidden rounded-full duration-[1s]`
-
-			// setFloatStyle(style)
-
-			// // final position would be 
-			// let cartX = cartIconRefSelector.current.getBoundingClientRect().x
-			// let cartY = cartIconRefSelector.current.getBoundingClientRect().y
-
-			// let floatX = floatImagePostion.x
-			// let floatY = floatImagePostion.y
-
-			// let diffX = cartX - floatX
-			// let diffY = cartY - floatY
-
-
-			// cartIconRefSelector.current.appendTo(floatImageRef)
-
-
-			// console.log(diffX, diffY);
-			// console.log(window.scrollY);
-
-			// floatImageRef.current.animate([
-			// 	{
-			// 		transform: 'translateY(0px) translateX(0px)',
-			// 	},
-			// 	{
-			// 		// transform: `translateY(${cartY}px) translateX(${cartX}px)`
-			// 		transform: 'translateY(9px) translateX(900px)'
-			// 	}
-			// ], {
-			// 	duration: 1000,
-			// 	iterations: Infinity
-			// })
-
-			// floatImageRef.current.animate([
-			// 	{ transform: 'translateY(0px)' },
-			// 	{ transform: `translateY(${diffY}px) translateX(${diffX}px)` }
-			// ], {
-			// 	// timing options
-			// 	duration: 4000,
-			// 	iterations: Infinity
-			// });
-			// console.log(cartIconRefSelector.current.getBoundingClientRect())
-		}
-	}, [showFloatAnimation])
-
 	let {
 		productImageUrl,
 		productImageUrlThumbnail,
@@ -130,6 +32,25 @@ export default function SingleProduct({ product, isInStock }) {
 		categoryleafName,
 		categoryIds,
 	} = product
+
+	const dispatch = useDispatch()
+	const [showFloatAnimation, setShowFloatAnimation] = useState(false)
+	const [floatStyle, setFloatStyle] = useState("hidden")
+	const [qty, setQty] = useState(minQty)
+	const [showQty, setShowQty] = useState(false)
+	const { setIsPlaceOrder } = useAddToCartApi(sku, qty, product)
+
+	// useLayoutEffect(() => {
+	// 	if (showFloatAnimation) {
+	// 		setFloatStyle('fixed z-30 top-0 left-0 animate-float-up')
+	// timeout same as animate-float-up
+	// setTimeout(function () {
+	// 	setFloatStyle('hidden')
+	// 	setShowFloatAnimation(false)
+	// }, 2000);
+	// 	}
+	// }, [showFloatAnimation])
+
 
 	if (isInStock) {
 		inStock = isInStock
@@ -168,35 +89,33 @@ export default function SingleProduct({ product, isInStock }) {
 	}
 
 	const AddToCart = () => {
-		const [qty, setQty] = useState(minQty)
-		const [showQty, setShowQty] = useState(false)
-		const { setIsPlaceOrder } = useAddToCartApi(sku, qty, product)
-
 		const setQtyHandler = (type) => {
 			if (type == "increment") {
 				if (qty == maxQty) {
 					return
 				}
-				setQty(prevqty => prevqty + 1)
+				setQty((prevqty) => prevqty + 1)
 				setIsPlaceOrder(true)
 			} else if (type == "decrement") {
 				if (qty == minQty) {
 					toast.error("Cannot order less than minimum quantity")
 					return
 				}
-				setQty(prevqty => prevqty - 1)
+				setQty((prevqty) => prevqty - 1)
 				setIsPlaceOrder(true)
 			}
 		}
+
+		console.log("RERENDERED");
 
 		return (
 			<div className="h-full w-full">
 				{inStock ? (
 					<div className="relative flex flex-row items-center h-full w-full">
 						{showQty ? (
-							<div className="animate-fade-in grid grid-cols-3 justify-items-center bg-slate-200 rounded-full h-full grow overflow-hidden">
+							<div className="animate-fade-in transition-transform grid grid-cols-3 justify-items-center bg-slate-200 rounded-full h-full grow overflow-hidden">
 								<button
-									className="flex items-center relative transition-none hover:scale-125 duration-100 my-1"
+									className="flex items-center relative transition-transform hover:scale-125 duration-100 my-1"
 									onClick={() => {
 										setQtyHandler("decrement")
 									}}
@@ -212,7 +131,7 @@ export default function SingleProduct({ product, isInStock }) {
 									<p className="mt-auto mb-auto">{qty}</p>
 								</div>
 								<button
-									className="flex items-center relative transition-none hover:scale-125 duration-100 my-1"
+									className="flex items-center relative transition-transform hover:scale-125 duration-100 my-1"
 									onClick={() => {
 										setQtyHandler("increment")
 									}}
@@ -229,14 +148,18 @@ export default function SingleProduct({ product, isInStock }) {
 							<button
 								className="flex justify-center items-center w-full h-full bg-main-blue rounded-full overflow-hidden hover:scale-105 duration-100 hover:text-black text-white"
 								onClick={() => {
-									// setIsPlaceOrder(true)
+									setIsPlaceOrder(true)
+									setShowQty(true)
 									setShowFloatAnimation(true)
-									// setShowQty(true)
+
+									// timeout same as animate-float-up
+									setTimeout(function () {
+										// setFloatStyle('hidden')
+										setShowFloatAnimation(false)
+									}, 2000);
 								}}
 							>
-								<p className="font-bold">
-									Add To Cart
-								</p>
+								<p className="font-bold">Add To Cart</p>
 							</button>
 						)}
 					</div>
@@ -255,18 +178,22 @@ export default function SingleProduct({ product, isInStock }) {
 	}
 
 	return (
-		<div className="">
-			{/* FIXED image float*/}
-			<div className={floatStyle}
-				ref={floatImageRef}
-			>
-				<Image
-					src={imageUrl}
-					layout='fill'
-					alt={"product image"}
-				/>
-			</div>
+		<div>
 			<div className="relative grid grid-rows-[7] bg-white px-2 h-[350px] rounded-br-lg border-b-2 border-r-2 duration-75 hover:scale-[1.02] ease-out hover:z-20 hover:border-main-blue hover:drop-shadow-2xl hover:border-2 hover:rounded-lg">
+				{/* ABSOLUTE image float*/}
+				{showFloatAnimation && (
+					<div
+						// className={floatStyle}
+						className={"fixed z-30 top-0 left-0 animate-float-up"}
+					>
+						<Image
+							src={imageUrl}
+							width={50}
+							height={50}
+							alt={"product image"}
+						/>
+					</div>
+				)}
 				{/* ABSOLUTE Wishlist*/}
 				<button
 					className="absolute z-10 right-1 top-1 flex items-center rounded-lg"
@@ -296,9 +223,7 @@ export default function SingleProduct({ product, isInStock }) {
 						}
 						passHref
 					>
-						<a className="relative h-[130px] w-[130px] lg:h-[150px] lg:w-[150px]"
-							ref={imageRef}
-						>
+						<a className="relative h-[130px] w-[130px] lg:h-[150px] lg:w-[150px]">
 							<Image
 								src={imageUrl}
 								layout={"fill"}

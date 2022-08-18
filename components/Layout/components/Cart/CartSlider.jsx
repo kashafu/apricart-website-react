@@ -54,9 +54,9 @@ export default function CartSlider() {
 		getCartDataApi();
 	}, [selectedTypeSelector]);
 
-	useEffect(() => {
-		dispatch(setCartIconRef(cartIconRef))
-	}, [])
+	// useEffect(() => {
+	// 	dispatch(setCartIconRef(cartIconRef))
+	// }, [])
 
 	const getCartDataApi = async () => {
 		let { headers, clientType, prodType, orderType } = getGeneralApiParams();

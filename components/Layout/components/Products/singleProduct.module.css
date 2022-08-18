@@ -1,9 +1,0 @@
-@keyframes moveToCart {
-    from {}
-    to {}
-}
-
-.element {
-    position: absolute;
-    transition: left 1s ease-out, top 1s ease-out;
-  }
