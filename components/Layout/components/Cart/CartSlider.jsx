@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from "react-redux";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import {
 	incrementQuantity,
@@ -17,6 +17,7 @@ import plusIcon from "../../../../public/assets/svgs/plusIcon.svg";
 import SubmitButton from "../Buttons/SubmitButton";
 import { useRouter } from "next/router";
 import missingImageIcon from "../../../../public/assets/images/missingImage.png"
+import { setCartIconRef } from "../../../../redux/page.slice";
 
 const fullUrl = (url) => {
 	let { city, userId, clientType, orderType, prodType } =
@@ -44,6 +45,7 @@ export default function CartSlider() {
 	const selectedTypeSelector = useSelector((state) => state.general.selectedType)
 	const dispatch = useDispatch();
 	const router = useRouter();
+	const cartIconRef = useRef()
 	let { token } = getGeneralApiParams();
 
 	const [showCart, setShowCart] = useState(false);
@@ -51,6 +53,10 @@ export default function CartSlider() {
 	useEffect(() => {
 		getCartDataApi();
 	}, [selectedTypeSelector]);
+
+	useEffect(() => {
+		dispatch(setCartIconRef(cartIconRef))
+	}, [])
 
 	const getCartDataApi = async () => {
 		let { headers, clientType, prodType, orderType } = getGeneralApiParams();
@@ -197,7 +203,9 @@ export default function CartSlider() {
 					setShowCart(!showCart);
 				}}
 			>
-				<div className="w-[45] h-[45] flex items-center">
+				<div className="w-[45] h-[45] flex items-center"
+					ref={cartIconRef}
+				>
 					<Image src={cartIcon} alt={"icon"} width={45} height={45} layout='fixed' />
 					<p className="absolute -top-1 p-[5px] py-0 -right-2 bg-main-blue rounded-full text-xs text-white">{reduxCart.length}</p>
 				</div>

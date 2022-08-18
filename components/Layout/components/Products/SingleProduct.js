@@ -1,7 +1,7 @@
 import Image from "next/image"
 import Link from "next/link"
 import axios from "axios"
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { addToWish } from "../../../../redux/wish.slice"
 import missingImageIcon from "../../../../public/assets/images/missingImage.png"
 import minusIcon from "../../../../public/assets/svgs/minusIcon.svg"
@@ -21,6 +21,7 @@ import toKebabCase from "../../../../helpers/toKebabCase"
 */
 export default function SingleProduct({ product, isInStock }) {
 	const dispatch = useDispatch()
+	const cartIconRefSelector = useSelector(state => state.page.cartIconRef)
 	const imageRef = useRef()
 	const floatImageRef = useRef()
 	const [imagePostion, setImagePostion] = useState()
@@ -36,6 +37,7 @@ export default function SingleProduct({ product, isInStock }) {
 			let top = imagePostion.height / 2
 			let style = "absolute z-10 left-0 right-0 m-auto w-[50px] h-[50px] flex items-center overflow-hidden rounded-full " + "top-[" + top + "px]"
 			setFloatStyle(style)
+			console.log(cartIconRefSelector.current.getBoundingClientRect())
 		}
 	}, [showFloatAnimation])
 

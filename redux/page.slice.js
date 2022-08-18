@@ -3,11 +3,11 @@ import { createSlice } from "@reduxjs/toolkit"
 const pageSlice = createSlice({
 	name: "page",
 	initialState: {
-		cartIconPosition: {},
+		cartIconRef: {},
 	},
 	reducers: {
-		updateCartIconPosition: (state, action) => {
-			state.cartIconPosition = action.payload
+		setCartIconRef: (state, action) => {
+			state.cartIconRef = action.payload
 		},
 	},
 })
@@ -15,5 +15,5 @@ const pageSlice = createSlice({
 export const pageReducer = pageSlice.reducer
 
 export const {
-	updateCartIconPosition
+	setCartIconRef
 } = pageSlice.actions
