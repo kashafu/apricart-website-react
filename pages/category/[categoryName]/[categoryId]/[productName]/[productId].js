@@ -8,9 +8,11 @@ import HeadTag from "../../../../../components/Layout/components/Head/HeadTag"
 import minusIcon from "../../../../../public/assets/svgs/minusIcon.svg"
 import plusIcon from "../../../../../public/assets/svgs/plusIcon.svg"
 import { useAddToCartApi, useProductDetailsApi } from "../../../../../helpers/Api"
+import { useSelector } from "react-redux"
 
 export default function ProductDetail() {
 	const router = useRouter()
+	const reduxCart = useSelector((state) => state.cart)
 	const { productId, productName } = router.query
 
 	const { isLoading, productData, errorMessage } = useProductDetailsApi()
@@ -36,6 +38,15 @@ export default function ProductDetail() {
 			setQty(productData[0].minQty)
 		}
 	}, [productData])
+
+	useEffect(() => {
+		if (productData) {
+			const item = reduxCart.find((item) => item.id === productData[0].id)
+			if (item) {
+				setQty(item.qty)
+			}
+		}
+	}, [reduxCart, productData])
 
 	if (isLoading) {
 		return (
