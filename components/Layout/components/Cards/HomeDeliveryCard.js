@@ -22,22 +22,22 @@ export default function HomeDeliveryCard({ isDisabled }) {
     }, [isDisabled])
 
     return (
-        <button className={[style] + ' relative rounded-lg shadow flex flex-col grow p-2 items-center ' + [disabledStyle]}
+        <button className={[style] + ' relative rounded-lg shadow flex flex-col grow p-1 items-center ' + [disabledStyle]}
             onClick={() => {
                 dispatch(updateSelectedType('home'))
                 setCookie('selected-type', 'home')
             }}
             disabled={isDisabled}
         >
-            <div className={[pStyle] + ' z-10 hidden absolute self-start font-bold lg:inline text-2xl xl:text-3xl 2xl:text-4xl'}>
+            <div className={[pStyle] + ' z-10 hidden absolute self-start font-bold lg:inline text-xl xl:text-2xl 2xl:text-3xl'}>
                 <p>
-                    HOME
+                    Home
                 </p>
                 <p>
-                    DELIVERY
+                    Delivery
                 </p>
             </div>
-            <div className='self-end mt-auto relative w-full lg:w-4/5 lg:pl-6'>
+            <div className='self-end mt-auto relative w-full lg:w-[75%] lg:pl-6'>
                 <Image
                     src={homeDeliveryIcon}
                     layout={'responsive'}
