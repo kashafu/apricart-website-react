@@ -54,15 +54,6 @@ const cartSlice = createSlice({
 			})
 			return total
 		},
-		getItemQtyInCart: (state, action) => {
-			let qty = 0
-			const itemIndex = state.findIndex((item) => item.id === action.payload.id)
-			if (itemIndex != -1) {
-				qty = state[itemIndex].qty
-				console.log(qty)
-				// return qty
-			}
-		}
 	},
 });
 
@@ -77,5 +68,4 @@ export const {
 	updatedcart,
 	initialize,
 	getCartTotal,
-	getItemQtyInCart
 } = cartSlice.actions;

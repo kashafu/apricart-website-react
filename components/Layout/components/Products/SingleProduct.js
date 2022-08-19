@@ -1,7 +1,7 @@
 import Image from "next/image"
 import Link from "next/link"
 import axios from "axios"
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { addToWish } from "../../../../redux/wish.slice"
 import missingImageIcon from "../../../../public/assets/images/missingImage.png"
 import minusIcon from "../../../../public/assets/svgs/minusIcon.svg"
@@ -10,10 +10,9 @@ import wishlistIcon from "../../../../public/assets/svgs/wishlistIcon.svg"
 import { useAddToCartApi } from "../../../../helpers/Api"
 import { base_url_api } from "../../../../information.json"
 import { getGeneralApiParams } from "../../../../helpers/ApiHelpers"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { toast } from "react-toastify"
 import toKebabCase from "../../../../helpers/toKebabCase"
-import { getItemQtyInCart } from "../../../../redux/cart.slice"
 
 /*
 	isInStock is being passed where static site generation is being used
@@ -32,15 +31,26 @@ export default function SingleProduct({ product, isInStock }) {
 		maxQty,
 		categoryleafName,
 		categoryIds,
+		id
 	} = product
 
 	const dispatch = useDispatch()
+	const reduxCart = useSelector((state) => state.cart)
 	const [showFloatAnimation, setShowFloatAnimation] = useState(false)
 	const [qty, setQty] = useState(minQty)
 	const [showQty, setShowQty] = useState(false)
 	const { setIsPlaceOrder } = useAddToCartApi(sku, qty, product)
 
-	let temp = dispatch(getItemQtyInCart(product))
+	useEffect(() => {
+		const item = reduxCart.find((item) => item.id === id)
+		if (item) {
+			setShowQty(true)
+			setQty(item.qty)
+		}
+		else {
+			setShowQty(false)
+		}
+	}, [reduxCart])
 
 	if (isInStock) {
 		inStock = isInStock
