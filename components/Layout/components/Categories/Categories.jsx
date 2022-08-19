@@ -27,7 +27,7 @@ export default function Categories() {
 	}
 
 	return (
-		<div className="sticky top-[100px] w-full">
+		<div className="sticky top-[70px] w-full">
 			<div className="space-y-4">
 				<p className="text-main-blue font-bold lg:text-2xl 2xl:text-3xl">
 					CATEGORIES
