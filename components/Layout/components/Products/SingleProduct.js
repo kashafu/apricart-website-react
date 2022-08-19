@@ -10,7 +10,7 @@ import wishlistIcon from "../../../../public/assets/svgs/wishlistIcon.svg"
 import { useAddToCartApi } from "../../../../helpers/Api"
 import { base_url_api } from "../../../../information.json"
 import { getGeneralApiParams } from "../../../../helpers/ApiHelpers"
-import { useState, useRef, useEffect, useLayoutEffect } from "react"
+import { useState } from "react"
 import { toast } from "react-toastify"
 import toKebabCase from "../../../../helpers/toKebabCase"
 
@@ -35,22 +35,9 @@ export default function SingleProduct({ product, isInStock }) {
 
 	const dispatch = useDispatch()
 	const [showFloatAnimation, setShowFloatAnimation] = useState(false)
-	const [floatStyle, setFloatStyle] = useState("hidden")
 	const [qty, setQty] = useState(minQty)
 	const [showQty, setShowQty] = useState(false)
 	const { setIsPlaceOrder } = useAddToCartApi(sku, qty, product)
-
-	// useLayoutEffect(() => {
-	// 	if (showFloatAnimation) {
-	// 		setFloatStyle('fixed z-30 top-0 left-0 animate-float-up')
-	// timeout same as animate-float-up
-	// setTimeout(function () {
-	// 	setFloatStyle('hidden')
-	// 	setShowFloatAnimation(false)
-	// }, 2000);
-	// 	}
-	// }, [showFloatAnimation])
-
 
 	if (isInStock) {
 		inStock = isInStock
@@ -88,93 +75,21 @@ export default function SingleProduct({ product, isInStock }) {
 		}
 	}
 
-	const AddToCart = () => {
-		const setQtyHandler = (type) => {
-			if (type == "increment") {
-				if (qty == maxQty) {
-					return
-				}
-				setQty((prevqty) => prevqty + 1)
-				setIsPlaceOrder(true)
-			} else if (type == "decrement") {
-				if (qty == minQty) {
-					toast.error("Cannot order less than minimum quantity")
-					return
-				}
-				setQty((prevqty) => prevqty - 1)
-				setIsPlaceOrder(true)
+	const setQtyHandler = (type) => {
+		if (type == "increment") {
+			if (qty == maxQty) {
+				return
 			}
+			setQty((prevqty) => prevqty + 1)
+			setIsPlaceOrder(true)
+		} else if (type == "decrement") {
+			if (qty == minQty) {
+				toast.error("Cannot order less than minimum quantity")
+				return
+			}
+			setQty((prevqty) => prevqty - 1)
+			setIsPlaceOrder(true)
 		}
-
-		console.log("RERENDERED");
-
-		return (
-			<div className="h-full w-full">
-				{inStock ? (
-					<div className="relative flex flex-row items-center h-full w-full">
-						{showQty ? (
-							<div className="animate-fade-in transition-transform grid grid-cols-3 justify-items-center bg-slate-200 rounded-full h-full grow overflow-hidden">
-								<button
-									className="flex items-center relative transition-transform hover:scale-125 duration-100 my-1"
-									onClick={() => {
-										setQtyHandler("decrement")
-									}}
-								>
-									<Image
-										height={10}
-										width={10}
-										src={minusIcon}
-										alt={"icon"}
-									/>
-								</button>
-								<div className="flex flex-col font-bold w-full text-main-blue text-2xl text-center">
-									<p className="mt-auto mb-auto">{qty}</p>
-								</div>
-								<button
-									className="flex items-center relative transition-transform hover:scale-125 duration-100 my-1"
-									onClick={() => {
-										setQtyHandler("increment")
-									}}
-								>
-									<Image
-										height={10}
-										width={10}
-										src={plusIcon}
-										alt={"icon"}
-									/>
-								</button>
-							</div>
-						) : (
-							<button
-								className="flex justify-center items-center w-full h-full bg-main-blue rounded-full overflow-hidden hover:scale-105 duration-100 hover:text-black text-white"
-								onClick={() => {
-									setIsPlaceOrder(true)
-									setShowQty(true)
-									setShowFloatAnimation(true)
-
-									// timeout same as animate-float-up
-									setTimeout(function () {
-										// setFloatStyle('hidden')
-										setShowFloatAnimation(false)
-									}, 2000);
-								}}
-							>
-								<p className="font-bold">Add To Cart</p>
-							</button>
-						)}
-					</div>
-				) : (
-					<div className="relative flex flex-row items-center h-full w-full">
-						<button
-							className="bg-zinc-400 font-bold text-xs lg:text-md rounded text-white h-full w-full"
-							disabled={true}
-						>
-							Out of Stock
-						</button>
-					</div>
-				)}
-			</div>
-		)
 	}
 
 	return (
@@ -184,7 +99,7 @@ export default function SingleProduct({ product, isInStock }) {
 				{showFloatAnimation && (
 					<div
 						// className={floatStyle}
-						className={"fixed z-30 top-0 left-0 animate-float-up"}
+						className={"absolute z-30 top-0 left-0 right-0 mx-auto animate-float-up"}
 					>
 						<Image
 							src={imageUrl}
@@ -251,8 +166,75 @@ export default function SingleProduct({ product, isInStock }) {
 						Rs. {currentPrice}
 					</p>
 				)}
+				{/* ADD TO CART */}
 				<div className="row-span-1 h-[32px] self-end mb-2">
-					<AddToCart />
+					<div className="h-full w-full">
+						{inStock ? (
+							<div className="relative flex flex-row items-center h-full w-full">
+								{showQty ? (
+									<div className="animate-fade-in transition-transform grid grid-cols-3 justify-items-center bg-slate-200 rounded-full h-full grow overflow-hidden">
+										<button
+											className="flex items-center relative transition-transform hover:scale-125 duration-100 my-1"
+											onClick={() => {
+												setQtyHandler("decrement")
+											}}
+										>
+											<Image
+												height={10}
+												width={10}
+												src={minusIcon}
+												alt={"icon"}
+											/>
+										</button>
+										<div className="flex flex-col font-bold w-full text-main-blue text-2xl text-center">
+											<p className="mt-auto mb-auto">
+												{qty}
+											</p>
+										</div>
+										<button
+											className="flex items-center relative transition-transform hover:scale-125 duration-100 my-1"
+											onClick={() => {
+												setQtyHandler("increment")
+											}}
+										>
+											<Image
+												height={10}
+												width={10}
+												src={plusIcon}
+												alt={"icon"}
+											/>
+										</button>
+									</div>
+								) : (
+									<button
+										className="flex justify-center items-center w-full h-full bg-main-blue rounded-full overflow-hidden hover:scale-105 duration-100 hover:text-black text-white"
+										onClick={() => {
+											setIsPlaceOrder(true)
+											setShowQty(true)
+											setShowFloatAnimation(true)
+
+											// timeout same as animate-float-up
+											setTimeout(function () {
+												// setFloatStyle('hidden')
+												setShowFloatAnimation(false)
+											}, 2000)
+										}}
+									>
+										<p className="font-bold">Add To Cart</p>
+									</button>
+								)}
+							</div>
+						) : (
+							<div className="relative flex flex-row items-center h-full w-full">
+								<button
+									className="bg-zinc-400 font-bold text-xs lg:text-md rounded text-white h-full w-full"
+									disabled={true}
+								>
+									Out of Stock
+								</button>
+							</div>
+						)}
+					</div>
 				</div>
 			</div>
 		</div>
