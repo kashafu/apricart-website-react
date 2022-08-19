@@ -9,6 +9,7 @@ import karachiScrollingBanner2 from '../../../../public/assets/images/banners/ev
 
 const Carousel = () => {
     const citySelector = useSelector(state => state.general.city)
+    const selectedTypeSelector = useSelector(state => state.general.selectedType)
     const settings = {
         dots: false,
         arrows: false,
@@ -24,37 +25,52 @@ const Carousel = () => {
     return (
         <div>
             {citySelector === 'karachi' && (
-                <Slider {...settings}>
-                    <div className='w-full h-full'>
-                        <Link href={'/offers/42'} passHref>
-                            <a className="w-full">
+                <div>
+                    {selectedTypeSelector === 'bulk' ? (
+                        <Slider {...settings}>
+                            <div className="w-full h-full">
                                 <Image
-                                    src={karachiScrollingBanner1}
+                                    src={karachiMainBanner}
                                     layout={"responsive"}
                                     alt="banner"
                                 />
-                            </a>
-                        </Link>
-                    </div>
-                    <div className='w-full h-full'>
-                        <Link href={'/category/just-rs.75/1242'} passHref>
-                            <a className="w-full">
+                            </div>
+                        </Slider>
+                    ) : (
+                        <Slider {...settings}>
+                            <div className='w-full h-full'>
+                                <Link href={'/offers/42'} passHref>
+                                    <a className="w-full">
+                                        <Image
+                                            src={karachiScrollingBanner1}
+                                            layout={"responsive"}
+                                            alt="banner"
+                                        />
+                                    </a>
+                                </Link>
+                            </div>
+                            <div className='w-full h-full'>
+                                <Link href={'/category/just-rs.75/1242'} passHref>
+                                    <a className="w-full">
+                                        <Image
+                                            src={karachiScrollingBanner2}
+                                            layout={"responsive"}
+                                            alt="banner"
+                                        />
+                                    </a>
+                                </Link>
+                            </div>
+                            <div className="w-full h-full">
                                 <Image
-                                    src={karachiScrollingBanner2}
+                                    src={karachiMainBanner}
                                     layout={"responsive"}
                                     alt="banner"
                                 />
-                            </a>
-                        </Link>
-                    </div>
-                    <div className="w-full h-full">
-                        <Image
-                            src={karachiMainBanner}
-                            layout={"responsive"}
-                            alt="banner"
-                        />
-                    </div>
-                </Slider>
+                            </div>
+                        </Slider>
+                    )}
+
+                </div>
             )}
             {citySelector === 'peshawar' && (
                 <Slider {...settings}>
