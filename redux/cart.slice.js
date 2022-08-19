@@ -53,6 +53,10 @@ const cartSlice = createSlice({
 				total += item.currentPrice
 			})
 			return total
+		},
+		getItemQtyInCart: (state, action) => {
+			const itemExists = state.find((item) => item.id === action.payload.id);
+			return itemExists ? itemExists.quantity : 0
 		}
 	},
 });
@@ -67,5 +71,6 @@ export const {
 	removeFromCart,
 	updatedcart,
 	initialize,
-	getCartTotal
+	getCartTotal,
+	getItemQtyInCart
 } = cartSlice.actions;

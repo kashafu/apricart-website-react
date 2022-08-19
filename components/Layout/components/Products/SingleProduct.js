@@ -1,7 +1,7 @@
 import Image from "next/image"
 import Link from "next/link"
 import axios from "axios"
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { addToWish } from "../../../../redux/wish.slice"
 import missingImageIcon from "../../../../public/assets/images/missingImage.png"
 import minusIcon from "../../../../public/assets/svgs/minusIcon.svg"
@@ -34,6 +34,7 @@ export default function SingleProduct({ product, isInStock }) {
 	} = product
 
 	const dispatch = useDispatch()
+	const reduxCart = useSelector((state) => state.cart);
 	const [showFloatAnimation, setShowFloatAnimation] = useState(false)
 	const [qty, setQty] = useState(minQty)
 	const [showQty, setShowQty] = useState(false)
