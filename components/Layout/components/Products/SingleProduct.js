@@ -1,7 +1,7 @@
 import Image from "next/image"
 import Link from "next/link"
 import axios from "axios"
-import { useDispatch, useSelector } from "react-redux"
+import { useDispatch } from "react-redux"
 import { addToWish } from "../../../../redux/wish.slice"
 import missingImageIcon from "../../../../public/assets/images/missingImage.png"
 import minusIcon from "../../../../public/assets/svgs/minusIcon.svg"
@@ -13,6 +13,7 @@ import { getGeneralApiParams } from "../../../../helpers/ApiHelpers"
 import { useState } from "react"
 import { toast } from "react-toastify"
 import toKebabCase from "../../../../helpers/toKebabCase"
+import { getItemQtyInCart } from "../../../../redux/cart.slice"
 
 /*
 	isInStock is being passed where static site generation is being used
@@ -34,11 +35,12 @@ export default function SingleProduct({ product, isInStock }) {
 	} = product
 
 	const dispatch = useDispatch()
-	const reduxCart = useSelector((state) => state.cart);
 	const [showFloatAnimation, setShowFloatAnimation] = useState(false)
 	const [qty, setQty] = useState(minQty)
 	const [showQty, setShowQty] = useState(false)
 	const { setIsPlaceOrder } = useAddToCartApi(sku, qty, product)
+
+	let temp = dispatch(getItemQtyInCart(product))
 
 	if (isInStock) {
 		inStock = isInStock

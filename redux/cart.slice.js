@@ -55,8 +55,13 @@ const cartSlice = createSlice({
 			return total
 		},
 		getItemQtyInCart: (state, action) => {
-			const itemExists = state.find((item) => item.id === action.payload.id);
-			return itemExists ? itemExists.quantity : 0
+			let qty = 0
+			const itemIndex = state.findIndex((item) => item.id === action.payload.id)
+			if (itemIndex != -1) {
+				qty = state[itemIndex].qty
+				console.log(qty)
+				// return qty
+			}
 		}
 	},
 });
