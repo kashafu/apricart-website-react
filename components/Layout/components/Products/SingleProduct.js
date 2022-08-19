@@ -111,8 +111,7 @@ export default function SingleProduct({ product, isInStock }) {
 				{/* ABSOLUTE image float*/}
 				{showFloatAnimation && (
 					<div
-						// className={floatStyle}
-						className={"absolute z-30 top-0 left-0 right-0 mx-auto animate-float-up"}
+						className={"absolute z-30 top-0 left-0 right-0 mx-auto flex items-center justify-center animate-float-up h-[50px] w-[50px] rounded-full overflow-hidden m-2"}
 					>
 						<Image
 							src={imageUrl}

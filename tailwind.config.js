@@ -33,7 +33,7 @@ module.exports = {
 					"100%": { opacity: 0 },
 				},
 				"float-up": {
-					"0%": { opacity: 100, transform: "translateY(0px)" },
+					"0%": { opacity: 50, transform: "translateY(0px)" },
 					"100%": { opacity: 0, transform: "translateY(-200px)" },
 				},
 			},
