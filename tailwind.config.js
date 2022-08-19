@@ -32,6 +32,10 @@ module.exports = {
 					"0%": { opacity: 100 },
 					"100%": { opacity: 0 },
 				},
+				"float-up": {
+					"0%": { opacity: 50, transform: "translateY(0px)" },
+					"100%": { opacity: 0, transform: "translateY(-200px)" },
+				},
 			},
 			animation: {
 				dangle: "dangle infinite 3s ease-in",
@@ -39,6 +43,7 @@ module.exports = {
 				'dropdown-inverse': "dropdown-inverse 2s ease-in",
 				'fade-in': "fade-in 0.25s ease-in",
 				'fade-out': "fade-out 0.5s ease-out",
+				'float-up': "float-up 2s ease-out"
 			},
 			colors: {
 				"main-yellow": {
@@ -78,6 +83,20 @@ module.exports = {
 				h4: { fontSize: theme("fontSize.xl") },
 			});
 		}),
-		require('@tailwindcss/line-clamp')
+		require('@tailwindcss/line-clamp'),
+		plugin(function ({ addUtilities }) {
+			addUtilities({
+				'.content-auto': {
+					'content-visibility': 'auto',
+				},
+				'.no-scrollbar::-webkit-scrollbar': {
+					display: 'none'
+				},
+				'.no-scrollbar': {
+					'-ms-overflow-style': 'none', /* IE and Edge */
+					'scrollbar-width': 'none'  /* Firefox */
+				}
+			})
+		})
 	],
 };

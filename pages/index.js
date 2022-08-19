@@ -7,20 +7,20 @@ import MainProducts from "../components/Layout/components/Products/MainProducts"
 import Link from "next/link"
 import HeadTag from "../components/Layout/components/Head/HeadTag"
 import storeBackgroundImage from "../public/assets/images/storeBackground.png"
-import staticBanner1 from "../public/assets/images/banners/harLamhaBanner.jpg"
-import staticBanner2 from "../public/assets/images/banners/haleemwebbanner.png"
+import karachiStaticBanner1 from "../public/assets/images/banners/harLamhaBanner.jpg"
+import karachiStaticBanner2 from "../public/assets/images/banners/haleemwebbanner.png"
+import karachiBulkBuyStaticBanner1 from "../public/assets/images/banners/bulkBuyBanner.jpeg"
 import crossIcon from "../public/assets/svgs/crossIcon.svg"
 import Carousel from "../components/Layout/components/Banner/Carousel"
 import { useHomeApi } from "../helpers/Api"
 import TypeCardSelector from "../components/Layout/components/Cards/TypeCardSelector"
+import { useSelector } from "react-redux"
 
 export default function Home() {
 	const router = useRouter()
-
+	const selectedTypeSelector = useSelector(state => state.general.selectedType)
 	let { token } = getGeneralApiParams()
-
 	const { isLoading, isPopupAd, homeData, banners } = useHomeApi()
-
 	const [showPopupAd, setShowPopupAd] = useState(isPopupAd)
 
 	if (isLoading) {
@@ -140,33 +140,49 @@ export default function Home() {
 							</section>
 						</section>
 						{/* STATIC BANNERS */}
-						<section className="col-span-5 grid grid-rows-2 h-full w-full justify-items-center align-items-center">
-							<div className="relative w-full p-2">
-								<Link href={"/offers/39"} passHref>
-									<a>
-										<Image
-											src={staticBanner2}
-											layout={"responsive"}
-											alt="banner"
-										/>
-									</a>
-								</Link>
-							</div>
-							<div className="relative w-full p-2">
-								<Link
-									href={"/offers/14"}
-									passHref
-								>
-									<a>
-										<Image
-											src={staticBanner1}
-											layout={"responsive"}
-											alt="banner"
-										/>
-									</a>
-								</Link>
-							</div>
-						</section>
+						{selectedTypeSelector === 'bulk' ? (
+							<section className="col-span-5 grid grid-rows-1 h-full w-full justify-items-center align-items-center">
+								<div className="relative w-full p-2">
+									<Link href={"/"} passHref>
+										<a>
+											<Image
+												src={karachiBulkBuyStaticBanner1}
+												layout={"responsive"}
+												alt="banner"
+											/>
+										</a>
+									</Link>
+								</div>
+							</section>
+						) : (
+							<section className="col-span-5 grid grid-rows-2 h-full w-full justify-items-center align-items-center">
+								<div className="relative w-full p-2">
+									<Link href={"/offers/39"} passHref>
+										<a>
+											<Image
+												src={karachiStaticBanner2}
+												layout={"responsive"}
+												alt="banner"
+											/>
+										</a>
+									</Link>
+								</div>
+								<div className="relative w-full p-2">
+									<Link
+										href={"/offers/14"}
+										passHref
+									>
+										<a>
+											<Image
+												src={karachiStaticBanner1}
+												layout={"responsive"}
+												alt="banner"
+											/>
+										</a>
+									</Link>
+								</div>
+							</section>
+						)}
 					</section>
 					{/* BANNERS SECTION hidden on desktop */}
 					<section className="lg:hidden w-full items-center mt-4">
@@ -194,7 +210,7 @@ export default function Home() {
 													>
 														<a className="w-full">
 															<Image
-																src={staticBanner2}
+																src={karachiStaticBanner2}
 																layout={
 																	"responsive"
 																}
@@ -214,7 +230,7 @@ export default function Home() {
 													>
 														<a className="w-full">
 															<Image
-																src={staticBanner1}
+																src={karachiStaticBanner1}
 																layout={
 																	"responsive"
 																}

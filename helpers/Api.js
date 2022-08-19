@@ -33,7 +33,7 @@ const fullUrl = (url) => {
 
 const initializeUserApi = async () => {
 	let { isUserInitialized, latitude, longitude, headers } = getGeneralApiParams()
-	
+
 	if (!isUserInitialized) {
 		let url =
 			"/home/all?client_lat=" +
@@ -41,7 +41,7 @@ const initializeUserApi = async () => {
 			"&client_long=" +
 			longitude +
 			"&web=false&hide=true"
-	
+
 		try {
 			await axios.get(fullUrl(url), {
 				headers: headers,
@@ -327,7 +327,6 @@ export const useAddToCartApi = (sku, qty, product) => {
 				headers: headers,
 			})
 			setResponse(apiResponse)
-			toast.success("Added to Cart")
 
 			let reduxCartData = {
 				...product
@@ -543,7 +542,7 @@ export const useIncrementQtyApi = (sku, qty, id) => {
 
 	const callApi = async () => {
 		setIsLoading(true)
-		
+
 		let { headers } = getGeneralApiParams()
 		let url = "/order/cart/updateqty?"
 		let body = {
@@ -596,7 +595,7 @@ export const useDecrementQtyApi = (sku, qty, id) => {
 
 	const callApi = async () => {
 		setIsLoading(true)
-		
+
 		let { headers } = getGeneralApiParams()
 		let url = "/order/cart/updateqty?"
 		let body = {
@@ -707,12 +706,12 @@ export const useDeleteItemApi = (sku, id) => {
 
 	const callApi = async () => {
 		setIsLoading(true)
-		
+
 		let { headers, token, userId } = getGeneralApiParams()
 		let url
 		let body
 
-		if(token){
+		if (token) {
 			url = "/order/cart/delete?"
 			body = {
 				cart: [
@@ -721,7 +720,7 @@ export const useDeleteItemApi = (sku, id) => {
 					},
 				],
 			}
-		} else{
+		} else {
 			url = "/guest/cart/delete?"
 			body = {
 				userId,

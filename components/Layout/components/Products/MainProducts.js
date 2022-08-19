@@ -2,6 +2,7 @@ import SingleProduct from "./SingleProduct"
 import Link from "next/link"
 import Image from "next/image"
 import { useState } from "react"
+import missingImageIcon from '../../../../public/assets/images/missingImage.png'
 
 export default function MainProducts({ section }) {
 	let { data, name, offerId } = section
@@ -16,12 +17,14 @@ export default function MainProducts({ section }) {
 		return <div>Loading</div>
 	}
 
+	let imageUrl = bannerImageWeb === '' ? missingImageIcon : bannerImageWeb
+
 	return (
 		<section key={name} className="space-y-4 px-2 py-4">
 			<div className="w-full rounded-xl overflow-hidden">
 				{offerId == 0 ? (
 					<Image
-						src={bannerImageWeb}
+						src={imageUrl}
 						layout={'responsive'}
 						alt={"banner image"}
 						width={'100%'}
@@ -37,7 +40,7 @@ export default function MainProducts({ section }) {
 					>
 						<a className="w-full">
 							<Image
-								src={bannerImageWeb}
+								src={imageUrl}
 								layout={'responsive'}
 								alt={"banner image"}
 								width={'100%'}

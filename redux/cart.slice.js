@@ -45,7 +45,6 @@ const cartSlice = createSlice({
 		removeFromCart: (state, action) => {
 			const index = state.findIndex((item) => item.id === action.payload);
 			state.splice(index, 1);
-			toast.info("Item Removed !");
 		},
 		getCartTotal: (state, action) => {
 			let total = 0
@@ -53,7 +52,7 @@ const cartSlice = createSlice({
 				total += item.currentPrice
 			})
 			return total
-		}
+		},
 	},
 });
 
@@ -67,5 +66,5 @@ export const {
 	removeFromCart,
 	updatedcart,
 	initialize,
-	getCartTotal
+	getCartTotal,
 } = cartSlice.actions;
