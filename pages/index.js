@@ -7,20 +7,19 @@ import MainProducts from "../components/Layout/components/Products/MainProducts"
 import Link from "next/link"
 import HeadTag from "../components/Layout/components/Head/HeadTag"
 import storeBackgroundImage from "../public/assets/images/storeBackground.png"
-import staticBanner1 from "../public/assets/images/banners/harLamhaBanner.jpg"
-import staticBanner2 from "../public/assets/images/banners/haleemwebbanner.png"
+import karachiStaticBanner1 from "../public/assets/images/banners/harLamhaBanner.jpg"
+import karachiStaticBanner2 from "../public/assets/images/banners/haleemwebbanner.png"
 import crossIcon from "../public/assets/svgs/crossIcon.svg"
 import Carousel from "../components/Layout/components/Banner/Carousel"
 import { useHomeApi } from "../helpers/Api"
 import TypeCardSelector from "../components/Layout/components/Cards/TypeCardSelector"
+import { useSelector } from "react-redux"
 
 export default function Home() {
 	const router = useRouter()
-
+	const citySelector = useSelector(state => state.general.city)
 	let { token } = getGeneralApiParams()
-
 	const { isLoading, isPopupAd, homeData, banners } = useHomeApi()
-
 	const [showPopupAd, setShowPopupAd] = useState(isPopupAd)
 
 	if (isLoading) {
@@ -145,7 +144,7 @@ export default function Home() {
 								<Link href={"/offers/39"} passHref>
 									<a>
 										<Image
-											src={staticBanner2}
+											src={karachiStaticBanner2}
 											layout={"responsive"}
 											alt="banner"
 										/>
@@ -159,7 +158,7 @@ export default function Home() {
 								>
 									<a>
 										<Image
-											src={staticBanner1}
+											src={karachiStaticBanner1}
 											layout={"responsive"}
 											alt="banner"
 										/>
@@ -194,7 +193,7 @@ export default function Home() {
 													>
 														<a className="w-full">
 															<Image
-																src={staticBanner2}
+																src={karachiStaticBanner2}
 																layout={
 																	"responsive"
 																}
@@ -214,7 +213,7 @@ export default function Home() {
 													>
 														<a className="w-full">
 															<Image
-																src={staticBanner1}
+																src={karachiStaticBanner1}
 																layout={
 																	"responsive"
 																}
