@@ -45,7 +45,6 @@ const cartSlice = createSlice({
 		removeFromCart: (state, action) => {
 			const index = state.findIndex((item) => item.id === action.payload);
 			state.splice(index, 1);
-			toast.info("Item Removed !");
 		},
 		getCartTotal: (state, action) => {
 			let total = 0
