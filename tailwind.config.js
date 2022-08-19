@@ -83,6 +83,20 @@ module.exports = {
 				h4: { fontSize: theme("fontSize.xl") },
 			});
 		}),
-		require('@tailwindcss/line-clamp')
+		require('@tailwindcss/line-clamp'),
+		plugin(function ({ addUtilities }) {
+			addUtilities({
+				'.content-auto': {
+					'content-visibility': 'auto',
+				},
+				'.no-scrollbar::-webkit-scrollbar': {
+					display: 'none'
+				},
+				'.no-scrollbar': {
+					'-ms-overflow-style': 'none', /* IE and Edge */
+					'scrollbar-width': 'none'  /* Firefox */
+				}
+			})
+		})
 	],
 };
