@@ -94,14 +94,14 @@ export default function SearchBar() {
 				</select>
 				<input
 					ref={searchIconElement}
-					className="p-2 w-full bg-slate-300 rounded-lg font-bold"
+					className="p-2 w-full bg-slate-200 rounded-lg font-bold"
 					type={"search"}
 					value={searchText}
 					onChange={(e) => {
 						setSearchText(e.target.value)
 						getSearchResultsApi(e.target.value)
 					}}
-					placeholder="Search"
+					placeholder="Find a Product"
 					onBlur={async () => {
 						await new Promise((r) => setTimeout(r, 500))
 						setShowSearchResults(false)
