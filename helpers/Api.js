@@ -332,7 +332,6 @@ export const useAddToCartApi = (sku, qty, product) => {
 				...product
 			}
 			reduxCartData.qty = qty
-			console.log(reduxCartData);
 			dispatch(addToCart(reduxCartData))
 		} catch (error) {
 			setErrorResponse(error?.response)
