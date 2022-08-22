@@ -8,7 +8,7 @@ import { useSearchResultsApi } from "../../../helpers/Api"
 const SearchResults = () => {
     const router = useRouter()
     const { term } = router.query
-    const { isLoading, searchResults, errorMessage } = useSearchResultsApi()
+    const { isLoading, searchResults, errorMessage, response } = useSearchResultsApi()
 
     if (isLoading) {
         return (
@@ -28,6 +28,8 @@ const SearchResults = () => {
         )
     }
 
+    console.log(response)
+
     return (
         <div>
             <HeadTag title={term} />
@@ -46,9 +48,9 @@ const SearchResults = () => {
                     ) : (
                         <section className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
                             {searchResults.map((result) => {
-                                let { id } = result
+                                let { sku } = result
                                 return (
-                                    <div key={id}>
+                                    <div key={sku}>
                                         <SingleProduct product={result} />
                                     </div>
                                 )

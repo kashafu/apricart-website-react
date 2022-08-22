@@ -96,12 +96,12 @@ export default function CategoryProducts() {
 		return (
 			<section className="grid grid-cols-2 md:grid-cols-4 2xl:grid-cols-5 gap-4">
 				{categoryProducts.map((product) => {
-					let { id } = product
+					let { sku } = product
 					return (
-						<div key={id}>
+						<div key={sku}>
 							<SingleProduct
 								product={product}
-								// TODO call api to get updated details of product and check if it is in stock
+							// TODO call api to get updated details of product and check if it is in stock
 							/>
 						</div>
 					)
