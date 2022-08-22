@@ -240,7 +240,7 @@ export default function Checkout() {
 				headers: headers,
 			})
 
-			dispatch(incrementQuantity(id))
+			dispatch(incrementQuantity(sku))
 		} catch (error) {
 			setCartErrorMessage(error?.response?.data?.message)
 			toast.error(error?.response?.data?.message)
@@ -268,7 +268,7 @@ export default function Checkout() {
 				headers: headers,
 			})
 
-			dispatch(decrementQuantity(id))
+			dispatch(decrementQuantity(sku))
 		} catch (error) {
 			toast.error(error?.response?.data?.message)
 			setCartErrorMessage(error?.response?.data?.message)
@@ -296,7 +296,7 @@ export default function Checkout() {
 					headers: headers,
 					data: body,
 				})
-				dispatch(removeFromCart(id))
+				dispatch(removeFromCart(sku))
 			} catch (error) {
 				console.log(error)
 				toast.error(error?.response?.data?.message)
@@ -318,7 +318,7 @@ export default function Checkout() {
 					headers: headers,
 					data: body,
 				})
-				dispatch(removeFromCart(id))
+				dispatch(removeFromCart(sku))
 			} catch (error) {
 				console.log(error)
 				toast.error(error?.response?.data?.message)

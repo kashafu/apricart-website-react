@@ -332,6 +332,7 @@ export const useAddToCartApi = (sku, qty, product) => {
 				...product
 			}
 			reduxCartData.qty = qty
+			console.log(reduxCartData);
 			dispatch(addToCart(reduxCartData))
 		} catch (error) {
 			setErrorResponse(error?.response)
@@ -559,7 +560,7 @@ export const useIncrementQtyApi = (sku, qty, id) => {
 				headers: headers,
 			})
 			setResponse(apiResponse)
-			dispatch(incrementQuantity(id))
+			dispatch(incrementQuantity(sku))
 		} catch (error) {
 			setErrorResponse(error?.response)
 			setErrorMessage(error?.response?.data?.message)
@@ -612,7 +613,7 @@ export const useDecrementQtyApi = (sku, qty, id) => {
 				headers: headers,
 			})
 			setResponse(apiResponse)
-			dispatch(decrementQuantity(id))
+			dispatch(decrementQuantity(sku))
 		} catch (error) {
 			setErrorResponse(error?.response)
 			setErrorMessage(error?.response?.data?.message)
@@ -738,7 +739,7 @@ export const useDeleteItemApi = (sku, id) => {
 				data: body
 			})
 			setResponse(apiResponse)
-			dispatch(removeFromCart(id))
+			dispatch(removeFromCart(sku))
 		} catch (error) {
 			setErrorResponse(error?.response)
 			setErrorMessage(error?.response?.data?.message)

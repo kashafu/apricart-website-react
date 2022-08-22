@@ -251,7 +251,7 @@ export default function CartSlider() {
 													: missingImageIcon
 
 										return (
-											<div key={id} className="grid grid-cols-4 p-2">
+											<div key={sku} className="grid grid-cols-4 p-2">
 												<div className="relative col-span-1 w-[50px] h-[50px] lg:w-[80px] lg:h-[80px] 2xl:[100px] 2xl:[100px]">
 													<Image
 														src={imageUrl}
@@ -266,7 +266,7 @@ export default function CartSlider() {
 													<div className="flex flex-row justify-around">
 														<button
 															onClick={() => {
-																dispatch(decrementQuantity(id));
+																dispatch(decrementQuantity(sku));
 																updateItemQty(sku, qty - 1);
 															}}
 															className={"flex flex-row items-center"}
@@ -278,7 +278,7 @@ export default function CartSlider() {
 														</p>
 														<button
 															onClick={() => {
-																dispatch(incrementQuantity(id));
+																dispatch(incrementQuantity(sku));
 																updateItemQty(sku, qty + 1);
 															}}
 															className={"flex flex-row items-center"}
@@ -289,7 +289,7 @@ export default function CartSlider() {
 															className=""
 															onClick={() => {
 																deleteItem(item);
-																dispatch(removeFromCart(id));
+																dispatch(removeFromCart(sku));
 															}}
 														>
 															<i className="fa fa-trash" aria-hidden="true"></i>
