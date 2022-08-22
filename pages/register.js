@@ -1,6 +1,6 @@
 import axios from "axios"
 import { useRouter } from "next/router"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { getGeneralApiParams } from "../helpers/ApiHelpers"
 import { base_url_api } from '../information.json'
 import TextField from "../components/Layout/components/Input/TextField"
@@ -18,8 +18,18 @@ export default function Register() {
     const [name, setname] = useState("");
     const [email, setemail] = useState("");
     const [otp, setOtp] = useState();
+    const [isButtonDisabled, setIsButtonDisabled] = useState(true)
 
     const [showOTPScreen, setShowOTPScreen] = useState(false)
+
+    useEffect(() => {
+        if (name.length == 0 || email.length == 0 || password.length == 0 || phoneNumber.length != 10) {
+            setIsButtonDisabled(true)
+        }
+        else {
+            setIsButtonDisabled(false)
+        }
+    }, [name, email, phoneNumber, password])
 
     const handleSubmit = async (e) => {
         try {
@@ -104,14 +114,14 @@ export default function Register() {
                             <div className="space-y-2">
                                 <TextField
                                     label={"Name"}
-                                    placeHolder={"name"}
+                                    placeHolder={"Enter Name"}
                                     onChange={setname}
                                     value={name}
                                     type={'String'}
                                 />
                                 <TextField
                                     label={"Email"}
-                                    placeHolder={"Email"}
+                                    placeHolder={"Enter Email"}
                                     onChange={setemail}
                                     value={email}
                                     type={'String'}
@@ -136,6 +146,7 @@ export default function Register() {
                                 <SubmitButton
                                     text={"Register"}
                                     onClick={handleSubmit}
+                                    disabled={isButtonDisabled}
                                 />
                             </div>
                             <ErrorText
