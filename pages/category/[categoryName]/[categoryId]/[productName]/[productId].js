@@ -45,7 +45,7 @@ export default function ProductDetail() {
 
 	useEffect(() => {
 		if (productData) {
-			const item = reduxCart.find((item) => item.id === productData[0].id)
+			const item = reduxCart.find((item) => item.sku === productData[0].sku)
 			if (item) {
 				setQty(item.qty)
 			}
