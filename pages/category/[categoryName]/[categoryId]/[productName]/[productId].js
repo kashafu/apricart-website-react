@@ -10,6 +10,10 @@ import plusIcon from "../../../../../public/assets/svgs/plusIcon.svg"
 import { useAddToCartApi, useProductDetailsApi } from "../../../../../helpers/Api"
 import { useSelector } from "react-redux"
 
+/*
+	Gets the product details from the useProductDetailsApi that picks up the url query params
+*/
+
 export default function ProductDetail() {
 	const router = useRouter()
 	const reduxCart = useSelector((state) => state.cart)
@@ -41,7 +45,7 @@ export default function ProductDetail() {
 
 	useEffect(() => {
 		if (productData) {
-			const item = reduxCart.find((item) => item.id === productData[0].id)
+			const item = reduxCart.find((item) => item.sku === productData[0].sku)
 			if (item) {
 				setQty(item.qty)
 			}
@@ -51,6 +55,7 @@ export default function ProductDetail() {
 	if (isLoading) {
 		return (
 			<div>
+				<HeadTag title={"Loading Product"} />
 				<p>Loading</p>
 			</div>
 		)
@@ -59,6 +64,7 @@ export default function ProductDetail() {
 	if (!productData) {
 		return (
 			<div>
+				<HeadTag title={"Product Detail"} />
 				<p>{errorMessage}</p>
 			</div>
 		)
@@ -67,6 +73,7 @@ export default function ProductDetail() {
 	if (productData.length == 0) {
 		return (
 			<div>
+				<HeadTag title={"No Item"} />
 				<p>Item does not exist</p>
 			</div>
 		)

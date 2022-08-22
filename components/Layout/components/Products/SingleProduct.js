@@ -42,7 +42,7 @@ export default function SingleProduct({ product, isInStock }) {
 	const { setIsPlaceOrder } = useAddToCartApi(sku, qty, product)
 
 	useEffect(() => {
-		const item = reduxCart.find((item) => item.id === id)
+		const item = reduxCart.find((item) => item.sku === sku)
 		if (item) {
 			setShowQty(true)
 			setQty(item.qty)

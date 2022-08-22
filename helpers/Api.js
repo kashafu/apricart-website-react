@@ -893,3 +893,49 @@ export const useCartDataApi = (checkoutData, checkoutAddress) => {
 		cartData
 	}
 }
+
+export const useSearchResultsApi = () => {
+	const router = useRouter()
+	const { term } = router.query
+	let page = 1
+
+	const [isLoading, setIsLoading] = useState(true)
+	const [searchResults, setSearchResults] = useState(null)
+	const [response, setResponse] = useState(null)
+	const [errorResponse, setErrorResponse] = useState(null)
+	const [errorMessage, setErrorMessage] = useState("")
+
+	useEffect(() => {
+		if (router.isReady) {
+			callApi()
+		}
+	}, [router.query])
+
+	const callApi = async () => {
+		setIsLoading(true)
+		await initializeUserApi()
+		let { headers } = getGeneralApiParams()
+		let url = "/catalog/products/search?page=" + page + "&size=25&term=" + term + "&category="
+
+		try {
+			let apiResponse = await axios.get(fullUrl(url), {
+				headers: headers,
+			})
+			setResponse(apiResponse)
+			setSearchResults(apiResponse.data.data)
+		} catch (error) {
+			setErrorResponse(error?.response)
+			setErrorMessage(error?.response?.data?.message)
+		} finally {
+			setIsLoading(false)
+		}
+	}
+
+	return {
+		isLoading,
+		searchResults,
+		errorMessage,
+		response,
+		errorResponse,
+	}
+}
