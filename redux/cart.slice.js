@@ -6,7 +6,7 @@ const cartSlice = createSlice({
 	initialState: [],
 	reducers: {
 		addToCart: (state, action) => {
-			const itemExists = state.find((item) => item.id === action.payload.id);
+			const itemExists = state.find((item) => item.sku === action.payload.sku);
 			let qty = action.payload.qty;
 			if (itemExists) {
 				itemExists.quantity++;
@@ -20,16 +20,15 @@ const cartSlice = createSlice({
 			state.push({ ...action.payload, quantity: qty });
 		},
 		incrementQuantity: (state, action) => {
-			const item = state.find((item) => item.id === action.payload);
+			const item = state.find((item) => item.sku === action.payload);
 			if (item.qty < item.maxQty) {
 				item.qty++;
 			} else {
-				item.qty;
 				toast.info("Limit Exceeded !");
 			}
 		},
 		decrementQuantity: (state, action) => {
-			const item = state.find((item) => item.id === action.payload);
+			const item = state.find((item) => item.sku === action.payload);
 			if (item.qty === item.minQty) {
 				return
 			} else {
@@ -43,7 +42,7 @@ const cartSlice = createSlice({
 			})
 		},
 		removeFromCart: (state, action) => {
-			const index = state.findIndex((item) => item.id === action.payload);
+			const index = state.findIndex((item) => item.sku === action.payload);
 			state.splice(index, 1);
 		},
 		getCartTotal: (state, action) => {
