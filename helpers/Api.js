@@ -603,8 +603,9 @@ export const useUpdateItemQtyApi = () => {
 	}
 }
 
-export const useDeleteItemApi = (sku, id) => {
+export const useDeleteItemApi = () => {
 	const dispatch = useDispatch()
+	const [sku, setSku] = useState('')
 	const [isLoading, setIsLoading] = useState(true)
 	const [response, setResponse] = useState(null)
 	const [errorResponse, setErrorResponse] = useState(null)
@@ -667,7 +668,8 @@ export const useDeleteItemApi = (sku, id) => {
 		errorMessage,
 		response,
 		errorResponse,
-		setIsDelete
+		setIsDelete,
+		setSku
 	}
 }
 

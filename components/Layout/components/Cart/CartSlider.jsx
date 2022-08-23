@@ -2,11 +2,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import {
-	incrementQuantity,
-	decrementQuantity,
-	removeFromCart,
 	initialize,
-	updateQuantity,
 } from "../../../../redux/cart.slice";
 import axios from "axios";
 import { toast } from "react-toastify";
@@ -18,7 +14,7 @@ import plusIcon from "../../../../public/assets/svgs/plusIcon.svg";
 import SubmitButton from "../Buttons/SubmitButton";
 import { useRouter } from "next/router";
 import missingImageIcon from "../../../../public/assets/images/missingImage.png"
-import { useUpdateItemQtyApi } from "../../../../helpers/Api";
+import { useDeleteItemApi, useUpdateItemQtyApi } from "../../../../helpers/Api";
 
 const fullUrl = (url) => {
 	let { city, userId, clientType, orderType, prodType } =
@@ -53,6 +49,7 @@ export default function CartSlider() {
 
 	// Used to send qty and sku to the custom update item qty hook
 	const { setIsUpdateItemQty, setData } = useUpdateItemQtyApi()
+	const { setIsDelete, setSku } = useDeleteItemApi()
 
 	useEffect(() => {
 		getCartDataApi();
@@ -98,102 +95,6 @@ export default function CartSlider() {
 				(item.specialPrice > 0 ? item.specialPrice : item.currentPrice),
 			0
 		);
-	};
-
-	const updateItemQty = async (sku, qty) => {
-		let { token, headers, city, userId } = getGeneralApiParams();
-
-		if (token) {
-			let url = "/order/cart/updateqty?"
-			let body = {
-				cart: [
-					{
-						sku: sku,
-						qty: qty,
-					},
-				],
-			};
-
-			try {
-				await axios.post(fullUrl(url), body, {
-					headers: headers,
-				});
-
-				getCartDataApi();
-			} catch (error) {
-				console.log(error?.response);
-				toast.error(error?.response?.data?.message);
-			}
-		} else {
-			let url =
-				base_url_api +
-				"/guest/cart/updateqty?city=" +
-				city +
-				"&lang=en&client_type=apricart";
-			let body = {
-				userId: userId,
-				cart: [
-					{
-						sku: sku,
-						qty: qty,
-					},
-				],
-			};
-
-			try {
-				await axios.post(url, body, {
-					headers: headers,
-				});
-
-				getCartDataApi();
-			} catch (error) {
-				console.log(error?.response);
-				toast.error(error?.response?.data?.message);
-			}
-		}
-	};
-
-	const deleteItem = (item) => {
-		if (token) {
-			let { headers } = getGeneralApiParams();
-			let url = "/order/cart/delete?"
-			let body = {
-				cart: [
-					{
-						sku: item.sku,
-					},
-				],
-			};
-
-			try {
-				axios.delete(fullUrl(url), {
-					headers: headers,
-					data: body,
-				});
-			} catch (error) {
-				console.log(error);
-			}
-		} else {
-			let { userId, headers } = getGeneralApiParams();
-			let url = "/guest/cart/delete?"
-			let body = {
-				userId: userId,
-				cart: [
-					{
-						sku: item.sku,
-					},
-				],
-			};
-
-			try {
-				axios.delete(fullUrl(url), {
-					headers: headers,
-					data: body,
-				});
-			} catch (error) {
-				console.log(error);
-			}
-		}
 	};
 
 	return (
@@ -294,8 +195,8 @@ export default function CartSlider() {
 														<button
 															className=""
 															onClick={() => {
-																deleteItem(item);
-																dispatch(removeFromCart(sku));
+																setSku(sku)
+																setIsDelete(true)
 															}}
 														>
 															<i className="fa fa-trash" aria-hidden="true"></i>
