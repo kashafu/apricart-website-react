@@ -14,7 +14,7 @@ export default function OfferId() {
 	const [offerItems, setOfferItems] = useState(null)
 
 	useEffect(() => {
-		if(router.isReady){
+		if (router.isReady) {
 			getOfferItemsApi()
 		}
 	}, [router.query])
@@ -23,18 +23,15 @@ export default function OfferId() {
 		let { city, headers, userId } = getGeneralApiParams()
 		let url = base_url_api + '/offers/detail?id=' + id + '&city=' + city + '&lang=en&client_type=apricart&userid=' + userId
 
-		console.log(url)
-
 		try {
 			let response = await axios.get(url,
 				{
 					headers: headers
 				}
 			)
-			if(response.data.data.length > 0){
+			if (response?.data?.data?.length > 0) {
 				setOfferItems(response.data.data)
 			}
-			console.log(response)
 		} catch (error) {
 			console.log(error)
 		}

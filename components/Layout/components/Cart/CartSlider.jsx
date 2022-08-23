@@ -6,6 +6,7 @@ import {
 	decrementQuantity,
 	removeFromCart,
 	initialize,
+	updateQuantity,
 } from "../../../../redux/cart.slice";
 import axios from "axios";
 import { toast } from "react-toastify";
@@ -17,7 +18,7 @@ import plusIcon from "../../../../public/assets/svgs/plusIcon.svg";
 import SubmitButton from "../Buttons/SubmitButton";
 import { useRouter } from "next/router";
 import missingImageIcon from "../../../../public/assets/images/missingImage.png"
-import { setCartIconRef } from "../../../../redux/page.slice";
+import { useUpdateItemQtyApi } from "../../../../helpers/Api";
 
 const fullUrl = (url) => {
 	let { city, userId, clientType, orderType, prodType } =
@@ -50,13 +51,13 @@ export default function CartSlider() {
 
 	const [showCart, setShowCart] = useState(false);
 
+	// Used to send qty and sku to the custom update item qty hook
+	const { setIsUpdateItemQty, setData } = useUpdateItemQtyApi()
+
 	useEffect(() => {
 		getCartDataApi();
 	}, [selectedTypeSelector]);
 
-	// useEffect(() => {
-	// 	dispatch(setCartIconRef(cartIconRef))
-	// }, [])
 
 	const getCartDataApi = async () => {
 		let { headers, clientType, prodType, orderType } = getGeneralApiParams();
@@ -233,7 +234,6 @@ export default function CartSlider() {
 								<div className="divide-y">
 									{reduxCart.map((item) => {
 										const {
-											id,
 											productImageUrl,
 											title,
 											currentPrice,
@@ -265,11 +265,14 @@ export default function CartSlider() {
 													</p>
 													<div className="flex flex-row justify-around">
 														<button
-															onClick={() => {
-																dispatch(decrementQuantity(sku));
-																updateItemQty(sku, qty - 1);
-															}}
 															className={"flex flex-row items-center"}
+															onClick={() => {
+																setData({
+																	qty: qty - 1,
+																	sku: sku
+																})
+																setIsUpdateItemQty(true)
+															}}
 														>
 															<Image src={minusIcon} width={10} height={10} alt="" />
 														</button>
@@ -277,11 +280,14 @@ export default function CartSlider() {
 															{item.qty}
 														</p>
 														<button
-															onClick={() => {
-																dispatch(incrementQuantity(sku));
-																updateItemQty(sku, qty + 1);
-															}}
 															className={"flex flex-row items-center"}
+															onClick={() => {
+																setData({
+																	qty: qty + 1,
+																	sku: sku
+																})
+																setIsUpdateItemQty(true)
+															}}
 														>
 															<Image src={plusIcon} width={10} height={10} alt="" />
 														</button>

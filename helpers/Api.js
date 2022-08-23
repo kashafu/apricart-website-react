@@ -4,7 +4,7 @@ import { useState, useEffect } from "react"
 import { base_url_api } from "../information.json"
 import { getGeneralApiParams } from "./ApiHelpers"
 import { useRouter } from "next/router"
-import { addToCart, decrementQuantity, incrementQuantity, removeFromCart } from '../redux/cart.slice'
+import { addToCart, decrementQuantity, incrementQuantity, removeFromCart, updateQuantity } from '../redux/cart.slice'
 import { updateTicker } from "../redux/general.slice"
 import { toast } from 'react-toastify'
 import { setCookie } from "./Cookies"
@@ -526,32 +526,52 @@ export const useCheckoutApi = (checkoutData, checkoutAddress) => {
 	}
 }
 
-export const useIncrementQtyApi = (sku, qty, id) => {
+export const useUpdateItemQtyApi = () => {
 	const dispatch = useDispatch()
+	const [data, setData] = useState({
+		sku: '',
+		qty: 0
+	})
 	const [isLoading, setIsLoading] = useState(true)
 	const [response, setResponse] = useState(null)
 	const [errorResponse, setErrorResponse] = useState(null)
 	const [errorMessage, setErrorMessage] = useState("")
-	const [isIncrement, setIsIncrement] = useState(false)
+	const [isUpdateItemQty, setIsUpdateItemQty] = useState(false)
+
+	let { headers, token, userId } = getGeneralApiParams()
+	let body
+	let url
 
 	useEffect(() => {
-		if (isIncrement) {
+		if (isUpdateItemQty) {
 			callApi()
+			console.log("CALLED")
 		}
-	}, [isIncrement])
+	}, [isUpdateItemQty])
 
 	const callApi = async () => {
-		setIsLoading(true)
-
-		let { headers } = getGeneralApiParams()
-		let url = "/order/cart/updateqty?"
-		let body = {
-			cart: [
-				{
-					sku: sku,
-					qty: qty + 1,
-				},
-			],
+		if (token) {
+			body = {
+				cart: [
+					{
+						sku: data.sku,
+						qty: data.qty
+					},
+				]
+			}
+			url = "/order/cart/updateqty?"
+		}
+		else {
+			body = {
+				userId,
+				cart: [
+					{
+						sku: data.sku,
+						qty: data.qty
+					},
+				]
+			}
+			url = "/guest/cart/updateqty?"
 		}
 
 		try {
@@ -559,14 +579,17 @@ export const useIncrementQtyApi = (sku, qty, id) => {
 				headers: headers,
 			})
 			setResponse(apiResponse)
-			dispatch(incrementQuantity(sku))
+			dispatch(updateQuantity({
+				sku: data.sku,
+				newQty: data.qty
+			}))
 		} catch (error) {
 			setErrorResponse(error?.response)
 			setErrorMessage(error?.response?.data?.message)
 			toast.error(error?.response?.data?.message)
 		} finally {
 			setIsLoading(false)
-			setIsIncrement(false)
+			setIsUpdateItemQty(false)
 		}
 	}
 
@@ -575,120 +598,10 @@ export const useIncrementQtyApi = (sku, qty, id) => {
 		errorMessage,
 		response,
 		errorResponse,
-		setIsIncrement
+		setIsUpdateItemQty,
+		setData
 	}
 }
-
-export const useDecrementQtyApi = (sku, qty, id) => {
-	const dispatch = useDispatch()
-	const [isLoading, setIsLoading] = useState(true)
-	const [response, setResponse] = useState(null)
-	const [errorResponse, setErrorResponse] = useState(null)
-	const [errorMessage, setErrorMessage] = useState("")
-	const [isDecrement, setIsDecrement] = useState(false)
-
-	useEffect(() => {
-		if (isDecrement) {
-			callApi()
-		}
-	}, [isDecrement])
-
-	const callApi = async () => {
-		setIsLoading(true)
-
-		let { headers } = getGeneralApiParams()
-		let url = "/order/cart/updateqty?"
-		let body = {
-			cart: [
-				{
-					sku: sku,
-					qty: qty - 1,
-				},
-			],
-		}
-
-		try {
-			let apiResponse = await axios.post(fullUrl(url), body, {
-				headers: headers,
-			})
-			setResponse(apiResponse)
-			dispatch(decrementQuantity(sku))
-		} catch (error) {
-			setErrorResponse(error?.response)
-			setErrorMessage(error?.response?.data?.message)
-			toast.error(error?.response?.data?.message)
-		} finally {
-			setIsLoading(false)
-			setIsDecrement(false)
-		}
-	}
-
-	return {
-		isLoading,
-		errorMessage,
-		response,
-		errorResponse,
-		setIsDecrement
-	}
-}
-
-// const updateItemQty = async (sku, qty) => {
-// 	let { token, headers, city, userId } = getGeneralApiParams();
-
-// 	if (token) {
-// 		let url =
-// 			base_url_api +
-// 			"/order/cart/updateqty?city=" +
-// 			city +
-// 			"&lang=en&client_type=apricart&userid=" +
-// 			userId;
-// 		let body = {
-// 			cart: [
-// 				{
-// 					sku: sku,
-// 					qty: qty,
-// 				},
-// 			],
-// 		};
-
-// 		try {
-// 			let response = await axios.post(url, body, {
-// 				headers: headers,
-// 			});
-
-// 			getCartDataApi();
-// 		} catch (error) {
-// 			console.log(error?.response);
-// 			toast.error(error?.response?.data?.message);
-// 		}
-// 	} else {
-// 		let url =
-// 			base_url_api +
-// 			"/guest/cart/updateqty?city=" +
-// 			city +
-// 			"&lang=en&client_type=apricart";
-// 		let body = {
-// 			userId: userId,
-// 			cart: [
-// 				{
-// 					sku: sku,
-// 					qty: qty,
-// 				},
-// 			],
-// 		};
-
-// 		try {
-// 			let response = await axios.post(url, body, {
-// 				headers: headers,
-// 			});
-
-// 			getCartDataApi();
-// 		} catch (error) {
-// 			console.log(error?.response);
-// 			toast.error(error?.response?.data?.message);
-// 		}
-// 	}
-// };
 
 export const useDeleteItemApi = (sku, id) => {
 	const dispatch = useDispatch()

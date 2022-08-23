@@ -53,7 +53,7 @@ export default function MainProducts({ section }) {
 			<div className="w-full border-b border-main-blue-100 py-4">
 				<div className="flex flex-row items-stretch w-full justify-between">
 					<p className="text-2xl text-main-blue font-bold">
-						- {name}
+						{name}
 					</p>
 					{identifier === "mostviewed" && (
 						<Link href={"/products/most-viewed"} passHref>

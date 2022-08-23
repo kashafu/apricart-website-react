@@ -35,6 +35,25 @@ const cartSlice = createSlice({
 				item.qty--;
 			}
 		},
+		updateQuantity: (state, action) => {
+			console.log("HERE")
+			const item = state.find((item) => item.sku === action.payload.sku);
+
+			// Increment qty case
+			if (action.payload.newQty > item?.qty) {
+				if (item?.qty < item?.maxQty) {
+					item.qty++;
+				}
+			}
+			// Decrement qty case
+			else {
+				if (item.qty === item.minQty) {
+					return
+				} else {
+					item.qty--;
+				}
+			}
+		},
 		initialize: (state, action) => {
 			state.splice(0, state.length)
 			action.payload.forEach((item) => {
@@ -66,4 +85,5 @@ export const {
 	updatedcart,
 	initialize,
 	getCartTotal,
+	updateQuantity
 } = cartSlice.actions;
