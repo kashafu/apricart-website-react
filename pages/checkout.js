@@ -170,7 +170,6 @@ export default function Checkout() {
 				headers: headers,
 			})
 
-			console.log(response.data);
 			setAddressErrorMessage("")
 			setCheckoutCartData(response.data.data)
 		} catch (error) {
