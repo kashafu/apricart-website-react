@@ -11,9 +11,12 @@ import CartSlider from "../Cart/CartSlider"
 import CitySelector from "../Selectors/CitySelector"
 import { useState, useEffect } from "react"
 import AddressSelector from "../Selectors/AddressSelector"
+import { useSelector } from "react-redux"
+import PickupLocationSelector from "../Selectors/PickupLocationSelector"
 
 export default function Header() {
 	let { token } = getGeneralApiParams()
+	const selectedTypeSelector = useSelector(state => state.general.selectedType)
 	const [offset, setOffset] = useState(0);
 
 	useEffect(() => {
@@ -51,10 +54,16 @@ export default function Header() {
 				</div>
 				<div className="h-full hidden lg:inline-flex  lg:flex-row lg:space-x-4 lg:items-center">
 					<div>
-						{token ? (
-							<AddressSelector />
+						{selectedTypeSelector === 'cnc' ? (
+							<PickupLocationSelector />
 						) : (
-							<CitySelector />
+							<>
+								{token ? (
+									<AddressSelector />
+								) : (
+									<CitySelector />
+								)}
+							</>
 						)}
 					</div>
 					<Link href={"/wishlist"} passHref>

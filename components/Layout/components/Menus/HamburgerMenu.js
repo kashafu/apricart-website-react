@@ -3,7 +3,6 @@ import { useState } from "react"
 import { useRouter } from "next/router"
 import menuIcon from "../../../../public/assets/svgs/menuIcon.svg"
 import crossIcon from "../../../../public/assets/svgs/cross2Icon.svg"
-import profileIcon from "../../../../public/assets/svgs/profileIcon.svg"
 import Logo from "../Logo/Logo"
 import {
 	getGeneralApiParams,
@@ -14,9 +13,12 @@ import SubmitButton from "../Buttons/SubmitButton"
 import LinkButton from "../Buttons/LinkButton"
 import CitySelector from "../Selectors/CitySelector"
 import AddressSelector from "../Selectors/AddressSelector"
+import { useSelector } from "react-redux"
+import PickupLocationSelector from "../Selectors/PickupLocationSelector"
 
 export default function HamburgerMenu() {
 	const router = useRouter()
+	const selectedTypeSelector = useSelector(state => state.general.selectedType)
 
 	let { token } = getGeneralApiParams()
 	let { name, email, phoneNumber } = getGeneralCookies()
@@ -66,15 +68,22 @@ export default function HamburgerMenu() {
 							)}
 							<div className="items-center align-center space-y-2">
 								<div className="py-2">
-									{token ? (
-										<div onClick={() => {
-											setShowMenu(!showMenu)
-										}}>
-											<AddressSelector />
-										</div>
+									{selectedTypeSelector === 'cnc' ? (
+										<PickupLocationSelector />
 									) : (
-										<CitySelector />)
-									}
+										<>
+											{token ? (
+												<div onClick={() => {
+													setShowMenu(!showMenu)
+												}}>
+													<AddressSelector />
+												</div>
+											) : (
+												<CitySelector />
+											)}
+										</>
+									)}
+
 								</div>
 								<LinkButton
 									text={"View Categories"}

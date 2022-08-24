@@ -262,6 +262,51 @@ export const useHomeApi = () => {
 	}
 }
 
+export const usePickupLocationsApi = () => {
+	const citySelector = useSelector((state) => state.general.city)
+	const [isLoading, setIsLoading] = useState(true)
+	const [pickupLocations, setPickupLocations] = useState(null)
+	const [availableDates, setAvailableDates] = useState(null)
+	const [response, setResponse] = useState(null)
+	const [errorResponse, setErrorResponse] = useState(null)
+	const [errorMessage, setErrorMessage] = useState("")
+
+	useEffect(() => {
+		callApi()
+	}, [citySelector])
+
+	const callApi = async () => {
+		setIsLoading(true)
+		await initializeUserApi()
+		let { headers } = getGeneralApiParams()
+
+		let url = "/order/address/pickup?"
+
+		try {
+			let apiResponse = await axios.get(fullUrl(url), {
+				headers: headers,
+			})
+			setResponse(apiResponse)
+			setPickupLocations(apiResponse.data.data.pickLocationDtoList)
+			setAvailableDates(apiResponse.data.data.availableDates)
+		} catch (error) {
+			setErrorResponse(error?.response)
+			setErrorMessage(error?.response?.data?.message)
+		} finally {
+			setIsLoading(false)
+		}
+	}
+
+	return {
+		isLoading,
+		pickupLocations,
+		availableDates,
+		errorMessage,
+		response,
+		errorResponse
+	}
+}
+
 export const useProductDetailsApi = () => {
 	const router = useRouter()
 	const { productId, productName } = router.query
