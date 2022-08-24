@@ -2,7 +2,7 @@
     If you want custom onChange that is defined in the file where the component is called, 
     set customOnChange to true and pass the custom function to onChange
 */
-export default function Dropdown({ label, options, name, optionText, onChange, value, placeholder, disabled, customOnChange }) {
+export default function Dropdown({ label, options, name, optionText, onChange, value, placeholder, disabled, customOnChange, customValue }) {
     return (
         <div className="grid grid-cols-3 items-center gap-2">
             <p className="col-span-1 font-lato text-main-blue font-semibold">
@@ -33,7 +33,11 @@ export default function Dropdown({ label, options, name, optionText, onChange, v
                     return (
                         <option
                             key={option.id}
-                            value={option.id}
+                            value={customValue ? (
+                                JSON.stringify(option)
+                            ) : (
+                                option.id
+                            )}
                         >
                             {option[optionText]}
                         </option>
