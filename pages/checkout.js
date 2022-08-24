@@ -586,6 +586,7 @@ export default function Checkout() {
 												onClick={() => {
 													deleteItem(sku)
 												}}
+												className="flex items-center justify-center"
 											>
 												<Image
 													src={trashIcon}
@@ -730,6 +731,7 @@ export default function Checkout() {
 												onClick={() => {
 													deleteItem(sku)
 												}}
+												className="flex items-center justify-center"
 											>
 												<Image
 													src={trashIcon}
@@ -860,6 +862,7 @@ export default function Checkout() {
 												onClick={() => {
 													deleteItem(sku)
 												}}
+												className="flex items-center justify-center"
 											>
 												<Image
 													src={trashIcon}
