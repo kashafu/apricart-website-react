@@ -48,6 +48,7 @@ export const getGeneralApiParams = () => {
     let token = getCookie('cookies-token')
     let city = getCookie("cities") == null ? "karachi" : getCookie("cities")
     let selectedAddress = getCookie('selected-address')
+    let selectedPickupLocation = getCookie('selected-pickup-location')
     let latitude = 0
     let longitude = 0
     let userId = getCookie('guestUserId')
@@ -94,7 +95,8 @@ export const getGeneralApiParams = () => {
         orderType,
         clientType,
         selectedType,
-        isUserInitialized
+        isUserInitialized,
+        selectedPickupLocation
     })
 }
 

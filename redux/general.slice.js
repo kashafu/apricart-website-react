@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit"
 import { setCookie } from "../helpers/Cookies"
 import { getGeneralApiParams } from "../helpers/ApiHelpers"
 
-let { selectedAddress, selectedType, city } = getGeneralApiParams()
+let { selectedAddress, selectedType, city, selectedPickupLocation } = getGeneralApiParams()
 
 const generalSlice = createSlice({
 	name: "general",
@@ -13,7 +13,7 @@ const generalSlice = createSlice({
 		selectedType: selectedType,
 		city: city,
 		isUserInitialized: false,
-		pickupLocation: {}
+		pickupLocation: selectedPickupLocation
 	},
 	reducers: {
 		updateSelectedAddress: (state, action) => {

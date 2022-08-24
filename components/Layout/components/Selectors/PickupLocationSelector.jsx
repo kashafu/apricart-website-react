@@ -7,18 +7,21 @@ import Dropdown from "../Input/Dropdown"
 import { useDispatch } from "react-redux"
 import { useRouter } from "next/router"
 import { usePickupLocationsApi } from "../../../../helpers/Api"
+import { updatePickupLocation } from "../../../../redux/general.slice"
+import { setCookie } from "../../../../helpers/Cookies"
+import { getGeneralApiParams } from "../../../../helpers/ApiHelpers"
+import { useSelector } from "react-redux"
 
 const PickupLocationSelector = () => {
 	const dispatch = useDispatch()
 	const router = useRouter()
+	// const selectedPickupLocationSelector = useSelector(state => state.general.pickupLocation)
+	// let { selectedPickupLocation } = getGeneralApiParams()
+	// TODO synchronize the selected pickup locations
 
 	const { pickupLocations } = usePickupLocationsApi()
-	const [selectedPickupLocation, setSelectedPickupLocation] = useState({})
+	const [selectedPickupLocation, setSelectedPickupLocation] = useState()
 	const [showPopup, setShowPopup] = useState(false)
-
-	useEffect(() => {
-		console.log(selectedPickupLocation)
-	}, [selectedPickupLocation])
 
 	const togglePopup = () => {
 		setShowPopup(!showPopup)
@@ -26,6 +29,8 @@ const PickupLocationSelector = () => {
 
 	const closeButton = () => {
 		setShowPopup(!showPopup)
+		dispatch(updatePickupLocation(selectedPickupLocation))
+		setCookie("selected-pickup-location", selectedPickupLocation)
 		router.push('/')
 	}
 
@@ -48,7 +53,7 @@ const PickupLocationSelector = () => {
 							"font-bold text-base text-main-grey-800 lg:text-lg capitalize"
 						}
 					>
-
+						{selectedPickupLocationSelector.name}
 					</p>
 				</button>
 			</div>
@@ -65,10 +70,11 @@ const PickupLocationSelector = () => {
 								placeholder={"Select Pickup Location"}
 								optionText={"name"}
 								onChange={setSelectedPickupLocation}
+								customValue={selectedPickupLocation}
 							/>
 							<div className="w-3/4">
 								<SubmitButton
-									text={"Change City"}
+									text={"Select Location"}
 									onClick={() => {
 										closeButton()
 									}}
