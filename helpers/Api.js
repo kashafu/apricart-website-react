@@ -4,9 +4,15 @@ import { useState, useEffect } from "react"
 import { base_url_api } from "../information.json"
 import { getGeneralApiParams } from "./ApiHelpers"
 import { useRouter } from "next/router"
-import { addToCart, decrementQuantity, incrementQuantity, removeFromCart, updateQuantity } from '../redux/cart.slice'
+import {
+	addToCart,
+	decrementQuantity,
+	incrementQuantity,
+	removeFromCart,
+	updateQuantity,
+} from "../redux/cart.slice"
 import { updateTicker } from "../redux/general.slice"
-import { toast } from 'react-toastify'
+import { toast } from "react-toastify"
 import { setCookie } from "./Cookies"
 import { updateCategories } from "../redux/data.slice"
 
@@ -32,7 +38,8 @@ const fullUrl = (url) => {
 }
 
 const initializeUserApi = async () => {
-	let { isUserInitialized, latitude, longitude, headers } = getGeneralApiParams()
+	let { isUserInitialized, latitude, longitude, headers } =
+		getGeneralApiParams()
 
 	if (!isUserInitialized) {
 		let url =
@@ -46,7 +53,7 @@ const initializeUserApi = async () => {
 			await axios.get(fullUrl(url), {
 				headers: headers,
 			})
-			setCookie('user-initialized', true)
+			setCookie("user-initialized", true)
 		} catch (error) {
 			console.log(error?.response)
 		}
@@ -54,7 +61,9 @@ const initializeUserApi = async () => {
 }
 
 export const useCategoriesApi = () => {
-	const selectedTypeSelector = useSelector((state) => state.general.selectedType)
+	const selectedTypeSelector = useSelector(
+		(state) => state.general.selectedType
+	)
 	const citySelector = useSelector((state) => state.general.city)
 	const [isLoading, setIsLoading] = useState(true)
 	const [categories, setCategories] = useState(null)
@@ -95,6 +104,9 @@ export const useCategoryProductsApi = () => {
 
 	const [isLoading, setIsLoading] = useState(true)
 	const [categoryProducts, setCategoryProducts] = useState(null)
+	const [size, setSize] = useState(20)
+	const [page, setPage] = useState(1)
+	const [totalItems, setTotalItems] = useState(0)
 	const [response, setResponse] = useState(null)
 	const [errorResponse, setErrorResponse] = useState(null)
 	const [errorMessage, setErrorMessage] = useState("")
@@ -103,15 +115,20 @@ export const useCategoryProductsApi = () => {
 		if (router.isReady) {
 			callApi()
 		}
-	}, [router.query])
+	}, [router.query, page])
 
 	const callApi = async () => {
 		setIsLoading(true)
 		await initializeUserApi()
 		let { headers } = getGeneralApiParams()
-		let url = "/catalog/categories/products?category=" +
+		let url =
+			"/catalog/categories/products?category=" +
 			categoryId +
-			"&page=1&size=100&sortType=&sortDirection=desc&instant=3"
+			"&page=" +
+			page +
+			"&size=" +
+			size +
+			"&sortType=&sortDirection=desc&instant=3"
 
 		try {
 			let apiResponse = await axios.get(fullUrl(url), {
@@ -119,6 +136,7 @@ export const useCategoryProductsApi = () => {
 			})
 			setResponse(apiResponse)
 			setCategoryProducts(apiResponse.data.data)
+			setTotalItems(+apiResponse.data.total)
 		} catch (error) {
 			setErrorResponse(error?.response)
 			setErrorMessage(error?.response?.data?.message)
@@ -127,7 +145,18 @@ export const useCategoryProductsApi = () => {
 		}
 	}
 
-	return { isLoading, categoryProducts, errorMessage, response, errorResponse }
+	return {
+		isLoading,
+		categoryProducts,
+		errorMessage,
+		response,
+		errorResponse,
+		setSize,
+		setPage,
+		page,
+		size,
+		totalItems,
+	}
 }
 
 export const useSubCategoriesApi = () => {
@@ -179,7 +208,7 @@ export const useHomeApi = () => {
 	const [homeData, setHomeData] = useState(null)
 	const [categories, setCategories] = useState(null)
 	const [banners, setBanners] = useState(null)
-	const [ticker, setTicker] = useState('')
+	const [ticker, setTicker] = useState("")
 	const [isPopupAd, setIsPopupAd] = useState(false)
 	const [response, setResponse] = useState(null)
 	const [errorResponse, setErrorResponse] = useState(null)
@@ -229,7 +258,7 @@ export const useHomeApi = () => {
 		isPopupAd,
 		categories,
 		banners,
-		ticker
+		ticker,
 	}
 }
 
@@ -305,11 +334,10 @@ export const useAddToCartApi = (sku, qty, product) => {
 						sku,
 						qty,
 					},
-				]
+				],
 			}
 			url = "/order/cart/save?"
-		}
-		else {
+		} else {
 			body = {
 				userId,
 				cart: [
@@ -317,7 +345,7 @@ export const useAddToCartApi = (sku, qty, product) => {
 						sku,
 						qty,
 					},
-				]
+				],
 			}
 			url = "/guest/cart/save?"
 		}
@@ -329,7 +357,7 @@ export const useAddToCartApi = (sku, qty, product) => {
 			setResponse(apiResponse)
 
 			let reduxCartData = {
-				...product
+				...product,
 			}
 			reduxCartData.qty = qty
 			dispatch(addToCart(reduxCartData))
@@ -348,7 +376,7 @@ export const useAddToCartApi = (sku, qty, product) => {
 		errorMessage,
 		response,
 		errorResponse,
-		setIsPlaceOrder
+		setIsPlaceOrder,
 	}
 }
 
@@ -484,10 +512,7 @@ export const useCheckoutApi = (checkoutData, checkoutAddress) => {
 		clientType: clientType,
 		orderType: orderType,
 	}
-	let url = "/order/cart/checkout?client_lat=" +
-		lat +
-		"&client_long=" +
-		long
+	let url = "/order/cart/checkout?client_lat=" + lat + "&client_long=" + long
 
 	useEffect(() => {
 		if (isCheckout) {
@@ -497,7 +522,7 @@ export const useCheckoutApi = (checkoutData, checkoutAddress) => {
 
 	const callApi = async () => {
 		setIsLoading(true)
-		toast.info('Processing Order')
+		toast.info("Processing Order")
 		try {
 			let apiResponse = await axios.post(fullUrl(url), body, {
 				headers: headers,
@@ -522,15 +547,15 @@ export const useCheckoutApi = (checkoutData, checkoutAddress) => {
 		errorMessage,
 		response,
 		errorResponse,
-		setIsCheckout
+		setIsCheckout,
 	}
 }
 
 export const useUpdateItemQtyApi = () => {
 	const dispatch = useDispatch()
 	const [data, setData] = useState({
-		sku: '',
-		qty: 0
+		sku: "",
+		qty: 0,
 	})
 	const [isLoading, setIsLoading] = useState(true)
 	const [response, setResponse] = useState(null)
@@ -555,21 +580,20 @@ export const useUpdateItemQtyApi = () => {
 				cart: [
 					{
 						sku: data.sku,
-						qty: data.qty
+						qty: data.qty,
 					},
-				]
+				],
 			}
 			url = "/order/cart/updateqty?"
-		}
-		else {
+		} else {
 			body = {
 				userId,
 				cart: [
 					{
 						sku: data.sku,
-						qty: data.qty
+						qty: data.qty,
 					},
-				]
+				],
 			}
 			url = "/guest/cart/updateqty?"
 		}
@@ -579,10 +603,12 @@ export const useUpdateItemQtyApi = () => {
 				headers: headers,
 			})
 			setResponse(apiResponse)
-			dispatch(updateQuantity({
-				sku: data.sku,
-				newQty: data.qty
-			}))
+			dispatch(
+				updateQuantity({
+					sku: data.sku,
+					newQty: data.qty,
+				})
+			)
 		} catch (error) {
 			setErrorResponse(error?.response)
 			setErrorMessage(error?.response?.data?.message)
@@ -599,13 +625,13 @@ export const useUpdateItemQtyApi = () => {
 		response,
 		errorResponse,
 		setIsUpdateItemQty,
-		setData
+		setData,
 	}
 }
 
 export const useDeleteItemApi = () => {
 	const dispatch = useDispatch()
-	const [sku, setSku] = useState('')
+	const [sku, setSku] = useState("")
 	const [isLoading, setIsLoading] = useState(true)
 	const [response, setResponse] = useState(null)
 	const [errorResponse, setErrorResponse] = useState(null)
@@ -649,7 +675,7 @@ export const useDeleteItemApi = () => {
 		try {
 			let apiResponse = await axios.delete(fullUrl(url), {
 				headers: headers,
-				data: body
+				data: body,
 			})
 			setResponse(apiResponse)
 			dispatch(removeFromCart(sku))
@@ -669,7 +695,7 @@ export const useDeleteItemApi = () => {
 		response,
 		errorResponse,
 		setIsDelete,
-		setSku
+		setSku,
 	}
 }
 
@@ -697,10 +723,7 @@ export const useInitialCartDataApi = (checkoutData) => {
 		clientType: clientType,
 		orderType: orderType,
 	}
-	let url = "/order/cart/checkout?client_lat=" +
-		lat +
-		"&client_long=" +
-		long
+	let url = "/order/cart/checkout?client_lat=" + lat + "&client_long=" + long
 
 	useEffect(() => {
 		if (isGetInitialCartData) {
@@ -732,7 +755,7 @@ export const useInitialCartDataApi = (checkoutData) => {
 		response,
 		errorResponse,
 		setIsGetInitialCartData,
-		initialCartData
+		initialCartData,
 	}
 }
 
@@ -769,10 +792,7 @@ export const useCartDataApi = (checkoutData, checkoutAddress) => {
 		clientType: clientType,
 		orderType: orderType,
 	}
-	let url = "/order/cart/checkout?client_lat=" +
-		lat +
-		"&client_long=" +
-		long
+	let url = "/order/cart/checkout?client_lat=" + lat + "&client_long=" + long
 
 	useEffect(() => {
 		if (isGetCartData) {
@@ -782,7 +802,7 @@ export const useCartDataApi = (checkoutData, checkoutAddress) => {
 
 	const callApi = async () => {
 		setIsLoading(true)
-		toast.info('Processing Order')
+		toast.info("Processing Order")
 		try {
 			let apiResponse = await axios.post(fullUrl(url), body, {
 				headers: headers,
@@ -805,7 +825,7 @@ export const useCartDataApi = (checkoutData, checkoutAddress) => {
 		response,
 		errorResponse,
 		setIsGetCartData,
-		cartData
+		cartData,
 	}
 }
 
@@ -830,7 +850,12 @@ export const useSearchResultsApi = () => {
 		setIsLoading(true)
 		await initializeUserApi()
 		let { headers } = getGeneralApiParams()
-		let url = "/catalog/products/search?page=" + page + "&size=25&term=" + term + "&category="
+		let url =
+			"/catalog/products/search?page=" +
+			page +
+			"&size=25&term=" +
+			term +
+			"&category="
 
 		try {
 			let apiResponse = await axios.get(fullUrl(url), {

@@ -10,6 +10,7 @@ import {
 	useCategoryProductsApi,
 	useSubCategoriesApi,
 } from "../../../../helpers/Api"
+import { useState } from "react"
 
 export default function CategoryProducts() {
 	const router = useRouter()
@@ -66,8 +67,16 @@ export default function CategoryProducts() {
 	}
 
 	const CategoryProducts = () => {
-		const { isLoading, categoryProducts, errorMessage } =
-			useCategoryProductsApi()
+		const {
+			isLoading,
+			categoryProducts,
+			errorMessage,
+			totalItems,
+			size,
+			setSize,
+			setPage,
+			page
+		} = useCategoryProductsApi()
 
 		if (isLoading) {
 			return (
@@ -93,19 +102,46 @@ export default function CategoryProducts() {
 			)
 		}
 
+		const Filter = () => {
+			let arr = []
+			for (let index = size; index <= totalItems + size; index = index + size) {
+				arr.push(
+					<button key={index}
+						onClick={() => {
+							setPage(index / size)
+						}}
+					>
+						<p>{index / size}</p>
+					</button>
+				)
+			}
+
+			return (
+				<div className="flex w-full space-x-6">
+					<p>
+						{/* Showing items {pageNumber * numberOfProducts}-{(pageNumber * numberOfProducts) + numberOfProducts} of {totalItems} */}
+					</p>
+					<div className="space-x-4">{arr}</div>
+				</div>
+			)
+		}
+
 		return (
-			<section className="grid grid-cols-2 md:grid-cols-4 2xl:grid-cols-5 gap-4">
-				{categoryProducts.map((product) => {
-					let { sku } = product
-					return (
-						<div key={sku}>
-							<SingleProduct
-								product={product}
-							// TODO call api to get updated details of product and check if it is in stock
-							/>
-						</div>
-					)
-				})}
+			<section>
+				<Filter />
+				<section className="grid grid-cols-2 md:grid-cols-4 2xl:grid-cols-5 gap-4">
+					{categoryProducts.map((product) => {
+						let { sku } = product
+						return (
+							<div key={sku}>
+								<SingleProduct
+									product={product}
+								// TODO call api to get updated details of product and check if it is in stock
+								/>
+							</div>
+						)
+					})}
+				</section>
 			</section>
 		)
 	}
