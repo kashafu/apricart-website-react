@@ -73,9 +73,11 @@ export default function Checkout() {
 	// view state can be either 'shipping', 'payment', 'review'
 	const [viewState, setViewState] = useState("shipping")
 	const [successResponse, setSuccessResponse] = useState(null)
+	// special address is when regardless of selected address, this is the delivery address after checkout (used in saylani donations)
+	const [specialAddress, setSpecialAddress] = useState('')
 
 	useEffect(() => {
-		getPaymentMethodsApi()
+		// getPaymentMethodsApi()
 		getOptionsDataApi()
 		getShippingCartDataApi()
 	}, [])
@@ -86,21 +88,7 @@ export default function Checkout() {
 		}
 	}, [checkoutAddress])
 
-	const getPaymentMethodsApi = async () => {
-		let { headers, userId } = getGeneralApiParams()
-		let url = base_url_api + "/order/payment/info?client_type=apricart&userid=" + userId
-
-		try {
-			let response = await axios.get(url, {
-				headers: headers,
-			})
-
-			setPaymentMethods(response.data.data)
-		} catch (error) {
-			console.log(error.response)
-		}
-	}
-
+	// Initial checkout api with address id 0 just to fetch cart items and totals
 	const getShippingCartDataApi = async () => {
 		let { headers, city, userId, clientType, prodType, orderType } = getGeneralApiParams()
 		let lat = 0
@@ -129,12 +117,14 @@ export default function Checkout() {
 
 			setAddressErrorMessage("")
 			setShippingCartData(response.data.data)
+			setSpecialAddress(response.data.data?.address)
 		} catch (error) {
 			setAddressErrorMessage(error?.response?.data?.message)
 			setShippingCartData(null)
 		}
 	}
 
+	// checkout api with the selected address id
 	const getCheckoutCartDataApi = async () => {
 		let { headers, city, userId, clientType, prodType, orderType } = getGeneralApiParams()
 		let lat = 0
@@ -172,6 +162,7 @@ export default function Checkout() {
 
 			setAddressErrorMessage("")
 			setCheckoutCartData(response.data.data)
+			setPaymentMethods(response.data.data?.paymentInfo)
 		} catch (error) {
 			setAddressErrorMessage(error?.response?.data?.message)
 			setCheckoutCartData(null)
@@ -381,6 +372,7 @@ export default function Checkout() {
 		}
 	}
 
+	// Used to make the redux cart empty
 	const getCartDataApi = async () => {
 		let { headers, city, userId, clientType, orderType, prodType } = getGeneralApiParams()
 		let lat = 0
@@ -959,6 +951,11 @@ export default function Checkout() {
 								setAddress={setCheckoutAddress}
 								dropDownSelectedAddress={checkoutAddress}
 							/>
+							{specialAddress !== '' && (
+								<ErrorText
+									text={"A special item has been added, this will be delivered to: " + specialAddress}
+								/>
+							)}
 							<ErrorText text={addressErrorMessage} />
 							<div className="border-y py-1">
 								<TextField
