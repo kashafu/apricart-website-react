@@ -10,7 +10,7 @@ export const getGeneralCookies = () => {
     let email = getCookie('cookies-email')
     let token = getCookie('cookies-token')
 
-    return({
+    return ({
         name,
         phoneNumber,
         email,
@@ -29,12 +29,17 @@ export const getGeneralApiParams = () => {
     let orderType = ''
 
     let selectedType = getCookie('selected-type')
-    if(selectedType === 'bulk'){
+    if (selectedType === 'bulk') {
         selectedType = 'bulk'
         prodType = 'b2b'
         orderType = 'delivery'
     }
-    else{
+    else if (selectedType === 'cnc') {
+        selectedType = 'cnc'
+        prodType = 'cus'
+        orderType = 'pickup'
+    }
+    else {
         selectedType = 'home'
         prodType = 'cus'
         orderType = 'delivery'
@@ -56,7 +61,7 @@ export const getGeneralApiParams = () => {
     // if user is logged in
     if (token) {
         // if user has a selected address, use that addresses's latitude longitude
-        if(selectedAddress){
+        if (selectedAddress) {
             latitude = selectedAddress.mapLat
             longitude = selectedAddress.mapLong
         }

@@ -13,6 +13,7 @@ const generalSlice = createSlice({
 		selectedType: selectedType,
 		city: city,
 		isUserInitialized: false,
+		pickupLocation: {}
 	},
 	reducers: {
 		updateSelectedAddress: (state, action) => {
@@ -23,6 +24,9 @@ const generalSlice = createSlice({
 		},
 		updateCity: (state, action) => {
 			state.city = action.payload
+		},
+		updatePickupLocation: (state, action) => {
+			state.pickupLocation = action.payload
 		},
 		updateSelectedType: (state, action) => {
 			state.selectedType = action.payload
@@ -42,4 +46,5 @@ export const {
 	updateSelectedType,
 	updateCity,
 	updateIsUserInitialized,
+	updatePickupLocation
 } = generalSlice.actions
