@@ -68,27 +68,39 @@ export const getGeneralApiParams = () => {
 
     let isUserInitialized = getCookie('user-initialized') ? true : false
 
-    // if user is logged in
-    if (token) {
-        // if user has a selected address, use that addresses's latitude longitude
-        if (selectedAddress) {
-            latitude = selectedAddress.mapLat
-            longitude = selectedAddress.mapLong
+    // If cnc is selected, lat long will be of selected pickup location
+    if (selectedType === 'cnc') {
+        if (selectedPickupLocation !== '') {
+            latitude = selectedPickupLocation.mapLat
+            longitude = selectedPickupLocation.mapLong
         }
-        // if no address is selected or no address has been added, use default lat long 0
+    }
+    else {
+        // if user is logged in
+        if (token) {
+            // if user has a selected address, use that addresses's latitude longitude
+            if (selectedAddress) {
+                latitude = selectedAddress.mapLat
+                longitude = selectedAddress.mapLong
+            }
+            // if no address is selected or no address has been added, use default lat long 0
+        }
+        // if its a guest
+        else {
+            // if location enabled, use browser latitude and longitude, if not enabled, send 0 by default
+            if (!isNode) {
+                navigator.geolocation.getCurrentPosition((position) => {
+                    latitude = position.coords.latitude
+                    longitude = position.coords.longitude
+                })
+            }
+        }
+    }
+
+    if (token) {
         headers = {
             ...headers,
             Authorization: "Bearer " + token
-        }
-    }
-    // if its a guest
-    else {
-        // if location enabled, use browser latitude and longitude, if not enabled, send 0 by default
-        if (!isNode) {
-            navigator.geolocation.getCurrentPosition((position) => {
-                latitude = position.coords.latitude
-                longitude = position.coords.longitude
-            })
         }
     }
 
