@@ -3,15 +3,11 @@ import locationPinPNG from "../../../../public/assets/svgs/locationPinIcon.svg"
 import Image from "next/image"
 import SubmitButton from "../Buttons/SubmitButton"
 import { useEffect, useState } from "react"
-import Dropdown from "../Input/Dropdown"
 import { useDispatch } from "react-redux"
 import { useRouter } from "next/router"
 import { usePickupLocationsApi } from "../../../../helpers/Api"
 import { updatePickupLocation } from "../../../../redux/general.slice"
-import { setCookie } from "../../../../helpers/Cookies"
-import { getGeneralApiParams } from "../../../../helpers/ApiHelpers"
 import { useSelector } from "react-redux"
-import { setItemLocalStorage } from "../../../../helpers/Storage"
 
 const PickupLocationSelector = () => {
 	const dispatch = useDispatch()

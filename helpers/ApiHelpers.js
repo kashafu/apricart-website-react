@@ -1,6 +1,7 @@
 import Cookies from 'universal-cookie';
 let isNode = require('detect-node')
 import { getCookie } from './Cookies';
+import { getItemLocalStorage } from './Storage';
 
 const cookies = new Cookies();
 
@@ -48,7 +49,7 @@ export const getGeneralApiParams = () => {
     let token = getCookie('cookies-token')
     let city = getCookie("cities") == null ? "karachi" : getCookie("cities")
     let selectedAddress = getCookie('selected-address')
-    let selectedPickupLocation = getCookie('selected-pickup-location')
+    let selectedPickupLocation = typeof (getItemLocalStorage('selected-pickup-location')) === 'string' ? JSON.parse(getItemLocalStorage('selected-pickup-location')) : getItemLocalStorage('selected-pickup-location')
     let latitude = 0
     let longitude = 0
     let userId = getCookie('guestUserId')

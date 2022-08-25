@@ -3,7 +3,9 @@ export function setItemLocalStorage(name, value) {
 }
 
 export function getItemLocalStorage(name) {
-    return localStorage.getItem(name)
+    if (typeof window !== 'undefined') {
+        return localStorage.getItem(name)
+    }
 }
 
 export function removeItemLocalStorage(name) {
