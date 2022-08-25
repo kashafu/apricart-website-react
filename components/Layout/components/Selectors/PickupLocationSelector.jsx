@@ -11,13 +11,12 @@ import { updatePickupLocation } from "../../../../redux/general.slice"
 import { setCookie } from "../../../../helpers/Cookies"
 import { getGeneralApiParams } from "../../../../helpers/ApiHelpers"
 import { useSelector } from "react-redux"
+import { setItemLocalStorage } from "../../../../helpers/Storage"
 
 const PickupLocationSelector = () => {
 	const dispatch = useDispatch()
 	const router = useRouter()
-	// const selectedPickupLocationSelector = useSelector(state => state.general.pickupLocation)
-	// let { selectedPickupLocation } = getGeneralApiParams()
-	// TODO synchronize the selected pickup locations
+	const selectedPickupLocationSelector = useSelector(state => state.general.pickupLocation)
 
 	const { pickupLocations } = usePickupLocationsApi()
 	const [selectedPickupLocation, setSelectedPickupLocation] = useState()
@@ -30,7 +29,6 @@ const PickupLocationSelector = () => {
 	const closeButton = () => {
 		setShowPopup(!showPopup)
 		dispatch(updatePickupLocation(selectedPickupLocation))
-		setCookie("selected-pickup-location", selectedPickupLocation)
 		router.push('/')
 	}
 
@@ -48,13 +46,23 @@ const PickupLocationSelector = () => {
 							layout={"fill"}
 						/>
 					</div>
-					<p
-						className={
-							"font-bold text-base text-main-grey-800 lg:text-lg capitalize"
-						}
-					>
-						{selectedPickupLocationSelector.name}
-					</p>
+					{selectedPickupLocationSelector ? (
+						<p
+							className={
+								"font-bold text-base text-main-grey-800 lg:text-lg capitalize"
+							}
+						>
+							{selectedPickupLocationSelector.name}
+						</p>
+					) : (
+						<p
+							className={
+								"font-bold text-base text-main-grey-800 lg:text-lg capitalize"
+							}
+						>
+							Select Pickup Location
+						</p>
+					)}
 				</button>
 			</div>
 			{showPopup && (
@@ -64,14 +72,36 @@ const PickupLocationSelector = () => {
 							<p className="text-main-blue font-bold text-xl">
 								Select Pickup Location
 							</p>
-							<Dropdown
-								label="Pickup Locations"
-								options={pickupLocations}
-								placeholder={"Select Pickup Location"}
-								optionText={"name"}
-								onChange={setSelectedPickupLocation}
-								customValue={selectedPickupLocation}
-							/>
+							{/* DROPDOWN */}
+							<div>
+								<select
+									className="col-span-2 h-full py-2 lg:px-4 text-xs lg:text-lg rounded-lg bg-slate-200"
+									disabled={false}
+									onChange={(e) => {
+										setSelectedPickupLocation(JSON.parse(e.target.value))
+									}}
+									value={selectedPickupLocation}
+								>
+									<option
+										value={''}
+										disabled={true}
+										selected={true}
+									>
+										Select Pickup Location
+									</option>
+									{pickupLocations.map((location) => {
+										return (
+											<option
+												selected={selectedPickupLocationSelector ? selectedPickupLocationSelector.id == location.id : false}
+												key={location.id}
+												value={JSON.stringify(location)}
+											>
+												{location.name}
+											</option>
+										)
+									})}
+								</select>
+							</div>
 							<div className="w-3/4">
 								<SubmitButton
 									text={"Select Location"}
@@ -84,7 +114,6 @@ const PickupLocationSelector = () => {
 					}
 					handleClose={() => {
 						closeButton()
-						togglePopup()
 					}}
 				/>
 			)}

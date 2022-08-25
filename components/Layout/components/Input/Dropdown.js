@@ -20,7 +20,7 @@ export default function Dropdown({ label, options, name, optionText, onChange, v
                     }
                 }}
                 name={name}
-                value={value}
+                value={customValue ? customValue : value}
             >
                 <option
                     value={''}
