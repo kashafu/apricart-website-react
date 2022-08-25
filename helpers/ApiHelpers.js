@@ -49,7 +49,15 @@ export const getGeneralApiParams = () => {
     let token = getCookie('cookies-token')
     let city = getCookie("cities") == null ? "karachi" : getCookie("cities")
     let selectedAddress = getCookie('selected-address')
-    let selectedPickupLocation = typeof (getItemLocalStorage('selected-pickup-location')) === 'string' ? JSON.parse(getItemLocalStorage('selected-pickup-location')) : getItemLocalStorage('selected-pickup-location')
+    let selectedPickupLocation = ''
+    if (getItemLocalStorage('selected-pickup-location')) {
+        if (typeof (getItemLocalStorage('selected-pickup-location')) === 'string') {
+            selectedPickupLocation = JSON.parse(getItemLocalStorage('selected-pickup-location'))
+        }
+        else {
+            selectedPickupLocation = getItemLocalStorage('selected-pickup-location')
+        }
+    }
     let latitude = 0
     let longitude = 0
     let userId = getCookie('guestUserId')

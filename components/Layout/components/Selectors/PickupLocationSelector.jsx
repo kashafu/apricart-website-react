@@ -15,7 +15,7 @@ const PickupLocationSelector = () => {
 	const selectedPickupLocationSelector = useSelector(state => state.general.pickupLocation)
 
 	const { pickupLocations } = usePickupLocationsApi()
-	const [selectedPickupLocation, setSelectedPickupLocation] = useState()
+	const [selectedPickupLocation, setSelectedPickupLocation] = useState('')
 	const [showPopup, setShowPopup] = useState(false)
 
 	const togglePopup = () => {
