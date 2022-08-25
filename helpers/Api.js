@@ -8,6 +8,7 @@ import {
 	addToCart,
 	decrementQuantity,
 	incrementQuantity,
+	initialize,
 	removeFromCart,
 	updateQuantity,
 } from "../redux/cart.slice"
@@ -747,51 +748,61 @@ export const useDeleteItemApi = () => {
 }
 
 export const useInitialCartDataApi = () => {
+	const dispatch = useDispatch()
+	const selectedTypeSelector = useSelector(
+		(state) => state.general.selectedType
+	)
+	const citySelector = useSelector((state) => state.general.city)
+	const selectedAddressSelector = useSelector((state) => state.general.selectedAddress)
+	const selectedPickupLocationSelector = useSelector((state) => state.general.pickupLocation)
 	const [isLoading, setIsLoading] = useState(true)
 	const [response, setResponse] = useState(null)
 	const [initialCartData, setInitialCartData] = useState(null)
 	const [errorResponse, setErrorResponse] = useState(null)
 	const [errorMessage, setErrorMessage] = useState("")
 
-	let { headers, clientType, prodType, orderType, selectedPickupLocation } = getGeneralApiParams()
-	let lat = 0
-	let long = 0
-	let addressId = 0
-	let body = {
-		...checkoutData,
-		address: addressId,
-		showProducts: true,
-		verify: true,
-		prodType: prodType,
-		day: "",
-		startTime: "",
-		endTime: "",
-		clientType: clientType,
-		orderType: orderType,
-	}
-	let url = "/order/cart/checkout?client_lat=" + lat + "&client_long=" + long
-
 	useEffect(() => {
-		if (isGetInitialCartData) {
-			callApi()
-		}
-	}, [isGetInitialCartData])
+		callApi()
+	}, [selectedTypeSelector, citySelector, selectedAddressSelector, selectedPickupLocationSelector])
 
 	const callApi = async () => {
 		setIsLoading(true)
+		await initializeUserApi()
+
+		let { headers, clientType, prodType, orderType, selectedPickupLocation, latitude, longitude } = getGeneralApiParams()
+		let addressId = 0
+		if (selectedTypeSelector === 'cnc') {
+			addressId = selectedPickupLocation?.id
+		}
+		let body = {
+			coupon: "",
+			notes: "",
+			paymentMethod: "cash",
+			address: addressId,
+			showProducts: true,
+			verify: true,
+			prodType,
+			day: "",
+			startTime: "",
+			endTime: "",
+			clientType,
+			orderType,
+		}
+		let url = "/order/cart/checkout?client_lat=" + latitude + "&client_long=" + longitude
+
 		try {
 			let apiResponse = await axios.post(fullUrl(url), body, {
 				headers: headers,
 			})
 			setResponse(apiResponse)
-			setInitialCartData(apiResponse.data.data)
+			setInitialCartData(apiResponse.data.data.products)
+			dispatch(initialize(apiResponse.data.data.products))
 		} catch (error) {
 			setErrorResponse(error?.response)
 			setErrorMessage(error?.response?.data?.message)
 			toast.error(error?.response?.data?.message)
 		} finally {
 			setIsLoading(false)
-			setIsGetInitialCartData(false)
 		}
 	}
 
