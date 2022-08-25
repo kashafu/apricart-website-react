@@ -11,7 +11,7 @@ import { setCookie } from "../../../../helpers/Cookies"
 
 /*
     type can be 'checkout', 'manage' 
-    if using it on checkout page, 'checkout' type will not modify the selected address cookie 
+    if using it on checkout page, 'checkout' type is dropdown and manage is list view 
     'manage' allows u to edit address and select
 */
 
@@ -44,15 +44,12 @@ export default function SelectAddress({ type, setAddress, dropDownSelectedAddres
 
     const handleSavedAddressChange = (e) => {
         setSelectedAddress(e.target.value)
-        if (type === 'checkout') {
-            setAddress(e.target.value)
-        }
-        else {
-            setCookie('selected-address', e.target.value)
-            dispatch(updateSelectedAddress(e.target.value))
-            setCookie("cities", e.target.value?.city.toLowerCase())
-            dispatch(updateCity(e.target.value?.city.toLowerCase()))
-        }
+        setAddress(e.target.value)
+        let parsedAddress = JSON.parse(e.target.value)
+        setCookie('selected-address', parsedAddress)
+        dispatch(updateSelectedAddress(parsedAddress))
+        setCookie("cities", parsedAddress?.city.toLowerCase())
+        dispatch(updateCity(parsedAddress?.city.toLowerCase()))
     }
 
     return (
