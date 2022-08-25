@@ -74,6 +74,15 @@ export const getGeneralApiParams = () => {
             latitude = selectedPickupLocation.mapLat
             longitude = selectedPickupLocation.mapLong
         }
+        else {
+            // if location enabled, use browser latitude and longitude, if not enabled, send 0 by default
+            if (!isNode) {
+                navigator.geolocation.getCurrentPosition((position) => {
+                    latitude = position.coords.latitude
+                    longitude = position.coords.longitude
+                })
+            }
+        }
     }
     else {
         // if user is logged in
