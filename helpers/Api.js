@@ -772,12 +772,18 @@ export const useInitialCartDataApi = () => {
 
 		let { headers, clientType, prodType, orderType, selectedPickupLocation, latitude, longitude } = getGeneralApiParams()
 		let addressId = 0
+		let day = ''
+		let startTime = ''
+		let endTime = ''
 		if (selectedTypeSelector === 'cnc') {
 			if (!selectedPickupLocation || selectedPickupLocation === '') {
 				toast.warn("SELECT PICKUP LOCATION")
 			}
 			else {
 				addressId = selectedPickupLocation?.id
+				day = "2022-04-10"
+				startTime = "11:00"
+				endTime = "11:30"
 			}
 		}
 		let body = {
@@ -788,15 +794,13 @@ export const useInitialCartDataApi = () => {
 			showProducts: true,
 			verify: true,
 			prodType,
-			day: "",
-			startTime: "",
-			endTime: "",
+			day,
+			startTime,
+			endTime,
 			clientType,
 			orderType,
 		}
 		let url = "/order/cart/checkout?client_lat=" + latitude + "&client_long=" + longitude
-
-		console.log(body)
 
 		try {
 			let apiResponse = await axios.post(fullUrl(url), body, {
