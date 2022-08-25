@@ -773,7 +773,12 @@ export const useInitialCartDataApi = () => {
 		let { headers, clientType, prodType, orderType, selectedPickupLocation, latitude, longitude } = getGeneralApiParams()
 		let addressId = 0
 		if (selectedTypeSelector === 'cnc') {
-			addressId = selectedPickupLocation?.id
+			if (!selectedPickupLocation || selectedPickupLocation === '') {
+				toast.warn("SELECT PICKUP LOCATION")
+			}
+			else {
+				addressId = selectedPickupLocation?.id
+			}
 		}
 		let body = {
 			coupon: "",
@@ -791,6 +796,8 @@ export const useInitialCartDataApi = () => {
 		}
 		let url = "/order/cart/checkout?client_lat=" + latitude + "&client_long=" + longitude
 
+		console.log(body)
+
 		try {
 			let apiResponse = await axios.post(fullUrl(url), body, {
 				headers: headers,
@@ -801,7 +808,7 @@ export const useInitialCartDataApi = () => {
 		} catch (error) {
 			setErrorResponse(error?.response)
 			setErrorMessage(error?.response?.data?.message)
-			toast.error(error?.response?.data?.message)
+			// toast.error(error?.response?.data?.message)
 		} finally {
 			setIsLoading(false)
 		}
