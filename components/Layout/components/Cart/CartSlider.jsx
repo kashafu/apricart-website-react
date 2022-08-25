@@ -1,12 +1,6 @@
-import { useSelector, useDispatch } from "react-redux";
-import { useState, useEffect, useRef } from "react";
+import { useSelector } from "react-redux";
+import { useState, useRef } from "react";
 import Image from "next/image";
-import {
-	initialize,
-} from "../../../../redux/cart.slice";
-import axios from "axios";
-import { toast } from "react-toastify";
-import { base_url_api } from "../../../../information.json";
 import { getGeneralApiParams } from "../../../../helpers/ApiHelpers";
 import cartIcon from "../../../../public/assets/svgs/cartIcon.svg";
 import minusIcon from "../../../../public/assets/svgs/minusIcon.svg";
@@ -14,78 +8,19 @@ import plusIcon from "../../../../public/assets/svgs/plusIcon.svg";
 import SubmitButton from "../Buttons/SubmitButton";
 import { useRouter } from "next/router";
 import missingImageIcon from "../../../../public/assets/images/missingImage.png"
-import { useDeleteItemApi, useUpdateItemQtyApi } from "../../../../helpers/Api";
-
-const fullUrl = (url) => {
-	let { city, userId, clientType, orderType, prodType } =
-		getGeneralApiParams()
-
-	return (
-		base_url_api +
-		url +
-		"&city=" +
-		city +
-		"&userid=" +
-		userId +
-		"&client_type=" +
-		clientType +
-		"&prod_type=" +
-		prodType +
-		"&order_type=" +
-		orderType +
-		"&lang=en"
-	)
-}
+import { useDeleteItemApi, useInitialCartDataApi, useUpdateItemQtyApi } from "../../../../helpers/Api";
 
 export default function CartSlider() {
+	useInitialCartDataApi()
 	const reduxCart = useSelector((state) => state.cart);
-	const selectedTypeSelector = useSelector((state) => state.general.selectedType)
-	const dispatch = useDispatch();
 	const router = useRouter();
 	const cartIconRef = useRef()
 	let { token } = getGeneralApiParams();
 
 	const [showCart, setShowCart] = useState(false);
 
-	// Used to send qty and sku to the custom update item qty hook
 	const { setIsUpdateItemQty, setData } = useUpdateItemQtyApi()
 	const { setIsDelete, setSku } = useDeleteItemApi()
-
-	useEffect(() => {
-		getCartDataApi();
-	}, [selectedTypeSelector]);
-
-
-	const getCartDataApi = async () => {
-		let { headers, clientType, prodType, orderType } = getGeneralApiParams();
-		let lat = 0;
-		let long = 0;
-		let body = {
-			coupon: "",
-			notes: "",
-			paymentMethod: "cash",
-			address: 0,
-			showProducts: true,
-			verify: true,
-			prodType,
-			day: "",
-			startTime: "",
-			endTime: "",
-			clientType,
-			orderType,
-		};
-		let url = "/order/cart/checkout?client_lat=" + lat + "&client_long=" + long
-
-		try {
-			let response = await axios.post(fullUrl(url), body, {
-				headers: headers,
-			});
-
-			dispatch(initialize(response.data.data.products));
-		} catch (error) {
-			console.log(error);
-		}
-	};
 
 	const getTotalPrice = () => {
 		return reduxCart.reduce(
@@ -95,7 +30,7 @@ export default function CartSlider() {
 				(item.specialPrice > 0 ? item.specialPrice : item.currentPrice),
 			0
 		);
-	};
+	}
 
 	return (
 		<div className="">

@@ -755,6 +755,7 @@ export const useInitialCartDataApi = () => {
 	const citySelector = useSelector((state) => state.general.city)
 	const selectedAddressSelector = useSelector((state) => state.general.selectedAddress)
 	const selectedPickupLocationSelector = useSelector((state) => state.general.pickupLocation)
+	let { token } = getGeneralApiParams()
 	const [isLoading, setIsLoading] = useState(true)
 	const [response, setResponse] = useState(null)
 	const [initialCartData, setInitialCartData] = useState(null)
@@ -763,7 +764,7 @@ export const useInitialCartDataApi = () => {
 
 	useEffect(() => {
 		callApi()
-	}, [selectedTypeSelector, citySelector, selectedAddressSelector, selectedPickupLocationSelector])
+	}, [selectedTypeSelector, citySelector, selectedAddressSelector, selectedPickupLocationSelector, token])
 
 	const callApi = async () => {
 		setIsLoading(true)
@@ -811,7 +812,6 @@ export const useInitialCartDataApi = () => {
 		errorMessage,
 		response,
 		errorResponse,
-		setIsGetInitialCartData,
 		initialCartData,
 	}
 }
