@@ -204,6 +204,8 @@ export const useHomeApi = () => {
 		(state) => state.general.selectedType
 	)
 	const citySelector = useSelector((state) => state.general.city)
+	const selectedAddressSelector = useSelector((state) => state.general.selectedAddress)
+	const selectedPickupLocationSelector = useSelector((state) => state.general.pickupLocation)
 	const [isLoading, setIsLoading] = useState(true)
 	const [homeData, setHomeData] = useState(null)
 	const [categories, setCategories] = useState(null)
@@ -216,7 +218,7 @@ export const useHomeApi = () => {
 
 	useEffect(() => {
 		callApi()
-	}, [selectedTypeSelector, citySelector])
+	}, [selectedTypeSelector, citySelector, selectedAddressSelector, selectedPickupLocationSelector])
 
 	const callApi = async () => {
 		setIsLoading(true)
@@ -744,15 +746,14 @@ export const useDeleteItemApi = () => {
 	}
 }
 
-export const useInitialCartDataApi = (checkoutData) => {
+export const useInitialCartDataApi = () => {
 	const [isLoading, setIsLoading] = useState(true)
 	const [response, setResponse] = useState(null)
 	const [initialCartData, setInitialCartData] = useState(null)
 	const [errorResponse, setErrorResponse] = useState(null)
 	const [errorMessage, setErrorMessage] = useState("")
-	const [isGetInitialCartData, setIsGetInitialCartData] = useState(false)
 
-	let { headers, clientType, prodType, orderType } = getGeneralApiParams()
+	let { headers, clientType, prodType, orderType, selectedPickupLocation } = getGeneralApiParams()
 	let lat = 0
 	let long = 0
 	let addressId = 0
