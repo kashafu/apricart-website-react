@@ -93,7 +93,7 @@ const ItemListing = ({ item }) => {
     )
 }
 
-const CheckoutCart = ({ initialCartProducts, initialCartData, isLoading, errorMessage }) => {
+const CheckoutCart = ({ initialCartProducts, initialCartData, isLoading }) => {
     let pLeft = "font-lato text-md text-main-blue"
     let pRight = "font-lato text-lg font-bold text-right"
 
@@ -117,9 +117,6 @@ const CheckoutCart = ({ initialCartProducts, initialCartData, isLoading, errorMe
 
     return (
         <div className="flex flex-col w-full h-full justify-between bg-white rounded-3xl">
-            <ErrorText
-                text={errorMessage}
-            />
             <div className="overflow-y-auto p-4 h-96 space-y-4">
                 {initialCartProducts.map((product) => {
                     return (

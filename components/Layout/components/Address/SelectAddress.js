@@ -44,7 +44,9 @@ export default function SelectAddress({ type, setAddress, dropDownSelectedAddres
 
     const handleSavedAddressChange = (e) => {
         setSelectedAddress(e.target.value)
-        setAddress(e.target.value)
+        if (setAddress) {
+            setAddress(e.target.value)
+        }
         let parsedAddress = JSON.parse(e.target.value)
         setCookie('selected-address', parsedAddress)
         dispatch(updateSelectedAddress(parsedAddress))

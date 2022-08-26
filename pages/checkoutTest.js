@@ -12,18 +12,31 @@ import InputLabelText from "../components/Layout/components/Typography/InputLabe
 import HeadTag from "../components/Layout/components/Head/HeadTag"
 import { useInitialCartDataApi } from "../helpers/Api"
 import CheckoutCart from "../components/Layout/components/Cart/CheckoutCart"
+import { useEffect } from "react"
 
 export default function Checkout() {
 	let { token } = getGeneralApiParams()
 	const selectedAddressSelector = useSelector((state) => state.general.selectedAddress)
 	const reduxCart = useSelector((state) => state.cart)
 
-
 	// view state can be either 'shipping', 'payment', 'review'
 	const [viewState, setViewState] = useState("shipping")
+	const [isCheckoutButtonPressed, setIsCheckoutButtonPressed] = useState(false)
 
 	const [couponCode, setCouponCode] = useState('')
-	const { initialCartProducts, initialCartData, isLoading, errorMessage, response, setNotes, setCoupon, notes, setPaymentMethod, paymentMethod, setIsCheckout, couponMessage, paymentMethods } = useInitialCartDataApi()
+	const { initialCartProducts, initialCartData, isLoading, errorMessage, response, setNotes, setCoupon, notes, setPaymentMethod, paymentMethod, setIsCheckout, couponMessage, paymentMethods, checkoutResponse } = useInitialCartDataApi()
+
+	/*
+		To check if checkout api response is succesful
+	*/
+	useEffect(() => {
+		if (viewState === 'payment' && isCheckoutButtonPressed) {
+			if (checkoutResponse) {
+				// console.log(response)
+				setViewState('review')
+			}
+		}
+	}, [checkoutResponse, viewState, isCheckoutButtonPressed])
 
 	const ProgressBar = ({ currentState, onClick }) => {
 		let pStyle = "font-lato text-md font-semibold"
@@ -178,20 +191,28 @@ export default function Checkout() {
 						</section>
 					)}
 					{viewState == "review" && (
-						<section className="flex flex-col items-center justify-center align-center m-auto space-y-2 p-12">
-							<div className="text-center">
-								{parse(response.data.message)}
-							</div>
-							<div className="h-[120px] w-full">
-								<Image
-									src={response.data.data.thankyou_image}
-									layout={"responsive"}
-									alt={"Thank You Image"}
-									width={450}
-									height={120}
-								/>
-							</div>
-						</section>
+						<>
+							{isLoading ? (
+								<div>
+									Loading
+								</div>
+							) : (
+								<section className="flex flex-col items-center justify-center align-center m-auto space-y-2 p-12">
+									<div className="text-center">
+										{parse(checkoutResponse.data.message)}
+									</div>
+									<div className="h-[120px] w-full">
+										<Image
+											src={checkoutResponse.data.data.thankyou_image}
+											layout={"responsive"}
+											alt={"Thank You Image"}
+											width={450}
+											height={120}
+										/>
+									</div>
+								</section>
+							)}
+						</>
 					)}
 				</div>
 				{/* CART DIV */}
@@ -256,7 +277,7 @@ export default function Checkout() {
 								text={"CHECKOUT"}
 								onClick={() => {
 									setIsCheckout(true)
-									setViewState("review")
+									setIsCheckoutButtonPressed(true)
 									window.scroll({
 										top: 0,
 										left: 0,
