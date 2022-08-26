@@ -268,11 +268,18 @@ export const useHomeApi = () => {
 export const usePickupLocationsApi = () => {
 	const citySelector = useSelector((state) => state.general.city)
 	const [isLoading, setIsLoading] = useState(true)
+	// const [fetchPickupLocations, setFetchPickupLocations] = useState(false)
 	const [pickupLocations, setPickupLocations] = useState(null)
 	const [availableDates, setAvailableDates] = useState(null)
 	const [response, setResponse] = useState(null)
 	const [errorResponse, setErrorResponse] = useState(null)
 	const [errorMessage, setErrorMessage] = useState("")
+
+	// useEffect(() => {
+	// 	if (fetchPickupLocations) {
+	// 		callApi()
+	// 	}
+	// }, [citySelector, fetchPickupLocations])
 
 	useEffect(() => {
 		callApi()
@@ -297,6 +304,7 @@ export const usePickupLocationsApi = () => {
 			setErrorMessage(error?.response?.data?.message)
 		} finally {
 			setIsLoading(false)
+			// setFetchPickupLocations(false)
 		}
 	}
 
@@ -306,7 +314,8 @@ export const usePickupLocationsApi = () => {
 		availableDates,
 		errorMessage,
 		response,
-		errorResponse
+		errorResponse,
+		// setFetchPickupLocations
 	}
 }
 
@@ -775,7 +784,7 @@ export const useInitialCartDataApi = () => {
 
 	useEffect(() => {
 		callApi()
-	}, [selectedTypeSelector, citySelector, selectedAddressSelector, selectedPickupLocationSelector, token, coupon, day, startTime, endTime])
+	}, [selectedTypeSelector, citySelector, selectedAddressSelector, selectedPickupLocationSelector, token, coupon])
 
 	useEffect(() => {
 		if (isCheckout) {

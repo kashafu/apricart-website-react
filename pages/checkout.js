@@ -11,7 +11,7 @@ import TextField from "../components/Layout/components/Input/TextField"
 import SectionHeading from "../components/Layout/components/Typography/SectionHeading"
 import InputLabelText from "../components/Layout/components/Typography/InputLabelText"
 import HeadTag from "../components/Layout/components/Head/HeadTag"
-import { useInitialCartDataApi } from "../helpers/Api"
+import { useInitialCartDataApi, usePickupLocationsApi } from "../helpers/Api"
 import CheckoutCart from "../components/Layout/components/Cart/CheckoutCart"
 import PickupLocationSelector from "../components/Layout/components/Selectors/PickupLocationSelector"
 
@@ -27,7 +27,8 @@ export default function Checkout() {
 	const [isCheckoutButtonPressed, setIsCheckoutButtonPressed] = useState(false)
 
 	const [couponCode, setCouponCode] = useState('')
-	const { initialCartProducts, initialCartData, isLoading, errorMessage, response, setNotes, setCoupon, notes, setPaymentMethod, paymentMethod, setIsCheckout, couponMessage, paymentMethods, checkoutResponse } = useInitialCartDataApi()
+	const { initialCartProducts, initialCartData, isLoading, errorMessage, response, setNotes, setCoupon, notes, setPaymentMethod, paymentMethod, setIsCheckout, couponMessage, paymentMethods, checkoutResponse, setDay, setStartTime, setEndTime } = useInitialCartDataApi()
+	const { pickupLocations, availableDates, response: pickupLocationsApiResponse, isLoading: pickupLocationsApiIsLoading } = usePickupLocationsApi()
 
 	/*
 		To check if checkout api response is succesful
@@ -105,6 +106,138 @@ export default function Checkout() {
 		)
 	}
 
+	const PickupLocation = () => {
+		const [dayIdentifier, setDayIdentifier] = useState('')
+		const [selectedDate, setSelectedDate] = useState('')
+		const [selectedTime, setSelectedTime] = useState('')
+
+		useEffect(() => {
+			console.log(selectedDate)
+		}, [selectedDate])
+
+		if (pickupLocationsApiIsLoading) {
+			return (
+				<>
+
+				</>
+			)
+		}
+
+		return (
+			<div className="w-full grid-rows-3 space-y-4">
+				{/* PICKUP LOCATION */}
+				<div className="grid grid-cols-3 items-center w-full h-full">
+					<p className="text-main-blue font-bold text-xl">
+						Select Pickup Location
+					</p>
+					<div>
+						<select
+							className="col-span-2 h-full py-2 lg:px-4 text-xs lg:text-lg rounded-lg bg-slate-200"
+							disabled={false}
+							onChange={(e) => {
+								dispatch(updatePickupLocation(JSON.parse(e.target.value)))
+							}}
+							value={selectedPickupLocationSelector}
+						>
+							<option
+								value={''}
+								disabled={true}
+								selected={true}
+							>
+								Select Pickup Location
+							</option>
+							{pickupLocationsApiResponse && pickupLocations.map((location) => {
+								return (
+									<option
+										selected={selectedPickupLocationSelector ? selectedPickupLocationSelector.id == location.id : false}
+										key={location.id}
+										value={JSON.stringify(location)}
+									>
+										{location.name}
+									</option>
+								)
+							})}
+						</select>
+					</div>
+				</div>
+				{/* DATE SELECT */}
+				<div className="grid grid-cols-3 items-center w-full h-full">
+					<p className="text-main-blue font-bold text-xl">
+						Select Delivery Date
+					</p>
+					<div>
+						<select
+							className="col-span-2 h-full py-2 lg:px-4 text-xs lg:text-lg rounded-lg bg-slate-200"
+							disabled={selectedPickupLocationSelector === '' ? true : false}
+							onChange={(e) => {
+								console.log(e.target.value)
+								let parsed = JSON.parse(e.target.value)
+								setSelectedDate(parsed)
+								setDay(parsed.dateForServer)
+								setDayIdentifier(parsed.identifier)
+							}}
+							value={selectedDate}
+						>
+							<option
+								value={''}
+								disabled={true}
+								selected={true}
+							>
+								Select Date
+							</option>
+							{availableDates.map((date) => {
+								return (
+									<option
+										key={date.dateForServer}
+										value={JSON.stringify(date)}
+									>
+										{date.displayDate}
+									</option>
+								)
+							})}
+						</select>
+					</div>
+				</div>
+				{/* TIME SELECT */}
+				<div className="grid grid-cols-3 items-center w-full h-full">
+					<p className="text-main-blue font-bold text-xl">
+						Select Time
+					</p>
+					<div>
+						<select
+							className="col-span-2 h-full py-2 lg:px-4 text-xs lg:text-lg rounded-lg bg-slate-200"
+							disabled={selectedDate === ''}
+							onChange={(e) => {
+								setSelectedTime(e.target.value.displayTime)
+								setStartTime(e.target.value.startTime)
+								setEndTime(e.target.value.endTime)
+							}}
+							value={selectedTime}
+						>
+							<option
+								value={''}
+								disabled={true}
+								selected={true}
+							>
+								Select Time
+							</option>
+							{dayIdentifier !== '' && selectedPickupLocationSelector[dayIdentifier].map((time) => {
+								return (
+									<option
+										key={time.displayTime}
+										value={time}
+									>
+										{time.displayTime}
+									</option>
+								)
+							})}
+						</select>
+					</div>
+				</div>
+			</div>
+		)
+	}
+
 	if (!token) {
 		return (
 			<>
@@ -161,7 +294,7 @@ export default function Checkout() {
 								<SectionHeading text={"Delivery Details"} />
 							</div>
 							{selectedTypeSelector === 'cnc' ? (
-								<PickupLocationSelector />
+								<PickupLocation />
 							) : (
 								<SelectAddress
 									type={"checkout"}
