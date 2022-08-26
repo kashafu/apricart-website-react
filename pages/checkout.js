@@ -26,6 +26,7 @@ import {
 import SectionHeading from "../components/Layout/components/Typography/SectionHeading"
 import InputLabelText from "../components/Layout/components/Typography/InputLabelText"
 import HeadTag from "../components/Layout/components/Head/HeadTag"
+import { useInitialCartDataApi } from "../helpers/Api"
 
 const fullUrl = (url) => {
 	let { city, userId, clientType, orderType, prodType } =
@@ -57,7 +58,6 @@ export default function Checkout() {
 	const [shipmentFixAmount, setShipmentFixAmount] = useState(0)
 	const [paymentMethods, setPaymentMethods] = useState([])
 	const [checkoutCartData, setCheckoutCartData] = useState(null)
-	const [shippingCartData, setShippingCartData] = useState(null)
 	const [checkoutData, setCheckOutData] = useState({
 		coupon: "",
 		notes: "",
@@ -76,10 +76,10 @@ export default function Checkout() {
 	// special address is when regardless of selected address, this is the delivery address after checkout (used in saylani donations)
 	const [specialAddress, setSpecialAddress] = useState('')
 
+	const { initialCartData } = useInitialCartDataApi()
+
 	useEffect(() => {
-		// getPaymentMethodsApi()
 		getOptionsDataApi()
-		getShippingCartDataApi()
 	}, [])
 
 	useEffect(() => {
@@ -87,42 +87,6 @@ export default function Checkout() {
 			getCheckoutCartDataApi()
 		}
 	}, [checkoutAddress])
-
-	// Initial checkout api with address id 0 just to fetch cart items and totals
-	const getShippingCartDataApi = async () => {
-		let { headers, city, userId, clientType, prodType, orderType } = getGeneralApiParams()
-		let lat = 0
-		let long = 0
-		let addressId = 0
-		let body = {
-			coupon: "",
-			notes: "",
-			paymentMethod: "cash",
-			address: addressId,
-			showProducts: true,
-			verify: true,
-			prodType,
-			day: "",
-			startTime: "",
-			endTime: "",
-			clientType,
-			orderType,
-		}
-		let url = "/order/cart/checkout?client_lat=" + lat + "&client_long=" + long
-
-		try {
-			let response = await axios.post(fullUrl(url), body, {
-				headers: headers,
-			})
-
-			setAddressErrorMessage("")
-			setShippingCartData(response.data.data)
-			setSpecialAddress(response.data.data?.address)
-		} catch (error) {
-			setAddressErrorMessage(error?.response?.data?.message)
-			setShippingCartData(null)
-		}
-	}
 
 	// checkout api with the selected address id
 	const getCheckoutCartDataApi = async () => {
@@ -923,7 +887,7 @@ export default function Checkout() {
 		)
 	}
 
-	if (!shippingCartData) {
+	if (!initialCartData) {
 		return (
 			<div>
 				<HeadTag title={"Checkout"} />

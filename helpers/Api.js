@@ -756,43 +756,59 @@ export const useInitialCartDataApi = () => {
 	const selectedAddressSelector = useSelector((state) => state.general.selectedAddress)
 	const selectedPickupLocationSelector = useSelector((state) => state.general.pickupLocation)
 	let { token } = getGeneralApiParams()
+	const [coupon, setCoupon] = useState('')
+	const [couponMessage, setCouponMessage] = useState('')
+	const [notes, setNotes] = useState('')
+	const [paymentMethod, setPaymentMethod] = useState('cash')
+	const [paymentMethods, setPaymentMethods] = useState('cash')
+	// const [addressId, setAddressId] = useState(0)
+	const [day, setDay] = useState("2022-04-10")
+	const [startTime, setStartTime] = useState("11:00")
+	const [endTime, setEndTime] = useState("11:30")
+	const [isCheckout, setIsCheckout] = useState(false)
 	const [isLoading, setIsLoading] = useState(true)
 	const [response, setResponse] = useState(null)
 	const [initialCartData, setInitialCartData] = useState(null)
+	const [initialCartProducts, setInitialCartProducts] = useState(null)
 	const [errorResponse, setErrorResponse] = useState(null)
 	const [errorMessage, setErrorMessage] = useState("")
 
 	useEffect(() => {
 		callApi()
-	}, [selectedTypeSelector, citySelector, selectedAddressSelector, selectedPickupLocationSelector, token])
+	}, [selectedTypeSelector, citySelector, selectedAddressSelector, selectedPickupLocationSelector, token, coupon, paymentMethod, day, startTime, endTime, isCheckout])
 
 	const callApi = async () => {
 		setIsLoading(true)
+		setIsCheckout(false)
+		setResponse(null)
 		await initializeUserApi()
 
-		let { headers, clientType, prodType, orderType, selectedPickupLocation, latitude, longitude } = getGeneralApiParams()
+		let { headers, clientType, prodType, orderType, selectedPickupLocation, selectedAddress, latitude, longitude } = getGeneralApiParams()
+
 		let addressId = 0
-		let day = ''
-		let startTime = ''
-		let endTime = ''
 		if (selectedTypeSelector === 'cnc') {
 			if (!selectedPickupLocation || selectedPickupLocation === '') {
 				toast.warn("SELECT PICKUP LOCATION")
 			}
 			else {
 				addressId = selectedPickupLocation?.id
-				day = "2022-04-10"
-				startTime = "11:00"
-				endTime = "11:30"
 			}
 		}
+		else {
+			if (selectedAddress && selectedAddress !== '') {
+				addressId = selectedAddress.id
+			}
+		}
+
+		let verify = isCheckout ? false : true
+
 		let body = {
-			coupon: "",
-			notes: "",
-			paymentMethod: "cash",
+			coupon,
+			notes,
+			paymentMethod,
 			address: addressId,
 			showProducts: true,
-			verify: true,
+			verify,
 			prodType,
 			day,
 			startTime,
@@ -807,7 +823,10 @@ export const useInitialCartDataApi = () => {
 				headers: headers,
 			})
 			setResponse(apiResponse)
-			setInitialCartData(apiResponse.data.data.products)
+			setInitialCartData(apiResponse.data.data)
+			setInitialCartProducts(apiResponse.data.data.products)
+			setCouponMessage(apiResponse.data.data.couponMessage)
+			setPaymentMethods(apiResponse.data.data.paymentInfo)
 			dispatch(initialize(apiResponse.data.data.products))
 		} catch (error) {
 			setErrorResponse(error?.response)
@@ -815,6 +834,7 @@ export const useInitialCartDataApi = () => {
 			// toast.error(error?.response?.data?.message)
 		} finally {
 			setIsLoading(false)
+			setIsCheckout(false)
 		}
 	}
 
@@ -824,6 +844,19 @@ export const useInitialCartDataApi = () => {
 		response,
 		errorResponse,
 		initialCartData,
+		initialCartProducts,
+		setCoupon,
+		paymentMethods,
+		setDay,
+		setStartTime,
+		setEndTime,
+		setIsCheckout,
+		setNotes,
+		notes,
+		coupon,
+		setPaymentMethod,
+		paymentMethod,
+		couponMessage
 	}
 }
 
