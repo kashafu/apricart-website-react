@@ -1,24 +1,25 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
+import parse from "html-react-parser"
+import Image from "next/image"
+import { useSelector } from "react-redux"
+
 import { getGeneralApiParams } from "../helpers/ApiHelpers"
 import SelectAddress from "../components/Layout/components/Address/SelectAddress"
 import ErrorText from "../components/Layout/components/Typography/ErrorText"
 import SubmitButton from "../components/Layout/components/Buttons/SubmitButton"
 import TextField from "../components/Layout/components/Input/TextField"
-import parse from "html-react-parser"
-import Image from "next/image"
-import { useSelector } from "react-redux"
 import SectionHeading from "../components/Layout/components/Typography/SectionHeading"
 import InputLabelText from "../components/Layout/components/Typography/InputLabelText"
 import HeadTag from "../components/Layout/components/Head/HeadTag"
 import { useInitialCartDataApi } from "../helpers/Api"
 import CheckoutCart from "../components/Layout/components/Cart/CheckoutCart"
-import { useEffect } from "react"
 import PickupLocationSelector from "../components/Layout/components/Selectors/PickupLocationSelector"
 
 export default function Checkout() {
 	let { token } = getGeneralApiParams()
 	const selectedAddressSelector = useSelector((state) => state.general.selectedAddress)
 	const selectedTypeSelector = useSelector((state) => state.general.selectedType)
+	const selectedPickupLocationSelector = useSelector((state) => state.general.pickupLocation)
 	const reduxCart = useSelector((state) => state.cart)
 
 	// view state can be either 'shipping', 'payment', 'review'
@@ -113,6 +114,20 @@ export default function Checkout() {
 		)
 	}
 
+	if (selectedTypeSelector === 'cnc' && selectedPickupLocationSelector === '') {
+		return (
+			<div className="flex flex-col w-full items-center">
+				<HeadTag title={"Checkout"} />
+				<div className="space-y-2">
+					<ErrorText
+						text={"Select a pickup location before continuing"}
+					/>
+					<PickupLocationSelector type={'select'} />
+				</div>
+			</div>
+		)
+	}
+
 	if (reduxCart.length == 0 && viewState !== "review") {
 		return (
 			<>
@@ -146,7 +161,7 @@ export default function Checkout() {
 								<SectionHeading text={"Delivery Details"} />
 							</div>
 							{selectedTypeSelector === 'cnc' ? (
-								<PickupLocationSelector />
+								<PickupLocationSelector type={'checkout'} />
 							) : (
 								<SelectAddress
 									type={"checkout"}
