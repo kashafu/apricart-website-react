@@ -55,7 +55,7 @@ export default function Header() {
 				<div className="h-full hidden lg:inline-flex  lg:flex-row lg:space-x-4 lg:items-center">
 					<div>
 						{selectedTypeSelector === 'cnc' ? (
-							<PickupLocationSelector type={'select'} />
+							<PickupLocationSelector />
 						) : (
 							<>
 								{token ? (

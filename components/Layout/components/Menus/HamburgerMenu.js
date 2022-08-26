@@ -69,7 +69,7 @@ export default function HamburgerMenu() {
 							<div className="items-center align-center space-y-2">
 								<div className="py-2">
 									{selectedTypeSelector === 'cnc' ? (
-										<PickupLocationSelector type={'select'} />
+										<PickupLocationSelector />
 									) : (
 										<>
 											{token ? (

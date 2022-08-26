@@ -122,7 +122,7 @@ export default function Checkout() {
 					<ErrorText
 						text={"Select a pickup location before continuing"}
 					/>
-					<PickupLocationSelector type={'select'} />
+					<PickupLocationSelector />
 				</div>
 			</div>
 		)
@@ -161,7 +161,7 @@ export default function Checkout() {
 								<SectionHeading text={"Delivery Details"} />
 							</div>
 							{selectedTypeSelector === 'cnc' ? (
-								<PickupLocationSelector type={'checkout'} />
+								<PickupLocationSelector />
 							) : (
 								<SelectAddress
 									type={"checkout"}
