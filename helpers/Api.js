@@ -289,9 +289,9 @@ export const usePickupLocationsApi = () => {
 			let apiResponse = await axios.get(fullUrl(url), {
 				headers: headers,
 			})
-			setResponse(apiResponse)
 			setPickupLocations(apiResponse.data.data.pickLocationDtoList)
 			setAvailableDates(apiResponse.data.data.availableDates)
+			setResponse(apiResponse)
 		} catch (error) {
 			setErrorResponse(error?.response)
 			setErrorMessage(error?.response?.data?.message)
