@@ -13,10 +13,12 @@ import HeadTag from "../components/Layout/components/Head/HeadTag"
 import { useInitialCartDataApi } from "../helpers/Api"
 import CheckoutCart from "../components/Layout/components/Cart/CheckoutCart"
 import { useEffect } from "react"
+import PickupLocationSelector from "../components/Layout/components/Selectors/PickupLocationSelector"
 
 export default function Checkout() {
 	let { token } = getGeneralApiParams()
 	const selectedAddressSelector = useSelector((state) => state.general.selectedAddress)
+	const selectedTypeSelector = useSelector((state) => state.general.selectedType)
 	const reduxCart = useSelector((state) => state.cart)
 
 	// view state can be either 'shipping', 'payment', 'review'
@@ -32,7 +34,6 @@ export default function Checkout() {
 	useEffect(() => {
 		if (viewState === 'payment' && isCheckoutButtonPressed) {
 			if (checkoutResponse) {
-				// console.log(response)
 				setViewState('review')
 			}
 		}
@@ -144,10 +145,14 @@ export default function Checkout() {
 							<div className="text-center">
 								<SectionHeading text={"Delivery Details"} />
 							</div>
-							<SelectAddress
-								type={"checkout"}
-								dropDownSelectedAddress={selectedAddressSelector}
-							/>
+							{selectedTypeSelector === 'cnc' ? (
+								<PickupLocationSelector />
+							) : (
+								<SelectAddress
+									type={"checkout"}
+									dropDownSelectedAddress={selectedAddressSelector}
+								/>
+							)}
 							<ErrorText text={errorMessage} />
 							<div className="border-y py-1">
 								<TextField
