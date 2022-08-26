@@ -26,6 +26,11 @@ export default function Checkout() {
 	const [viewState, setViewState] = useState("shipping")
 	const [isCheckoutButtonPressed, setIsCheckoutButtonPressed] = useState(false)
 
+	// For the PickupLocation Component
+	const [dayIdentifier, setDayIdentifier] = useState('')
+	const [selectedDate, setSelectedDate] = useState('')
+	const [selectedTime, setSelectedTime] = useState('')
+
 	const [couponCode, setCouponCode] = useState('')
 	const { initialCartProducts, initialCartData, isLoading, errorMessage, response, setNotes, setCoupon, notes, setPaymentMethod, paymentMethod, setIsCheckout, couponMessage, paymentMethods, checkoutResponse, setDay, setStartTime, setEndTime } = useInitialCartDataApi()
 	const { pickupLocations, availableDates, response: pickupLocationsApiResponse, isLoading: pickupLocationsApiIsLoading } = usePickupLocationsApi()
@@ -107,13 +112,9 @@ export default function Checkout() {
 	}
 
 	const PickupLocation = () => {
-		const [dayIdentifier, setDayIdentifier] = useState('')
-		const [selectedDate, setSelectedDate] = useState('')
-		const [selectedTime, setSelectedTime] = useState('')
-
-		useEffect(() => {
-			console.log(selectedDate)
-		}, [selectedDate])
+		let pStyle = "text-main-blue font-bold text-xs lg:text-xl"
+		let divStyle = "grid grid-cols-1 items-center w-full h-full"
+		let selectStyle = "h-full w-full py-2 lg:px-4 text-xs lg:text-lg rounded-lg bg-slate-200"
 
 		if (pickupLocationsApiIsLoading) {
 			return (
@@ -124,18 +125,22 @@ export default function Checkout() {
 		}
 
 		return (
-			<div className="w-full grid-rows-3 space-y-4">
+			<div className="w-full grid-rows-4 text-center space-y-4">
+				<p>
+					Select Pickup Details
+				</p>
 				{/* PICKUP LOCATION */}
-				<div className="grid grid-cols-3 items-center w-full h-full">
-					<p className="text-main-blue font-bold text-xl">
+				<div className={divStyle}>
+					{/* <p className={pStyle}>
 						Select Pickup Location
-					</p>
+					</p> */}
 					<div>
 						<select
-							className="col-span-2 h-full py-2 lg:px-4 text-xs lg:text-lg rounded-lg bg-slate-200"
+							className={selectStyle}
 							disabled={false}
 							onChange={(e) => {
 								dispatch(updatePickupLocation(JSON.parse(e.target.value)))
+								console.log(JSON.parse(e.target.value))
 							}}
 							value={selectedPickupLocationSelector}
 						>
@@ -161,27 +166,27 @@ export default function Checkout() {
 					</div>
 				</div>
 				{/* DATE SELECT */}
-				<div className="grid grid-cols-3 items-center w-full h-full">
-					<p className="text-main-blue font-bold text-xl">
+				<div className={divStyle}>
+					{/* <p className={pStyle}>
 						Select Delivery Date
-					</p>
+					</p> */}
 					<div>
 						<select
-							className="col-span-2 h-full py-2 lg:px-4 text-xs lg:text-lg rounded-lg bg-slate-200"
+							className={selectStyle}
 							disabled={selectedPickupLocationSelector === '' ? true : false}
 							onChange={(e) => {
-								console.log(e.target.value)
-								let parsed = JSON.parse(e.target.value)
-								setSelectedDate(parsed)
-								setDay(parsed.dateForServer)
-								setDayIdentifier(parsed.identifier)
+								if (e.target.value !== '') {
+									let parsed = JSON.parse(e.target.value)
+									setSelectedDate(parsed)
+									setDay(parsed.dateForServer)
+									setDayIdentifier(parsed.identifier)
+								}
 							}}
-							value={selectedDate}
+							value={JSON.stringify(selectedDate)}
 						>
 							<option
 								value={''}
-								disabled={true}
-								selected={true}
+								hidden={selectedDate !== ''}
 							>
 								Select Date
 							</option>
@@ -199,20 +204,21 @@ export default function Checkout() {
 					</div>
 				</div>
 				{/* TIME SELECT */}
-				<div className="grid grid-cols-3 items-center w-full h-full">
-					<p className="text-main-blue font-bold text-xl">
+				<div className={divStyle}>
+					{/* <p className={pStyle}>
 						Select Time
-					</p>
+					</p> */}
 					<div>
 						<select
-							className="col-span-2 h-full py-2 lg:px-4 text-xs lg:text-lg rounded-lg bg-slate-200"
+							className={selectStyle}
 							disabled={selectedDate === ''}
 							onChange={(e) => {
-								setSelectedTime(e.target.value.displayTime)
-								setStartTime(e.target.value.startTime)
-								setEndTime(e.target.value.endTime)
+								let parsed = JSON.parse(e.target.value)
+								setSelectedTime(parsed)
+								setStartTime(parsed.startTime)
+								setEndTime(parsed.endTime)
 							}}
-							value={selectedTime}
+							value={JSON.stringify(selectedTime)}
 						>
 							<option
 								value={''}
@@ -225,7 +231,7 @@ export default function Checkout() {
 								return (
 									<option
 										key={time.displayTime}
-										value={time}
+										value={JSON.stringify(time)}
 									>
 										{time.displayTime}
 									</option>
@@ -234,6 +240,9 @@ export default function Checkout() {
 						</select>
 					</div>
 				</div>
+				<p className="font-semibold">
+					Pickup location address is {selectedPickupLocationSelector.address}
+				</p>
 			</div>
 		)
 	}
