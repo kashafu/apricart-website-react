@@ -1,6 +1,7 @@
 import Cookies from 'universal-cookie';
 let isNode = require('detect-node')
 import { getCookie } from './Cookies';
+import { getItemLocalStorage } from './Storage';
 
 const cookies = new Cookies();
 
@@ -10,7 +11,7 @@ export const getGeneralCookies = () => {
     let email = getCookie('cookies-email')
     let token = getCookie('cookies-token')
 
-    return({
+    return ({
         name,
         phoneNumber,
         email,
@@ -29,12 +30,17 @@ export const getGeneralApiParams = () => {
     let orderType = ''
 
     let selectedType = getCookie('selected-type')
-    if(selectedType === 'bulk'){
+    if (selectedType === 'bulk') {
         selectedType = 'bulk'
         prodType = 'b2b'
         orderType = 'delivery'
     }
-    else{
+    else if (selectedType === 'cnc') {
+        selectedType = 'cnc'
+        prodType = 'cus'
+        orderType = 'pickup'
+    }
+    else {
         selectedType = 'home'
         prodType = 'cus'
         orderType = 'delivery'
@@ -43,6 +49,15 @@ export const getGeneralApiParams = () => {
     let token = getCookie('cookies-token')
     let city = getCookie("cities") == null ? "karachi" : getCookie("cities")
     let selectedAddress = getCookie('selected-address')
+    let selectedPickupLocation = ''
+    if (getItemLocalStorage('selected-pickup-location')) {
+        if (typeof (getItemLocalStorage('selected-pickup-location')) === 'string') {
+            selectedPickupLocation = JSON.parse(getItemLocalStorage('selected-pickup-location'))
+        }
+        else {
+            selectedPickupLocation = getItemLocalStorage('selected-pickup-location')
+        }
+    }
     let latitude = 0
     let longitude = 0
     let userId = getCookie('guestUserId')
@@ -53,27 +68,48 @@ export const getGeneralApiParams = () => {
 
     let isUserInitialized = getCookie('user-initialized') ? true : false
 
-    // if user is logged in
-    if (token) {
-        // if user has a selected address, use that addresses's latitude longitude
-        if(selectedAddress){
-            latitude = selectedAddress.mapLat
-            longitude = selectedAddress.mapLong
+    // If cnc is selected, lat long will be of selected pickup location
+    if (selectedType === 'cnc') {
+        if (selectedPickupLocation !== '') {
+            latitude = selectedPickupLocation.mapLat
+            longitude = selectedPickupLocation.mapLong
         }
-        // if no address is selected or no address has been added, use default lat long 0
+        else {
+            // if location enabled, use browser latitude and longitude, if not enabled, send 0 by default
+            if (!isNode) {
+                navigator.geolocation.getCurrentPosition((position) => {
+                    latitude = position.coords.latitude
+                    longitude = position.coords.longitude
+                })
+            }
+        }
+    }
+    else {
+        // if user is logged in
+        if (token) {
+            // if user has a selected address, use that addresses's latitude longitude
+            if (selectedAddress) {
+                latitude = selectedAddress.mapLat
+                longitude = selectedAddress.mapLong
+            }
+            // if no address is selected or no address has been added, use default lat long 0
+        }
+        // if its a guest
+        else {
+            // if location enabled, use browser latitude and longitude, if not enabled, send 0 by default
+            if (!isNode) {
+                navigator.geolocation.getCurrentPosition((position) => {
+                    latitude = position.coords.latitude
+                    longitude = position.coords.longitude
+                })
+            }
+        }
+    }
+
+    if (token) {
         headers = {
             ...headers,
             Authorization: "Bearer " + token
-        }
-    }
-    // if its a guest
-    else {
-        // if location enabled, use browser latitude and longitude, if not enabled, send 0 by default
-        if (!isNode) {
-            navigator.geolocation.getCurrentPosition((position) => {
-                latitude = position.coords.latitude
-                longitude = position.coords.longitude
-            })
         }
     }
 
@@ -89,7 +125,8 @@ export const getGeneralApiParams = () => {
         orderType,
         clientType,
         selectedType,
-        isUserInitialized
+        isUserInitialized,
+        selectedPickupLocation
     })
 }
 
