@@ -32,7 +32,7 @@ export default function Checkout() {
 	const [selectedTime, setSelectedTime] = useState('')
 
 	const [couponCode, setCouponCode] = useState('')
-	const { initialCartProducts, initialCartData, isLoading, errorMessage, response, setNotes, setCoupon, notes, setPaymentMethod, paymentMethod, setIsCheckout, couponMessage, paymentMethods, checkoutResponse, setDay, setStartTime, setEndTime } = useInitialCartDataApi()
+	const { initialCartProducts, initialCartData, isLoading, errorMessage, response, setNotes, setCoupon, notes, setPaymentMethod, paymentMethod, setIsCheckout, couponMessage, paymentMethods, checkoutResponse, setDay, setStartTime, setEndTime, setIsFetchCart } = useInitialCartDataApi()
 	const { pickupLocations, availableDates, response: pickupLocationsApiResponse, isLoading: pickupLocationsApiIsLoading } = usePickupLocationsApi()
 
 	/*
@@ -114,7 +114,7 @@ export default function Checkout() {
 	const PickupLocation = () => {
 		let pStyle = "text-main-blue font-bold text-xs lg:text-xl"
 		let divStyle = "grid grid-cols-1 items-center w-full h-full"
-		let selectStyle = "h-full w-full py-2 lg:px-4 text-xs lg:text-lg rounded-lg bg-slate-200"
+		let selectStyle = "h-full w-full py-2 lg:px-4 text-xs lg:text-lg rounded-lg bg-slate-200 h-[40px]"
 
 		if (pickupLocationsApiIsLoading) {
 			return (
@@ -126,7 +126,7 @@ export default function Checkout() {
 
 		return (
 			<div className="w-full grid-rows-4 text-center space-y-4">
-				<p>
+				<p className="font-lato text-main-blue font-semibold">
 					Select Pickup Details
 				</p>
 				{/* PICKUP LOCATION */}
@@ -335,7 +335,7 @@ export default function Checkout() {
 											return <div key={id}></div>
 										}
 										return (
-											<div key={id}>
+											<div key={id} className='flex items-center space-x-2'>
 												<input
 													value={key}
 													type={"radio"}
@@ -344,7 +344,9 @@ export default function Checkout() {
 													}}
 													checked={paymentMethod === key}
 												/>
-												{name}
+												<p>
+													{name}
+												</p>
 											</div>
 										)
 									})}
@@ -383,7 +385,7 @@ export default function Checkout() {
 						initialCartProducts={initialCartProducts}
 						initialCartData={initialCartData}
 						isLoading={isLoading}
-						errorMessage={errorMessage}
+						fetchCart={setIsFetchCart}
 					/>
 				</div>
 				{/* CHECKOUT BUTTON DIV */}

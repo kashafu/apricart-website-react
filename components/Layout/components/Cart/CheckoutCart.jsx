@@ -1,13 +1,15 @@
 import Image from "next/image"
+import parse from "html-react-parser"
+
 import missingImageIcon from '../../../../public/assets/svgs/missingImageIcon.svg'
 import trashIcon from '../../../../public/assets/svgs/trashIcon.svg'
 import plusIcon from '../../../../public/assets/svgs/plusIcon.svg'
 import minusIcon from '../../../../public/assets/svgs/minusIcon.svg'
-import parse from "html-react-parser"
 import { useDeleteItemApi, useUpdateItemQtyApi } from "../../../../helpers/Api"
 import ErrorText from "../Typography/ErrorText"
+import { useSelector } from "react-redux"
 
-const ItemListing = ({ item }) => {
+const ItemListing = ({ item, fetchCart }) => {
     let {
         title,
         qty,
@@ -47,6 +49,7 @@ const ItemListing = ({ item }) => {
                                 sku: sku
                             })
                             setIsUpdateItemQty(true)
+                            fetchCart(true)
                         }}
                     >
                         <Image src={minusIcon} width={10} height={10} alt="" />
@@ -60,6 +63,7 @@ const ItemListing = ({ item }) => {
                                 sku: sku
                             })
                             setIsUpdateItemQty(true)
+                            fetchCart(true)
                         }}
                     >
                         <Image src={plusIcon} width={10} height={10} alt="" />
@@ -73,6 +77,7 @@ const ItemListing = ({ item }) => {
                         onClick={() => {
                             setSku(sku)
                             setIsDelete(true)
+                            fetchCart(true)
                         }}
                     >
                         <Image
@@ -84,26 +89,29 @@ const ItemListing = ({ item }) => {
                     </button>
                 </div>
                 {specialPrice > 0 ? (
-                    <p>x RS. {specialPrice * qty}</p>
+                    <p>RS. {specialPrice * qty}</p>
                 ) : (
-                    <p>x RS. {currentPrice * qty}</p>
+                    <p>RS. {currentPrice * qty}</p>
                 )}
             </div>
         </div>
     )
 }
 
-const CheckoutCart = ({ initialCartProducts, initialCartData, isLoading }) => {
+const CheckoutCart = ({ initialCartProducts, initialCartData, isLoading, fetchCart }) => {
+    const selectedTypeSelector = useSelector(state => state.general.selectedType)
+    const reduxCart = useSelector(state => state.cart)
+
     let pLeft = "font-lato text-md text-main-blue"
     let pRight = "font-lato text-lg font-bold text-right"
 
-    if (isLoading) {
-        return (
-            <div>
-                Fetching Cart Data
-            </div>
-        )
-    }
+    // if (isLoading) {
+    //     return (
+    //         <div>
+    //             Fetching Cart Data
+    //         </div>
+    //     )
+    // }
 
     let {
         subtotal,
@@ -113,16 +121,18 @@ const CheckoutCart = ({ initialCartProducts, initialCartData, isLoading }) => {
         shipment_message,
         base_currency_code,
         couponDiscountAmount,
+        pickup_message
     } = initialCartData
 
     return (
         <div className="flex flex-col w-full h-full justify-between bg-white rounded-3xl">
             <div className="overflow-y-auto p-4 h-96 space-y-4">
-                {initialCartProducts.map((product) => {
+                {reduxCart.map((product) => {
                     return (
                         <ItemListing
                             key={product.sku}
                             item={product}
+                            fetchCart={fetchCart}
                         />
                     )
                 })}
@@ -134,12 +144,22 @@ const CheckoutCart = ({ initialCartProducts, initialCartData, isLoading }) => {
                 <p className={pRight}>
                     {base_currency_code} {tax}
                 </p>
-                <p className={pLeft}>Shipping</p>
-                <p className={pRight}>{parse(shipment_message)}</p>
-                <p className={pLeft}>Shipping Amount</p>
-                <p className={pRight}>
-                    {base_currency_code} {shipping_amount}
-                </p>
+                {selectedTypeSelector === 'cnc' ? (
+                    <>
+                        <p className={pLeft}>Pickup</p>
+                        <p className={pRight}>{parse(pickup_message)}</p>
+
+                    </>
+                ) : (
+                    <>
+                        <p className={pLeft}>Shipping</p>
+                        <p className={pRight}>{parse(shipment_message)}</p>
+                        <p className={pLeft}>Shipping Amount</p>
+                        <p className={pRight}>
+                            {base_currency_code} {shipping_amount}
+                        </p>
+                    </>
+                )}
                 <p className={pLeft}>Coupon Discount Amount</p>
                 <p className={pRight}>
                     {base_currency_code} {couponDiscountAmount}

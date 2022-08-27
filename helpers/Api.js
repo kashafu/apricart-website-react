@@ -627,7 +627,6 @@ export const useUpdateItemQtyApi = () => {
 	useEffect(() => {
 		if (isUpdateItemQty) {
 			callApi()
-			console.log("CALLED")
 		}
 	}, [isUpdateItemQty])
 
@@ -774,6 +773,7 @@ export const useInitialCartDataApi = () => {
 	const [startTime, setStartTime] = useState("11:00")
 	const [endTime, setEndTime] = useState("11:30")
 	const [isCheckout, setIsCheckout] = useState(false)
+	const [isFetchCart, setIsFetchCart] = useState(false)
 	const [checkoutResponse, setCheckoutResponse] = useState(null)
 	const [isLoading, setIsLoading] = useState(true)
 	const [response, setResponse] = useState(null)
@@ -791,6 +791,12 @@ export const useInitialCartDataApi = () => {
 			callCheckoutApi()
 		}
 	}, [isCheckout])
+
+	useEffect(() => {
+		if (isFetchCart) {
+			callApi()
+		}
+	}, [isFetchCart])
 
 	const callApi = async () => {
 		setIsLoading(true)
@@ -848,6 +854,7 @@ export const useInitialCartDataApi = () => {
 		} finally {
 			setIsLoading(false)
 			setIsCheckout(false)
+			setIsFetchCart(false)
 		}
 	}
 
@@ -925,7 +932,8 @@ export const useInitialCartDataApi = () => {
 		setPaymentMethod,
 		paymentMethod,
 		couponMessage,
-		checkoutResponse
+		checkoutResponse,
+		setIsFetchCart
 	}
 }
 
