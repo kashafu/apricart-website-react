@@ -28,7 +28,7 @@ export default function ClickAndCollectCard({ isDisabled }) {
 				dispatch(updateSelectedType('cnc'))
 				setCookie('selected-type', 'cnc')
 			}}
-			disabled={isDisabled}
+			disabled={true}
 		>
 			<div className={[pStyle] + ' z-10 hidden absolute self-start font-bold lg:inline text-xl xl:text-2xl 2xl:text-3xl'}>				<p>Click & Collect</p>
 			</div>
