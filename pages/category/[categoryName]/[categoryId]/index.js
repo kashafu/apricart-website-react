@@ -10,6 +10,7 @@ import {
 	useCategoryProductsApi,
 	useSubCategoriesApi,
 } from "../../../../helpers/Api"
+import { useState } from "react"
 
 export default function CategoryProducts() {
 	const router = useRouter()
@@ -65,10 +66,54 @@ export default function CategoryProducts() {
 		)
 	}
 
-	const CategoryProducts = () => {
-		const { isLoading, categoryProducts, errorMessage } =
-			useCategoryProductsApi()
+	const {
+		isLoading,
+		categoryProducts,
+		errorMessage,
+		totalItems,
+		size,
+		setSize,
+		setPage,
+		page
+	} = useCategoryProductsApi()
 
+	const Filter = () => {
+		let arr = []
+		for (let index = size; index <= totalItems + size; index = index + size) {
+			arr.push(
+				<button key={index}
+					onClick={() => {
+						setPage(index / size)
+					}}
+					className={index / size === page ? "border-main-blue border-1 bg-main-blue p-2 text-white font-bold rounded-lg" : "border-main-blue border-1 p-2 text-main-blue font-bold rounded-lg duration-200 hover:bg-main-blue hover:text-white"}
+				>
+					{index / size}
+				</button>
+			)
+		}
+
+		return (
+			<div className="flex w-full space-x-6 items-center">
+				<p className="">
+					Showing items {(page - 1) * size} - {(((page - 1) * size) + size) > totalItems ? (totalItems) : (((page - 1) * size) + size)} of {totalItems}
+				</p>
+				{/* <div>
+					<p>Number of items per page</p>
+					<select onChange={(e) => {
+						setSize(e.target.value)
+					}}>
+						<option value={20}>20</option>
+						<option value={40}>40</option>
+					</select>
+				</div> */}
+				<div className="space-x-2">
+					{arr}
+				</div>
+			</div>
+		)
+	}
+
+	const CategoryProducts = () => {
 		if (isLoading) {
 			return (
 				<div>
@@ -94,18 +139,20 @@ export default function CategoryProducts() {
 		}
 
 		return (
-			<section className="grid grid-cols-2 md:grid-cols-4 2xl:grid-cols-5 gap-4">
-				{categoryProducts.map((product) => {
-					let { sku } = product
-					return (
-						<div key={sku}>
-							<SingleProduct
-								product={product}
-							// TODO call api to get updated details of product and check if it is in stock
-							/>
-						</div>
-					)
-				})}
+			<section>
+				<section className="grid grid-cols-2 md:grid-cols-4 2xl:grid-cols-5 gap-4">
+					{categoryProducts.map((product) => {
+						let { sku } = product
+						return (
+							<div key={sku}>
+								<SingleProduct
+									product={product}
+								// TODO call api to get updated details of product and check if it is in stock
+								/>
+							</div>
+						)
+					})}
+				</section>
 			</section>
 		)
 	}
@@ -134,7 +181,9 @@ export default function CategoryProducts() {
 					/>
 					<section className="space-y-12">
 						<SubCategories />
+						<Filter />
 						<CategoryProducts />
+						<Filter />
 					</section>
 				</section>
 			</div>

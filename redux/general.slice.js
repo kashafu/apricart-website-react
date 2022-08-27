@@ -1,8 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit"
 import { setCookie } from "../helpers/Cookies"
+import { setItemLocalStorage } from "../helpers/Storage"
 import { getGeneralApiParams } from "../helpers/ApiHelpers"
 
-let { selectedAddress, selectedType, city } = getGeneralApiParams()
+let { selectedAddress, selectedType, city, selectedPickupLocation } = getGeneralApiParams()
 
 const generalSlice = createSlice({
 	name: "general",
@@ -13,6 +14,7 @@ const generalSlice = createSlice({
 		selectedType: selectedType,
 		city: city,
 		isUserInitialized: false,
+		pickupLocation: selectedPickupLocation
 	},
 	reducers: {
 		updateSelectedAddress: (state, action) => {
@@ -23,6 +25,10 @@ const generalSlice = createSlice({
 		},
 		updateCity: (state, action) => {
 			state.city = action.payload
+		},
+		updatePickupLocation: (state, action) => {
+			state.pickupLocation = action.payload
+			setItemLocalStorage("selected-pickup-location", JSON.stringify(action.payload))
 		},
 		updateSelectedType: (state, action) => {
 			state.selectedType = action.payload
@@ -42,4 +48,5 @@ export const {
 	updateSelectedType,
 	updateCity,
 	updateIsUserInitialized,
+	updatePickupLocation
 } = generalSlice.actions
