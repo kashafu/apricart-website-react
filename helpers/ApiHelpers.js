@@ -1,7 +1,7 @@
 import Cookies from 'universal-cookie';
 let isNode = require('detect-node')
 import { getCookie } from './Cookies';
-import { getItemSessionStorage } from './Storage';
+import { getItemSessionStorage, getItemLocalStorage, removeItemLocalStorage } from './Storage';
 
 const cookies = new Cookies();
 
@@ -48,7 +48,15 @@ export const getGeneralApiParams = () => {
 
     let token = getCookie('cookies-token')
     let city = getCookie("cities") == null ? "karachi" : getCookie("cities")
-    let selectedAddress = getCookie('selected-address')
+    let selectedAddress = ''
+    if (getItemLocalStorage('selected-address')) {
+        if (typeof (getItemLocalStorage('selected-address')) === 'string') {
+            selectedAddress = JSON.parse(getItemLocalStorage('selected-address'))
+        }
+        else {
+            selectedAddress = getItemLocalStorage('selected-address')
+        }
+    }
     let selectedPickupLocation = ''
     if (getItemSessionStorage('selected-pickup-location')) {
         if (typeof (getItemSessionStorage('selected-pickup-location')) === 'string') {
@@ -132,7 +140,7 @@ export const getGeneralApiParams = () => {
 
 export const logOutRemoveCookies = () => {
     cookies.remove("cookies-token")
-    cookies.remove('selected-address')
+    removeItemLocalStorage.remove('selected-address')
     cookies.remove('guestUserId')
     cookies.remove('cookies-name')
     cookies.remove('cookies-userId')
