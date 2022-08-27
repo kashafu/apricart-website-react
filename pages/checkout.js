@@ -213,17 +213,18 @@ export default function Checkout() {
 							className={selectStyle}
 							disabled={selectedDate === ''}
 							onChange={(e) => {
-								let parsed = JSON.parse(e.target.value)
-								setSelectedTime(parsed)
-								setStartTime(parsed.startTime)
-								setEndTime(parsed.endTime)
+								if (e.target.value !== '') {
+									let parsed = JSON.parse(e.target.value)
+									setSelectedTime(parsed)
+									setStartTime(parsed.startTime)
+									setEndTime(parsed.endTime)
+								}
 							}}
 							value={JSON.stringify(selectedTime)}
 						>
 							<option
 								value={''}
-								disabled={true}
-								selected={true}
+								hidden={selectedTime !== ''}
 							>
 								Select Time
 							</option>
@@ -392,22 +393,41 @@ export default function Checkout() {
 				<div className="col-span-4">
 					{viewState === "shipping" && (
 						<div>
-							<SubmitButton
-								text={
-									response
-										? "CONTINUE TO PAYMENT"
-										: "SELECT ADDRESS"
-								}
-								onClick={() => {
-									setViewState("payment")
-									window.scroll({
-										top: 0,
-										left: 0,
-										behavior: "smooth",
-									})
-								}}
-								disabled={response == null}
-							/>
+							{selectedTypeSelector === 'cnc' ? (
+								<SubmitButton
+									text={
+										selectedDate === '' || selectedTime === ''
+											? "SELECT PICKUP LOCATION"
+											: "CONTINUE TO PAYMENT"
+									}
+									onClick={() => {
+										setViewState("payment")
+										window.scroll({
+											top: 0,
+											left: 0,
+											behavior: "smooth",
+										})
+									}}
+									disabled={selectedDate === '' || selectedTime === ''}
+								/>
+							) : (
+								<SubmitButton
+									text={
+										response
+											? "CONTINUE TO PAYMENT"
+											: "SELECT ADDRESS"
+									}
+									onClick={() => {
+										setViewState("payment")
+										window.scroll({
+											top: 0,
+											left: 0,
+											behavior: "smooth",
+										})
+									}}
+									disabled={response == null}
+								/>
+							)}
 						</div>
 					)}
 					{viewState === "payment" && (

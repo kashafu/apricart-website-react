@@ -784,7 +784,7 @@ export const useInitialCartDataApi = () => {
 
 	useEffect(() => {
 		callApi()
-	}, [selectedTypeSelector, citySelector, selectedAddressSelector, selectedPickupLocationSelector, token, coupon])
+	}, [selectedTypeSelector, citySelector, selectedAddressSelector, selectedPickupLocationSelector, token, coupon, day, startTime, endTime])
 
 	useEffect(() => {
 		if (isCheckout) {
@@ -859,6 +859,7 @@ export const useInitialCartDataApi = () => {
 	}
 
 	const callCheckoutApi = async () => {
+		toast.info("Processing order")
 		setIsLoading(true)
 		setCheckoutResponse(null)
 		await initializeUserApi()
@@ -906,7 +907,7 @@ export const useInitialCartDataApi = () => {
 		} catch (error) {
 			setErrorResponse(error?.response)
 			setErrorMessage(error?.response?.data?.message)
-			// toast.error(error?.response?.data?.message)
+			toast.error(error?.response?.data?.message)
 		} finally {
 			setIsLoading(false)
 			setIsCheckout(false)
