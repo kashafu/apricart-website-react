@@ -47,7 +47,7 @@ export const getGeneralApiParams = () => {
     }
 
     let token = getCookie('cookies-token')
-    let city = getCookie("cities") == null ? "karachi" : getCookie("cities")
+    let city = getItemLocalStorage("cities") == null ? "karachi" : getItemLocalStorage("cities")
     let selectedAddress = ''
     if (getItemLocalStorage('selected-address')) {
         if (typeof (getItemLocalStorage('selected-address')) === 'string') {

@@ -42,7 +42,6 @@ export default function SingleAddressListing({
 
 	const onClickHandle = () => {
 		dispatch(updateSelectedAddress(listing))
-		setCookie("cities", listing.city.toLowerCase())
 		dispatch(updateCity(listing.city.toLowerCase()))
 		setAddress(listing)
 	}

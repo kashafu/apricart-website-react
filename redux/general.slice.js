@@ -26,6 +26,7 @@ const generalSlice = createSlice({
 		},
 		updateCity: (state, action) => {
 			state.city = action.payload
+			setItemLocalStorage("cities", action.payload)
 		},
 		updatePickupLocation: (state, action) => {
 			state.pickupLocation = action.payload
