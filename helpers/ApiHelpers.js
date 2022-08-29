@@ -143,7 +143,6 @@ export const logOutRemoveCookies = () => {
     removeItemLocalStorage.remove('selected-address')
     cookies.remove('guestUserId')
     cookies.remove('cookies-name')
-    cookies.remove('cookies-userId')
     cookies.remove('cookies-phoneNumber')
     cookies.remove('cookies-email')
     localStorage.clear()

@@ -35,10 +35,7 @@ const generalSlice = createSlice({
 		updateSelectedType: (state, action) => {
 			state.selectedType = action.payload
 			setItemLocalStorage("selected-type", action.payload)
-		},
-		updateIsUserInitialized: (state, action) => {
-			state.isUserInitialized = action.payload
-		},
+		}
 	},
 })
 
@@ -49,6 +46,5 @@ export const {
 	updateTicker,
 	updateSelectedType,
 	updateCity,
-	updateIsUserInitialized,
 	updatePickupLocation
 } = generalSlice.actions

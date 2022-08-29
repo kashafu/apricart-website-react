@@ -5,7 +5,6 @@ import { useEffect, useState } from "react"
 import { useDispatch } from "react-redux"
 import { updateSelectedType } from "../../../../redux/general.slice"
 import { useSelector } from "react-redux"
-import { setCookie } from "../../../../helpers/Cookies"
 
 const TypeCardSelector = () => {
     const dispatch = useDispatch()

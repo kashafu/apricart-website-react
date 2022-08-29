@@ -3,7 +3,6 @@ import clickAndCollectIcon from "../../../../public/assets/svgs/clickAndCollectI
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { updateSelectedType } from "../../../../redux/general.slice"
-import { setCookie } from "../../../../helpers/Cookies"
 
 export default function ClickAndCollectCard({ isDisabled }) {
 	const dispatch = useDispatch()

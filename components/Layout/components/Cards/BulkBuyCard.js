@@ -3,7 +3,6 @@ import bulkBuyIcon from "../../../../public/assets/svgs/bulkBuyIcon.svg"
 import { useDispatch, useSelector } from 'react-redux'
 import { updateSelectedType } from '../../../../redux/general.slice'
 import { useEffect, useState } from 'react'
-import { setCookie } from "../../../../helpers/Cookies"
 
 export default function BulkBuyCard() {
 	const dispatch = useDispatch()
