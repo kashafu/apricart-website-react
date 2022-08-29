@@ -6,8 +6,6 @@ import { getGeneralApiParams } from "./ApiHelpers"
 import { useRouter } from "next/router"
 import {
 	addToCart,
-	decrementQuantity,
-	incrementQuantity,
 	initialize,
 	removeFromCart,
 	updateQuantity,
@@ -268,18 +266,11 @@ export const useHomeApi = () => {
 export const usePickupLocationsApi = () => {
 	const citySelector = useSelector((state) => state.general.city)
 	const [isLoading, setIsLoading] = useState(true)
-	// const [fetchPickupLocations, setFetchPickupLocations] = useState(false)
 	const [pickupLocations, setPickupLocations] = useState(null)
 	const [availableDates, setAvailableDates] = useState(null)
 	const [response, setResponse] = useState(null)
 	const [errorResponse, setErrorResponse] = useState(null)
 	const [errorMessage, setErrorMessage] = useState("")
-
-	// useEffect(() => {
-	// 	if (fetchPickupLocations) {
-	// 		callApi()
-	// 	}
-	// }, [citySelector, fetchPickupLocations])
 
 	useEffect(() => {
 		callApi()
@@ -304,7 +295,6 @@ export const usePickupLocationsApi = () => {
 			setErrorMessage(error?.response?.data?.message)
 		} finally {
 			setIsLoading(false)
-			// setFetchPickupLocations(false)
 		}
 	}
 
@@ -315,7 +305,6 @@ export const usePickupLocationsApi = () => {
 		errorMessage,
 		response,
 		errorResponse,
-		// setFetchPickupLocations
 	}
 }
 
@@ -536,77 +525,6 @@ export const usePaymentMethodsApi = () => {
 		errorResponse,
 	}
 }
-
-// export const useCheckoutApi = (checkoutData, checkoutAddress) => {
-// 	const [isLoading, setIsLoading] = useState(true)
-// 	const [response, setResponse] = useState(null)
-// 	const [errorResponse, setErrorResponse] = useState(null)
-// 	const [errorMessage, setErrorMessage] = useState("")
-// 	const [isCheckout, setIsCheckout] = useState(false)
-
-// 	let { headers, clientType, prodType, orderType } = getGeneralApiParams()
-// 	let lat = 0
-// 	let long = 0
-// 	let addressId = 0
-// 	if (typeof checkoutAddress === "object") {
-// 		lat = checkoutAddress ? checkoutAddress.mapLat : "0"
-// 		long = checkoutAddress ? checkoutAddress.mapLong : "0"
-// 		addressId = checkoutAddress ? checkoutAddress.id : ""
-// 	} else {
-// 		lat = checkoutAddress ? JSON.parse(checkoutAddress).mapLat : "0"
-// 		long = checkoutAddress ? JSON.parse(checkoutAddress).mapLong : "0"
-// 		addressId = checkoutAddress ? JSON.parse(checkoutAddress).id : ""
-// 	}
-// 	let body = {
-// 		...checkoutData,
-// 		address: addressId,
-// 		showProducts: true,
-// 		verify: false,
-// 		prodType: prodType,
-// 		day: "",
-// 		startTime: "",
-// 		endTime: "",
-// 		clientType: clientType,
-// 		orderType: orderType,
-// 	}
-// 	let url = "/order/cart/checkout?client_lat=" + lat + "&client_long=" + long
-
-// 	useEffect(() => {
-// 		if (isCheckout) {
-// 			callApi()
-// 		}
-// 	}, [isCheckout])
-
-// 	const callApi = async () => {
-// 		setIsLoading(true)
-// 		toast.info("Processing Order")
-// 		try {
-// 			let apiResponse = await axios.post(fullUrl(url), body, {
-// 				headers: headers,
-// 			})
-// 			setResponse(apiResponse)
-// 			if (checkoutData.paymentMethod === "meezan") {
-// 				let { paymentUrl } = response.data.data
-// 				window.open(paymentUrl, "_blank").focus()
-// 			}
-// 		} catch (error) {
-// 			setErrorResponse(error?.response)
-// 			setErrorMessage(error?.response?.data?.message)
-// 			toast.error(error?.response?.data?.message)
-// 		} finally {
-// 			setIsLoading(false)
-// 			setIsCheckout(false)
-// 		}
-// 	}
-
-// 	return {
-// 		isLoading,
-// 		errorMessage,
-// 		response,
-// 		errorResponse,
-// 		setIsCheckout,
-// 	}
-// }
 
 export const useUpdateItemQtyApi = () => {
 	const dispatch = useDispatch()
@@ -934,122 +852,6 @@ export const useInitialCartDataApi = () => {
 		paymentMethod,
 		couponMessage,
 		checkoutResponse,
-		setIsFetchCart
-	}
-}
-
-export const useCheckoutApi = () => {
-	const dispatch = useDispatch()
-	const selectedTypeSelector = useSelector(
-		(state) => state.general.selectedType
-	)
-	const citySelector = useSelector((state) => state.general.city)
-	const selectedAddressSelector = useSelector((state) => state.general.selectedAddress)
-	const selectedPickupLocationSelector = useSelector((state) => state.general.pickupLocation)
-	let { token } = getGeneralApiParams()
-	const [coupon, setCoupon] = useState('')
-	const [couponMessage, setCouponMessage] = useState('')
-	const [notes, setNotes] = useState('')
-	const [paymentMethod, setPaymentMethod] = useState('cash')
-	const [paymentMethods, setPaymentMethods] = useState('cash')
-	const [day, setDay] = useState("2022-04-10")
-	const [startTime, setStartTime] = useState("11:00")
-	const [endTime, setEndTime] = useState("11:30")
-	const [isCheckout, setIsCheckout] = useState(false)
-	const [isFetchCart, setIsFetchCart] = useState(false)
-	const [isLoading, setIsLoading] = useState(true)
-	const [response, setResponse] = useState(null)
-	const [initialCartData, setInitialCartData] = useState(null)
-	const [initialCartProducts, setInitialCartProducts] = useState(null)
-	const [errorResponse, setErrorResponse] = useState(null)
-	const [errorMessage, setErrorMessage] = useState("")
-
-	useEffect(() => {
-		if (isFetchCart) {
-			callApi()
-		}
-	}, [selectedTypeSelector, citySelector, selectedAddressSelector, selectedPickupLocationSelector, token, coupon, paymentMethod, day, startTime, endTime, isCheckout])
-
-	const callApi = async () => {
-		console.log("CALLED")
-		setIsLoading(true)
-		setResponse(null)
-		await initializeUserApi()
-
-		let { headers, clientType, prodType, orderType, selectedPickupLocation, selectedAddress, latitude, longitude } = getGeneralApiParams()
-
-		let addressId = 0
-		if (selectedTypeSelector === 'cnc') {
-			if (!selectedPickupLocation || selectedPickupLocation === '') {
-				toast.warn("SELECT PICKUP LOCATION")
-			}
-			else {
-				addressId = selectedPickupLocation?.id
-			}
-		}
-		else {
-			if (selectedAddress && selectedAddress !== '') {
-				addressId = selectedAddress.id
-			}
-		}
-
-		let verify = isCheckout ? false : true
-
-		let body = {
-			coupon,
-			notes,
-			paymentMethod,
-			address: addressId,
-			showProducts: true,
-			verify,
-			prodType,
-			day,
-			startTime,
-			endTime,
-			clientType,
-			orderType,
-		}
-		let url = "/order/cart/checkout?client_lat=" + latitude + "&client_long=" + longitude
-
-		try {
-			let apiResponse = await axios.post(fullUrl(url), body, {
-				headers: headers,
-			})
-			setResponse(apiResponse)
-			setInitialCartData(apiResponse.data.data)
-			setInitialCartProducts(apiResponse.data.data.products)
-			setCouponMessage(apiResponse.data.data.couponMessage)
-			setPaymentMethods(apiResponse.data.data.paymentInfo)
-			dispatch(initialize(apiResponse.data.data.products))
-		} catch (error) {
-			setErrorResponse(error?.response)
-			setErrorMessage(error?.response?.data?.message)
-			// toast.error(error?.response?.data?.message)
-		} finally {
-			setIsLoading(false)
-			setIsCheckout(false)
-		}
-	}
-
-	return {
-		isLoading,
-		errorMessage,
-		response,
-		errorResponse,
-		initialCartData,
-		initialCartProducts,
-		setCoupon,
-		paymentMethods,
-		setDay,
-		setStartTime,
-		setEndTime,
-		setIsCheckout,
-		setNotes,
-		notes,
-		coupon,
-		setPaymentMethod,
-		paymentMethod,
-		couponMessage,
 		setIsFetchCart
 	}
 }
