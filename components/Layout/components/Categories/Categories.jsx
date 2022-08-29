@@ -1,14 +1,26 @@
 import Link from "next/link"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import Image from "next/image"
 import upArrowIcon from "../../../../public/assets/svgs/upArrowIcon.svg"
 import downArrowIcon from "../../../../public/assets/svgs/downArrowIcon.svg"
 import toKebabCase from "../../../../helpers/toKebabCase"
 import { useCategoriesApi } from "../../../../helpers/Api"
+import { useRouter } from "next/router"
 
 export default function Categories() {
+	const router = useRouter()
+	const { categoryId } = router.query
+
 	const { isLoading, categories, errorMessage } = useCategoriesApi()
 	const [isSelected, setIsSelected] = useState("")
+
+	useEffect(() => {
+		if (router.isReady) {
+			if (categoryId) {
+				setIsSelected(categoryId)
+			}
+		}
+	}, [router.query])
 
 	if (isLoading) {
 		return (
@@ -25,6 +37,8 @@ export default function Categories() {
 			</div>
 		)
 	}
+
+	console.log()
 
 	return (
 		<div className="sticky top-[70px] w-full overflow-y-auto no-scrollbar max-h-[calc(100vh-100px)]">
