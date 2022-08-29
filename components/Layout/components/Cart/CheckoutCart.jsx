@@ -60,46 +60,48 @@ const ItemListing = ({ item, fetchCart }) => {
             </div>
             <div className="col-span-2 grid grid-rows-4 pr-2">
                 <div className="row-span-2 flex items-center">
-                    <p>{title}</p>
+                    <p className="font-bold text-lg">{title}</p>
                 </div>
                 <div className="flex flex-row items-center justify-between">
-                    {/* Quantity */}
-                    <div className="grid grid-cols-3 bg-slate-200 rounded-lg gap-2 lg:gap-4 px-2">
-                        <button
-                            className={"flex flex-row items-center"}
-                            onClick={() => {
-                                setData({
-                                    qty: qty - 1,
-                                    sku: sku
-                                })
-                                setIsUpdateItemQty(true)
-                                fetchCart(true)
-                            }}
-                        >
-                            <Image src={minusIcon} width={10} height={10} alt="" />
-                        </button>
-                        <p>{qty}</p>
-                        <button
-                            className={"flex flex-row items-center"}
-                            onClick={() => {
-                                setData({
-                                    qty: qty + 1,
-                                    sku: sku
-                                })
-                                setIsUpdateItemQty(true)
-                                fetchCart(true)
-                            }}
-                        >
-                            <Image src={plusIcon} width={10} height={10} alt="" />
-                        </button>
+                    {/* QUANTITY and PRICE */}
+                    <div className="flex space-x-4">
+                        <div className="grid grid-cols-3 bg-slate-200 rounded-lg gap-4 lg:gap-4 px-2">
+                            <button
+                                className={"flex flex-row items-center"}
+                                onClick={() => {
+                                    setData({
+                                        qty: qty - 1,
+                                        sku: sku
+                                    })
+                                    setIsUpdateItemQty(true)
+                                    fetchCart(true)
+                                }}
+                            >
+                                <Image src={minusIcon} width={10} height={10} alt="" />
+                            </button>
+                            <p>{qty}</p>
+                            <button
+                                className={"flex flex-row items-center"}
+                                onClick={() => {
+                                    setData({
+                                        qty: qty + 1,
+                                        sku: sku
+                                    })
+                                    setIsUpdateItemQty(true)
+                                    fetchCart(true)
+                                }}
+                            >
+                                <Image src={plusIcon} width={10} height={10} alt="" />
+                            </button>
+                        </div>
+                        <p>
+                            {specialPrice > 0 ? (
+                                "x RS. " + specialPrice
+                            ) : (
+                                "x RS. " + currentPrice
+                            )}
+                        </p>
                     </div>
-                    <p>
-                        {specialPrice > 0 ? (
-                            "x RS. " + specialPrice
-                        ) : (
-                            "x RS. " + currentPrice
-                        )}
-                    </p>
                     <button
                         onClick={() => {
                             setSku(sku)
@@ -115,7 +117,7 @@ const ItemListing = ({ item, fetchCart }) => {
                         />
                     </button>
                 </div>
-                <p className="text-lg">
+                <p className="font-bold text-xl">
                     {specialPrice > 0 ? (
                         "RS. " + specialPrice * qty
                     ) : (
