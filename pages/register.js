@@ -82,7 +82,7 @@ export default function Register() {
     }
 
     return (
-        <>
+        <div className="animate-dropdown">
             <HeadTag title={'Register'} />
             {showOTPScreen ? (
                 <div className='flex flex-row justify-center w-full'>
@@ -158,6 +158,6 @@ export default function Register() {
                 </div>
             )
             }
-        </>
+        </div>
     )
 }

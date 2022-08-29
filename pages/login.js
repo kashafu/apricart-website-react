@@ -114,7 +114,7 @@ export default function Login() {
     }
 
     return (
-        <>
+        <div className="animate-dropdown">
             <HeadTag title={'Login'} />
             {resetpwdScreen ? (
                 <div className="flex justify-center w-full"
@@ -200,6 +200,6 @@ export default function Login() {
                     </div>
                 </div>)
             }
-        </>
+        </div>
     )
 }
