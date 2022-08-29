@@ -22,7 +22,7 @@ export default function Checkout() {
 	const selectedPickupLocationSelector = useSelector((state) => state.general.pickupLocation)
 	const reduxCart = useSelector((state) => state.cart)
 
-	// view state can be either 'shipping', 'payment', 'review'
+	// view state can be either 'loading', 'shipping', 'payment', 'review'
 	const [viewState, setViewState] = useState("shipping")
 	const [isCheckoutButtonPressed, setIsCheckoutButtonPressed] = useState(false)
 
@@ -44,6 +44,9 @@ export default function Checkout() {
 				setViewState('review')
 			}
 		}
+		// if (!isLoading && viewState === 'loading') {
+		// 	setViewState('review')
+		// }
 	}, [checkoutResponse, viewState, isCheckoutButtonPressed])
 
 	const ProgressBar = ({ currentState, onClick }) => {
@@ -280,11 +283,20 @@ export default function Checkout() {
 		)
 	}
 
+	// if (isLoading && viewState === 'loading') {
+	// 	return (
+	// 		<>
+	// 			<HeadTag title={"Checkout"} />
+	// 			<h5 className="login-token">Fetching cart</h5>
+	// 		</>
+	// 	)
+	// }
+
 	if (!initialCartProducts) {
 		return (
 			<div>
 				<HeadTag title={"Checkout"} />
-				<h5 className="login-token">YOUR CART IS EMPTY</h5>
+				<h5 className="login-token">Fetching cart...</h5>
 			</div>
 		)
 	}
@@ -292,7 +304,7 @@ export default function Checkout() {
 	return (
 		<div className="h-full w-full">
 			<HeadTag title={"Checkout"} />
-			<div className="flex flex-col w-full h-full lg:grid lg:grid-cols-5 2xl:grid 2xl:grid-cols-6 gap-2 divide-y lg:gap-28">
+			<div className="flex flex-col w-full h-full lg:grid lg:grid-cols-5 2xl:grid 2xl:grid-cols-6 gap-2 lg:gap-28">
 				<div className="lg:col-span-3 2xl:col-span-4 space-y-12">
 					<ProgressBar
 						currentState={viewState}
@@ -381,7 +393,7 @@ export default function Checkout() {
 					)}
 				</div>
 				{/* CART DIV */}
-				<div className="lg:col-span-2 2xl:col-span-2 h-full">
+				<div className="lg:col-span-2 h-full">
 					<CheckoutCart
 						initialCartProducts={initialCartProducts}
 						initialCartData={initialCartData}

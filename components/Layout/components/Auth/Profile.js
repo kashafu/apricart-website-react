@@ -44,7 +44,7 @@ export default function Profile() {
 					<LinkText text={"My Orders"} path={"/order"} />
 					<LinkText text={"My Addresses"} path={"/address"} />
 				</div>
-				<SubmitButton text={"LOGOUT"} onClick={logout} bgColor={"bg-red-600"} />
+				<SubmitButton text={"LOGOUT"} onClick={logout} bgColor={"bg-red-500"} />
 			</div>
 		</div>
 	)

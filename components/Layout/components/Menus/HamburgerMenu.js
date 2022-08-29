@@ -139,7 +139,7 @@ export default function HamburgerMenu() {
 									}}
 								/>
 								<SubmitButton
-									bgColor={'bg-red-600'}
+									bgColor={'bg-red-500'}
 									text={"LOGOUT"}
 									onClick={() => {
 										logout()

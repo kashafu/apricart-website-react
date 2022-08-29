@@ -1,13 +1,14 @@
 import Image from "next/image"
 import parse from "html-react-parser"
+import { useSelector } from "react-redux"
+import Link from 'next/link'
 
 import missingImageIcon from '../../../../public/assets/svgs/missingImageIcon.svg'
 import trashIcon from '../../../../public/assets/svgs/trashIcon.svg'
 import plusIcon from '../../../../public/assets/svgs/plusIcon.svg'
 import minusIcon from '../../../../public/assets/svgs/minusIcon.svg'
 import { useDeleteItemApi, useUpdateItemQtyApi } from "../../../../helpers/Api"
-import ErrorText from "../Typography/ErrorText"
-import { useSelector } from "react-redux"
+import toKebabCase from "../../../../helpers/toKebabCase"
 
 const ItemListing = ({ item, fetchCart }) => {
     let {
@@ -17,62 +18,88 @@ const ItemListing = ({ item, fetchCart }) => {
         specialPrice,
         productImageUrlThumbnail,
         productImageUrl,
-        sku
+        sku,
+        categoryleafName,
+        categoryIds,
     } = item
 
     const { setIsUpdateItemQty, setData } = useUpdateItemQtyApi()
     const { setIsDelete, setSku } = useDeleteItemApi()
 
+    let immediateCategoryName = categoryleafName.split("|")[0].trim()
+    let immediateCategoryId = categoryIds.replace(/\s+/g, "").split("|")[0]
+
     return (
-        <div className="flex flex-row space-x-2 shadow rounded-3xl overflow-hidden p-2">
-            <div className="relative h-[100px] w-[100px]">
-                <Image
-                    src={
-                        productImageUrlThumbnail
-                            ? productImageUrlThumbnail
-                            : productImageUrl
-                                ? productImageUrl
-                                : missingImageIcon
+        <div className="grid grid-cols-3 items-center gap-2 overflow-hidden bg-slate-100">
+            <div className="col-span-1 place-self-center relative h-[80px] w-[80px]">
+                <Link
+                    href={
+                        "/category/" +
+                        toKebabCase(immediateCategoryName) +
+                        "/" +
+                        immediateCategoryId +
+                        "/" +
+                        toKebabCase(title) +
+                        "/" +
+                        sku
                     }
-                    layout={"fill"}
-                    alt="thumbnail"
-                />
+                    passHref
+                >
+                    <Image
+                        src={
+                            productImageUrlThumbnail
+                                ? productImageUrlThumbnail
+                                : productImageUrl
+                                    ? productImageUrl
+                                    : missingImageIcon
+                        }
+                        layout={"fill"}
+                        alt="thumbnail"
+                    />
+                </Link>
             </div>
-            <div className="flex flex-col justify-between">
-                <p>{title}</p>
-                <div className="flex flex-row space-x-2 lg:space-x-4 items-center">
-                    <button
-                        className={"flex flex-row items-center"}
-                        onClick={() => {
-                            setData({
-                                qty: qty - 1,
-                                sku: sku
-                            })
-                            setIsUpdateItemQty(true)
-                            fetchCart(true)
-                        }}
-                    >
-                        <Image src={minusIcon} width={10} height={10} alt="" />
-                    </button>
-                    <p>{qty}</p>
-                    <button
-                        className={"flex flex-row items-center"}
-                        onClick={() => {
-                            setData({
-                                qty: qty + 1,
-                                sku: sku
-                            })
-                            setIsUpdateItemQty(true)
-                            fetchCart(true)
-                        }}
-                    >
-                        <Image src={plusIcon} width={10} height={10} alt="" />
-                    </button>
-                    {specialPrice > 0 ? (
-                        <p>x RS. {specialPrice}</p>
-                    ) : (
-                        <p>x RS. {currentPrice}</p>
-                    )}
+            <div className="col-span-2 grid grid-rows-4 pr-2">
+                <div className="row-span-2 flex items-center">
+                    <p>{title}</p>
+                </div>
+                <div className="flex flex-row items-center justify-between">
+                    {/* Quantity */}
+                    <div className="grid grid-cols-3 bg-slate-200 rounded-lg gap-2 lg:gap-4 px-2">
+                        <button
+                            className={"flex flex-row items-center"}
+                            onClick={() => {
+                                setData({
+                                    qty: qty - 1,
+                                    sku: sku
+                                })
+                                setIsUpdateItemQty(true)
+                                fetchCart(true)
+                            }}
+                        >
+                            <Image src={minusIcon} width={10} height={10} alt="" />
+                        </button>
+                        <p>{qty}</p>
+                        <button
+                            className={"flex flex-row items-center"}
+                            onClick={() => {
+                                setData({
+                                    qty: qty + 1,
+                                    sku: sku
+                                })
+                                setIsUpdateItemQty(true)
+                                fetchCart(true)
+                            }}
+                        >
+                            <Image src={plusIcon} width={10} height={10} alt="" />
+                        </button>
+                    </div>
+                    <p>
+                        {specialPrice > 0 ? (
+                            "x RS. " + specialPrice
+                        ) : (
+                            "x RS. " + currentPrice
+                        )}
+                    </p>
                     <button
                         onClick={() => {
                             setSku(sku)
@@ -88,11 +115,13 @@ const ItemListing = ({ item, fetchCart }) => {
                         />
                     </button>
                 </div>
-                {specialPrice > 0 ? (
-                    <p>RS. {specialPrice * qty}</p>
-                ) : (
-                    <p>RS. {currentPrice * qty}</p>
-                )}
+                <p className="text-lg">
+                    {specialPrice > 0 ? (
+                        "RS. " + specialPrice * qty
+                    ) : (
+                        "RS. " + currentPrice * qty
+                    )}
+                </p>
             </div>
         </div>
     )
@@ -104,14 +133,6 @@ const CheckoutCart = ({ initialCartProducts, initialCartData, isLoading, fetchCa
 
     let pLeft = "font-lato text-md text-main-blue"
     let pRight = "font-lato text-lg font-bold text-right"
-
-    // if (isLoading) {
-    //     return (
-    //         <div>
-    //             Fetching Cart Data
-    //         </div>
-    //     )
-    // }
 
     let {
         subtotal,
@@ -125,8 +146,8 @@ const CheckoutCart = ({ initialCartProducts, initialCartData, isLoading, fetchCa
     } = initialCartData
 
     return (
-        <div className="flex flex-col w-full h-full justify-between bg-white rounded-3xl">
-            <div className="overflow-y-auto p-4 h-96 space-y-4">
+        <div className="flex flex-col w-full h-full justify-between bg-white">
+            <div className="overflow-y-auto max-h-96 divide-y">
                 {reduxCart.map((product) => {
                     return (
                         <ItemListing
