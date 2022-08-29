@@ -26,7 +26,6 @@ export default function ClickAndCollectCard({ isDisabled }) {
 			className={[style] + ' relative rounded-lg shadow flex flex-col grow p-1 lg:pl-2 lg:pt-2 items-center ' + [disabledStyle]}
 			onClick={() => {
 				dispatch(updateSelectedType('cnc'))
-				setCookie('selected-type', 'cnc')
 			}}
 			disabled={isDisabled}
 		>

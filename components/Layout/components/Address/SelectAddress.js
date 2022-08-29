@@ -7,7 +7,6 @@ import AddressCard from "./AddressCard"
 import SingleAddressListing from "./SingleAddressListing"
 import { useDispatch } from "react-redux";
 import { updateCity, updateSelectedAddress } from "../../../../redux/general.slice"
-import { setCookie } from "../../../../helpers/Cookies"
 
 /*
     type can be 'checkout', 'manage' 

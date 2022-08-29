@@ -16,7 +16,6 @@ const TypeCardSelector = () => {
         if (citySelector === 'peshawar') {
             setIsDisabled(true)
             dispatch(updateSelectedType('bulk'))
-            setCookie('selected-type', 'bulk')
         }
         else {
             setIsDisabled(false)

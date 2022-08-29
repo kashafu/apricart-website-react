@@ -34,7 +34,7 @@ const generalSlice = createSlice({
 		},
 		updateSelectedType: (state, action) => {
 			state.selectedType = action.payload
-			setCookie("selected-type", action.payload)
+			setItemLocalStorage("selected-type", action.payload)
 		},
 		updateIsUserInitialized: (state, action) => {
 			state.isUserInitialized = action.payload

@@ -21,7 +21,6 @@ export default function BulkBuyCard() {
 		<button className={[style] + ' relative rounded-lg shadow flex flex-col grow p-1 lg:pl-2 lg:pt-2 items-center'}
 			onClick={() => {
 				dispatch(updateSelectedType('bulk'))
-				setCookie('selected-type', 'bulk')
 			}}
 		>
 			<div className={[pStyle] + " hidden absolute self-start font-bold text-main-blue lg:inline text-xl xl:text-2xl 2xl:text-3xl"}>

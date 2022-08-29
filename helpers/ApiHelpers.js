@@ -29,7 +29,7 @@ export const getGeneralApiParams = () => {
     let prodType = ''
     let orderType = ''
 
-    let selectedType = getCookie('selected-type')
+    let selectedType = getItemLocalStorage('selected-type')
     if (selectedType === 'bulk') {
         selectedType = 'bulk'
         prodType = 'b2b'

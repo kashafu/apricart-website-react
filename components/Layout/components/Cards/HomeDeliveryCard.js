@@ -25,7 +25,6 @@ export default function HomeDeliveryCard({ isDisabled }) {
         <button className={[style] + ' relative rounded-lg shadow flex flex-col grow p-1 items-center ' + [disabledStyle]}
             onClick={() => {
                 dispatch(updateSelectedType('home'))
-                setCookie('selected-type', 'home')
             }}
             disabled={isDisabled}
         >
