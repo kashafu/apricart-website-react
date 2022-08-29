@@ -8,6 +8,13 @@ const AddressSelector = () => {
         (state) => state.general.selectedAddress
     )
 
+    if (!selectedAddressSelector) {
+        let toastId = 'delivery'
+        toast.warn("SELECT DELIVERY ADDRESS", {
+            toastId: toastId
+        })
+    }
+
     return (
         <Link href={"/address"} passHref>
             <a>
