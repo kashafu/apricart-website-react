@@ -36,7 +36,7 @@ const PickupLocationSelector = () => {
 					className="flex flex-row space-x-2 items-center"
 					onClick={togglePopup}
 				>
-					<div className="relative w-[25px] h-[25px] lg:w-[30px] lg:h-[30px]">
+					<div className="relative w-[25px] h-[25px]">
 						<Image
 							src={locationPinPNG}
 							alt={"location icon"}

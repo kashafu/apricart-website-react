@@ -40,10 +40,10 @@ export default function CartSlider() {
 					setShowCart(!showCart);
 				}}
 			>
-				<div className="w-[45] h-[45] flex items-center"
+				<div className="flex items-center"
 					ref={cartIconRef}
 				>
-					<Image src={cartIcon} alt={"icon"} width={45} height={45} layout='fixed' />
+					<Image src={cartIcon} alt={"icon"} width={25} height={25} layout='fixed' />
 					<p className="absolute -top-1 p-[5px] py-0 -right-2 bg-main-blue rounded-full text-xs text-white">{reduxCart.length}</p>
 				</div>
 			</button>

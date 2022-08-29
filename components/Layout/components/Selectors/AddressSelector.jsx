@@ -14,7 +14,7 @@ const AddressSelector = () => {
                 <div className="flex w-full justify-center">
                     <div className="bg-slate-100 rounded-xl py-2 px-4 lg:bg-inherit lg:rounded-none lg:py-0 lg:px-0">
                         <div className="flex flex-row space-x-2 items-center">
-                            <div className="relative w-[25px] h-[25px] lg:w-[30px] lg:h-[30px]">
+                            <div className="relative w-[25px] h-[25px]">
                                 <Image
                                     src={locationPinPNG}
                                     alt={"location icon"}

@@ -67,11 +67,9 @@ export default function Header() {
 						)}
 					</div>
 					<Link href={"/wishlist"} passHref>
-						<a className="flex items-center relative w-[45px] h-[45px]">
+						<a className="flex items-center relative w-[25px] h-[25px]">
 							<Image
 								src={heartIcon}
-								// width={45}
-								// height={45}
 								layout='fixed'
 								alt="wishlist icon"
 							/>
