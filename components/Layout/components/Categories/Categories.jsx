@@ -11,6 +11,7 @@ export default function Categories() {
 	const router = useRouter()
 	const { categoryId } = router.query
 
+	const [routerCategoryId, setRouterCategoryId] = useState(0)
 	const { isLoading, categories, errorMessage } = useCategoriesApi()
 	const [isSelected, setIsSelected] = useState("")
 
@@ -18,6 +19,7 @@ export default function Categories() {
 		if (router.isReady) {
 			if (categoryId) {
 				setIsSelected(categoryId)
+				setRouterCategoryId(categoryId)
 			}
 		}
 	}, [router.query])
@@ -86,10 +88,10 @@ export default function Categories() {
 										</div>
 										<div className="bg-main-blue rounded-b-lg px-6 divide-y animate-dropdown">
 											{childrenData.map((subCategory) => {
-												let { id, name } = subCategory
+												let { id: subId, name } = subCategory
 												return (
 													<div
-														key={id}
+														key={subId}
 														className="flex flex-row w-full items-center py-2"
 													>
 														<Link
@@ -97,7 +99,7 @@ export default function Categories() {
 																"/category/" +
 																toKebabCase(name) +
 																"/" +
-																id
+																subId
 															}
 															passHref
 														>
