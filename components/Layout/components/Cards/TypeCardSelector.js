@@ -22,7 +22,7 @@ const TypeCardSelector = () => {
     }, [citySelector])
 
     return (
-        <div className="grid grid-cols-3 px-2 gap-6 bg-white">
+        <div className="grid grid-cols-3 px-2 gap-4 lg:gap-20 bg-white">
             <HomeDeliveryCard isDisabled={isDisabled} />
             <ClickAndCollectCard isDisabled={isDisabled} />
             <BulkBuyCard />

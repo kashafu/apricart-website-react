@@ -27,7 +27,7 @@ export default function HomeDeliveryCard({ isDisabled }) {
             }}
             disabled={isDisabled}
         >
-            <div className={[pStyle] + ' z-10 hidden absolute self-start font-bold lg:inline text-xl xl:text-2xl 2xl:text-3xl'}>
+            <div className={[pStyle] + ' z-10 hidden absolute self-start font-bold lg:inline text-xl xl:text-2xl 2xl:text-3xl pl-4'}>
                 <p>
                     Home
                 </p>
@@ -35,7 +35,7 @@ export default function HomeDeliveryCard({ isDisabled }) {
                     Delivery
                 </p>
             </div>
-            <div className='self-end mt-auto relative w-full lg:w-[75%] lg:pl-6'>
+            <div className='self-end mt-auto relative w-full lg:w-[60%] lg:pl-6'>
                 <Image
                     src={homeDeliveryIcon}
                     layout={'responsive'}

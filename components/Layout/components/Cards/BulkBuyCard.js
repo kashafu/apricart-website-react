@@ -22,7 +22,7 @@ export default function BulkBuyCard() {
 				dispatch(updateSelectedType('bulk'))
 			}}
 		>
-			<div className={[pStyle] + " hidden absolute self-start font-bold text-main-blue lg:inline text-xl xl:text-2xl 2xl:text-3xl"}>
+			<div className={[pStyle] + " hidden absolute self-start font-bold text-main-blue lg:inline text-xl xl:text-2xl 2xl:text-3xl pl-4"}>
 				<p>Bulk Buy</p>
 			</div>
 			<div className="self-end mt-auto relative w-full lg:w-[55%]">
