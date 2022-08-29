@@ -726,7 +726,10 @@ export const useInitialCartDataApi = () => {
 		let addressId = 0
 		if (selectedTypeSelector === 'cnc') {
 			if (!selectedPickupLocation || selectedPickupLocation === '') {
-				toast.warn("SELECT PICKUP LOCATION")
+				let toastId = 'pickup'
+				toast.warn("SELECT PICKUP LOCATION", {
+					toastId: toastId
+				})
 			}
 			else {
 				addressId = selectedPickupLocation?.id
