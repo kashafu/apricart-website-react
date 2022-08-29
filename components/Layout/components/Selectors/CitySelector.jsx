@@ -4,7 +4,6 @@ import Image from "next/image"
 import SubmitButton from "../Buttons/SubmitButton"
 import { useState, useEffect } from "react"
 import { getGeneralApiParams } from "../../../../helpers/ApiHelpers"
-import { setCookie } from "../../../../helpers/Cookies"
 import { useDispatch } from "react-redux"
 import { updateCity } from "../../../../redux/general.slice"
 import { useRouter } from "next/router"
@@ -20,8 +19,7 @@ const CitySelector = () => {
 	useEffect(() => {
 		if (city == null) {
 			setcity("karachi")
-			setCookie("cities", "karachi")
-			dispatch(updateCity(karachi))
+			dispatch(updateCity("karachi"))
 			getLocation()
 		}
 	}, [])
@@ -35,7 +33,6 @@ const CitySelector = () => {
 	}
 
 	const closeButton = () => {
-		setCookie("cities", getcity)
 		dispatch(updateCity(getcity))
 		setShowPopup(!showPopup)
 		router.push('/')
@@ -65,7 +62,7 @@ const CitySelector = () => {
 				longitude >= karachiCoords.left[1]
 			) {
 				setcity("karachi")
-				setCookie("cities", "karachi")
+				dispatch(updateCity("karachi"))
 				return
 			}
 
@@ -84,7 +81,7 @@ const CitySelector = () => {
 				longitude >= peshawarCoords.left[1]
 			) {
 				setcity("peshawar")
-				setCookie("cities", "peshawar")
+				dispatch(updateCity("peshawar"))
 				return
 			}
 		})

@@ -38,12 +38,10 @@ export default function Login() {
             )
 
             if (response.data.status == 1) {
-                setCookie("cookies-message", response.data.message)
                 setCookie("cookies-token", response.data.data.token)
                 setCookie("cookies-name", response.data.data.name)
                 setCookie("cookies-email", response.data.data.email)
                 setCookie("cookies-phoneNumber", response.data.data.phoneNumber)
-                setCookie("cookies-userId", response.data.data.userId)
                 setErrorMessage('')
                 router.push('/')
             }

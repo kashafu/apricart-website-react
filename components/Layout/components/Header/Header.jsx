@@ -13,6 +13,7 @@ import { useState, useEffect } from "react"
 import AddressSelector from "../Selectors/AddressSelector"
 import { useSelector } from "react-redux"
 import PickupLocationSelector from "../Selectors/PickupLocationSelector"
+import { getItemLocalStorage, setItemLocalStorage } from "../../../../helpers/Storage"
 
 export default function Header() {
 	let { token } = getGeneralApiParams()
@@ -25,8 +26,8 @@ export default function Header() {
 			setCookie("guestUserId", "desktopuser_" + d.getTime())
 		}
 
-		if (!getCookie("selected-type")) {
-			setCookie('selected-type', 'home')
+		if (!getItemLocalStorage("selected-type")) {
+			setItemLocalStorage('selected-type', 'home')
 		}
 
 		const onScroll = () => setOffset(window.pageYOffset);

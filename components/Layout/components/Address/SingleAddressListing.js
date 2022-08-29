@@ -5,7 +5,6 @@ import { base_url_api } from "../../../../information.json"
 import axios from "axios"
 import { useDispatch } from "react-redux"
 import { updateCity, updateSelectedAddress } from "../../../../redux/general.slice"
-import { setCookie } from "../../../../helpers/Cookies"
 
 export default function SingleAddressListing({
 	listing,
@@ -41,9 +40,7 @@ export default function SingleAddressListing({
 	}
 
 	const onClickHandle = () => {
-		setCookie("selected-address", listing)
 		dispatch(updateSelectedAddress(listing))
-		setCookie("cities", listing.city.toLowerCase())
 		dispatch(updateCity(listing.city.toLowerCase()))
 		setAddress(listing)
 	}

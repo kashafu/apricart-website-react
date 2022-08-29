@@ -3,7 +3,6 @@ import homeDeliveryIcon from '../../../../public/assets/svgs/homeDeliveryIcon.sv
 import { useDispatch, useSelector } from 'react-redux'
 import { updateSelectedType } from '../../../../redux/general.slice'
 import { useEffect, useState } from 'react'
-import { setCookie } from '../../../../helpers/Cookies'
 
 export default function HomeDeliveryCard({ isDisabled }) {
     const dispatch = useDispatch()
@@ -25,7 +24,6 @@ export default function HomeDeliveryCard({ isDisabled }) {
         <button className={[style] + ' relative rounded-lg shadow flex flex-col grow p-1 items-center ' + [disabledStyle]}
             onClick={() => {
                 dispatch(updateSelectedType('home'))
-                setCookie('selected-type', 'home')
             }}
             disabled={isDisabled}
         >
