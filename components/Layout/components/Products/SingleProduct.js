@@ -31,7 +31,6 @@ export default function SingleProduct({ product, isInStock }) {
 		maxQty,
 		categoryleafName,
 		categoryIds,
-		id
 	} = product
 
 	const dispatch = useDispatch()
@@ -39,7 +38,7 @@ export default function SingleProduct({ product, isInStock }) {
 	const [showFloatAnimation, setShowFloatAnimation] = useState(false)
 	const [qty, setQty] = useState(minQty)
 	const [showQty, setShowQty] = useState(false)
-	const { setIsPlaceOrder } = useAddToCartApi(sku, qty, product)
+	const { setIsPlaceOrder, errorResponse } = useAddToCartApi(sku, qty, product)
 
 	useEffect(() => {
 		const item = reduxCart.find((item) => item.sku === sku)
@@ -51,6 +50,12 @@ export default function SingleProduct({ product, isInStock }) {
 			setShowQty(false)
 		}
 	}, [reduxCart])
+
+	useEffect(() => {
+		if (errorResponse) {
+			setShowQty(false)
+		}
+	}, [errorResponse])
 
 	if (isInStock) {
 		inStock = isInStock

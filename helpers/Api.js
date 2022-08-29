@@ -374,6 +374,7 @@ export const useAddToCartApi = (sku, qty, product) => {
 
 	const callApi = async () => {
 		setResponse(null)
+		setErrorResponse(null)
 
 		if (token) {
 			body = {
