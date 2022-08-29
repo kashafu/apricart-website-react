@@ -373,6 +373,8 @@ export const useAddToCartApi = (sku, qty, product) => {
 	}, [isPlaceOrder])
 
 	const callApi = async () => {
+		setResponse(null)
+
 		if (token) {
 			body = {
 				cart: [

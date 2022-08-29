@@ -21,6 +21,7 @@ export default function ProductDetail() {
 
 	const { isLoading, productData, errorMessage } = useProductDetailsApi()
 	const [qty, setQty] = useState(1)
+	const [cartButtonText, setCartButtonText] = useState("ADD TO CART")
 
 	const setQtyHandler = (type) => {
 		if (type == "increment") {
@@ -88,11 +89,16 @@ export default function ProductDetail() {
 		currentPrice,
 		sku,
 		inStock,
-		minQty
 	} = productData[0]
 
 	const AddToCart = () => {
-		const { setIsPlaceOrder } = useAddToCartApi(sku, qty, productData[0])
+		const { setIsPlaceOrder, response } = useAddToCartApi(sku, qty, productData[0])
+
+		useEffect(() => {
+			if (response) {
+				setCartButtonText("ADDED")
+			}
+		}, [response])
 
 		return (
 			<div className="flex flex-row w-full justify-between lg:justify-start lg:space-x-4">
@@ -149,11 +155,11 @@ export default function ProductDetail() {
 								className="flex items-center h-[40px]"
 								onClick={() => {
 									setIsPlaceOrder(true)
+
 								}}
 							>
 								<p className="text-white font-bold bg-main-blue py-2 px-4 rounded-xl">
-									ADD TO
-									CART
+									{cartButtonText}
 								</p>
 							</button>
 						</div>
