@@ -30,7 +30,7 @@ const ItemListing = ({ item, fetchCart }) => {
     let immediateCategoryId = categoryIds.replace(/\s+/g, "").split("|")[0]
 
     return (
-        <div className="grid grid-cols-3 items-center gap-2 overflow-hidden bg-slate-100">
+        <div className="grid grid-cols-3 items-center gap-2 overflow-hidden bg-white">
             <div className="col-span-1 place-self-center relative h-[80px] w-[80px]">
                 <Link
                     href={
@@ -45,17 +45,19 @@ const ItemListing = ({ item, fetchCart }) => {
                     }
                     passHref
                 >
-                    <Image
-                        src={
-                            productImageUrlThumbnail
-                                ? productImageUrlThumbnail
-                                : productImageUrl
-                                    ? productImageUrl
-                                    : missingImageIcon
-                        }
-                        layout={"fill"}
-                        alt="thumbnail"
-                    />
+                    <a>
+                        <Image
+                            src={
+                                productImageUrlThumbnail
+                                    ? productImageUrlThumbnail
+                                    : productImageUrl
+                                        ? productImageUrl
+                                        : missingImageIcon
+                            }
+                            layout={"fill"}
+                            alt="thumbnail"
+                        />
+                    </a>
                 </Link>
             </div>
             <div className="col-span-2 grid grid-rows-4 pr-2">

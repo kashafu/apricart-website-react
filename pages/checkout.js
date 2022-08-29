@@ -59,7 +59,7 @@ export default function Checkout() {
 					className={
 						currentState == "shipping"
 							? { divStyle } +
-							" bg-main-yellow text-main-blue px-2 rounded-xl"
+							" bg-main-yellow text-main-blue py-2 px-4 rounded-xl"
 							: { divStyle }
 					}
 					onClick={() => {
@@ -72,7 +72,7 @@ export default function Checkout() {
 					className={
 						currentState == "payment"
 							? { divStyle } +
-							" bg-main-yellow text-main-blue px-2 rounded-xl"
+							" bg-main-yellow text-main-blue py-2 px-4 rounded-xl"
 							: { divStyle }
 					}
 					onClick={() => {
@@ -93,7 +93,7 @@ export default function Checkout() {
 					className={
 						currentState == "review"
 							? { divStyle } +
-							" bg-main-yellow text-main-blue px-2 rounded-xl"
+							" bg-main-yellow text-main-blue py-2 px-3 lg:px-4 rounded-xl"
 							: { divStyle }
 					}
 					onClick={() => {
@@ -115,7 +115,6 @@ export default function Checkout() {
 	}
 
 	const PickupLocation = () => {
-		let pStyle = "text-main-blue font-bold text-xs lg:text-xl"
 		let divStyle = "grid grid-cols-1 items-center w-full h-full"
 		let selectStyle = "h-full w-full py-2 lg:px-4 text-xs lg:text-lg rounded-lg bg-slate-200 h-[40px]"
 
@@ -134,9 +133,6 @@ export default function Checkout() {
 				</p>
 				{/* PICKUP LOCATION */}
 				<div className={divStyle}>
-					{/* <p className={pStyle}>
-						Select Pickup Location
-					</p> */}
 					<div>
 						<select
 							className={selectStyle}
@@ -170,9 +166,6 @@ export default function Checkout() {
 				</div>
 				{/* DATE SELECT */}
 				<div className={divStyle}>
-					{/* <p className={pStyle}>
-						Select Delivery Date
-					</p> */}
 					<div>
 						<select
 							className={selectStyle}
@@ -208,9 +201,6 @@ export default function Checkout() {
 				</div>
 				{/* TIME SELECT */}
 				<div className={divStyle}>
-					{/* <p className={pStyle}>
-						Select Time
-					</p> */}
 					<div>
 						<select
 							className={selectStyle}
@@ -305,7 +295,7 @@ export default function Checkout() {
 		<div className="h-full w-full">
 			<HeadTag title={"Checkout"} />
 			<div className="flex flex-col w-full h-full lg:grid lg:grid-cols-5 2xl:grid 2xl:grid-cols-6 gap-2 lg:gap-28">
-				<div className="lg:col-span-3 2xl:col-span-4 space-y-12">
+				<div className={"space-y-12 " + viewState !== 'review' ? "lg:col-span-5 2xl:col-span-6" : "lg:col-span-3 2xl:col-span-4"}>
 					<ProgressBar
 						currentState={viewState}
 						onClick={setViewState}
@@ -374,17 +364,17 @@ export default function Checkout() {
 									Loading
 								</div>
 							) : (
-								<section className="flex flex-col items-center justify-center align-center m-auto space-y-2 p-12">
+								<section className="flex flex-col items-center justify-center align-center m-auto space-y-2 p-2 lg:p-12">
 									<div className="text-center">
 										{parse(checkoutResponse.data.message)}
 									</div>
-									<div className="h-[120px] w-full">
+									<div className="w-full lg:w-1/2">
 										<Image
 											src={checkoutResponse.data.data.thankyou_image}
 											layout={"responsive"}
 											alt={"Thank You Image"}
 											width={450}
-											height={120}
+											height={100}
 										/>
 									</div>
 								</section>
@@ -393,14 +383,16 @@ export default function Checkout() {
 					)}
 				</div>
 				{/* CART DIV */}
-				<div className="lg:col-span-2 h-full">
-					<CheckoutCart
-						initialCartProducts={initialCartProducts}
-						initialCartData={initialCartData}
-						isLoading={isLoading}
-						fetchCart={setIsFetchCart}
-					/>
-				</div>
+				{viewState !== 'review' && (
+					<div className="lg:col-span-2 h-full">
+						<CheckoutCart
+							initialCartProducts={initialCartProducts}
+							initialCartData={initialCartData}
+							isLoading={isLoading}
+							fetchCart={setIsFetchCart}
+						/>
+					</div>
+				)}
 				{/* CHECKOUT BUTTON DIV */}
 				<div className="col-span-4">
 					{viewState === "shipping" && (

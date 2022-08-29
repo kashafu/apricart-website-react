@@ -2,18 +2,22 @@ import locationPinPNG from "../../../../public/assets/svgs/locationPinIcon.svg"
 import Image from "next/image"
 import { useSelector } from "react-redux"
 import Link from "next/link"
+import { toast } from "react-toastify"
+import { useEffect } from "react"
 
 const AddressSelector = () => {
     const selectedAddressSelector = useSelector(
         (state) => state.general.selectedAddress
     )
 
-    if (!selectedAddressSelector) {
-        let toastId = 'delivery'
-        toast.warn("SELECT DELIVERY ADDRESS", {
-            toastId: toastId
-        })
-    }
+    useEffect(() => {
+        if (!selectedAddressSelector) {
+            let toastId = 'delivery'
+            toast.warn("SELECT DELIVERY ADDRESS", {
+                toastId: toastId
+            })
+        }
+    }, [])
 
     return (
         <Link href={"/address"} passHref>

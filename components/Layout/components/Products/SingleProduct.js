@@ -107,7 +107,7 @@ export default function SingleProduct({ product, isInStock }) {
 
 	return (
 		<div>
-			<div className="relative grid grid-rows-[7] bg-white px-2 h-[350px] rounded-br-lg border-b-2 border-r-2 duration-75 hover:scale-[1.02] ease-out hover:z-20 hover:border-main-blue hover:drop-shadow-2xl hover:border-2 hover:rounded-lg">
+			<div className="relative grid grid-rows-[7] bg-white px-2 h-[250px] lg:h-[300px] rounded-br-lg border-b-2 border-r-2 duration-75 hover:scale-[1.02] ease-out hover:z-20 hover:border-main-blue hover:drop-shadow-2xl hover:border-2 hover:rounded-lg">
 				{/* ABSOLUTE image float*/}
 				{showFloatAnimation && (
 					<div
@@ -150,7 +150,7 @@ export default function SingleProduct({ product, isInStock }) {
 						}
 						passHref
 					>
-						<a className="relative h-[130px] w-[130px] lg:h-[150px] lg:w-[150px]">
+						<a className="relative h-[90px] w-[90px] lg:h-[120px] lg:w-[120px]">
 							<Image
 								src={imageUrl}
 								layout={"fill"}
@@ -160,27 +160,27 @@ export default function SingleProduct({ product, isInStock }) {
 					</Link>
 				</div>
 				{/* TITLE */}
-				<p className="row-span-1 font-lato font-bold text-left text-sm xl:text-lg text-main-blue line-clamp-2 overflow-y-hidden">
+				<p className="row-span-1 font-lato font-bold text-left text-sm xl:text-base text-main-blue line-clamp-2 overflow-y-hidden">
 					{title}
 				</p>
 				{/* PRICE */}
 				{specialPrice > 0 ? (
 					<div className="row-span-2 flex flex-col justify-center">
-						<p className="text-sm lg:text-xl text-left font-bold text-main-blue line-through decoration-red-600">
+						<p className="text-sm lg:text-lg text-left font-bold text-main-blue line-through decoration-red-600">
 							Rs. {currentPrice}
 						</p>
-						<p className="text-2xl lg:text-3xl text-left font-bold text-main-blue">
+						<p className="text-xl lg:text-2xl text-left font-bold text-main-blue">
 							Rs. {specialPrice}
 						</p>
 					</div>
 				) : (
-					<p className="row-span-2 flex items-center text-2xl lg:text-3xl text-left font-bold text-main-blue">
+					<p className="row-span-2 flex items-center text-xl lg:text-2xl text-left font-bold text-main-blue">
 						Rs. {currentPrice}
 					</p>
 				)}
 				{/* ADD TO CART */}
-				<div className="row-span-1 h-[32px] self-end mb-2">
-					<div className="h-full w-full">
+				<div className="row-span-1 h-[32px] flex justify-center self-end mb-2">
+					<div className="h-full w-2/3">
 						{inStock ? (
 							<div className="relative flex flex-row items-center h-full w-full">
 								{showQty ? (
