@@ -294,15 +294,15 @@ export default function Checkout() {
 	return (
 		<div className="h-full w-full">
 			<HeadTag title={"Checkout"} />
-			<ProgressBar
-				currentState={viewState}
-				onClick={setViewState}
-			/>
-			<div className="flex flex-col w-full h-full lg:grid lg:grid-cols-5 2xl:grid 2xl:grid-cols-6 lg:space-x-20">
+			<div className="flex flex-col w-full h-full lg:grid lg:grid-cols-5 2xl:grid 2xl:grid-cols-6 space-x-2 lg:space-x-20 divide-x-2">
 				<div className={"space-y-12 " + viewState === 'review' ? "lg:col-span-5 2xl:col-span-6" : "lg:col-span-3 2xl:col-span-4"}>
+					<ProgressBar
+						currentState={viewState}
+						onClick={setViewState}
+					/>
 					{viewState == "shipping" && (
 						<section className="flex flex-col space-y-4 w-full">
-							<div className="text-center py-2">
+							<div className="text-center">
 								<SectionHeading text={"Delivery Details"} />
 							</div>
 							{selectedTypeSelector === 'cnc' ? (
@@ -326,7 +326,7 @@ export default function Checkout() {
 					)}
 					{viewState === "payment" && (
 						<section className="space-y-6">
-							<div className="text-center py-2">
+							<div className="text-center">
 								<SectionHeading text={"PAYMENT SELECTION"} />
 							</div>
 							<div className="space-y-2">
@@ -384,7 +384,7 @@ export default function Checkout() {
 				</div>
 				{/* CART DIV */}
 				{viewState !== 'review' && (
-					<div className="lg:col-span-2 h-full my-4 lg:my-0">
+					<div className="lg:col-span-2 h-full">
 						<CheckoutCart
 							initialCartProducts={initialCartProducts}
 							initialCartData={initialCartData}
