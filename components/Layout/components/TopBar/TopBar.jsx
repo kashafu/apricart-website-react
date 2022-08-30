@@ -52,17 +52,17 @@ export default function TopBar() {
 					) : (
 						<div>
 							{selectedTypeSelector == 'bulk' && (
-								<p className="text-white font-bold capitalize">
+								<p className="text-black font-nunito font-black capitalize">
 									Bulk Buy
 								</p>
 							)}
 							{selectedTypeSelector == 'home' && (
-								<p className="text-white font-bold capitalize">
+								<p className="text-black font-nunito font-black capitalize">
 									Home Delivery
 								</p>
 							)}
 							{selectedTypeSelector == 'cnc' && (
-								<p className="text-white font-bold capitalize">
+								<p className="text-black font-nunito font-black capitalize">
 									Click n' Collect
 								</p>
 							)}

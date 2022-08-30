@@ -94,7 +94,7 @@ export default function SearchBar() {
 				</select>
 				<input
 					ref={searchIconElement}
-					className="p-2 w-full bg-slate-200 rounded-lg font-bold"
+					className="px-2 py-1 w-full bg-slate-200 rounded-lg font-bold"
 					type={"search"}
 					value={searchText}
 					onChange={(e) => {
