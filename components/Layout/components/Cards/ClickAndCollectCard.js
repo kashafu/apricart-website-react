@@ -48,7 +48,7 @@ export default function ClickAndCollectCard({ isDisabled }) {
 				disabled={isDisabled}
 			>
 				<div className="text-main-blue z-10 hidden absolute self-start font-bold lg:inline text-xl xl:text-2xl 2xl:text-3xl pl-4">
-					<p className="font-nunito">Click & Collect</p>
+					<p className="font-nunito font-bold">Click & Collect</p>
 				</div>
 				<div className="self-end mt-auto relative w-full lg:w-[60%] lg:pr-4">
 					<Image
@@ -58,7 +58,7 @@ export default function ClickAndCollectCard({ isDisabled }) {
 					/>
 				</div>
 				<div className="text-main-blue lg:hidden flex font-semibold text-xs">
-					<p className="font-nunito">Click & Collect</p>
+					<p className="font-nunito font-bold">Click & Collect</p>
 				</div>
 			</button>
 			{showPopup && (

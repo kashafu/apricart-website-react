@@ -157,7 +157,7 @@ const CheckoutCart = ({ initialCartProducts, initialCartData, isLoading, fetchCa
                     My Cart
                 </p>
             </div>
-            <div className="overflow-y-auto max-h-56 divide-y border-t-2">
+            <div className="overflow-y-auto max-h-64 divide-y border-t-2">
                 {reduxCart.map((product) => {
                     return (
                         <ItemListing

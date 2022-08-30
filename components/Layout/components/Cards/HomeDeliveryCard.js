@@ -42,8 +42,8 @@ export default function HomeDeliveryCard({ isDisabled }) {
                     alt='icon'
                 />
             </div>
-            <div className={[pStyle] + ' lg:hidden flex font-semibold text-xs'}>
-                <p>
+            <div className={[pStyle] + ' lg:hidden flex font-bold text-xs'}>
+                <p className='font-nunito'>
                     Home Delivery
                 </p>
             </div>

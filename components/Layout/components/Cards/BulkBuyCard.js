@@ -23,13 +23,13 @@ export default function BulkBuyCard() {
 			}}
 		>
 			<div className={[pStyle] + " hidden absolute self-start font-bold text-main-blue lg:inline text-xl xl:text-2xl 2xl:text-3xl pl-4"}>
-				<p className="font-nunito">Bulk Buy</p>
+				<p className="font-nunito font-bold">Bulk Buy</p>
 			</div>
 			<div className="self-end mt-auto relative w-full lg:w-[55%]">
 				<Image src={bulkBuyIcon} layout={"responsive"} alt="bulk buy" />
 			</div>
 			<div className={[pStyle] + " lg:hidden flex font-semibold text-main-blue text-xs"}>
-				<p className="font-nunito">Bulk Buy</p>
+				<p className="font-nunito font-bold">Bulk Buy</p>
 			</div>
 		</button>
 	)
