@@ -1,6 +1,6 @@
 import Cookies from 'universal-cookie';
 let isNode = require('detect-node')
-import { getCookie } from './Cookies';
+import { getCookie, removeCookie } from './Cookies';
 import { getItemSessionStorage, getItemLocalStorage, removeItemLocalStorage } from './Storage';
 
 const cookies = new Cookies();
@@ -139,11 +139,11 @@ export const getGeneralApiParams = () => {
 }
 
 export const logOutRemoveCookies = () => {
-    cookies.remove("cookies-token")
-    removeItemLocalStorage.remove('selected-address')
-    cookies.remove('guestUserId')
-    cookies.remove('cookies-name')
-    cookies.remove('cookies-phoneNumber')
-    cookies.remove('cookies-email')
+    removeCookie("cookies-token")
+    removeItemLocalStorage('selected-address')
+    removeCookie('guestUserId')
+    removeCookie('cookies-name')
+    removeCookie('cookies-phoneNumber')
+    removeCookie('cookies-email')
     localStorage.clear()
 }
