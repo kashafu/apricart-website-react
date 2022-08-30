@@ -103,7 +103,7 @@ const CitySelector = () => {
 					</div>
 					<p
 						className={
-							"font-bold text-base text-main-grey-800 lg:text-lg capitalize"
+							"font-bold text-base text-main-grey-800 capitalize font-nunito"
 						}
 					>
 						{getcity}

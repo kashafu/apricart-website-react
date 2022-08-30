@@ -34,7 +34,7 @@ const AddressSelector = () => {
                             </div>
                             <p
                                 className={
-                                    "font-bold text-base truncate max-w-[150px] xl:max-w-xs text-main-grey-800 lg:text-lg capitalize"
+                                    "font-bold text-base truncate max-w-[150px] xl:max-w-xs text-main-grey-800 capitalize font-nunito"
                                 }
                             >
                                 {selectedAddressSelector ? [selectedAddressSelector.address] : "Select Address"}

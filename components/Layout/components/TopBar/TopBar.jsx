@@ -16,11 +16,11 @@ export default function TopBar() {
 	)
 	const tickerSelector = useSelector((state) => state.general.ticker)
 	const selectedTypeSelector = useSelector((state) => state.general.selectedType)
-	let pStyle = "font-lato font-bold text-sm lg:text-md text-white lg:text-base"
+	let pStyle = "font-lato font-bold text-sm lg:text-md text-black lg:text-base"
 
 	return (
 		<header className="flex flex-col">
-			<div className="flex flex-row w-full bg-main-green lg:justify-between px-2 lg:px-12 items-center h-[50px]">
+			<div className="flex flex-row w-full bg-main-yellow lg:justify-between px-2 lg:px-12 items-center h-[50px]">
 				{/* ARPICART LOGO, LOCATION AND SELECTED ADDRESS */}
 				<div className="flex flex-row items-center justify-between">
 					{/* APRICART LOGO shown on phone, hidden on desktop*/}
@@ -28,7 +28,7 @@ export default function TopBar() {
 						<Link href={"/"} passHref>
 							<button className="flex">
 								<Image
-								className=""
+									className=""
 									src={logoPNG}
 									alt={"logo"}
 								/>
@@ -44,12 +44,12 @@ export default function TopBar() {
 								</p>
 							</div>
 							<Marquee speed={50} className="overflow-hidden">
-								<p className="text-center text-sm font-bold text-white">
+								<p className="text-center text-sm font-bold text-black">
 									{tickerSelector}
 								</p>
 							</Marquee>
 						</div>
-					):(
+					) : (
 						<div>
 							{selectedTypeSelector == 'bulk' && (
 								<p className="text-white font-bold capitalize">
@@ -68,48 +68,6 @@ export default function TopBar() {
 							)}
 						</div>
 					)}
-					{/* DELIVERY */}
-					{/* <div className="hidden lg:inline-flex flex flex-row space-x-2 items-center">
-                        <div className="relative w-[15px] h-[15px] lg:w-[22px] lg:h-[22px]">
-                            <Image 
-                                src={bikePNG} 
-                                alt={"bike icon"}
-                                layout={"fill"}
-                            />
-                        </div>
-                        <p className={pStyle}>
-                            Fast Delivery
-                        </p>
-                    </div> */}
-					{/* LOCATION AND SELECTED ADDRESS */}
-					{/* <div className="flex flex-row space-x-4 lg:space-x-12 items-center"> */}
-					{/* CURRENT SELECTED ADDRESS */}
-					{/* <div
-                            className={
-                                pStyle + " capitalize flex flex-row space-x-2"
-                            }
-                        >
-                            <button
-                                onClick={() => {
-                                    router.push("/address");
-                                }}
-                            >
-                                {addressSelector ? (
-                                    <p>{addressSelector.area}</p>
-                                ) : (
-                                    <p className="truncate">
-                                        Select Delivery Address
-                                    </p>
-                                )}
-                            </button>
-                        </div> */}
-					{/* LANGUAGE */}
-					{/* <div>
-                            <p className={pStyle}>
-                                English
-                            </p>
-                        </div> */}
-					{/* </div> */}
 				</div>
 				{/* PHONE NUMBER hidden on phone, shown on desktop*/}
 				<div className="hidden space-x-2 items-center lg:inline-flex pl-2 pr-4">

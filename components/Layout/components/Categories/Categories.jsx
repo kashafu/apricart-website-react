@@ -45,7 +45,7 @@ export default function Categories() {
 	return (
 		<div className="sticky top-[70px] w-full overflow-y-auto no-scrollbar max-h-[calc(100vh-100px)]">
 			<div className="space-y-4">
-				<p className="text-main-blue font-bold lg:text-2xl 2xl:text-3xl">
+				<p className="text-main-blue font-lato font-bold lg:text-2xl 2xl:text-3xl">
 					Categories
 				</p>
 				<div className="grid grid-flow-row divide-y">
@@ -65,7 +65,7 @@ export default function Categories() {
 												}
 												passHref
 											>
-												<a className="text-white font-bold col-span-4">
+												<a className="text-white font-nunito font-bold col-span-4">
 													{name}
 												</a>
 											</Link>
@@ -103,7 +103,7 @@ export default function Categories() {
 															}
 															passHref
 														>
-															<a className="font-bold text-main-yellow">
+															<a className="font-bold font-nunito text-main-yellow">
 																{name}
 															</a>
 														</Link>
@@ -123,7 +123,7 @@ export default function Categories() {
 											}
 											passHref
 										>
-											<a className="text-main-blue col-span-4">
+											<a className="text-main-blue col-span-4 font-nunito">
 												{name}
 											</a>
 										</Link>

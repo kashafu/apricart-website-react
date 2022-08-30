@@ -12,8 +12,8 @@ export default function ClickAndCollectCard({ isDisabled }) {
 	const selectedTypeSelector = useSelector((state) => state.general.selectedType)
 
 	useEffect(() => {
-		setStlye(selectedTypeSelector === 'cnc' ? 'bg-main-green' : '')
-		setPStyle(selectedTypeSelector === 'cnc' ? 'text-white' : 'text-main-blue')
+		setStlye(selectedTypeSelector === 'cnc' ? 'bg-main-yellow' : '')
+		setPStyle(selectedTypeSelector === 'cnc' ? 'text-main-blue' : 'text-main-blue')
 	}, [selectedTypeSelector])
 
 	useEffect(() => {
@@ -29,7 +29,7 @@ export default function ClickAndCollectCard({ isDisabled }) {
 			disabled={isDisabled}
 		>
 			<div className={[pStyle] + ' z-10 hidden absolute self-start font-bold lg:inline text-xl xl:text-2xl 2xl:text-3xl pl-4'}>
-				<p>Click & Collect</p>
+				<p className="font-nunito">Click & Collect</p>
 			</div>
 			<div className="self-end mt-auto relative w-full lg:w-[60%] lg:pr-4">
 				<Image
@@ -39,7 +39,7 @@ export default function ClickAndCollectCard({ isDisabled }) {
 				/>
 			</div>
 			<div className={[pStyle] + ' lg:hidden flex font-semibold text-xs'}>
-				<p>Click & Collect</p>
+				<p className="font-nunito">Click & Collect</p>
 			</div>
 		</button>
 	)

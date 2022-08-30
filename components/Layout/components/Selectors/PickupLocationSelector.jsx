@@ -46,7 +46,7 @@ const PickupLocationSelector = () => {
 					{selectedPickupLocationSelector ? (
 						<p
 							className={
-								"font-bold text-base text-main-grey-800 lg:text-lg capitalize line-clamp-1"
+								"font-bold text-base text-main-grey-800 capitalize line-clamp-1 font-nunito"
 							}
 						>
 							{selectedPickupLocationSelector.name}
@@ -54,7 +54,7 @@ const PickupLocationSelector = () => {
 					) : (
 						<p
 							className={
-								"font-bold text-base text-main-grey-800 lg:text-lg capitalize"
+								"font-bold text-base text-main-grey-800 capitalize font-nunito"
 							}
 						>
 							Select Pickup Location

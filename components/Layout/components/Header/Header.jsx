@@ -86,13 +86,13 @@ export default function Header() {
 					) : (
 						<div className="flex flex-row space-x-2 items-center">
 							<Link href={"/login"} passHref>
-								<a className="text-xl font-main-grey-800 font-semibold">
+								<a className="font-nunito text-base font-main-grey-800 font-semibold">
 									Login
 								</a>
 							</Link>
 							<p className="text-3xl font-bold pb-[5px]">|</p>
 							<Link href={"/register"} passHref>
-								<a className="truncate text-xl font-main-grey-800 font-semibold">
+								<a className="truncate text-base font-nunito font-main-grey-800 font-semibold">
 									Sign Up
 								</a>
 							</Link>

@@ -12,8 +12,8 @@ export default function BulkBuyCard() {
 	const selectedTypeSelector = useSelector((state) => state.general.selectedType)
 
 	useEffect(() => {
-		setStlye(selectedTypeSelector === 'bulk' ? 'bg-main-green' : '')
-		setPStyle(selectedTypeSelector === 'bulk' ? 'text-white' : 'text-main-blue')
+		setStlye(selectedTypeSelector === 'bulk' ? 'bg-main-yellow' : '')
+		setPStyle(selectedTypeSelector === 'bulk' ? 'text-main-blue' : 'text-main-blue')
 	}, [selectedTypeSelector])
 
 	return (
@@ -23,13 +23,13 @@ export default function BulkBuyCard() {
 			}}
 		>
 			<div className={[pStyle] + " hidden absolute self-start font-bold text-main-blue lg:inline text-xl xl:text-2xl 2xl:text-3xl pl-4"}>
-				<p>Bulk Buy</p>
+				<p className="font-nunito">Bulk Buy</p>
 			</div>
 			<div className="self-end mt-auto relative w-full lg:w-[55%]">
 				<Image src={bulkBuyIcon} layout={"responsive"} alt="bulk buy" />
 			</div>
 			<div className={[pStyle] + " lg:hidden flex font-semibold text-main-blue text-xs"}>
-				<p>Bulk Buy</p>
+				<p className="font-nunito">Bulk Buy</p>
 			</div>
 		</button>
 	)

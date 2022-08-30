@@ -12,8 +12,8 @@ export default function HomeDeliveryCard({ isDisabled }) {
     const selectedTypeSelector = useSelector((state) => state.general.selectedType)
 
     useEffect(() => {
-        setStlye(selectedTypeSelector === 'home' ? 'bg-main-green' : '')
-        setPStyle(selectedTypeSelector === 'home' ? 'text-white' : 'text-main-blue')
+        setStlye(selectedTypeSelector === 'home' ? 'bg-main-yellow' : '')
+        setPStyle(selectedTypeSelector === 'home' ? 'text-main-blue' : 'text-main-blue')
     }, [selectedTypeSelector])
 
     useEffect(() => {
@@ -28,10 +28,10 @@ export default function HomeDeliveryCard({ isDisabled }) {
             disabled={isDisabled}
         >
             <div className={[pStyle] + ' z-10 hidden absolute self-start font-bold lg:inline text-xl xl:text-2xl 2xl:text-3xl pl-4'}>
-                <p>
+                <p className='font-nunito'>
                     Home
                 </p>
-                <p>
+                <p className='font-nunito'>
                     Delivery
                 </p>
             </div>
