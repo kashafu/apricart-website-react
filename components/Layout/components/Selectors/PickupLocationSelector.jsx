@@ -1,13 +1,13 @@
+import Image from "next/image"
+import { useState } from "react"
+import { useDispatch, useSelector } from "react-redux"
+import { useRouter } from "next/router"
+
 import Popup from "../Popup/Popup"
 import locationPinPNG from "../../../../public/assets/svgs/locationPinIcon.svg"
-import Image from "next/image"
 import SubmitButton from "../Buttons/SubmitButton"
-import { useState } from "react"
-import { useDispatch } from "react-redux"
-import { useRouter } from "next/router"
 import { usePickupLocationsApi } from "../../../../helpers/Api"
 import { updatePickupLocation } from "../../../../redux/general.slice"
-import { useSelector } from "react-redux"
 
 // type can be either checkout or select
 const PickupLocationSelector = () => {
