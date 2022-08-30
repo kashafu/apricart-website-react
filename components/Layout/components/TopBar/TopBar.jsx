@@ -6,7 +6,7 @@ import { useRouter } from "next/router"
 
 // IMAGES
 import phonePNG from "../../../../public/assets/images/phone.png"
-import logoPNG from "../../../../public/assets/images/logo-white.png"
+import logoPNG from "../../../../public/assets/images/logo.png"
 
 export default function TopBar() {
 	const router = useRouter()
