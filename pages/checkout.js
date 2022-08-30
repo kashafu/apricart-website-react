@@ -294,8 +294,8 @@ export default function Checkout() {
 	return (
 		<div className="h-full w-full">
 			<HeadTag title={"Checkout"} />
-			<div className="flex flex-col w-full h-full lg:grid lg:grid-cols-5 2xl:grid 2xl:grid-cols-6 gap-2 lg:gap-28">
-				<div className={"space-y-12 " + viewState !== 'review' ? "lg:col-span-5 2xl:col-span-6" : "lg:col-span-3 2xl:col-span-4"}>
+			<div className="flex flex-col w-full h-full lg:grid lg:grid-cols-5 2xl:grid 2xl:grid-cols-6 space-x-2 lg:space-x-20 divide-x-2">
+				<div className={"space-y-12 " + viewState === 'review' ? "lg:col-span-5 2xl:col-span-6" : "lg:col-span-3 2xl:col-span-4"}>
 					<ProgressBar
 						currentState={viewState}
 						onClick={setViewState}
@@ -394,7 +394,7 @@ export default function Checkout() {
 					</div>
 				)}
 				{/* CHECKOUT BUTTON DIV */}
-				<div className="col-span-4">
+				<div className="lg:col-span-3 2xl:col-span-4">
 					{viewState === "shipping" && (
 						<div>
 							{selectedTypeSelector === 'cnc' ? (

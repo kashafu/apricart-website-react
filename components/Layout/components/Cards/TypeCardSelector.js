@@ -2,9 +2,8 @@ import HomeDeliveryCard from "./HomeDeliveryCard"
 import ClickAndCollectCard from "./ClickAndCollectCard"
 import BulkBuyCard from "./BulkBuyCard"
 import { useEffect, useState } from "react"
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { updateSelectedType } from "../../../../redux/general.slice"
-import { useSelector } from "react-redux"
 
 const TypeCardSelector = () => {
     const dispatch = useDispatch()
