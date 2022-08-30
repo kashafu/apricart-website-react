@@ -9,6 +9,7 @@ import plusIcon from '../../../../public/assets/svgs/plusIcon.svg'
 import minusIcon from '../../../../public/assets/svgs/minusIcon.svg'
 import { useDeleteItemApi, useUpdateItemQtyApi } from "../../../../helpers/Api"
 import toKebabCase from "../../../../helpers/toKebabCase"
+import SectionHeading from "../Typography/SectionHeading"
 
 const ItemListing = ({ item, fetchCart }) => {
     let {
@@ -151,7 +152,12 @@ const CheckoutCart = ({ initialCartProducts, initialCartData, isLoading, fetchCa
 
     return (
         <div className="flex flex-col w-full h-full justify-between bg-white">
-            <div className="overflow-y-auto max-h-96 divide-y">
+            <div className="hidden w-full lg:flex items-center justify-center py-2 bg-main-blue">
+                <p className="font-lato text-lg font-bold text-white">
+                    My Cart
+                </p>
+            </div>
+            <div className="overflow-y-auto max-h-96 divide-y lg:border-t-2">
                 {reduxCart.map((product) => {
                     return (
                         <ItemListing
@@ -162,7 +168,7 @@ const CheckoutCart = ({ initialCartProducts, initialCartData, isLoading, fetchCa
                     )
                 })}
             </div>
-            <div className="grid grid-cols-2 gap-2 font-lato items-center border-t-2 px-4 py-2">
+            <div className="grid grid-cols-2 gap-2 font-lato items-center border-y-2 px-4 py-2">
                 <p className={pLeft}>SubTotal</p>
                 <p className={pRight}>{subtotal}</p>
                 <p className={pLeft}>Tax</p>
