@@ -88,7 +88,7 @@ export default function CartSlider() {
 
 										return (
 											<div key={sku} className="grid grid-cols-4 p-2">
-												<div className="relative col-span-1 w-[50px] h-[50px] lg:w-[80px] lg:h-[80px] 2xl:[100px] 2xl:[100px]">
+												<div className="relative col-span-1 w-[50px] h-[50px] lg:w-[70px] lg:h-[70px] 2xl:[100px] 2xl:[100px] self-center">
 													<Image
 														src={imageUrl}
 														alt={title}

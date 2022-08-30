@@ -151,13 +151,13 @@ const CheckoutCart = ({ initialCartProducts, initialCartData, isLoading, fetchCa
     } = initialCartData
 
     return (
-        <div className="flex flex-col w-full h-full justify-between bg-white">
+        <div className="flex flex-col w-full h-full justify-between bg-white lg:border-l-2">
             <div className="hidden w-full lg:flex items-center justify-center py-2 bg-main-blue">
                 <p className="font-lato text-lg font-bold text-white">
                     My Cart
                 </p>
             </div>
-            <div className="overflow-y-auto max-h-96 divide-y lg:border-t-2">
+            <div className="overflow-y-auto max-h-56 divide-y border-t-2">
                 {reduxCart.map((product) => {
                     return (
                         <ItemListing

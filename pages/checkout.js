@@ -381,10 +381,94 @@ export default function Checkout() {
 							)}
 						</>
 					)}
+					{/* CHECKOUT BUTTON DIV */}
+					<div className="lg:col-span-3 2xl:col-span-4 pt-8">
+						{viewState === "shipping" && (
+							<div>
+								{selectedTypeSelector === 'cnc' ? (
+									<SubmitButton
+										text={
+											selectedDate === '' || selectedTime === ''
+												? "SELECT PICKUP LOCATION"
+												: "CONTINUE TO PAYMENT"
+										}
+										onClick={() => {
+											setViewState("payment")
+											window.scroll({
+												top: 0,
+												left: 0,
+												behavior: "smooth",
+											})
+										}}
+										disabled={selectedDate === '' || selectedTime === ''}
+									/>
+								) : (
+									<SubmitButton
+										text={
+											response
+												? "CONTINUE TO PAYMENT"
+												: "SELECT ADDRESS"
+										}
+										onClick={() => {
+											setViewState("payment")
+											window.scroll({
+												top: 0,
+												left: 0,
+												behavior: "smooth",
+											})
+										}}
+										disabled={response == null}
+									/>
+								)}
+							</div>
+						)}
+						{viewState === "payment" && (
+							<div className="space-y-4">
+								{/* PROMO CODE */}
+								<div className="flex flex-row w-full items-center space-x-4">
+									<div className="w-4/6">
+										<TextField
+											label={'Promo Code'}
+											placeHolder={'Enter Code'}
+											onChange={setCouponCode}
+											value={couponCode}
+										/>
+									</div>
+									<div className="w-2/6">
+										<SubmitButton
+											text={'Apply'}
+											onClick={() => {
+												setCoupon(couponCode)
+											}}
+										/>
+									</div>
+								</div>
+								{couponMessage !== 'Discount code not received' && (
+									<p>
+										{couponMessage}
+									</p>
+								)}
+								<ErrorText text={errorMessage} />
+								<SubmitButton
+									text={"CHECKOUT"}
+									onClick={() => {
+										setIsCheckout(true)
+										setIsCheckoutButtonPressed(true)
+										window.scroll({
+											top: 0,
+											left: 0,
+											behavior: "smooth",
+										})
+									}}
+								/>
+							</div>
+						)}
+					</div>
 				</div>
 				{/* CART DIV */}
 				{viewState !== 'review' && (
-					<div className="lg:col-span-2 h-full my-4 lg:my-0">
+					<div className="lg:col-span-2 h-full">
+						<div className="p-2 lg:hidden"></div>
 						<CheckoutCart
 							initialCartProducts={initialCartProducts}
 							initialCartData={initialCartData}
@@ -393,89 +477,6 @@ export default function Checkout() {
 						/>
 					</div>
 				)}
-				{/* CHECKOUT BUTTON DIV */}
-				<div className="lg:col-span-3 2xl:col-span-4">
-					{viewState === "shipping" && (
-						<div>
-							{selectedTypeSelector === 'cnc' ? (
-								<SubmitButton
-									text={
-										selectedDate === '' || selectedTime === ''
-											? "SELECT PICKUP LOCATION"
-											: "CONTINUE TO PAYMENT"
-									}
-									onClick={() => {
-										setViewState("payment")
-										window.scroll({
-											top: 0,
-											left: 0,
-											behavior: "smooth",
-										})
-									}}
-									disabled={selectedDate === '' || selectedTime === ''}
-								/>
-							) : (
-								<SubmitButton
-									text={
-										response
-											? "CONTINUE TO PAYMENT"
-											: "SELECT ADDRESS"
-									}
-									onClick={() => {
-										setViewState("payment")
-										window.scroll({
-											top: 0,
-											left: 0,
-											behavior: "smooth",
-										})
-									}}
-									disabled={response == null}
-								/>
-							)}
-						</div>
-					)}
-					{viewState === "payment" && (
-						<div className="space-y-4">
-							{/* PROMO CODE */}
-							<div className="flex flex-row w-full items-center space-x-4">
-								<div className="w-4/6">
-									<TextField
-										label={'Promo Code'}
-										placeHolder={'Enter Code'}
-										onChange={setCouponCode}
-										value={couponCode}
-									/>
-								</div>
-								<div className="w-2/6">
-									<SubmitButton
-										text={'Apply'}
-										onClick={() => {
-											setCoupon(couponCode)
-										}}
-									/>
-								</div>
-							</div>
-							{couponMessage !== 'Discount code not received' && (
-								<p>
-									{couponMessage}
-								</p>
-							)}
-							<ErrorText text={errorMessage} />
-							<SubmitButton
-								text={"CHECKOUT"}
-								onClick={() => {
-									setIsCheckout(true)
-									setIsCheckoutButtonPressed(true)
-									window.scroll({
-										top: 0,
-										left: 0,
-										behavior: "smooth",
-									})
-								}}
-							/>
-						</div>
-					)}
-				</div>
 			</div>
 		</div>
 	)
