@@ -31,7 +31,7 @@ export default function Profile() {
 		>
 			<Link href={"/profile"} passHref>
 				<a className="flex flex-row w-full items-center whitespace-nowrap space-x-px font-lato text-main-blue font-semibold">
-					<p className="capitalize">Welcome, {name}</p>
+					<p className="capitalize font-lato">Welcome, {name}</p>
 				</a>
 			</Link>
 			<div
