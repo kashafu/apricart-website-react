@@ -85,7 +85,7 @@ export default function ClickAndCollectCard({ isDisabled }) {
 									>
 										Select Pickup Location
 									</option>
-									{pickupLocations.map((location) => {
+									{pickupLocations && pickupLocations.map((location) => {
 										return (
 											<option
 												selected={selectedPickupLocationSelector ? selectedPickupLocationSelector.id == location.id : false}
