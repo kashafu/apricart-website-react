@@ -97,7 +97,7 @@ const ItemListing = ({ item, fetchCart }) => {
                                 <Image src={plusIcon} width={10} height={10} alt="" />
                             </button>
                         </div>
-                        <p>
+                        <p className="truncate">
                             {specialPrice > 0 ? (
                                 "x RS. " + specialPrice
                             ) : (
@@ -120,7 +120,7 @@ const ItemListing = ({ item, fetchCart }) => {
                         />
                     </button>
                 </div>
-                <p className="font-bold text-xl">
+                <p className="font-bold text-xl truncate">
                     {specialPrice > 0 ? (
                         "RS. " + specialPrice * qty
                     ) : (
@@ -151,13 +151,13 @@ const CheckoutCart = ({ initialCartProducts, initialCartData, isLoading, fetchCa
     } = initialCartData
 
     return (
-        <div className="flex flex-col w-full h-full justify-between bg-white lg:border-l-2">
-            <div className="hidden w-full lg:flex items-center justify-center py-2 bg-main-blue">
+        <div className="flex flex-col w-full bg-white lg:border-l-2 border-t-2 lg:border-t-0">
+            {/* <div className="hidden w-full lg:flex items-center justify-center py-2 bg-main-blue">
                 <p className="font-lato text-lg font-bold text-white">
                     My Cart
                 </p>
-            </div>
-            <div className="overflow-y-auto max-h-64 divide-y border-t-2">
+            </div> */}
+            <div className="overflow-y-auto max-h-64 divide-y">
                 {reduxCart.map((product) => {
                     return (
                         <ItemListing
@@ -170,7 +170,7 @@ const CheckoutCart = ({ initialCartProducts, initialCartData, isLoading, fetchCa
             </div>
             <div className="grid grid-cols-2 gap-2 font-lato items-center border-y-2 px-4 py-2">
                 <p className={pLeft}>SubTotal</p>
-                <p className={pRight}>{subtotal}</p>
+                <p className={pRight}>{base_currency_code} {subtotal}</p>
                 {selectedTypeSelector === 'cnc' ? (
                     <>
                         {/* <p className={pLeft}>Pickup</p> */}
