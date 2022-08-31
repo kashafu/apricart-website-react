@@ -3,9 +3,7 @@ import TopBar from "./components/TopBar/TopBar";
 import Header from "./components/Header/Header";
 import Copyrights from "./components/Footer/Copyrights";
 import { useRouter } from "next/router";
-import FooterSleek from "./components/Footer/FooterSleek";
 import { getGeneralApiParams } from "../../helpers/ApiHelpers";
-import { toast } from "react-toastify";
 import FooterZabiga from "./components/Footer/FooterZabiga";
 export const AppContext = createContext();
 
