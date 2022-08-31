@@ -21,6 +21,14 @@ export default function ClickAndCollectCard({ isDisabled }) {
 	const [selectedPickupLocation, setSelectedPickupLocation] = useState('')
 	const [showPopup, setShowPopup] = useState(false)
 
+	useEffect(() => {
+		setStlye(selectedTypeSelector === 'cnc' ? 'bg-main-yellow' : '')
+	}, [selectedTypeSelector])
+
+	useEffect(() => {
+		setDisabledStyle(isDisabled ? 'bg-main-grey grayscale' : '')
+	}, [isDisabled])
+
 	const closeButton = () => {
 		setShowPopup(!showPopup)
 		if (selectedPickupLocation !== '') {
@@ -29,14 +37,6 @@ export default function ClickAndCollectCard({ isDisabled }) {
 			router.push('/')
 		}
 	}
-
-	useEffect(() => {
-		setStlye(selectedTypeSelector === 'cnc' ? 'bg-main-yellow' : '')
-	}, [selectedTypeSelector])
-
-	useEffect(() => {
-		setDisabledStyle(isDisabled ? 'bg-main-grey grayscale' : '')
-	}, [isDisabled])
 
 	return (
 		<>

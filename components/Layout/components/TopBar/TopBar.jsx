@@ -63,7 +63,7 @@ export default function TopBar() {
 							)}
 							{selectedTypeSelector == 'cnc' && (
 								<p className="text-black font-nunito font-black capitalize">
-									Click n' Collect
+									Click & Collect
 								</p>
 							)}
 						</div>

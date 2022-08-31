@@ -171,14 +171,10 @@ const CheckoutCart = ({ initialCartProducts, initialCartData, isLoading, fetchCa
             <div className="grid grid-cols-2 gap-2 font-lato items-center border-y-2 px-4 py-2">
                 <p className={pLeft}>SubTotal</p>
                 <p className={pRight}>{subtotal}</p>
-                <p className={pLeft}>Tax</p>
-                <p className={pRight}>
-                    {base_currency_code} {tax}
-                </p>
                 {selectedTypeSelector === 'cnc' ? (
                     <>
-                        <p className={pLeft}>Pickup</p>
-                        <p className={pRight}>{parse(pickup_message)}</p>
+                        {/* <p className={pLeft}>Pickup</p> */}
+                        <p className={[pRight] + " col-span-2 text-justify"}>{parse(pickup_message)}</p>
 
                     </>
                 ) : (
