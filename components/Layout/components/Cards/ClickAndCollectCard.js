@@ -98,7 +98,7 @@ export default function ClickAndCollectCard({ isDisabled }) {
 									})}
 								</select>
 							</div>
-							<div className="w-3/4">
+							<div className="w-1/2">
 								<SubmitButton
 									text={"Select Location"}
 									onClick={() => {

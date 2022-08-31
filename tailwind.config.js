@@ -36,6 +36,10 @@ module.exports = {
 					"0%": { opacity: 50, transform: "translateY(0px)" },
 					"100%": { opacity: 0, transform: "translateY(-200px)" },
 				},
+				"slide-in-right": {
+					"0%": { transform: "scale(0, 1)" },
+					"100%": { transform: "scale(1, 1)" },
+				}
 			},
 			animation: {
 				dangle: "dangle infinite 3s ease-in",
@@ -43,7 +47,8 @@ module.exports = {
 				'dropdown-inverse': "dropdown-inverse 2s ease-in",
 				'fade-in': "fade-in 0.25s ease-in",
 				'fade-out': "fade-out 0.5s ease-out",
-				'float-up': "float-up 2s ease-out"
+				'float-up': "float-up 2s ease-out",
+				'slide-in-right': "slide-in-right 0.5s ease-in-out"
 			},
 			colors: {
 				"main-yellow": {
