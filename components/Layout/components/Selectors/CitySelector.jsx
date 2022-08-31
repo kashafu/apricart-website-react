@@ -114,10 +114,10 @@ const CitySelector = () => {
 				<Popup
 					content={
 						<div className="flex flex-col items-center w-full h-full justify-around">
-							<p className="text-main-blue font-bold text-xl">
+							<p className="text-main-blue font-bold text-xl font-nunito">
 								Select City
 							</p>
-							<div className="flex flex-col space-y-2">
+							<div className="flex flex-col space-y-2 items-center">
 								<div className="flex flex-row space-x-2 items-center">
 									<input
 										className=""
@@ -127,7 +127,7 @@ const CitySelector = () => {
 										checked={getcity === "karachi"}
 										onChange={handleCity}
 									/>
-									<p className="text-main-bue font-bold">
+									<p className="text-main-bue font-bold font-lato">
 										Karachi
 									</p>
 								</div>
@@ -140,15 +140,12 @@ const CitySelector = () => {
 										checked={getcity === "peshawar"}
 										onChange={handleCity}
 									/>
-									<p className="text-main-bue font-bold">
-										Peshawar
+									<p className="text-main-bue font-bold font-lato">
+										Peshawar (Only Bulk Buy is available in Peshawar)
 									</p>
 								</div>
 							</div>
-							<p className="text-main-blue font-bold text-sm">
-								Only Bulk Buy is available in Peshawar
-							</p>
-							<div className="w-3/4">
+							<div className="w-1/2">
 								<SubmitButton
 									text={"Change City"}
 									onClick={() => {

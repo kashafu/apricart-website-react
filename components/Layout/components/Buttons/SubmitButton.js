@@ -1,5 +1,5 @@
 export default function SubmitButton({ text, onClick, disabled, bgColor }) {
-    let className = disabled ? "duration-200 bg-slate-400 font-lato text-white min-w-full rounded-lg py-2 text-md  lg:text-xl " : "duration-200 bg-main-blue font-lato text-white min-w-full rounded-lg py-2 text-md lg:text-xl "
+    let className = disabled ? "duration-200 bg-slate-400 text-white min-w-full rounded-lg py-2 text-md  lg:text-xl " : "duration-200 bg-main-blue text-white min-w-full rounded-lg py-2 text-md lg:text-xl "
 
     return (
         <div className="w-full">
@@ -10,7 +10,9 @@ export default function SubmitButton({ text, onClick, disabled, bgColor }) {
                     onClick()
                 }}
             >
-                {text}
+                <p className="font-lato">
+                    {text}
+                </p>
             </button>
         </div>
     )
