@@ -241,21 +241,6 @@ export default function Home() {
 		)
 	}
 
-	// if (isLoading) {
-	// 	return (
-	// 		<div>
-	// 			<HeadTag
-	// 				title={"Apricart | Online Grocery"}
-	// 				description={
-	// 					"Online grocery store in Pakistan, offering bulk buy and home delivery"
-	// 				}
-	// 			/>
-	// 			{/* <p>Loading</p> */}
-	// 			<IndexLoader />
-	// 		</div>
-	// 	)
-	// }
-
 	return (
 		<div className="">
 			<HeadTag
@@ -269,7 +254,7 @@ export default function Home() {
 				<section className="hidden lg:block lg:col-span-1">
 					<Categories />
 				</section>
-				<section className="space-y-8 col-span-5 lg:col-span-4">
+				<section className="space-y-2 lg:space-y-8 col-span-5 lg:col-span-4">
 					<TypeCardSelector />
 					<HomeItems />
 				</section>

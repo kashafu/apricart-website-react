@@ -1,27 +1,13 @@
-import React, { useEffect, useState } from "react";
-import Logo from "../Logo/Logo";
+import { useState } from "react";
 import phoneIcon from "../../../../public/assets/svgs/phoneIcon.svg";
 import globeIcon from "../../../../public/assets/svgs/globeIcon.svg";
-import addressIcon from "../../../../public/assets/svgs/addressIcon.svg";
 import playstoreImg from "../../../../public/assets/images/playstore-img.png";
 import appstoreImg from "../../../../public/assets/images/appstore-img.png";
-import cartOnly from "../../../../public/assets/images/cartonly.png";
 
 import Image from "next/image";
 import Link from "next/link";
 
-const FooterZabiga = () => {
-	// useEffect(() => {
-	// 	console.log(privacy);
-	// 	if (privacy === false) {
-	// 		setTimeout(() => {
-	// 			setToggler({ ...toggler, privTimer: false });
-	// 		}, 1000);
-	// 	} else if (privacy === true) {
-	// 		setToggler({ ...toggler, privTimer: true });
-	// 	}
-	// }, [privacy, toggler]);
-
+const Footer = () => {
 	const [toggler, setToggler] = useState({
 		privacy: false,
 		address: false,
@@ -457,4 +443,4 @@ const FooterZabiga = () => {
 	);
 };
 
-export default FooterZabiga;
+export default Footer;
