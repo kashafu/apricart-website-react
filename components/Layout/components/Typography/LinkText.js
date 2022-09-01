@@ -9,7 +9,7 @@ export default function LinkText({ text, path, onClick, icon }) {
         return (
             <button
                 onClick={() => {
-                    onClick
+                    onClick()
                 }}
             >
                 <div className="flex flex-row w-full items-center whitespace-nowrap space-x-px font-lato text-main-blue font-semibold text-center">
@@ -21,7 +21,7 @@ export default function LinkText({ text, path, onClick, icon }) {
                             width={25}
                         />
                     )}
-                    <p className="text-center">
+                    <p className="text-center font-lato">
                         {text}
                     </p>
                 </div>
@@ -40,7 +40,7 @@ export default function LinkText({ text, path, onClick, icon }) {
                         width={25}
                     />
                 )}
-                <p className="text-center">
+                <p className="text-center font-lato">
                     {text}
                 </p>
             </a>

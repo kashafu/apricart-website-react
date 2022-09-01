@@ -3,28 +3,20 @@ import TopBar from "./components/TopBar/TopBar";
 import Header from "./components/Header/Header";
 import Copyrights from "./components/Footer/Copyrights";
 import { useRouter } from "next/router";
-import FooterSleek from "./components/Footer/FooterSleek";
-import { getGeneralApiParams } from "../../helpers/ApiHelpers";
-import { toast } from 'react-toastify'
+import Footer from "./components/Footer/Footer";
 export const AppContext = createContext();
 
 export default function Layout(props) {
 	const router = useRouter();
 	const [appState, setAppState] = useState({ sideDrawerStatus: false });
-	const { token, selectedAddress } = getGeneralApiParams()
 
 	const handleAppState = (newState) => {
 		setAppState({ ...appState, ...newState });
-	};
-
-	// if (token && !selectedAddress) {
-	// 	toast.warn("Please select your delivery address")
-	// 	console.log("Please select your delivery address")
-	// }
+	}
 
 	return (
 		<AppContext.Provider value={{ appState, handleAppState }}>
-			<div className="flex flex-col min-h-screen max-w-screen">
+			<div className="flex flex-col min-h-screen max-w-screen bg-white">
 				{!(
 					router.pathname === "/privacy-policy-mobile" ||
 					router.pathname === "/terms-of-use-mobile" ||
@@ -35,8 +27,8 @@ export default function Layout(props) {
 							<Header />
 						</div>
 					)}
-				<div className="flex-1 min-h-full min-w-full pt-2 pb-10 px-2 md:px-8 bg-white">
-					<div className="pt-6 lg:pt-10">{props.children}</div>
+				<div className="flex-1 flex flex-col min-h-full min-w-full bg-white px-2 py-2 lg:py-8 lg:my-8">
+					<div>{props.children}</div>
 				</div>
 				{!(
 					router.pathname === "/privacy-policy-mobile" ||
@@ -44,7 +36,7 @@ export default function Layout(props) {
 					router.pathname === "/faqs-mobile"
 				) && (
 						<div className="mt-auto">
-							<FooterSleek />
+							<Footer />
 							<Copyrights />
 						</div>
 					)}

@@ -7,7 +7,6 @@ import AddressCard from "./AddressCard"
 import SingleAddressListing from "./SingleAddressListing"
 import { useDispatch } from "react-redux";
 import { updateCity, updateSelectedAddress } from "../../../../redux/general.slice"
-import { setCookie } from "../../../../helpers/Cookies"
 
 /*
     type can be 'checkout', 'manage' 
@@ -48,9 +47,7 @@ export default function SelectAddress({ type, setAddress, dropDownSelectedAddres
             setAddress(e.target.value)
         }
         let parsedAddress = JSON.parse(e.target.value)
-        setCookie('selected-address', parsedAddress)
         dispatch(updateSelectedAddress(parsedAddress))
-        setCookie("cities", parsedAddress?.city.toLowerCase())
         dispatch(updateCity(parsedAddress?.city.toLowerCase()))
     }
 
@@ -65,7 +62,7 @@ export default function SelectAddress({ type, setAddress, dropDownSelectedAddres
                         className="col-span-2 h-full py-2 lg:px-4 text-xs lg:text-lg rounded-lg bg-slate-200"
                         disabled={false}
                         onChange={handleSavedAddressChange}
-                        value={JSON.stringify(selectedAddress)}
+                        value={selectedAddress}
                     >
                         <option
                             value={''}

@@ -1,7 +1,7 @@
 import Cookies from 'universal-cookie';
 let isNode = require('detect-node')
-import { getCookie } from './Cookies';
-import { getItemLocalStorage } from './Storage';
+import { getCookie, removeCookie } from './Cookies';
+import { getItemSessionStorage, getItemLocalStorage, removeItemLocalStorage } from './Storage';
 
 const cookies = new Cookies();
 
@@ -29,7 +29,7 @@ export const getGeneralApiParams = () => {
     let prodType = ''
     let orderType = ''
 
-    let selectedType = getCookie('selected-type')
+    let selectedType = getItemLocalStorage('selected-type')
     if (selectedType === 'bulk') {
         selectedType = 'bulk'
         prodType = 'b2b'
@@ -47,15 +47,23 @@ export const getGeneralApiParams = () => {
     }
 
     let token = getCookie('cookies-token')
-    let city = getCookie("cities") == null ? "karachi" : getCookie("cities")
-    let selectedAddress = getCookie('selected-address')
-    let selectedPickupLocation = ''
-    if (getItemLocalStorage('selected-pickup-location')) {
-        if (typeof (getItemLocalStorage('selected-pickup-location')) === 'string') {
-            selectedPickupLocation = JSON.parse(getItemLocalStorage('selected-pickup-location'))
+    let city = getItemLocalStorage("cities") == null ? "karachi" : getItemLocalStorage("cities")
+    let selectedAddress = ''
+    if (getItemLocalStorage('selected-address')) {
+        if (typeof (getItemLocalStorage('selected-address')) === 'string') {
+            selectedAddress = JSON.parse(getItemLocalStorage('selected-address'))
         }
         else {
-            selectedPickupLocation = getItemLocalStorage('selected-pickup-location')
+            selectedAddress = getItemLocalStorage('selected-address')
+        }
+    }
+    let selectedPickupLocation = ''
+    if (getItemSessionStorage('selected-pickup-location')) {
+        if (typeof (getItemSessionStorage('selected-pickup-location')) === 'string') {
+            selectedPickupLocation = JSON.parse(getItemSessionStorage('selected-pickup-location'))
+        }
+        else {
+            selectedPickupLocation = getItemSessionStorage('selected-pickup-location')
         }
     }
     let latitude = 0
@@ -131,12 +139,11 @@ export const getGeneralApiParams = () => {
 }
 
 export const logOutRemoveCookies = () => {
-    cookies.remove("cookies-token")
-    cookies.remove('selected-address')
-    cookies.remove('guestUserId')
-    cookies.remove('cookies-name')
-    cookies.remove('cookies-userId')
-    cookies.remove('cookies-phoneNumber')
-    cookies.remove('cookies-email')
+    removeCookie("cookies-token")
+    removeItemLocalStorage('selected-address')
+    removeCookie('guestUserId')
+    removeCookie('cookies-name')
+    removeCookie('cookies-phoneNumber')
+    removeCookie('cookies-email')
     localStorage.clear()
 }

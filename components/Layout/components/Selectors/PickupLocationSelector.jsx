@@ -1,13 +1,13 @@
+import Image from "next/image"
+import { useState } from "react"
+import { useDispatch, useSelector } from "react-redux"
+import { useRouter } from "next/router"
+
 import Popup from "../Popup/Popup"
 import locationPinPNG from "../../../../public/assets/svgs/locationPinIcon.svg"
-import Image from "next/image"
 import SubmitButton from "../Buttons/SubmitButton"
-import { useState } from "react"
-import { useDispatch } from "react-redux"
-import { useRouter } from "next/router"
 import { usePickupLocationsApi } from "../../../../helpers/Api"
 import { updatePickupLocation } from "../../../../redux/general.slice"
-import { useSelector } from "react-redux"
 
 // type can be either checkout or select
 const PickupLocationSelector = () => {
@@ -36,7 +36,7 @@ const PickupLocationSelector = () => {
 					className="flex flex-row space-x-2 items-center"
 					onClick={togglePopup}
 				>
-					<div className="relative w-[25px] h-[25px] lg:w-[30px] lg:h-[30px]">
+					<div className="relative w-[25px] h-[25px]">
 						<Image
 							src={locationPinPNG}
 							alt={"location icon"}
@@ -46,7 +46,7 @@ const PickupLocationSelector = () => {
 					{selectedPickupLocationSelector ? (
 						<p
 							className={
-								"font-bold text-base text-main-grey-800 lg:text-lg capitalize"
+								"font-bold text-base text-main-grey-800 capitalize line-clamp-1 font-nunito"
 							}
 						>
 							{selectedPickupLocationSelector.name}
@@ -54,7 +54,7 @@ const PickupLocationSelector = () => {
 					) : (
 						<p
 							className={
-								"font-bold text-base text-main-grey-800 lg:text-lg capitalize"
+								"font-bold text-base text-main-grey-800 capitalize font-nunito"
 							}
 						>
 							Select Pickup Location

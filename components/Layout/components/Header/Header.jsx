@@ -13,6 +13,7 @@ import { useState, useEffect } from "react"
 import AddressSelector from "../Selectors/AddressSelector"
 import { useSelector } from "react-redux"
 import PickupLocationSelector from "../Selectors/PickupLocationSelector"
+import { getItemLocalStorage, setItemLocalStorage } from "../../../../helpers/Storage"
 
 export default function Header() {
 	let { token } = getGeneralApiParams()
@@ -25,8 +26,8 @@ export default function Header() {
 			setCookie("guestUserId", "desktopuser_" + d.getTime())
 		}
 
-		if (!getCookie("selected-type")) {
-			setCookie('selected-type', 'home')
+		if (!getItemLocalStorage("selected-type")) {
+			setItemLocalStorage('selected-type', 'home')
 		}
 
 		const onScroll = () => setOffset(window.pageYOffset);
@@ -67,11 +68,9 @@ export default function Header() {
 						)}
 					</div>
 					<Link href={"/wishlist"} passHref>
-						<a className="flex items-center relative w-[45px] h-[45px]">
+						<a className="flex items-center relative w-[30px] h-[30px]">
 							<Image
 								src={heartIcon}
-								// width={45}
-								// height={45}
 								layout='fixed'
 								alt="wishlist icon"
 							/>
@@ -87,13 +86,13 @@ export default function Header() {
 					) : (
 						<div className="flex flex-row space-x-2 items-center">
 							<Link href={"/login"} passHref>
-								<a className="text-xl font-main-grey-800 font-semibold">
+								<a className="font-nunito text-base font-main-grey-800 font-semibold">
 									Login
 								</a>
 							</Link>
 							<p className="text-3xl font-bold pb-[5px]">|</p>
 							<Link href={"/register"} passHref>
-								<a className="truncate text-xl font-main-grey-800 font-semibold">
+								<a className="truncate text-base font-nunito font-main-grey-800 font-semibold">
 									Sign Up
 								</a>
 							</Link>

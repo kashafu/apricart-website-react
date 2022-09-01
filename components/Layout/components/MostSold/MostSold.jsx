@@ -56,9 +56,9 @@ export default function RecommendedProducts() {
     const getPopularitems = async () => {
         const response = await axios.get(
             base_url_api +
-                `/catalog/mostviewed?page=1&size=20&city=${getCookie(
-                    "cities"
-                )}&lang=en`
+            `/catalog/mostviewed?page=1&size=20&city=${getCookie(
+                "cities"
+            )}&lang=en`
         );
         setUsers(response.data.data);
     };
@@ -69,7 +69,6 @@ export default function RecommendedProducts() {
     const cart = useSelector((state) => state.cart);
     const wish = useSelector((state) => state.wish);
     const wishapi = (list) => {
-        console.log(list.sku);
         const wishdata = { sku: [list.sku] };
         if (token) {
             let url = base_url_api + '/watchlist/save?client_type=apricart'
@@ -94,11 +93,8 @@ export default function RecommendedProducts() {
                 },
             ],
         };
-        console.log(data.cart);
 
         if (token) {
-            console.log("AVG ");
-            console.log(list.sku);
             let url = base_url_api + '/order/cart/save?city=karachi&lang=en&client_type=apricart'
             const response = axios.post(
                 url,

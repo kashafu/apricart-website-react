@@ -181,7 +181,7 @@ export default function AddressCard({ type, previousAddress, updateSavedAddresse
                 value={address.areaId}
                 placeholder={'Select Area'}
             />
-            <p>
+            <p className="font-lato text-main-blue font-semibold">
                 Choose Location
             </p>
             <div className="w-full h-[300px]">
@@ -189,9 +189,9 @@ export default function AddressCard({ type, previousAddress, updateSavedAddresse
                     label={"Pick Location"}
                     onChangeLatitude={setMapLat}
                     onChangeLongitude={setMapLong}
-                    startingLocation={{ 
-                        lat: mapLat, 
-                        lng: mapLong 
+                    startingLocation={{
+                        lat: mapLat,
+                        lng: mapLong
                     }}
                 />
             </div>

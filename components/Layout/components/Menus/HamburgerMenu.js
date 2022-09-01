@@ -1,6 +1,8 @@
 import Image from "next/image"
 import { useState } from "react"
 import { useRouter } from "next/router"
+import { useSelector } from "react-redux"
+
 import menuIcon from "../../../../public/assets/svgs/menuIcon.svg"
 import crossIcon from "../../../../public/assets/svgs/cross2Icon.svg"
 import Logo from "../Logo/Logo"
@@ -13,7 +15,6 @@ import SubmitButton from "../Buttons/SubmitButton"
 import LinkButton from "../Buttons/LinkButton"
 import CitySelector from "../Selectors/CitySelector"
 import AddressSelector from "../Selectors/AddressSelector"
-import { useSelector } from "react-redux"
 import PickupLocationSelector from "../Selectors/PickupLocationSelector"
 
 export default function HamburgerMenu() {
@@ -21,13 +22,12 @@ export default function HamburgerMenu() {
 	const selectedTypeSelector = useSelector(state => state.general.selectedType)
 
 	let { token } = getGeneralApiParams()
-	let { name, email, phoneNumber } = getGeneralCookies()
+	let { name } = getGeneralCookies()
 	const [showMenu, setShowMenu] = useState(false)
 
 	const logout = () => {
 		logOutRemoveCookies()
 		router.push("/")
-		// router.reload()
 	}
 
 	return (
@@ -41,7 +41,7 @@ export default function HamburgerMenu() {
 				<Image src={menuIcon} alt={"icon"} width={25} height={20} />
 			</button>
 			{showMenu && (
-				<div className="w-full h-full">
+				<div className="w-full h-full animate-fade-in">
 					<div className="fixed top-0 flex flex-col py-4 px-2 left-0 w-3/4 h-full bg-white z-50 justify-between rounded-r-2xl">
 						<div className="space-y-4">
 							<div className="flex flex-row justify-between items-center">
@@ -139,7 +139,7 @@ export default function HamburgerMenu() {
 									}}
 								/>
 								<SubmitButton
-									bgColor={'bg-red-600'}
+									bgColor={'bg-red-500'}
 									text={"LOGOUT"}
 									onClick={() => {
 										logout()

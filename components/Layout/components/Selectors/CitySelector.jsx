@@ -4,7 +4,6 @@ import Image from "next/image"
 import SubmitButton from "../Buttons/SubmitButton"
 import { useState, useEffect } from "react"
 import { getGeneralApiParams } from "../../../../helpers/ApiHelpers"
-import { setCookie } from "../../../../helpers/Cookies"
 import { useDispatch } from "react-redux"
 import { updateCity } from "../../../../redux/general.slice"
 import { useRouter } from "next/router"
@@ -20,8 +19,7 @@ const CitySelector = () => {
 	useEffect(() => {
 		if (city == null) {
 			setcity("karachi")
-			setCookie("cities", "karachi")
-			dispatch(updateCity(karachi))
+			dispatch(updateCity("karachi"))
 			getLocation()
 		}
 	}, [])
@@ -35,7 +33,6 @@ const CitySelector = () => {
 	}
 
 	const closeButton = () => {
-		setCookie("cities", getcity)
 		dispatch(updateCity(getcity))
 		setShowPopup(!showPopup)
 		router.push('/')
@@ -65,7 +62,7 @@ const CitySelector = () => {
 				longitude >= karachiCoords.left[1]
 			) {
 				setcity("karachi")
-				setCookie("cities", "karachi")
+				dispatch(updateCity("karachi"))
 				return
 			}
 
@@ -84,7 +81,7 @@ const CitySelector = () => {
 				longitude >= peshawarCoords.left[1]
 			) {
 				setcity("peshawar")
-				setCookie("cities", "peshawar")
+				dispatch(updateCity("peshawar"))
 				return
 			}
 		})
@@ -97,7 +94,7 @@ const CitySelector = () => {
 					className="flex flex-row space-x-2 items-center"
 					onClick={togglePopup}
 				>
-					<div className="relative w-[25px] h-[25px] lg:w-[30px] lg:h-[30px]">
+					<div className="relative w-[25px] h-[25px]">
 						<Image
 							src={locationPinPNG}
 							alt={"location icon"}
@@ -106,7 +103,7 @@ const CitySelector = () => {
 					</div>
 					<p
 						className={
-							"font-bold text-base text-main-grey-800 lg:text-lg capitalize"
+							"font-bold text-base text-main-grey-800 capitalize font-nunito"
 						}
 					>
 						{getcity}
@@ -117,10 +114,10 @@ const CitySelector = () => {
 				<Popup
 					content={
 						<div className="flex flex-col items-center w-full h-full justify-around">
-							<p className="text-main-blue font-bold text-xl">
+							<p className="text-main-blue font-bold text-xl font-nunito">
 								Select City
 							</p>
-							<div className="flex flex-col space-y-2">
+							<div className="flex flex-col space-y-2 items-center">
 								<div className="flex flex-row space-x-2 items-center">
 									<input
 										className=""
@@ -130,7 +127,7 @@ const CitySelector = () => {
 										checked={getcity === "karachi"}
 										onChange={handleCity}
 									/>
-									<p className="text-main-bue font-bold">
+									<p className="text-main-bue font-bold font-lato">
 										Karachi
 									</p>
 								</div>
@@ -143,15 +140,12 @@ const CitySelector = () => {
 										checked={getcity === "peshawar"}
 										onChange={handleCity}
 									/>
-									<p className="text-main-bue font-bold">
-										Peshawar
+									<p className="text-main-bue font-bold font-lato">
+										Peshawar (Only Bulk Buy is available in Peshawar)
 									</p>
 								</div>
 							</div>
-							<p className="text-main-blue font-bold text-sm">
-								Only Bulk Buy is available in Peshawar
-							</p>
-							<div className="w-3/4">
+							<div className="w-1/2">
 								<SubmitButton
 									text={"Change City"}
 									onClick={() => {

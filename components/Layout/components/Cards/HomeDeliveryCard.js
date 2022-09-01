@@ -3,18 +3,15 @@ import homeDeliveryIcon from '../../../../public/assets/svgs/homeDeliveryIcon.sv
 import { useDispatch, useSelector } from 'react-redux'
 import { updateSelectedType } from '../../../../redux/general.slice'
 import { useEffect, useState } from 'react'
-import { setCookie } from '../../../../helpers/Cookies'
 
 export default function HomeDeliveryCard({ isDisabled }) {
     const dispatch = useDispatch()
     const [style, setStlye] = useState('')
-    const [pStyle, setPStyle] = useState('')
     const [disabledStyle, setDisabledStyle] = useState('')
     const selectedTypeSelector = useSelector((state) => state.general.selectedType)
 
     useEffect(() => {
-        setStlye(selectedTypeSelector === 'home' ? 'bg-main-green' : '')
-        setPStyle(selectedTypeSelector === 'home' ? 'text-white' : 'text-main-blue')
+        setStlye(selectedTypeSelector === 'home' ? 'bg-main-yellow' : '')
     }, [selectedTypeSelector])
 
     useEffect(() => {
@@ -22,32 +19,21 @@ export default function HomeDeliveryCard({ isDisabled }) {
     }, [isDisabled])
 
     return (
-        <button className={[style] + ' relative rounded-lg shadow flex flex-col grow p-1 items-center ' + [disabledStyle]}
+        <button className={[style] + ' relative rounded-lg shadow flex items-center grow ' + [disabledStyle]}
             onClick={() => {
                 dispatch(updateSelectedType('home'))
-                setCookie('selected-type', 'home')
             }}
             disabled={isDisabled}
         >
-            <div className={[pStyle] + ' z-10 hidden absolute self-start font-bold lg:inline text-xl xl:text-2xl 2xl:text-3xl'}>
-                <p>
-                    Home
-                </p>
-                <p>
-                    Delivery
-                </p>
-            </div>
-            <div className='self-end mt-auto relative w-full lg:w-[75%] lg:pl-6'>
+            <p className='font-nunito text-main-blue font-black truncate lg:font-extrabold text-[8px] md:text-base w-full lg:text-lg 2xl:text-2xl pl-1 lg:pl-2 leading-none'>
+                Home Delivery
+            </p>
+            <div className='w-[70%] max-w-[150px]'>
                 <Image
                     src={homeDeliveryIcon}
                     layout={'responsive'}
                     alt='icon'
                 />
-            </div>
-            <div className={[pStyle] + ' lg:hidden flex font-semibold text-xs'}>
-                <p>
-                    Home Delivery
-                </p>
             </div>
         </button>
     )

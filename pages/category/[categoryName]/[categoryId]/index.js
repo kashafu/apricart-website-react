@@ -72,7 +72,6 @@ export default function CategoryProducts() {
 		errorMessage,
 		totalItems,
 		size,
-		setSize,
 		setPage,
 		page
 	} = useCategoryProductsApi()
@@ -97,15 +96,6 @@ export default function CategoryProducts() {
 				<p className="">
 					Showing items {(page - 1) * size} - {(((page - 1) * size) + size) > totalItems ? (totalItems) : (((page - 1) * size) + size)} of {totalItems}
 				</p>
-				{/* <div>
-					<p>Number of items per page</p>
-					<select onChange={(e) => {
-						setSize(e.target.value)
-					}}>
-						<option value={20}>20</option>
-						<option value={40}>40</option>
-					</select>
-				</div> */}
 				<div className="space-x-2">
 					{arr}
 				</div>

@@ -114,7 +114,7 @@ export default function ProfileUser() {
 									</div>
 									<div>
 										<SubmitButton
-											bgColor={'bg-red-600'}
+											bgColor={'bg-red-500'}
 											text={"LOGOUT"}
 											onClick={() => {
 												logout()

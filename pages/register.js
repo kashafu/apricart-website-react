@@ -43,7 +43,6 @@ export default function Register() {
                 "guestuserid": userId,
 
             }
-            console.log(body)
             const response = await axios.post(url, body, {
                 headers: headers,
             });
@@ -82,7 +81,7 @@ export default function Register() {
     }
 
     return (
-        <>
+        <div className="animate-dropdown">
             <HeadTag title={'Register'} />
             {showOTPScreen ? (
                 <div className='flex flex-row justify-center w-full'>
@@ -158,6 +157,6 @@ export default function Register() {
                 </div>
             )
             }
-        </>
+        </div>
     )
 }

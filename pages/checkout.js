@@ -1,14 +1,13 @@
 import { useState, useEffect } from "react"
 import parse from "html-react-parser"
 import Image from "next/image"
-import { useSelector } from "react-redux"
+import { useSelector, useDispatch } from "react-redux"
 
 import { getGeneralApiParams } from "../helpers/ApiHelpers"
 import SelectAddress from "../components/Layout/components/Address/SelectAddress"
 import ErrorText from "../components/Layout/components/Typography/ErrorText"
 import SubmitButton from "../components/Layout/components/Buttons/SubmitButton"
 import TextField from "../components/Layout/components/Input/TextField"
-import SectionHeading from "../components/Layout/components/Typography/SectionHeading"
 import InputLabelText from "../components/Layout/components/Typography/InputLabelText"
 import HeadTag from "../components/Layout/components/Head/HeadTag"
 import { useInitialCartDataApi, usePickupLocationsApi } from "../helpers/Api"
@@ -16,13 +15,14 @@ import CheckoutCart from "../components/Layout/components/Cart/CheckoutCart"
 import PickupLocationSelector from "../components/Layout/components/Selectors/PickupLocationSelector"
 
 export default function Checkout() {
+	const dispatch = useDispatch()
 	let { token } = getGeneralApiParams()
 	const selectedAddressSelector = useSelector((state) => state.general.selectedAddress)
 	const selectedTypeSelector = useSelector((state) => state.general.selectedType)
 	const selectedPickupLocationSelector = useSelector((state) => state.general.pickupLocation)
 	const reduxCart = useSelector((state) => state.cart)
 
-	// view state can be either 'shipping', 'payment', 'review'
+	// view state can be either 'loading', 'shipping', 'payment', 'review'
 	const [viewState, setViewState] = useState("shipping")
 	const [isCheckoutButtonPressed, setIsCheckoutButtonPressed] = useState(false)
 
@@ -56,7 +56,7 @@ export default function Checkout() {
 					className={
 						currentState == "shipping"
 							? { divStyle } +
-							" bg-main-yellow text-main-blue px-2 rounded-xl"
+							" bg-main-yellow text-main-blue py-2 px-4 rounded-xl"
 							: { divStyle }
 					}
 					onClick={() => {
@@ -69,7 +69,7 @@ export default function Checkout() {
 					className={
 						currentState == "payment"
 							? { divStyle } +
-							" bg-main-yellow text-main-blue px-2 rounded-xl"
+							" bg-main-yellow text-main-blue py-2 px-4 rounded-xl"
 							: { divStyle }
 					}
 					onClick={() => {
@@ -90,7 +90,7 @@ export default function Checkout() {
 					className={
 						currentState == "review"
 							? { divStyle } +
-							" bg-main-yellow text-main-blue px-2 rounded-xl"
+							" bg-main-yellow text-main-blue py-2 px-3 lg:px-4 rounded-xl"
 							: { divStyle }
 					}
 					onClick={() => {
@@ -112,7 +112,6 @@ export default function Checkout() {
 	}
 
 	const PickupLocation = () => {
-		let pStyle = "text-main-blue font-bold text-xs lg:text-xl"
 		let divStyle = "grid grid-cols-1 items-center w-full h-full"
 		let selectStyle = "h-full w-full py-2 lg:px-4 text-xs lg:text-lg rounded-lg bg-slate-200 h-[40px]"
 
@@ -131,16 +130,12 @@ export default function Checkout() {
 				</p>
 				{/* PICKUP LOCATION */}
 				<div className={divStyle}>
-					{/* <p className={pStyle}>
-						Select Pickup Location
-					</p> */}
 					<div>
 						<select
 							className={selectStyle}
 							disabled={false}
 							onChange={(e) => {
 								dispatch(updatePickupLocation(JSON.parse(e.target.value)))
-								console.log(JSON.parse(e.target.value))
 							}}
 							value={selectedPickupLocationSelector}
 						>
@@ -167,9 +162,6 @@ export default function Checkout() {
 				</div>
 				{/* DATE SELECT */}
 				<div className={divStyle}>
-					{/* <p className={pStyle}>
-						Select Delivery Date
-					</p> */}
 					<div>
 						<select
 							className={selectStyle}
@@ -205,9 +197,6 @@ export default function Checkout() {
 				</div>
 				{/* TIME SELECT */}
 				<div className={divStyle}>
-					{/* <p className={pStyle}>
-						Select Time
-					</p> */}
 					<div>
 						<select
 							className={selectStyle}
@@ -248,6 +237,70 @@ export default function Checkout() {
 		)
 	}
 
+	const CheckoutButton = () => {
+		return (
+			<div className="">
+				{viewState === "shipping" && (
+					<div>
+						{selectedTypeSelector === 'cnc' ? (
+							<SubmitButton
+								text={
+									selectedDate === '' || selectedTime === ''
+										? "SELECT PICKUP LOCATION"
+										: "CONTINUE TO PAYMENT"
+								}
+								onClick={() => {
+									setViewState("payment")
+									window.scroll({
+										top: 0,
+										left: 0,
+										behavior: "smooth",
+									})
+								}}
+								disabled={selectedDate === '' || selectedTime === ''}
+							/>
+						) : (
+							<SubmitButton
+								text={
+									isLoading ? "LOADING" :
+										selectedAddressSelector && response
+											? "CONTINUE TO PAYMENT"
+											: "SELECT ADDRESS"
+								}
+								onClick={() => {
+									setViewState("payment")
+									window.scroll({
+										top: 0,
+										left: 0,
+										behavior: "smooth",
+									})
+								}}
+								disabled={selectedAddressSelector && response ? false : true}
+							/>
+						)}
+					</div>
+				)}
+				{viewState === "payment" && (
+					<div className="space-y-4">
+						<ErrorText text={errorMessage} />
+						<SubmitButton
+							text={"CHECKOUT"}
+							onClick={() => {
+								setIsCheckout(true)
+								setIsCheckoutButtonPressed(true)
+								window.scroll({
+									top: 0,
+									left: 0,
+									behavior: "smooth",
+								})
+							}}
+						/>
+					</div>
+				)}
+			</div>
+		)
+	}
+
 	if (!token) {
 		return (
 			<>
@@ -284,7 +337,7 @@ export default function Checkout() {
 		return (
 			<div>
 				<HeadTag title={"Checkout"} />
-				<h5 className="login-token">YOUR CART IS EMPTY</h5>
+				<h5 className="login-token">Fetching cart...</h5>
 			</div>
 		)
 	}
@@ -292,187 +345,143 @@ export default function Checkout() {
 	return (
 		<div className="h-full w-full">
 			<HeadTag title={"Checkout"} />
-			<div className="flex flex-col w-full h-full lg:grid lg:grid-cols-5 2xl:grid 2xl:grid-cols-6 gap-2 divide-y lg:gap-28">
-				<div className="lg:col-span-3 2xl:col-span-4 space-y-12">
-					<ProgressBar
-						currentState={viewState}
-						onClick={setViewState}
-					/>
-					{viewState == "shipping" && (
-						<section className="flex flex-col space-y-4 w-full">
-							<div className="text-center">
-								<SectionHeading text={"Delivery Details"} />
-							</div>
-							{selectedTypeSelector === 'cnc' ? (
-								<PickupLocation />
-							) : (
-								<SelectAddress
-									type={"checkout"}
-									dropDownSelectedAddress={selectedAddressSelector}
-								/>
-							)}
-							<ErrorText text={errorMessage} />
-							<div className="border-y py-1">
-								<TextField
-									label={"Special Instructions"}
-									placeHolder={"instructions"}
-									onChange={setNotes}
-									value={notes}
-								/>
-							</div>
-						</section>
-					)}
-					{viewState === "payment" && (
-						<section className="space-y-6">
-							<div className="text-center">
-								<SectionHeading text={"PAYMENT SELECTION"} />
-							</div>
-							<div className="space-y-2">
-								<InputLabelText text={"Payment Method"} />
-								<div className="flex flex-col space-y-2">
-									{paymentMethods.map((method) => {
-										let { id, name, key } = method
-										if (key === "jswallet") {
-											return <div key={id}></div>
-										}
-										return (
-											<div key={id} className='flex items-center space-x-2'>
-												<input
-													value={key}
-													type={"radio"}
-													onChange={(e) => {
-														setPaymentMethod(e.target.value)
-													}}
-													checked={paymentMethod === key}
-												/>
-												<p>
-													{name}
-												</p>
-											</div>
-										)
-									})}
+			<ProgressBar
+				currentState={viewState}
+				onClick={setViewState}
+			/>
+			<div className="flex flex-col w-full h-full lg:grid lg:grid-cols-5 2xl:grid 2xl:grid-cols-6">
+				<div className={viewState === 'review' ? "lg:col-span-5 2xl:col-span-6 flex flex-col w-full items-center" : "lg:col-span-3 2xl:col-span-4 flex flex-col w-full items-center"}>
+					<section className="w-full lg:w-[60%] space-y-4 bg-slate-100 p-4 m-4 rounded-2xl">
+						{viewState == "shipping" && (
+							<>
+								<p className="font-lato text-lg text-main-blue font-extrabold text-center">
+									DELIVERY DETAILS
+								</p>
+								{selectedTypeSelector === 'cnc' ? (
+									<PickupLocation />
+								) : (
+									<SelectAddress
+										type={"checkout"}
+										dropDownSelectedAddress={selectedAddressSelector}
+									/>
+								)}
+								<ErrorText text={errorMessage} />
+								<div className="">
+									<TextField
+										label={"Special Instructions"}
+										placeHolder={"instructions"}
+										onChange={setNotes}
+										value={notes}
+									/>
 								</div>
-							</div>
-						</section>
-					)}
-					{viewState == "review" && (
-						<>
-							{isLoading ? (
-								<div>
-									Loading
-								</div>
-							) : (
-								<section className="flex flex-col items-center justify-center align-center m-auto space-y-2 p-12">
-									<div className="text-center">
-										{parse(checkoutResponse.data.message)}
+							</>
+						)}
+						{viewState === "payment" && (
+							<>
+								<p className="font-lato text-lg text-main-blue font-extrabold text-center">
+									PAYMENT SELECTION
+								</p>
+								<div className="flex flex-col items-center w-full">
+									<div className="space-y-2 flex flex-col items-center w-1/3">
+										<InputLabelText text={"Payment Method"} />
+										<div className="flex flex-col space-y-2">
+											{paymentMethods.map((method) => {
+												let { id, name, key } = method
+												if (key === "jswallet") {
+													return <div key={id}></div>
+												}
+												return (
+													<div key={id} className='flex items-center space-x-2'>
+														<input
+															value={key}
+															type={"radio"}
+															onChange={(e) => {
+																setPaymentMethod(e.target.value)
+															}}
+															checked={paymentMethod === key}
+														/>
+														<p>
+															{name}
+														</p>
+													</div>
+												)
+											})}
+										</div>
 									</div>
-									<div className="h-[120px] w-full">
-										<Image
-											src={checkoutResponse.data.data.thankyou_image}
-											layout={"responsive"}
-											alt={"Thank You Image"}
-											width={450}
-											height={120}
+								</div>
+								{/* PROMO CODE */}
+								<div className="flex flex-row w-full items-center space-x-4">
+									<div className="w-4/6">
+										<TextField
+											label={'Promo Code'}
+											placeHolder={'Enter Code'}
+											onChange={setCouponCode}
+											value={couponCode}
 										/>
 									</div>
-								</section>
-							)}
-						</>
-					)}
+									<div className="w-2/6">
+										<SubmitButton
+											text={'Apply'}
+											onClick={() => {
+												setCoupon(couponCode)
+											}}
+										/>
+									</div>
+								</div>
+								{couponMessage !== 'Discount code not received' && (
+									<p>
+										{couponMessage}
+									</p>
+								)}
+							</>
+						)}
+						{viewState == "review" && (
+							<>
+								{isLoading ? (
+									<div>
+										Loading
+									</div>
+								) : (
+									<section className="w-full flex flex-col items-center">
+										<div className="text-center">
+											{parse(checkoutResponse.data.message)}
+										</div>
+										<div className="w-full lg:w-2/3">
+											<Image
+												src={checkoutResponse.data.data.thankyou_image}
+												layout={"responsive"}
+												alt={"Thank You Image"}
+												width={450}
+												height={100}
+											/>
+										</div>
+									</section>
+								)}
+							</>
+						)}
+					</section>
+					{/* CHECKOUT BUTTON DIV for desktop*/}
+					<div className="hidden w-[60%] lg:grid lg:col-span-3 2xl:col-span-4">
+						<CheckoutButton />
+					</div>
 				</div>
 				{/* CART DIV */}
-				<div className="lg:col-span-2 2xl:col-span-2 h-full">
-					<CheckoutCart
-						initialCartProducts={initialCartProducts}
-						initialCartData={initialCartData}
-						isLoading={isLoading}
-						fetchCart={setIsFetchCart}
-					/>
-				</div>
-				{/* CHECKOUT BUTTON DIV */}
-				<div className="col-span-4">
-					{viewState === "shipping" && (
-						<div>
-							{selectedTypeSelector === 'cnc' ? (
-								<SubmitButton
-									text={
-										selectedDate === '' || selectedTime === ''
-											? "SELECT PICKUP LOCATION"
-											: "CONTINUE TO PAYMENT"
-									}
-									onClick={() => {
-										setViewState("payment")
-										window.scroll({
-											top: 0,
-											left: 0,
-											behavior: "smooth",
-										})
-									}}
-									disabled={selectedDate === '' || selectedTime === ''}
-								/>
-							) : (
-								<SubmitButton
-									text={
-										response
-											? "CONTINUE TO PAYMENT"
-											: "SELECT ADDRESS"
-									}
-									onClick={() => {
-										setViewState("payment")
-										window.scroll({
-											top: 0,
-											left: 0,
-											behavior: "smooth",
-										})
-									}}
-									disabled={response == null}
-								/>
-							)}
-						</div>
-					)}
-					{viewState === "payment" && (
-						<div className="space-y-4">
-							{/* PROMO CODE */}
-							<div className="flex flex-row w-full items-center space-x-4">
-								<div className="w-4/6">
-									<TextField
-										label={'Promo Code'}
-										placeHolder={'Enter Code'}
-										onChange={setCouponCode}
-										value={couponCode}
-									/>
-								</div>
-								<div className="w-2/6">
-									<SubmitButton
-										text={'Apply'}
-										onClick={() => {
-											setCoupon(couponCode)
-										}}
-									/>
-								</div>
-							</div>
-							{couponMessage !== 'Discount code not received' && (
-								<p>
-									{couponMessage}
-								</p>
-							)}
-							<ErrorText text={errorMessage} />
-							<SubmitButton
-								text={"CHECKOUT"}
-								onClick={() => {
-									setIsCheckout(true)
-									setIsCheckoutButtonPressed(true)
-									window.scroll({
-										top: 0,
-										left: 0,
-										behavior: "smooth",
-									})
-								}}
-							/>
-						</div>
-					)}
+				{viewState !== 'review' && (
+					<div className="lg:col-span-2 h-full">
+						<div className="p-2 lg:hidden"></div>
+						<CheckoutCart
+							initialCartProducts={initialCartProducts}
+							initialCartData={initialCartData}
+							isLoading={isLoading}
+							fetchCart={setIsFetchCart}
+						/>
+					</div>
+				)}
+				{/* CHECKOUT BUTTON DIV for mobile*/}
+				<div className="lg:hidden w-full">
+					<CheckoutButton />
 				</div>
 			</div>
-		</div>
+		</div >
 	)
 }

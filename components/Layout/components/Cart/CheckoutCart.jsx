@@ -1,102 +1,7 @@
-import Image from "next/image"
 import parse from "html-react-parser"
-
-import missingImageIcon from '../../../../public/assets/svgs/missingImageIcon.svg'
-import trashIcon from '../../../../public/assets/svgs/trashIcon.svg'
-import plusIcon from '../../../../public/assets/svgs/plusIcon.svg'
-import minusIcon from '../../../../public/assets/svgs/minusIcon.svg'
-import { useDeleteItemApi, useUpdateItemQtyApi } from "../../../../helpers/Api"
-import ErrorText from "../Typography/ErrorText"
 import { useSelector } from "react-redux"
 
-const ItemListing = ({ item, fetchCart }) => {
-    let {
-        title,
-        qty,
-        currentPrice,
-        specialPrice,
-        productImageUrlThumbnail,
-        productImageUrl,
-        sku
-    } = item
-
-    const { setIsUpdateItemQty, setData } = useUpdateItemQtyApi()
-    const { setIsDelete, setSku } = useDeleteItemApi()
-
-    return (
-        <div className="flex flex-row space-x-2 shadow rounded-3xl overflow-hidden p-2">
-            <div className="relative h-[100px] w-[100px]">
-                <Image
-                    src={
-                        productImageUrlThumbnail
-                            ? productImageUrlThumbnail
-                            : productImageUrl
-                                ? productImageUrl
-                                : missingImageIcon
-                    }
-                    layout={"fill"}
-                    alt="thumbnail"
-                />
-            </div>
-            <div className="flex flex-col justify-between">
-                <p>{title}</p>
-                <div className="flex flex-row space-x-2 lg:space-x-4 items-center">
-                    <button
-                        className={"flex flex-row items-center"}
-                        onClick={() => {
-                            setData({
-                                qty: qty - 1,
-                                sku: sku
-                            })
-                            setIsUpdateItemQty(true)
-                            fetchCart(true)
-                        }}
-                    >
-                        <Image src={minusIcon} width={10} height={10} alt="" />
-                    </button>
-                    <p>{qty}</p>
-                    <button
-                        className={"flex flex-row items-center"}
-                        onClick={() => {
-                            setData({
-                                qty: qty + 1,
-                                sku: sku
-                            })
-                            setIsUpdateItemQty(true)
-                            fetchCart(true)
-                        }}
-                    >
-                        <Image src={plusIcon} width={10} height={10} alt="" />
-                    </button>
-                    {specialPrice > 0 ? (
-                        <p>x RS. {specialPrice}</p>
-                    ) : (
-                        <p>x RS. {currentPrice}</p>
-                    )}
-                    <button
-                        onClick={() => {
-                            setSku(sku)
-                            setIsDelete(true)
-                            fetchCart(true)
-                        }}
-                    >
-                        <Image
-                            src={trashIcon}
-                            height={20}
-                            width={20}
-                            alt="icon"
-                        />
-                    </button>
-                </div>
-                {specialPrice > 0 ? (
-                    <p>RS. {specialPrice * qty}</p>
-                ) : (
-                    <p>RS. {currentPrice * qty}</p>
-                )}
-            </div>
-        </div>
-    )
-}
+import CartItemListing from "./CartItemListing"
 
 const CheckoutCart = ({ initialCartProducts, initialCartData, isLoading, fetchCart }) => {
     const selectedTypeSelector = useSelector(state => state.general.selectedType)
@@ -105,17 +10,8 @@ const CheckoutCart = ({ initialCartProducts, initialCartData, isLoading, fetchCa
     let pLeft = "font-lato text-md text-main-blue"
     let pRight = "font-lato text-lg font-bold text-right"
 
-    // if (isLoading) {
-    //     return (
-    //         <div>
-    //             Fetching Cart Data
-    //         </div>
-    //     )
-    // }
-
     let {
         subtotal,
-        tax,
         shipping_amount,
         grand_total,
         shipment_message,
@@ -125,11 +21,11 @@ const CheckoutCart = ({ initialCartProducts, initialCartData, isLoading, fetchCa
     } = initialCartData
 
     return (
-        <div className="flex flex-col w-full h-full justify-between bg-white rounded-3xl">
-            <div className="overflow-y-auto p-4 h-96 space-y-4">
+        <div className="flex flex-col w-full bg-white lg:border-l-2 border-t-2 lg:border-t-0">
+            <div className="overflow-y-auto max-h-64 divide-y">
                 {reduxCart.map((product) => {
                     return (
-                        <ItemListing
+                        <CartItemListing
                             key={product.sku}
                             item={product}
                             fetchCart={fetchCart}
@@ -137,18 +33,12 @@ const CheckoutCart = ({ initialCartProducts, initialCartData, isLoading, fetchCa
                     )
                 })}
             </div>
-            <div className="grid grid-cols-2 gap-2 font-lato items-center border-t-2 px-4 py-2">
+            <div className="grid grid-cols-2 gap-2 font-lato items-center border-y-2 px-4 py-2">
                 <p className={pLeft}>SubTotal</p>
-                <p className={pRight}>{subtotal}</p>
-                <p className={pLeft}>Tax</p>
-                <p className={pRight}>
-                    {base_currency_code} {tax}
-                </p>
+                <p className={pRight}>{base_currency_code} {subtotal}</p>
                 {selectedTypeSelector === 'cnc' ? (
                     <>
-                        <p className={pLeft}>Pickup</p>
-                        <p className={pRight}>{parse(pickup_message)}</p>
-
+                        <p className={[pRight] + " col-span-2 text-justify"}>{parse(pickup_message)}</p>
                     </>
                 ) : (
                     <>

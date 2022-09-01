@@ -31,7 +31,7 @@ export default function Profile() {
 		>
 			<Link href={"/profile"} passHref>
 				<a className="flex flex-row w-full items-center whitespace-nowrap space-x-px font-lato text-main-blue font-semibold">
-					<p className="capitalize">Welcome, {name}</p>
+					<p className="capitalize font-lato">Welcome, {name}</p>
 				</a>
 			</Link>
 			<div
@@ -44,7 +44,7 @@ export default function Profile() {
 					<LinkText text={"My Orders"} path={"/order"} />
 					<LinkText text={"My Addresses"} path={"/address"} />
 				</div>
-				<SubmitButton text={"LOGOUT"} onClick={logout} bgColor={"bg-red-600"} />
+				<SubmitButton text={"LOGOUT"} onClick={logout} bgColor={"bg-red-500"} />
 			</div>
 		</div>
 	)
