@@ -1,15 +1,13 @@
 import { useState, useEffect } from "react"
 import parse from "html-react-parser"
 import Image from "next/image"
-import { useSelector } from "react-redux"
-import { useDispatch } from "react-redux"
+import { useSelector, useDispatch } from "react-redux"
 
 import { getGeneralApiParams } from "../helpers/ApiHelpers"
 import SelectAddress from "../components/Layout/components/Address/SelectAddress"
 import ErrorText from "../components/Layout/components/Typography/ErrorText"
 import SubmitButton from "../components/Layout/components/Buttons/SubmitButton"
 import TextField from "../components/Layout/components/Input/TextField"
-import SectionHeading from "../components/Layout/components/Typography/SectionHeading"
 import InputLabelText from "../components/Layout/components/Typography/InputLabelText"
 import HeadTag from "../components/Layout/components/Head/HeadTag"
 import { useInitialCartDataApi, usePickupLocationsApi } from "../helpers/Api"
@@ -46,9 +44,6 @@ export default function Checkout() {
 				setViewState('review')
 			}
 		}
-		// if (!isLoading && viewState === 'loading') {
-		// 	setViewState('review')
-		// }
 	}, [checkoutResponse, viewState, isCheckoutButtonPressed])
 
 	const ProgressBar = ({ currentState, onClick }) => {
@@ -440,8 +435,6 @@ export default function Checkout() {
 								)}
 							</>
 						)}
-						{/* <section className="flex flex-col items-center justify-center align-center m-auto space-y-2 p-2 lg:p-12">
-									</section> */}
 						{viewState == "review" && (
 							<>
 								{isLoading ? (
