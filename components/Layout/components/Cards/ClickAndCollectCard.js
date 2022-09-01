@@ -47,10 +47,10 @@ export default function ClickAndCollectCard({ isDisabled }) {
 				}}
 				disabled={isDisabled}
 			>
-				<p className='font-nunito text-main-blue font-bold text-sm'>
+				<p className='font-nunito text-main-blue font-bold text-sm lg:text-2xl pl-2 leading-none'>
 					Click & Collect
 				</p>
-				<div className='w-[80px]'>
+				<div className='w-[80px] lg:w-[150px]'>
 					<Image
 						src={clickAndCollectIcon}
 						layout={'responsive'}

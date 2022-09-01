@@ -22,10 +22,10 @@ export default function BulkBuyCard() {
 				dispatch(updateSelectedType('bulk'))
 			}}
 		>
-			<p className='font-nunito text-main-blue font-bold text-sm'>
+			<p className='font-nunito text-main-blue font-bold text-sm lg:text-2xl pl-2 leading-none'>
 				Bulk Buy
 			</p>
-			<div className='w-[40px]'>
+			<div className='w-[40px] lg:w-[100px]'>
 				<Image
 					src={bulkBuyIcon}
 					layout={'responsive'}
