@@ -62,8 +62,8 @@ export default function CartSlider() {
 								No items in your cart
 							</p>
 						) : (
-							<div className="overflow-y-auto grid grid-flow-row w-full lg:px-4 2xl:px-12 py-2">
-								<div className="divide-y">
+							<div className="overflow-y-auto grid grid-flow-row w-full p-2">
+								<div className="divide-y overflow-y-auto w-full">
 									{reduxCart.map((item) => {
 										return (
 											<CartItemListing
