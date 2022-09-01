@@ -1,13 +1,11 @@
-import BannerShimmer from '../components/Layout/components/Loaders/Shimmers/BannerShimmer'
-import CategoryShimmer from '../components/Layout/components/Loaders/Shimmers/CategoryShimmer'
-import SingleProductShimmer from '../components/Layout/components/Loaders/SingleProductShimmer'
-
+import HomeLoader from '../components/Layout/components/Loaders/HomeLoader'
 
 export default function Test() {
     return (
         <div>
             {/* <BannerShimmer /> */}
-            <CategoryShimmer />
+            {/* <CategoryShimmer /> */}
+            <HomeLoader />
             {/* <SingleProductShimmer /> */}
         </div>
     )
