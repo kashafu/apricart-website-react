@@ -62,7 +62,7 @@ export default function CartSlider() {
 								No items in your cart
 							</p>
 						) : (
-							<div className="overflow-y-auto grid grid-flow-row w-full p-2">
+							<div className="overflow-y-auto flex flex-col h-full w-full p-2">
 								<div className="divide-y overflow-y-auto w-full">
 									{reduxCart.map((item) => {
 										return (
@@ -81,20 +81,18 @@ export default function CartSlider() {
 											RS. {getTotalPrice()}
 										</p>
 									</div>
-									<div className="">
-										<SubmitButton
-											text={"CHECKOUT"}
-											onClick={() => {
-												if (token) {
-													setShowCart(false);
-													router.push("/checkout");
-												} else {
-													setShowCart(false);
-													router.push("/login");
-												}
-											}}
-										/>
-									</div>
+									<SubmitButton
+										text={"CHECKOUT"}
+										onClick={() => {
+											if (token) {
+												setShowCart(false);
+												router.push("/checkout");
+											} else {
+												setShowCart(false);
+												router.push("/login");
+											}
+										}}
+									/>
 								</div>
 							</div>
 						)}
