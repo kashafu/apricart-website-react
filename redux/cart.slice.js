@@ -36,7 +36,6 @@ const cartSlice = createSlice({
 			}
 		},
 		updateQuantity: (state, action) => {
-			console.log("HERE")
 			const item = state.find((item) => item.sku === action.payload.sku);
 
 			// Increment qty case

@@ -23,7 +23,6 @@ export default function PageContact() {
 			file: "http://file.pdf",
 			text: subject,
 		}
-		console.log(body)
 		try {
 			let response = await axios.post(url, body, {
 				headers: headers,
@@ -86,7 +85,7 @@ export default function PageContact() {
 							placeholder="Type your message"
 							className="col-span-2 w-2/3 h-[100px] py-2 px-2 rounded-lg bg-slate-200 overflow-hidden"
 						>
-							
+
 						</textarea>
 
 						<div className="flex flex-col gap-1 items-center">

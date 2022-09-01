@@ -43,7 +43,6 @@ export default function Register() {
                 "guestuserid": userId,
 
             }
-            console.log(body)
             const response = await axios.post(url, body, {
                 headers: headers,
             });

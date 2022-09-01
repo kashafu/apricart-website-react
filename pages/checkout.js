@@ -141,7 +141,6 @@ export default function Checkout() {
 							disabled={false}
 							onChange={(e) => {
 								dispatch(updatePickupLocation(JSON.parse(e.target.value)))
-								console.log(JSON.parse(e.target.value))
 							}}
 							value={selectedPickupLocationSelector}
 						>
