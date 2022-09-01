@@ -6,7 +6,7 @@ import downArrowIcon from "../../../../public/assets/svgs/downArrowIcon.svg"
 import toKebabCase from "../../../../helpers/toKebabCase"
 import { useCategoriesApi } from "../../../../helpers/Api"
 import { useRouter } from "next/router"
-import CategoryShimmer from "../Loaders/CategoryShimmer"
+import CategoryShimmer from "../Loaders/Shimmers/CategoryShimmer"
 
 export default function Categories() {
 	const router = useRouter()

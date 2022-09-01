@@ -15,6 +15,7 @@ import Carousel from "../components/Layout/components/Banner/Carousel"
 import { useHomeApi } from "../helpers/Api"
 import TypeCardSelector from "../components/Layout/components/Cards/TypeCardSelector"
 import { useSelector } from "react-redux"
+import IndexLoader from "../components/Layout/components/Loaders/IndexLoader"
 
 export default function Home() {
 	const router = useRouter()
@@ -32,7 +33,8 @@ export default function Home() {
 						"Online grocery store in Pakistan, offering bulk buy and home delivery"
 					}
 				/>
-				<p>Loading</p>
+				{/* <p>Loading</p> */}
+				<IndexLoader />
 			</div>
 		)
 	}

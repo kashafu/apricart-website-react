@@ -1,5 +1,5 @@
-import BannerShimmer from '../components/Layout/components/Loaders/BannerShimmer'
-import CategoryShimmer from '../components/Layout/components/Loaders/CategoryShimmer'
+import BannerShimmer from '../components/Layout/components/Loaders/Shimmers/BannerShimmer'
+import CategoryShimmer from '../components/Layout/components/Loaders/Shimmers/CategoryShimmer'
 import SingleProductShimmer from '../components/Layout/components/Loaders/SingleProductShimmer'
 
 
