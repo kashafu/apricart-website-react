@@ -6,6 +6,7 @@ const HomeLoader = () => {
         <div className="flex flex-col space-y-12">
             <BannerShimmer />
             <MainProductsShimmer />
+            <MainProductsShimmer />
         </div>
     )
 }
