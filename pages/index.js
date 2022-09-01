@@ -20,7 +20,7 @@ export default function Home() {
 	const router = useRouter()
 	const selectedTypeSelector = useSelector(state => state.general.selectedType)
 	let { token } = getGeneralApiParams()
-	const { isLoading, isPopupAd, homeData, banners } = useHomeApi()
+	const { isLoading, isPopupAd, homeData } = useHomeApi()
 	const [showPopupAd, setShowPopupAd] = useState(isPopupAd)
 
 	if (isLoading) {

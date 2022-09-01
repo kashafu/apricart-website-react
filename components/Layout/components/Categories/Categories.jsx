@@ -6,6 +6,7 @@ import downArrowIcon from "../../../../public/assets/svgs/downArrowIcon.svg"
 import toKebabCase from "../../../../helpers/toKebabCase"
 import { useCategoriesApi } from "../../../../helpers/Api"
 import { useRouter } from "next/router"
+import CategoryShimmer from "../Loaders/CategoryShimmer"
 
 export default function Categories() {
 	const router = useRouter()
@@ -26,9 +27,7 @@ export default function Categories() {
 
 	if (isLoading) {
 		return (
-			<div>
-				<p>Loading categories</p>
-			</div>
+			<CategoryShimmer />
 		)
 	}
 
