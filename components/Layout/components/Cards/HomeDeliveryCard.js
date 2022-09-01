@@ -19,42 +19,22 @@ export default function HomeDeliveryCard({ isDisabled }) {
     }, [isDisabled])
 
     return (
-        <button className={[style] + ' relative rounded-lg shadow flex items-center grow justify-between ' + [disabledStyle]}
+        <button className={[style] + ' relative rounded-lg shadow flex items-center grow ' + [disabledStyle]}
             onClick={() => {
                 dispatch(updateSelectedType('home'))
             }}
             disabled={isDisabled}
         >
-            <p className='font-nunito text-main-blue font-bold text-sm lg:text-2xl pl-2 leading-none'>
+            <p className='font-nunito text-main-blue font-black truncate lg:font-extrabold text-[8px] md:text-base w-full lg:text-lg 2xl:text-2xl pl-1 lg:pl-2 leading-none'>
                 Home Delivery
             </p>
-            <div className='w-[80px] lg:w-[120px]'>
+            <div className='w-[70%] max-w-[150px]'>
                 <Image
                     src={homeDeliveryIcon}
                     layout={'responsive'}
                     alt='icon'
                 />
             </div>
-            {/* <div className={[pStyle] + ' z-10 hidden absolute self-start font-bold lg:inline text-xl xl:text-2xl 2xl:text-3xl pl-4'}>
-                <p className='font-nunito'>
-                    Home
-                </p>
-                <p className='font-nunito'>
-                    Delivery
-                </p>
-            </div>
-            <div className='self-end mt-auto relative w-full lg:w-[60%] lg:pl-6'>
-                <Image
-                    src={homeDeliveryIcon}
-                    layout={'responsive'}
-                    alt='icon'
-                />
-            </div>
-            <div className={[pStyle] + ' lg:hidden flex font-bold text-xs'}>
-                <p className='font-nunito'>
-                    Home Delivery
-                </p>
-            </div> */}
         </button>
     )
 }

@@ -161,7 +161,7 @@ export default function Home() {
 					)}
 				</section>
 				{/* BANNERS SECTION hidden on desktop */}
-				<section className="lg:hidden w-full items-center mt-4">
+				<section className="lg:hidden w-full items-center">
 					{/* MAIN BANNER */}
 					<section className="w-full">
 						<Carousel />

@@ -41,35 +41,22 @@ export default function ClickAndCollectCard({ isDisabled }) {
 	return (
 		<>
 			<button
-				className={[style] + ' relative rounded-lg shadow flex grow items-center justify-between ' + [disabledStyle]}
+				className={[style] + ' relative rounded-lg shadow flex grow items-center ' + [disabledStyle]}
 				onClick={() => {
 					setShowPopup(!showPopup)
 				}}
 				disabled={isDisabled}
 			>
-				<p className='font-nunito text-main-blue font-bold text-sm lg:text-2xl pl-2 leading-none'>
+				<p className='font-nunito text-main-blue font-black truncate lg:font-extrabold w-full text-[8px] md:text-base lg:text-lg 2xl:text-2xl pl-1 lg:pl-2 leading-none'>
 					Click & Collect
 				</p>
-				<div className='w-[80px] lg:w-[150px]'>
+				<div className='w-[80%] max-w-[180px]'>
 					<Image
 						src={clickAndCollectIcon}
 						layout={'responsive'}
 						alt='icon'
 					/>
 				</div>
-				{/* <div className="text-main-blue z-10 hidden absolute self-start font-bold lg:inline text-xl xl:text-2xl 2xl:text-3xl pl-4">
-					<p className="font-nunito font-bold">Click & Collect</p>
-				</div>
-				<div className="self-end mt-auto relative w-full lg:w-[60%] lg:pr-4">
-					<Image
-						src={clickAndCollectIcon}
-						layout={"responsive"}
-						alt="click and collect"
-					/>
-				</div>
-				<div className="text-main-blue lg:hidden flex font-semibold text-xs">
-					<p className="font-nunito font-bold">Click & Collect</p>
-				</div> */}
 			</button>
 			{showPopup && (
 				<Popup
