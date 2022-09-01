@@ -42,7 +42,6 @@ export default function SelectAddress({ type, setAddress, dropDownSelectedAddres
     }
 
     const handleSavedAddressChange = (e) => {
-        console.log(e.target.value)
         setSelectedAddress(e.target.value)
         if (setAddress) {
             setAddress(e.target.value)
