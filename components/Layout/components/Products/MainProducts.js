@@ -89,7 +89,7 @@ export default function MainProducts({ section }) {
 						})}
 					</section>
 					{/* LAPTOP VIEW PRODUCTS */}
-					<section className="hidden lg:grid lg:grid-cols-5 gap-2 2xl:hidden">
+					<section className="hidden lg:grid lg:grid-cols-4 gap-2 2xl:hidden">
 						{data.slice(0, numberOfProductsLaptop).map((product) => {
 							let { id } = product
 							return (
