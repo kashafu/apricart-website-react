@@ -39,8 +39,6 @@ export default function Categories() {
 		)
 	}
 
-	console.log()
-
 	return (
 		<div className="sticky top-[70px] w-full overflow-y-auto no-scrollbar max-h-[calc(100vh-100px)]">
 			<div className="space-y-4">
