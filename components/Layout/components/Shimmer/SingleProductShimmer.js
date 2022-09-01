@@ -1,4 +1,4 @@
-export default function SingleProductShimmer() {
+const SingleProductShimmer = () => {
 	return (
 		<div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 sm:grid-rows-2 w-full">
 			<div className="animate-pulse h-[400px] m-2 rounded-lg w-full">
@@ -77,3 +77,5 @@ export default function SingleProductShimmer() {
 		</div>
 	)
 }
+
+export default SingleProductShimmer

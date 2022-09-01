@@ -1,4 +1,4 @@
-export default function Bannershimmer() {
+const BannerShimmer = () => {
 	return (
 		<div className="animate-pulse flex flex-row mx-2 h-[600px] p-4 bg-slate-100 ">
 			<div className="animate-pulse  w-3/5 h-3/4 my-[100px]  bg-cyan-200"></div>
@@ -9,3 +9,5 @@ export default function Bannershimmer() {
 		</div>
 	)
 }
+
+export default BannerShimmer
