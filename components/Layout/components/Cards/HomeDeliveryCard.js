@@ -7,13 +7,11 @@ import { useEffect, useState } from 'react'
 export default function HomeDeliveryCard({ isDisabled }) {
     const dispatch = useDispatch()
     const [style, setStlye] = useState('')
-    const [pStyle, setPStyle] = useState('')
     const [disabledStyle, setDisabledStyle] = useState('')
     const selectedTypeSelector = useSelector((state) => state.general.selectedType)
 
     useEffect(() => {
         setStlye(selectedTypeSelector === 'home' ? 'bg-main-yellow' : '')
-        setPStyle(selectedTypeSelector === 'home' ? 'text-main-blue' : 'text-main-blue')
     }, [selectedTypeSelector])
 
     useEffect(() => {
@@ -21,13 +19,23 @@ export default function HomeDeliveryCard({ isDisabled }) {
     }, [isDisabled])
 
     return (
-        <button className={[style] + ' relative rounded-lg shadow flex flex-col grow p-1 items-center ' + [disabledStyle]}
+        <button className={[style] + ' relative rounded-lg shadow flex items-center grow justify-between ' + [disabledStyle]}
             onClick={() => {
                 dispatch(updateSelectedType('home'))
             }}
             disabled={isDisabled}
         >
-            <div className={[pStyle] + ' z-10 hidden absolute self-start font-bold lg:inline text-xl xl:text-2xl 2xl:text-3xl pl-4'}>
+            <p className='font-nunito text-main-blue font-bold text-sm'>
+                Home Delivery
+            </p>
+            <div className='w-[80px]'>
+                <Image
+                    src={homeDeliveryIcon}
+                    layout={'responsive'}
+                    alt='icon'
+                />
+            </div>
+            {/* <div className={[pStyle] + ' z-10 hidden absolute self-start font-bold lg:inline text-xl xl:text-2xl 2xl:text-3xl pl-4'}>
                 <p className='font-nunito'>
                     Home
                 </p>
@@ -46,7 +54,7 @@ export default function HomeDeliveryCard({ isDisabled }) {
                 <p className='font-nunito'>
                     Home Delivery
                 </p>
-            </div>
+            </div> */}
         </button>
     )
 }

@@ -17,12 +17,22 @@ export default function BulkBuyCard() {
 	}, [selectedTypeSelector])
 
 	return (
-		<button className={[style] + ' relative rounded-lg shadow flex flex-col grow p-1 lg:pl-2 lg:pt-2 items-center'}
+		<button className={[style] + ' relative rounded-lg shadow flex grow items-center justify-between'}
 			onClick={() => {
 				dispatch(updateSelectedType('bulk'))
 			}}
 		>
-			<div className={[pStyle] + " hidden absolute self-start font-bold text-main-blue lg:inline text-xl xl:text-2xl 2xl:text-3xl pl-4"}>
+			<p className='font-nunito text-main-blue font-bold text-sm'>
+				Bulk Buy
+			</p>
+			<div className='w-[40px]'>
+				<Image
+					src={bulkBuyIcon}
+					layout={'responsive'}
+					alt='icon'
+				/>
+			</div>
+			{/* <div className={[pStyle] + " hidden absolute self-start font-bold text-main-blue lg:inline text-xl xl:text-2xl 2xl:text-3xl pl-4"}>
 				<p className="font-nunito font-bold">Bulk Buy</p>
 			</div>
 			<div className="self-end mt-auto relative w-full lg:w-[55%]">
@@ -30,7 +40,7 @@ export default function BulkBuyCard() {
 			</div>
 			<div className={[pStyle] + " lg:hidden flex font-semibold text-main-blue text-xs"}>
 				<p className="font-nunito font-bold">Bulk Buy</p>
-			</div>
+			</div> */}
 		</button>
 	)
 }
