@@ -28,8 +28,8 @@ const CartItemListing = ({ item, fetchCart }) => {
     let immediateCategoryId = categoryIds.replace(/\s+/g, "").split("|")[0]
 
     return (
-        <div className="grid grid-cols-3 items-center gap-2 overflow-hidden bg-white">
-            <div className="col-span-1 place-self-center relative h-[80px] w-[80px]">
+        <div className="grid grid-cols-4 lg:grid-cols-3 items-center lg:gap-2 overflow-hidden bg-white">
+            <div className="col-span-1 place-self-center relative h-[50px] w-[50px] lg:h-[80px] lg:w-[80px]">
                 <Link
                     href={
                         "/category/" +
@@ -58,14 +58,14 @@ const CartItemListing = ({ item, fetchCart }) => {
                     </a>
                 </Link>
             </div>
-            <div className="col-span-2 grid grid-rows-4 pr-2">
+            <div className="col-span-3 lg:col-span-2 grid grid-rows-4 lg:pr-2">
                 <div className="row-span-2 flex items-center">
-                    <p className="font-bold text-lg">{title}</p>
+                    <p className="font-bold text-base lg:text-lg">{title}</p>
                 </div>
                 <div className="flex flex-row items-center justify-between">
                     {/* QUANTITY and PRICE */}
-                    <div className="flex space-x-4">
-                        <div className="grid grid-cols-3 bg-slate-200 rounded-lg gap-4 lg:gap-4 px-2">
+                    <div className="flex flex-row items-center space-x-2 lg:space-x-4">
+                        <div className="grid grid-cols-3 bg-slate-200 rounded-lg gap-2 lg:gap-4 px-2">
                             <button
                                 className={"flex flex-row items-center"}
                                 onClick={() => {
@@ -94,7 +94,7 @@ const CartItemListing = ({ item, fetchCart }) => {
                                 <Image src={plusIcon} width={10} height={10} alt="" />
                             </button>
                         </div>
-                        <p className="truncate">
+                        <p className="truncate text-sm lg:text-base">
                             {specialPrice > 0 ? (
                                 "x RS. " + specialPrice
                             ) : (
@@ -117,7 +117,7 @@ const CartItemListing = ({ item, fetchCart }) => {
                         />
                     </button>
                 </div>
-                <p className="font-bold text-xl truncate">
+                <p className="font-bold text-lg lg:text-xl truncate">
                     {specialPrice > 0 ? (
                         "RS. " + specialPrice * qty
                     ) : (
