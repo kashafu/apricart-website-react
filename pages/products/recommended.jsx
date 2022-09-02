@@ -5,7 +5,7 @@ import PageHeading from '../../components/Layout/components/Typography/PageHeadi
 import { useRecommendedProductsApi } from "../../helpers/Api"
 
 export default function Recommended() {
-	const { isLoading, errorMessage, recommendedProducts, response } = useRecommendedProductsApi()
+	const { isLoading, errorMessage, recommendedProducts } = useRecommendedProductsApi()
 
 	const RecommendedProducts = () => {
 		if (isLoading) {
@@ -44,7 +44,6 @@ export default function Recommended() {
 		)
 
 	}
-
 
 	return (
 		<div>
