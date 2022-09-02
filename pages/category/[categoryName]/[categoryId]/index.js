@@ -10,6 +10,7 @@ import {
 	useCategoryProductsApi,
 } from "../../../../helpers/Api"
 import SubCategoryShimmer from "../../../../components/Layout/components/Loaders/Shimmers/SubCategoryShimmer"
+import SubCategoryProductsShimmer from "../../../../components/Layout/components/Loaders/Shimmers/SubCategoryProductsShimmer"
 
 export default function CategoryProducts() {
 	const router = useRouter()
@@ -93,9 +94,7 @@ export default function CategoryProducts() {
 	const CategoryProducts = () => {
 		if (isLoading) {
 			return (
-				<div>
-
-				</div>
+				<SubCategoryProductsShimmer />
 			)
 		}
 

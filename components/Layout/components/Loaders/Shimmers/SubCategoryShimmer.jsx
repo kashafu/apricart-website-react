@@ -6,15 +6,22 @@ const SubCategoryShimmer = () => {
     }
 
     return (
-        <div className="flex flex-row gap-4 py-4 px-2">
-            <SingleShimmer />
-            <SingleShimmer />
-            <SingleShimmer />
-            <SingleShimmer />
-            <SingleShimmer />
-            <SingleShimmer />
-            <SingleShimmer />
-            <SingleShimmer />
+        <div>
+            <div className="hidden lg:flex overflow-auto h-full w-full gap-4 py-4 px-2">
+                <SingleShimmer />
+                <SingleShimmer />
+                <SingleShimmer />
+                <SingleShimmer />
+                <SingleShimmer />
+                <SingleShimmer />
+                <SingleShimmer />
+                <SingleShimmer />
+            </div>
+            <div className="flex lg:hidden overflow-auto h-full w-full gap-4 py-4 px-2">
+                <SingleShimmer />
+                <SingleShimmer />
+                <SingleShimmer />
+            </div>
         </div>
     )
 }
