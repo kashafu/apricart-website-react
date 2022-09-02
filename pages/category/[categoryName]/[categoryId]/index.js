@@ -9,6 +9,7 @@ import toKebabCase, { fromKebabCase } from "../../../../helpers/toKebabCase"
 import {
 	useCategoryProductsApi,
 } from "../../../../helpers/Api"
+import SubCategoryShimmer from "../../../../components/Layout/components/Loaders/Shimmers/SubCategoryShimmer"
 
 export default function CategoryProducts() {
 	const router = useRouter()
@@ -25,6 +26,12 @@ export default function CategoryProducts() {
 	} = useCategoryProductsApi()
 
 	const SubCategories = () => {
+		if (isLoading) {
+			return (
+				<SubCategoryShimmer />
+			)
+		}
+
 		return (
 			<section>
 				{subCategories.length > 0 && (
@@ -84,6 +91,14 @@ export default function CategoryProducts() {
 	}
 
 	const CategoryProducts = () => {
+		if (isLoading) {
+			return (
+				<div>
+
+				</div>
+			)
+		}
+
 		return (
 			<section>
 				<section className="grid grid-cols-2 md:grid-cols-4 2xl:grid-cols-5 gap-4">
@@ -105,14 +120,6 @@ export default function CategoryProducts() {
 
 	if (!router.isReady) {
 		return <></>
-	}
-
-	if (isLoading) {
-		return (
-			<div>
-				<p>Loading</p>
-			</div>
-		)
 	}
 
 	if (!categoryProducts) {
