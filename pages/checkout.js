@@ -351,7 +351,7 @@ export default function Checkout() {
 			/>
 			<div className="flex flex-col w-full h-full lg:grid lg:grid-cols-5 2xl:grid 2xl:grid-cols-6">
 				<div className={viewState === 'review' ? "lg:col-span-5 2xl:col-span-6 flex flex-col w-full items-center" : "lg:col-span-3 2xl:col-span-4 flex flex-col w-full items-center"}>
-					<section className="w-full lg:w-[60%] space-y-4 bg-slate-100 p-4 m-4 rounded-2xl">
+					<section className="w-full lg:w-[80%] 2xl:w-[60%] space-y-4 bg-slate-100 p-4 m-4 rounded-2xl">
 						{viewState == "shipping" && (
 							<>
 								<p className="font-lato text-lg text-main-blue font-extrabold text-center">
