@@ -103,6 +103,7 @@ export const useCategoryProductsApi = () => {
 
 	const [isLoading, setIsLoading] = useState(true)
 	const [categoryProducts, setCategoryProducts] = useState(null)
+	const [subCategories, setSubCategories] = useState(null)
 	const [size, setSize] = useState(20)
 	const [page, setPage] = useState(1)
 	const [totalItems, setTotalItems] = useState(0)
@@ -134,7 +135,8 @@ export const useCategoryProductsApi = () => {
 				headers: headers,
 			})
 			setResponse(apiResponse)
-			setCategoryProducts(apiResponse.data.data)
+			setCategoryProducts(apiResponse.data.data.products)
+			setSubCategories(apiResponse.data.data.categories)
 			setTotalItems(+apiResponse.data.total)
 		} catch (error) {
 			setErrorResponse(error?.response)
@@ -155,6 +157,7 @@ export const useCategoryProductsApi = () => {
 		page,
 		size,
 		totalItems,
+		subCategories
 	}
 }
 
