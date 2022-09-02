@@ -101,7 +101,7 @@ export default function Home() {
 					</div>
 				)}
 				{/* BANNERS SECTION hidden on phone */}
-				<section className="hidden lg:relative lg:w-full lg:aspect-[16/6] lg:grid grid-cols-12 p-2 items-center">
+				<section className="hidden lg:relative lg:w-full lg:aspect-[16/6] lg:grid grid-cols-12 gap-x-2 p-2 items-center">
 					{/* BACKGROUND IMAGE */}
 					{/* <div className="absolute w-full h-full blur-lg">
 						<Image
@@ -132,7 +132,7 @@ export default function Home() {
 							</div>
 						</section>
 					) : (
-						<section className="col-span-5 grid grid-rows-2 h-full w-full">
+						<section className="col-span-5 grid grid-rows-2 gap-y-2 h-full w-full">
 							<div className="relative w-full h-full">
 								<Link href={"/offers/45"} passHref>
 									<a>
