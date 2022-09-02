@@ -5,6 +5,13 @@ import { useSelector } from "react-redux"
 
 import menuIcon from "../../../../public/assets/svgs/menuIcon.svg"
 import crossIcon from "../../../../public/assets/svgs/cross2Icon.svg"
+import profileIcon from "../../../../public/assets/svgs/profileIcon.svg"
+import categoriesIcon from "../../../../public/assets/svgs/categoriesIcon.svg"
+import myOrdersIcon from "../../../../public/assets/svgs/myOrdersIcon.svg"
+import shoppingListIcon from "../../../../public/assets/svgs/shoppingListIcon.svg"
+import locationPinBlueIcon from "../../../../public/assets/svgs/locationPinBlueIcon.svg"
+import logoutIcon from "../../../../public/assets/svgs/logoutIcon.svg"
+
 import Logo from "../Logo/Logo"
 import {
 	getGeneralApiParams,
@@ -43,7 +50,7 @@ export default function HamburgerMenu() {
 			{showMenu && (
 				<div className="w-full h-full animate-fade-in">
 					<div className="fixed top-0 flex flex-col py-4 px-2 left-0 w-3/4 h-full bg-white z-50 justify-between rounded-r-2xl">
-						<div className="space-y-4">
+						<div className="space-y-4 w-full">
 							<div className="flex flex-row justify-between items-center">
 								<div className="w-1/2">
 									<Logo />
@@ -66,85 +73,95 @@ export default function HamburgerMenu() {
 									Welcome, {name}
 								</p>
 							)}
-							<div className="items-center align-center space-y-2">
-								<div className="py-2">
-									{selectedTypeSelector === 'cnc' ? (
-										<PickupLocationSelector />
-									) : (
-										<>
-											{token ? (
-												<div onClick={() => {
+							<div className="py-2 w-full">
+								{selectedTypeSelector === 'cnc' ? (
+									<PickupLocationSelector />
+								) : (
+									<>
+										{token ? (
+											<div
+												className="w-full"
+												onClick={() => {
 													setShowMenu(!showMenu)
 												}}>
-													<AddressSelector />
-												</div>
-											) : (
-												<CitySelector />
-											)}
-										</>
-									)}
+												<AddressSelector />
+											</div>
+										) : (
+											<CitySelector />
+										)}
+									</>
+								)}
 
-								</div>
+							</div>
+							<div className="flex flex-col items-center justify-center align-center space-y-2 w-2/3">
 								<LinkButton
 									text={"View Categories"}
 									path={"/category"}
 									onClick={() => {
 										setShowMenu(!showMenu)
 									}}
+									icon={categoriesIcon}
+									height={'20px'}
+									width={'20px'}
 								/>
+								{token && (
+									<>
+										<LinkButton
+											text={"Account"}
+											path={"/profile"}
+											onClick={() => {
+												setShowMenu(!showMenu)
+											}}
+											icon={profileIcon}
+											height={'20px'}
+											width={'20px'}
+										/>
+										<LinkButton
+											text={"My Orders"}
+											path={"/order"}
+											onClick={() => {
+												setShowMenu(!showMenu)
+											}}
+											icon={myOrdersIcon}
+											height={'20px'}
+											width={'20px'}
+										/>
+										<LinkButton
+											text={"My Addresses"}
+											path={"/address"}
+											onClick={() => {
+												setShowMenu(!showMenu)
+											}}
+											icon={locationPinBlueIcon}
+											height={'20px'}
+											width={'20px'}
+										/>
+									</>
+								)}
 								<LinkButton
 									text={"Shopping List"}
 									path={"/wishlist"}
 									onClick={() => {
 										setShowMenu(!showMenu)
 									}}
-								/>
-								<LinkButton
-									text={"Order Manually"}
-									path={token ? "/grocery_list" : "/login"}
-									onClick={() => {
-										setShowMenu(!showMenu)
-									}}
+									icon={shoppingListIcon}
+									height={'20px'}
+									width={'20px'}
 								/>
 							</div>
 						</div>
 						{token ? (
 							<div className="flex flex-col space-y-2">
 								<SubmitButton
-									text={"ACCOUNT"}
-									onClick={() => {
-										setShowMenu(!showMenu)
-										router.push("/profile")
-									}}
-								/>
-								<SubmitButton
-									text={"ADDRESSES"}
-									onClick={() => {
-										setShowMenu(!showMenu)
-										router.push("/address")
-									}}
-								/>
-								<SubmitButton
-									text={"ORDERS"}
-									onClick={() => {
-										setShowMenu(!showMenu)
-										router.push("/order")
-									}}
-								/>
-								<SubmitButton
-									text={"ADDRESS"}
-									onClick={() => {
-										setShowMenu(!showMenu)
-										router.push("/address")
-									}}
-								/>
-								<SubmitButton
-									bgColor={'bg-red-500'}
+									bgColor={'bg-red-600'}
 									text={"LOGOUT"}
 									onClick={() => {
 										logout()
 										setShowMenu(!showMenu)
 									}}
+									icon={logoutIcon}
+									height={'20px'}
+									width={'20px'}
 								/>
 							</div>
 						) : (
