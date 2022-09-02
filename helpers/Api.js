@@ -912,3 +912,44 @@ export const useSearchResultsApi = () => {
 		errorResponse,
 	}
 }
+
+export const useRecommendedProductsApi = () => {
+	const [isLoading, setIsLoading] = useState(true)
+	const [recommendedProducts, setRecommendedProducts] = useState(null)
+	const [response, setResponse] = useState(null)
+	const [errorResponse, setErrorResponse] = useState(null)
+	const [errorMessage, setErrorMessage] = useState("")
+
+	useEffect(() => {
+		callApi()
+	}, [])
+
+	const callApi = async () => {
+		setIsLoading(true)
+		await initializeUserApi()
+		let { headers } = getGeneralApiParams()
+
+		let url = "/catalog/recommended?page=1&size=20"
+
+		try {
+			let apiResponse = await axios.get(fullUrl(url), {
+				headers: headers,
+			})
+			setResponse(apiResponse)
+			setRecommendedProducts(apiResponse.data.data)
+		} catch (error) {
+			setErrorResponse(error?.response)
+			setErrorMessage(error?.response?.data?.message)
+		} finally {
+			setIsLoading(false)
+		}
+	}
+
+	return {
+		isLoading,
+		recommendedProducts,
+		errorMessage,
+		response,
+		errorResponse,
+	}
+}
