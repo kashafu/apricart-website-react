@@ -3,7 +3,6 @@ import SingleProductShimmer from "./SingleProductShimmer"
 const MainProductsShimmer = () => {
 	return (
 		<div className="space-y-4 lg:space-y-12">
-			<div className="h-[150px] lg:h-[350px] w-full bg-slate-200 animate-pulse rounded-lg" />
 			<>
 				<div className="grid lg:hidden grid-cols-2 gap-2 w-full">
 					<SingleProductShimmer />
@@ -34,6 +33,7 @@ const MainProductsShimmer = () => {
 					<SingleProductShimmer />
 				</div>
 			</>
+			<div className="h-[150px] lg:h-[350px] w-full bg-slate-200 animate-pulse rounded-lg" />
 		</div>
 	)
 }

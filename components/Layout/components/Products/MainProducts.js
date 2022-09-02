@@ -21,35 +21,6 @@ export default function MainProducts({ section }) {
 
 	return (
 		<section key={name} className="space-y-4 px-2 py-4">
-			<div className="w-full rounded-xl overflow-hidden">
-				{offerId == 0 ? (
-					<Image
-						src={imageUrl}
-						layout={'responsive'}
-						alt={"banner image"}
-						width={'100%'}
-						height={20}
-					/>
-				) : (
-					<Link
-						href={
-							"/offers/" + offerId
-						}
-						passHref
-						key={offerId}
-					>
-						<a className="w-full">
-							<Image
-								src={imageUrl}
-								layout={'responsive'}
-								alt={"banner image"}
-								width={'100%'}
-								height={20}
-							/>
-						</a>
-					</Link>
-				)}
-			</div>
 			<div className="w-full border-b border-main-blue-100 py-4">
 				<div className="flex flex-row items-stretch w-full justify-between">
 					<p className="text-2xl text-main-blue font-bold">
@@ -112,6 +83,35 @@ export default function MainProducts({ section }) {
 					</section>
 				</div>
 			)}
+			<div className="w-full rounded-xl overflow-hidden">
+				{offerId == 0 ? (
+					<Image
+						src={imageUrl}
+						layout={'responsive'}
+						alt={"banner image"}
+						width={'100%'}
+						height={20}
+					/>
+				) : (
+					<Link
+						href={
+							"/offers/" + offerId
+						}
+						passHref
+						key={offerId}
+					>
+						<a className="w-full">
+							<Image
+								src={imageUrl}
+								layout={'responsive'}
+								alt={"banner image"}
+								width={'100%'}
+								height={20}
+							/>
+						</a>
+					</Link>
+				)}
+			</div>
 		</section>
 	)
 }
