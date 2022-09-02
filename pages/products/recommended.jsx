@@ -1,11 +1,7 @@
-import { useState, useEffect } from "react"
-import axios from "axios"
 import HeadTag from "../../components/Layout/components/Head/HeadTag"
 import Categories from "../../components/Layout/components/Categories/Categories"
 import SingleProduct from "../../components/Layout/components/Products/SingleProduct"
 import PageHeading from '../../components/Layout/components/Typography/PageHeading'
-import { getGeneralApiParams } from "../../helpers/ApiHelpers"
-import { base_url_api } from "../../information.json"
 import { useRecommendedProductsApi } from "../../helpers/Api"
 
 export default function Recommended() {
