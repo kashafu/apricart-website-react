@@ -1,40 +1,30 @@
 import { useRouter } from "next/router"
+import Link from "next/link"
+
 import Categories from "../../../../components/Layout/components/Categories/Categories"
 import SingleProduct from "../../../../components/Layout/components/Products/SingleProduct"
 import PageHeading from "../../../../components/Layout/components/Typography/PageHeading"
-import Link from "next/link"
 import HeadTag from "../../../../components/Layout/components/Head/HeadTag"
-import toKebabCase from "../../../../helpers/toKebabCase"
-import { fromKebabCase } from "../../../../helpers/toKebabCase"
+import toKebabCase, { fromKebabCase } from "../../../../helpers/toKebabCase"
 import {
 	useCategoryProductsApi,
-	useSubCategoriesApi,
 } from "../../../../helpers/Api"
-import { useState } from "react"
 
 export default function CategoryProducts() {
 	const router = useRouter()
-	const { categoryId, categoryName } = router.query
+	const { categoryName } = router.query
+	const {
+		isLoading,
+		categoryProducts,
+		subCategories,
+		errorMessage,
+		totalItems,
+		size,
+		setPage,
+		page
+	} = useCategoryProductsApi()
 
 	const SubCategories = () => {
-		const { isLoading, subCategories, errorMessage } = useSubCategoriesApi()
-
-		if (isLoading) {
-			return (
-				<div>
-					<p>Loading</p>
-				</div>
-			)
-		}
-
-		if (!subCategories) {
-			return (
-				<div>
-					<p>{errorMessage}</p>
-				</div>
-			)
-		}
-
 		return (
 			<section>
 				{subCategories.length > 0 && (
@@ -66,16 +56,6 @@ export default function CategoryProducts() {
 		)
 	}
 
-	const {
-		isLoading,
-		categoryProducts,
-		errorMessage,
-		totalItems,
-		size,
-		setPage,
-		page
-	} = useCategoryProductsApi()
-
 	const Filter = () => {
 		let arr = []
 		for (let index = size; index <= totalItems + size; index = index + size) {
@@ -104,30 +84,6 @@ export default function CategoryProducts() {
 	}
 
 	const CategoryProducts = () => {
-		if (isLoading) {
-			return (
-				<div>
-					<p>Loading</p>
-				</div>
-			)
-		}
-
-		if (!categoryProducts) {
-			return (
-				<div>
-					<p>{errorMessage}</p>
-				</div>
-			)
-		}
-
-		if (categoryProducts.length == 0) {
-			return (
-				<div>
-					<p>No items to show</p>
-				</div>
-			)
-		}
-
 		return (
 			<section>
 				<section className="grid grid-cols-2 md:grid-cols-4 2xl:grid-cols-5 gap-4">
@@ -149,6 +105,30 @@ export default function CategoryProducts() {
 
 	if (!router.isReady) {
 		return <></>
+	}
+
+	if (isLoading) {
+		return (
+			<div>
+				<p>Loading</p>
+			</div>
+		)
+	}
+
+	if (!categoryProducts) {
+		return (
+			<div>
+				<p>{errorMessage}</p>
+			</div>
+		)
+	}
+
+	if (categoryProducts.length == 0) {
+		return (
+			<div>
+				<p>No items to show</p>
+			</div>
+		)
 	}
 
 	return (
