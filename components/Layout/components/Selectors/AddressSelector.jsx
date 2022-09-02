@@ -21,9 +21,9 @@ const AddressSelector = () => {
 
     return (
         <Link href={"/address"} passHref>
-            <a>
-                <div className="flex w-full justify-center">
-                    <div className="bg-slate-100 rounded-xl py-2 px-4 lg:bg-inherit lg:rounded-none lg:py-0 lg:px-0">
+            <a className="w-full">
+                <div className="flex w-full justify-center bg-slate-100 rounded-xl">
+                    <div className="py-2 px-4 lg:bg-inherit lg:rounded-none lg:py-0 lg:px-0">
                         <div className="flex flex-row space-x-2 items-center">
                             <div className="relative w-[25px] h-[25px]">
                                 <Image

@@ -73,15 +73,17 @@ export default function HamburgerMenu() {
 									Welcome, {name}
 								</p>
 							)}
-							<div className="py-2">
+							<div className="py-2 w-full">
 								{selectedTypeSelector === 'cnc' ? (
 									<PickupLocationSelector />
 								) : (
 									<>
 										{token ? (
-											<div onClick={() => {
-												setShowMenu(!showMenu)
-											}}>
+											<div
+												className="w-full"
+												onClick={() => {
+													setShowMenu(!showMenu)
+												}}>
 												<AddressSelector />
 											</div>
 										) : (
