@@ -21,7 +21,17 @@ const MainProductsShimmer = () => {
 					<SingleProductShimmer />
 					<SingleProductShimmer />
 				</div>
-				<div className="hidden lg:grid grid-cols-5 gap-2 w-full">
+				<div className="hidden lg:grid grid-cols-4 2xl:hidden gap-2 w-full">
+					<SingleProductShimmer />
+					<SingleProductShimmer />
+					<SingleProductShimmer />
+					<SingleProductShimmer />
+					<SingleProductShimmer />
+					<SingleProductShimmer />
+					<SingleProductShimmer />
+					<SingleProductShimmer />
+				</div>
+				<div className="hidden 2xl:grid grid-cols-5 gap-2 w-full">
 					<SingleProductShimmer />
 					<SingleProductShimmer />
 					<SingleProductShimmer />

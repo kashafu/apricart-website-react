@@ -7,16 +7,17 @@ import Link from "next/link"
 import { getGeneralApiParams } from "../helpers/ApiHelpers"
 import MainProducts from "../components/Layout/components/Products/MainProducts"
 import HeadTag from "../components/Layout/components/Head/HeadTag"
-import storeBackgroundImage from "../public/assets/images/storeBackground.png"
-import karachiStaticBanner1 from "../public/assets/images/banners/harLamhaMazedarBanner.jpeg"
-import karachiStaticBanner2 from "../public/assets/images/banners/haleemwebbanner.png"
-import karachiBulkBuyStaticBanner1 from "../public/assets/images/banners/bulkBuyBanner.jpeg"
-import crossIcon from "../public/assets/svgs/crossIcon.svg"
 import Carousel from "../components/Layout/components/Banner/Carousel"
 import Categories from "../components/Layout/components/Categories/Categories"
 import { useHomeApi } from "../helpers/Api"
 import TypeCardSelector from "../components/Layout/components/Cards/TypeCardSelector"
 import HomeLoader from "../components/Layout/components/Loaders/HomeLoader"
+
+import storeBackgroundImage from "../public/assets/images/storeBackground.png"
+import karachiStaticBanner1 from "../public/assets/images/banners/harLamhaMazedarBanner.jpeg"
+import karachiStaticBanner2 from "../public/assets/images/banners/saylanistaticbanner.jpeg"
+import karachiBulkBuyStaticBanner1 from "../public/assets/images/banners/bulkBuyBanner.jpeg"
+import crossIcon from "../public/assets/svgs/crossIcon.svg"
 
 export default function Home() {
 	const router = useRouter()
@@ -102,13 +103,13 @@ export default function Home() {
 				{/* BANNERS SECTION hidden on phone */}
 				<section className="hidden lg:relative lg:w-full lg:aspect-[16/6] lg:grid grid-cols-12 p-2 items-center">
 					{/* BACKGROUND IMAGE */}
-					<div className="absolute w-full h-full blur-lg">
+					{/* <div className="absolute w-full h-full blur-lg">
 						<Image
 							src={storeBackgroundImage}
 							layout={"responsive"}
 							alt="banner"
 						/>
-					</div>
+					</div> */}
 					{/* SCROLLING BANNER */}
 					<section className="col-span-7">
 						<section className="w-full">
@@ -131,19 +132,19 @@ export default function Home() {
 							</div>
 						</section>
 					) : (
-						<section className="col-span-5 grid grid-rows-2 h-full w-full justify-items-center align-items-center">
-							<div className="relative w-full p-2">
-								<Link href={"/offers/39"} passHref>
+						<section className="col-span-5 grid grid-rows-2 h-full w-full">
+							<div className="relative w-full h-full">
+								<Link href={"/offers/45"} passHref>
 									<a>
 										<Image
 											src={karachiStaticBanner2}
-											layout={"responsive"}
+											layout={"fill"}
 											alt="banner"
 										/>
 									</a>
 								</Link>
 							</div>
-							<div className="relative w-full p-2">
+							<div className="relative w-full h-full">
 								<Link
 									href={"/offers/14"}
 									passHref
@@ -151,7 +152,7 @@ export default function Home() {
 									<a>
 										<Image
 											src={karachiStaticBanner1}
-											layout={"responsive"}
+											layout={"fill"}
 											alt="banner"
 										/>
 									</a>
@@ -180,7 +181,7 @@ export default function Home() {
 										<section className="lg:hidden relative space-y-6 items-center">
 											<section className="w-full">
 												<Link
-													href={"/offers/39"}
+													href={"/offers/45"}
 													passHref
 													className="w-full"
 												>
