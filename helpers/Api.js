@@ -1,9 +1,11 @@
 import axios from "axios"
 import { useSelector, useDispatch } from "react-redux"
 import { useState, useEffect } from "react"
+import { useRouter } from "next/router"
+import { toast } from "react-toastify"
+
 import { base_url_api } from "../information.json"
 import { getGeneralApiParams } from "./ApiHelpers"
-import { useRouter } from "next/router"
 import {
 	addToCart,
 	initialize,
@@ -11,7 +13,6 @@ import {
 	updateQuantity,
 } from "../redux/cart.slice"
 import { updateTicker } from "../redux/general.slice"
-import { toast } from "react-toastify"
 import { setCookie } from "./Cookies"
 import { updateCategories } from "../redux/data.slice"
 
