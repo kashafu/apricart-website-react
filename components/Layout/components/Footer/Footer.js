@@ -213,7 +213,7 @@ const Footer = () => {
 				<section className=" w-1/4 ">
 					<div className="md:w-full px-3 text-center text-main-blue font-nunito">
 						<div className="flex flex-col sm:flex-col justify-center items-center md:mt-0">
-							<Link passHref href={"/"}>
+							<Link passHref href={"/about-us"}>
 								<p className="cursor-pointer hover:brightness-[5] font-nunito text-base md:text-[14px] duration-300 px-3">
 									About Us
 								</p>
@@ -319,7 +319,7 @@ const Footer = () => {
 									: "hidden"
 							}
 						>
-							<Link passHref href={"/"}>
+							<Link passHref href={"/about-us"}>
 								<p className="font-nunito hover:text-indigo-600">About Us</p>
 							</Link>
 							<Link passHref href={"/privacy-policy"}>
