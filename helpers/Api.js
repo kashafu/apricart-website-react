@@ -994,3 +994,56 @@ export const useMostViewedProductsApi = () => {
 		errorResponse,
 	}
 }
+
+export const useLoginApi = () => {
+	const [isLoading, setIsLoading] = useState(true)
+	const [response, setResponse] = useState(null)
+	const [errorResponse, setErrorResponse] = useState(null)
+	const [errorMessage, setErrorMessage] = useState("")
+	const [isLogin, setIsLogin] = useState(false)
+	const [data, setData] = useState({
+		"guestuserid": '',
+		"username": '',
+		"password": ''
+	})
+
+	useEffect(() => {
+		if (isLogin) {
+			callApi()
+		}
+	}, [isLogin])
+
+	const callApi = async () => {
+		setIsLoading(true)
+		let { headers } = getGeneralApiParams()
+
+		let url = "/auth/open/login?"
+		let body = {
+			"guestuserid": data.guestuserid,
+			"username": '92' + data.username,
+			"password": data.password
+		}
+
+		try {
+			let apiResponse = await axios.post(fullUrl(url), body, {
+				headers: headers,
+			})
+			setResponse(apiResponse)
+		} catch (error) {
+			setErrorResponse(error?.response)
+			setErrorMessage(error?.response?.data?.message)
+		} finally {
+			setIsLoading(false)
+			setIsLogin(false)
+		}
+	}
+
+	return {
+		isLoading,
+		setData,
+		setIsLogin,
+		errorMessage,
+		response,
+		errorResponse,
+	}
+}

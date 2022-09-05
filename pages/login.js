@@ -11,10 +11,13 @@ import ErrorText from "../components/Layout/components/Typography/ErrorText"
 import PageHeading from "../components/Layout/components/Typography/PageHeading"
 import HeadTag from "../components/Layout/components/Head/HeadTag"
 import { toast } from "react-toastify";
+import { useLoginApi } from "../helpers/Api"
 
 export default function Login() {
     const router = useRouter();
     let { city, headers, userId } = getGeneralApiParams();
+
+    const { isLoading: loginIsLoading, response: loginResponse, errorMessage: loginErrorMessage, setData: setLoginData, setIsLogin } = useLoginApi()
 
     const [phoneNumber, setPhoneNumber] = useState('')
     const [password, setPassword] = useState('')
@@ -170,7 +173,11 @@ export default function Login() {
                             <TextField
                                 label={"Phone Number"}
                                 placeHolder={"3301234567"}
-                                onChange={setPhoneNumber}
+                                customOnChange
+                                onChange={(e) => {
+                                    setPhoneNumber(e.target.value)
+                                    // setLoginData((prev) => )
+                                }}
                                 value={phoneNumber}
                                 type={'number'}
                             />
