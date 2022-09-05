@@ -145,5 +145,6 @@ export const logOutRemoveCookies = () => {
     removeCookie('cookies-name')
     removeCookie('cookies-phoneNumber')
     removeCookie('cookies-email')
+    removeCookie('user-initialized')
     localStorage.clear()
 }

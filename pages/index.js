@@ -18,6 +18,8 @@ import karachiStaticBanner1 from "../public/assets/images/banners/harLamhaMazeda
 import karachiStaticBanner2 from "../public/assets/images/banners/saylanistaticbanner.jpeg"
 import karachiBulkBuyStaticBanner1 from "../public/assets/images/banners/bulkBuyBanner.jpeg"
 import crossIcon from "../public/assets/svgs/crossIcon.svg"
+import { clearCookies } from "../helpers/Cookies"
+import { clearLocalStorage, clearSessionStorage } from "../helpers/Storage"
 
 export default function Home() {
 	const router = useRouter()
@@ -35,8 +37,18 @@ export default function Home() {
 
 		if (!homeData) {
 			return (
-				<div>
+				<div className="flex space-x-4">
 					<p>No data</p>
+					<a className="text-blue-400 underline"
+						onClick={() => {
+							clearCookies()
+							clearLocalStorage()
+							clearSessionStorage()
+							router.reload()
+						}}
+					>
+						Refresh Page
+					</a>
 				</div>
 			)
 		}
