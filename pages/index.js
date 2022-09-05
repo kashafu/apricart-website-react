@@ -25,7 +25,7 @@ export default function Home() {
 	const router = useRouter()
 	const selectedTypeSelector = useSelector(state => state.general.selectedType)
 	let { token } = getGeneralApiParams()
-	const { isLoading, isPopupAd, homeData } = useHomeApi()
+	const { isLoading, isPopupAd, homeData, errorMessage } = useHomeApi()
 	const [showPopupAd, setShowPopupAd] = useState(isPopupAd)
 
 	const HomeItems = () => {
@@ -38,7 +38,7 @@ export default function Home() {
 		if (!homeData) {
 			return (
 				<div className="flex space-x-4">
-					<p>No data</p>
+					<p>{errorMessage}</p>
 					<a className="text-blue-400 underline"
 						onClick={() => {
 							clearCookies()
