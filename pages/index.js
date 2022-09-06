@@ -19,6 +19,7 @@ import karachiBulkBuyStaticBanner1 from "../public/assets/images/banners/bulkBuy
 import crossIcon from "../public/assets/svgs/crossIcon.svg"
 import { clearCookies } from "../helpers/Cookies"
 import { clearLocalStorage, clearSessionStorage } from "../helpers/Storage"
+import MainProductsShimmer from "../components/Layout/components/Loaders/Shimmers/MainProductsShimmer"
 
 export default function Home() {
 	const router = useRouter()
@@ -27,33 +28,9 @@ export default function Home() {
 	const { isLoading, isPopupAd, homeData, errorMessage } = useHomeApi()
 	const [showPopupAd, setShowPopupAd] = useState(isPopupAd)
 
-	const HomeItems = () => {
-		if (isLoading) {
-			return (
-				<HomeLoader />
-			)
-		}
-
-		if (!homeData) {
-			return (
-				<div className="flex flex-col space-y-2">
-					<p>{errorMessage}</p>
-					<a className="text-blue-400 underline"
-						onClick={() => {
-							clearCookies()
-							clearLocalStorage()
-							clearSessionStorage()
-							router.reload()
-						}}
-					>
-						Refresh Page
-					</a>
-				</div>
-			)
-		}
-
+	const PopupAd = () => {
 		return (
-			<div>
+			<>
 				{/* POPUP AD */}
 				{showPopupAd && (
 					<div className="w-full">
@@ -111,6 +88,115 @@ export default function Home() {
 						</div>
 					</div>
 				)}
+			</>
+		)
+	}
+
+	const Products = () => {
+		if (isLoading) {
+			return (
+				<MainProductsShimmer />
+			)
+		}
+
+		return (
+			<section className="space-y-12">
+				{homeData.products.map((product, index) => {
+					let { offerId } = product
+					return (
+						<section key={offerId}>
+							{/* STATIC BANNERS for mobile */}
+							{index % 2 == 0 ? (
+								<section className="lg:hidden relative space-y-6 items-center">
+									<section className="w-full">
+										<Link
+											href={"/offers/45"}
+											passHref
+											className="w-full"
+										>
+											<a className="w-full">
+												<Image
+													src={karachiStaticBanner2}
+													layout={
+														"responsive"
+													}
+													alt=""
+												/>
+											</a>
+										</Link>
+									</section>
+								</section>
+							) : (
+								<section className="lg:hidden relative space-y-6 items-center">
+									<section className="w-full">
+										<Link
+											href={"/offers/14"}
+											passHref
+											className="w-full"
+										>
+											<a className="w-full">
+												<Image
+													src={karachiStaticBanner1}
+													layout={
+														"responsive"
+													}
+													alt=""
+												/>
+											</a>
+										</Link>
+									</section>
+								</section>
+							)}
+							<MainProducts
+								key={offerId}
+								section={product}
+							/>
+						</section>
+					)
+				})}
+				{/* MANUAL ORDER SECTION */}
+				<section className="mb-2 mt-8 flex flex-row w-full rounded-xl p-2 bg-main-yellow items-center align-center justify-around">
+					<Link
+						href={token ? "/grocery_list" : "/login"}
+						passHref
+					>
+						<a className="text-main-blue font-bold text-lg w-full text-center">
+							UPLOAD YOUR GROCERY LIST
+						</a>
+					</Link>
+				</section>
+			</section>
+		)
+	}
+
+	const HomeItems = () => {
+		if (isLoading) {
+			return (
+				<HomeLoader />
+			)
+		}
+
+		if (!homeData) {
+			return (
+				<div className="flex flex-col space-y-2">
+					<p>{errorMessage}</p>
+					<a className="text-blue-400 underline"
+						onClick={() => {
+							clearCookies()
+							clearLocalStorage()
+							clearSessionStorage()
+							router.reload()
+						}}
+					>
+						Refresh Page
+					</a>
+				</div>
+			)
+		}
+
+		return (
+			<div>
+				<PopupAd />
 				{/* BANNERS SECTION for desktop */}
 				<section className="hidden lg:relative lg:w-full lg:aspect-[16/6] lg:grid grid-cols-12 gap-x-2 p-2 items-center">
 					{/* CAROUSEL BANNER */}
@@ -166,73 +252,7 @@ export default function Home() {
 				<section className="lg:hidden w-full items-center">
 					<Carousel />
 				</section>
-				{/* PRODUCTS SECTION */}
-				<section className="space-y-12">
-					{homeData.products.map((product, index) => {
-						let { offerId } = product
-						return (
-							<section key={offerId}>
-								{/* STATIC BANNERS for mobile */}
-								{index % 2 == 0 ? (
-									<section className="lg:hidden relative space-y-6 items-center">
-										<section className="w-full">
-											<Link
-												href={"/offers/45"}
-												passHref
-												className="w-full"
-											>
-												<a className="w-full">
-													<Image
-														src={karachiStaticBanner2}
-														layout={
-															"responsive"
-														}
-														alt=""
-													/>
-												</a>
-											</Link>
-										</section>
-									</section>
-								) : (
-									<section className="lg:hidden relative space-y-6 items-center">
-										<section className="w-full">
-											<Link
-												href={"/offers/14"}
-												passHref
-												className="w-full"
-											>
-												<a className="w-full">
-													<Image
-														src={karachiStaticBanner1}
-														layout={
-															"responsive"
-														}
-														alt=""
-													/>
-												</a>
-											</Link>
-										</section>
-									</section>
-								)}
-								<MainProducts
-									key={offerId}
-									section={product}
-								/>
-							</section>
-						)
-					})}
-					{/* MANUAL ORDER SECTION */}
-					<section className="mb-2 mt-8 flex flex-row w-full rounded-xl p-2 bg-main-yellow items-center align-center justify-around">
-						<Link
-							href={token ? "/grocery_list" : "/login"}
-							passHref
-						>
-							<a className="text-main-blue font-bold text-lg w-full text-center">
-								UPLOAD YOUR GROCERY LIST
-							</a>
-						</Link>
-					</section>
-				</section>
+				<Products />
 			</div>
 		)
 	}
