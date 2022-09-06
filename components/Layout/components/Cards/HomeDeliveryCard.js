@@ -19,7 +19,7 @@ export default function HomeDeliveryCard({ isDisabled }) {
     }, [isDisabled])
 
     return (
-        <button className={[style] + ' relative rounded-lg shadow flex items-center grow ' + [disabledStyle]}
+        <button className={[style] + ' relative rounded-lg shadow flex items-center grow hover:bg-main-yellow duration-300 ' + [disabledStyle]}
             onClick={() => {
                 dispatch(updateSelectedType('home'))
             }}

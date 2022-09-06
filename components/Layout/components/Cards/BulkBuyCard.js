@@ -15,7 +15,7 @@ export default function BulkBuyCard() {
 	}, [selectedTypeSelector])
 
 	return (
-		<button className={[style] + ' relative rounded-lg shadow flex grow items-center'}
+		<button className={[style] + ' relative rounded-lg shadow flex grow items-center hover:bg-main-yellow duration-300'}
 			onClick={() => {
 				dispatch(updateSelectedType('bulk'))
 			}}

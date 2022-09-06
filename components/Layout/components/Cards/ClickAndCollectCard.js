@@ -41,7 +41,7 @@ export default function ClickAndCollectCard({ isDisabled }) {
 	return (
 		<>
 			<button
-				className={[style] + ' relative rounded-lg shadow flex grow items-center ' + [disabledStyle]}
+				className={[style] + ' relative rounded-lg shadow flex grow items-center hover:bg-main-yellow duration-300 ' + [disabledStyle]}
 				onClick={() => {
 					setShowPopup(!showPopup)
 				}}
