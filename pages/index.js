@@ -197,15 +197,15 @@ export default function Home() {
 		return (
 			<div>
 				<PopupAd />
-				{/* BANNERS SECTION for desktop */}
-				<section className="hidden lg:relative lg:w-full lg:aspect-[16/6] lg:grid grid-cols-12 gap-x-2 p-2 items-center">
+				{/* BANNERS SECTION */}
+				<section className="flex w-full lg:relative lg:grid grid-cols-12 gap-x-2 p-2 items-center">
 					{/* CAROUSEL BANNER */}
-					<section className="col-span-7 w-full">
+					<section className="col-span-12 lg:col-span-7 w-full">
 						<Carousel />
 					</section>
 					{/* STATIC BANNERS */}
 					{selectedTypeSelector === 'bulk' ? (
-						<section className="col-span-5 grid grid-rows-1 h-full w-full justify-items-center align-items-center">
+						<section className="hidden col-span-5 lg:grid grid-rows-1 h-full w-full justify-items-center align-items-center">
 							<div className="relative w-full p-2">
 								<Link href={"/"} passHref>
 									<a>
@@ -219,7 +219,7 @@ export default function Home() {
 							</div>
 						</section>
 					) : (
-						<section className="col-span-5 grid grid-rows-2 gap-y-2 h-full w-full">
+						<section className="hidden col-span-5 lg:grid grid-rows-2 gap-y-2 h-full w-full">
 							<div className="relative w-full h-full">
 								<Link href={"/offers/45"} passHref>
 									<a>
@@ -247,10 +247,6 @@ export default function Home() {
 							</div>
 						</section>
 					)}
-				</section>
-				{/* CAROUSEL for phone */}
-				<section className="lg:hidden w-full items-center">
-					<Carousel />
 				</section>
 				<Products />
 			</div>
