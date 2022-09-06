@@ -1,7 +1,7 @@
 import Image from "next/image"
 import { useRouter } from "next/router"
-import { useState } from "react"
-import { useSelector } from "react-redux"
+import { useState, useEffect } from "react"
+import { useSelector, useDispatch } from "react-redux"
 import Link from "next/link"
 
 import { getGeneralApiParams } from "../helpers/ApiHelpers"
@@ -12,6 +12,7 @@ import Categories from "../components/Layout/components/Categories/Categories"
 import { useHomeApi } from "../helpers/Api"
 import TypeCardSelector from "../components/Layout/components/Cards/TypeCardSelector"
 import HomeLoader from "../components/Layout/components/Loaders/HomeLoader"
+import { updateRedirectSource } from "../redux/general.slice"
 
 import karachiStaticBanner1 from "../public/assets/images/banners/harLamhaMazedarBanner.jpeg"
 import karachiStaticBanner2 from "../public/assets/images/banners/saylanistaticbanner.jpeg"
@@ -22,10 +23,20 @@ import { clearLocalStorage, clearSessionStorage } from "../helpers/Storage"
 
 export default function Home() {
 	const router = useRouter()
+	const dispatch = useDispatch()
 	const selectedTypeSelector = useSelector(state => state.general.selectedType)
 	let { token } = getGeneralApiParams()
 	const { isLoading, isPopupAd, homeData, errorMessage } = useHomeApi()
 	const [showPopupAd, setShowPopupAd] = useState(isPopupAd)
+
+	useEffect(() => {
+		if (router.isReady) {
+			let queries = router.query
+			if (queries.source) {
+				dispatch(updateRedirectSource(queries.source))
+			}
+		}
+	}, [router.isReady])
 
 	const HomeItems = () => {
 		if (isLoading) {
