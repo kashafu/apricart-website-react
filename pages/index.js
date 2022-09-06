@@ -111,21 +111,11 @@ export default function Home() {
 						</div>
 					</div>
 				)}
-				{/* BANNERS SECTION hidden on phone */}
+				{/* BANNERS SECTION for desktop */}
 				<section className="hidden lg:relative lg:w-full lg:aspect-[16/6] lg:grid grid-cols-12 gap-x-2 p-2 items-center">
-					{/* BACKGROUND IMAGE */}
-					{/* <div className="absolute w-full h-full blur-lg">
-						<Image
-							src={storeBackgroundImage}
-							layout={"responsive"}
-							alt="banner"
-						/>
-					</div> */}
-					{/* SCROLLING BANNER */}
-					<section className="col-span-7">
-						<section className="w-full">
-							<Carousel />
-						</section>
+					{/* CAROUSEL BANNER */}
+					<section className="col-span-7 w-full">
+						<Carousel />
 					</section>
 					{/* STATIC BANNERS */}
 					{selectedTypeSelector === 'bulk' ? (
@@ -172,83 +162,77 @@ export default function Home() {
 						</section>
 					)}
 				</section>
-				{/* BANNERS SECTION hidden on desktop */}
+				{/* CAROUSEL for phone */}
 				<section className="lg:hidden w-full items-center">
-					{/* MAIN BANNER */}
-					<section className="w-full">
-						<Carousel />
+					<Carousel />
+				</section>
+				{/* PRODUCTS SECTION */}
+				<section className="space-y-12">
+					{homeData.products.map((product, index) => {
+						let { offerId } = product
+						return (
+							<section key={offerId}>
+								{/* STATIC BANNERS for mobile */}
+								{index % 2 == 0 ? (
+									<section className="lg:hidden relative space-y-6 items-center">
+										<section className="w-full">
+											<Link
+												href={"/offers/45"}
+												passHref
+												className="w-full"
+											>
+												<a className="w-full">
+													<Image
+														src={karachiStaticBanner2}
+														layout={
+															"responsive"
+														}
+														alt=""
+													/>
+												</a>
+											</Link>
+										</section>
+									</section>
+								) : (
+									<section className="lg:hidden relative space-y-6 items-center">
+										<section className="w-full">
+											<Link
+												href={"/offers/14"}
+												passHref
+												className="w-full"
+											>
+												<a className="w-full">
+													<Image
+														src={karachiStaticBanner1}
+														layout={
+															"responsive"
+														}
+														alt=""
+													/>
+												</a>
+											</Link>
+										</section>
+									</section>
+								)}
+								<MainProducts
+									key={offerId}
+									section={product}
+								/>
+							</section>
+						)
+					})}
+					{/* MANUAL ORDER SECTION */}
+					<section className="mb-2 mt-8 flex flex-row w-full rounded-xl p-2 bg-main-yellow items-center align-center justify-around">
+						<Link
+							href={token ? "/grocery_list" : "/login"}
+							passHref
+						>
+							<a className="text-main-blue font-bold text-lg w-full text-center">
+								UPLOAD YOUR GROCERY LIST
+							</a>
+						</Link>
 					</section>
 				</section>
-				<div className="">
-					{/* PRODUCTS SECTION */}
-					<section className="space-y-12">
-						{homeData.products.map((product, index) => {
-							let { offerId } = product
-
-							return (
-								<section key={offerId}>
-									{/* STATIC BANNERS for mobile */}
-									{index % 2 == 0 ? (
-										<section className="lg:hidden relative space-y-6 items-center">
-											<section className="w-full">
-												<Link
-													href={"/offers/45"}
-													passHref
-													className="w-full"
-												>
-													<a className="w-full">
-														<Image
-															src={karachiStaticBanner2}
-															layout={
-																"responsive"
-															}
-															alt=""
-														/>
-													</a>
-												</Link>
-											</section>
-										</section>
-									) : (
-										<section className="lg:hidden relative space-y-6 items-center">
-											<section className="w-full">
-												<Link
-													href={"/offers/14"}
-													passHref
-													className="w-full"
-												>
-													<a className="w-full">
-														<Image
-															src={karachiStaticBanner1}
-															layout={
-																"responsive"
-															}
-															alt=""
-														/>
-													</a>
-												</Link>
-											</section>
-										</section>
-									)}
-									<MainProducts
-										key={offerId}
-										section={product}
-									/>
-								</section>
-							)
-						})}
-						{/* MANUAL ORDER SECTION */}
-						<section className="mb-2 mt-8 flex flex-row w-full rounded-xl p-2 bg-main-yellow items-center align-center justify-around">
-							<Link
-								href={token ? "/grocery_list" : "/login"}
-								passHref
-							>
-								<a className="text-main-blue font-bold text-lg w-full text-center">
-									UPLOAD YOUR GROCERY LIST
-								</a>
-							</Link>
-						</section>
-					</section>
-				</div>
 			</div>
 		)
 	}
