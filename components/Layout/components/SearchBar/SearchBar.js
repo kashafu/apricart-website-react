@@ -117,7 +117,7 @@ export default function SearchBar() {
 						}
 					}}
 				/>
-				<div className="h-full w-16 rounded-xl ml-[-20px] bg-main-yellow flex items-center justify-center"
+				<button className="h-full w-16 rounded-xl ml-[-20px] bg-main-yellow flex items-center justify-center"
 					onClick={async () => {
 						if (searchText === '') {
 							searchBarRef.current.focus()
@@ -134,7 +134,7 @@ export default function SearchBar() {
 						width={20}
 						alt='search icon'
 					/>
-				</div>
+				</button>
 			</div>
 			{showSearchResults && (
 				<div className="absolute z-30 w-full bg-white max-h-[350px] overflow-auto rounded-b-lg">
