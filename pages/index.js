@@ -36,7 +36,7 @@ export default function Home() {
 
 		if (!homeData) {
 			return (
-				<div className="flex space-x-4">
+				<div className="flex flex-col space-y-2">
 					<p>{errorMessage}</p>
 					<a className="text-blue-400 underline"
 						onClick={() => {
