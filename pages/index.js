@@ -13,7 +13,6 @@ import { useHomeApi } from "../helpers/Api"
 import TypeCardSelector from "../components/Layout/components/Cards/TypeCardSelector"
 import HomeLoader from "../components/Layout/components/Loaders/HomeLoader"
 
-import storeBackgroundImage from "../public/assets/images/storeBackground.png"
 import karachiStaticBanner1 from "../public/assets/images/banners/harLamhaMazedarBanner.jpeg"
 import karachiStaticBanner2 from "../public/assets/images/banners/saylanistaticbanner.jpeg"
 import karachiBulkBuyStaticBanner1 from "../public/assets/images/banners/bulkBuyBanner.jpeg"
