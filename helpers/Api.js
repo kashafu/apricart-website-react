@@ -1143,6 +1143,7 @@ export const useResetPasswordApi = () => {
 			})
 
 			setResponse(apiResponse)
+			toast.success(apiResponse.data.message)
 			setErrorMessage('')
 			setErrorResponse(null)
 		} catch (error) {

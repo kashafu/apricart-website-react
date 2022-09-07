@@ -1,53 +1,21 @@
-import axios from "axios"
 import { useRouter } from "next/router"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Link from "next/link"
-import { setCookie } from "../helpers/Cookies"
+
 import { getGeneralApiParams } from "../helpers/ApiHelpers"
-import { base_url_api } from '../information.json'
 import TextField from "../components/Layout/components/Input/TextField"
 import SubmitButton from "../components/Layout/components/Buttons/SubmitButton"
 import ErrorText from "../components/Layout/components/Typography/ErrorText"
 import PageHeading from "../components/Layout/components/Typography/PageHeading"
 import HeadTag from "../components/Layout/components/Head/HeadTag"
-import { toast } from "react-toastify";
 import { useLoginApi, useResetPasswordApi, useSendOtpApi } from "../helpers/Api"
-import { useEffect } from "react"
 
 export default function Login() {
     const router = useRouter();
-    let { city, headers, userId } = getGeneralApiParams();
+    let { userId } = getGeneralApiParams();
 
     const [viewState, setViewState] = useState('login')
     const [sharedPhoneNumber, setSharedPhoneNumber] = useState()
-
-    const [errorMessage, setErrorMessage] = useState('')
-    const [resetpwdScreen, setresetpwdcreen] = useState(false);
-
-    // const resetPasswordApi = async () => {
-    //     let url = base_url_api + "/auth/open/password/forgot?lang=en&client_type=apricart"
-    //     let body = {
-    //         "phoneNumber": '92' + phoneNumber,
-    //         "password": password,
-    //         "otp": otp
-    //     }
-    //     try {
-    //         let response = await axios.post(url, body,
-    //             {
-    //                 headers: headers
-    //             }
-    //         )
-    //         if (response.data.status == 1) {
-    //             toast.success(response.data.message);
-    //             setresetpwdcreen(false);
-    //         }
-    //     }
-    //     catch (error) {
-    //         console.log(error?.response)
-    //         toast.error(error?.response?.message)
-    //     }
-
-    // }
 
     const Login = () => {
         const { isLoading, response, errorMessage, setData, setIsLogin } = useLoginApi()
@@ -226,8 +194,7 @@ export default function Login() {
 
         useEffect(() => {
             if (response) {
-                setSharedPhoneNumber(phoneNumber)
-                setViewState('reset')
+                setViewState('login')
             }
         }, [response])
 
