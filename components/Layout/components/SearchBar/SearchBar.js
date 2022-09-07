@@ -116,6 +116,8 @@ export default function SearchBar() {
 							setShowSearchResults(false)
 						}
 					}}
+					autoComplete="false"
+					name="hidden"
 				/>
 				<button className="h-full w-16 rounded-xl ml-[-20px] bg-main-yellow flex items-center justify-center"
 					onClick={async () => {

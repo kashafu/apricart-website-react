@@ -1,7 +1,7 @@
-export default function TextField({label, placeHolder, onChange, value, name, type, disabled, customOnChange, onEnterPress}){
-    
-    
-    return(
+export default function TextField({ label, placeHolder, onChange, value, name, type, disabled, customOnChange, onEnterPress, autoComplete }) {
+
+
+    return (
         <div className="grid grid-cols-3 gap-4 items-center">
             <p className="col-span-1 font-lato text-main-blue font-semibold">
                 {label}
@@ -13,21 +13,22 @@ export default function TextField({label, placeHolder, onChange, value, name, ty
                 placeholder={placeHolder}
                 value={value}
                 name={name}
-                onKeyDown={(e)=>{
-                    if(onEnterPress){
-                        if(e.key === 'Enter'){
+                onKeyDown={(e) => {
+                    if (onEnterPress) {
+                        if (e.key === 'Enter') {
                             onEnterPress()
                         }
                     }
                 }}
-                onChange={(e)=>{
-                    if(customOnChange){
+                onChange={(e) => {
+                    if (customOnChange) {
                         onChange(e)
                     }
-                    else{
+                    else {
                         onChange(e.target.value)
                     }
                 }}
+                autoComplete={autoComplete || ''}
             />
         </div>
     )

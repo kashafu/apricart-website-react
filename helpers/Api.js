@@ -1107,3 +1107,59 @@ export const useSendOtpApi = () => {
 		errorResponse,
 	}
 }
+
+export const useResetPasswordApi = () => {
+	const [isLoading, setIsLoading] = useState(false)
+	const [response, setResponse] = useState(null)
+	const [errorResponse, setErrorResponse] = useState(null)
+	const [errorMessage, setErrorMessage] = useState("")
+	const [isSendOtp, setIsSendOtp] = useState(false)
+	const [data, setData] = useState({
+		"phoneNumber": '',
+		"password": '',
+		"otp": ''
+	})
+
+	useEffect(() => {
+		if (isSendOtp) {
+			callApi()
+		}
+	}, [isSendOtp])
+
+	const callApi = async () => {
+		setIsLoading(true)
+		let { headers } = getGeneralApiParams()
+
+		let url = "/auth/open/password/forgot?"
+		let body = {
+			"phoneNumber": '92' + data.phoneNumber,
+			"password": data.password,
+			"otp": data.otp
+		}
+
+		try {
+			let apiResponse = await axios.post(fullUrl(url), body, {
+				headers: headers,
+			})
+
+			setResponse(apiResponse)
+			setErrorMessage('')
+			setErrorResponse(null)
+		} catch (error) {
+			setErrorResponse(error?.response)
+			setErrorMessage(error?.response?.data?.message)
+		} finally {
+			setIsLoading(false)
+			setIsSendOtp(false)
+		}
+	}
+
+	return {
+		isLoading,
+		setData,
+		setIsSendOtp,
+		errorMessage,
+		response,
+		errorResponse,
+	}
+}

@@ -108,7 +108,7 @@ export default function Register() {
                     <div className="flex justify-center w-full" onKeyDown={onEnterPress}>
                         <div className="flex flex-col p-8 space-y-6 lg:w-1/3 items-center align-center bg-slate-100 shadow rounded-3xl">
                             <PageHeading
-                                text={"Register"}
+                                text={"REGISTER"}
                             />
                             <div className="space-y-2">
                                 <TextField
@@ -133,7 +133,7 @@ export default function Register() {
                                     type={'number'}
                                 />
                                 <TextField
-                                    label={"New Password"}
+                                    label={"Password"}
                                     placeHolder={"password"}
                                     onChange={setPassword}
                                     value={password}
@@ -151,7 +151,14 @@ export default function Register() {
                             <ErrorText
                                 text={errorMessage}
                             />
-
+                            <button
+                                className="underline"
+                                onClick={() => {
+                                    router.push('/login')
+                                }}
+                            >
+                                Already have an account?
+                            </button>
                         </div>
                     </div>
                 </div>
