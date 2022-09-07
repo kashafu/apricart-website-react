@@ -1057,3 +1057,53 @@ export const useLoginApi = () => {
 		errorResponse,
 	}
 }
+
+export const useSendOtpApi = () => {
+	const [isLoading, setIsLoading] = useState(false)
+	const [response, setResponse] = useState(null)
+	const [errorResponse, setErrorResponse] = useState(null)
+	const [errorMessage, setErrorMessage] = useState("")
+	const [isSendOtp, setIsSendOtp] = useState(false)
+	const [phoneNumber, setPhoneNumber] = useState('')
+
+	useEffect(() => {
+		if (isSendOtp) {
+			callApi()
+		}
+	}, [isSendOtp])
+
+	const callApi = async () => {
+		setIsLoading(true)
+		let { headers } = getGeneralApiParams()
+
+		let url = "/auth/open/otp?"
+		let body = {
+			"phoneNumber": '92' + phoneNumber
+		}
+
+		try {
+			let apiResponse = await axios.post(fullUrl(url), body, {
+				headers: headers,
+			})
+			setResponse(apiResponse)
+			toast.success(apiResponse.data.message)
+			setErrorMessage('')
+			setErrorResponse(null)
+		} catch (error) {
+			setErrorResponse(error?.response)
+			setErrorMessage(error?.response?.data?.message)
+		} finally {
+			setIsLoading(false)
+			setIsSendOtp(false)
+		}
+	}
+
+	return {
+		isLoading,
+		setPhoneNumber,
+		setIsSendOtp,
+		errorMessage,
+		response,
+		errorResponse,
+	}
+}
