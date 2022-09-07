@@ -208,57 +208,26 @@ export default function Home() {
 		return (
 			<div>
 				<PopupAd />
-				{/* BANNERS SECTION */}
-				<section className="flex w-full lg:relative lg:grid grid-cols-12 gap-x-2 p-2 items-center">
-					{/* CAROUSEL BANNER */}
-					<section className="col-span-12 lg:col-span-7 w-full">
-						<Carousel />
-					</section>
-					{/* STATIC BANNERS */}
-					{selectedTypeSelector === 'bulk' ? (
-						<section className="hidden col-span-5 lg:grid grid-rows-1 h-full w-full justify-items-center align-items-center">
-							<div className="relative w-full p-2">
-								<Link href={"/"} passHref>
-									<a>
-										<Image
-											src={karachiBulkBuyStaticBanner1}
-											layout={"responsive"}
-											alt="banner"
-										/>
-									</a>
-								</Link>
-							</div>
-						</section>
-					) : (
-						<section className="hidden col-span-5 lg:grid grid-rows-2 gap-y-2 h-full w-full">
-							<div className="relative w-full h-full">
-								<Link href={"/offers/45"} passHref>
-									<a>
-										<Image
-											src={karachiStaticBanner2}
-											layout={"fill"}
-											alt="banner"
-										/>
-									</a>
-								</Link>
-							</div>
-							<div className="relative w-full h-full">
-								<Link
-									href={"/offers/14"}
-									passHref
-								>
-									<a>
-										<Image
-											src={karachiStaticBanner1}
-											layout={"fill"}
-											alt="banner"
-										/>
-									</a>
-								</Link>
-							</div>
-						</section>
-					)}
-				</section>
+				<div className="flex flex-row w-full space-x-2">
+					<div className="flex flex-col space-y-2 w-[70%]">
+						<TypeCardSelector />
+						<div className="relative h-[200px] w-full">
+							<Image
+								src={karachiStaticBanner1}
+								layout={"fill"}
+								alt="banner"
+							/>
+						</div>
+					</div>
+					<div className="w-[30%] h-[280px] relative">
+						<Image
+							src={karachiStaticBanner2}
+							layout={"fill"}
+							alt="banner"
+						/>
+					</div>
+				</div>
+
 				<Products />
 			</div>
 		)
@@ -278,10 +247,62 @@ export default function Home() {
 					<Categories />
 				</section>
 				<section className="space-y-2 lg:space-y-6 col-span-5 lg:col-span-4">
-					<TypeCardSelector />
 					<HomeItems />
 				</section>
 			</div>
 		</div>
 	)
 }
+
+
+// {/* BANNERS SECTION */}
+// <section className="flex w-full lg:relative lg:grid grid-cols-12 gap-x-2 p-2 items-center">
+// {/* CAROUSEL BANNER */}
+// <section className="col-span-12 lg:col-span-7 w-full">
+// 	<Carousel />
+// </section>
+// {/* STATIC BANNERS */}
+// {selectedTypeSelector === 'bulk' ? (
+// 	<section className="hidden col-span-5 lg:grid grid-rows-1 h-full w-full justify-items-center align-items-center">
+// 		<div className="relative w-full p-2">
+// 			<Link href={"/"} passHref>
+// 				<a>
+// 					<Image
+// 						src={karachiBulkBuyStaticBanner1}
+// 						layout={"responsive"}
+// 						alt="banner"
+// 					/>
+// 				</a>
+// 			</Link>
+// 		</div>
+// 	</section>
+// ) : (
+// 	<section className="hidden col-span-5 lg:grid grid-rows-2 gap-y-2 h-full w-full">
+// 		<div className="relative w-full h-full">
+// 			<Link href={"/offers/45"} passHref>
+// 				<a>
+// 					<Image
+// 						src={karachiStaticBanner2}
+// 						layout={"fill"}
+// 						alt="banner"
+// 					/>
+// 				</a>
+// 			</Link>
+// 		</div>
+// 		<div className="relative w-full h-full">
+// 			<Link
+// 				href={"/offers/14"}
+// 				passHref
+// 			>
+// 				<a>
+// 					<Image
+// 						src={karachiStaticBanner1}
+// 						layout={"fill"}
+// 						alt="banner"
+// 					/>
+// 				</a>
+// 			</Link>
+// 		</div>
+// 	</section>
+// )}
+// </section>
