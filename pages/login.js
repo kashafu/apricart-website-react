@@ -12,15 +12,12 @@ import PageHeading from "../components/Layout/components/Typography/PageHeading"
 import HeadTag from "../components/Layout/components/Head/HeadTag"
 import { toast } from "react-toastify";
 import { useLoginApi } from "../helpers/Api"
+import { useEffect } from "react"
 
 export default function Login() {
     const router = useRouter();
     let { city, headers, userId } = getGeneralApiParams();
 
-    const { isLoading: loginIsLoading, response: loginResponse, errorMessage: loginErrorMessage, setData: setLoginData, setIsLogin } = useLoginApi()
-
-    const [phoneNumber, setPhoneNumber] = useState('')
-    const [password, setPassword] = useState('')
     const [errorMessage, setErrorMessage] = useState('')
     const [resetpwdScreen, setresetpwdcreen] = useState(false);
     const [otp, setotp] = useState();
@@ -108,10 +105,86 @@ export default function Login() {
 
     }
 
-    const onEnterPress = async (e) => {
-        if (e.key === 'Enter') {
-            await loginApi()
+    const Login = () => {
+        const { isLoading: loginIsLoading, response: loginResponse, errorMessage: loginErrorMessage, setData: setLoginData, setIsLogin } = useLoginApi()
+
+        const [phoneNumber, setPhoneNumber] = useState('')
+        const [password, setPassword] = useState('')
+        const [buttonDisabled, setButtonDisabled] = useState(true)
+
+        useEffect(() => {
+            if (phoneNumber.length === 10 && password.length > 0) {
+                setButtonDisabled(false)
+            }
+            else {
+                setButtonDisabled(true)
+            }
+        }, [phoneNumber, password])
+
+        const onEnterPress = async (e) => {
+            if (e.key === 'Enter') {
+                await loginApi()
+            }
         }
+
+        return (
+            <div
+                className="flex justify-center w-full"
+                onKeyDown={onEnterPress}
+            >
+                <div className="flex flex-col p-8 space-y-6 lg:w-1/3 items-center align-center bg-slate-100 shadow rounded-3xl">
+                    <PageHeading
+                        text={"LOGIN"}
+                    />
+                    <div className="space-y-2">
+                        <TextField
+                            label={"Phone Number"}
+                            placeHolder={"3301234567"}
+                            onChange={setPhoneNumber}
+                            value={phoneNumber}
+                            type={'number'}
+                        />
+                        <TextField
+                            label={"Password"}
+                            placeHolder={"password"}
+                            onChange={setPassword}
+                            value={password}
+                            type={'password'}
+                        />
+                    </div>
+                    <div className="w-3/4">
+                        <SubmitButton
+                            text={"LOGIN"}
+                            onClick={() => {
+                                setLoginData({
+                                    "guestuserid": userId,
+                                    "username": '92' + phoneNumber,
+                                    "password": password
+                                })
+                                setIsLogin(true)
+                            }}
+                            disabled={buttonDisabled}
+                        />
+                    </div>
+                    <ErrorText
+                        text={loginErrorMessage}
+                    />
+                    <button
+                        onClick={sendOtpApi}
+                    >
+                        Reset Password
+                    </button>
+                    <div className="flex flex-row space-x-2">
+                        <p>
+                            Don't have an Account?
+                        </p>
+                        <Link href="/register" passHref>
+                            <a>Sign Up</a>
+                        </Link>
+                    </div>
+                </div>
+            </div>
+        )
     }
 
     return (
@@ -119,7 +192,7 @@ export default function Login() {
             <HeadTag title={'Login'} />
             {resetpwdScreen ? (
                 <div className="flex justify-center w-full"
-                    onKeyDown={onEnterPress}
+                // onKeyDown={onEnterPress}
                 >
                     <div className="flex flex-col p-8 space-y-6 lg:w-1/3 items-center align-center bg-slate-100 shadow rounded-3xl">
                         <PageHeading
@@ -161,49 +234,7 @@ export default function Login() {
                     </div>
                 </div>
             ) : (
-                <div
-                    className="flex justify-center w-full"
-                    onKeyDown={onEnterPress}
-                >
-                    <div className="flex flex-col p-8 space-y-6 lg:w-1/3 items-center align-center bg-slate-100 shadow rounded-3xl">
-                        <PageHeading
-                            text={"LOGIN"}
-                        />
-                        <div className="space-y-2">
-                            <TextField
-                                label={"Phone Number"}
-                                placeHolder={"3301234567"}
-                                customOnChange
-                                onChange={(e) => {
-                                    setPhoneNumber(e.target.value)
-                                    // setLoginData((prev) => )
-                                }}
-                                value={phoneNumber}
-                                type={'number'}
-                            />
-                            <TextField
-                                label={"Password"}
-                                placeHolder={"password"}
-                                onChange={setPassword}
-                                value={password}
-                                type={'password'}
-                            />
-                        </div>
-                        <div className="w-3/4">
-                            <SubmitButton
-                                text={"LOGIN"}
-                                onClick={loginApi}
-                            />
-                        </div>
-                        <ErrorText
-                            text={errorMessage}
-                        />
-                        <p> <button onClick={sendOtpApi}>Reset Password</button></p>
-                        <p>Don't have an Account ?  <Link href="/register" passHref>
-                            <a>Sign Up</a>
-                        </Link> </p>
-                    </div>
-                </div>)
+                <Login />)
             }
         </div>
     )
