@@ -996,7 +996,7 @@ export const useMostViewedProductsApi = () => {
 }
 
 export const useLoginApi = () => {
-	const [isLoading, setIsLoading] = useState(true)
+	const [isLoading, setIsLoading] = useState(false)
 	const [response, setResponse] = useState(null)
 	const [errorResponse, setErrorResponse] = useState(null)
 	const [errorMessage, setErrorMessage] = useState("")
@@ -1028,7 +1028,17 @@ export const useLoginApi = () => {
 			let apiResponse = await axios.post(fullUrl(url), body, {
 				headers: headers,
 			})
-			setResponse(apiResponse)
+			if (apiResponse.data.status == 1) {
+				setCookie("cookies-token", apiResponse.data.data.token)
+				setCookie("cookies-name", apiResponse.data.data.name)
+				setCookie("cookies-email", apiResponse.data.data.email)
+				setCookie("cookies-phoneNumber", apiResponse.data.data.phoneNumber)
+				setErrorMessage('')
+				setResponse(apiResponse)
+			}
+			else {
+				setErrorMessage(apiResponse.data.message)
+			}
 		} catch (error) {
 			setErrorResponse(error?.response)
 			setErrorMessage(error?.response?.data?.message)

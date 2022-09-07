@@ -22,37 +22,6 @@ export default function Login() {
     const [resetpwdScreen, setresetpwdcreen] = useState(false);
     const [otp, setotp] = useState();
 
-    const loginApi = async () => {
-        let url = base_url_api + "/auth/open/login?city=" + city + "&lang=en&client_type=apricart&userid=" + userId
-        let body = {
-            "guestuserid": userId,
-            "username": '92' + phoneNumber,
-            "password": password
-        }
-
-        try {
-            let response = await axios.post(url, body,
-                {
-                    headers: headers
-                }
-            )
-
-            if (response.data.status == 1) {
-                setCookie("cookies-token", response.data.data.token)
-                setCookie("cookies-name", response.data.data.name)
-                setCookie("cookies-email", response.data.data.email)
-                setCookie("cookies-phoneNumber", response.data.data.phoneNumber)
-                setErrorMessage('')
-                router.push('/')
-            }
-            else {
-                setErrorMessage(response.data.message)
-            }
-        } catch (err) {
-            setErrorMessage(err.response.data.message)
-        }
-    }
-
     const resetPasswordApi = async () => {
         let url = base_url_api + "/auth/open/password/forgot?lang=en&client_type=apricart"
         let body = {
@@ -106,7 +75,7 @@ export default function Login() {
     }
 
     const Login = () => {
-        const { isLoading: loginIsLoading, response: loginResponse, errorMessage: loginErrorMessage, setData: setLoginData, setIsLogin } = useLoginApi()
+        const { isLoading, response, errorMessage, setData, setIsLogin } = useLoginApi()
 
         const [phoneNumber, setPhoneNumber] = useState('')
         const [password, setPassword] = useState('')
@@ -121,16 +90,22 @@ export default function Login() {
             }
         }, [phoneNumber, password])
 
-        const onEnterPress = async (e) => {
-            if (e.key === 'Enter') {
-                await loginApi()
+        useEffect(() => {
+            if (response) {
+                router.push('/')
             }
-        }
+        }, [response])
 
         return (
             <div
                 className="flex justify-center w-full"
-                onKeyDown={onEnterPress}
+                onKeyDown={(e) => {
+                    if (e.key === 'Enter') {
+                        if (!buttonDisabled) {
+                            setIsLogin(true)
+                        }
+                    }
+                }}
             >
                 <div className="flex flex-col p-8 space-y-6 lg:w-1/3 items-center align-center bg-slate-100 shadow rounded-3xl">
                     <PageHeading
@@ -156,18 +131,18 @@ export default function Login() {
                         <SubmitButton
                             text={"LOGIN"}
                             onClick={() => {
-                                setLoginData({
+                                setData({
                                     "guestuserid": userId,
-                                    "username": '92' + phoneNumber,
+                                    "username": phoneNumber,
                                     "password": password
                                 })
                                 setIsLogin(true)
                             }}
-                            disabled={buttonDisabled}
+                            disabled={buttonDisabled || isLoading}
                         />
                     </div>
                     <ErrorText
-                        text={loginErrorMessage}
+                        text={errorMessage}
                     />
                     <button
                         onClick={sendOtpApi}
@@ -179,7 +154,9 @@ export default function Login() {
                             Don't have an Account?
                         </p>
                         <Link href="/register" passHref>
-                            <a>Sign Up</a>
+                            <a className="underline">
+                                Sign Up
+                            </a>
                         </Link>
                     </div>
                 </div>
@@ -192,7 +169,6 @@ export default function Login() {
             <HeadTag title={'Login'} />
             {resetpwdScreen ? (
                 <div className="flex justify-center w-full"
-                // onKeyDown={onEnterPress}
                 >
                     <div className="flex flex-col p-8 space-y-6 lg:w-1/3 items-center align-center bg-slate-100 shadow rounded-3xl">
                         <PageHeading
