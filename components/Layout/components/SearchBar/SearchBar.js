@@ -1,14 +1,17 @@
 import axios from "axios"
 import { useRouter } from "next/router"
 import { useEffect, useState, useRef } from "react"
+import { useSelector, useDispatch } from "react-redux"
+
+import searchIcon from '../../../../public/assets/svgs/searchIcon.svg'
+
 import { getGeneralApiParams } from "../../../../helpers/ApiHelpers"
 import { base_url_api } from "../../../../information.json"
 import SingleProductList from "../Products/SingleProductList"
 import toKebabCase from "../../../../helpers/toKebabCase"
 import { useCategoriesApi } from "../../../../helpers/Api"
-import { useSelector } from "react-redux"
-import { useDispatch } from "react-redux"
 import { updateCategories } from "../../../../redux/data.slice"
+import Image from "next/image"
 
 export default function SearchBar() {
 	const [searchText, setSearchText] = useState("")
@@ -19,7 +22,7 @@ export default function SearchBar() {
 	const { categories } = useCategoriesApi()
 
 	const dispatch = useDispatch()
-	const searchIconElement = useRef()
+	const searchBarRef = useRef()
 	const router = useRouter()
 	const categoriesSelector = useSelector((state) => state.data.categories)
 
@@ -66,10 +69,10 @@ export default function SearchBar() {
 
 	return (
 		<div className="relative w-full z-30">
-			<div className="flex flex-row space-x-1 rounded-lg w-full">
+			<div className="flex flex-row items-center h-8 rounded-lg w-full">
 				<select
 					disabled={categoriesSelector == null}
-					className="py-2 rounded-lg bg-slate-200 w-1/2 lg:w-1/4 font-bold text-xs"
+					className="rounded-l-lg bg-slate-200 w-1/2 lg:w-1/4 h-full font-bold text-xs border-2 border-zinc-500"
 					onChange={(e) => {
 						setSelectedCategoryId(e.target.value)
 						categoriesSelector.find((item) => {
@@ -93,15 +96,15 @@ export default function SearchBar() {
 						})}
 				</select>
 				<input
-					ref={searchIconElement}
-					className="px-2 py-1 w-full bg-slate-200 rounded-lg font-bold"
+					ref={searchBarRef}
+					className="px-2 py-1 w-full h-full bg-slate-200 font-bold border-y-2 border-zinc-500"
 					type={"search"}
 					value={searchText}
 					onChange={(e) => {
 						setSearchText(e.target.value)
 						getSearchResultsApi(e.target.value)
 					}}
-					placeholder="Find a Product"
+					placeholder="Search Products..."
 					onBlur={async () => {
 						await new Promise((r) => setTimeout(r, 500))
 						setShowSearchResults(false)
@@ -114,6 +117,24 @@ export default function SearchBar() {
 						}
 					}}
 				/>
+				<button className="h-full w-16 rounded-xl ml-[-20px] bg-main-yellow flex items-center justify-center"
+					onClick={async () => {
+						if (searchText === '') {
+							searchBarRef.current.focus()
+						}
+						else {
+							router.push('/products/search/' + searchText)
+							await new Promise((r) => setTimeout(r, 100))
+						}
+					}}
+				>
+					<Image
+						src={searchIcon}
+						height={20}
+						width={20}
+						alt='search icon'
+					/>
+				</button>
 			</div>
 			{showSearchResults && (
 				<div className="absolute z-30 w-full bg-white max-h-[350px] overflow-auto rounded-b-lg">

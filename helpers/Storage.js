@@ -12,6 +12,10 @@ export function removeItemLocalStorage(name) {
     localStorage.removeItem(name)
 }
 
+export function clearLocalStorage() {
+    localStorage.clear()
+}
+
 export function setItemSessionStorage(name, value) {
     sessionStorage.setItem(name, value)
 }
@@ -20,4 +24,8 @@ export function getItemSessionStorage(name) {
     if (typeof window !== 'undefined') {
         return sessionStorage.getItem(name)
     }
+}
+
+export function clearSessionStorage() {
+    sessionStorage.clear()
 }
