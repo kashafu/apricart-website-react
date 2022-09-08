@@ -25,6 +25,8 @@ export const getGeneralCookies = () => {
     selectedType can be either 'bulk' 'home'
 */
 export const getGeneralApiParams = () => {
+    let redirectSource = getItemSessionStorage('redirect-source')
+
     let clientType = 'apricart'
     let prodType = ''
     let orderType = ''
@@ -134,7 +136,8 @@ export const getGeneralApiParams = () => {
         clientType,
         selectedType,
         isUserInitialized,
-        selectedPickupLocation
+        selectedPickupLocation,
+        redirectSource
     })
 }
 
@@ -145,5 +148,6 @@ export const logOutRemoveCookies = () => {
     removeCookie('cookies-name')
     removeCookie('cookies-phoneNumber')
     removeCookie('cookies-email')
+    removeCookie('user-initialized')
     localStorage.clear()
 }

@@ -3,7 +3,7 @@ import { setCookie } from "../helpers/Cookies"
 import { setItemSessionStorage, setItemLocalStorage } from "../helpers/Storage"
 import { getGeneralApiParams } from "../helpers/ApiHelpers"
 
-let { selectedAddress, selectedType, city, selectedPickupLocation } = getGeneralApiParams()
+let { selectedAddress, selectedType, city, selectedPickupLocation, redirectSource } = getGeneralApiParams()
 
 const generalSlice = createSlice({
 	name: "general",
@@ -14,7 +14,8 @@ const generalSlice = createSlice({
 		selectedType: selectedType,
 		city: city,
 		isUserInitialized: false,
-		pickupLocation: selectedPickupLocation
+		pickupLocation: selectedPickupLocation,
+		redirectSource: redirectSource
 	},
 	reducers: {
 		updateSelectedAddress: (state, action) => {
@@ -35,6 +36,10 @@ const generalSlice = createSlice({
 		updateSelectedType: (state, action) => {
 			state.selectedType = action.payload
 			setItemLocalStorage("selected-type", action.payload)
+		},
+		updateRedirectSource: (state, action) => {
+			state.redirectSource = action.payload
+			setItemSessionStorage("redirect-source", action.payload)
 		}
 	},
 })
@@ -46,5 +51,6 @@ export const {
 	updateTicker,
 	updateSelectedType,
 	updateCity,
-	updatePickupLocation
+	updatePickupLocation,
+	updateRedirectSource
 } = generalSlice.actions

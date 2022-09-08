@@ -777,3 +777,372 @@ export const useSearchResultsApi = () => {
 		errorResponse,
 	}
 }
+
+export const useRecommendedProductsApi = () => {
+	const [isLoading, setIsLoading] = useState(true)
+	const [recommendedProducts, setRecommendedProducts] = useState(null)
+	const [response, setResponse] = useState(null)
+	const [errorResponse, setErrorResponse] = useState(null)
+	const [errorMessage, setErrorMessage] = useState("")
+
+	useEffect(() => {
+		callApi()
+	}, [])
+
+	const callApi = async () => {
+		setIsLoading(true)
+		await initializeUserApi()
+		let { headers } = getGeneralApiParams()
+
+		let url = "/catalog/recommended?page=1&size=20"
+
+		try {
+			let apiResponse = await axios.get(fullUrl(url), {
+				headers: headers,
+			})
+			setResponse(apiResponse)
+			setRecommendedProducts(apiResponse.data.data)
+		} catch (error) {
+			setErrorResponse(error?.response)
+			setErrorMessage(error?.response?.data?.message)
+		} finally {
+			setIsLoading(false)
+		}
+	}
+
+	return {
+		isLoading,
+		recommendedProducts,
+		errorMessage,
+		response,
+		errorResponse,
+	}
+}
+
+export const useMostViewedProductsApi = () => {
+	const [isLoading, setIsLoading] = useState(true)
+	const [mostViewedProducts, setMostViewedProducts] = useState(null)
+	const [response, setResponse] = useState(null)
+	const [errorResponse, setErrorResponse] = useState(null)
+	const [errorMessage, setErrorMessage] = useState("")
+
+	useEffect(() => {
+		callApi()
+	}, [])
+
+	const callApi = async () => {
+		setIsLoading(true)
+		await initializeUserApi()
+		let { headers } = getGeneralApiParams()
+
+		let url = "/catalog/mostviewed?page=1&size=20"
+
+		try {
+			let apiResponse = await axios.get(fullUrl(url), {
+				headers: headers,
+			})
+			setResponse(apiResponse)
+			setMostViewedProducts(apiResponse.data.data)
+		} catch (error) {
+			setErrorResponse(error?.response)
+			setErrorMessage(error?.response?.data?.message)
+		} finally {
+			setIsLoading(false)
+		}
+	}
+
+	return {
+		isLoading,
+		mostViewedProducts,
+		errorMessage,
+		response,
+		errorResponse,
+	}
+}
+
+export const useLoginApi = () => {
+	const [isLoading, setIsLoading] = useState(false)
+	const [response, setResponse] = useState(null)
+	const [errorResponse, setErrorResponse] = useState(null)
+	const [errorMessage, setErrorMessage] = useState("")
+	const [isLogin, setIsLogin] = useState(false)
+	const [data, setData] = useState({
+		"username": '',
+		"password": ''
+	})
+
+	useEffect(() => {
+		if (isLogin) {
+			callApi()
+		}
+	}, [isLogin])
+
+	const callApi = async () => {
+		setIsLoading(true)
+		let { userId, headers } = getGeneralApiParams()
+
+		let url = "/auth/open/login?"
+		let body = {
+			"guestuserid": userId,
+			"username": '92' + data.username,
+			"password": data.password
+		}
+
+		try {
+			let apiResponse = await axios.post(fullUrl(url), body, {
+				headers: headers,
+			})
+			if (apiResponse.data.status == 1) {
+				setCookie("cookies-token", apiResponse.data.data.token)
+				setCookie("cookies-name", apiResponse.data.data.name)
+				setCookie("cookies-email", apiResponse.data.data.email)
+				setCookie("cookies-phoneNumber", apiResponse.data.data.phoneNumber)
+				setResponse(apiResponse)
+				setErrorMessage('')
+				setErrorResponse(null)
+			}
+			else {
+				setErrorMessage(apiResponse.data.message)
+				setErrorResponse(apiResponse)
+			}
+		} catch (error) {
+			setErrorResponse(error?.response)
+			setErrorMessage(error?.response?.data?.message)
+		} finally {
+			setIsLoading(false)
+			setIsLogin(false)
+		}
+	}
+
+	return {
+		isLoading,
+		setData,
+		setIsLogin,
+		errorMessage,
+		response,
+		errorResponse,
+	}
+}
+
+export const useSendOtpApi = () => {
+	const [isLoading, setIsLoading] = useState(false)
+	const [response, setResponse] = useState(null)
+	const [errorResponse, setErrorResponse] = useState(null)
+	const [errorMessage, setErrorMessage] = useState("")
+	const [isSendOtp, setIsSendOtp] = useState(false)
+	const [phoneNumber, setPhoneNumber] = useState('')
+
+	useEffect(() => {
+		if (isSendOtp) {
+			callApi()
+		}
+	}, [isSendOtp])
+
+	const callApi = async () => {
+		setIsLoading(true)
+		let { headers } = getGeneralApiParams()
+
+		let url = "/auth/open/otp?"
+		let body = {
+			"phoneNumber": '92' + phoneNumber
+		}
+
+		try {
+			let apiResponse = await axios.post(fullUrl(url), body, {
+				headers: headers,
+			})
+			setResponse(apiResponse)
+			toast.success(apiResponse.data.message)
+			setErrorMessage('')
+			setErrorResponse(null)
+		} catch (error) {
+			setErrorResponse(error?.response)
+			setErrorMessage(error?.response?.data?.message)
+		} finally {
+			setIsLoading(false)
+			setIsSendOtp(false)
+		}
+	}
+
+	return {
+		isLoading,
+		setPhoneNumber,
+		setIsSendOtp,
+		errorMessage,
+		response,
+		errorResponse,
+	}
+}
+
+export const useResetPasswordApi = () => {
+	const [isLoading, setIsLoading] = useState(false)
+	const [response, setResponse] = useState(null)
+	const [errorResponse, setErrorResponse] = useState(null)
+	const [errorMessage, setErrorMessage] = useState("")
+	const [isSendOtp, setIsSendOtp] = useState(false)
+	const [data, setData] = useState({
+		"phoneNumber": '',
+		"password": '',
+		"otp": ''
+	})
+
+	useEffect(() => {
+		if (isSendOtp) {
+			callApi()
+		}
+	}, [isSendOtp])
+
+	const callApi = async () => {
+		setIsLoading(true)
+		let { headers } = getGeneralApiParams()
+
+		let url = "/auth/open/password/forgot?"
+		let body = {
+			"phoneNumber": '92' + data.phoneNumber,
+			"password": data.password,
+			"otp": data.otp
+		}
+
+		try {
+			let apiResponse = await axios.post(fullUrl(url), body, {
+				headers: headers,
+			})
+
+			setResponse(apiResponse)
+			toast.success(apiResponse.data.message)
+			setErrorMessage('')
+			setErrorResponse(null)
+		} catch (error) {
+			setErrorResponse(error?.response)
+			setErrorMessage(error?.response?.data?.message)
+		} finally {
+			setIsLoading(false)
+			setIsSendOtp(false)
+		}
+	}
+
+	return {
+		isLoading,
+		setData,
+		setIsSendOtp,
+		errorMessage,
+		response,
+		errorResponse,
+	}
+}
+
+export const useRegisterApi = () => {
+	const [isLoading, setIsLoading] = useState(false)
+	const [response, setResponse] = useState(null)
+	const [errorResponse, setErrorResponse] = useState(null)
+	const [errorMessage, setErrorMessage] = useState("")
+	const [isRegister, setIsRegister] = useState(false)
+	const [data, setData] = useState({
+		"email": '',
+		"name": '',
+		"phoneNumber": '',
+		"password": '',
+	})
+
+	useEffect(() => {
+		if (isRegister) {
+			callApi()
+		}
+	}, [isRegister])
+
+	const callApi = async () => {
+		setIsLoading(true)
+		let { userId, headers } = getGeneralApiParams()
+
+		let url = "/auth/open/register?"
+		let body = {
+			"email": data.email,
+			"name": data.name,
+			"phoneNumber": '92' + data.phoneNumber,
+			"password": data.password,
+			"guestuserid": userId,
+		}
+
+		try {
+			let apiResponse = await axios.post(fullUrl(url), body, {
+				headers: headers,
+			})
+
+			setResponse(apiResponse)
+			toast.success(apiResponse.data?.message)
+			setErrorMessage('')
+			setErrorResponse(null)
+		} catch (error) {
+			setErrorResponse(error?.response)
+			setErrorMessage(error?.response?.data?.message)
+		} finally {
+			setIsLoading(false)
+			setIsRegister(false)
+		}
+	}
+
+	return {
+		isLoading,
+		setData,
+		setIsRegister,
+		errorMessage,
+		response,
+		errorResponse,
+	}
+}
+
+export const useVerifyOtpApi = () => {
+	const [isLoading, setIsLoading] = useState(false)
+	const [response, setResponse] = useState(null)
+	const [errorResponse, setErrorResponse] = useState(null)
+	const [errorMessage, setErrorMessage] = useState("")
+	const [isVerifyOtp, setIsVerifyOtp] = useState(false)
+	const [data, setData] = useState({
+		"phoneNumber": '',
+		"otp": '',
+	})
+
+	useEffect(() => {
+		if (isVerifyOtp) {
+			callApi()
+		}
+	}, [isVerifyOtp])
+
+	const callApi = async () => {
+		setIsLoading(true)
+		let { userId, headers } = getGeneralApiParams()
+
+		let url = "/auth/open/otp/verify?"
+		let body = {
+			"phoneNumber": '92' + data.phoneNumber,
+			"otp": data.otp
+		}
+
+		try {
+			let apiResponse = await axios.post(fullUrl(url), body, {
+				headers: headers,
+			})
+
+			setResponse(apiResponse)
+			toast.success(apiResponse.data?.message)
+			setErrorMessage('')
+			setErrorResponse(null)
+		} catch (error) {
+			setErrorResponse(error?.response)
+			setErrorMessage(error?.response?.data?.message)
+			toast.error(error?.response?.data?.message)
+		} finally {
+			setIsLoading(false)
+			setIsVerifyOtp(false)
+		}
+	}
+
+	return {
+		isLoading,
+		setData,
+		setIsVerifyOtp,
+		errorMessage,
+		response,
+		errorResponse,
+	}
+}
