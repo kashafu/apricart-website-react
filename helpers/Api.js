@@ -1032,11 +1032,13 @@ export const useLoginApi = () => {
 				setCookie("cookies-name", apiResponse.data.data.name)
 				setCookie("cookies-email", apiResponse.data.data.email)
 				setCookie("cookies-phoneNumber", apiResponse.data.data.phoneNumber)
-				setErrorMessage('')
 				setResponse(apiResponse)
+				setErrorMessage('')
+				setErrorResponse(null)
 			}
 			else {
 				setErrorMessage(apiResponse.data.message)
+				setErrorResponse(apiResponse)
 			}
 		} catch (error) {
 			setErrorResponse(error?.response)

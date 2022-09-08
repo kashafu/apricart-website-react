@@ -7,7 +7,7 @@ import SubmitButton from "../components/Layout/components/Buttons/SubmitButton"
 import ErrorText from "../components/Layout/components/Typography/ErrorText"
 import PageHeading from "../components/Layout/components/Typography/PageHeading"
 import HeadTag from "../components/Layout/components/Head/HeadTag"
-import { useLoginApi, useResetPasswordApi, useSendOtpApi } from "../helpers/Api"
+import { useLoginApi, useResetPasswordApi, useSendOtpApi, useVerifyOtpApi } from "../helpers/Api"
 
 export default function Login() {
     const router = useRouter();
@@ -16,7 +16,7 @@ export default function Login() {
     let sharedPhoneNumber = useRef('')
 
     const Login = () => {
-        const { isLoading, response, errorMessage, setData, setIsLogin } = useLoginApi()
+        const { isLoading, response, errorMessage, errorResponse, setData, setIsLogin } = useLoginApi()
 
         const [phoneNumber, setPhoneNumber] = useState('')
         const [password, setPassword] = useState('')
@@ -36,6 +36,14 @@ export default function Login() {
                 router.push('/')
             }
         }, [response])
+
+        useEffect(() => {
+            if (errorResponse) {
+                if (errorResponse?.data?.status === 1010) {
+                    setViewState('verify')
+                }
+            }
+        }, [errorResponse])
 
         return (
             <div
@@ -179,6 +187,76 @@ export default function Login() {
         )
     }
 
+    const Verify = () => {
+        const { isLoading, response, errorMessage, setData, setIsVerifyOtp } = useVerifyOtpApi()
+
+        const [otp, setOtp] = useState('')
+        const [isButtonDisabled, setIsButtonDisabled] = useState(true)
+
+        useEffect(() => {
+            if (otp.length === 4) {
+                setIsButtonDisabled(false)
+            }
+            else {
+                setIsButtonDisabled(true)
+            }
+        }, [otp])
+
+        useEffect(() => {
+            if (response) {
+                setViewState('login')
+            }
+        }, [response])
+
+        return (
+            <div className="flex justify-center w-full animate-dropdown">
+                <div className="flex flex-col p-8 space-y-6 lg:w-1/3 items-center align-center bg-slate-100 shadow rounded-3xl">
+                    <PageHeading
+                        text={"VERIFY NUMBER"}
+                    />
+                    <div className="space-y-2">
+                        <div className="flex space-x-2 w-full justify-center">
+                            <p className="font-nunito">
+                                OTP sent to +92{sharedPhoneNumber.current}
+                            </p>
+                            <button
+                                className="font-nunito underline"
+                                onClick={() => {
+                                    setViewState('login')
+                                }}
+                            >
+                                Wrong number?
+                            </button>
+                        </div>
+                        <TextField
+                            label={"OTP"}
+                            placeHolder={"Enter OTP"}
+                            onChange={setOtp}
+                            value={otp}
+                            type='number'
+                        />
+                    </div>
+                    <div className="w-3/4">
+                        <SubmitButton
+                            text={"VERIFY"}
+                            onClick={() => {
+                                setData({
+                                    "phoneNumber": sharedPhoneNumber.current,
+                                    "otp": otp,
+                                })
+                                setIsVerifyOtp(true)
+                            }}
+                            disabled={isButtonDisabled || isLoading}
+                        />
+                    </div>
+                    <ErrorText
+                        text={errorMessage}
+                    />
+                </div>
+            </div>
+        )
+    }
+
     const ResetPassword = () => {
         const { response, setData, setIsSendOtp, isLoading, errorMessage } = useResetPasswordApi()
 
@@ -270,6 +348,9 @@ export default function Login() {
             )}
             {viewState === 'otp' && (
                 <Otp />
+            )}
+            {viewState === 'verify' && (
+                <Verify />
             )}
         </div>
     )

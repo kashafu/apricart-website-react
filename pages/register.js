@@ -38,8 +38,6 @@ export default function Register() {
             }
         }, [response])
 
-        console.log(name, email, phoneNumber, password, isButtonDisabled)
-
         return (
             <div
                 className="flex justify-center w-full animate-dropdown"
@@ -130,10 +128,10 @@ export default function Register() {
 
         useEffect(() => {
             if (otp.length === 4) {
-                setIsButtonDisabled(true)
+                setIsButtonDisabled(false)
             }
             else {
-                setIsButtonDisabled(false)
+                setIsButtonDisabled(true)
             }
         }, [otp])
 
@@ -165,9 +163,10 @@ export default function Register() {
                         </div>
                         <TextField
                             label={"OTP"}
-                            placeHolder={"Enter Name"}
+                            placeHolder={"Enter OTP"}
                             onChange={setOtp}
                             value={otp}
+                            type='number'
                         />
                     </div>
                     <div className="w-3/4">
