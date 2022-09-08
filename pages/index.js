@@ -17,6 +17,7 @@ import { updateRedirectSource } from "../redux/general.slice"
 import karachiStaticBanner1 from "../public/assets/images/banners/harLamhaMazedarBanner.jpeg"
 import karachiStaticBanner2 from "../public/assets/images/banners/saylanistaticbanner.jpeg"
 import karachiBulkBuyStaticBanner1 from "../public/assets/images/banners/bulkBuyBanner.jpeg"
+import karachiMainBanner from "../public/assets/images/banners/everythingIn75.png"
 import crossIcon from "../public/assets/svgs/crossIcon.svg"
 import { clearCookies } from "../helpers/Cookies"
 import { clearLocalStorage, clearSessionStorage } from "../helpers/Storage"
@@ -221,7 +222,7 @@ export default function Home() {
 					</div>
 					<div className="w-[30%] h-[280px] relative">
 						<Image
-							src={karachiStaticBanner2}
+							src={karachiMainBanner}
 							layout={"fill"}
 							alt="banner"
 						/>
