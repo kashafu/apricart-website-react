@@ -82,7 +82,7 @@ export default function CategoryProducts() {
 		return (
 			<div className="flex w-full space-x-6 items-center">
 				<p className="">
-					Showing items {(page - 1) * size} - {(((page - 1) * size) + size) > totalItems ? (totalItems) : (((page - 1) * size) + size)} of {totalItems}
+					Showing items {(page - 1) * size + 1} - {(((page - 1) * size) + size) > totalItems ? (totalItems) : (((page - 1) * size) + size)} of {totalItems}
 				</p>
 				<div className="space-x-2">
 					{arr}
