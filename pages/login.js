@@ -2,7 +2,6 @@ import { useRouter } from "next/router"
 import { useState, useEffect } from "react"
 import Link from "next/link"
 
-import { getGeneralApiParams } from "../helpers/ApiHelpers"
 import TextField from "../components/Layout/components/Input/TextField"
 import SubmitButton from "../components/Layout/components/Buttons/SubmitButton"
 import ErrorText from "../components/Layout/components/Typography/ErrorText"
@@ -12,7 +11,6 @@ import { useLoginApi, useResetPasswordApi, useSendOtpApi } from "../helpers/Api"
 
 export default function Login() {
     const router = useRouter();
-    let { userId } = getGeneralApiParams();
 
     const [viewState, setViewState] = useState('login')
     const [sharedPhoneNumber, setSharedPhoneNumber] = useState()
@@ -75,7 +73,6 @@ export default function Login() {
                             text={"LOGIN"}
                             onClick={() => {
                                 setData({
-                                    "guestuserid": userId,
                                     "username": phoneNumber,
                                     "password": password
                                 })

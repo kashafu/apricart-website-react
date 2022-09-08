@@ -1002,7 +1002,6 @@ export const useLoginApi = () => {
 	const [errorMessage, setErrorMessage] = useState("")
 	const [isLogin, setIsLogin] = useState(false)
 	const [data, setData] = useState({
-		"guestuserid": '',
 		"username": '',
 		"password": ''
 	})
@@ -1015,11 +1014,11 @@ export const useLoginApi = () => {
 
 	const callApi = async () => {
 		setIsLoading(true)
-		let { headers } = getGeneralApiParams()
+		let { userId, headers } = getGeneralApiParams()
 
 		let url = "/auth/open/login?"
 		let body = {
-			"guestuserid": data.guestuserid,
+			"guestuserid": userId,
 			"username": '92' + data.username,
 			"password": data.password
 		}
@@ -1159,6 +1158,122 @@ export const useResetPasswordApi = () => {
 		isLoading,
 		setData,
 		setIsSendOtp,
+		errorMessage,
+		response,
+		errorResponse,
+	}
+}
+
+export const useRegisterApi = () => {
+	const [isLoading, setIsLoading] = useState(false)
+	const [response, setResponse] = useState(null)
+	const [errorResponse, setErrorResponse] = useState(null)
+	const [errorMessage, setErrorMessage] = useState("")
+	const [isRegister, setIsRegister] = useState(false)
+	const [data, setData] = useState({
+		"email": '',
+		"name": '',
+		"phoneNumber": '',
+		"password": '',
+	})
+
+	useEffect(() => {
+		if (isRegister) {
+			callApi()
+		}
+	}, [isRegister])
+
+	const callApi = async () => {
+		setIsLoading(true)
+		let { userId, headers } = getGeneralApiParams()
+
+		let url = "/auth/open/register?"
+		let body = {
+			"email": data.email,
+			"name": data.name,
+			"phoneNumber": '92' + data.phoneNumber,
+			"password": data.password,
+			"guestuserid": userId,
+		}
+
+		try {
+			let apiResponse = await axios.post(fullUrl(url), body, {
+				headers: headers,
+			})
+
+			setResponse(apiResponse)
+			toast.success(apiResponse.data?.message)
+			setErrorMessage('')
+			setErrorResponse(null)
+		} catch (error) {
+			setErrorResponse(error?.response)
+			setErrorMessage(error?.response?.data?.message)
+		} finally {
+			setIsLoading(false)
+			setIsRegister(false)
+		}
+	}
+
+	return {
+		isLoading,
+		setData,
+		setIsRegister,
+		errorMessage,
+		response,
+		errorResponse,
+	}
+}
+
+export const useVerifyOtpApi = () => {
+	const [isLoading, setIsLoading] = useState(false)
+	const [response, setResponse] = useState(null)
+	const [errorResponse, setErrorResponse] = useState(null)
+	const [errorMessage, setErrorMessage] = useState("")
+	const [isVerifyOtp, setIsVerifyOtp] = useState(false)
+	const [data, setData] = useState({
+		"phoneNumber": '',
+		"otp": '',
+	})
+
+	useEffect(() => {
+		if (isVerifyOtp) {
+			callApi()
+		}
+	}, [isVerifyOtp])
+
+	const callApi = async () => {
+		setIsLoading(true)
+		let { userId, headers } = getGeneralApiParams()
+
+		let url = "/auth/open/otp/verify?"
+		let body = {
+			"phoneNumber": '92' + data.phoneNumber,
+			"otp": data.otp
+		}
+
+		try {
+			let apiResponse = await axios.post(fullUrl(url), body, {
+				headers: headers,
+			})
+
+			setResponse(apiResponse)
+			toast.success(apiResponse.data?.message)
+			setErrorMessage('')
+			setErrorResponse(null)
+		} catch (error) {
+			setErrorResponse(error?.response)
+			setErrorMessage(error?.response?.data?.message)
+			toast.error(error?.response?.data?.message)
+		} finally {
+			setIsLoading(false)
+			setIsVerifyOtp(false)
+		}
+	}
+
+	return {
+		isLoading,
+		setData,
+		setIsVerifyOtp,
 		errorMessage,
 		response,
 		errorResponse,
