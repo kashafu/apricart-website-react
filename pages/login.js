@@ -1,5 +1,5 @@
 import { useRouter } from "next/router"
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import Link from "next/link"
 
 import TextField from "../components/Layout/components/Input/TextField"
@@ -13,7 +13,7 @@ export default function Login() {
     const router = useRouter();
 
     const [viewState, setViewState] = useState('login')
-    const [sharedPhoneNumber, setSharedPhoneNumber] = useState()
+    let sharedPhoneNumber = useRef('')
 
     const Login = () => {
         const { isLoading, response, errorMessage, setData, setIsLogin } = useLoginApi()
@@ -43,6 +43,11 @@ export default function Login() {
                 onKeyDown={(e) => {
                     if (e.key === 'Enter') {
                         if (!buttonDisabled) {
+                            setData({
+                                "username": phoneNumber,
+                                "password": password
+                            })
+                            sharedPhoneNumber.current = phoneNumber
                             setIsLogin(true)
                         }
                     }
@@ -76,6 +81,7 @@ export default function Login() {
                                     "username": phoneNumber,
                                     "password": password
                                 })
+                                sharedPhoneNumber.current = phoneNumber
                                 setIsLogin(true)
                             }}
                             disabled={buttonDisabled || isLoading}
@@ -124,7 +130,7 @@ export default function Login() {
 
         useEffect(() => {
             if (response) {
-                setSharedPhoneNumber(phoneNumber)
+                sharedPhoneNumber.current = phoneNumber
                 setViewState('reset')
             }
         }, [response])
@@ -204,7 +210,7 @@ export default function Login() {
                     <div className="space-y-2">
                         <div className="flex space-x-2 w-full justify-center">
                             <p className="font-nunito">
-                                OTP sent to +92{sharedPhoneNumber}
+                                OTP sent to +92{sharedPhoneNumber.current}
                             </p>
                             <button
                                 className="font-nunito underline"
@@ -236,7 +242,7 @@ export default function Login() {
                             text={"Reset Password"}
                             onClick={() => {
                                 setData({
-                                    "phoneNumber": sharedPhoneNumber,
+                                    "phoneNumber": sharedPhoneNumber.current,
                                     "password": newPassword,
                                     "otp": otp
                                 })

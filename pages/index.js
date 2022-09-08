@@ -113,9 +113,9 @@ export default function Home() {
 		return (
 			<section className="space-y-12">
 				{homeData.products.map((product, index) => {
-					let { offerId } = product
+					let { identifier } = product
 					return (
-						<section key={offerId}>
+						<section key={identifier}>
 							{/* STATIC BANNERS for mobile */}
 							{index % 2 == 0 ? (
 								<section className="lg:hidden relative space-y-6 items-center">
@@ -159,7 +159,7 @@ export default function Home() {
 								</section>
 							)}
 							<MainProducts
-								key={offerId}
+								key={identifier}
 								section={product}
 							/>
 						</section>
