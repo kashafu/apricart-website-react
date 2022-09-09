@@ -14,7 +14,7 @@ import TypeCardSelector from "../components/Layout/components/Cards/TypeCardSele
 import HomeLoader from "../components/Layout/components/Loaders/HomeLoader"
 import { updateRedirectSource } from "../redux/general.slice"
 
-import karachiStaticBanner1 from "../public/assets/images/banners/harLamhaMazedarBanner.jpeg"
+import karachiStaticBanner1 from "../public/assets/images/banners/99AndBelow.jpg"
 import karachiStaticBanner2 from "../public/assets/images/banners/saylanistaticbanner.jpeg"
 import karachiBulkBuyStaticBanner1 from "../public/assets/images/banners/bulkBuyBanner.jpeg"
 import crossIcon from "../public/assets/svgs/crossIcon.svg"
@@ -208,57 +208,21 @@ export default function Home() {
 		return (
 			<div>
 				<PopupAd />
-				{/* BANNERS SECTION */}
-				<section className="flex w-full lg:relative lg:grid grid-cols-12 gap-x-2 p-2 items-center">
-					{/* CAROUSEL BANNER */}
-					<section className="col-span-12 lg:col-span-7 w-full">
-						<Carousel />
-					</section>
-					{/* STATIC BANNERS */}
-					{selectedTypeSelector === 'bulk' ? (
-						<section className="hidden col-span-5 lg:grid grid-rows-1 h-full w-full justify-items-center align-items-center">
-							<div className="relative w-full p-2">
-								<Link href={"/"} passHref>
-									<a>
-										<Image
-											src={karachiBulkBuyStaticBanner1}
-											layout={"responsive"}
-											alt="banner"
-										/>
-									</a>
-								</Link>
-							</div>
-						</section>
-					) : (
-						<section className="hidden col-span-5 lg:grid grid-rows-2 gap-y-2 h-full w-full">
-							<div className="relative w-full h-full">
-								<Link href={"/offers/45"} passHref>
-									<a>
-										<Image
-											src={karachiStaticBanner2}
-											layout={"fill"}
-											alt="banner"
-										/>
-									</a>
-								</Link>
-							</div>
-							<div className="relative w-full h-full">
-								<Link
-									href={"/offers/14"}
-									passHref
-								>
-									<a>
-										<Image
-											src={karachiStaticBanner1}
-											layout={"fill"}
-											alt="banner"
-										/>
-									</a>
-								</Link>
-							</div>
-						</section>
-					)}
-				</section>
+				<div className="flex flex-row w-full space-x-2">
+					<div className="flex flex-col justify-between w-full lg:w-[65%]">
+						<TypeCardSelector />
+						<div className="w-full my-2 lg:my-0">
+							<Carousel />
+						</div>
+					</div>
+					<div className="hidden lg:inline-block lg:w-[35%]">
+						<Image
+							src={karachiStaticBanner1}
+							layout={"responsive"}
+							alt="banner"
+						/>
+					</div>
+				</div>
 				<Products />
 			</div>
 		)
@@ -277,11 +241,63 @@ export default function Home() {
 				<section className="hidden lg:block lg:col-span-1">
 					<Categories />
 				</section>
-				<section className="space-y-2 lg:space-y-4 col-span-5 lg:col-span-4">
-					<TypeCardSelector />
+				<section className="space-y-2 lg:space-y-6 col-span-5 lg:col-span-4">
 					<HomeItems />
 				</section>
 			</div>
 		</div>
 	)
 }
+
+
+// {/* BANNERS SECTION */}
+// <section className="flex w-full lg:relative lg:grid grid-cols-12 gap-x-2 p-2 items-center">
+// {/* CAROUSEL BANNER */}
+// <section className="col-span-12 lg:col-span-7 w-full">
+// 	<Carousel />
+// </section>
+// {/* STATIC BANNERS */}
+// {selectedTypeSelector === 'bulk' ? (
+// 	<section className="hidden col-span-5 lg:grid grid-rows-1 h-full w-full justify-items-center align-items-center">
+// 		<div className="relative w-full p-2">
+// 			<Link href={"/"} passHref>
+// 				<a>
+// 					<Image
+// 						src={karachiBulkBuyStaticBanner1}
+// 						layout={"responsive"}
+// 						alt="banner"
+// 					/>
+// 				</a>
+// 			</Link>
+// 		</div>
+// 	</section>
+// ) : (
+// 	<section className="hidden col-span-5 lg:grid grid-rows-2 gap-y-2 h-full w-full">
+// 		<div className="relative w-full h-full">
+// 			<Link href={"/offers/45"} passHref>
+// 				<a>
+// 					<Image
+// 						src={karachiStaticBanner2}
+// 						layout={"fill"}
+// 						alt="banner"
+// 					/>
+// 				</a>
+// 			</Link>
+// 		</div>
+// 		<div className="relative w-full h-full">
+// 			<Link
+// 				href={"/offers/14"}
+// 				passHref
+// 			>
+// 				<a>
+// 					<Image
+// 						src={karachiStaticBanner1}
+// 						layout={"fill"}
+// 						alt="banner"
+// 					/>
+// 				</a>
+// 			</Link>
+// 		</div>
+// 	</section>
+// )}
+// </section>
