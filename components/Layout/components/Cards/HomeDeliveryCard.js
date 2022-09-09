@@ -28,7 +28,7 @@ export default function HomeDeliveryCard({ isDisabled }) {
             <p className='font-nunito text-main-blue font-black lg:font-extrabold text-[8px] md:text-base lg:text-sm 2xl:text-lg w-full pl-1 lg:pl-2 leading-none'>
                 Home Delivery
             </p>
-            <div className='w-[40%] max-w-[150px]'>
+            <div className='w-[60%] max-w-[150px]'>
                 <Image
                     src={homeDeliveryIcon}
                     layout={'responsive'}
