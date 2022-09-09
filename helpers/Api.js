@@ -1,9 +1,11 @@
 import axios from "axios"
 import { useSelector, useDispatch } from "react-redux"
 import { useState, useEffect } from "react"
+import { useRouter } from "next/router"
+import { toast } from "react-toastify"
+
 import { base_url_api } from "../information.json"
 import { getGeneralApiParams } from "./ApiHelpers"
-import { useRouter } from "next/router"
 import {
 	addToCart,
 	initialize,
@@ -11,7 +13,6 @@ import {
 	updateQuantity,
 } from "../redux/cart.slice"
 import { updateTicker } from "../redux/general.slice"
-import { toast } from "react-toastify"
 import { setCookie } from "./Cookies"
 import { updateCategories } from "../redux/data.slice"
 
@@ -103,6 +104,7 @@ export const useCategoryProductsApi = () => {
 
 	const [isLoading, setIsLoading] = useState(true)
 	const [categoryProducts, setCategoryProducts] = useState(null)
+	const [subCategories, setSubCategories] = useState(null)
 	const [size, setSize] = useState(20)
 	const [page, setPage] = useState(1)
 	const [totalItems, setTotalItems] = useState(0)
@@ -134,7 +136,8 @@ export const useCategoryProductsApi = () => {
 				headers: headers,
 			})
 			setResponse(apiResponse)
-			setCategoryProducts(apiResponse.data.data)
+			setCategoryProducts(apiResponse.data.data.products)
+			setSubCategories(apiResponse.data.data.categories)
 			setTotalItems(+apiResponse.data.total)
 		} catch (error) {
 			setErrorResponse(error?.response)
@@ -155,46 +158,8 @@ export const useCategoryProductsApi = () => {
 		page,
 		size,
 		totalItems,
+		subCategories
 	}
-}
-
-export const useSubCategoriesApi = () => {
-	const router = useRouter()
-	const { categoryId, categoryName } = router.query
-
-	const [isLoading, setIsLoading] = useState(true)
-	const [subCategories, setSubCategories] = useState(null)
-	const [response, setResponse] = useState(null)
-	const [errorResponse, setErrorResponse] = useState(null)
-	const [errorMessage, setErrorMessage] = useState("")
-
-	useEffect(() => {
-		if (router.isReady) {
-			callApi()
-		}
-	}, [router.query])
-
-	const callApi = async () => {
-		setIsLoading(true)
-		await initializeUserApi()
-		let { headers } = getGeneralApiParams()
-		let url = "/catalog/categories/detail?id=" + categoryId
-
-		try {
-			let apiResponse = await axios.get(fullUrl(url), {
-				headers: headers,
-			})
-			setResponse(apiResponse)
-			setSubCategories(apiResponse.data.data)
-		} catch (error) {
-			setErrorResponse(error?.response)
-			setErrorMessage(error?.response?.data?.message)
-		} finally {
-			setIsLoading(false)
-		}
-	}
-
-	return { isLoading, subCategories, errorMessage, response, errorResponse }
 }
 
 export const useHomeApi = () => {
@@ -426,106 +391,6 @@ export const useAddToCartApi = (sku, qty, product) => {
 		response,
 		errorResponse,
 		setIsPlaceOrder,
-	}
-}
-
-export const useOptionsApi = () => {
-	const selectedTypeSelector = useSelector(
-		(state) => state.general.selectedType
-	)
-	const [isLoading, setIsLoading] = useState(true)
-	const [optionsData, setOptionsData] = useState(null)
-	const [shipmentChargedAt, setShipmentChargedAt] = useState(0)
-	const [shipmentFixAmount, setShipmentFixAmount] = useState(0)
-	const [response, setResponse] = useState(null)
-	const [errorResponse, setErrorResponse] = useState(null)
-	const [errorMessage, setErrorMessage] = useState("")
-
-	useEffect(() => {
-		callApi()
-	}, [selectedTypeSelector])
-
-	const callApi = async () => {
-		setIsLoading(true)
-		await initializeUserApi()
-		let { headers } = getGeneralApiParams()
-
-		let url = "/options/all?"
-
-		try {
-			let apiResponse = await axios.get(fullUrl(url), {
-				headers: headers,
-			})
-			setResponse(apiResponse)
-			setOptionsData(apiResponse.data.data)
-			apiResponse.data.data.forEach((item) => {
-				if (item.key === "shippment_charged_at") {
-					setShipmentChargedAt(item.value)
-				}
-				if (item.key === "shippment_fix_amount") {
-					setShipmentFixAmount(item.value)
-				}
-			})
-		} catch (error) {
-			setErrorResponse(error?.response)
-			setErrorMessage(error?.response?.data?.message)
-		} finally {
-			setIsLoading(false)
-		}
-	}
-
-	return {
-		isLoading,
-		optionsData,
-		errorMessage,
-		response,
-		errorResponse,
-		shipmentChargedAt,
-		shipmentFixAmount,
-	}
-}
-
-export const usePaymentMethodsApi = () => {
-	const selectedTypeSelector = useSelector(
-		(state) => state.general.selectedType
-	)
-	const [isLoading, setIsLoading] = useState(true)
-	const [paymentMethodsData, setPaymentMethodsData] = useState(null)
-	const [response, setResponse] = useState(null)
-	const [errorResponse, setErrorResponse] = useState(null)
-	const [errorMessage, setErrorMessage] = useState("")
-
-	useEffect(() => {
-		callApi()
-	}, [selectedTypeSelector])
-
-	const callApi = async () => {
-		setIsLoading(true)
-		await initializeUserApi()
-		let { headers } = getGeneralApiParams()
-
-		let url = "/order/payment/info?"
-
-		try {
-			let apiResponse = await axios.get(fullUrl(url), {
-				headers: headers,
-			})
-			setResponse(apiResponse)
-			setPaymentMethodsData(apiResponse.data.data)
-		} catch (error) {
-			setErrorResponse(error?.response)
-			setErrorMessage(error?.response?.data?.message)
-		} finally {
-			setIsLoading(false)
-		}
-	}
-
-	return {
-		isLoading,
-		paymentMethodsData,
-		errorMessage,
-		response,
-		errorResponse,
 	}
 }
 
