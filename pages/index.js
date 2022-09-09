@@ -165,17 +165,6 @@ export default function Home() {
 						</section>
 					)
 				})}
-				{/* MANUAL ORDER SECTION */}
-				<section className="mb-2 mt-8 flex flex-row w-full rounded-xl p-2 bg-main-yellow items-center align-center justify-around">
-					<Link
-						href={token ? "/grocery_list" : "/login"}
-						passHref
-					>
-						<a className="text-main-blue font-bold text-lg w-full text-center">
-							UPLOAD YOUR GROCERY LIST
-						</a>
-					</Link>
-				</section>
 			</section>
 		)
 	}
