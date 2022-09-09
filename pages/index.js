@@ -117,7 +117,7 @@ export default function Home() {
 					return (
 						<section key={identifier}>
 							{/* STATIC BANNERS for mobile */}
-							{index % 2 == 0 ? (
+							{/* {index % 2 == 0 ? (
 								<section className="lg:hidden relative space-y-6 items-center">
 									<section className="w-full">
 										<Link
@@ -141,23 +141,21 @@ export default function Home() {
 								<section className="lg:hidden relative space-y-6 items-center">
 									<section className="w-full">
 										<Link
-											href={"/offers/14"}
+											href={"/category/under-rs.99/1242"}
 											passHref
 											className="w-full"
 										>
 											<a className="w-full">
 												<Image
 													src={karachiStaticBanner1}
-													layout={
-														"responsive"
-													}
-													alt=""
+													layout={"responsive"}
+													alt="banner"
 												/>
 											</a>
 										</Link>
 									</section>
 								</section>
-							)}
+							)} */}
 							<MainProducts
 								key={identifier}
 								section={product}
@@ -205,11 +203,19 @@ export default function Home() {
 						</div>
 					</div>
 					<div className="hidden lg:inline-block lg:w-[35%]">
-						<Image
-							src={karachiStaticBanner1}
-							layout={"responsive"}
-							alt="banner"
-						/>
+						<Link
+							href={"/category/under-rs.99/1242"}
+							passHref
+							className="w-full"
+						>
+							<a className="w-full">
+								<Image
+									src={karachiStaticBanner1}
+									layout={"responsive"}
+									alt="banner"
+								/>
+							</a>
+						</Link>
 					</div>
 				</div>
 				<Products />
