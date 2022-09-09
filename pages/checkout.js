@@ -301,6 +301,120 @@ export default function Checkout() {
 		)
 	}
 
+	const DetailsArea = () => {
+		return (
+			<section className="w-full lg:w-[80%] 2xl:w-[60%] space-y-4 bg-slate-100 p-4 m-4 rounded-2xl">
+				{viewState == "shipping" && (
+					<>
+						<p className="font-lato text-lg text-main-blue font-extrabold text-center">
+							DELIVERY DETAILS
+						</p>
+						{selectedTypeSelector === 'cnc' ? (
+							<PickupLocation />
+						) : (
+							<SelectAddress
+								type={"checkout"}
+								dropDownSelectedAddress={selectedAddressSelector}
+							/>
+						)}
+						<ErrorText text={errorMessage} />
+						<div className="">
+							<TextField
+								label={"Special Instructions"}
+								placeHolder={"instructions"}
+								onChange={setNotes}
+								value={notes}
+							/>
+						</div>
+					</>
+				)}
+				{viewState === "payment" && (
+					<>
+						<p className="font-lato text-lg text-main-blue font-extrabold text-center">
+							PAYMENT SELECTION
+						</p>
+						<div className="flex flex-col items-center w-full">
+							<div className="space-y-2 flex flex-col items-center w-1/3">
+								<InputLabelText text={"Payment Method"} />
+								<div className="flex flex-col space-y-2">
+									{paymentMethods.map((method) => {
+										let { id, name, key } = method
+										if (key === "jswallet") {
+											return <div key={id}></div>
+										}
+										return (
+											<div key={id} className='flex items-center space-x-2'>
+												<input
+													value={key}
+													type={"radio"}
+													onChange={(e) => {
+														setPaymentMethod(e.target.value)
+													}}
+													checked={paymentMethod === key}
+												/>
+												<p>
+													{name}
+												</p>
+											</div>
+										)
+									})}
+								</div>
+							</div>
+						</div>
+						{/* PROMO CODE */}
+						<div className="flex flex-row w-full items-center space-x-4">
+							<div className="w-4/6">
+								<TextField
+									label={'Promo Code'}
+									placeHolder={'Enter Code'}
+									onChange={setCouponCode}
+									value={couponCode}
+								/>
+							</div>
+							<div className="w-2/6">
+								<SubmitButton
+									text={'Apply'}
+									onClick={() => {
+										setCoupon(couponCode)
+									}}
+								/>
+							</div>
+						</div>
+						{couponMessage !== 'Discount code not received' && (
+							<p>
+								{couponMessage}
+							</p>
+						)}
+					</>
+				)}
+				{viewState == "review" && (
+					<>
+						{isLoading ? (
+							<div>
+								Loading
+							</div>
+						) : (
+							<section className="w-full flex flex-col items-center">
+								<div className="text-center">
+									{parse(checkoutResponse.data.message)}
+								</div>
+								<div className="w-full lg:w-2/3">
+									<Image
+										src={checkoutResponse.data.data.thankyou_image}
+										layout={"responsive"}
+										alt={"Thank You Image"}
+										width={450}
+										height={100}
+									/>
+								</div>
+							</section>
+						)}
+					</>
+				)}
+			</section>
+		)
+	}
+
 	if (!token) {
 		return (
 			<>
@@ -351,115 +465,7 @@ export default function Checkout() {
 			/>
 			<div className="flex flex-col w-full h-full lg:grid lg:grid-cols-5 2xl:grid 2xl:grid-cols-6">
 				<div className={viewState === 'review' ? "lg:col-span-5 2xl:col-span-6 flex flex-col w-full items-center" : "lg:col-span-3 2xl:col-span-4 flex flex-col w-full items-center"}>
-					<section className="w-full lg:w-[80%] 2xl:w-[60%] space-y-4 bg-slate-100 p-4 m-4 rounded-2xl">
-						{viewState == "shipping" && (
-							<>
-								<p className="font-lato text-lg text-main-blue font-extrabold text-center">
-									DELIVERY DETAILS
-								</p>
-								{selectedTypeSelector === 'cnc' ? (
-									<PickupLocation />
-								) : (
-									<SelectAddress
-										type={"checkout"}
-										dropDownSelectedAddress={selectedAddressSelector}
-									/>
-								)}
-								<ErrorText text={errorMessage} />
-								<div className="">
-									<TextField
-										label={"Special Instructions"}
-										placeHolder={"instructions"}
-										onChange={setNotes}
-										value={notes}
-									/>
-								</div>
-							</>
-						)}
-						{viewState === "payment" && (
-							<>
-								<p className="font-lato text-lg text-main-blue font-extrabold text-center">
-									PAYMENT SELECTION
-								</p>
-								<div className="flex flex-col items-center w-full">
-									<div className="space-y-2 flex flex-col items-center w-1/3">
-										<InputLabelText text={"Payment Method"} />
-										<div className="flex flex-col space-y-2">
-											{paymentMethods.map((method) => {
-												let { id, name, key } = method
-												if (key === "jswallet") {
-													return <div key={id}></div>
-												}
-												return (
-													<div key={id} className='flex items-center space-x-2'>
-														<input
-															value={key}
-															type={"radio"}
-															onChange={(e) => {
-																setPaymentMethod(e.target.value)
-															}}
-															checked={paymentMethod === key}
-														/>
-														<p>
-															{name}
-														</p>
-													</div>
-												)
-											})}
-										</div>
-									</div>
-								</div>
-								{/* PROMO CODE */}
-								<div className="flex flex-row w-full items-center space-x-4">
-									<div className="w-4/6">
-										<TextField
-											label={'Promo Code'}
-											placeHolder={'Enter Code'}
-											onChange={setCouponCode}
-											value={couponCode}
-										/>
-									</div>
-									<div className="w-2/6">
-										<SubmitButton
-											text={'Apply'}
-											onClick={() => {
-												setCoupon(couponCode)
-											}}
-										/>
-									</div>
-								</div>
-								{couponMessage !== 'Discount code not received' && (
-									<p>
-										{couponMessage}
-									</p>
-								)}
-							</>
-						)}
-						{viewState == "review" && (
-							<>
-								{isLoading ? (
-									<div>
-										Loading
-									</div>
-								) : (
-									<section className="w-full flex flex-col items-center">
-										<div className="text-center">
-											{parse(checkoutResponse.data.message)}
-										</div>
-										<div className="w-full lg:w-2/3">
-											<Image
-												src={checkoutResponse.data.data.thankyou_image}
-												layout={"responsive"}
-												alt={"Thank You Image"}
-												width={450}
-												height={100}
-											/>
-										</div>
-									</section>
-								)}
-							</>
-						)}
-					</section>
+					<DetailsArea />
 					{/* CHECKOUT BUTTON DIV for desktop*/}
 					<div className="hidden w-[60%] lg:grid lg:col-span-3 2xl:col-span-4">
 						<CheckoutButton />
