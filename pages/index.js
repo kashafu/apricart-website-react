@@ -14,10 +14,9 @@ import TypeCardSelector from "../components/Layout/components/Cards/TypeCardSele
 import HomeLoader from "../components/Layout/components/Loaders/HomeLoader"
 import { updateRedirectSource } from "../redux/general.slice"
 
-import karachiStaticBanner1 from "../public/assets/images/banners/harLamhaMazedarBanner.jpeg"
+import karachiStaticBanner1 from "../public/assets/images/banners/99AndBelow.jpg"
 import karachiStaticBanner2 from "../public/assets/images/banners/saylanistaticbanner.jpeg"
 import karachiBulkBuyStaticBanner1 from "../public/assets/images/banners/bulkBuyBanner.jpeg"
-import karachiMainBanner from "../public/assets/images/banners/everythingIn75.png"
 import crossIcon from "../public/assets/svgs/crossIcon.svg"
 import { clearCookies } from "../helpers/Cookies"
 import { clearLocalStorage, clearSessionStorage } from "../helpers/Storage"
@@ -210,25 +209,20 @@ export default function Home() {
 			<div>
 				<PopupAd />
 				<div className="flex flex-row w-full space-x-2">
-					<div className="flex flex-col space-y-2 w-[70%]">
+					<div className="flex flex-col justify-between w-full lg:w-[65%]">
 						<TypeCardSelector />
-						<div className="relative h-[200px] w-full">
-							<Image
-								src={karachiStaticBanner1}
-								layout={"fill"}
-								alt="banner"
-							/>
+						<div className="w-full my-2 lg:my-0">
+							<Carousel />
 						</div>
 					</div>
-					<div className="w-[30%] h-[280px] relative">
+					<div className="hidden lg:inline-block lg:w-[35%]">
 						<Image
-							src={karachiMainBanner}
-							layout={"fill"}
+							src={karachiStaticBanner1}
+							layout={"responsive"}
 							alt="banner"
 						/>
 					</div>
 				</div>
-
 				<Products />
 			</div>
 		)
