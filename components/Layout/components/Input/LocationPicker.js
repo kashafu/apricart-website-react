@@ -1,18 +1,18 @@
 import { useState } from 'react';
 import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
 // import PlacesAutocomplete from './PlacesAutocomplete';
-let defaultLocation = { 
-    lat: 24.917122827062762, 
-    lng: 67.09610049861793 
+let defaultLocation = {
+    lat: 24.917122827062762,
+    lng: 67.09610049861793
 }
 
-export default function LocationPicker({label, onChangeLatitude, onChangeLongitude, startingLocation}) {
+export default function LocationPicker({ label, onChangeLatitude, onChangeLongitude, startingLocation }) {
     const [mapref, setMapRef] = useState(null);
     const [centerLocation, setCenterLocation] = useState({
         lat: 24.917122827062762,
         long: 67.09610049861793
     })
-    
+
     const handleOnLoad = map => {
         setMapRef(map)
     }
@@ -21,8 +21,8 @@ export default function LocationPicker({label, onChangeLatitude, onChangeLongitu
         if (mapref) {
             const newCenter = mapref.getCenter()
             setCenterLocation({
-                lat : newCenter.lat(),
-                lng : newCenter.lng()
+                lat: newCenter.lat(),
+                lng: newCenter.lng()
             })
             onChangeLatitude(newCenter.lat())
             onChangeLongitude(newCenter.lng())
@@ -31,7 +31,7 @@ export default function LocationPicker({label, onChangeLatitude, onChangeLongitu
 
     return (
         <LoadScript
-            // googleMapsApiKey='AIzaSyBCdUlcuc_K2zH9CWXCj_6BEhJ30Fo5u3A'
+            googleMapsApiKey='AIzaSyBCdUlcuc_K2zH9CWXCj_6BEhJ30Fo5u3A'
         >
             {/* <PlacesAutocomplete /> */}
             <GoogleMap

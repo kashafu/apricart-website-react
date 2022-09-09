@@ -126,7 +126,7 @@ export default function AddressCard({ type, previousAddress, updateSavedAddresse
     }
 
     return (
-        <div className="min-w-full flex flex-col space-y-2">
+        <div className="min-w-full flex flex-col space-y-2 animate-dropdown">
             <TextField
                 label={'Name'}
                 type={'text'}
