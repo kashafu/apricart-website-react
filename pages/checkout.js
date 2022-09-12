@@ -13,6 +13,7 @@ import HeadTag from "../components/Layout/components/Head/HeadTag"
 import { useInitialCartDataApi, usePickupLocationsApi } from "../helpers/Api"
 import CheckoutCart from "../components/Layout/components/Cart/CheckoutCart"
 import PickupLocationSelector from "../components/Layout/components/Selectors/PickupLocationSelector"
+import Popup from "../components/Layout/components/Popup/Popup"
 
 export default function Checkout() {
 	const dispatch = useDispatch()
@@ -24,6 +25,7 @@ export default function Checkout() {
 	const reduxCart = useSelector((state) => state.cart)
 
 	// view state can be either 'loading', 'shipping', 'payment', 'review'
+	const [showJSPopup, setShowJSPopup] = useState(false)
 	const [viewState, setViewState] = useState("shipping")
 	const [isCheckoutButtonPressed, setIsCheckoutButtonPressed] = useState(false)
 
@@ -46,6 +48,10 @@ export default function Checkout() {
 			}
 		}
 	}, [checkoutResponse, viewState, isCheckoutButtonPressed])
+
+	useEffect(() => {
+		setShowJSPopup(redirectSourceSelector === 'js_bank')
+	}, [redirectSourceSelector])
 
 	const ProgressBar = ({ currentState, onClick }) => {
 		let pStyle = "font-lato text-md font-semibold"
@@ -460,6 +466,18 @@ export default function Checkout() {
 	return (
 		<div className="h-full w-full">
 			<HeadTag title={"Checkout"} />
+			{showJSPopup && (
+				<Popup
+					content={
+						<div>
+
+						</div>
+					}
+					handleClose={() => {
+						setShowJSPopup(!showJSPopup)
+					}}
+				/>
+			)}
 			<ProgressBar
 				currentState={viewState}
 				onClick={setViewState}
