@@ -801,7 +801,7 @@ export const useRecommendedProductsApi = () => {
 				headers: headers,
 			})
 			setResponse(apiResponse)
-			setRecommendedProducts(apiResponse.data.data)
+			setRecommendedProducts(apiResponse.data.data.products)
 		} catch (error) {
 			setErrorResponse(error?.response)
 			setErrorMessage(error?.response?.data?.message)
