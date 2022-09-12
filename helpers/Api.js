@@ -842,7 +842,7 @@ export const useMostViewedProductsApi = () => {
 				headers: headers,
 			})
 			setResponse(apiResponse)
-			setMostViewedProducts(apiResponse.data.data)
+			setMostViewedProducts(apiResponse.data.data.products)
 		} catch (error) {
 			setErrorResponse(error?.response)
 			setErrorMessage(error?.response?.data?.message)
