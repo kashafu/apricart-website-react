@@ -19,6 +19,7 @@ export default function Checkout() {
 	let { token } = getGeneralApiParams()
 	const selectedAddressSelector = useSelector((state) => state.general.selectedAddress)
 	const selectedTypeSelector = useSelector((state) => state.general.selectedType)
+	const redirectSourceSelector = useSelector((state) => state.general.redirectSource)
 	const selectedPickupLocationSelector = useSelector((state) => state.general.pickupLocation)
 	const reduxCart = useSelector((state) => state.cart)
 
