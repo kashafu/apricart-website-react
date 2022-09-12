@@ -760,7 +760,7 @@ export const useSearchResultsApi = () => {
 				headers: headers,
 			})
 			setResponse(apiResponse)
-			setSearchResults(apiResponse.data.data)
+			setSearchResults(apiResponse.data.data.products)
 		} catch (error) {
 			setErrorResponse(error?.response)
 			setErrorMessage(error?.response?.data?.message)

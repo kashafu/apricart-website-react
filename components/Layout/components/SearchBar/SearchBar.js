@@ -64,7 +64,7 @@ export default function SearchBar() {
 			headers: headers,
 		})
 		setShowSearchResults(true)
-		setSearchResults(searchResponse.data.data)
+		setSearchResults(searchResponse.data.data.products)
 	}
 
 	return (
