@@ -64,15 +64,15 @@ export default function SearchBar() {
 			headers: headers,
 		})
 		setShowSearchResults(true)
-		setSearchResults(searchResponse.data.data)
+		setSearchResults(searchResponse.data.data.products)
 	}
 
 	return (
 		<div className="relative w-full z-30">
-			<div className="flex flex-row items-center h-8 rounded-lg w-full">
+			<div className="flex flex-row items-center h-7 lg:h-8 rounded-lg w-full">
 				<select
 					disabled={categoriesSelector == null}
-					className="rounded-l-lg bg-slate-200 w-1/2 lg:w-1/4 h-full font-bold text-xs border-2 border-main-blue"
+					className="rounded-l-lg bg-slate-200 w-1/2 lg:w-1/4 h-full font-bold text-xs border-1 lg:border-2 border-main-blue"
 					onChange={(e) => {
 						setSelectedCategoryId(e.target.value)
 						categoriesSelector.find((item) => {
@@ -97,7 +97,7 @@ export default function SearchBar() {
 				</select>
 				<input
 					ref={searchBarRef}
-					className="px-2 py-1 w-full h-full bg-slate-200 font-bold border-y-2 border-main-blue"
+					className="px-2 py-1 w-full h-full bg-slate-200 font-bold border-1 lg:border-2 border-main-blue"
 					type={"search"}
 					value={searchText}
 					onChange={(e) => {

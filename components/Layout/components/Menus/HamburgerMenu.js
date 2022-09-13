@@ -45,7 +45,7 @@ export default function HamburgerMenu() {
 					setShowMenu(!showMenu)
 				}}
 			>
-				<Image src={menuIcon} alt={"icon"} width={25} height={20} />
+				<Image src={menuIcon} alt={"icon"} width={35} height={30} />
 			</button>
 			{showMenu && (
 				<div className="w-full h-full animate-fade-in">
@@ -73,7 +73,7 @@ export default function HamburgerMenu() {
 									Welcome, {name}
 								</p>
 							)}
-							<div className="py-2 w-full">
+							<div className="py-2 w-2/3">
 								{selectedTypeSelector === 'cnc' ? (
 									<PickupLocationSelector />
 								) : (
@@ -152,9 +152,9 @@ export default function HamburgerMenu() {
 						</div>
 						{token ? (
 							<div className="flex flex-col space-y-2">
-								<SubmitButton
-									bgColor={'bg-red-600'}
-									text={"LOGOUT"}
+								<LinkButton
+									text={"Logout"}
+									path={"/"}
 									onClick={() => {
 										logout()
 										setShowMenu(!showMenu)

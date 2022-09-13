@@ -20,15 +20,15 @@ export default function MainProducts({ section }) {
 	let imageUrl = bannerImageWeb === '' ? missingImageIcon : bannerImageWeb
 
 	return (
-		<section key={name} className="space-y-4 px-2 py-4">
-			<div className="w-full border-b border-main-blue-100 py-4">
-				<div className="flex flex-row items-stretch w-full justify-between">
+		<section key={name} className="space-y-4 px-2 py-2">
+			<div className="w-full border-b border-main-blue-100 py-2">
+				<div className="flex flex-row items-center w-full justify-between">
 					<p className="text-2xl text-main-blue font-bold">
 						{name}
 					</p>
 					{identifier === "mostviewed" && (
 						<Link href={"/products/most-viewed"} passHref>
-							<a className="bg-main-blue px-4 rounded-xl flex items-center">
+							<a className="bg-main-blue px-4 h-1/2 rounded-xl flex items-center">
 								<p className="text-white font-bold text-md lg:text-lg">
 									View All
 								</p>
@@ -37,7 +37,7 @@ export default function MainProducts({ section }) {
 					)}
 					{identifier === "recommended" && (
 						<Link href={"/products/recommended"} passHref>
-							<a className="bg-main-blue px-4 rounded-xl flex items-center">
+							<a className="bg-main-blue px-4 h-1/2 rounded-xl flex items-center">
 								<p className="text-white font-bold text-md lg:text-lg">
 									View All
 								</p>

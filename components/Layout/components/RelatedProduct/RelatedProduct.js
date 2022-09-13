@@ -15,9 +15,9 @@ export default function RecommendedProducts() {
 			"&lang=en&client_type=apricart&userid=" +
 			userId
 		const response = await axios.get(
-			url, {headers: headers}
+			url, { headers: headers }
 		)
-		setUsers(response.data.data)
+		setUsers(response.data.data.products)
 	}
 	useEffect(() => {
 		getPopularitems()

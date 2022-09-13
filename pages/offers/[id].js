@@ -29,8 +29,8 @@ export default function OfferId() {
 					headers: headers
 				}
 			)
-			if (response?.data?.data?.length > 0) {
-				setOfferItems(response.data.data)
+			if (response?.data?.data?.products.length > 0) {
+				setOfferItems(response.data.data.products)
 			}
 		} catch (error) {
 			console.log(error)

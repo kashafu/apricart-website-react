@@ -29,7 +29,7 @@ const Footer = () => {
 	const { privacy, address, privTimer, addTimer } = toggler;
 	return (
 		<>
-			<footer className="flex-col sm:flex-row md:flex w-full  py-2 hidden ">
+			<footer className="flex-col sm:flex-row md:flex w-full py-2 hidden bg-slate-200">
 				{/* Follow us here zegtion */}
 				<section className="flex flex-col justify-evenly w-1/4">
 					<div className="text-center">
