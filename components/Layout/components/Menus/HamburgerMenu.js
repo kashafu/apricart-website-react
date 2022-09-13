@@ -152,9 +152,9 @@ export default function HamburgerMenu() {
 						</div>
 						{token ? (
 							<div className="flex flex-col space-y-2">
-								<SubmitButton
-									bgColor={'bg-red-600'}
-									text={"LOGOUT"}
+								<LinkButton
+									text={"Logout"}
+									path={"/"}
 									onClick={() => {
 										logout()
 										setShowMenu(!showMenu)
