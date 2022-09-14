@@ -72,6 +72,9 @@ module.exports = {
 				"main-green": {
 					DEFAULT: "#296118",
 				},
+				"js": {
+					DEFAULT: "#00CC99"
+				}
 			},
 			fontFamily: {
 				lato: ["Lato", "sans-serif"],

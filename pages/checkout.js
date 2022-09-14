@@ -2,6 +2,7 @@ import { useState, useEffect } from "react"
 import parse from "html-react-parser"
 import Image from "next/image"
 import { useSelector, useDispatch } from "react-redux"
+import { useRouter } from "next/router"
 
 import { getGeneralApiParams } from "../helpers/ApiHelpers"
 import SelectAddress from "../components/Layout/components/Address/SelectAddress"
@@ -17,6 +18,7 @@ import Popup from "../components/Layout/components/Popup/Popup"
 
 export default function Checkout() {
 	const dispatch = useDispatch()
+	const router = useRouter()
 	let { token } = getGeneralApiParams()
 	const selectedAddressSelector = useSelector((state) => state.general.selectedAddress)
 	const selectedTypeSelector = useSelector((state) => state.general.selectedType)
@@ -48,10 +50,6 @@ export default function Checkout() {
 			}
 		}
 	}, [checkoutResponse, viewState, isCheckoutButtonPressed])
-
-	useEffect(() => {
-		setShowJSPopup(redirectSourceSelector === 'js_bank')
-	}, [redirectSourceSelector])
 
 	const ProgressBar = ({ currentState, onClick }) => {
 		let pStyle = "font-lato text-md font-semibold"
@@ -249,41 +247,52 @@ export default function Checkout() {
 			<div className="">
 				{viewState === "shipping" && (
 					<div>
-						{selectedTypeSelector === 'cnc' ? (
+						{redirectSourceSelector === 'js_bank' ? (
 							<SubmitButton
-								text={
-									selectedDate === '' || selectedTime === ''
-										? "SELECT PICKUP LOCATION"
-										: "CONTINUE TO PAYMENT"
-								}
+								text={'CONTINUE WITH ORDER'}
 								onClick={() => {
-									setViewState("payment")
-									window.scroll({
-										top: 0,
-										left: 0,
-										behavior: "smooth",
-									})
+									setShowJSPopup(true)
 								}}
-								disabled={selectedDate === '' || selectedTime === ''}
 							/>
 						) : (
-							<SubmitButton
-								text={
-									isLoading ? "LOADING" :
-										selectedAddressSelector && response
-											? "CONTINUE TO PAYMENT"
-											: "SELECT ADDRESS"
-								}
-								onClick={() => {
-									setViewState("payment")
-									window.scroll({
-										top: 0,
-										left: 0,
-										behavior: "smooth",
-									})
-								}}
-								disabled={selectedAddressSelector && response ? false : true}
-							/>
+							<>
+								{selectedTypeSelector === 'cnc' ? (
+									<SubmitButton
+										text={
+											selectedDate === '' || selectedTime === ''
+												? "SELECT PICKUP LOCATION"
+												: "CONTINUE TO PAYMENT"
+										}
+										onClick={() => {
+											setViewState("payment")
+											window.scroll({
+												top: 0,
+												left: 0,
+												behavior: "smooth",
+											})
+										}}
+										disabled={selectedDate === '' || selectedTime === ''}
+									/>
+								) : (
+									<SubmitButton
+										text={
+											isLoading ? "LOADING" :
+												selectedAddressSelector && response
+													? "CONTINUE TO PAYMENT"
+													: "SELECT ADDRESS"
+										}
+										onClick={() => {
+											setViewState("payment")
+											window.scroll({
+												top: 0,
+												left: 0,
+												behavior: "smooth",
+											})
+										}}
+										disabled={selectedAddressSelector && response ? false : true}
+									/>
+								)}
+							</>
 						)}
 					</div>
 				)}
@@ -425,14 +434,34 @@ export default function Checkout() {
 	const JsPopup = () => {
 		return (
 			<div className="animate-dropdown fixed inset-0 h-full w-full backdrop-blur-sm z-50">
-				<div className="fixed w-3/4 lg:w-1/3 bg-white h-3/4 border-2 shadow-2xl inset-0 m-auto z-50 rounded-lg p-2">
-
+				<div className="fixed w-3/4 lg:w-1/3 h-1/3 bg-white border-2 shadow-2xl inset-0 m-auto z-50 rounded-lg p-2">
+					<div className="flex flex-col justify-between h-full w-full">
+						<p className="font-nunito text-black text-lg text-center">
+							Your Zindagi User ID and number is needed to proceed. Please confirm to grant access to this information.
+						</p>
+						<div className="flex flex-row space-x-4">
+							<SubmitButton
+								text={"Confirm"}
+								onClick={() => {
+									// CALL FARRUKH API
+								}}
+								bgColor={'bg-js'}
+							/>
+							<SubmitButton
+								text={"Decline"}
+								onClick={() => {
+									router.push('/')
+								}}
+								bgColor={'bg-js'}
+							/>
+						</div>
+					</div>
 				</div>
 			</div>
 		)
 	}
 
-	if (!token) {
+	if (!token && redirectSourceSelector !== 'js_bank') {
 		return (
 			<>
 				<HeadTag title={"Checkout"} />
