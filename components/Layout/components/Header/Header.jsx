@@ -29,13 +29,15 @@ export default function Header() {
 		if (!getItemLocalStorage("selected-type")) {
 			setItemLocalStorage('selected-type', 'home')
 		}
+	}, [token])
 
+	useEffect(() => {
 		const onScroll = () => setOffset(window.pageYOffset);
 		// clean up code
 		window.removeEventListener('scroll', onScroll);
 		window.addEventListener('scroll', onScroll, { passive: true });
 		return () => window.removeEventListener('scroll', onScroll);
-	}, [token])
+	}, [])
 
 
 	return (
