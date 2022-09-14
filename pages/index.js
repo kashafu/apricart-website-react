@@ -31,7 +31,6 @@ export default function Home() {
 	const [showPopupAd, setShowPopupAd] = useState(isPopupAd)
 
 	const redirectSourceSelector = useSelector(state => state.general.redirectSource)
-	const [showJSPopup, setShowJSPopup] = useState(false)
 
 	useEffect(() => {
 		if (router.isReady) {
@@ -41,10 +40,6 @@ export default function Home() {
 			}
 		}
 	}, [router.isReady])
-
-	useEffect(() => {
-		setShowJSPopup(redirectSourceSelector === 'js_bank')
-	}, [redirectSourceSelector])
 
 	const PopupAd = () => {
 		return (
@@ -230,16 +225,6 @@ export default function Home() {
 		)
 	}
 
-	const JsPopup = () => {
-		return (
-			<div className="animate-dropdown fixed inset-0 h-full w-full backdrop-blur-sm z-50">
-				<div className="fixed w-3/4 lg:w-1/3 bg-white h-3/4 border-2 shadow-2xl inset-0 m-auto z-50 rounded-lg p-2">
-
-				</div>
-			</div>
-		)
-	}
-
 	return (
 		<div className="">
 			<HeadTag
@@ -248,9 +233,6 @@ export default function Home() {
 					"Online grocery store in Pakistan, offering bulk buy and home delivery"
 				}
 			/>
-			{showJSPopup && (
-				<JsPopup />
-			)}
 			<div className="grid grid-cols-5 gap-6">
 				{/* CATEGORIES SECTION */}
 				<section className="hidden lg:block lg:col-span-1">

@@ -25,7 +25,7 @@ export default function Checkout() {
 	const reduxCart = useSelector((state) => state.cart)
 
 	// view state can be either 'loading', 'shipping', 'payment', 'review'
-	// const [showJSPopup, setShowJSPopup] = useState(false)
+	const [showJSPopup, setShowJSPopup] = useState(false)
 	const [viewState, setViewState] = useState("shipping")
 	const [isCheckoutButtonPressed, setIsCheckoutButtonPressed] = useState(false)
 
@@ -49,9 +49,9 @@ export default function Checkout() {
 		}
 	}, [checkoutResponse, viewState, isCheckoutButtonPressed])
 
-	// useEffect(() => {
-	// 	setShowJSPopup(redirectSourceSelector === 'js_bank')
-	// }, [redirectSourceSelector])
+	useEffect(() => {
+		setShowJSPopup(redirectSourceSelector === 'js_bank')
+	}, [redirectSourceSelector])
 
 	const ProgressBar = ({ currentState, onClick }) => {
 		let pStyle = "font-lato text-md font-semibold"
@@ -422,6 +422,16 @@ export default function Checkout() {
 		)
 	}
 
+	const JsPopup = () => {
+		return (
+			<div className="animate-dropdown fixed inset-0 h-full w-full backdrop-blur-sm z-50">
+				<div className="fixed w-3/4 lg:w-1/3 bg-white h-3/4 border-2 shadow-2xl inset-0 m-auto z-50 rounded-lg p-2">
+
+				</div>
+			</div>
+		)
+	}
+
 	if (!token) {
 		return (
 			<>
@@ -466,18 +476,9 @@ export default function Checkout() {
 	return (
 		<div className="h-full w-full">
 			<HeadTag title={"Checkout"} />
-			{/* {showJSPopup && (
-				<Popup
-					content={
-						<div>
-
-						</div>
-					}
-					handleClose={() => {
-						setShowJSPopup(!showJSPopup)
-					}}
-				/>
-			)} */}
+			{showJSPopup && (
+				<JsPopup />
+			)}
 			<ProgressBar
 				currentState={viewState}
 				onClick={setViewState}
