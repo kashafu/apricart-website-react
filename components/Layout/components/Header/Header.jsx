@@ -35,7 +35,7 @@ export default function Header() {
 		window.removeEventListener('scroll', onScroll);
 		window.addEventListener('scroll', onScroll, { passive: true });
 		return () => window.removeEventListener('scroll', onScroll);
-	}, [])
+	}, [token])
 
 
 	return (
