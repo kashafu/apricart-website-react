@@ -14,7 +14,7 @@ import TypeCardSelector from "../components/Layout/components/Cards/TypeCardSele
 import HomeLoader from "../components/Layout/components/Loaders/HomeLoader"
 
 import storeBackgroundImage from "../public/assets/images/storeBackground.png"
-import karachiStaticBanner1 from "../public/assets/images/banners/harLamhaMazedarBanner.jpeg"
+import karachiStaticBanner1 from "../public/assets/images/banners/99AndBelowOld.png"
 import karachiStaticBanner2 from "../public/assets/images/banners/saylanistaticbanner.jpeg"
 import karachiBulkBuyStaticBanner1 from "../public/assets/images/banners/bulkBuyBanner.jpeg"
 import crossIcon from "../public/assets/svgs/crossIcon.svg"
@@ -158,7 +158,7 @@ export default function Home() {
 							</div>
 							<div className="relative w-full h-full">
 								<Link
-									href={"/offers/14"}
+									href={"/category/rs.99-&-below/1242"}
 									passHref
 								>
 									<a>
@@ -213,7 +213,7 @@ export default function Home() {
 										<section className="lg:hidden relative space-y-6 items-center">
 											<section className="w-full">
 												<Link
-													href={"/offers/14"}
+													href={"/category/rs.99-&-below/1242"}
 													passHref
 													className="w-full"
 												>
