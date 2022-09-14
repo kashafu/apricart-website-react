@@ -12,6 +12,7 @@ import CartItemListing from "./CartItemListing";
 export default function CartSlider() {
 	const { setIsFetchCart } = useInitialCartDataApi()
 	const reduxCart = useSelector((state) => state.cart);
+	const redirectSourceSelector = useSelector(state => state.general.redirectSource)
 	const router = useRouter();
 	const cartIconRef = useRef()
 	let { token } = getGeneralApiParams();
@@ -84,7 +85,7 @@ export default function CartSlider() {
 									<SubmitButton
 										text={"CHECKOUT"}
 										onClick={() => {
-											if (token) {
+											if (token || redirectSourceSelector === 'js_bank') {
 												setShowCart(false);
 												router.push("/checkout");
 											} else {
