@@ -163,12 +163,14 @@ export const useCategoryProductsApi = () => {
 
 export const useHomeApi = () => {
 	const dispatch = useDispatch()
+	const router = useRouter()
 	const selectedTypeSelector = useSelector(
 		(state) => state.general.selectedType
 	)
 	const citySelector = useSelector((state) => state.general.city)
 	const selectedAddressSelector = useSelector((state) => state.general.selectedAddress)
 	const selectedPickupLocationSelector = useSelector((state) => state.general.pickupLocation)
+	const redirectSourceSelector = useSelector((state) => state.general.redirectSource)
 	const [isLoading, setIsLoading] = useState(true)
 	const [homeData, setHomeData] = useState(null)
 	const [categories, setCategories] = useState(null)
@@ -180,8 +182,10 @@ export const useHomeApi = () => {
 	const [errorMessage, setErrorMessage] = useState("")
 
 	useEffect(() => {
-		callApi()
-	}, [selectedTypeSelector, citySelector, selectedAddressSelector, selectedPickupLocationSelector])
+		if (router.isReady) {
+			callApi()
+		}
+	}, [selectedTypeSelector, citySelector, selectedAddressSelector, selectedPickupLocationSelector, router.query, redirectSourceSelector])
 
 	const callApi = async () => {
 		setIsLoading(true)
