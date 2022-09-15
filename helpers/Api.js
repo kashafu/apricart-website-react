@@ -17,8 +17,7 @@ import { setCookie } from "./Cookies"
 import { updateCategories } from "../redux/data.slice"
 
 const fullUrl = (url) => {
-	let { city, userId, clientType, orderType, prodType } =
-		getGeneralApiParams()
+	let { city, userId, clientType, orderType, prodType } = getGeneralApiParams()
 
 	return (
 		base_url_api +

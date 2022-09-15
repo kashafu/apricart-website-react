@@ -1,9 +1,6 @@
-import Cookies from 'universal-cookie';
-let isNode = require('detect-node')
 import { getCookie, removeCookie } from './Cookies';
 import { getItemSessionStorage, getItemLocalStorage, removeItemLocalStorage } from './Storage';
-
-const cookies = new Cookies();
+let isNode = require('detect-node')
 
 export const getGeneralCookies = () => {
     let name = getCookie('cookies-name')
