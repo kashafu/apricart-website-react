@@ -31,8 +31,7 @@ export default function Checkout() {
 	const [selectedDate, setSelectedDate] = useState('')
 	const [selectedTime, setSelectedTime] = useState('')
 
-	const [couponCode, setCouponCode] = useState('')
-	const { initialCartProducts, initialCartData, isLoading, errorMessage, response, setNotes, setCoupon, notes, setPaymentMethod, paymentMethod, setIsCheckout, couponMessage, paymentMethods, checkoutResponse, setDay, setStartTime, setEndTime, setIsFetchCart } = useInitialCartDataApi()
+	const { initialCartProducts, initialCartData, isLoading, errorMessage, response, setCoupon, notes, setPaymentMethod, paymentMethod, setIsCheckout, couponMessage, paymentMethods, checkoutResponse, setDay, setStartTime, setEndTime, setIsFetchCart } = useInitialCartDataApi()
 	const { pickupLocations, availableDates, response: pickupLocationsApiResponse, isLoading: pickupLocationsApiIsLoading } = usePickupLocationsApi()
 
 	/*
@@ -302,6 +301,8 @@ export default function Checkout() {
 	}
 
 	const DetailsArea = () => {
+		const [couponCode, setCouponCode] = useState('')
+
 		return (
 			<section className="w-full lg:w-[80%] 2xl:w-[60%] space-y-4 bg-slate-100 p-4 m-4 rounded-2xl">
 				{viewState == "shipping" && (
@@ -322,8 +323,10 @@ export default function Checkout() {
 							<TextField
 								label={"Special Instructions"}
 								placeHolder={"instructions"}
-								onChange={setNotes}
-								value={notes}
+								customOnChange
+								onChange={(e) => {
+									notes.current = e.target.value
+								}}
 							/>
 						</div>
 					</>
