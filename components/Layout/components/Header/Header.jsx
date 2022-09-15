@@ -18,6 +18,7 @@ import { getItemLocalStorage, setItemLocalStorage } from "../../../../helpers/St
 export default function Header() {
 	let { token } = getGeneralApiParams()
 	const selectedTypeSelector = useSelector(state => state.general.selectedType)
+	const redirectSourceSelector = useSelector(state => state.general.redirectSource)
 	const [offset, setOffset] = useState(0);
 
 	useEffect(() => {
@@ -86,19 +87,23 @@ export default function Header() {
 							<Profile />
 						</div>
 					) : (
-						<div className="flex flex-row space-x-2 items-center">
-							<Link href={"/login"} passHref>
-								<a className="font-nunito text-base font-main-grey-800 font-semibold">
-									Login
-								</a>
-							</Link>
-							<p className="text-3xl font-bold pb-[5px]">|</p>
-							<Link href={"/register"} passHref>
-								<a className="truncate text-base font-nunito font-main-grey-800 font-semibold">
-									Sign Up
-								</a>
-							</Link>
-						</div>
+						<>
+							{redirectSourceSelector !== 'js_bank' && (
+								<div className="flex flex-row space-x-2 items-center">
+									<Link href={"/login"} passHref>
+										<a className="font-nunito text-base font-main-grey-800 font-semibold">
+											Login
+										</a>
+									</Link>
+									<p className="text-3xl font-bold pb-[5px]">|</p>
+									<Link href={"/register"} passHref>
+										<a className="truncate text-base font-nunito font-main-grey-800 font-semibold">
+											Sign Up
+										</a>
+									</Link>
+								</div>
+							)}
+						</>
 					)}
 				</div>
 			</div>
