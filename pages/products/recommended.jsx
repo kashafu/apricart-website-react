@@ -56,7 +56,7 @@ export default function Recommended() {
 				{/* PRODUCTS SECTION */}
 				<section className="col-span-5 lg:col-span-4 space-y-12">
 					<PageHeading
-						text='RECOMMENDED PRODUCTS'
+						text='PEOPLE ALSO BUY'
 					/>
 					<RecommendedProducts />
 				</section>

@@ -48,6 +48,7 @@ export default function SingleProduct({ product, isInStock }) {
 		}
 		else {
 			setShowQty(false)
+			setQty(minQty)
 		}
 	}, [reduxCart])
 
