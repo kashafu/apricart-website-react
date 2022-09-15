@@ -27,7 +27,7 @@ export const getGeneralCookies = () => {
 export const getGeneralApiParams = () => {
     let redirectSource = getItemSessionStorage('redirect-source')
 
-    let clientType = 'apricart'
+    let clientType = redirectSource === 'js_bank' ? 'jsstore' : 'apricart'
     let prodType = ''
     let orderType = ''
 
