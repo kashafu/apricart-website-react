@@ -15,10 +15,6 @@ const cartSlice = createSlice({
 				state.push({ ...action.payload, quantity: qty });
 			}
 		},
-		updatedcart: (state, action) => {
-			let qty = action.payload.qty;
-			state.push({ ...action.payload, quantity: qty });
-		},
 		incrementQuantity: (state, action) => {
 			const item = state.find((item) => item.sku === action.payload);
 			if (item.qty < item.maxQty) {
@@ -62,14 +58,7 @@ const cartSlice = createSlice({
 		removeFromCart: (state, action) => {
 			const index = state.findIndex((item) => item.sku === action.payload);
 			state.splice(index, 1);
-		},
-		getCartTotal: (state, action) => {
-			let total = 0
-			state.forEach((item) => {
-				total += item.currentPrice
-			})
-			return total
-		},
+		}
 	},
 });
 
@@ -81,8 +70,6 @@ export const {
 	incrementQuantity,
 	decrementQuantity,
 	removeFromCart,
-	updatedcart,
 	initialize,
-	getCartTotal,
 	updateQuantity
 } = cartSlice.actions;
