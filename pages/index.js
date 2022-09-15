@@ -1,7 +1,7 @@
 import Image from "next/image"
 import { useRouter } from "next/router"
 import { useState, useEffect } from "react"
-import { useSelector, useDispatch } from "react-redux"
+import { useDispatch } from "react-redux"
 import Link from "next/link"
 
 import MainProducts from "../components/Layout/components/Products/MainProducts"
@@ -32,7 +32,7 @@ export default function Home() {
 				dispatch(updateRedirectSource(queries.source))
 			}
 		}
-	}, [router.isReady])
+	}, [router.isReady, router.query])
 
 	const PopupAd = () => {
 		return (
