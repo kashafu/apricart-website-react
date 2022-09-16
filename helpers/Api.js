@@ -691,6 +691,9 @@ export const useInitialCartDataApi = () => {
 				headers: headers,
 			})
 			setCheckoutResponse(apiResponse)
+			if (apiResponse.data.data.paymentUrl !== "") {
+				window.open(apiResponse.data.data.paymentUrl, '_blank').focus();
+			}
 			dispatch(initialize([]))
 
 		} catch (error) {
