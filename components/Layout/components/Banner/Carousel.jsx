@@ -4,8 +4,9 @@ import Link from 'next/link'
 import { useSelector } from 'react-redux'
 
 import karachiMainBanner from '../../../../public/assets/images/banners/mainBanner.png'
+import karachiBulkBanner from '../../../../public/assets/images/banners/karachiBulkBanner.png'
 import peshawarMainBanner from '../../../../public/assets/images/banners/peshawarMainBanner.jpeg'
-// import karachiScrollingBanner1 from '../../../../public/assets/images/banners/blessedfridaywebbanner.jpg'
+import karachiScrollingBanner1 from '../../../../public/assets/images/banners/blessedFridayKarachiHomeDelivery.png'
 // import karachiScrollingBanner2 from '../../../../public/assets/images/banners/everythingIn75.png'
 
 const Carousel = () => {
@@ -31,7 +32,7 @@ const Carousel = () => {
                         <Slider {...settings}>
                             <div className="w-full h-full">
                                 <Image
-                                    src={karachiMainBanner}
+                                    src={karachiBulkBanner}
                                     layout={"responsive"}
                                     alt="banner"
                                 />
@@ -39,8 +40,8 @@ const Carousel = () => {
                         </Slider>
                     ) : (
                         <Slider {...settings}>
-                            {/* <div className='w-full h-full'>
-                                <Link href={'/offers/48'} passHref>
+                            <div className='w-full h-full'>
+                                <Link href={'/'} passHref>
                                     <a className="w-full h-full">
                                         <Image
                                             src={karachiScrollingBanner1}
@@ -49,7 +50,7 @@ const Carousel = () => {
                                         />
                                     </a>
                                 </Link>
-                            </div> */}
+                            </div>
                             {/* <div className='w-full h-full'>
                                 <Link href={'/category/just-rs.75/1242'} passHref>
                                     <a className="w-full">
