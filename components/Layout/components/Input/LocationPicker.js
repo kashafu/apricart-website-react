@@ -1,19 +1,18 @@
 import { useState } from 'react';
 import { Autocomplete, GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
-import { PlacesAutocomplete } from './PlacesAutocomplete'
 
-let defaultLocation = {
-    lat: 24.917122827062762,
-    lng: 67.09610049861793
-}
+const libraries = ['places']
 
 export default function LocationPicker({ onChangeLatitude, onChangeLongitude, center }) {
-    const libraries = ['places']
     const [mapref, setMapRef] = useState(null);
     const [autocomplete, setAutocomplete] = useState(null)
-    const [centerLocation, setCenterLocation] = useState({
+    const [mapCenterLocation, setMapCenterLocation] = useState({
         lat: 24.917122827062762,
-        long: 67.09610049861793
+        lng: 67.09610049861793
+    })
+    const [markerCenterLocation, setMarkerCenterLocation] = useState({
+        lat: 24.917122827062762,
+        lng: 67.09610049861793
     })
 
     const handleOnLoad = map => {
@@ -23,10 +22,11 @@ export default function LocationPicker({ onChangeLatitude, onChangeLongitude, ce
     const handleCenterChanged = () => {
         if (mapref) {
             const newCenter = mapref.getCenter()
-            setCenterLocation({
+            setMarkerCenterLocation({
                 lat: newCenter.lat(),
                 lng: newCenter.lng()
             })
+
             onChangeLatitude(newCenter.lat())
             onChangeLongitude(newCenter.lng())
         }
@@ -38,8 +38,7 @@ export default function LocationPicker({ onChangeLatitude, onChangeLongitude, ce
             libraries={libraries}
         >
             <GoogleMap
-                center={defaultLocation}
-                // center={center}
+                center={mapCenterLocation}
                 zoom={15}
                 onLoad={handleOnLoad}
                 onCenterChanged={handleCenterChanged}
@@ -50,8 +49,12 @@ export default function LocationPicker({ onChangeLatitude, onChangeLongitude, ce
                         setAutocomplete(autocomplete)
                     }}
                     onPlaceChanged={() => {
-                        console.log(autocomplete.getPlace().geometry.location.lat())
-                        console.log(autocomplete.getPlace().geometry.location.lng())
+                        setMapCenterLocation({
+                            lat: autocomplete.getPlace().geometry.location.lat(),
+                            lng: autocomplete.getPlace().geometry.location.lng()
+                        })
+                        onChangeLatitude(autocomplete.getPlace().geometry.location.lat())
+                        onChangeLongitude(autocomplete.getPlace().geometry.location.lng())
                     }}
                 >
                     <input
@@ -75,27 +78,10 @@ export default function LocationPicker({ onChangeLatitude, onChangeLongitude, ce
                     />
                 </Autocomplete>
                 <Marker
-                    position={centerLocation}
+                    position={markerCenterLocation}
                     draggable={false}
                 />
             </GoogleMap>
         </LoadScript>
     )
-    {/* <LoadScript
-        googleMapsApiKey={process.env.NEXT_PUBLIC_GOOGLE_API_KEY}
-    >
-        <GoogleMap
-            // center={startingLocation.lat != '' && startingLocation.lng != '' ? startingLocation : defaultLocation}
-            center={defaultLocation}
-            zoom={15}
-            onLoad={handleOnLoad}
-            onCenterChanged={handleCenterChanged}
-            mapContainerStyle={{ width: '100%', height: '100%' }}
-        >
-            <Marker
-                position={centerLocation}
-                draggable={false}
-            />
-        </GoogleMap>
-    </LoadScript> */}
 }
