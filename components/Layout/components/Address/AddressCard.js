@@ -189,12 +189,6 @@ export default function AddressCard({ type, previousAddress, updateSavedAddresse
                 <LocationPicker
                     onChangeLatitude={setMapLat}
                     onChangeLongitude={setMapLong}
-                    center={
-                        {
-                            lat: 24.917122827062762,
-                            lng: 67.09610049861793
-                        }
-                    }
                 />
             </div>
             {errorMessage != '' && (
@@ -205,7 +199,15 @@ export default function AddressCard({ type, previousAddress, updateSavedAddresse
             {type == 'add' && (
                 <SubmitButton
                     text={'Add Address'}
-                    onClick={addAddressApi}
+                    onClick={() => {
+                        addAddressApi()
+                        setShow(false)
+                        window.scroll({
+                            top: 0,
+                            left: 0,
+                            behavior: "smooth",
+                        })
+                    }}
                 />
             )}
             {type == 'edit' && (

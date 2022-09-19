@@ -3,17 +3,14 @@ import { Autocomplete, GoogleMap, LoadScript, Marker } from '@react-google-maps/
 
 const libraries = ['places']
 
-export default function LocationPicker({ onChangeLatitude, onChangeLongitude, center }) {
+export default function LocationPicker({ onChangeLatitude, onChangeLongitude }) {
     const [mapref, setMapRef] = useState(null);
     const [autocomplete, setAutocomplete] = useState(null)
     const [mapCenterLocation, setMapCenterLocation] = useState({
         lat: 24.917122827062762,
         lng: 67.09610049861793
     })
-    const [markerCenterLocation, setMarkerCenterLocation] = useState({
-        lat: 24.917122827062762,
-        lng: 67.09610049861793
-    })
+    const [markerCenterLocation, setMarkerCenterLocation] = useState(mapCenterLocation)
 
     const handleOnLoad = map => {
         setMapRef(map)
@@ -59,7 +56,7 @@ export default function LocationPicker({ onChangeLatitude, onChangeLongitude, ce
                 >
                     <input
                         type="text"
-                        placeholder="Customized your placeholder"
+                        placeholder="Search Address"
                         style={{
                             boxSizing: `border-box`,
                             border: `1px solid transparent`,

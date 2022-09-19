@@ -1,17 +1,14 @@
+import axios from "axios"
+import { useDispatch } from "react-redux"
+import { removeSelectedAddress, updateCity, updateSelectedAddress } from "../../../../redux/general.slice"
+import { toast } from "react-toastify"
 import { useState } from "react"
+
 import AddressCard from "./AddressCard"
 import { getGeneralApiParams } from "../../../../helpers/ApiHelpers"
 import { base_url_api } from "../../../../information.json"
-import axios from "axios"
-import { useDispatch } from "react-redux"
-import { updateCity, updateSelectedAddress } from "../../../../redux/general.slice"
 
-export default function SingleAddressListing({
-	listing,
-	isSelected,
-	setAddress,
-	updateSavedAddresses,
-}) {
+export default function SingleAddressListing({ listing, isSelected, setAddress, updateSavedAddresses, }) {
 	const dispatch = useDispatch()
 
 	let { address, area, city, name, phoneNumber, email } = listing
@@ -28,7 +25,7 @@ export default function SingleAddressListing({
 		}
 
 		try {
-			let response = await axios.delete(url, {
+			await axios.delete(url, {
 				headers: headers,
 				data: body,
 			})
@@ -40,6 +37,7 @@ export default function SingleAddressListing({
 	}
 
 	const onClickHandle = () => {
+		toast.success('Selected Address Updated')
 		dispatch(updateSelectedAddress(listing))
 		dispatch(updateCity(listing.city.toLowerCase()))
 		setAddress(listing)
@@ -66,7 +64,12 @@ export default function SingleAddressListing({
 					<p className="text-white font-bold">EDIT</p>
 				</button>
 				<button
-					onClick={deleteAddressApi}
+					onClick={() => {
+						deleteAddressApi()
+						if (isSelected) {
+							dispatch(removeSelectedAddress)
+						}
+					}}
 					className="bg-red-500 w-full py-2 rounded-lg sm:w-1/3"
 				>
 					<p className="text-white font-bold">DELETE</p>

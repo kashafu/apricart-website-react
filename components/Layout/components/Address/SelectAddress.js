@@ -124,6 +124,7 @@ export default function SelectAddress({ type, setAddress, dropDownSelectedAddres
                 <AddressCard
                     type={'add'}
                     updateSavedAddresses={getSavedAddressesApi}
+                    setShow={setShowAddressCard}
                 />
             )}
         </div>
