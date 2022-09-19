@@ -151,6 +151,7 @@ export default function AddressCard({ type, previousAddress, updateSavedAddresse
                 customOnChange={true}
                 onChange={handleAddressChange}
                 value={address.phoneNumber}
+                type={'number'}
             />
             <TextField
                 label={'Email Address'}
@@ -186,13 +187,14 @@ export default function AddressCard({ type, previousAddress, updateSavedAddresse
             </p>
             <div className="w-full h-[300px]">
                 <LocationPicker
-                    label={"Pick Location"}
                     onChangeLatitude={setMapLat}
                     onChangeLongitude={setMapLong}
-                    startingLocation={{
-                        lat: mapLat,
-                        lng: mapLong
-                    }}
+                    center={
+                        {
+                            lat: 24.917122827062762,
+                            lng: 67.09610049861793
+                        }
+                    }
                 />
             </div>
             {errorMessage != '' && (
