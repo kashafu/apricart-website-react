@@ -113,7 +113,7 @@ export default function SelectAddress({ type, setAddress, dropDownSelectedAddres
                         )
                     })}
                     <SubmitButton
-                        text={"Add Address"}
+                        text={showAddressCard ? "Hide Address" : "Add New Address"}
                         onClick={() => {
                             setShowAddressCard(!showAddressCard)
                         }}
