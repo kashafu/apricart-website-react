@@ -1,6 +1,6 @@
 import axios from "axios"
 import { useSelector, useDispatch } from "react-redux"
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import { useRouter } from "next/router"
 import { toast } from "react-toastify"
 
@@ -555,7 +555,7 @@ export const useInitialCartDataApi = () => {
 	let { token } = getGeneralApiParams()
 	const [coupon, setCoupon] = useState('')
 	const [couponMessage, setCouponMessage] = useState('')
-	const [notes, setNotes] = useState('')
+	let notes = useRef('')
 	const [paymentMethod, setPaymentMethod] = useState('cash')
 	const [paymentMethods, setPaymentMethods] = useState('cash')
 	const [day, setDay] = useState("2022-04-10")
@@ -614,7 +614,7 @@ export const useInitialCartDataApi = () => {
 
 		let body = {
 			coupon,
-			notes,
+			notes: notes.current,
 			paymentMethod,
 			address: addressId,
 			showProducts: true,
@@ -675,7 +675,7 @@ export const useInitialCartDataApi = () => {
 
 		let body = {
 			coupon,
-			notes,
+			notes: notes.current,
 			paymentMethod,
 			address: addressId,
 			showProducts: true,
@@ -694,6 +694,9 @@ export const useInitialCartDataApi = () => {
 				headers: headers,
 			})
 			setCheckoutResponse(apiResponse)
+			if (apiResponse.data.data.paymentUrl !== "") {
+				window.open(apiResponse.data.data.paymentUrl, '_blank').focus();
+			}
 			dispatch(initialize([]))
 
 		} catch (error) {
@@ -719,7 +722,6 @@ export const useInitialCartDataApi = () => {
 		setStartTime,
 		setEndTime,
 		setIsCheckout,
-		setNotes,
 		notes,
 		coupon,
 		setPaymentMethod,

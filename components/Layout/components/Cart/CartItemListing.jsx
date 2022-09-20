@@ -12,6 +12,7 @@ const CartItemListing = ({ item, fetchCart }) => {
     let {
         title,
         qty,
+        minQty,
         currentPrice,
         specialPrice,
         productImageUrlThumbnail,
@@ -105,6 +106,7 @@ const CartItemListing = ({ item, fetchCart }) => {
                     <button
                         onClick={() => {
                             setSku(sku)
+                            qty = minQty
                             setIsDelete(true)
                             fetchCart(true)
                         }}

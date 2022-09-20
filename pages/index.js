@@ -181,10 +181,11 @@ export default function Home() {
 	return (
 		<div className="">
 			<HeadTag
-				title={"Apricart | Online Grocery"}
+				title={"Apricart.Pk Online Grocery Store - Best Grocer Shopping App in Karachi Peshawar Pakistan"}
 				description={
-					"Online grocery store in Pakistan, offering bulk buy and home delivery"
+					"Apricart.Pk - Online Grocery Store in Pakistan: Deliver Groceries,Beverages,Bakery,Fruits & Vegetables, Rice, Pulses | Online Grocer App in Karachi, Peshawar Pakistan"
 				}
+				isIndex
 			/>
 			<div className="grid grid-cols-5 gap-6">
 				{/* CATEGORIES SECTION */}

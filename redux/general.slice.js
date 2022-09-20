@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit"
 import { setCookie } from "../helpers/Cookies"
-import { setItemSessionStorage, setItemLocalStorage } from "../helpers/Storage"
+import { setItemSessionStorage, setItemLocalStorage, removeItemLocalStorage } from "../helpers/Storage"
 import { getGeneralApiParams } from "../helpers/ApiHelpers"
 
 let { selectedAddress, selectedType, city, selectedPickupLocation, redirectSource } = getGeneralApiParams()
@@ -21,6 +21,10 @@ const generalSlice = createSlice({
 		updateSelectedAddress: (state, action) => {
 			state.selectedAddress = { ...action.payload }
 			setItemLocalStorage('selected-address', JSON.stringify(action.payload))
+		},
+		removeSelectedAddress: (state, action) => {
+			state.selectedAddress = {}
+			removeItemLocalStorage('selected-address')
 		},
 		updateTicker: (state, action) => {
 			state.ticker = action.payload
@@ -52,5 +56,6 @@ export const {
 	updateSelectedType,
 	updateCity,
 	updatePickupLocation,
-	updateRedirectSource
+	updateRedirectSource,
+	removeSelectedAddress
 } = generalSlice.actions

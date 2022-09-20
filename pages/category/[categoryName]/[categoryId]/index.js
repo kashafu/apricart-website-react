@@ -80,11 +80,11 @@ export default function CategoryProducts() {
 		}
 
 		return (
-			<div className="flex w-full space-x-6 items-center">
+			<div className="flex w-full space-x-6 items-center overflow-x-auto">
 				<p className="">
 					Showing items {(page - 1) * size + 1} - {(((page - 1) * size) + size) > totalItems ? (totalItems) : (((page - 1) * size) + size)} of {totalItems}
 				</p>
-				<div className="space-x-2">
+				<div className="flex flex-row space-x-2 w-full overflow-x-auto">
 					{arr}
 				</div>
 			</div>
