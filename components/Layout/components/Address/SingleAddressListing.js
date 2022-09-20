@@ -4,7 +4,7 @@ import { removeSelectedAddress, updateCity, updateSelectedAddress } from "../../
 import { toast } from "react-toastify"
 import { useState } from "react"
 
-import AddressCard from "./AddressCard"
+import AddAddressCard from "./AddAddressCard"
 import { getGeneralApiParams } from "../../../../helpers/ApiHelpers"
 import { base_url_api } from "../../../../information.json"
 
@@ -76,7 +76,7 @@ export default function SingleAddressListing({ listing, isSelected, setAddress, 
 				</button>
 			</div>
 			{showEdit && (
-				<AddressCard
+				<AddAddressCard
 					type={"edit"}
 					previousAddress={listing}
 					updateSavedAddresses={updateSavedAddresses}

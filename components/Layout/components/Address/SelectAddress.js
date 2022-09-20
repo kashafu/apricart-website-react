@@ -3,7 +3,7 @@ import { getGeneralApiParams } from "../../../../helpers/ApiHelpers"
 import { base_url_api } from '../../../../information.json'
 import axios from "axios"
 import SubmitButton from "../Buttons/SubmitButton"
-import AddressCard from "./AddressCard"
+import AddAddressCard from "./AddAddressCard"
 import SingleAddressListing from "./SingleAddressListing"
 import { useDispatch } from "react-redux";
 import { updateCity, updateSelectedAddress } from "../../../../redux/general.slice"
@@ -121,7 +121,7 @@ export default function SelectAddress({ type, setAddress, dropDownSelectedAddres
                 </div>
             )}
             {showAddressCard && (
-                <AddressCard
+                <AddAddressCard
                     type={'add'}
                     updateSavedAddresses={getSavedAddressesApi}
                     setShow={setShowAddressCard}
