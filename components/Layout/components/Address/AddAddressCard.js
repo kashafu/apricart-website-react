@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+
 import { getGeneralApiParams } from "../../../../helpers/ApiHelpers";
 import { base_url_api } from '../../../../information.json'
 import Dropdown from "../Input/Dropdown";
@@ -12,7 +13,7 @@ import ErrorText from "../Typography/ErrorText";
     previousAddress will be empty if type is 'add', in 'edit' previousAddress is the previous address to be modified
     updateSavedAddresses is there so that it can recall the getSavedAddresses API in parent component
 */
-export default function AddressCard({ type, previousAddress, updateSavedAddresses, setShow }) {
+export default function AddAddressCard({ type, previousAddress, updateSavedAddresses, setShow }) {
     const [deliveryAreaOptions, setDeliveryAreaOptions] = useState([]);
     const [cityOptions, setCityOptions] = useState([]);
     const [errorMessage, setErrorMessage] = useState('')
