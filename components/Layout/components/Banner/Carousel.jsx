@@ -32,7 +32,7 @@ const Carousel = () => {
                         <Slider {...settings}>
                             <div className="w-full h-full">
                                 <Image
-                                    src={karachiBulkBanner}
+                                    src={karachiScrollingBanner1}
                                     layout={"responsive"}
                                     alt="banner"
                                 />
@@ -78,7 +78,7 @@ const Carousel = () => {
                 <Slider {...settings}>
                     <div className="w-full h-full">
                         <Image
-                            src={peshawarMainBanner}
+                            src={karachiScrollingBanner1}
                             layout={"responsive"}
                             alt="banner"
                         />
