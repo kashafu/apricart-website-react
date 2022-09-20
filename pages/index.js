@@ -4,7 +4,6 @@ import { useState, useEffect } from "react"
 import { useSelector, useDispatch } from "react-redux"
 import Link from "next/link"
 
-import { getGeneralApiParams } from "../helpers/ApiHelpers"
 import MainProducts from "../components/Layout/components/Products/MainProducts"
 import HeadTag from "../components/Layout/components/Head/HeadTag"
 import Carousel from "../components/Layout/components/Banner/Carousel"
@@ -18,8 +17,6 @@ import homeDeliveryIcon from "../public/assets/svgs/homeDeliveryIcon.svg"
 import clickAndCollectIcon from "../public/assets/svgs/clickAndCollectIcon.svg"
 import bulkBuyIcon from "../public/assets/svgs/bulkBuyIcon.svg"
 import karachiStaticBanner1 from "../public/assets/images/banners/99AndBelow.jpg"
-import karachiStaticBanner2 from "../public/assets/images/banners/saylanistaticbanner.jpeg"
-import karachiBulkBuyStaticBanner1 from "../public/assets/images/banners/bulkBuyBanner.jpeg"
 import crossIcon from "../public/assets/svgs/crossIcon.svg"
 import { clearCookies } from "../helpers/Cookies"
 import { clearLocalStorage, clearSessionStorage } from "../helpers/Storage"
@@ -28,9 +25,7 @@ import MainProductsShimmer from "../components/Layout/components/Loaders/Shimmer
 export default function Home() {
 	const router = useRouter()
 	const dispatch = useDispatch()
-	const selectedTypeSelector = useSelector(state => state.general.selectedType)
 	const isShowSelectionScreen = useSelector(state => state.general.isShowSelectionScreen)
-	let { token } = getGeneralApiParams()
 	const { isLoading, isPopupAd, homeData, errorMessage } = useHomeApi()
 	const [showPopupAd, setShowPopupAd] = useState(isPopupAd)
 
@@ -222,46 +217,6 @@ export default function Home() {
 					let { identifier } = product
 					return (
 						<section key={identifier}>
-							{/* STATIC BANNERS for mobile */}
-							{/* {index % 2 == 0 ? (
-								<section className="lg:hidden relative space-y-6 items-center">
-									<section className="w-full">
-										<Link
-											href={"/offers/45"}
-											passHref
-											className="w-full"
-										>
-											<a className="w-full">
-												<Image
-													src={karachiStaticBanner2}
-													layout={
-														"responsive"
-													}
-													alt=""
-												/>
-											</a>
-										</Link>
-									</section>
-								</section>
-							) : (
-								<section className="lg:hidden relative space-y-6 items-center">
-									<section className="w-full">
-										<Link
-											href={"/category/under-rs.99/1242"}
-											passHref
-											className="w-full"
-										>
-											<a className="w-full">
-												<Image
-													src={karachiStaticBanner1}
-													layout={"responsive"}
-													alt="banner"
-												/>
-											</a>
-										</Link>
-									</section>
-								</section>
-							)} */}
 							<MainProducts
 								key={identifier}
 								section={product}
