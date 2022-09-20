@@ -43,10 +43,6 @@ export default function Home() {
 		}
 	}, [router.isReady])
 
-	useEffect(() => {
-		console.log(isShowSelectionScreen)
-	}, [isShowSelectionScreen])
-
 	const SelectionScreenPopup = () => {
 		const { welcomeVideo, isLoading } = useOptionsApi()
 
