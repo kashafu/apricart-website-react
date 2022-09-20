@@ -14,10 +14,18 @@ const cartSlice = createSlice({
 			} else {
 				state.push({ ...action.payload, quantity: qty });
 			}
-		},
-		updatedcart: (state, action) => {
-			let qty = action.payload.qty;
-			state.push({ ...action.payload, quantity: qty });
+			state.sort((a, b) => {
+				let fa = a.sku.toLowerCase(),
+					fb = b.sku.toLowerCase();
+
+				if (fa < fb) {
+					return -1;
+				}
+				if (fa > fb) {
+					return 1;
+				}
+				return 0;
+			})
 		},
 		incrementQuantity: (state, action) => {
 			const item = state.find((item) => item.sku === action.payload);
@@ -52,24 +60,41 @@ const cartSlice = createSlice({
 					item.qty--;
 				}
 			}
+			state.sort((a, b) => {
+				let fa = a.sku.toLowerCase(),
+					fb = b.sku.toLowerCase();
+
+				if (fa < fb) {
+					return -1;
+				}
+				if (fa > fb) {
+					return 1;
+				}
+				return 0;
+			})
 		},
 		initialize: (state, action) => {
 			state.splice(0, state.length)
 			action.payload.forEach((item) => {
 				state.push(item)
 			})
+			state.sort((a, b) => {
+				let fa = a.sku.toLowerCase(),
+					fb = b.sku.toLowerCase();
+
+				if (fa < fb) {
+					return -1;
+				}
+				if (fa > fb) {
+					return 1;
+				}
+				return 0;
+			})
 		},
 		removeFromCart: (state, action) => {
 			const index = state.findIndex((item) => item.sku === action.payload);
-			state.splice(index, 1);
-		},
-		getCartTotal: (state, action) => {
-			let total = 0
-			state.forEach((item) => {
-				total += item.currentPrice
-			})
-			return total
-		},
+			state.splice(index, 1)
+		}
 	},
 });
 
@@ -81,8 +106,6 @@ export const {
 	incrementQuantity,
 	decrementQuantity,
 	removeFromCart,
-	updatedcart,
 	initialize,
-	getCartTotal,
 	updateQuantity
 } = cartSlice.actions;

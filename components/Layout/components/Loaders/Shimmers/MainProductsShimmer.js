@@ -1,20 +1,14 @@
-const MainProductsShimmer = () => {
-	const SingleProductShimmer = () => {
-		return (
-			<div className="animate-pulse h-[300px] flex flex-col w-full p-2 rounded-lg bg-slate-200">
-				<div className="animate-pulse w-full h-2/3 bg-slate-100 rounded-lg"></div>
-				<div className="h-1/3 space-y-2 flex flex-col justify-between py-2">
-					<div className="animate-pulse w-full h-full rounded-lg bg-slate-50"></div>
-					<div className="animate-pulse w-full h-full rounded-lg bg-slate-50"></div>
-				</div>
-			</div>
-		)
-	}
+import SingleProductShimmer from "./SingleProductShimmer"
 
+const MainProductsShimmer = () => {
 	return (
 		<div className="space-y-4 lg:space-y-12">
-			<div className="h-[150px] lg:h-[350px] w-full bg-slate-200 animate-pulse rounded-lg" />
-			<>
+			{/* <div className="lg:hidden h-[150px] w-full bg-slate-200 animate-pulse rounded-lg" /> */}
+			<div>
+				<div className="w-full h-[40px] p-1 flex flex-row items-center justify-between">
+					<div className="h-full w-3/6 animate-pulse bg-slate-100 rounded-lg" />
+					<div className="h-full w-2/6 animate-pulse bg-slate-100 rounded-lg" />
+				</div>
 				<div className="grid lg:hidden grid-cols-2 gap-2 w-full">
 					<SingleProductShimmer />
 					<SingleProductShimmer />
@@ -43,7 +37,8 @@ const MainProductsShimmer = () => {
 					<SingleProductShimmer />
 					<SingleProductShimmer />
 				</div>
-			</>
+			</div>
+			<div className="aspect-[4.5] w-full bg-slate-200 animate-pulse rounded-lg" />
 		</div>
 	)
 }

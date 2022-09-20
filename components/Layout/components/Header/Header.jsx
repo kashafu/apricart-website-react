@@ -29,7 +29,9 @@ export default function Header() {
 		if (!getItemLocalStorage("selected-type")) {
 			setItemLocalStorage('selected-type', 'home')
 		}
+	}, [token])
 
+	useEffect(() => {
 		const onScroll = () => setOffset(window.pageYOffset);
 		// clean up code
 		window.removeEventListener('scroll', onScroll);
@@ -39,7 +41,7 @@ export default function Header() {
 
 
 	return (
-		<div className="flex flex-col py-2 md:py-8 space-y-2 border-b relative h-[45px]">
+		<div className="flex flex-col py-2 md:py-8 relative h-[45px]">
 			<div className={offset >= 20 ? "flex flex-row py-2 transition-all fixed top-0 duration-100 ease-linear z-40 px-2 bg-slate-100 w-full items-center md:py-2" : "flex flex-row py-2 transition-all fixed top-[50px] z-40 px-2 bg-slate-100 w-full items-center md:py-2 duration-300 ease-linear"}>
 				<div className="lg:hidden pr-2">
 					<HamburgerMenu />

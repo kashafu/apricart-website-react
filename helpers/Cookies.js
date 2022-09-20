@@ -3,7 +3,7 @@ import Cookies from "universal-cookie";
 const cookies = new Cookies()
 
 export function setCookie(name, value) {
-    cookies.set(name, value)
+    cookies.set(name, value, { path: '/' })
 }
 
 export function getCookie(name) {
@@ -11,7 +11,7 @@ export function getCookie(name) {
 }
 
 export function removeCookie(name) {
-    cookies.remove(name)
+    cookies.remove(name, { path: '/' })
 }
 
 export function clearCookies() {

@@ -28,8 +28,6 @@ const SearchResults = () => {
         )
     }
 
-    console.log(response)
-
     return (
         <div>
             <HeadTag title={term} />

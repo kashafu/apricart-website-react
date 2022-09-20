@@ -3,7 +3,7 @@ import MainProductsShimmer from "./Shimmers/MainProductsShimmer"
 
 const HomeLoader = () => {
     return (
-        <div className="flex flex-col space-y-12">
+        <div className="flex flex-col space-y-2">
             <BannerShimmer />
             <MainProductsShimmer />
             <MainProductsShimmer />

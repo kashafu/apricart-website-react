@@ -1,203 +1,357 @@
-import axios from "axios"
 import { useRouter } from "next/router"
-import { useState } from "react"
+import { useState, useEffect, useRef } from "react"
 import Link from "next/link"
-import { setCookie } from "../helpers/Cookies"
-import { getGeneralApiParams } from "../helpers/ApiHelpers"
-import { base_url_api } from '../information.json'
+
 import TextField from "../components/Layout/components/Input/TextField"
 import SubmitButton from "../components/Layout/components/Buttons/SubmitButton"
 import ErrorText from "../components/Layout/components/Typography/ErrorText"
 import PageHeading from "../components/Layout/components/Typography/PageHeading"
 import HeadTag from "../components/Layout/components/Head/HeadTag"
-import { toast } from "react-toastify";
+import { useLoginApi, useResetPasswordApi, useSendOtpApi, useVerifyOtpApi } from "../helpers/Api"
 
 export default function Login() {
     const router = useRouter();
-    let { city, headers, userId } = getGeneralApiParams();
 
-    const [phoneNumber, setPhoneNumber] = useState('')
-    const [password, setPassword] = useState('')
-    const [errorMessage, setErrorMessage] = useState('')
-    const [resetpwdScreen, setresetpwdcreen] = useState(false);
-    const [otp, setotp] = useState();
+    const [viewState, setViewState] = useState('login')
+    let sharedPhoneNumber = useRef('')
 
-    const loginApi = async () => {
-        let url = base_url_api + "/auth/open/login?city=" + city + "&lang=en&client_type=apricart&userid=" + userId
-        let body = {
-            "guestuserid": userId,
-            "username": '92' + phoneNumber,
-            "password": password
-        }
+    const Login = () => {
+        const { isLoading, response, errorMessage, errorResponse, setData, setIsLogin } = useLoginApi()
 
-        try {
-            let response = await axios.post(url, body,
-                {
-                    headers: headers
-                }
-            )
+        const [phoneNumber, setPhoneNumber] = useState('')
+        const [password, setPassword] = useState('')
+        const [buttonDisabled, setButtonDisabled] = useState(true)
 
-            if (response.data.status == 1) {
-                setCookie("cookies-token", response.data.data.token)
-                setCookie("cookies-name", response.data.data.name)
-                setCookie("cookies-email", response.data.data.email)
-                setCookie("cookies-phoneNumber", response.data.data.phoneNumber)
-                setErrorMessage('')
+        useEffect(() => {
+            if (phoneNumber.length === 10 && password.length > 0) {
+                setButtonDisabled(false)
+            }
+            else {
+                setButtonDisabled(true)
+            }
+        }, [phoneNumber, password])
+
+        useEffect(() => {
+            if (response) {
                 router.push('/')
             }
-            else {
-                setErrorMessage(response.data.message)
-            }
-        } catch (err) {
-            setErrorMessage(err.response.data.message)
-        }
-    }
+        }, [response])
 
-    const resetPasswordApi = async () => {
-        let url = base_url_api + "/auth/open/password/forgot?lang=en&client_type=apricart"
-        let body = {
-            "phoneNumber": '92' + phoneNumber,
-            "password": password,
-            "otp": otp
-        }
-        try {
-            let response = await axios.post(url, body,
-                {
-                    headers: headers
+        useEffect(() => {
+            if (errorResponse) {
+                if (errorResponse?.data?.status === 1010) {
+                    setViewState('verify')
                 }
-            )
-            if (response.data.status == 1) {
-                toast.success(response.data.message);
-                setresetpwdcreen(false);
             }
-        }
-        catch (error) {
-            console.log(error?.response)
-            toast.error(error?.response?.message)
-        }
+        }, [errorResponse])
 
+        return (
+            <div
+                className="flex justify-center w-full animate-dropdown"
+                onKeyDown={(e) => {
+                    if (e.key === 'Enter') {
+                        if (!buttonDisabled) {
+                            setData({
+                                "username": phoneNumber,
+                                "password": password
+                            })
+                            sharedPhoneNumber.current = phoneNumber
+                            setIsLogin(true)
+                        }
+                    }
+                }}
+            >
+                <div className="flex flex-col p-8 space-y-6 lg:w-1/3 items-center align-center bg-slate-100 shadow rounded-3xl">
+                    <PageHeading
+                        text={"LOGIN"}
+                    />
+                    <div className="space-y-2">
+                        <TextField
+                            label={"Phone Number"}
+                            placeHolder={"3301234567"}
+                            onChange={setPhoneNumber}
+                            value={phoneNumber}
+                            type={'number'}
+                        />
+                        <TextField
+                            label={"Password"}
+                            placeHolder={"password"}
+                            onChange={setPassword}
+                            value={password}
+                            type={'password'}
+                        />
+                    </div>
+                    <div className="w-3/4">
+                        <SubmitButton
+                            text={"LOGIN"}
+                            onClick={() => {
+                                setData({
+                                    "username": phoneNumber,
+                                    "password": password
+                                })
+                                sharedPhoneNumber.current = phoneNumber
+                                setIsLogin(true)
+                            }}
+                            disabled={buttonDisabled || isLoading}
+                        />
+                    </div>
+                    <ErrorText
+                        text={errorMessage}
+                    />
+                    <button
+                        className="underline"
+                        onClick={() => {
+                            setViewState('otp')
+                        }}
+                    >
+                        Reset Password
+                    </button>
+                    <div className="flex flex-row space-x-2">
+                        <p className="font-nunito">
+                            Don't have an Account?
+                        </p>
+                        <Link href="/register" passHref>
+                            <a className="font-nunito underline">
+                                Sign Up
+                            </a>
+                        </Link>
+                    </div>
+                </div>
+            </div>
+        )
     }
 
-    const sendOtpApi = async () => {
-        const url = base_url_api + "/auth/open/otp"
-        let body = {
-            "phoneNumber": '92' + phoneNumber
-        }
-        try {
-            let response = await axios.post(url, body,
-                {
-                    headers: headers
-                }
-            )
-            if (response.data.status == 1) {
-                setresetpwdcreen(true);
-                toast.success(response.data.message);
+    const Otp = () => {
+        const { response, errorMessage, isLoading, setIsSendOtp, setPhoneNumber: setOTPPhoneNumber } = useSendOtpApi()
+
+        const [phoneNumber, setPhoneNumber] = useState('')
+        const [buttonDisabled, setButtonDisabled] = useState(true)
+
+        useEffect(() => {
+            if (phoneNumber.length === 10) {
+                setButtonDisabled(false)
             }
             else {
-                toast.error(response.data.message);
-                toast.error("enter a phone number for otp request to reset password")
+                setButtonDisabled(true)
             }
+        }, [phoneNumber])
 
-        }
-        catch (e) {
-            console.log(e)
-        }
+        useEffect(() => {
+            if (response) {
+                sharedPhoneNumber.current = phoneNumber
+                setViewState('reset')
+            }
+        }, [response])
 
+        return (
+            <div className="flex justify-center w-full animate-dropdown">
+                <div className="flex flex-col p-8 space-y-6 lg:w-1/3 items-center align-center bg-slate-100 shadow rounded-3xl">
+                    <PageHeading
+                        text={"OTP"}
+                    />
+                    <div className="space-y-2">
+                        <TextField
+                            label={"Phone Number"}
+                            placeHolder={"3301234567"}
+                            customOnChange
+                            onChange={(e) => {
+                                setPhoneNumber(e.target.value)
+                            }}
+                            value={phoneNumber}
+                            type={'number'}
+                        />
+                    </div>
+                    <div className="w-3/4">
+                        <SubmitButton
+                            text={"Send OTP"}
+                            onClick={() => {
+                                setOTPPhoneNumber(prev => phoneNumber)
+                                setIsSendOtp(true)
+                            }}
+                            disabled={buttonDisabled || isLoading}
+                        />
+                    </div>
+                    <ErrorText
+                        text={errorMessage}
+                    />
+                    <button
+                        className="font-nunito underline"
+                        onClick={() => {
+                            setViewState('login')
+                        }}
+                    >
+                        Go back to login
+                    </button>
+                </div>
+            </div>
+        )
     }
 
-    const onEnterPress = async (e) => {
-        if (e.key === 'Enter') {
-            await loginApi()
-        }
+    const Verify = () => {
+        const { isLoading, response, errorMessage, setData, setIsVerifyOtp } = useVerifyOtpApi()
+
+        const [otp, setOtp] = useState('')
+        const [isButtonDisabled, setIsButtonDisabled] = useState(true)
+
+        useEffect(() => {
+            if (otp.length === 4) {
+                setIsButtonDisabled(false)
+            }
+            else {
+                setIsButtonDisabled(true)
+            }
+        }, [otp])
+
+        useEffect(() => {
+            if (response) {
+                setViewState('login')
+            }
+        }, [response])
+
+        return (
+            <div className="flex justify-center w-full animate-dropdown">
+                <div className="flex flex-col p-8 space-y-6 lg:w-1/3 items-center align-center bg-slate-100 shadow rounded-3xl">
+                    <PageHeading
+                        text={"VERIFY NUMBER"}
+                    />
+                    <div className="space-y-2">
+                        <div className="flex space-x-2 w-full justify-center">
+                            <p className="font-nunito">
+                                OTP sent to +92{sharedPhoneNumber.current}
+                            </p>
+                            <button
+                                className="font-nunito underline"
+                                onClick={() => {
+                                    setViewState('login')
+                                }}
+                            >
+                                Wrong number?
+                            </button>
+                        </div>
+                        <TextField
+                            label={"OTP"}
+                            placeHolder={"Enter OTP"}
+                            onChange={setOtp}
+                            value={otp}
+                            type='number'
+                        />
+                    </div>
+                    <div className="w-3/4">
+                        <SubmitButton
+                            text={"VERIFY"}
+                            onClick={() => {
+                                setData({
+                                    "phoneNumber": sharedPhoneNumber.current,
+                                    "otp": otp,
+                                })
+                                setIsVerifyOtp(true)
+                            }}
+                            disabled={isButtonDisabled || isLoading}
+                        />
+                    </div>
+                    <ErrorText
+                        text={errorMessage}
+                    />
+                </div>
+            </div>
+        )
+    }
+
+    const ResetPassword = () => {
+        const { response, setData, setIsSendOtp, isLoading, errorMessage } = useResetPasswordApi()
+
+        const [newPassword, setNewPassword] = useState('')
+        const [otp, setotp] = useState('')
+        const [buttonDisabled, setButtonDisabled] = useState(true)
+
+        useEffect(() => {
+            if (newPassword.length > 0 && otp.length === 4) {
+                setButtonDisabled(false)
+            }
+            else {
+                setButtonDisabled(true)
+            }
+        }, [newPassword, otp])
+
+        useEffect(() => {
+            if (response) {
+                setViewState('login')
+            }
+        }, [response])
+
+        return (
+            <div className="flex justify-center w-full animate-dropdown">
+                <div className="flex flex-col p-8 space-y-6 lg:w-1/3 items-center align-center bg-slate-100 shadow rounded-3xl">
+                    <PageHeading
+                        text={"RESET PASSWORD"}
+                    />
+                    <div className="space-y-2">
+                        <div className="flex space-x-2 w-full justify-center">
+                            <p className="font-nunito">
+                                OTP sent to +92{sharedPhoneNumber.current}
+                            </p>
+                            <button
+                                className="font-nunito underline"
+                                onClick={() => {
+                                    setViewState('otp')
+                                }}
+                            >
+                                Wrong number?
+                            </button>
+                        </div>
+                        <TextField
+                            label={"New Password"}
+                            placeHolder={"new password"}
+                            onChange={setNewPassword}
+                            value={newPassword}
+                            type={'password'}
+                            autoComplete='new-password'
+                        />
+                        <TextField
+                            label={"OTP"}
+                            placeHolder={"OTP"}
+                            onChange={setotp}
+                            value={otp}
+                            type={'number'}
+                        />
+                    </div>
+                    <div className="w-3/4">
+                        <SubmitButton
+                            text={"Reset Password"}
+                            onClick={() => {
+                                setData({
+                                    "phoneNumber": sharedPhoneNumber.current,
+                                    "password": newPassword,
+                                    "otp": otp
+                                })
+                                setIsSendOtp(true)
+                            }}
+                            disabled={buttonDisabled || isLoading}
+                        />
+                    </div>
+                    <ErrorText
+                        text={errorMessage}
+                    />
+                </div>
+            </div>
+        )
     }
 
     return (
-        <div className="animate-dropdown">
+        <div>
             <HeadTag title={'Login'} />
-            {resetpwdScreen ? (
-                <div className="flex justify-center w-full"
-                    onKeyDown={onEnterPress}
-                >
-                    <div className="flex flex-col p-8 space-y-6 lg:w-1/3 items-center align-center bg-slate-100 shadow rounded-3xl">
-                        <PageHeading
-                            text={"LOGIN"}
-                        />
-                        <div className="space-y-2">
-                            <TextField
-                                label={"Phone Number"}
-                                placeHolder={"3301234567"}
-                                onChange={setPhoneNumber}
-                                value={phoneNumber}
-                                type={'number'}
-                            />
-                            <TextField
-                                label={"New Password"}
-                                placeHolder={"password"}
-                                onChange={setPassword}
-                                value={password}
-                                type={'password'}
-                            />
-                            <TextField
-                                label={"OTP"}
-                                placeHolder={"OTP"}
-                                onChange={setotp}
-                                value={otp}
-                                type={'number'}
-                            />
-                        </div>
-                        <div className="w-3/4">
-                            <SubmitButton
-                                text={"Reset Password"}
-                                onClick={resetPasswordApi}
-                            />
-                        </div>
-                        <ErrorText
-                            text={errorMessage}
-                        />
-
-                    </div>
-                </div>
-            ) : (
-                <div
-                    className="flex justify-center w-full"
-                    onKeyDown={onEnterPress}
-                >
-                    <div className="flex flex-col p-8 space-y-6 lg:w-1/3 items-center align-center bg-slate-100 shadow rounded-3xl">
-                        <PageHeading
-                            text={"LOGIN"}
-                        />
-                        <div className="space-y-2">
-                            <TextField
-                                label={"Phone Number"}
-                                placeHolder={"3301234567"}
-                                onChange={setPhoneNumber}
-                                value={phoneNumber}
-                                type={'number'}
-                            />
-                            <TextField
-                                label={"Password"}
-                                placeHolder={"password"}
-                                onChange={setPassword}
-                                value={password}
-                                type={'password'}
-                            />
-                        </div>
-                        <div className="w-3/4">
-                            <SubmitButton
-                                text={"LOGIN"}
-                                onClick={loginApi}
-                            />
-                        </div>
-                        <ErrorText
-                            text={errorMessage}
-                        />
-                        <p> <button onClick={sendOtpApi}>Reset Password</button></p>
-                        <p>Don't have an Account ?  <Link href="/register" passHref>
-                            <a>Sign Up</a>
-                        </Link> </p>
-                    </div>
-                </div>)
-            }
+            {viewState === 'login' && (
+                <Login />
+            )}
+            {viewState === 'reset' && (
+                <ResetPassword />
+            )}
+            {viewState === 'otp' && (
+                <Otp />
+            )}
+            {viewState === 'verify' && (
+                <Verify />
+            )}
         </div>
     )
 }

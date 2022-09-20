@@ -9,11 +9,13 @@ import downArrowIcon from "../../../../public/assets/svgs/downArrowIcon.svg"
 import toKebabCase from "../../../../helpers/toKebabCase"
 import { useCategoriesApi } from "../../../../helpers/Api"
 import CategoryShimmer from "../Loaders/Shimmers/CategoryShimmer"
+import { getGeneralApiParams } from "../../../../helpers/ApiHelpers"
 
 export default function Categories() {
 	const router = useRouter()
 	const { categoryId } = router.query
 	const categoriesSelector = useSelector(state => state.data.categories)
+	let { token } = getGeneralApiParams()
 
 	const [routerCategoryId, setRouterCategoryId] = useState(0)
 	const { isLoading, categories, errorMessage } = useCategoriesApi()
@@ -133,6 +135,17 @@ export default function Categories() {
 							)
 						})}
 					</div>
+					{/* MANUAL ORDER SECTION */}
+					<section className="mb-2 mt-8 flex flex-row w-full rounded-xl p-2 bg-main-yellow items-center align-center justify-around">
+						<Link
+							href={token ? "/grocery_list" : "/login"}
+							passHref
+						>
+							<a className="text-main-blue font-bold text-lg w-full text-center">
+								UPLOAD YOUR GROCERY LIST
+							</a>
+						</Link>
+					</section>
 				</div>
 			</div>
 		)
@@ -256,6 +269,17 @@ export default function Categories() {
 						)
 					})}
 				</div>
+				{/* MANUAL ORDER SECTION */}
+				<section className="mb-2 mt-8 flex flex-row w-full rounded-xl p-2 bg-main-yellow items-center align-center justify-around">
+					<Link
+						href={token ? "/grocery_list" : "/login"}
+						passHref
+					>
+						<a className="text-main-blue font-bold text-lg w-full text-center">
+							UPLOAD YOUR GROCERY LIST
+						</a>
+					</Link>
+				</section>
 			</div>
 		</div>
 	)

@@ -3,7 +3,7 @@ import { getGeneralApiParams } from "../../../../helpers/ApiHelpers"
 import { base_url_api } from '../../../../information.json'
 import axios from "axios"
 import SubmitButton from "../Buttons/SubmitButton"
-import AddressCard from "./AddressCard"
+import AddAddressCard from "./AddAddressCard"
 import SingleAddressListing from "./SingleAddressListing"
 import { useDispatch } from "react-redux";
 import { updateCity, updateSelectedAddress } from "../../../../redux/general.slice"
@@ -54,7 +54,7 @@ export default function SelectAddress({ type, setAddress, dropDownSelectedAddres
     return (
         <div className="w-full space-y-2">
             {type === 'checkout' && (
-                <div className="grid grid-cols-6 items-center gap-4 border-y py-1">
+                <div className="grid grid-cols-6 items-center gap-2 border-y py-1">
                     <p className="col-span-2 font-lato text-main-blue font-semibold">
                         Select Address
                     </p>
@@ -113,7 +113,7 @@ export default function SelectAddress({ type, setAddress, dropDownSelectedAddres
                         )
                     })}
                     <SubmitButton
-                        text={"Add Address"}
+                        text={showAddressCard ? "Hide Address" : "Add New Address"}
                         onClick={() => {
                             setShowAddressCard(!showAddressCard)
                         }}
@@ -121,9 +121,10 @@ export default function SelectAddress({ type, setAddress, dropDownSelectedAddres
                 </div>
             )}
             {showAddressCard && (
-                <AddressCard
+                <AddAddressCard
                     type={'add'}
                     updateSavedAddresses={getSavedAddressesApi}
+                    setShow={setShowAddressCard}
                 />
             )}
         </div>

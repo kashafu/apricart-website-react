@@ -1,7 +1,7 @@
 import Image from "next/image"
 import { useRouter } from "next/router"
-import { useState } from "react"
-import { useSelector } from "react-redux"
+import { useState, useEffect } from "react"
+import { useSelector, useDispatch } from "react-redux"
 import Link from "next/link"
 
 import { getGeneralApiParams } from "../helpers/ApiHelpers"
@@ -9,52 +9,149 @@ import MainProducts from "../components/Layout/components/Products/MainProducts"
 import HeadTag from "../components/Layout/components/Head/HeadTag"
 import Carousel from "../components/Layout/components/Banner/Carousel"
 import Categories from "../components/Layout/components/Categories/Categories"
-import { useHomeApi } from "../helpers/Api"
+import { useHomeApi, useOptionsApi } from "../helpers/Api"
 import TypeCardSelector from "../components/Layout/components/Cards/TypeCardSelector"
 import HomeLoader from "../components/Layout/components/Loaders/HomeLoader"
+import { updateIsShowSelectionScreen, updateRedirectSource, updateSelectedType } from "../redux/general.slice"
 
-import storeBackgroundImage from "../public/assets/images/storeBackground.png"
-import karachiStaticBanner1 from "../public/assets/images/banners/99AndBelowOld.png"
+import homeDeliveryIcon from "../public/assets/svgs/homeDeliveryIcon.svg"
+import clickAndCollectIcon from "../public/assets/svgs/clickAndCollectIcon.svg"
+import bulkBuyIcon from "../public/assets/svgs/bulkBuyIcon.svg"
+import karachiStaticBanner1 from "../public/assets/images/banners/99AndBelow.jpg"
 import karachiStaticBanner2 from "../public/assets/images/banners/saylanistaticbanner.jpeg"
 import karachiBulkBuyStaticBanner1 from "../public/assets/images/banners/bulkBuyBanner.jpeg"
 import crossIcon from "../public/assets/svgs/crossIcon.svg"
 import { clearCookies } from "../helpers/Cookies"
 import { clearLocalStorage, clearSessionStorage } from "../helpers/Storage"
+import MainProductsShimmer from "../components/Layout/components/Loaders/Shimmers/MainProductsShimmer"
 
 export default function Home() {
 	const router = useRouter()
+	const dispatch = useDispatch()
 	const selectedTypeSelector = useSelector(state => state.general.selectedType)
+	const isShowSelectionScreen = useSelector(state => state.general.isShowSelectionScreen)
 	let { token } = getGeneralApiParams()
 	const { isLoading, isPopupAd, homeData, errorMessage } = useHomeApi()
 	const [showPopupAd, setShowPopupAd] = useState(isPopupAd)
 
-	const HomeItems = () => {
-		if (isLoading) {
-			return (
-				<HomeLoader />
-			)
+	useEffect(() => {
+		if (router.isReady) {
+			let queries = router.query
+			if (queries.source) {
+				dispatch(updateRedirectSource(queries.source))
+			}
 		}
+	}, [router.isReady])
 
-		if (!homeData) {
-			return (
-				<div className="flex space-x-4">
-					<p>{errorMessage}</p>
-					<a className="text-blue-400 underline"
-						onClick={() => {
-							clearCookies()
-							clearLocalStorage()
-							clearSessionStorage()
-							router.reload()
-						}}
-					>
-						Refresh Page
-					</a>
-				</div>
-			)
-		}
+	useEffect(() => {
+		console.log(isShowSelectionScreen)
+	}, [isShowSelectionScreen])
+
+	const SelectionScreenPopup = () => {
+		const { welcomeVideo, isLoading } = useOptionsApi()
 
 		return (
-			<div>
+			<>
+				{isShowSelectionScreen && (
+					<div className="animate-fade-in fixed inset-0 h-full w-full backdrop-blur-sm z-50">
+						<div className="fixed w-11/12 lg:w-fit h-fit flex flex-col space-y-4 bg-white border-2 shadow-2xl inset-0 m-auto z-50 rounded-lg p-2">
+							<p className="font-nunito text-lg text-left font-bold text-black">
+								Step 1: Select Order Type
+							</p>
+							<div className="grid grid-cols-5 grid-rows-1 gap-2">
+								<button className="col-span-3 flex flex-col w-full items-center justify-between bg-main-yellow aspect-square rounded-2xl p-2 shadow-2xl"
+									onClick={() => {
+										dispatch(updateIsShowSelectionScreen(false))
+										dispatch(updateSelectedType('home'))
+									}}
+								>
+									<div>
+										<p className="font-nunito text-main-blue font-bold text-xl text-right">
+											Home Delivery
+										</p>
+										<p className="font-inter text-black font-bold text-xs text-right">
+											آسانی سے گھر بیٹھےآرڈر ڈلیور کروائیں
+										</p>
+									</div>
+									<div className="w-1/2">
+										<Image
+											src={homeDeliveryIcon}
+											alt={'home delivery icon'}
+											layout={'responsive'}
+										/>
+									</div>
+								</button>
+								<div className="col-span-2 grid grid-rows-2 grid-cols-1 space-y-2">
+									<button className="bg-white flex flex-col w-full items-center justify-between rounded-2xl p-1 pb-2 shadow-2xl"
+										onClick={() => {
+											dispatch(updateIsShowSelectionScreen(false))
+											dispatch(updateSelectedType('cnc'))
+										}}
+									>
+										<div>
+											<p className="font-nunito text-main-blue font-bold text-xs">
+												Click & Collect Mart
+											</p>
+											<p className="font-inter text-black font-bold text-xs">
+												گھر سے  آرڈر کریں اور قریبی اسٹور سے  پک کریں
+											</p>
+										</div>
+										<div className="w-2/3 self-start">
+											<Image
+												src={clickAndCollectIcon}
+												alt={'Click & Collect Mart icon'}
+												layout={'responsive'}
+											/>
+										</div>
+									</button>
+									<button className="bg-main-blue-100 flex flex-col w-full items-center justify-between rounded-2xl pt-1 px-1 shadow-2xl"
+										onClick={() => {
+											dispatch(updateIsShowSelectionScreen(false))
+											dispatch(updateSelectedType('bulk'))
+										}}
+									>
+										<div>
+											<p className="font-nunito text-main-blue font-bold text-xs text-right">
+												Bulk Buy
+											</p>
+											<p className="font-inter text-black font-bold text-xs">
+												بڑی خریداری بڑی بچت
+											</p>
+										</div>
+										<div className="w-2/3 drop-shadow-2xl">
+											<Image
+												src={bulkBuyIcon}
+												alt={'Bulk Buy icon'}
+												layout={'responsive'}
+											/>
+										</div>
+									</button>
+								</div>
+							</div>
+							{/* VIDEO CONTAINER */}
+							<div className="w-full aspect-video rounded-2xl overflow-hidden">
+								{!isLoading && (
+									<iframe
+										width={'100%'}
+										height={'100%'}
+										src={welcomeVideo}
+										frameBorder="0"
+										allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+										allowFullScreen
+										title="Embedded youtube"
+									/>
+								)}
+							</div>
+						</div>
+					</div>
+				)}
+			</>
+		)
+	}
+
+	const PopupAd = () => {
+		return (
+			<>
 				{/* POPUP AD */}
 				{showPopupAd && (
 					<div className="w-full">
@@ -112,144 +209,127 @@ export default function Home() {
 						</div>
 					</div>
 				)}
-				{/* BANNERS SECTION hidden on phone */}
-				<section className="hidden lg:relative lg:w-full lg:aspect-[16/6] lg:grid grid-cols-12 gap-x-2 p-2 items-center">
-					{/* BACKGROUND IMAGE */}
-					{/* <div className="absolute w-full h-full blur-lg">
-						<Image
-							src={storeBackgroundImage}
-							layout={"responsive"}
-							alt="banner"
-						/>
-					</div> */}
-					{/* SCROLLING BANNER */}
-					<section className="col-span-7">
-						<section className="w-full">
-							<Carousel />
-						</section>
-					</section>
-					{/* STATIC BANNERS */}
-					{selectedTypeSelector === 'bulk' ? (
-						<section className="col-span-5 grid grid-rows-1 h-full w-full justify-items-center align-items-center">
-							<div className="relative w-full p-2">
-								<Link href={"/"} passHref>
-									<a>
-										<Image
-											src={karachiBulkBuyStaticBanner1}
-											layout={"responsive"}
-											alt="banner"
-										/>
-									</a>
-								</Link>
-							</div>
-						</section>
-					) : (
-						<section className="col-span-5 grid grid-rows-2 gap-y-2 h-full w-full">
-							<div className="relative w-full h-full">
-								<Link href={"/offers/45"} passHref>
-									<a>
-										<Image
-											src={karachiStaticBanner2}
-											layout={"fill"}
-											alt="banner"
-										/>
-									</a>
-								</Link>
-							</div>
-							<div className="relative w-full h-full">
-								<Link
-									href={"/category/rs.99-&-below/1242"}
-									passHref
-								>
-									<a>
-										<Image
-											src={karachiStaticBanner1}
-											layout={"fill"}
-											alt="banner"
-										/>
-									</a>
-								</Link>
-							</div>
-						</section>
-					)}
-				</section>
-				{/* BANNERS SECTION hidden on desktop */}
-				<section className="lg:hidden w-full items-center">
-					{/* MAIN BANNER */}
-					<section className="w-full">
-						<Carousel />
-					</section>
-				</section>
-				<div className="">
-					{/* PRODUCTS SECTION */}
-					<section className="space-y-12">
-						{homeData.products.map((product, index) => {
-							let { offerId } = product
+			</>
+		)
+	}
 
-							return (
-								<section key={offerId}>
-									{/* STATIC BANNERS for mobile */}
-									{index % 2 == 0 ? (
-										<section className="lg:hidden relative space-y-6 items-center">
-											<section className="w-full">
-												<Link
-													href={"/offers/45"}
-													passHref
-													className="w-full"
-												>
-													<a className="w-full">
-														<Image
-															src={karachiStaticBanner2}
-															layout={
-																"responsive"
-															}
-															alt=""
-														/>
-													</a>
-												</Link>
-											</section>
-										</section>
-									) : (
-										<section className="lg:hidden relative space-y-6 items-center">
-											<section className="w-full">
-												<Link
-													href={"/category/rs.99-&-below/1242"}
-													passHref
-													className="w-full"
-												>
-													<a className="w-full">
-														<Image
-															src={karachiStaticBanner1}
-															layout={
-																"responsive"
-															}
-															alt=""
-														/>
-													</a>
-												</Link>
-											</section>
-										</section>
-									)}
-									<MainProducts
-										key={offerId}
-										section={product}
-									/>
+	const Products = () => {
+		if (isLoading) {
+			return (
+				<MainProductsShimmer />
+			)
+		}
+
+		return (
+			<section className="space-y-12">
+				{homeData.products.map((product, index) => {
+					let { identifier } = product
+					return (
+						<section key={identifier}>
+							{/* STATIC BANNERS for mobile */}
+							{/* {index % 2 == 0 ? (
+								<section className="lg:hidden relative space-y-6 items-center">
+									<section className="w-full">
+										<Link
+											href={"/offers/45"}
+											passHref
+											className="w-full"
+										>
+											<a className="w-full">
+												<Image
+													src={karachiStaticBanner2}
+													layout={
+														"responsive"
+													}
+													alt=""
+												/>
+											</a>
+										</Link>
+									</section>
 								</section>
-							)
-						})}
-						{/* MANUAL ORDER SECTION */}
-						<section className="mb-2 mt-8 flex flex-row w-full rounded-xl p-2 bg-main-yellow items-center align-center justify-around">
-							<Link
-								href={token ? "/grocery_list" : "/login"}
-								passHref
-							>
-								<a className="text-main-blue font-bold text-lg w-full text-center">
-									UPLOAD YOUR GROCERY LIST
-								</a>
-							</Link>
+							) : (
+								<section className="lg:hidden relative space-y-6 items-center">
+									<section className="w-full">
+										<Link
+											href={"/category/under-rs.99/1242"}
+											passHref
+											className="w-full"
+										>
+											<a className="w-full">
+												<Image
+													src={karachiStaticBanner1}
+													layout={"responsive"}
+													alt="banner"
+												/>
+											</a>
+										</Link>
+									</section>
+								</section>
+							)} */}
+							<MainProducts
+								key={identifier}
+								section={product}
+							/>
 						</section>
-					</section>
+					)
+				})}
+			</section>
+		)
+	}
+
+	const HomeItems = () => {
+		if (isLoading) {
+			return (
+				<HomeLoader />
+			)
+		}
+
+		if (!homeData) {
+			return (
+				<div className="flex flex-col space-y-2">
+					<p>{errorMessage}</p>
+					<a className="text-blue-400 underline"
+						onClick={() => {
+							clearCookies()
+							clearLocalStorage()
+							clearSessionStorage()
+							router.reload()
+						}}
+					>
+						Refresh Page
+					</a>
 				</div>
+			)
+		}
+
+		return (
+			<div>
+				<PopupAd />
+				<SelectionScreenPopup />
+				<div className="flex flex-row w-full space-x-2">
+					<div className="flex flex-col justify-between w-full lg:w-[65%]">
+						<TypeCardSelector />
+						<div className="w-full my-2 lg:my-0">
+							<Carousel />
+						</div>
+					</div>
+					<div className="hidden lg:inline-block lg:w-[35%]">
+						<Link
+							href={"/category/under-rs.99/1242"}
+							passHref
+							className="w-full"
+						>
+							<a className="w-full">
+								<Image
+									src={karachiStaticBanner1}
+									layout={"responsive"}
+									alt="banner"
+								/>
+							</a>
+						</Link>
+					</div>
+				</div>
+				<Products />
 			</div>
 		)
 	}
@@ -269,7 +349,6 @@ export default function Home() {
 					<Categories />
 				</section>
 				<section className="space-y-2 lg:space-y-6 col-span-5 lg:col-span-4">
-					<TypeCardSelector />
 					<HomeItems />
 				</section>
 			</div>

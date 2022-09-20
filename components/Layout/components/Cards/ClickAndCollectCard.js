@@ -41,22 +41,22 @@ export default function ClickAndCollectCard({ isDisabled }) {
 	return (
 		<>
 			<button
-				className={[style] + ' relative rounded-lg shadow flex grow items-center ' + [disabledStyle]}
+				className={[style] + ' relative rounded-lg shadow flex grow items-center hover:bg-main-yellow duration-300 ' + [disabledStyle]}
 				onClick={() => {
 					setShowPopup(!showPopup)
 				}}
 				disabled={isDisabled}
 			>
-				<p className='font-nunito text-main-blue font-black truncate lg:font-extrabold w-full text-[8px] md:text-base lg:text-lg 2xl:text-2xl pl-1 lg:pl-2 leading-none'>
+				<p className='font-nunito text-main-blue font-black lg:font-extrabold w-full text-[8px] md:text-base lg:text-sm 2xl:text-lg pl-1 lg:pl-2 leading-none'>
 					Click & Collect
 				</p>
-				<div className='w-[80%] max-w-[180px] pr-2'>
+				{/* <div className='w-[80%] max-w-[180px] pr-2'>
 					<Image
 						src={clickAndCollectIcon}
 						layout={'responsive'}
 						alt='icon'
 					/>
-				</div>
+				</div> */}
 			</button>
 			{showPopup && (
 				<Popup

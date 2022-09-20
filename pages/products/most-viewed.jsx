@@ -56,7 +56,7 @@ export default function MostViewed() {
 				{/* PRODUCTS SECTION */}
 				<section className="col-span-5 lg:col-span-4 space-y-12">
 					<PageHeading
-						text="MOST VIEWED PRODUCTS"
+						text="BEST SELLER"
 					/>
 					<MostViewedProducts />
 				</section>

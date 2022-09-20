@@ -1,18 +1,17 @@
 import { useState } from 'react';
-import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
-// import PlacesAutocomplete from './PlacesAutocomplete';
-let defaultLocation = { 
-    lat: 24.917122827062762, 
-    lng: 67.09610049861793 
-}
+import { Autocomplete, GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
 
-export default function LocationPicker({label, onChangeLatitude, onChangeLongitude, startingLocation}) {
+const libraries = ['places']
+
+export default function LocationPicker({ onChangeLatitude, onChangeLongitude }) {
     const [mapref, setMapRef] = useState(null);
-    const [centerLocation, setCenterLocation] = useState({
+    const [autocomplete, setAutocomplete] = useState(null)
+    const [mapCenterLocation, setMapCenterLocation] = useState({
         lat: 24.917122827062762,
-        long: 67.09610049861793
+        lng: 67.09610049861793
     })
-    
+    const [markerCenterLocation, setMarkerCenterLocation] = useState(mapCenterLocation)
+
     const handleOnLoad = map => {
         setMapRef(map)
     }
@@ -20,10 +19,11 @@ export default function LocationPicker({label, onChangeLatitude, onChangeLongitu
     const handleCenterChanged = () => {
         if (mapref) {
             const newCenter = mapref.getCenter()
-            setCenterLocation({
-                lat : newCenter.lat(),
-                lng : newCenter.lng()
+            setMarkerCenterLocation({
+                lat: newCenter.lat(),
+                lng: newCenter.lng()
             })
+
             onChangeLatitude(newCenter.lat())
             onChangeLongitude(newCenter.lng())
         }
@@ -31,19 +31,51 @@ export default function LocationPicker({label, onChangeLatitude, onChangeLongitu
 
     return (
         <LoadScript
-            // googleMapsApiKey='AIzaSyBCdUlcuc_K2zH9CWXCj_6BEhJ30Fo5u3A'
+            googleMapsApiKey={process.env.NEXT_PUBLIC_GOOGLE_API_KEY}
+            libraries={libraries}
         >
-            {/* <PlacesAutocomplete /> */}
             <GoogleMap
-                // center={startingLocation.lat != '' && startingLocation.lng != '' ? startingLocation : defaultLocation}
-                center={defaultLocation}
+                center={mapCenterLocation}
                 zoom={15}
                 onLoad={handleOnLoad}
                 onCenterChanged={handleCenterChanged}
                 mapContainerStyle={{ width: '100%', height: '100%' }}
             >
+                <Autocomplete
+                    onLoad={(autocomplete) => {
+                        setAutocomplete(autocomplete)
+                    }}
+                    onPlaceChanged={() => {
+                        setMapCenterLocation({
+                            lat: autocomplete.getPlace().geometry.location.lat(),
+                            lng: autocomplete.getPlace().geometry.location.lng()
+                        })
+                        onChangeLatitude(autocomplete.getPlace().geometry.location.lat())
+                        onChangeLongitude(autocomplete.getPlace().geometry.location.lng())
+                    }}
+                >
+                    <input
+                        type="text"
+                        placeholder="Search Address"
+                        style={{
+                            boxSizing: `border-box`,
+                            border: `1px solid transparent`,
+                            width: `240px`,
+                            height: `32px`,
+                            padding: `0 12px`,
+                            borderRadius: `3px`,
+                            boxShadow: `0 2px 6px rgba(0, 0, 0, 0.3)`,
+                            fontSize: `14px`,
+                            outline: `none`,
+                            textOverflow: `ellipses`,
+                            position: "absolute",
+                            left: "50%",
+                            marginLeft: "-120px"
+                        }}
+                    />
+                </Autocomplete>
                 <Marker
-                    position={centerLocation}
+                    position={markerCenterLocation}
                     draggable={false}
                 />
             </GoogleMap>

@@ -1,9 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit"
-import { setCookie } from "../helpers/Cookies"
-import { setItemSessionStorage, setItemLocalStorage } from "../helpers/Storage"
+import { setItemSessionStorage, setItemLocalStorage, removeItemLocalStorage } from "../helpers/Storage"
 import { getGeneralApiParams } from "../helpers/ApiHelpers"
 
-let { selectedAddress, selectedType, city, selectedPickupLocation } = getGeneralApiParams()
+let { selectedAddress, selectedType, city, selectedPickupLocation, redirectSource, isShowSelectionScreen } = getGeneralApiParams()
 
 const generalSlice = createSlice({
 	name: "general",
@@ -14,12 +13,18 @@ const generalSlice = createSlice({
 		selectedType: selectedType,
 		city: city,
 		isUserInitialized: false,
-		pickupLocation: selectedPickupLocation
+		pickupLocation: selectedPickupLocation,
+		redirectSource: redirectSource,
+		isShowSelectionScreen: isShowSelectionScreen
 	},
 	reducers: {
 		updateSelectedAddress: (state, action) => {
 			state.selectedAddress = { ...action.payload }
 			setItemLocalStorage('selected-address', JSON.stringify(action.payload))
+		},
+		removeSelectedAddress: (state, action) => {
+			state.selectedAddress = {}
+			removeItemLocalStorage('selected-address')
 		},
 		updateTicker: (state, action) => {
 			state.ticker = action.payload
@@ -35,6 +40,14 @@ const generalSlice = createSlice({
 		updateSelectedType: (state, action) => {
 			state.selectedType = action.payload
 			setItemLocalStorage("selected-type", action.payload)
+		},
+		updateRedirectSource: (state, action) => {
+			state.redirectSource = action.payload
+			setItemSessionStorage("redirect-source", action.payload)
+		},
+		updateIsShowSelectionScreen: (state, action) => {
+			state.isShowSelectionScreen = action.payload
+			setItemSessionStorage("is_show_selection_screen", action.payload)
 		}
 	},
 })
@@ -46,5 +59,8 @@ export const {
 	updateTicker,
 	updateSelectedType,
 	updateCity,
-	updatePickupLocation
+	updatePickupLocation,
+	updateRedirectSource,
+	removeSelectedAddress,
+	updateIsShowSelectionScreen
 } = generalSlice.actions

@@ -9,7 +9,7 @@ export default function Dropdown({ label, options, name, optionText, onChange, v
                 {label}
             </p>
             <select
-                className="col-span-2 h-[40px] py-2 px-2 rounded-lg bg-slate-100"
+                className="col-span-2 h-[40px] py-2 px-2 rounded-lg bg-slate-200"
                 disabled={disabled}
                 onChange={(e) => {
                     if (customOnChange) {

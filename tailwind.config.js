@@ -59,7 +59,7 @@ module.exports = {
 				},
 				"main-blue": {
 					DEFAULT: "#08185A",
-					100: "#CFD4FF",
+					100: "#93C4E2",
 				},
 				"main-red": {
 					DEFAULT: "#FF1100",
@@ -76,6 +76,7 @@ module.exports = {
 			fontFamily: {
 				lato: ["Lato", "sans-serif"],
 				nunito: ["Nunito"],
+				inter: ["Inter", "sans-serif"]
 			},
 			screens: {
 				"3xl": "1920px",

@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+
 import { getGeneralApiParams } from "../../../../helpers/ApiHelpers";
 import { base_url_api } from '../../../../information.json'
 import Dropdown from "../Input/Dropdown";
@@ -12,7 +13,7 @@ import ErrorText from "../Typography/ErrorText";
     previousAddress will be empty if type is 'add', in 'edit' previousAddress is the previous address to be modified
     updateSavedAddresses is there so that it can recall the getSavedAddresses API in parent component
 */
-export default function AddressCard({ type, previousAddress, updateSavedAddresses, setShow }) {
+export default function AddAddressCard({ type, previousAddress, updateSavedAddresses, setShow }) {
     const [deliveryAreaOptions, setDeliveryAreaOptions] = useState([]);
     const [cityOptions, setCityOptions] = useState([]);
     const [errorMessage, setErrorMessage] = useState('')
@@ -27,6 +28,7 @@ export default function AddressCard({ type, previousAddress, updateSavedAddresse
     const [mapLat, setMapLat] = useState(previousAddress ? previousAddress.mapLat : '')
     const [mapLong, setMapLong] = useState(previousAddress ? previousAddress.mapLong : '')
     const [googleAddress, setGoogleAddress] = useState(previousAddress ? previousAddress.googleAddress : '')
+    const [isButtonDisabled, setIsButtonDisabled] = useState(true)
 
     useEffect(() => {
         getCityAreasOptionsApi()
@@ -40,6 +42,15 @@ export default function AddressCard({ type, previousAddress, updateSavedAddresse
             getDeliveryAreasOptionsApi(address.cityId)
         }
     }, [address.cityId])
+
+    useEffect(() => {
+        if (address.name !== '' && address.address !== '' && address.phoneNumber !== '' && address.email !== '' && address.cityId !== '' && address.areaId !== '' && mapLat !== '' && mapLong !== '') {
+            setIsButtonDisabled(false)
+        }
+        else {
+            setIsButtonDisabled(true)
+        }
+    }, [address.address, address.areaId, address.cityId, address.email, address.name, address.phoneNumber, mapLat, mapLong])
 
     const handleAddressChange = (e) => {
         let { name, value } = e.target
@@ -126,7 +137,7 @@ export default function AddressCard({ type, previousAddress, updateSavedAddresse
     }
 
     return (
-        <div className="min-w-full flex flex-col space-y-2">
+        <div className="animate-dropdown bg-slate-100 p-2 rounded-xl min-w-full flex flex-col space-y-2">
             <TextField
                 label={'Name'}
                 type={'text'}
@@ -151,6 +162,7 @@ export default function AddressCard({ type, previousAddress, updateSavedAddresse
                 customOnChange={true}
                 onChange={handleAddressChange}
                 value={address.phoneNumber}
+                type={'number'}
             />
             <TextField
                 label={'Email Address'}
@@ -186,13 +198,8 @@ export default function AddressCard({ type, previousAddress, updateSavedAddresse
             </p>
             <div className="w-full h-[300px]">
                 <LocationPicker
-                    label={"Pick Location"}
                     onChangeLatitude={setMapLat}
                     onChangeLongitude={setMapLong}
-                    startingLocation={{
-                        lat: mapLat,
-                        lng: mapLong
-                    }}
                 />
             </div>
             {errorMessage != '' && (
@@ -202,8 +209,17 @@ export default function AddressCard({ type, previousAddress, updateSavedAddresse
             )}
             {type == 'add' && (
                 <SubmitButton
-                    text={'Add Address'}
-                    onClick={addAddressApi}
+                    text={'Add New Address'}
+                    onClick={() => {
+                        addAddressApi()
+                        setShow(false)
+                        window.scroll({
+                            top: 0,
+                            left: 0,
+                            behavior: "smooth",
+                        })
+                    }}
+                    disabled={isButtonDisabled}
                 />
             )}
             {type == 'edit' && (

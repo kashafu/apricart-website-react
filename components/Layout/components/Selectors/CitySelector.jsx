@@ -88,7 +88,7 @@ const CitySelector = () => {
 	}
 
 	return (
-		<div className="flex w-full justify-center">
+		<div className="flex w-full justify-left">
 			<div className="bg-slate-100 rounded-xl py-2 px-4 lg:bg-inherit lg:rounded-none lg:py-0 lg:px-0">
 				<button
 					className="flex flex-row space-x-2 items-center"

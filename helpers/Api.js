@@ -1,9 +1,11 @@
 import axios from "axios"
 import { useSelector, useDispatch } from "react-redux"
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
+import { useRouter } from "next/router"
+import { toast } from "react-toastify"
+
 import { base_url_api } from "../information.json"
 import { getGeneralApiParams } from "./ApiHelpers"
-import { useRouter } from "next/router"
 import {
 	addToCart,
 	initialize,
@@ -11,7 +13,6 @@ import {
 	updateQuantity,
 } from "../redux/cart.slice"
 import { updateTicker } from "../redux/general.slice"
-import { toast } from "react-toastify"
 import { setCookie } from "./Cookies"
 import { updateCategories } from "../redux/data.slice"
 
@@ -103,6 +104,7 @@ export const useCategoryProductsApi = () => {
 
 	const [isLoading, setIsLoading] = useState(true)
 	const [categoryProducts, setCategoryProducts] = useState(null)
+	const [subCategories, setSubCategories] = useState(null)
 	const [size, setSize] = useState(20)
 	const [page, setPage] = useState(1)
 	const [totalItems, setTotalItems] = useState(0)
@@ -134,7 +136,8 @@ export const useCategoryProductsApi = () => {
 				headers: headers,
 			})
 			setResponse(apiResponse)
-			setCategoryProducts(apiResponse.data.data)
+			setCategoryProducts(apiResponse.data.data.products)
+			setSubCategories(apiResponse.data.data.categories)
 			setTotalItems(+apiResponse.data.total)
 		} catch (error) {
 			setErrorResponse(error?.response)
@@ -155,46 +158,8 @@ export const useCategoryProductsApi = () => {
 		page,
 		size,
 		totalItems,
+		subCategories
 	}
-}
-
-export const useSubCategoriesApi = () => {
-	const router = useRouter()
-	const { categoryId, categoryName } = router.query
-
-	const [isLoading, setIsLoading] = useState(true)
-	const [subCategories, setSubCategories] = useState(null)
-	const [response, setResponse] = useState(null)
-	const [errorResponse, setErrorResponse] = useState(null)
-	const [errorMessage, setErrorMessage] = useState("")
-
-	useEffect(() => {
-		if (router.isReady) {
-			callApi()
-		}
-	}, [router.query])
-
-	const callApi = async () => {
-		setIsLoading(true)
-		await initializeUserApi()
-		let { headers } = getGeneralApiParams()
-		let url = "/catalog/categories/detail?id=" + categoryId
-
-		try {
-			let apiResponse = await axios.get(fullUrl(url), {
-				headers: headers,
-			})
-			setResponse(apiResponse)
-			setSubCategories(apiResponse.data.data)
-		} catch (error) {
-			setErrorResponse(error?.response)
-			setErrorMessage(error?.response?.data?.message)
-		} finally {
-			setIsLoading(false)
-		}
-	}
-
-	return { isLoading, subCategories, errorMessage, response, errorResponse }
 }
 
 export const useHomeApi = () => {
@@ -429,106 +394,6 @@ export const useAddToCartApi = (sku, qty, product) => {
 	}
 }
 
-export const useOptionsApi = () => {
-	const selectedTypeSelector = useSelector(
-		(state) => state.general.selectedType
-	)
-	const [isLoading, setIsLoading] = useState(true)
-	const [optionsData, setOptionsData] = useState(null)
-	const [shipmentChargedAt, setShipmentChargedAt] = useState(0)
-	const [shipmentFixAmount, setShipmentFixAmount] = useState(0)
-	const [response, setResponse] = useState(null)
-	const [errorResponse, setErrorResponse] = useState(null)
-	const [errorMessage, setErrorMessage] = useState("")
-
-	useEffect(() => {
-		callApi()
-	}, [selectedTypeSelector])
-
-	const callApi = async () => {
-		setIsLoading(true)
-		await initializeUserApi()
-		let { headers } = getGeneralApiParams()
-
-		let url = "/options/all?"
-
-		try {
-			let apiResponse = await axios.get(fullUrl(url), {
-				headers: headers,
-			})
-			setResponse(apiResponse)
-			setOptionsData(apiResponse.data.data)
-			apiResponse.data.data.forEach((item) => {
-				if (item.key === "shippment_charged_at") {
-					setShipmentChargedAt(item.value)
-				}
-				if (item.key === "shippment_fix_amount") {
-					setShipmentFixAmount(item.value)
-				}
-			})
-		} catch (error) {
-			setErrorResponse(error?.response)
-			setErrorMessage(error?.response?.data?.message)
-		} finally {
-			setIsLoading(false)
-		}
-	}
-
-	return {
-		isLoading,
-		optionsData,
-		errorMessage,
-		response,
-		errorResponse,
-		shipmentChargedAt,
-		shipmentFixAmount,
-	}
-}
-
-export const usePaymentMethodsApi = () => {
-	const selectedTypeSelector = useSelector(
-		(state) => state.general.selectedType
-	)
-	const [isLoading, setIsLoading] = useState(true)
-	const [paymentMethodsData, setPaymentMethodsData] = useState(null)
-	const [response, setResponse] = useState(null)
-	const [errorResponse, setErrorResponse] = useState(null)
-	const [errorMessage, setErrorMessage] = useState("")
-
-	useEffect(() => {
-		callApi()
-	}, [selectedTypeSelector])
-
-	const callApi = async () => {
-		setIsLoading(true)
-		await initializeUserApi()
-		let { headers } = getGeneralApiParams()
-
-		let url = "/order/payment/info?"
-
-		try {
-			let apiResponse = await axios.get(fullUrl(url), {
-				headers: headers,
-			})
-			setResponse(apiResponse)
-			setPaymentMethodsData(apiResponse.data.data)
-		} catch (error) {
-			setErrorResponse(error?.response)
-			setErrorMessage(error?.response?.data?.message)
-		} finally {
-			setIsLoading(false)
-		}
-	}
-
-	return {
-		isLoading,
-		paymentMethodsData,
-		errorMessage,
-		response,
-		errorResponse,
-	}
-}
-
 export const useUpdateItemQtyApi = () => {
 	const dispatch = useDispatch()
 	const [data, setData] = useState({
@@ -687,7 +552,7 @@ export const useInitialCartDataApi = () => {
 	let { token } = getGeneralApiParams()
 	const [coupon, setCoupon] = useState('')
 	const [couponMessage, setCouponMessage] = useState('')
-	const [notes, setNotes] = useState('')
+	let notes = useRef('')
 	const [paymentMethod, setPaymentMethod] = useState('cash')
 	const [paymentMethods, setPaymentMethods] = useState('cash')
 	const [day, setDay] = useState("2022-04-10")
@@ -746,7 +611,7 @@ export const useInitialCartDataApi = () => {
 
 		let body = {
 			coupon,
-			notes,
+			notes: notes.current,
 			paymentMethod,
 			address: addressId,
 			showProducts: true,
@@ -807,7 +672,7 @@ export const useInitialCartDataApi = () => {
 
 		let body = {
 			coupon,
-			notes,
+			notes: notes.current,
 			paymentMethod,
 			address: addressId,
 			showProducts: true,
@@ -854,7 +719,6 @@ export const useInitialCartDataApi = () => {
 		setStartTime,
 		setEndTime,
 		setIsCheckout,
-		setNotes,
 		notes,
 		coupon,
 		setPaymentMethod,
@@ -898,7 +762,7 @@ export const useSearchResultsApi = () => {
 				headers: headers,
 			})
 			setResponse(apiResponse)
-			setSearchResults(apiResponse.data.data)
+			setSearchResults(apiResponse.data.data.products)
 		} catch (error) {
 			setErrorResponse(error?.response)
 			setErrorMessage(error?.response?.data?.message)
@@ -939,7 +803,7 @@ export const useRecommendedProductsApi = () => {
 				headers: headers,
 			})
 			setResponse(apiResponse)
-			setRecommendedProducts(apiResponse.data.data)
+			setRecommendedProducts(apiResponse.data.data.products)
 		} catch (error) {
 			setErrorResponse(error?.response)
 			setErrorMessage(error?.response?.data?.message)
@@ -980,7 +844,7 @@ export const useMostViewedProductsApi = () => {
 				headers: headers,
 			})
 			setResponse(apiResponse)
-			setMostViewedProducts(apiResponse.data.data)
+			setMostViewedProducts(apiResponse.data.data.products)
 		} catch (error) {
 			setErrorResponse(error?.response)
 			setErrorMessage(error?.response?.data?.message)
@@ -995,5 +859,340 @@ export const useMostViewedProductsApi = () => {
 		errorMessage,
 		response,
 		errorResponse,
+	}
+}
+
+export const useLoginApi = () => {
+	const [isLoading, setIsLoading] = useState(false)
+	const [response, setResponse] = useState(null)
+	const [errorResponse, setErrorResponse] = useState(null)
+	const [errorMessage, setErrorMessage] = useState("")
+	const [isLogin, setIsLogin] = useState(false)
+	const [data, setData] = useState({
+		"username": '',
+		"password": ''
+	})
+
+	useEffect(() => {
+		if (isLogin) {
+			callApi()
+		}
+	}, [isLogin])
+
+	const callApi = async () => {
+		setIsLoading(true)
+		let { userId, headers } = getGeneralApiParams()
+
+		let url = "/auth/open/login?"
+		let body = {
+			"guestuserid": userId,
+			"username": '92' + data.username,
+			"password": data.password
+		}
+
+		try {
+			let apiResponse = await axios.post(fullUrl(url), body, {
+				headers: headers,
+			})
+			if (apiResponse.data.status == 1) {
+				setCookie("cookies-token", apiResponse.data.data.token)
+				setCookie("cookies-name", apiResponse.data.data.name)
+				setCookie("cookies-email", apiResponse.data.data.email)
+				setCookie("cookies-phoneNumber", apiResponse.data.data.phoneNumber)
+				setResponse(apiResponse)
+				setErrorMessage('')
+				setErrorResponse(null)
+			}
+			else {
+				setErrorMessage(apiResponse.data.message)
+				setErrorResponse(apiResponse)
+			}
+		} catch (error) {
+			setErrorResponse(error?.response)
+			setErrorMessage(error?.response?.data?.message)
+		} finally {
+			setIsLoading(false)
+			setIsLogin(false)
+		}
+	}
+
+	return {
+		isLoading,
+		setData,
+		setIsLogin,
+		errorMessage,
+		response,
+		errorResponse,
+	}
+}
+
+export const useSendOtpApi = () => {
+	const [isLoading, setIsLoading] = useState(false)
+	const [response, setResponse] = useState(null)
+	const [errorResponse, setErrorResponse] = useState(null)
+	const [errorMessage, setErrorMessage] = useState("")
+	const [isSendOtp, setIsSendOtp] = useState(false)
+	const [phoneNumber, setPhoneNumber] = useState('')
+
+	useEffect(() => {
+		if (isSendOtp) {
+			callApi()
+		}
+	}, [isSendOtp])
+
+	const callApi = async () => {
+		setIsLoading(true)
+		let { headers } = getGeneralApiParams()
+
+		let url = "/auth/open/otp?"
+		let body = {
+			"phoneNumber": '92' + phoneNumber
+		}
+
+		try {
+			let apiResponse = await axios.post(fullUrl(url), body, {
+				headers: headers,
+			})
+			setResponse(apiResponse)
+			toast.success(apiResponse.data.message)
+			setErrorMessage('')
+			setErrorResponse(null)
+		} catch (error) {
+			setErrorResponse(error?.response)
+			setErrorMessage(error?.response?.data?.message)
+		} finally {
+			setIsLoading(false)
+			setIsSendOtp(false)
+		}
+	}
+
+	return {
+		isLoading,
+		setPhoneNumber,
+		setIsSendOtp,
+		errorMessage,
+		response,
+		errorResponse,
+	}
+}
+
+export const useResetPasswordApi = () => {
+	const [isLoading, setIsLoading] = useState(false)
+	const [response, setResponse] = useState(null)
+	const [errorResponse, setErrorResponse] = useState(null)
+	const [errorMessage, setErrorMessage] = useState("")
+	const [isSendOtp, setIsSendOtp] = useState(false)
+	const [data, setData] = useState({
+		"phoneNumber": '',
+		"password": '',
+		"otp": ''
+	})
+
+	useEffect(() => {
+		if (isSendOtp) {
+			callApi()
+		}
+	}, [isSendOtp])
+
+	const callApi = async () => {
+		setIsLoading(true)
+		let { headers } = getGeneralApiParams()
+
+		let url = "/auth/open/password/forgot?"
+		let body = {
+			"phoneNumber": '92' + data.phoneNumber,
+			"password": data.password,
+			"otp": data.otp
+		}
+
+		try {
+			let apiResponse = await axios.post(fullUrl(url), body, {
+				headers: headers,
+			})
+
+			setResponse(apiResponse)
+			toast.success(apiResponse.data.message)
+			setErrorMessage('')
+			setErrorResponse(null)
+		} catch (error) {
+			setErrorResponse(error?.response)
+			setErrorMessage(error?.response?.data?.message)
+		} finally {
+			setIsLoading(false)
+			setIsSendOtp(false)
+		}
+	}
+
+	return {
+		isLoading,
+		setData,
+		setIsSendOtp,
+		errorMessage,
+		response,
+		errorResponse,
+	}
+}
+
+export const useRegisterApi = () => {
+	const [isLoading, setIsLoading] = useState(false)
+	const [response, setResponse] = useState(null)
+	const [errorResponse, setErrorResponse] = useState(null)
+	const [errorMessage, setErrorMessage] = useState("")
+	const [isRegister, setIsRegister] = useState(false)
+	const [data, setData] = useState({
+		"email": '',
+		"name": '',
+		"phoneNumber": '',
+		"password": '',
+	})
+
+	useEffect(() => {
+		if (isRegister) {
+			callApi()
+		}
+	}, [isRegister])
+
+	const callApi = async () => {
+		setIsLoading(true)
+		let { userId, headers } = getGeneralApiParams()
+
+		let url = "/auth/open/register?"
+		let body = {
+			"email": data.email,
+			"name": data.name,
+			"phoneNumber": '92' + data.phoneNumber,
+			"password": data.password,
+			"guestuserid": userId,
+		}
+
+		try {
+			let apiResponse = await axios.post(fullUrl(url), body, {
+				headers: headers,
+			})
+
+			setResponse(apiResponse)
+			toast.success(apiResponse.data?.message)
+			setErrorMessage('')
+			setErrorResponse(null)
+		} catch (error) {
+			setErrorResponse(error?.response)
+			setErrorMessage(error?.response?.data?.message)
+		} finally {
+			setIsLoading(false)
+			setIsRegister(false)
+		}
+	}
+
+	return {
+		isLoading,
+		setData,
+		setIsRegister,
+		errorMessage,
+		response,
+		errorResponse,
+	}
+}
+
+export const useVerifyOtpApi = () => {
+	const [isLoading, setIsLoading] = useState(false)
+	const [response, setResponse] = useState(null)
+	const [errorResponse, setErrorResponse] = useState(null)
+	const [errorMessage, setErrorMessage] = useState("")
+	const [isVerifyOtp, setIsVerifyOtp] = useState(false)
+	const [data, setData] = useState({
+		"phoneNumber": '',
+		"otp": '',
+	})
+
+	useEffect(() => {
+		if (isVerifyOtp) {
+			callApi()
+		}
+	}, [isVerifyOtp])
+
+	const callApi = async () => {
+		setIsLoading(true)
+		let { headers } = getGeneralApiParams()
+
+		let url = "/auth/open/otp/verify?"
+		let body = {
+			"phoneNumber": '92' + data.phoneNumber,
+			"otp": data.otp
+		}
+
+		try {
+			let apiResponse = await axios.post(fullUrl(url), body, {
+				headers: headers,
+			})
+
+			setResponse(apiResponse)
+			toast.success(apiResponse.data?.message)
+			setErrorMessage('')
+			setErrorResponse(null)
+		} catch (error) {
+			setErrorResponse(error?.response)
+			setErrorMessage(error?.response?.data?.message)
+			toast.error(error?.response?.data?.message)
+		} finally {
+			setIsLoading(false)
+			setIsVerifyOtp(false)
+		}
+	}
+
+	return {
+		isLoading,
+		setData,
+		setIsVerifyOtp,
+		errorMessage,
+		response,
+		errorResponse,
+	}
+}
+
+export const useOptionsApi = () => {
+	const [isLoading, setIsLoading] = useState(true)
+	const [response, setResponse] = useState(null)
+	const [errorResponse, setErrorResponse] = useState(null)
+	const [errorMessage, setErrorMessage] = useState("")
+	const [welcomeVideo, setWelcomeVideo] = useState('')
+
+	useEffect(() => {
+		callApi()
+	}, [])
+
+	const callApi = async () => {
+		setIsLoading(true)
+		let { headers } = getGeneralApiParams()
+
+		let url = "/options/all?"
+
+		try {
+			let apiResponse = await axios.get(fullUrl(url), {
+				headers: headers,
+			})
+
+			setResponse(apiResponse)
+			setErrorMessage('')
+			setErrorResponse(null)
+
+			apiResponse.data.data.forEach(element => {
+				if (element.key === 'welcome_video') {
+					setWelcomeVideo("https://www.youtube.com/embed/" + element.value)
+				}
+			});
+		} catch (error) {
+			setErrorResponse(error?.response)
+			setErrorMessage(error?.response?.data?.message)
+		} finally {
+			setIsLoading(false)
+		}
+	}
+
+	return {
+		isLoading,
+		errorMessage,
+		response,
+		errorResponse,
+		welcomeVideo
 	}
 }

@@ -1,37 +1,35 @@
 import { useRouter } from "next/router"
+import Link from "next/link"
+
 import Categories from "../../../../components/Layout/components/Categories/Categories"
 import SingleProduct from "../../../../components/Layout/components/Products/SingleProduct"
 import PageHeading from "../../../../components/Layout/components/Typography/PageHeading"
-import Link from "next/link"
 import HeadTag from "../../../../components/Layout/components/Head/HeadTag"
-import toKebabCase from "../../../../helpers/toKebabCase"
-import { fromKebabCase } from "../../../../helpers/toKebabCase"
+import toKebabCase, { fromKebabCase } from "../../../../helpers/toKebabCase"
 import {
 	useCategoryProductsApi,
-	useSubCategoriesApi,
 } from "../../../../helpers/Api"
-import { useState } from "react"
+import SubCategoryShimmer from "../../../../components/Layout/components/Loaders/Shimmers/SubCategoryShimmer"
+import SubCategoryProductsShimmer from "../../../../components/Layout/components/Loaders/Shimmers/SubCategoryProductsShimmer"
 
 export default function CategoryProducts() {
 	const router = useRouter()
-	const { categoryId, categoryName } = router.query
+	const { categoryName } = router.query
+	const {
+		isLoading,
+		categoryProducts,
+		subCategories,
+		errorMessage,
+		totalItems,
+		size,
+		setPage,
+		page
+	} = useCategoryProductsApi()
 
 	const SubCategories = () => {
-		const { isLoading, subCategories, errorMessage } = useSubCategoriesApi()
-
 		if (isLoading) {
 			return (
-				<div>
-					<p>Loading</p>
-				</div>
-			)
-		}
-
-		if (!subCategories) {
-			return (
-				<div>
-					<p>{errorMessage}</p>
-				</div>
+				<SubCategoryShimmer />
 			)
 		}
 
@@ -66,16 +64,6 @@ export default function CategoryProducts() {
 		)
 	}
 
-	const {
-		isLoading,
-		categoryProducts,
-		errorMessage,
-		totalItems,
-		size,
-		setPage,
-		page
-	} = useCategoryProductsApi()
-
 	const Filter = () => {
 		let arr = []
 		for (let index = size; index <= totalItems + size; index = index + size) {
@@ -92,11 +80,11 @@ export default function CategoryProducts() {
 		}
 
 		return (
-			<div className="flex w-full space-x-6 items-center">
+			<div className="flex w-full space-x-6 items-center overflow-x-auto">
 				<p className="">
-					Showing items {(page - 1) * size} - {(((page - 1) * size) + size) > totalItems ? (totalItems) : (((page - 1) * size) + size)} of {totalItems}
+					Showing items {(page - 1) * size + 1} - {(((page - 1) * size) + size) > totalItems ? (totalItems) : (((page - 1) * size) + size)} of {totalItems}
 				</p>
-				<div className="space-x-2">
+				<div className="flex flex-row space-x-2 w-full overflow-x-auto">
 					{arr}
 				</div>
 			</div>
@@ -106,25 +94,7 @@ export default function CategoryProducts() {
 	const CategoryProducts = () => {
 		if (isLoading) {
 			return (
-				<div>
-					<p>Loading</p>
-				</div>
-			)
-		}
-
-		if (!categoryProducts) {
-			return (
-				<div>
-					<p>{errorMessage}</p>
-				</div>
-			)
-		}
-
-		if (categoryProducts.length == 0) {
-			return (
-				<div>
-					<p>No items to show</p>
-				</div>
+				<SubCategoryProductsShimmer />
 			)
 		}
 
@@ -149,6 +119,22 @@ export default function CategoryProducts() {
 
 	if (!router.isReady) {
 		return <></>
+	}
+
+	if (!categoryProducts) {
+		return (
+			<div>
+				<p>{errorMessage}</p>
+			</div>
+		)
+	}
+
+	if (categoryProducts.length == 0) {
+		return (
+			<div>
+				<p>No items to show</p>
+			</div>
+		)
 	}
 
 	return (

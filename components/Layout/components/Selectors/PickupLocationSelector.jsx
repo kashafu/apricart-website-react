@@ -30,8 +30,8 @@ const PickupLocationSelector = () => {
 	}
 
 	return (
-		<div className="flex w-full justify-center">
-			<div className="bg-slate-100 rounded-xl py-2 px-4 lg:bg-inherit lg:rounded-none lg:py-0 lg:px-0">
+		<div className="flex w-full justify-left">
+			<div className="bg-slate-100 rounded-xl p-2 lg:bg-inherit lg:rounded-none lg:py-0 lg:px-0">
 				<button
 					className="flex flex-row space-x-2 items-center"
 					onClick={togglePopup}
@@ -43,23 +43,13 @@ const PickupLocationSelector = () => {
 							layout={"fill"}
 						/>
 					</div>
-					{selectedPickupLocationSelector ? (
-						<p
-							className={
-								"font-bold text-base text-main-grey-800 capitalize line-clamp-1 font-nunito"
-							}
-						>
-							{selectedPickupLocationSelector.name}
-						</p>
-					) : (
-						<p
-							className={
-								"font-bold text-base text-main-grey-800 capitalize font-nunito"
-							}
-						>
-							Select Pickup Location
-						</p>
-					)}
+					<p
+						className={
+							"font-bold text-base truncate max-w-[150px] xl:max-w-xs text-main-grey-800 capitalize font-nunito"
+						}
+					>
+						{selectedPickupLocationSelector ? [selectedPickupLocationSelector.name] : "Select Pickup Location"}
+					</p>
 				</button>
 			</div>
 			{showPopup && (
