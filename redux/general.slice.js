@@ -1,9 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit"
-import { setCookie } from "../helpers/Cookies"
 import { setItemSessionStorage, setItemLocalStorage, removeItemLocalStorage } from "../helpers/Storage"
 import { getGeneralApiParams } from "../helpers/ApiHelpers"
 
-let { selectedAddress, selectedType, city, selectedPickupLocation, redirectSource } = getGeneralApiParams()
+let { selectedAddress, selectedType, city, selectedPickupLocation, redirectSource, isShowSelectionScreen } = getGeneralApiParams()
 
 const generalSlice = createSlice({
 	name: "general",
@@ -15,7 +14,8 @@ const generalSlice = createSlice({
 		city: city,
 		isUserInitialized: false,
 		pickupLocation: selectedPickupLocation,
-		redirectSource: redirectSource
+		redirectSource: redirectSource,
+		isShowSelectionScreen: isShowSelectionScreen
 	},
 	reducers: {
 		updateSelectedAddress: (state, action) => {
@@ -44,6 +44,10 @@ const generalSlice = createSlice({
 		updateRedirectSource: (state, action) => {
 			state.redirectSource = action.payload
 			setItemSessionStorage("redirect-source", action.payload)
+		},
+		updateIsShowSelectionScreen: (state, action) => {
+			state.isShowSelectionScreen = action.payload
+			setItemSessionStorage("is_show_selection_screen", action.payload)
 		}
 	},
 })
@@ -57,5 +61,6 @@ export const {
 	updateCity,
 	updatePickupLocation,
 	updateRedirectSource,
-	removeSelectedAddress
+	removeSelectedAddress,
+	updateIsShowSelectionScreen
 } = generalSlice.actions

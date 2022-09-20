@@ -1112,7 +1112,7 @@ export const useVerifyOtpApi = () => {
 
 	const callApi = async () => {
 		setIsLoading(true)
-		let { userId, headers } = getGeneralApiParams()
+		let { headers } = getGeneralApiParams()
 
 		let url = "/auth/open/otp/verify?"
 		let body = {
@@ -1146,5 +1146,53 @@ export const useVerifyOtpApi = () => {
 		errorMessage,
 		response,
 		errorResponse,
+	}
+}
+
+export const useOptionsApi = () => {
+	const [isLoading, setIsLoading] = useState(true)
+	const [response, setResponse] = useState(null)
+	const [errorResponse, setErrorResponse] = useState(null)
+	const [errorMessage, setErrorMessage] = useState("")
+	const [welcomeVideo, setWelcomeVideo] = useState('')
+
+	useEffect(() => {
+		callApi()
+	}, [])
+
+	const callApi = async () => {
+		setIsLoading(true)
+		let { headers } = getGeneralApiParams()
+
+		let url = "/options/all?"
+
+		try {
+			let apiResponse = await axios.get(fullUrl(url), {
+				headers: headers,
+			})
+
+			setResponse(apiResponse)
+			setErrorMessage('')
+			setErrorResponse(null)
+
+			apiResponse.data.data.forEach(element => {
+				if (element.key === 'welcome_video') {
+					setWelcomeVideo("https://www.youtube.com/embed/" + element.value)
+				}
+			});
+		} catch (error) {
+			setErrorResponse(error?.response)
+			setErrorMessage(error?.response?.data?.message)
+		} finally {
+			setIsLoading(false)
+		}
+	}
+
+	return {
+		isLoading,
+		errorMessage,
+		response,
+		errorResponse,
+		welcomeVideo
 	}
 }

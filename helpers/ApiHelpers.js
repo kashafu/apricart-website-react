@@ -1,9 +1,6 @@
-import Cookies from 'universal-cookie';
 let isNode = require('detect-node')
 import { getCookie, removeCookie } from './Cookies';
 import { getItemSessionStorage, getItemLocalStorage, removeItemLocalStorage } from './Storage';
-
-const cookies = new Cookies();
 
 export const getGeneralCookies = () => {
     let name = getCookie('cookies-name')
@@ -26,6 +23,11 @@ export const getGeneralCookies = () => {
 */
 export const getGeneralApiParams = () => {
     let redirectSource = getItemSessionStorage('redirect-source')
+
+    let isShowSelectionScreen = true
+    if (getItemSessionStorage('is_show_selection_screen')) {
+        isShowSelectionScreen = getItemSessionStorage('is_show_selection_screen') === 'true' ? true : false
+    }
 
     let clientType = 'apricart'
     let prodType = ''
@@ -137,7 +139,8 @@ export const getGeneralApiParams = () => {
         selectedType,
         isUserInitialized,
         selectedPickupLocation,
-        redirectSource
+        redirectSource,
+        isShowSelectionScreen
     })
 }
 

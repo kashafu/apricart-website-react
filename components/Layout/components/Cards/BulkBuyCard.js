@@ -23,13 +23,13 @@ export default function BulkBuyCard() {
 			<p className='font-nunito text-main-blue font-black truncate lg:font-extrabold w-full text-[8px] md:text-base lg:text-sm 2xl:text-lg pl-1 lg:pl-2 leading-none'>
 				Bulk Buy
 			</p>
-			<div className='w-[60%] max-w-[130px]'>
+			{/* <div className='w-[60%] max-w-[130px]'>
 				<Image
 					src={bulkBuyIcon}
 					layout={'responsive'}
 					alt='icon'
 				/>
-			</div>
+			</div> */}
 		</button>
 	)
 }
