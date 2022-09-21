@@ -1177,7 +1177,7 @@ export const useOptionsApi = () => {
 
 			apiResponse.data.data.forEach(element => {
 				if (element.key === 'welcome_video') {
-					setWelcomeVideo("https://www.youtube.com/embed/" + element.value)
+					setWelcomeVideo("https://www.youtube.com/embed/" + element.value + "?autoplay=1&mute=1")
 				}
 			});
 		} catch (error) {
