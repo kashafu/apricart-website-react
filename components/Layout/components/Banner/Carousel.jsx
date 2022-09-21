@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux'
 import karachiMainBanner from '../../../../public/assets/images/banners/mainBanner.png'
 import peshawarMainBanner from '../../../../public/assets/images/banners/peshawarMainBanner.jpeg'
 import karachiScrollingBanner1 from '../../../../public/assets/images/banners/saylaniCarousel.jpg'
+import bulkBuyBanner from '../../../../public/assets/images/banners/bulkBuyCarousel.png'
 import karachiScrollingBanner2 from '../../../../public/assets/images/banners/nationalCarousel.jpg'
 
 const Carousel = () => {
@@ -31,7 +32,7 @@ const Carousel = () => {
                         <Slider {...settings}>
                             <div className="w-full h-full">
                                 <Image
-                                    src={karachiMainBanner}
+                                    src={bulkBuyBanner}
                                     layout={"responsive"}
                                     alt="banner"
                                 />
@@ -40,7 +41,7 @@ const Carousel = () => {
                     ) : (
                         <Slider {...settings}>
                             <div className='w-full h-full'>
-                                <Link href={'/offers/48'} passHref>
+                                <Link href={'/offers/45'} passHref>
                                     <a className="w-full h-full">
                                         <Image
                                             src={karachiScrollingBanner1}
@@ -50,7 +51,7 @@ const Carousel = () => {
                                     </a>
                                 </Link>
                             </div>
-                            <div className='w-full h-full'>
+                            {/* <div className='w-full h-full'>
                                 <Link href={'/category/just-rs.75/1242'} passHref>
                                     <a className="w-full">
                                         <Image
@@ -60,7 +61,7 @@ const Carousel = () => {
                                         />
                                     </a>
                                 </Link>
-                            </div>
+                            </div> */}
                             {/* <div className="w-full h-full">
                                 <Image
                                     src={karachiMainBanner}
@@ -77,7 +78,7 @@ const Carousel = () => {
                 <Slider {...settings}>
                     <div className="w-full h-full">
                         <Image
-                            src={peshawarMainBanner}
+                            src={bulkBuyBanner}
                             layout={"responsive"}
                             alt="banner"
                         />
