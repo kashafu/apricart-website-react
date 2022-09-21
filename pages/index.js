@@ -17,6 +17,7 @@ import homeDeliveryIcon from "../public/assets/svgs/homeDeliveryIcon.svg"
 import clickAndCollectIcon from "../public/assets/svgs/clickAndCollectIcon.svg"
 import bulkBuyIcon from "../public/assets/svgs/bulkBuyIcon.svg"
 import karachiStaticBanner1 from "../public/assets/images/banners/99AndBelow.jpg"
+import bulkBuyStaticBanner from "../public/assets/images/banners/bulkBuyMainBanner.png"
 import crossIcon from "../public/assets/svgs/crossIcon.svg"
 import { clearCookies } from "../helpers/Cookies"
 import { clearLocalStorage, clearSessionStorage } from "../helpers/Storage"
@@ -25,6 +26,7 @@ import MainProductsShimmer from "../components/Layout/components/Loaders/Shimmer
 export default function Home() {
 	const router = useRouter()
 	const dispatch = useDispatch()
+	const selectedTypeSelector = useSelector(state => state.general.selectedType)
 	const isShowSelectionScreen = useSelector(state => state.general.isShowSelectionScreen)
 	const { isLoading, isPopupAd, homeData, errorMessage } = useHomeApi()
 	const [showPopupAd, setShowPopupAd] = useState(isPopupAd)
@@ -45,22 +47,22 @@ export default function Home() {
 			<>
 				{isShowSelectionScreen && (
 					<div className="animate-fade-in fixed inset-0 h-full w-full backdrop-blur-sm z-50">
-						<div className="fixed w-11/12 lg:w-fit h-fit flex flex-col space-y-4 bg-white border-2 shadow-2xl inset-0 m-auto z-50 rounded-lg p-2">
+						<div className="fixed w-11/12 md:w-1/2 lg:w-[40%] 2xl:w-1/3 h-fit flex flex-col space-y-4 bg-white border-2 shadow-2xl inset-0 m-auto z-50 rounded-lg p-2">
 							<p className="font-nunito text-lg text-left font-bold text-black">
 								Step 1: Select Order Type
 							</p>
 							<div className="grid grid-cols-5 grid-rows-1 gap-2">
-								<button className="col-span-3 flex flex-col w-full items-center justify-between bg-main-yellow aspect-square rounded-2xl p-2 shadow-2xl"
+								<button className="col-span-3 flex flex-col w-full items-center justify-between bg-main-yellow h-full rounded-2xl p-2 shadow-2xl"
 									onClick={() => {
 										dispatch(updateIsShowSelectionScreen(false))
 										dispatch(updateSelectedType('home'))
 									}}
 								>
 									<div>
-										<p className="font-nunito text-main-blue font-bold text-xl text-right">
+										<p className="font-nunito text-main-blue font-bold text-xl lg:text-2xl 2xl:text-3xl text-right">
 											Home Delivery
 										</p>
-										<p className="font-inter text-black font-bold text-xs text-right">
+										<p className="font-inter text-black font-bold text-xs lg:text-sm 2xl:text-lg text-right">
 											آسانی سے گھر بیٹھےآرڈر ڈلیور کروائیں
 										</p>
 									</div>
@@ -80,10 +82,10 @@ export default function Home() {
 										}}
 									>
 										<div>
-											<p className="font-nunito text-main-blue font-bold text-xs">
+											<p className="font-nunito text-main-blue font-bold text-xs lg:text-base 2xl:text-xl">
 												Click & Collect Mart
 											</p>
-											<p className="font-inter text-black font-bold text-xs">
+											<p className="font-inter text-black font-bold text-xs lg:text-sm">
 												گھر سے  آرڈر کریں اور قریبی اسٹور سے  پک کریں
 											</p>
 										</div>
@@ -102,10 +104,10 @@ export default function Home() {
 										}}
 									>
 										<div>
-											<p className="font-nunito text-main-blue font-bold text-xs text-right">
+											<p className="font-nunito text-main-blue font-bold text-xs lg:text-lg 2xl:text-3xl text-right">
 												Bulk Buy
 											</p>
-											<p className="font-inter text-black font-bold text-xs">
+											<p className="font-inter text-black font-bold text-xs lg:text-sm">
 												بڑی خریداری بڑی بچت
 											</p>
 										</div>
@@ -265,19 +267,35 @@ export default function Home() {
 						</div>
 					</div>
 					<div className="hidden lg:inline-block lg:w-[35%]">
-						<Link
-							href={"/category/under-rs.99/1242"}
-							passHref
-							className="w-full"
-						>
-							<a className="w-full">
-								<Image
-									src={karachiStaticBanner1}
-									layout={"responsive"}
-									alt="banner"
-								/>
-							</a>
-						</Link>
+						{selectedTypeSelector === 'bulk' ? (
+							<Link
+								href={"/"}
+								passHref
+								className="w-full"
+							>
+								<a className="w-full">
+									<Image
+										src={bulkBuyStaticBanner}
+										layout={"responsive"}
+										alt="banner"
+									/>
+								</a>
+							</Link>
+						) : (
+							<Link
+								href={"/category/under-rs.99/1242"}
+								passHref
+								className="w-full"
+							>
+								<a className="w-full">
+									<Image
+										src={karachiStaticBanner1}
+										layout={"responsive"}
+										alt="banner"
+									/>
+								</a>
+							</Link>
+						)}
 					</div>
 				</div>
 				<Products />
