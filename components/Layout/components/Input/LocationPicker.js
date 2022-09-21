@@ -31,7 +31,7 @@ export default function LocationPicker({ onChangeLatitude, onChangeLongitude }) 
 
     return (
         <LoadScript
-            googleMapsApiKey={process.env.NEXT_PUBLIC_GOOGLE_API_KEY}
+            googleMapsApiKey={process.env.NEXT_PUBLIC_API_KEY}
             libraries={libraries}
         >
             <GoogleMap
