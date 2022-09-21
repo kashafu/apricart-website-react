@@ -42,7 +42,7 @@ const Carousel = () => {
                     ) : (
                         <Slider {...settings}>
                             <div className='w-full h-full'>
-                                <Link href={'/offers/48'} passHref>
+                                <Link href={'/offers/45'} passHref>
                                     <a className="w-full h-full">
                                         <Image
                                             src={karachiScrollingBanner1}
