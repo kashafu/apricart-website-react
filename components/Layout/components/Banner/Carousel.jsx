@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux'
 import karachiMainBanner from '../../../../public/assets/images/banners/mainBanner.png'
 import peshawarMainBanner from '../../../../public/assets/images/banners/peshawarMainBanner.jpeg'
 import karachiScrollingBanner1 from '../../../../public/assets/images/banners/saylaniCarousel.jpg'
+import bulkBuyBanner from '../../../../public/assets/images/banners/bulkBuyCarousel.png'
 import karachiScrollingBanner2 from '../../../../public/assets/images/banners/nationalCarousel.jpg'
 
 const Carousel = () => {
@@ -31,7 +32,7 @@ const Carousel = () => {
                         <Slider {...settings}>
                             <div className="w-full h-full">
                                 <Image
-                                    src={karachiScrollingBanner1}
+                                    src={bulkBuyBanner}
                                     layout={"responsive"}
                                     alt="banner"
                                 />
@@ -77,7 +78,7 @@ const Carousel = () => {
                 <Slider {...settings}>
                     <div className="w-full h-full">
                         <Image
-                            src={karachiScrollingBanner1}
+                            src={bulkBuyBanner}
                             layout={"responsive"}
                             alt="banner"
                         />

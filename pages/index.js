@@ -17,6 +17,7 @@ import homeDeliveryIcon from "../public/assets/svgs/homeDeliveryIcon.svg"
 import clickAndCollectIcon from "../public/assets/svgs/clickAndCollectIcon.svg"
 import bulkBuyIcon from "../public/assets/svgs/bulkBuyIcon.svg"
 import karachiStaticBanner1 from "../public/assets/images/banners/99AndBelow.jpg"
+import bulkBuyStaticBanner from "../public/assets/images/banners/bulkBuyMainBanner.png"
 import crossIcon from "../public/assets/svgs/crossIcon.svg"
 import { clearCookies } from "../helpers/Cookies"
 import { clearLocalStorage, clearSessionStorage } from "../helpers/Storage"
@@ -25,6 +26,7 @@ import MainProductsShimmer from "../components/Layout/components/Loaders/Shimmer
 export default function Home() {
 	const router = useRouter()
 	const dispatch = useDispatch()
+	const selectedTypeSelector = useSelector(state => state.general.selectedType)
 	const isShowSelectionScreen = useSelector(state => state.general.isShowSelectionScreen)
 	const { isLoading, isPopupAd, homeData, errorMessage } = useHomeApi()
 	const [showPopupAd, setShowPopupAd] = useState(isPopupAd)
@@ -305,19 +307,35 @@ export default function Home() {
 						</div>
 					</div>
 					<div className="hidden lg:inline-block lg:w-[35%]">
-						<Link
-							href={"/category/under-rs.99/1242"}
-							passHref
-							className="w-full"
-						>
-							<a className="w-full">
-								<Image
-									src={karachiStaticBanner1}
-									layout={"responsive"}
-									alt="banner"
-								/>
-							</a>
-						</Link>
+						{selectedTypeSelector === 'bulk' ? (
+							<Link
+								href={"/"}
+								passHref
+								className="w-full"
+							>
+								<a className="w-full">
+									<Image
+										src={bulkBuyStaticBanner}
+										layout={"responsive"}
+										alt="banner"
+									/>
+								</a>
+							</Link>
+						) : (
+							<Link
+								href={"/category/under-rs.99/1242"}
+								passHref
+								className="w-full"
+							>
+								<a className="w-full">
+									<Image
+										src={karachiStaticBanner1}
+										layout={"responsive"}
+										alt="banner"
+									/>
+								</a>
+							</Link>
+						)}
 					</div>
 				</div>
 				<Products />
