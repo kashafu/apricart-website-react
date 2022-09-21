@@ -353,14 +353,14 @@ export default function Checkout() {
 							PAYMENT SELECTION
 						</p>
 						<div className="flex flex-col items-center w-full">
-							<div className="space-y-2 flex flex-col items-center w-1/3">
+							<div className="space-y-2 flex flex-col items-center">
 								<InputLabelText text={"Payment Method"} />
 								<div className="flex flex-col space-y-2">
 									{paymentMethods.map((method) => {
 										let { id, name, key } = method
-										if (key === "jswallet") {
+										{/* if (key === "jswallet") {
 											return <div key={id}></div>
-										}
+										} */}
 										return (
 											<div key={id} className='flex items-center space-x-2'>
 												<input
