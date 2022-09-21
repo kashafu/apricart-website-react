@@ -50,7 +50,7 @@ const Carousel = () => {
                                     </a>
                                 </Link>
                             </div>
-                            <div className='w-full h-full'>
+                            {/* <div className='w-full h-full'>
                                 <Link href={'/category/just-rs.75/1242'} passHref>
                                     <a className="w-full">
                                         <Image
@@ -60,7 +60,7 @@ const Carousel = () => {
                                         />
                                     </a>
                                 </Link>
-                            </div>
+                            </div> */}
                             {/* <div className="w-full h-full">
                                 <Image
                                     src={karachiMainBanner}
