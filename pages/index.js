@@ -17,6 +17,7 @@ import homeDeliveryIcon from "../public/assets/svgs/homeDeliveryIcon.svg"
 import clickAndCollectIcon from "../public/assets/svgs/clickAndCollectIcon.svg"
 import bulkBuyIcon from "../public/assets/svgs/bulkBuyIcon.svg"
 import karachiStaticBanner1 from "../public/assets/images/banners/99AndBelow.jpg"
+import karachiCncStaticBanner1 from "../public/assets/images/banners/cncBlessedFridayStatic.png"
 import bulkBuyStaticBanner from "../public/assets/images/banners/bulkBuyMainBanner.png"
 import crossIcon from "../public/assets/svgs/crossIcon.svg"
 import { clearCookies } from "../helpers/Cookies"
@@ -267,7 +268,7 @@ export default function Home() {
 						</div>
 					</div>
 					<div className="hidden lg:inline-block lg:w-[35%]">
-						{selectedTypeSelector === 'bulk' ? (
+						{selectedTypeSelector === 'bulk' && (
 							<Link
 								href={"/"}
 								passHref
@@ -281,7 +282,23 @@ export default function Home() {
 									/>
 								</a>
 							</Link>
-						) : (
+						)}
+						{selectedTypeSelector === 'cnc' && (
+							<Link
+								href={"/"}
+								passHref
+								className="w-full"
+							>
+								<a className="w-full">
+									<Image
+										src={karachiCncStaticBanner1}
+										layout={"responsive"}
+										alt="banner"
+									/>
+								</a>
+							</Link>
+						)}
+						{selectedTypeSelector === 'home' && (
 							<Link
 								href={"/category/under-rs.99/1242"}
 								passHref

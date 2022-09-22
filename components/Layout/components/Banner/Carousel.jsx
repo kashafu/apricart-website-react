@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux'
 import karachiMainBanner from '../../../../public/assets/images/banners/mainBanner.png'
 import karachiBulkBanner from '../../../../public/assets/images/banners/peshawarMainBanner.jpeg'
 import peshawarMainBanner from '../../../../public/assets/images/banners/peshawarMainBanner.jpeg'
+import karachiCncBanner from '../../../../public/assets/images/banners/cncBlessedFridayCarousel.png'
 import karachiScrollingBanner1 from '../../../../public/assets/images/banners/saylaniCarousel.jpg'
 import bulkBuyBanner from '../../../../public/assets/images/banners/bulkBuyCarousel.png'
 import karachiScrollingBanner2 from '../../../../public/assets/images/banners/nationalCarousel.jpg'
@@ -29,7 +30,7 @@ const Carousel = () => {
         <div className='h-full w-full overflow-hidden'>
             {citySelector === 'karachi' && (
                 <div>
-                    {selectedTypeSelector === 'bulk' ? (
+                    {selectedTypeSelector === 'bulk' && (
                         <Slider {...settings}>
                             <div className="w-full h-full">
                                 <Image
@@ -39,7 +40,8 @@ const Carousel = () => {
                                 />
                             </div>
                         </Slider>
-                    ) : (
+                    )}
+                    {selectedTypeSelector === 'home' && (
                         <Slider {...settings}>
                             <div className='w-full h-full'>
                                 <Link href={'/offers/45'} passHref>
@@ -70,6 +72,17 @@ const Carousel = () => {
                                     alt="banner"
                                 />
                             </div> */}
+                        </Slider>
+                    )}
+                    {selectedTypeSelector === 'cnc' && (
+                        <Slider {...settings}>
+                            <div className="w-full h-full">
+                                <Image
+                                    src={karachiCncBanner}
+                                    layout={"responsive"}
+                                    alt="banner"
+                                />
+                            </div>
                         </Slider>
                     )}
 
