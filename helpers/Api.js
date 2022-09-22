@@ -12,7 +12,7 @@ import {
 	removeFromCart,
 	updateQuantity,
 } from "../redux/cart.slice"
-import { updateTicker } from "../redux/general.slice"
+import { updateIsUserInitialized, updateTicker } from "../redux/general.slice"
 import { setCookie } from "./Cookies"
 import { updateCategories } from "../redux/data.slice"
 
@@ -38,8 +38,7 @@ const fullUrl = (url) => {
 }
 
 const initializeUserApi = async () => {
-	let { isUserInitialized, latitude, longitude, headers } =
-		getGeneralApiParams()
+	let { isUserInitialized, latitude, longitude, headers } = getGeneralApiParams()
 
 	if (!isUserInitialized) {
 		let url =
@@ -53,15 +52,17 @@ const initializeUserApi = async () => {
 			await axios.get(fullUrl(url), {
 				headers: headers,
 			})
-			setCookie("user-initialized", true)
+			return (true)
 		} catch (error) {
 			console.log(error?.response)
+			return (false)
 		}
 	}
 }
 
 export const useCategoriesApi = () => {
 	const router = useRouter()
+	const dispatch = useDispatch()
 	const selectedTypeSelector = useSelector(
 		(state) => state.general.selectedType
 	)
@@ -79,7 +80,9 @@ export const useCategoriesApi = () => {
 	const callApi = async () => {
 		setIsLoading(true)
 		if (router.pathname !== '/') {
-			await initializeUserApi()
+			if (await initializeUserApi()) {
+				dispatch(updateIsUserInitialized(true))
+			}
 		}
 		let { headers } = getGeneralApiParams()
 		let url = "/catalog/categories?level=all"
@@ -103,6 +106,7 @@ export const useCategoriesApi = () => {
 
 export const useCategoryProductsApi = () => {
 	const router = useRouter()
+	const dispatch = useDispatch()
 	const { categoryId, categoryName } = router.query
 
 	const [isLoading, setIsLoading] = useState(true)
@@ -124,7 +128,9 @@ export const useCategoryProductsApi = () => {
 	const callApi = async () => {
 		setIsLoading(true)
 		if (router.pathname !== '/') {
-			await initializeUserApi()
+			if (await initializeUserApi()) {
+				dispatch(updateIsUserInitialized(true))
+			}
 		}
 		let { headers } = getGeneralApiParams()
 		let url =
@@ -204,6 +210,8 @@ export const useHomeApi = () => {
 			let apiResponse = await axios.get(fullUrl(url), {
 				headers: headers,
 			})
+
+			dispatch(updateIsUserInitialized(true))
 			setResponse(apiResponse)
 			setHomeData(apiResponse.data.data)
 			setCategories(apiResponse.data.data.categories)
@@ -235,6 +243,7 @@ export const useHomeApi = () => {
 
 export const usePickupLocationsApi = () => {
 	const router = useRouter()
+	const dispatch = useDispatch()
 	const citySelector = useSelector((state) => state.general.city)
 	const [isLoading, setIsLoading] = useState(true)
 	const [pickupLocations, setPickupLocations] = useState(null)
@@ -250,7 +259,9 @@ export const usePickupLocationsApi = () => {
 	const callApi = async () => {
 		setIsLoading(true)
 		if (router.pathname !== '/') {
-			await initializeUserApi()
+			if (await initializeUserApi()) {
+				dispatch(updateIsUserInitialized(true))
+			}
 		}
 		let { headers } = getGeneralApiParams()
 
@@ -283,6 +294,7 @@ export const usePickupLocationsApi = () => {
 
 export const useProductDetailsApi = () => {
 	const router = useRouter()
+	const dispatch = useDispatch()
 	const { productId, productName } = router.query
 
 	const [isLoading, setIsLoading] = useState(true)
@@ -300,7 +312,9 @@ export const useProductDetailsApi = () => {
 	const callApi = async () => {
 		setIsLoading(true)
 		if (router.pathname !== '/') {
-			await initializeUserApi()
+			if (await initializeUserApi()) {
+				dispatch(updateIsUserInitialized(true))
+			}
 		}
 		let { headers } = getGeneralApiParams()
 
@@ -739,6 +753,7 @@ export const useInitialCartDataApi = () => {
 
 export const useSearchResultsApi = () => {
 	const router = useRouter()
+	const dispatch = useDispatch()
 	const { term } = router.query
 	let page = 1
 
@@ -757,7 +772,9 @@ export const useSearchResultsApi = () => {
 	const callApi = async () => {
 		setIsLoading(true)
 		if (router.pathname !== '/') {
-			await initializeUserApi()
+			if (await initializeUserApi()) {
+				dispatch(updateIsUserInitialized(true))
+			}
 		}
 		let { headers } = getGeneralApiParams()
 		let url =
@@ -838,6 +855,7 @@ export const useSearchBarResultsApi = () => {
 
 export const useRecommendedProductsApi = (type) => {
 	const router = useRouter()
+	const dispatch = useDispatch()
 	const [isLoading, setIsLoading] = useState(true)
 	const [recommendedProducts, setRecommendedProducts] = useState(null)
 	const [response, setResponse] = useState(null)
@@ -851,7 +869,9 @@ export const useRecommendedProductsApi = (type) => {
 	const callApi = async () => {
 		setIsLoading(true)
 		if (router.pathname !== '/') {
-			await initializeUserApi()
+			if (await initializeUserApi()) {
+				dispatch(updateIsUserInitialized(true))
+			}
 		}
 		let { headers } = getGeneralApiParams()
 
@@ -888,6 +908,7 @@ export const useRecommendedProductsApi = (type) => {
 
 export const useMostViewedProductsApi = () => {
 	const router = useRouter()
+	const dispatch = useDispatch()
 	const [isLoading, setIsLoading] = useState(true)
 	const [mostViewedProducts, setMostViewedProducts] = useState(null)
 	const [response, setResponse] = useState(null)
@@ -901,7 +922,9 @@ export const useMostViewedProductsApi = () => {
 	const callApi = async () => {
 		setIsLoading(true)
 		if (router.pathname !== '/') {
-			await initializeUserApi()
+			if (await initializeUserApi()) {
+				dispatch(updateIsUserInitialized(true))
+			}
 		}
 		let { headers } = getGeneralApiParams()
 
@@ -1267,6 +1290,7 @@ export const useOptionsApi = () => {
 
 export const useWishlistProductsApi = () => {
 	const router = useRouter()
+	const dispatch = useDispatch()
 	const [isLoading, setIsLoading] = useState(true)
 	const [wishlistProducts, setWishlistProducts] = useState(null)
 	const [response, setResponse] = useState(null)
@@ -1280,7 +1304,9 @@ export const useWishlistProductsApi = () => {
 	const callApi = async () => {
 		setIsLoading(true)
 		if (router.pathname !== '/') {
-			await initializeUserApi()
+			if (await initializeUserApi()) {
+				dispatch(updateIsUserInitialized(true))
+			}
 		}
 		let { headers, token } = getGeneralApiParams()
 
