@@ -1,23 +1,21 @@
 import { useEffect, useState } from "react"
 import Image from "next/image"
-import { useRouter } from "next/router"
+import { toast } from "react-toastify"
+import { useSelector } from "react-redux"
+
 import Categories from "../../../../../components/Layout/components/Categories/Categories"
 import RelatedProduct from "../../../../../components/Layout/components/RelatedProduct/RelatedProduct"
-import { toast } from "react-toastify"
 import HeadTag from "../../../../../components/Layout/components/Head/HeadTag"
 import minusIcon from "../../../../../public/assets/svgs/minusIcon.svg"
 import plusIcon from "../../../../../public/assets/svgs/plusIcon.svg"
 import { useAddToCartApi, useProductDetailsApi } from "../../../../../helpers/Api"
-import { useSelector } from "react-redux"
 
 /*
 	Gets the product details from the useProductDetailsApi that picks up the url query params
 */
 
 export default function ProductDetail() {
-	const router = useRouter()
 	const reduxCart = useSelector((state) => state.cart)
-	const { productId, productName } = router.query
 
 	const { isLoading, productData, errorMessage } = useProductDetailsApi()
 	const [qty, setQty] = useState(1)

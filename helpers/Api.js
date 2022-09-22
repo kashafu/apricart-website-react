@@ -827,7 +827,7 @@ export const useSearchBarResultsApi = () => {
 	}
 }
 
-export const useRecommendedProductsApi = () => {
+export const useRecommendedProductsApi = (type) => {
 	const [isLoading, setIsLoading] = useState(true)
 	const [recommendedProducts, setRecommendedProducts] = useState(null)
 	const [response, setResponse] = useState(null)
@@ -843,7 +843,13 @@ export const useRecommendedProductsApi = () => {
 		await initializeUserApi()
 		let { headers } = getGeneralApiParams()
 
-		let url = "/catalog/recommended?page=1&size=20"
+		let url = ""
+		if (type === 'related') {
+			url = "/catalog/recommended?page=1&size=6"
+		}
+		else {
+			url = "/catalog/recommended?page=1&size=20"
+		}
 
 		try {
 			let apiResponse = await axios.get(fullUrl(url), {
