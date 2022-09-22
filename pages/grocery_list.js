@@ -1,16 +1,19 @@
 import { useState } from "react"
 import axios from "axios"
+import { toast } from "react-toastify"
+import { useRouter } from "next/router"
+
 import { getGeneralApiParams } from "../helpers/ApiHelpers"
 import HeadTag from "../components/Layout/components/Head/HeadTag"
 import SelectAddress from "../components/Layout/components/Address/SelectAddress"
 import PageHeading from "../components/Layout/components/Typography/PageHeading"
-import Paragraph from "../components/Layout/components/Typography/Paragraph"
 import { base_url_api } from "../information.json"
-import { toast } from "react-toastify"
 import TextArea from "../components/Layout/components/Input/TextArea"
 import SubmitButton from "../components/Layout/components/Buttons/SubmitButton"
+import SuccessText from '../components/Layout/components/Typography/SuccessText'
 
 export default function GroceryList() {
+	const router = useRouter()
 	let { selectedAddress } = getGeneralApiParams()
 
 	const [address, setAddress] = useState(
@@ -18,6 +21,7 @@ export default function GroceryList() {
 	)
 	const [list, setList] = useState("")
 	const [isDisabled, setIsDisabled] = useState(false)
+	const [successText, setSuccessText] = useState('')
 
 	const placeOrderApi = async () => {
 		let { userId, headers, city } = getGeneralApiParams()
@@ -49,6 +53,7 @@ export default function GroceryList() {
 			let response = await axios.post(url, formData, { headers: headers })
 
 			toast.success(response.data?.message)
+			setSuccessText(response.data?.message)
 		} catch (error) {
 			toast.error(error.response?.data?.message)
 			setIsDisabled(false)
@@ -61,18 +66,6 @@ export default function GroceryList() {
 			<div className="flex w-full justify-center">
 				<section className="flex flex-col p-2 space-y-4 lg:w-2/3 items-center align-center bg-slate-100 shadow rounded-3xl">
 					<PageHeading text={"Type Your Grocery List"} />
-					{/* <div>
-						<Paragraph
-							text={
-								"Disclaimer: Delivery only in Karachi and Peshawar"
-							}
-						/>
-						<Paragraph
-							text={
-								"For online payments, a payment link is shared with you once your order has been Purchased."
-							}
-						/>
-					</div> */}
 					<SelectAddress
 						setAddress={setAddress}
 						type={"checkout"}
@@ -90,6 +83,19 @@ export default function GroceryList() {
 						onClick={placeOrderApi}
 						disabled={isDisabled}
 					/>
+					{successText !== '' && (
+						<>
+							<SuccessText
+								text={successText}
+							/>
+							<SubmitButton
+								text={"Continue Shopping"}
+								onClick={() => {
+									router.push('/')
+								}}
+							/>
+						</>
+					)}
 				</section>
 			</div>
 		</div>
