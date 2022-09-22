@@ -61,6 +61,7 @@ const initializeUserApi = async () => {
 }
 
 export const useCategoriesApi = () => {
+	const router = useRouter()
 	const selectedTypeSelector = useSelector(
 		(state) => state.general.selectedType
 	)
@@ -77,7 +78,9 @@ export const useCategoriesApi = () => {
 
 	const callApi = async () => {
 		setIsLoading(true)
-		await initializeUserApi()
+		if (router.pathname !== '/') {
+			await initializeUserApi()
+		}
 		let { headers } = getGeneralApiParams()
 		let url = "/catalog/categories?level=all"
 
@@ -120,7 +123,9 @@ export const useCategoryProductsApi = () => {
 
 	const callApi = async () => {
 		setIsLoading(true)
-		await initializeUserApi()
+		if (router.pathname !== '/') {
+			await initializeUserApi()
+		}
 		let { headers } = getGeneralApiParams()
 		let url =
 			"/catalog/categories/products?category=" +
@@ -229,6 +234,7 @@ export const useHomeApi = () => {
 }
 
 export const usePickupLocationsApi = () => {
+	const router = useRouter()
 	const citySelector = useSelector((state) => state.general.city)
 	const [isLoading, setIsLoading] = useState(true)
 	const [pickupLocations, setPickupLocations] = useState(null)
@@ -243,7 +249,9 @@ export const usePickupLocationsApi = () => {
 
 	const callApi = async () => {
 		setIsLoading(true)
-		await initializeUserApi()
+		if (router.pathname !== '/') {
+			await initializeUserApi()
+		}
 		let { headers } = getGeneralApiParams()
 
 		let url = "/order/address/pickup?"
@@ -291,7 +299,9 @@ export const useProductDetailsApi = () => {
 
 	const callApi = async () => {
 		setIsLoading(true)
-		await initializeUserApi()
+		if (router.pathname !== '/') {
+			await initializeUserApi()
+		}
 		let { headers } = getGeneralApiParams()
 
 		let url = "/catalog/products/detail?id=" + productId
@@ -587,7 +597,6 @@ export const useInitialCartDataApi = () => {
 	const callApi = async () => {
 		setIsLoading(true)
 		setResponse(null)
-		await initializeUserApi()
 
 		let { headers, clientType, prodType, orderType, selectedPickupLocation, selectedAddress, latitude, longitude } = getGeneralApiParams()
 
@@ -651,7 +660,6 @@ export const useInitialCartDataApi = () => {
 		toast.info("Processing order")
 		setIsLoading(true)
 		setCheckoutResponse(null)
-		await initializeUserApi()
 
 		let { headers, clientType, prodType, orderType, selectedPickupLocation, selectedAddress, latitude, longitude } = getGeneralApiParams()
 
@@ -748,7 +756,9 @@ export const useSearchResultsApi = () => {
 
 	const callApi = async () => {
 		setIsLoading(true)
-		await initializeUserApi()
+		if (router.pathname !== '/') {
+			await initializeUserApi()
+		}
 		let { headers } = getGeneralApiParams()
 		let url =
 			"/catalog/products/search?page=" +
@@ -794,7 +804,6 @@ export const useSearchBarResultsApi = () => {
 
 	const callApi = async () => {
 		setIsLoading(true)
-		await initializeUserApi()
 		let { headers } = getGeneralApiParams()
 		let url =
 			"/catalog/products/search?page=1&size=25&term=" +
@@ -828,6 +837,7 @@ export const useSearchBarResultsApi = () => {
 }
 
 export const useRecommendedProductsApi = (type) => {
+	const router = useRouter()
 	const [isLoading, setIsLoading] = useState(true)
 	const [recommendedProducts, setRecommendedProducts] = useState(null)
 	const [response, setResponse] = useState(null)
@@ -840,7 +850,9 @@ export const useRecommendedProductsApi = (type) => {
 
 	const callApi = async () => {
 		setIsLoading(true)
-		await initializeUserApi()
+		if (router.pathname !== '/') {
+			await initializeUserApi()
+		}
 		let { headers } = getGeneralApiParams()
 
 		let url = ""
@@ -875,6 +887,7 @@ export const useRecommendedProductsApi = (type) => {
 }
 
 export const useMostViewedProductsApi = () => {
+	const router = useRouter()
 	const [isLoading, setIsLoading] = useState(true)
 	const [mostViewedProducts, setMostViewedProducts] = useState(null)
 	const [response, setResponse] = useState(null)
@@ -887,7 +900,9 @@ export const useMostViewedProductsApi = () => {
 
 	const callApi = async () => {
 		setIsLoading(true)
-		await initializeUserApi()
+		if (router.pathname !== '/') {
+			await initializeUserApi()
+		}
 		let { headers } = getGeneralApiParams()
 
 		let url = "/catalog/mostviewed?page=1&size=20"
@@ -1251,6 +1266,7 @@ export const useOptionsApi = () => {
 }
 
 export const useWishlistProductsApi = () => {
+	const router = useRouter()
 	const [isLoading, setIsLoading] = useState(true)
 	const [wishlistProducts, setWishlistProducts] = useState(null)
 	const [response, setResponse] = useState(null)
@@ -1263,7 +1279,9 @@ export const useWishlistProductsApi = () => {
 
 	const callApi = async () => {
 		setIsLoading(true)
-		await initializeUserApi()
+		if (router.pathname !== '/') {
+			await initializeUserApi()
+		}
 		let { headers, token } = getGeneralApiParams()
 
 		let url = ''
