@@ -1196,3 +1196,110 @@ export const useOptionsApi = () => {
 		welcomeVideo
 	}
 }
+
+export const useWishlistProductsApi = () => {
+	const [isLoading, setIsLoading] = useState(true)
+	const [wishlistProducts, setWishlistProducts] = useState(null)
+	const [response, setResponse] = useState(null)
+	const [errorResponse, setErrorResponse] = useState(null)
+	const [errorMessage, setErrorMessage] = useState("")
+
+	useEffect(() => {
+		callApi()
+	}, [])
+
+	const callApi = async () => {
+		setIsLoading(true)
+		await initializeUserApi()
+		let { headers, token } = getGeneralApiParams()
+
+		let url = ''
+
+		if (token) {
+			url = "/watchlist/all?"
+		}
+		else {
+			url = "/guest/watchlist/all?"
+		}
+
+		try {
+			let apiResponse = await axios.get(fullUrl(url), {
+				headers: headers,
+			})
+			setResponse(apiResponse)
+			setWishlistProducts(apiResponse.data.data)
+		} catch (error) {
+			setErrorResponse(error?.response)
+			setErrorMessage(error?.response?.data?.message)
+		} finally {
+			setIsLoading(false)
+		}
+	}
+
+	return {
+		isLoading,
+		wishlistProducts,
+		errorMessage,
+		response,
+		errorResponse,
+	}
+}
+
+export const useRemoveFromWishlist = () => {
+	const [isLoading, setIsLoading] = useState(false)
+	const [response, setResponse] = useState(null)
+	const [errorResponse, setErrorResponse] = useState(null)
+	const [errorMessage, setErrorMessage] = useState("")
+	const [isRemove, setIsRemove] = useState(false)
+	const [data, setData] = useState({
+		"sku": []
+	})
+
+	useEffect(() => {
+		if (isRemove) {
+			callApi()
+		}
+	}, [isRemove])
+
+	const callApi = async () => {
+		setIsLoading(true)
+		let { headers, token } = getGeneralApiParams()
+
+		let url = ""
+
+		if (token) {
+			url = "/watchlist/delete?"
+		}
+		else {
+			url = "/guest/watchlist/delete?"
+		}
+
+		try {
+			let apiResponse = await axios.delete(fullUrl(url), {
+				headers: headers,
+				data: JSON.stringify(data)
+			})
+
+			setResponse(apiResponse)
+			toast.success(apiResponse.data?.message)
+			setErrorMessage('')
+			setErrorResponse(null)
+		} catch (error) {
+			setErrorResponse(error?.response)
+			setErrorMessage(error?.response?.data?.message)
+			toast.error(error?.response?.data?.message)
+		} finally {
+			setIsLoading(false)
+			setIsRemove(false)
+		}
+	}
+
+	return {
+		isLoading,
+		setData,
+		setIsRemove,
+		errorMessage,
+		response,
+		errorResponse,
+	}
+}

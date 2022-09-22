@@ -69,7 +69,7 @@ export default function Header() {
 							</>
 						)}
 					</div>
-					<Link href={"/wishlist"} passHref>
+					<Link href={"/shopping-list"} passHref>
 						<a className="flex items-center relative w-[30px] h-[30px]">
 							<Image
 								src={heartIcon}
