@@ -479,9 +479,7 @@ export default function Checkout() {
 					<div className="lg:col-span-2 h-full">
 						<div className="p-2 lg:hidden"></div>
 						<CheckoutCart
-							initialCartProducts={initialCartProducts}
 							initialCartData={initialCartData}
-							isLoading={isLoading}
 							fetchCart={setIsFetchCart}
 						/>
 					</div>
