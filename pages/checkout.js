@@ -14,7 +14,7 @@ import HeadTag from "../components/Layout/components/Head/HeadTag"
 import { useInitialCartDataApi, usePickupLocationsApi } from "../helpers/Api"
 import CheckoutCart from "../components/Layout/components/Cart/CheckoutCart"
 import PickupLocationSelector from "../components/Layout/components/Selectors/PickupLocationSelector"
-import Popup from "../components/Layout/components/Popup/Popup"
+import JsPopup from "../components/Layout/components/Popup/JsPopup"
 
 export default function Checkout() {
 	const dispatch = useDispatch()
@@ -431,36 +431,6 @@ export default function Checkout() {
 					</>
 				)}
 			</section>
-		)
-	}
-
-	const JsPopup = () => {
-		return (
-			<div className="animate-dropdown fixed inset-0 h-full w-full backdrop-blur-sm z-50">
-				<div className="fixed w-3/4 lg:w-1/3 h-1/3 bg-white border-2 shadow-2xl inset-0 m-auto z-50 rounded-lg p-2">
-					<div className="flex flex-col justify-between h-full w-full">
-						<p className="font-nunito text-black text-xl text-center">
-							Your Zindagi User ID and number is needed to proceed. Please confirm to grant access to this information.
-						</p>
-						<div className="flex flex-row space-x-4">
-							<SubmitButton
-								text={"Confirm"}
-								onClick={() => {
-									// CALL FARRUKH API
-								}}
-								bgColor={'bg-js'}
-							/>
-							<SubmitButton
-								text={"Decline"}
-								onClick={() => {
-									router.push('/')
-								}}
-								bgColor={'bg-js'}
-							/>
-						</div>
-					</div>
-				</div>
-			</div>
 		)
 	}
 
