@@ -11,7 +11,7 @@ import Categories from "../components/Layout/components/Categories/Categories"
 import { useHomeApi, useOptionsApi } from "../helpers/Api"
 import TypeCardSelector from "../components/Layout/components/Cards/TypeCardSelector"
 import HomeLoader from "../components/Layout/components/Loaders/HomeLoader"
-import { updateIsShowSelectionScreen, updateRedirectSource, updateSelectedType } from "../redux/general.slice"
+import { updateIsShowSelectionScreen, updateRedirectInformation, updateRedirectSource, updateSelectedType } from "../redux/general.slice"
 
 import homeDeliveryIcon from "../public/assets/svgs/homeDeliveryIcon.svg"
 import clickAndCollectIcon from "../public/assets/svgs/clickAndCollectIcon.svg"
@@ -36,7 +36,14 @@ export default function Home() {
 		if (router.isReady) {
 			let queries = router.query
 			if (queries.source) {
-				dispatch(updateRedirectSource(queries.source))
+				dispatch(updateRedirectSource(queries?.source))
+			}
+			if (queries.name && queries.email && queries.phone_number) {
+				dispatch(updateRedirectInformation({
+					name: queries?.name,
+					email: queries?.email,
+					phoneNumber: queries?.phone_number
+				}))
 			}
 		}
 	}, [router.isReady, router.query])

@@ -23,6 +23,7 @@ export const getGeneralCookies = () => {
 */
 export const getGeneralApiParams = () => {
     let redirectSource = getItemSessionStorage('redirect-source')
+    let redirectInformation = getItemSessionStorage('redirect-information')
 
     let clientType = redirectSource === 'js_bank' ? 'jsstore' : 'apricart'
     let isShowSelectionScreen = true
@@ -140,6 +141,7 @@ export const getGeneralApiParams = () => {
         isUserInitialized,
         selectedPickupLocation,
         redirectSource,
+        redirectInformation,
         isShowSelectionScreen
     })
 }
