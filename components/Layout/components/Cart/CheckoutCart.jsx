@@ -3,7 +3,7 @@ import { useSelector } from "react-redux"
 
 import CartItemListing from "./CartItemListing"
 
-const CheckoutCart = ({ initialCartProducts, initialCartData, isLoading, fetchCart }) => {
+const CheckoutCart = ({ initialCartData, fetchCart }) => {
     const selectedTypeSelector = useSelector(state => state.general.selectedType)
     const reduxCart = useSelector(state => state.cart)
 

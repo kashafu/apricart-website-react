@@ -141,7 +141,7 @@ export default function HamburgerMenu() {
 								)}
 								<LinkButton
 									text={"Shopping List"}
-									path={"/wishlist"}
+									path={"/shopping-list"}
 									onClick={() => {
 										setShowMenu(!showMenu)
 									}}

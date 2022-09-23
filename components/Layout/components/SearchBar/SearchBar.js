@@ -1,25 +1,22 @@
-import axios from "axios"
 import { useRouter } from "next/router"
 import { useEffect, useState, useRef } from "react"
 import { useSelector, useDispatch } from "react-redux"
 
 import searchIcon from '../../../../public/assets/svgs/searchIcon.svg'
 
-import { getGeneralApiParams } from "../../../../helpers/ApiHelpers"
-import { base_url_api } from "../../../../information.json"
 import SingleProductList from "../Products/SingleProductList"
 import toKebabCase from "../../../../helpers/toKebabCase"
-import { useCategoriesApi } from "../../../../helpers/Api"
+import { useCategoriesApi, useSearchBarResultsApi } from "../../../../helpers/Api"
 import { updateCategories } from "../../../../redux/data.slice"
 import Image from "next/image"
 
 export default function SearchBar() {
 	const [searchText, setSearchText] = useState("")
-	const [searchResults, setSearchResults] = useState([])
 	const [showSearchResults, setShowSearchResults] = useState(false)
 	const [selectedCategoryId, setSelectedCategoryId] = useState("")
 	const [selectedCategoryName, setSelectedCategoryName] = useState("")
 	const { categories } = useCategoriesApi()
+	const { isLoading, setSearchTerm, searchResults, errorResponse, errorMessage } = useSearchBarResultsApi()
 
 	const dispatch = useDispatch()
 	const searchBarRef = useRef()
@@ -41,31 +38,6 @@ export default function SearchBar() {
 			}
 		}
 	}, [categories, categoriesSelector])
-
-	const getSearchResultsApi = async (searchTerm) => {
-		if (searchTerm.length <= 2) {
-			setSearchResults([])
-			setShowSearchResults(false)
-			return
-		}
-		let { city, userId, headers } = getGeneralApiParams()
-		let url =
-			base_url_api +
-			"/catalog/products/search?page=1&size=10&term=" +
-			searchTerm +
-			"&category=" +
-			selectedCategoryId +
-			"&city=" +
-			city +
-			"&lang=en&userid=" +
-			userId +
-			"&client_type=apricart"
-		let searchResponse = await axios.get(url, {
-			headers: headers,
-		})
-		setShowSearchResults(true)
-		setSearchResults(searchResponse.data.data.products)
-	}
 
 	return (
 		<div className="relative w-full z-30">
@@ -102,7 +74,13 @@ export default function SearchBar() {
 					value={searchText}
 					onChange={(e) => {
 						setSearchText(e.target.value)
-						getSearchResultsApi(e.target.value)
+						if (e.target.value.length >= 3) {
+							setSearchTerm(e.target.value)
+							setShowSearchResults(true)
+						}
+						else {
+							setShowSearchResults(false)
+						}
 					}}
 					placeholder="Search Products..."
 					onBlur={async () => {
@@ -138,7 +116,7 @@ export default function SearchBar() {
 					/>
 				</button>
 			</div>
-			{showSearchResults && (
+			{showSearchResults && !isLoading && (
 				<div className="absolute z-30 w-full bg-white max-h-[350px] overflow-auto rounded-b-lg">
 					{searchResults.length > 0 ? (
 						<div className="flex flex-col p-2 lg:p-4 space-y-2">

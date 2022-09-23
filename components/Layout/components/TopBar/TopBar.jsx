@@ -38,7 +38,7 @@ export default function TopBar() {
 					{/* show TICKER on index page only, otherwise show selectedType */}
 					{router.pathname === "/" ? (
 						<div className="flex flex-row items-center h-full md:space-x-2">
-							<div className="hidden lg:inline flex items-center bg-main-red px-2 h-2/3">
+							<div className="hidden lg:inline items-center bg-main-red px-2 h-2/3">
 								<p className="text-white font-roboto font-bold text-xs truncate md:text-lg">
 									Latest Update
 								</p>

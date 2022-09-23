@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux"
 import { removeSelectedAddress, updateCity, updateSelectedAddress } from "../../../../redux/general.slice"
 import { toast } from "react-toastify"
 import { useState } from "react"
+import { useRouter } from "next/router"
 
 import AddAddressCard from "./AddAddressCard"
 import { getGeneralApiParams } from "../../../../helpers/ApiHelpers"
@@ -10,6 +11,7 @@ import { base_url_api } from "../../../../information.json"
 
 export default function SingleAddressListing({ listing, isSelected, setAddress, updateSavedAddresses, }) {
 	const dispatch = useDispatch()
+	const router = useRouter()
 
 	let { address, area, city, name, phoneNumber, email } = listing
 	let style = isSelected ? "bg-lime-300" : ""
@@ -41,6 +43,7 @@ export default function SingleAddressListing({ listing, isSelected, setAddress, 
 		dispatch(updateSelectedAddress(listing))
 		dispatch(updateCity(listing.city.toLowerCase()))
 		setAddress(listing)
+		router.push('/')
 	}
 
 	return (

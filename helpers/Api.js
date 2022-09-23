@@ -12,7 +12,7 @@ import {
 	removeFromCart,
 	updateQuantity,
 } from "../redux/cart.slice"
-import { updateTicker } from "../redux/general.slice"
+import { updateIsUserInitialized, updateTicker } from "../redux/general.slice"
 import { setCookie } from "./Cookies"
 import { updateCategories } from "../redux/data.slice"
 
@@ -37,8 +37,7 @@ const fullUrl = (url) => {
 }
 
 const initializeUserApi = async () => {
-	let { isUserInitialized, latitude, longitude, headers } =
-		getGeneralApiParams()
+	let { isUserInitialized, latitude, longitude, headers } = getGeneralApiParams()
 
 	if (!isUserInitialized) {
 		let url =
@@ -52,14 +51,17 @@ const initializeUserApi = async () => {
 			await axios.get(fullUrl(url), {
 				headers: headers,
 			})
-			setCookie("user-initialized", true)
+			return (true)
 		} catch (error) {
 			console.log(error?.response)
+			return (false)
 		}
 	}
 }
 
 export const useCategoriesApi = () => {
+	const router = useRouter()
+	const dispatch = useDispatch()
 	const selectedTypeSelector = useSelector(
 		(state) => state.general.selectedType
 	)
@@ -76,7 +78,11 @@ export const useCategoriesApi = () => {
 
 	const callApi = async () => {
 		setIsLoading(true)
-		await initializeUserApi()
+		if (router.pathname !== '/') {
+			if (await initializeUserApi()) {
+				dispatch(updateIsUserInitialized(true))
+			}
+		}
 		let { headers } = getGeneralApiParams()
 		let url = "/catalog/categories?level=all"
 
@@ -99,6 +105,7 @@ export const useCategoriesApi = () => {
 
 export const useCategoryProductsApi = () => {
 	const router = useRouter()
+	const dispatch = useDispatch()
 	const { categoryId, categoryName } = router.query
 
 	const [isLoading, setIsLoading] = useState(true)
@@ -119,7 +126,11 @@ export const useCategoryProductsApi = () => {
 
 	const callApi = async () => {
 		setIsLoading(true)
-		await initializeUserApi()
+		if (router.pathname !== '/') {
+			if (await initializeUserApi()) {
+				dispatch(updateIsUserInitialized(true))
+			}
+		}
 		let { headers } = getGeneralApiParams()
 		let url =
 			"/catalog/categories/products?category=" +
@@ -202,6 +213,8 @@ export const useHomeApi = () => {
 			let apiResponse = await axios.get(fullUrl(url), {
 				headers: headers,
 			})
+
+			dispatch(updateIsUserInitialized(true))
 			setResponse(apiResponse)
 			setHomeData(apiResponse.data.data)
 			setCategories(apiResponse.data.data.categories)
@@ -232,6 +245,8 @@ export const useHomeApi = () => {
 }
 
 export const usePickupLocationsApi = () => {
+	const router = useRouter()
+	const dispatch = useDispatch()
 	const citySelector = useSelector((state) => state.general.city)
 	const [isLoading, setIsLoading] = useState(true)
 	const [pickupLocations, setPickupLocations] = useState(null)
@@ -246,7 +261,11 @@ export const usePickupLocationsApi = () => {
 
 	const callApi = async () => {
 		setIsLoading(true)
-		await initializeUserApi()
+		if (router.pathname !== '/') {
+			if (await initializeUserApi()) {
+				dispatch(updateIsUserInitialized(true))
+			}
+		}
 		let { headers } = getGeneralApiParams()
 
 		let url = "/order/address/pickup?"
@@ -278,6 +297,7 @@ export const usePickupLocationsApi = () => {
 
 export const useProductDetailsApi = () => {
 	const router = useRouter()
+	const dispatch = useDispatch()
 	const { productId, productName } = router.query
 
 	const [isLoading, setIsLoading] = useState(true)
@@ -294,7 +314,11 @@ export const useProductDetailsApi = () => {
 
 	const callApi = async () => {
 		setIsLoading(true)
-		await initializeUserApi()
+		if (router.pathname !== '/') {
+			if (await initializeUserApi()) {
+				dispatch(updateIsUserInitialized(true))
+			}
+		}
 		let { headers } = getGeneralApiParams()
 
 		let url = "/catalog/products/detail?id=" + productId
@@ -590,7 +614,6 @@ export const useInitialCartDataApi = () => {
 	const callApi = async () => {
 		setIsLoading(true)
 		setResponse(null)
-		await initializeUserApi()
 
 		let { headers, clientType, prodType, orderType, selectedPickupLocation, selectedAddress, latitude, longitude } = getGeneralApiParams()
 
@@ -654,7 +677,6 @@ export const useInitialCartDataApi = () => {
 		toast.info("Processing order")
 		setIsLoading(true)
 		setCheckoutResponse(null)
-		await initializeUserApi()
 
 		let { headers, clientType, prodType, orderType, selectedPickupLocation, selectedAddress, latitude, longitude } = getGeneralApiParams()
 
@@ -734,6 +756,7 @@ export const useInitialCartDataApi = () => {
 
 export const useSearchResultsApi = () => {
 	const router = useRouter()
+	const dispatch = useDispatch()
 	const { term } = router.query
 	let page = 1
 
@@ -751,7 +774,11 @@ export const useSearchResultsApi = () => {
 
 	const callApi = async () => {
 		setIsLoading(true)
-		await initializeUserApi()
+		if (router.pathname !== '/') {
+			if (await initializeUserApi()) {
+				dispatch(updateIsUserInitialized(true))
+			}
+		}
 		let { headers } = getGeneralApiParams()
 		let url =
 			"/catalog/products/search?page=" +
@@ -783,7 +810,55 @@ export const useSearchResultsApi = () => {
 	}
 }
 
-export const useRecommendedProductsApi = () => {
+export const useSearchBarResultsApi = () => {
+	const [isLoading, setIsLoading] = useState(true)
+	const [searchResults, setSearchResults] = useState(null)
+	const [searchTerm, setSearchTerm] = useState(null)
+	const [response, setResponse] = useState(null)
+	const [errorResponse, setErrorResponse] = useState(null)
+	const [errorMessage, setErrorMessage] = useState("")
+
+	useEffect(() => {
+		callApi()
+	}, [searchTerm])
+
+	const callApi = async () => {
+		setIsLoading(true)
+		let { headers } = getGeneralApiParams()
+		let url =
+			"/catalog/products/search?page=1&size=25&term=" +
+			searchTerm +
+			"&category="
+
+		try {
+			let apiResponse = await axios.get(fullUrl(url), {
+				headers: headers,
+			})
+			setResponse(apiResponse)
+			setSearchResults(apiResponse.data.data.products)
+			setErrorResponse(null)
+			setErrorMessage("")
+		} catch (error) {
+			setErrorResponse(error?.response)
+			setErrorMessage(error?.response?.data?.message)
+		} finally {
+			setIsLoading(false)
+		}
+	}
+
+	return {
+		isLoading,
+		searchResults,
+		errorMessage,
+		response,
+		errorResponse,
+		setSearchTerm
+	}
+}
+
+export const useRecommendedProductsApi = (type) => {
+	const router = useRouter()
+	const dispatch = useDispatch()
 	const [isLoading, setIsLoading] = useState(true)
 	const [recommendedProducts, setRecommendedProducts] = useState(null)
 	const [response, setResponse] = useState(null)
@@ -796,10 +871,20 @@ export const useRecommendedProductsApi = () => {
 
 	const callApi = async () => {
 		setIsLoading(true)
-		await initializeUserApi()
+		if (router.pathname !== '/') {
+			if (await initializeUserApi()) {
+				dispatch(updateIsUserInitialized(true))
+			}
+		}
 		let { headers } = getGeneralApiParams()
 
-		let url = "/catalog/recommended?page=1&size=20"
+		let url = ""
+		if (type === 'related') {
+			url = "/catalog/recommended?page=1&size=6"
+		}
+		else {
+			url = "/catalog/recommended?page=1&size=20"
+		}
 
 		try {
 			let apiResponse = await axios.get(fullUrl(url), {
@@ -825,6 +910,8 @@ export const useRecommendedProductsApi = () => {
 }
 
 export const useMostViewedProductsApi = () => {
+	const router = useRouter()
+	const dispatch = useDispatch()
 	const [isLoading, setIsLoading] = useState(true)
 	const [mostViewedProducts, setMostViewedProducts] = useState(null)
 	const [response, setResponse] = useState(null)
@@ -837,7 +924,11 @@ export const useMostViewedProductsApi = () => {
 
 	const callApi = async () => {
 		setIsLoading(true)
-		await initializeUserApi()
+		if (router.pathname !== '/') {
+			if (await initializeUserApi()) {
+				dispatch(updateIsUserInitialized(true))
+			}
+		}
 		let { headers } = getGeneralApiParams()
 
 		let url = "/catalog/mostviewed?page=1&size=20"
@@ -1197,5 +1288,118 @@ export const useOptionsApi = () => {
 		response,
 		errorResponse,
 		welcomeVideo
+	}
+}
+
+export const useWishlistProductsApi = () => {
+	const router = useRouter()
+	const dispatch = useDispatch()
+	const [isLoading, setIsLoading] = useState(true)
+	const [wishlistProducts, setWishlistProducts] = useState(null)
+	const [response, setResponse] = useState(null)
+	const [errorResponse, setErrorResponse] = useState(null)
+	const [errorMessage, setErrorMessage] = useState("")
+
+	useEffect(() => {
+		callApi()
+	}, [])
+
+	const callApi = async () => {
+		setIsLoading(true)
+		if (router.pathname !== '/') {
+			if (await initializeUserApi()) {
+				dispatch(updateIsUserInitialized(true))
+			}
+		}
+		let { headers, token } = getGeneralApiParams()
+
+		let url = ''
+
+		if (token) {
+			url = "/watchlist/all?"
+		}
+		else {
+			url = "/guest/watchlist/all?"
+		}
+
+		try {
+			let apiResponse = await axios.get(fullUrl(url), {
+				headers: headers,
+			})
+			setResponse(apiResponse)
+			setWishlistProducts(apiResponse.data.data)
+		} catch (error) {
+			setErrorResponse(error?.response)
+			setErrorMessage(error?.response?.data?.message)
+		} finally {
+			setIsLoading(false)
+		}
+	}
+
+	return {
+		isLoading,
+		wishlistProducts,
+		errorMessage,
+		response,
+		errorResponse,
+	}
+}
+
+export const useRemoveFromWishlist = () => {
+	const [isLoading, setIsLoading] = useState(false)
+	const [response, setResponse] = useState(null)
+	const [errorResponse, setErrorResponse] = useState(null)
+	const [errorMessage, setErrorMessage] = useState("")
+	const [isRemove, setIsRemove] = useState(false)
+	const [data, setData] = useState({
+		"sku": []
+	})
+
+	useEffect(() => {
+		if (isRemove) {
+			callApi()
+		}
+	}, [isRemove])
+
+	const callApi = async () => {
+		setIsLoading(true)
+		let { headers, token } = getGeneralApiParams()
+
+		let url = ""
+
+		if (token) {
+			url = "/watchlist/delete?"
+		}
+		else {
+			url = "/guest/watchlist/delete?"
+		}
+
+		try {
+			let apiResponse = await axios.delete(fullUrl(url), {
+				headers: headers,
+				data: JSON.stringify(data)
+			})
+
+			setResponse(apiResponse)
+			toast.success(apiResponse.data?.message)
+			setErrorMessage('')
+			setErrorResponse(null)
+		} catch (error) {
+			setErrorResponse(error?.response)
+			setErrorMessage(error?.response?.data?.message)
+			toast.error(error?.response?.data?.message)
+		} finally {
+			setIsLoading(false)
+			setIsRemove(false)
+		}
+	}
+
+	return {
+		isLoading,
+		setData,
+		setIsRemove,
+		errorMessage,
+		response,
+		errorResponse,
 	}
 }
