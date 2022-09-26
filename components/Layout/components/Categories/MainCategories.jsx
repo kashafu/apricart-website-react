@@ -4,8 +4,8 @@ import SingleCategory from "./SingleCategory"
 
 const MainCategories = ({ categories }) => {
     let numberOfCategoriesMobile = 9
-    let numberOfProductsLaptop = 8
-    let numberOfProductsDesktop = 10
+    let numberOfProductsLaptop = 10
+    let numberOfProductsDesktop = 12
 
     return (
         <section className="space-y-4 px-2 py-2">
@@ -36,7 +36,7 @@ const MainCategories = ({ categories }) => {
                     })}
                 </section>
                 {/* LAPTOP VIEW PRODUCTS */}
-                <section className="hidden lg:grid lg:grid-cols-4 gap-2 2xl:hidden">
+                <section className="hidden lg:grid lg:grid-cols-5 gap-2 2xl:hidden">
                     {categories.slice(0, numberOfProductsLaptop).map((category) => {
                         let { id } = category
                         return (
@@ -47,7 +47,7 @@ const MainCategories = ({ categories }) => {
                     })}
                 </section>
                 {/* DESKTOP VIEW PRODUCTS */}
-                <section className="hidden 2xl:grid 2xl:grid-cols-5 gap-2">
+                <section className="hidden 2xl:grid 2xl:grid-cols-6 gap-2">
                     {categories.slice(0, numberOfProductsDesktop).map((category) => {
                         let { id } = category
                         return (
