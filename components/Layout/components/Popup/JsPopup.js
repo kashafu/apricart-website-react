@@ -1,12 +1,27 @@
+import { useRouter } from "next/router"
+import { useEffect } from "react"
+import { useSelector } from "react-redux"
+
 import { useRegisterApi } from "../../../../helpers/Api"
 import SubmitButton from "../Buttons/SubmitButton"
 
-const JsPopup = () => {
-    const { isLoading, response, setData, setIsRegister, errorResponse, errorMessage } = useRegisterApi()
+const JsPopup = ({ setShowOtp, setRandomPassword }) => {
+    const router = useRouter()
+    const redirectInformationSelector = useSelector(state => state.general.redirectInformation)
+    const { isLoading, response, setData, setIsRegister, errorResponse } = useRegisterApi()
 
     function generatePassword() {
-        return ("mujtaba")
+        let password = "Mujtaba"
+        setRandomPassword(password)
+        return password
     }
+
+    useEffect(() => {
+        if (response || errorResponse?.status === 409) {
+            setShowOtp(true)
+        }
+
+    }, [errorResponse, response])
 
     return (
         <div className="animate-dropdown fixed inset-0 h-full w-full backdrop-blur-sm z-50">
@@ -20,11 +35,12 @@ const JsPopup = () => {
                             text={"Confirm"}
                             onClick={() => {
                                 setData({
-                                    email: '',
-                                    phoneNumber: '',
-                                    name: '',
+                                    email: redirectInformationSelector.email,
+                                    phoneNumber: redirectInformationSelector.phoneNumber,
+                                    name: redirectInformationSelector.name,
                                     password: generatePassword()
                                 })
+                                setIsRegister(true)
                             }}
                             bgColor={'bg-js'}
                             disabled={isLoading}

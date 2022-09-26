@@ -1170,6 +1170,7 @@ export const useRegisterApi = () => {
 			setErrorResponse(null)
 		} catch (error) {
 			setErrorResponse(error?.response)
+			setResponse(null)
 			setErrorMessage(error?.response?.data?.message)
 		} finally {
 			setIsLoading(false)

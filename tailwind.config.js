@@ -76,6 +76,9 @@ module.exports = {
 					DEFAULT: "#00CC99"
 				}
 			},
+			boxShadow: {
+				'inner-3xl': 'inset 5px 5px 5px 5px rgb(0 0 0 / 0.05)'
+			},
 			fontFamily: {
 				lato: ["Lato", "sans-serif"],
 				nunito: ["Nunito"],

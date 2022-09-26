@@ -15,6 +15,7 @@ import { useInitialCartDataApi, usePickupLocationsApi } from "../helpers/Api"
 import CheckoutCart from "../components/Layout/components/Cart/CheckoutCart"
 import PickupLocationSelector from "../components/Layout/components/Selectors/PickupLocationSelector"
 import JsPopup from "../components/Layout/components/Popup/JsPopup"
+import OtpJsPopup from "../components/Layout/components/Popup/OtpJsPopup"
 
 export default function Checkout() {
 	const dispatch = useDispatch()
@@ -27,7 +28,6 @@ export default function Checkout() {
 	const reduxCart = useSelector((state) => state.cart)
 
 	// view state can be either 'loading', 'shipping', 'payment', 'review'
-	const [showJSPopup, setShowJSPopup] = useState(false)
 	const [viewState, setViewState] = useState("shipping")
 	const [isCheckoutButtonPressed, setIsCheckoutButtonPressed] = useState(false)
 
@@ -434,6 +434,38 @@ export default function Checkout() {
 		)
 	}
 
+	const JsScreen = () => {
+		const [showJsPopup, setShowJsPopup] = useState(false)
+		const [showJsOtp, setShowJsOtp] = useState(false)
+		const [randomPassword, setRandomPassword] = useState('')
+
+		useEffect(() => {
+			setShowJsPopup(redirectSourceSelector === 'js_bank')
+		}, [])
+
+		useEffect(() => {
+			if (showJsPopup) {
+				setShowJsPopup(false)
+			}
+		}, [showJsOtp])
+
+		return (
+			<>
+				{showJsPopup && (
+					<JsPopup
+						setShowOtp={setShowJsOtp}
+						setRandomPassword={setRandomPassword}
+					/>
+				)}
+				{showJsOtp && (
+					<OtpJsPopup
+						randomPassword={randomPassword}
+					/>
+				)}
+			</>
+		)
+	}
+
 	if (!token && redirectSourceSelector !== 'js_bank') {
 		return (
 			<>
@@ -478,9 +510,7 @@ export default function Checkout() {
 	return (
 		<div className="h-full w-full">
 			<HeadTag title={"Checkout"} />
-			{showJSPopup && (
-				<JsPopup />
-			)}
+			<JsScreen />
 			<ProgressBar
 				currentState={viewState}
 				onClick={setViewState}
