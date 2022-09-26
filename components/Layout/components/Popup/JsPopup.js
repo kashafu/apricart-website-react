@@ -5,14 +5,13 @@ import { useSelector } from "react-redux"
 import { useRegisterApi } from "../../../../helpers/Api"
 import SubmitButton from "../Buttons/SubmitButton"
 
-const JsPopup = ({ setShowOtp, setRandomPassword }) => {
+const JsPopup = ({ setShowOtp }) => {
     const router = useRouter()
     const redirectInformationSelector = useSelector(state => state.general.redirectInformation)
     const { isLoading, response, setData, setIsRegister, errorResponse } = useRegisterApi()
 
     function generatePassword() {
         let password = "Mujtaba"
-        setRandomPassword(password)
         return password
     }
 

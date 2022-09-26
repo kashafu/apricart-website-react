@@ -1221,6 +1221,10 @@ export const useVerifyOtpApi = () => {
 			})
 
 			setResponse(apiResponse)
+			setCookie("cookies-token", apiResponse.data.data.token)
+			setCookie("cookies-name", apiResponse.data.data.name)
+			setCookie("cookies-email", apiResponse.data.data.email)
+			setCookie("cookies-phoneNumber", apiResponse.data.data.phoneNumber)
 			toast.success(apiResponse.data?.message)
 			setErrorMessage('')
 			setErrorResponse(null)

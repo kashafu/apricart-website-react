@@ -3,13 +3,12 @@ import { useEffect } from "react"
 import { useState, useRef } from "react"
 import { useSelector } from "react-redux"
 
-import { useLoginApi, useVerifyOtpApi } from "../../../../helpers/Api"
+import { useVerifyOtpApi } from "../../../../helpers/Api"
 
-const OtpJsPopup = ({ randomPassword }) => {
+const OtpJsPopup = ({ setShowJsScreen }) => {
     const router = useRouter()
     const redirectInformationSelector = useSelector(state => state.general.redirectInformation)
     const { isLoading, setData: setOtpData, setIsVerifyOtp, response: otpResponse } = useVerifyOtpApi()
-    const { setData: setLoginData, setIsLogin, response: loginResponse } = useLoginApi()
 
     const [otp1, setOtp1] = useState('')
     const [otp2, setOtp2] = useState('')
@@ -29,19 +28,9 @@ const OtpJsPopup = ({ randomPassword }) => {
 
     useEffect(() => {
         if (otpResponse) {
-            setLoginData({
-                username: redirectInformationSelector.phoneNumber,
-                password: randomPassword
-            })
-            setIsLogin(true)
+            setShowJsScreen(false)
         }
     }, [otpResponse])
-
-    useEffect(() => {
-        if (loginResponse) {
-            router.push('/checkout')
-        }
-    }, [loginResponse])
 
     return (
         <div className="animate-dropdown fixed inset-0 h-full w-full backdrop-blur-sm z-50">
@@ -51,7 +40,7 @@ const OtpJsPopup = ({ randomPassword }) => {
                         Authentication
                     </p>
                     <p className="text-nunito text-black font-semibold">
-                        Enter your 4-digit PIN
+                        Enter the 4-digit OTP for +92{redirectInformationSelector.phoneNumber}
                     </p>
                     <div className="flex space-x-2 w-4/5">
                         <input

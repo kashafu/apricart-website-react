@@ -31,6 +31,8 @@ export default function Checkout() {
 	const [viewState, setViewState] = useState("shipping")
 	const [isCheckoutButtonPressed, setIsCheckoutButtonPressed] = useState(false)
 
+	const [showJsScreen, setShowJsScreen] = useState(false)
+
 	// For the PickupLocation Component
 	const [dayIdentifier, setDayIdentifier] = useState('')
 	const [selectedDate, setSelectedDate] = useState('')
@@ -246,11 +248,11 @@ export default function Checkout() {
 			<div className="">
 				{viewState === "shipping" && (
 					<div>
-						{redirectSourceSelector === 'js_bank' ? (
+						{redirectSourceSelector === 'js_bank' && !token ? (
 							<SubmitButton
 								text={'CONTINUE WITH ORDER'}
 								onClick={() => {
-									setShowJSPopup(true)
+									setShowJsScreen(true)
 								}}
 							/>
 						) : (
@@ -437,7 +439,6 @@ export default function Checkout() {
 	const JsScreen = () => {
 		const [showJsPopup, setShowJsPopup] = useState(false)
 		const [showJsOtp, setShowJsOtp] = useState(false)
-		const [randomPassword, setRandomPassword] = useState('')
 
 		useEffect(() => {
 			setShowJsPopup(redirectSourceSelector === 'js_bank')
@@ -451,16 +452,19 @@ export default function Checkout() {
 
 		return (
 			<>
-				{showJsPopup && (
-					<JsPopup
-						setShowOtp={setShowJsOtp}
-						setRandomPassword={setRandomPassword}
-					/>
-				)}
-				{showJsOtp && (
-					<OtpJsPopup
-						randomPassword={randomPassword}
-					/>
+				{showJsScreen && (
+					<>
+						{showJsPopup && (
+							<JsPopup
+								setShowOtp={setShowJsOtp}
+							/>
+						)}
+						{showJsOtp && (
+							<OtpJsPopup
+								setShowJsScreen={setShowJsScreen}
+							/>
+						)}
+					</>
 				)}
 			</>
 		)
