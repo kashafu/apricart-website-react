@@ -27,7 +27,7 @@ export default function CategoryProducts() {
 	} = useCategoryProductsApi()
 
 	const SubCategories = () => {
-		if (isLoading) {
+		if (isLoading || !router.isReady) {
 			return (
 				<SubCategoryShimmer />
 			)
@@ -92,9 +92,25 @@ export default function CategoryProducts() {
 	}
 
 	const CategoryProducts = () => {
-		if (isLoading) {
+		if (isLoading || !router.isReady) {
 			return (
 				<SubCategoryProductsShimmer />
+			)
+		}
+
+		if (!categoryProducts) {
+			return (
+				<div>
+					<p>{errorMessage}</p>
+				</div>
+			)
+		}
+
+		if (categoryProducts.length == 0) {
+			return (
+				<div>
+					<p>No items to show</p>
+				</div>
 			)
 		}
 
@@ -114,26 +130,6 @@ export default function CategoryProducts() {
 					})}
 				</section>
 			</section>
-		)
-	}
-
-	if (!router.isReady) {
-		return <></>
-	}
-
-	if (!categoryProducts) {
-		return (
-			<div>
-				<p>{errorMessage}</p>
-			</div>
-		)
-	}
-
-	if (categoryProducts.length == 0) {
-		return (
-			<div>
-				<p>No items to show</p>
-			</div>
 		)
 	}
 
