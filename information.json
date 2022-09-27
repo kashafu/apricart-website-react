@@ -1,4 +1,4 @@
 {
-    "base_url_api": "https://cbe.apricart.pk/v1",
+    "base_url_api": "https://stag.apricart.pk/v1",
     "mode": "staging"
 }
