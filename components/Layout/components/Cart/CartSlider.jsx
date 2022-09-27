@@ -41,7 +41,9 @@ export default function CartSlider() {
 					ref={cartIconRef}
 				>
 					<Image src={cartIcon} alt={"icon"} width={30} height={30} layout='fixed' />
-					<p className="absolute -top-1 p-[5px] py-0 -right-2 bg-main-blue rounded-full text-xs text-white">{reduxCart.length}</p>
+					<p className="absolute inset-0 m-auto pt-1 h-fit w-fit rounded-full text-xs font-bold text-main-blue">
+						{reduxCart.length}
+					</p>
 				</div>
 			</button>
 			{

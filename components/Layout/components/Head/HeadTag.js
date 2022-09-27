@@ -5,7 +5,7 @@ import { mode } from '../../../../information.json'
 export default function HeadTag({ title, description, isIndex }) {
     return (
         <Head>
-            <title>{title}</title>
+            <title className='capitalize'>{title}</title>
             {description && (
                 <meta name="description" content={description} />
             )}

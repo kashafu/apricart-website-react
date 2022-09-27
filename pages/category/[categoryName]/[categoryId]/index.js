@@ -27,7 +27,7 @@ export default function CategoryProducts() {
 	} = useCategoryProductsApi()
 
 	const SubCategories = () => {
-		if (isLoading) {
+		if (isLoading || !router.isReady) {
 			return (
 				<SubCategoryShimmer />
 			)
@@ -92,9 +92,25 @@ export default function CategoryProducts() {
 	}
 
 	const CategoryProducts = () => {
-		if (isLoading) {
+		if (isLoading || !router.isReady) {
 			return (
 				<SubCategoryProductsShimmer />
+			)
+		}
+
+		if (!categoryProducts) {
+			return (
+				<div>
+					<p>{errorMessage}</p>
+				</div>
+			)
+		}
+
+		if (categoryProducts.length == 0) {
+			return (
+				<div>
+					<p>No items to show</p>
+				</div>
 			)
 		}
 
@@ -107,7 +123,6 @@ export default function CategoryProducts() {
 							<div key={sku}>
 								<SingleProduct
 									product={product}
-								// TODO call api to get updated details of product and check if it is in stock
 								/>
 							</div>
 						)
@@ -117,34 +132,15 @@ export default function CategoryProducts() {
 		)
 	}
 
-	if (!router.isReady) {
-		return <></>
-	}
-
-	if (!categoryProducts) {
-		return (
-			<div>
-				<p>{errorMessage}</p>
-			</div>
-		)
-	}
-
-	if (categoryProducts.length == 0) {
-		return (
-			<div>
-				<p>No items to show</p>
-			</div>
-		)
-	}
-
 	return (
 		<div>
-			<HeadTag
-				title={
-					fromKebabCase(categoryName)[0].toUpperCase() +
-					fromKebabCase(categoryName).substring(1)
-				}
-			/>
+			{router.isReady && (
+				<HeadTag
+					title={
+						fromKebabCase(categoryName)
+					}
+				/>
+			)}
 			<div className="grid grid-cols-5 gap-8">
 				{/* CATEGORIES SECTION */}
 				<section className="hidden lg:col-span-1 lg:block">
@@ -152,9 +148,11 @@ export default function CategoryProducts() {
 				</section>
 				{/* PRODUCTS SECTION */}
 				<section className="col-span-5 lg:col-span-4">
-					<PageHeading
-						text={fromKebabCase(categoryName.toUpperCase())}
-					/>
+					{router.isReady && (
+						<PageHeading
+							text={fromKebabCase(categoryName.toUpperCase())}
+						/>
+					)}
 					<section className="space-y-12">
 						<SubCategories />
 						<Filter />
