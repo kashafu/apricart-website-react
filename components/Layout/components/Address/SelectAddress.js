@@ -62,7 +62,7 @@ export default function SelectAddress({ type, setAddress, dropDownSelectedAddres
                         className="col-span-2 h-full py-2 lg:px-4 text-xs lg:text-lg rounded-lg bg-slate-200"
                         disabled={false}
                         onChange={handleSavedAddressChange}
-                        value={selectedAddress}
+                        value={JSON.stringify(selectedAddress)}
                     >
                         <option
                             value={''}
