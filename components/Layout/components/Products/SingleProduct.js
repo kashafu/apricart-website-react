@@ -200,7 +200,7 @@ export default function SingleProduct({ product, isInStock }) {
 												setQtyHandler("decrement")
 											}}
 										>
-											<div className="relative h-[10px] w-[10px] lg:h-[15px] lg:w-[15px]">
+											<div className="relative h-[10px] w-[10px]">
 												<Image
 													src={minusIcon}
 													layout='fill'
@@ -217,7 +217,7 @@ export default function SingleProduct({ product, isInStock }) {
 												setQtyHandler("increment")
 											}}
 										>
-											<div className="relative h-[10px] w-[10px] lg:h-[15px] lg:w-[15px]">
+											<div className="relative h-[10px] w-[10px]">
 												<Image
 													src={plusIcon}
 													layout='fill'
@@ -241,7 +241,7 @@ export default function SingleProduct({ product, isInStock }) {
 												}, 2000)
 											}}
 										>
-											<div className="relative h-[18px] w-[18px] lg:h-[30px] lg:w-[30px]">
+											<div className="relative h-[18px] w-[18px]">
 												<Image
 													src={addToCartIcon}
 													layout='fill'
@@ -255,7 +255,7 @@ export default function SingleProduct({ product, isInStock }) {
 												addToWishlistApi()
 											}}
 										>
-											<div className="relative h-[18px] w-[18px] lg:h-[30px] lg:w-[30px]">
+											<div className="relative h-[18px] w-[18px]">
 												<Image
 													src={wishlistIcon}
 													layout='fill'

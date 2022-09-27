@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux'
 import karachiCncBanner from '../../../../public/assets/images/banners/cncBlessedFridayCarousel.png'
 import karachiScrollingBanner1 from '../../../../public/assets/images/banners/saylaniCarousel.jpg'
 import karachiScrollingBanner2 from '../../../../public/assets/images/banners/homeDeliveryCarousel.png'
+import peshawarScrollingBanner from '../../../../public/assets/images/banners/peshawarBulkBuyCarousel3.png'
 import bulkBuyBanner from '../../../../public/assets/images/banners/bulkBuyCarousel.png'
 import bulkBuyBanner2 from '../../../../public/assets/images/banners/bulkBuyCarousel2.png'
 
@@ -84,6 +85,17 @@ const Carousel = () => {
             )}
             {citySelector === 'peshawar' && (
                 <Slider {...settings}>
+                    <div className='w-full h-full'>
+                        <Link href={'/offers/75'} passHref>
+                            <a className="w-full h-full">
+                                <Image
+                                    src={peshawarScrollingBanner}
+                                    layout={"responsive"}
+                                    alt="banner"
+                                />
+                            </a>
+                        </Link>
+                    </div>
                     <div className="w-full h-full">
                         <Image
                             src={bulkBuyBanner}

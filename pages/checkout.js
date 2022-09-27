@@ -12,10 +12,10 @@ import TextField from "../components/Layout/components/Input/TextField"
 import InputLabelText from "../components/Layout/components/Typography/InputLabelText"
 import HeadTag from "../components/Layout/components/Head/HeadTag"
 import { useInitialCartDataApi, usePickupLocationsApi } from "../helpers/Api"
-import CheckoutCart from "../components/Layout/components/Cart/CheckoutCart"
 import PickupLocationSelector from "../components/Layout/components/Selectors/PickupLocationSelector"
 import JsPopup from "../components/Layout/components/Popup/JsPopup"
 import OtpJsPopup from "../components/Layout/components/Popup/OtpJsPopup"
+import CartItemListing from "../components/Layout/components/Cart/CartItemListing"
 
 export default function Checkout() {
 	const dispatch = useDispatch()
@@ -489,6 +489,78 @@ export default function Checkout() {
 		)
 	}
 
+	const Cart = () => {
+		const reduxCart = useSelector(state => state.cart)
+
+		return (
+			<div className="flex flex-col w-full bg-white lg:border-l-2 border-t-2 lg:border-t-0">
+				<div className="overflow-y-auto max-h-64 divide-y">
+					{reduxCart.map((product) => {
+						return (
+							<CartItemListing
+								key={product.sku}
+								item={product}
+								fetchCart={setIsFetchCart}
+							/>
+						)
+					})}
+				</div>
+			</div>
+		)
+	}
+
+	const CartDetails = () => {
+		const selectedTypeSelector = useSelector(state => state.general.selectedType)
+
+		let pLeft = "font-lato text-md text-main-blue"
+		let pRight = "font-lato text-lg font-bold text-right"
+
+		if (isLoading) {
+			return <></>
+		}
+
+		let {
+			subtotal,
+			shipping_amount,
+			grand_total,
+			shipment_message,
+			base_currency_code,
+			couponDiscountAmount,
+			pickup_message
+		} = initialCartData
+
+		return (
+			<div className="flex flex-col w-full bg-white lg:border-l-2 border-t-2 lg:border-t-0">
+				<div className="grid grid-cols-2 gap-2 font-lato items-center border-y-2 px-4 py-2">
+					<p className={pLeft}>SubTotal</p>
+					<p className={pRight}>{base_currency_code} {subtotal}</p>
+					{selectedTypeSelector === 'cnc' ? (
+						<>
+							<p className={[pRight] + " col-span-2 text-justify"}>{parse(pickup_message)}</p>
+						</>
+					) : (
+						<>
+							<p className={pLeft}>Shipping</p>
+							<p className={pRight}>{parse(shipment_message)}</p>
+							<p className={pLeft}>Shipping Amount</p>
+							<p className={pRight}>
+								{base_currency_code} {shipping_amount}
+							</p>
+						</>
+					)}
+					<p className={pLeft}>Coupon Discount Amount</p>
+					<p className={pRight}>
+						{base_currency_code} {couponDiscountAmount}
+					</p>
+					<p className={pLeft}>Total</p>
+					<p className={pRight}>
+						{base_currency_code} {grand_total}
+					</p>
+				</div>
+			</div>
+		)
+	}
+
 	if (!token && redirectSourceSelector !== 'js_bank') {
 		return (
 			<>
@@ -540,7 +612,18 @@ export default function Checkout() {
 			/>
 			<div className="flex flex-col w-full h-full lg:grid lg:grid-cols-5 2xl:grid 2xl:grid-cols-6">
 				<div className={viewState === 'review' ? "lg:col-span-5 2xl:col-span-6 flex flex-col w-full items-center" : "lg:col-span-3 2xl:col-span-4 flex flex-col w-full items-center"}>
+					{/* CART DIV for phone*/}
+					{viewState !== 'review' && (
+						<div className="lg:hidden">
+							<Cart />
+						</div>
+					)}
 					<DetailsArea />
+					{viewState !== 'review' && (
+						<div className="lg:hidden">
+							<CartDetails />
+						</div>
+					)}
 					{/* CHECKOUT BUTTON DIV for desktop*/}
 					<div className="hidden w-[60%] lg:grid lg:col-span-3 2xl:col-span-4">
 						<CheckoutButton />
@@ -548,12 +631,10 @@ export default function Checkout() {
 				</div>
 				{/* CART DIV */}
 				{viewState !== 'review' && (
-					<div className="lg:col-span-2 h-full">
+					<div className="hidden lg:grid lg:col-span-2 h-full">
 						<div className="p-2 lg:hidden"></div>
-						<CheckoutCart
-							initialCartData={initialCartData}
-							fetchCart={setIsFetchCart}
-						/>
+						<Cart />
+						<CartDetails />
 					</div>
 				)}
 				{/* CHECKOUT BUTTON DIV for mobile*/}
