@@ -137,8 +137,7 @@ export default function CategoryProducts() {
 			{router.isReady && (
 				<HeadTag
 					title={
-						fromKebabCase(categoryName)[0].toUpperCase() +
-						fromKebabCase(categoryName).substring(1)
+						fromKebabCase(categoryName)
 					}
 				/>
 			)}
@@ -149,9 +148,11 @@ export default function CategoryProducts() {
 				</section>
 				{/* PRODUCTS SECTION */}
 				<section className="col-span-5 lg:col-span-4">
-					<PageHeading
-						text={fromKebabCase(categoryName.toUpperCase())}
-					/>
+					{router.isReady && (
+						<PageHeading
+							text={fromKebabCase(categoryName.toUpperCase())}
+						/>
+					)}
 					<section className="space-y-12">
 						<SubCategories />
 						<Filter />
