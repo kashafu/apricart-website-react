@@ -69,7 +69,6 @@ export default function SelectAddress({ type, setAddress, dropDownSelectedAddres
                             Select Address
                         </option>
                         {savedAddresses.map((option) => {
-                            console.log(JSON.stringify(selectedAddressSelector))
                             return (
                                 <option
                                     selected={selectedAddressSelector !== '' && selectedAddressSelector.id === option.id}
