@@ -25,7 +25,7 @@ const MainCategories = ({ categories }) => {
             </div>
             <div>
                 {/* MOBILE VIEW PRODUCTS */}
-                <section className="grid grid-cols-3 lg:hidden gap-10">
+                <section className="grid grid-cols-3 lg:hidden gap-x-10 gap-y-2">
                     {categories.slice(0, numberOfCategoriesMobile).map((category) => {
                         let { id } = category
                         return (
@@ -36,7 +36,7 @@ const MainCategories = ({ categories }) => {
                     })}
                 </section>
                 {/* LAPTOP VIEW PRODUCTS */}
-                <section className="hidden lg:grid lg:grid-cols-5 gap-2 2xl:hidden">
+                <section className="hidden lg:grid lg:grid-cols-5 gap-x-12 gap-y-2 2xl:hidden">
                     {categories.slice(0, numberOfProductsLaptop).map((category) => {
                         let { id } = category
                         return (
@@ -47,7 +47,7 @@ const MainCategories = ({ categories }) => {
                     })}
                 </section>
                 {/* DESKTOP VIEW PRODUCTS */}
-                <section className="hidden 2xl:grid 2xl:grid-cols-6 gap-2">
+                <section className="hidden 2xl:grid 2xl:grid-cols-6 gap-x-12 gap-y-2">
                     {categories.slice(0, numberOfProductsDesktop).map((category) => {
                         let { id } = category
                         return (

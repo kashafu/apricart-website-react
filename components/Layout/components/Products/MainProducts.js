@@ -1,7 +1,6 @@
 import SingleProduct from "./SingleProduct"
 import Link from "next/link"
 import Image from "next/image"
-import { useState } from "react"
 import missingImageIcon from '../../../../public/assets/images/missingImage.png'
 
 export default function MainProducts({ section }) {
@@ -9,9 +8,9 @@ export default function MainProducts({ section }) {
 	let bannerImageWeb = section?.bannerImageWeb
 	let identifier = section?.identifier
 
-	const [numberOfProductsMobile, setNumberOfProductsMobile] = useState(4)
-	const [numberOfProductsLaptop, setNumberOfProductsLaptop] = useState(8)
-	const [numberOfProductsDesktop, setNumberOfProductsDesktop] = useState(10)
+	let numberOfProductsMobile = 6
+	let numberOfProductsLaptop = 8
+	let numberOfProductsDesktop = 6
 
 	if (!section) {
 		return <div>Loading</div>
@@ -23,13 +22,13 @@ export default function MainProducts({ section }) {
 		<section key={name} className="space-y-4 px-2 py-2">
 			<div className="w-full border-b border-main-blue-100 py-2">
 				<div className="flex flex-row items-center w-full justify-between">
-					<p className="text-2xl text-main-blue font-bold">
+					<p className="text-lg lg:text-[22px] text-main-blue font-bold">
 						{name}
 					</p>
 					{identifier === "mostviewed" && (
 						<Link href={"/products/most-viewed"} passHref>
-							<a className="bg-main-blue px-4 h-1/2 rounded-xl flex items-center">
-								<p className="text-white font-bold text-md lg:text-lg">
+							<a className="bg-main-blue px-10 py-2 h-full rounded-md flex items-center">
+								<p className="text-white font-nunito font-normal text-xs lg:text-lg">
 									View All
 								</p>
 							</a>
@@ -37,8 +36,8 @@ export default function MainProducts({ section }) {
 					)}
 					{identifier === "recommended" && (
 						<Link href={"/products/recommended"} passHref>
-							<a className="bg-main-blue px-4 h-1/2 rounded-xl flex items-center">
-								<p className="text-white font-bold text-md lg:text-lg">
+							<a className="bg-main-blue px-10 py-2 h-full rounded-md flex items-center">
+								<p className="text-white font-nunito font-normal text-xs lg:text-lg">
 									View All
 								</p>
 							</a>
@@ -49,7 +48,7 @@ export default function MainProducts({ section }) {
 			{identifier !== 'otherstores' && (
 				<div>
 					{/* MOBILE VIEW PRODUCTS */}
-					<section className="grid grid-cols-2 lg:hidden gap-2">
+					<section className="grid grid-cols-2 sm:grid-cols-3 md:hidden gap-2">
 						{data.slice(0, numberOfProductsMobile).map((product) => {
 							let { id } = product
 							return (
@@ -59,8 +58,8 @@ export default function MainProducts({ section }) {
 							)
 						})}
 					</section>
-					{/* LAPTOP VIEW PRODUCTS */}
-					<section className="hidden lg:grid lg:grid-cols-4 gap-2 2xl:hidden">
+					{/* LAPTOP AND TABLET VIEW PRODUCTS */}
+					<section className="hidden md:grid md:grid-cols-4 gap-2 xl:hidden">
 						{data.slice(0, numberOfProductsLaptop).map((product) => {
 							let { id } = product
 							return (
@@ -71,7 +70,7 @@ export default function MainProducts({ section }) {
 						})}
 					</section>
 					{/* DESKTOP VIEW PRODUCTS */}
-					<section className="hidden 2xl:grid 2xl:grid-cols-5 gap-2">
+					<section className="hidden xl:grid xl:grid-cols-5 2xl:grid-cols-4 gap-2">
 						{data.slice(0, numberOfProductsDesktop).map((product) => {
 							let { id } = product
 							return (
