@@ -72,7 +72,7 @@ export default function CategoryProducts() {
 					onClick={() => {
 						setPage(index / size)
 					}}
-					className={index / size === page ? "border-main-blue border-1 bg-main-blue p-2 text-white font-bold rounded-lg" : "border-main-blue border-1 p-2 text-main-blue font-bold rounded-lg duration-200 hover:bg-main-blue hover:text-white"}
+					className={index / size === page ? "border-main-blue border-1 bg-main-blue px-2 text-white font-bold rounded-lg" : "border-main-blue border-1 px-2 text-main-blue font-bold rounded-lg duration-200 hover:bg-main-blue hover:text-white"}
 				>
 					{index / size}
 				</button>
