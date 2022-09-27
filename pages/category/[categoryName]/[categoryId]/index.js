@@ -153,9 +153,8 @@ export default function CategoryProducts() {
 							text={fromKebabCase(categoryName.toUpperCase())}
 						/>
 					)}
-					<section className="space-y-12">
+					<section className="space-y-4">
 						<SubCategories />
-						<Filter />
 						<CategoryProducts />
 						<Filter />
 					</section>
