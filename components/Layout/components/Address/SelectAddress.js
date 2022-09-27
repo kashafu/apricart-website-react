@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react"
+import axios from "axios"
+import { useDispatch, useSelector } from "react-redux";
+
 import { getGeneralApiParams } from "../../../../helpers/ApiHelpers"
 import { base_url_api } from '../../../../information.json'
-import axios from "axios"
 import SubmitButton from "../Buttons/SubmitButton"
 import AddAddressCard from "./AddAddressCard"
 import SingleAddressListing from "./SingleAddressListing"
-import { useDispatch } from "react-redux";
 import { updateCity, updateSelectedAddress } from "../../../../redux/general.slice"
 
 /*
@@ -15,10 +16,12 @@ import { updateCity, updateSelectedAddress } from "../../../../redux/general.sli
 */
 
 export default function SelectAddress({ type, setAddress, dropDownSelectedAddress }) {
+    const dispatch = useDispatch()
+    const selectedAddressSelector = useSelector(state => state.general.selectedAddress)
+
     const [savedAddresses, setSavedAddresses] = useState([])
     const [selectedAddress, setSelectedAddress] = useState(getGeneralApiParams().selectedAddress)
     const [showAddressCard, setShowAddressCard] = useState(false)
-    const dispatch = useDispatch()
 
     useEffect(() => {
         getSavedAddressesApi()
@@ -41,16 +44,6 @@ export default function SelectAddress({ type, setAddress, dropDownSelectedAddres
         }
     }
 
-    const handleSavedAddressChange = (e) => {
-        setSelectedAddress(e.target.value)
-        if (setAddress) {
-            setAddress(e.target.value)
-        }
-        let parsedAddress = JSON.parse(e.target.value)
-        dispatch(updateSelectedAddress(parsedAddress))
-        dispatch(updateCity(parsedAddress?.city.toLowerCase()))
-    }
-
     return (
         <div className="w-full space-y-2">
             {type === 'checkout' && (
@@ -61,24 +54,24 @@ export default function SelectAddress({ type, setAddress, dropDownSelectedAddres
                     <select
                         className="col-span-2 h-full py-2 lg:px-4 text-xs lg:text-lg rounded-lg bg-slate-200"
                         disabled={false}
-                        onChange={handleSavedAddressChange}
-                        value={JSON.stringify(selectedAddress)}
+                        onChange={(e) => {
+                            let parsedAddress = JSON.parse(e.target.value)
+                            dispatch(updateSelectedAddress(parsedAddress))
+                            dispatch(updateCity(parsedAddress?.city.toLowerCase()))
+                        }}
+                        value={JSON.stringify(selectedAddressSelector)}
                     >
                         <option
-                            value={''}
+                            value={'""'}
                             disabled={true}
-                            selected={true}
+                            selected
                         >
                             Select Address
                         </option>
                         {savedAddresses.map((option) => {
-                            let tempSelectedAddress = {}
-                            if (dropDownSelectedAddress) {
-                                tempSelectedAddress = typeof (dropDownSelectedAddress) === 'object' ? dropDownSelectedAddress : JSON.parse(dropDownSelectedAddress)
-                            }
                             return (
                                 <option
-                                    selected={dropDownSelectedAddress && dropDownSelectedAddress !== '' ? tempSelectedAddress.id == option.id : false}
+                                    selected={selectedAddressSelector !== '' && selectedAddressSelector.id === option.id}
                                     key={option.id}
                                     value={JSON.stringify(option)}
                                 >
