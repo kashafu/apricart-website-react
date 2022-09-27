@@ -2,16 +2,20 @@ import Image from "next/image"
 import Link from "next/link"
 import axios from "axios"
 import { useDispatch, useSelector } from "react-redux"
-import { addToWish } from "../../../../redux/wish.slice"
+import { useState, useEffect } from "react"
+import { toast } from "react-toastify"
+
 import missingImageIcon from "../../../../public/assets/images/missingImage.png"
-import minusIcon from "../../../../public/assets/svgs/minusIcon.svg"
-import plusIcon from "../../../../public/assets/svgs/plusIcon.svg"
+import minusIcon from "../../../../public/assets/svgs/minusIconWhite.svg"
+import plusIcon from "../../../../public/assets/svgs/plusIconWhite.svg"
 import wishlistIcon from "../../../../public/assets/svgs/wishlistIcon.svg"
+import addToCartIcon from "../../../../public/assets/svgs/addToCartIcon.svg"
+import productBackground from "../../../../public/assets/svgs/productBackground.svg"
+
+import { addToWish } from "../../../../redux/wish.slice"
 import { useAddToCartApi } from "../../../../helpers/Api"
 import { base_url_api } from "../../../../information.json"
 import { getGeneralApiParams } from "../../../../helpers/ApiHelpers"
-import { useState, useEffect } from "react"
-import { toast } from "react-toastify"
 import toKebabCase from "../../../../helpers/toKebabCase"
 
 /*
@@ -112,8 +116,16 @@ export default function SingleProduct({ product, isInStock }) {
 	}
 
 	return (
-		<div>
-			<div className="relative grid grid-rows-[7] bg-white px-2 h-[250px] lg:h-[300px] rounded-br-lg border-b-2 border-r-2 duration-75 hover:scale-[1.02] ease-out hover:z-20 hover:border-main-blue hover:drop-shadow-2xl hover:border-2 hover:rounded-lg">
+		<div className="flex flex-col relative duration-75 hover:scale-[1.02] ease-out hover:z-20 h-full w-full">
+			{/* Background image */}
+			<div className="absolute flex h-full w-full">
+				<Image
+					src={productBackground}
+					alt=''
+					layout="fill"
+				/>
+			</div>
+			<div className="relative grid grid-rows-[7] gap-2 place-items-center w-full h-full lg:py-5 px-3 xl:px-5 2xl:px-12">
 				{/* ABSOLUTE image float*/}
 				{showFloatAnimation && (
 					<div
@@ -127,22 +139,8 @@ export default function SingleProduct({ product, isInStock }) {
 						/>
 					</div>
 				)}
-				{/* ABSOLUTE Wishlist*/}
-				<button
-					className="absolute z-10 right-1 top-1 flex items-center rounded-lg"
-					onClick={() => {
-						addToWishlistApi()
-					}}
-				>
-					<Image
-						src={wishlistIcon}
-						width={40}
-						height={40}
-						alt={"icon"}
-					/>
-				</button>
 				{/* IMAGE */}
-				<div className="row-span-4 flex items-center justify-center w-full h-full">
+				<div className="row-span-4 w-5/6 lg:w-2/3 h-full flex grow">
 					<Link
 						href={
 							"/category/" +
@@ -156,92 +154,118 @@ export default function SingleProduct({ product, isInStock }) {
 						}
 						passHref
 					>
-						<a className="relative h-[90px] w-[90px] lg:h-[120px] lg:w-[120px]">
+						<a className="w-full">
 							<Image
 								src={imageUrl}
-								layout={"fill"}
+								layout={"responsive"}
 								alt={"product image"}
+								height={100}
+								width={100}
 							/>
 						</a>
 					</Link>
 				</div>
 				{/* TITLE */}
-				<p className="row-span-1 font-lato font-bold text-left text-sm xl:text-base text-main-blue line-clamp-2 overflow-y-hidden">
+				<p className="row-span-1 place-self-start font-lato text-black font-normal text-left text-xs xl:text-base line-clamp-2 overflow-y-hidden">
 					{title}
 				</p>
-				{/* PRICE */}
-				{specialPrice > 0 ? (
-					<div className="row-span-2 flex flex-col justify-center">
-						<p className="text-sm lg:text-lg text-left font-bold text-main-blue line-through decoration-red-600">
-							Rs. {currentPrice}
-						</p>
-						<p className="text-xl lg:text-2xl text-left font-bold text-main-blue">
-							Rs. {specialPrice}
-						</p>
+				{/* PRICE and  ADD TO CART*/}
+				<div className="row-span-1 flex items-center w-full justify-between px-2 pb-8">
+					{/* PRICE */}
+					<div className="flex w-fit flex-col justify-center">
+						{specialPrice > 0 ? (
+							<>
+								<p className="text-xs lg:text-sm 2xl:text-lg text-left font-bold text-black line-through decoration-red-600">
+									Rs. {currentPrice}
+								</p>
+								<p className="text-sm lg:text-base 2xl:text-xl text-left font-bold text-black">
+									Rs. {specialPrice}
+								</p>
+							</>
+						) : (
+							<p className="text-sm lg:text-base 2xl:text-xl text-left font-bold text-black">
+								Rs. {currentPrice}
+							</p>
+						)}
 					</div>
-				) : (
-					<p className="row-span-2 flex items-center text-xl lg:text-2xl text-left font-bold text-main-blue">
-						Rs. {currentPrice}
-					</p>
-				)}
-				{/* ADD TO CART */}
-				<div className="row-span-1 h-[32px] flex justify-center self-end mb-2">
-					<div className="h-full w-2/3">
+					{/* ADD TO CART */}
+					<div className="flex justify-center w-1/2 h-full">
 						{inStock ? (
-							<div className="relative flex flex-row items-center h-full w-full">
+							<>
 								{showQty ? (
-									<div className="animate-fade-in transition-transform grid grid-cols-3 justify-items-center bg-slate-200 rounded-full h-full grow overflow-hidden">
+									<div className="w-full h-full animate-fade-in transition-transform grid grid-cols-3 justify-items-center bg-main-blue rounded-md">
 										<button
-											className="flex items-center relative transition-transform hover:scale-125 duration-100 my-1"
+											className="flex items-center relative transition-transform hover:scale-125 duration-100"
 											onClick={() => {
 												setQtyHandler("decrement")
 											}}
 										>
-											<Image
-												height={10}
-												width={10}
-												src={minusIcon}
-												alt={"icon"}
-											/>
+											<div className="relative h-[10px] w-[10px] lg:h-[15px] lg:w-[15px]">
+												<Image
+													src={minusIcon}
+													layout='fill'
+													alt=''
+												/>
+											</div>
 										</button>
-										<div className="flex flex-col font-bold w-full text-main-blue text-2xl text-center">
-											<p className="mt-auto mb-auto">
-												{qty}
-											</p>
-										</div>
+										<p className="font-nunito text-sm lg:text-lg font-bold text-white text-center">
+											{qty}
+										</p>
 										<button
-											className="flex items-center relative transition-transform hover:scale-125 duration-100 my-1"
+											className="flex items-center relative transition-transform hover:scale-125 duration-100"
 											onClick={() => {
 												setQtyHandler("increment")
 											}}
 										>
-											<Image
-												height={10}
-												width={10}
-												src={plusIcon}
-												alt={"icon"}
-											/>
+											<div className="relative h-[10px] w-[10px] lg:h-[15px] lg:w-[15px]">
+												<Image
+													src={plusIcon}
+													layout='fill'
+													alt=''
+												/>
+											</div>
 										</button>
 									</div>
 								) : (
-									<button
-										className="flex justify-center items-center w-full h-full bg-main-blue rounded-full overflow-hidden hover:scale-105 duration-100 hover:text-black text-white"
-										onClick={() => {
-											setIsPlaceOrder(true)
-											setShowQty(true)
-											setShowFloatAnimation(true)
+									<div className="flex flex-row w-full justify-around space-x-1">
+										<div
+											className="drop-shadow-lg p-1 flex items-center justify-center bg-white rounded-md hover:scale-105 duration-100"
+											onClick={() => {
+												setIsPlaceOrder(true)
+												setShowQty(true)
+												setShowFloatAnimation(true)
 
-											// timeout same as animate-float-up
-											setTimeout(function () {
-												// setFloatStyle('hidden')
-												setShowFloatAnimation(false)
-											}, 2000)
-										}}
-									>
-										<p className="font-bold">Add To Cart</p>
-									</button>
+												// timeout same as animate-float-up
+												setTimeout(function () {
+													setShowFloatAnimation(false)
+												}, 2000)
+											}}
+										>
+											<div className="relative h-[18px] w-[18px] lg:h-[30px] lg:w-[30px]">
+												<Image
+													src={addToCartIcon}
+													layout='fill'
+													alt=''
+												/>
+											</div>
+										</div>
+										<div
+											className="drop-shadow-lg p-1 flex items-center justify-center bg-white rounded-md hover:scale-105 duration-100"
+											onClick={() => {
+												addToWishlistApi()
+											}}
+										>
+											<div className="relative h-[18px] w-[18px] lg:h-[30px] lg:w-[30px]">
+												<Image
+													src={wishlistIcon}
+													layout='fill'
+													alt=''
+												/>
+											</div>
+										</div>
+									</div>
 								)}
-							</div>
+							</>
 						) : (
 							<div className="relative flex flex-row items-center h-full w-full">
 								<button

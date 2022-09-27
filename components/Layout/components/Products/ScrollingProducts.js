@@ -7,7 +7,7 @@ export default function ScrollingProducts({ products }) {
         infinite: true,
         speed: 500,
         autoplay: true,
-        slidesToShow: 3,
+        slidesToShow: 4,
         centerMargin: "20px",
         slidesToScroll: 1,
         autoplaySpeed: 2000,
@@ -16,7 +16,7 @@ export default function ScrollingProducts({ products }) {
             {
                 breakpoint: 1024,
                 settings: {
-                    slidesToShow: 3,
+                    slidesToShow: 4,
                     slidesToScroll: 1,
                     infinite: true,
                     dots: false,
@@ -42,8 +42,8 @@ export default function ScrollingProducts({ products }) {
         ],
     }
 
-    if(!products){
-        return(
+    if (!products) {
+        return (
             <div>
                 Loading
             </div>
@@ -51,19 +51,19 @@ export default function ScrollingProducts({ products }) {
     }
 
     return (
-        <section className="">
-            <Slider {...settings} className=''>
-                {products.map((product)=>{
-                    let {id} = product
-                    return(
-                        <section key={id} className='lg:px-4 py-12'>
+        <section className="h-full w-full">
+            <Slider {...settings} className='h-full w-full'>
+                {products.map((product) => {
+                    let { id } = product
+                    return (
+                        <section key={id} className='lg:px-4 py-12 h-full w-full'>
                             <SingleProduct
                                 product={product}
                             />
                         </section>
                     )
                 })}
-            </Slider>               
+            </Slider>
         </section>
     )
 }

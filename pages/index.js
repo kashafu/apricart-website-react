@@ -23,13 +23,14 @@ import crossIcon from "../public/assets/svgs/crossIcon.svg"
 import { clearCookies } from "../helpers/Cookies"
 import { clearLocalStorage, clearSessionStorage } from "../helpers/Storage"
 import MainProductsShimmer from "../components/Layout/components/Loaders/Shimmers/MainProductsShimmer"
+import MainCategories from "../components/Layout/components/Categories/MainCategories"
 
 export default function Home() {
 	const router = useRouter()
 	const dispatch = useDispatch()
 	const selectedTypeSelector = useSelector(state => state.general.selectedType)
 	const isShowSelectionScreen = useSelector(state => state.general.isShowSelectionScreen)
-	const { isLoading, isPopupAd, homeData, errorMessage } = useHomeApi()
+	const { isLoading, isPopupAd, homeData, errorMessage, categories } = useHomeApi()
 	const [showPopupAd, setShowPopupAd] = useState(isPopupAd)
 
 	useEffect(() => {
@@ -215,7 +216,7 @@ export default function Home() {
 		}
 
 		return (
-			<section className="space-y-12">
+			<section className="space-y-4">
 				{homeData.products.map((product, index) => {
 					let { identifier } = product
 					return (
@@ -315,6 +316,9 @@ export default function Home() {
 						)}
 					</div>
 				</div>
+				<MainCategories
+					categories={categories}
+				/>
 				<Products />
 			</div>
 		)
