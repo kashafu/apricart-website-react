@@ -125,7 +125,7 @@ export default function SingleProduct({ product, isInStock }) {
 					layout="fill"
 				/>
 			</div>
-			<div className="relative grid grid-rows-[7] gap-2 place-items-center w-full h-full py-5 px-3 xl:px-5 2xl:px-12">
+			<div className="relative grid grid-rows-[7] gap-2 place-items-center w-full h-full lg:py-5 px-3 xl:px-5 2xl:px-12">
 				{/* ABSOLUTE image float*/}
 				{showFloatAnimation && (
 					<div
@@ -139,20 +139,6 @@ export default function SingleProduct({ product, isInStock }) {
 						/>
 					</div>
 				)}
-				{/* ABSOLUTE Wishlist*/}
-				{/* <button
-						className="absolute z-10 right-1 top-1 flex items-center rounded-lg"
-						onClick={() => {
-							addToWishlistApi()
-						}}
-					>
-						<Image
-							src={wishlistIcon}
-							width={40}
-							height={40}
-							alt={"icon"}
-						/>
-					</button> */}
 				{/* IMAGE */}
 				<div className="row-span-4 w-5/6 lg:w-2/3 h-full flex grow">
 					<Link
@@ -214,7 +200,7 @@ export default function SingleProduct({ product, isInStock }) {
 												setQtyHandler("decrement")
 											}}
 										>
-											<div className="relative h-[18px] w-[18px] lg:h-[15px] lg:w-[15px]">
+											<div className="relative h-[10px] w-[10px] lg:h-[15px] lg:w-[15px]">
 												<Image
 													src={minusIcon}
 													layout='fill'
@@ -231,7 +217,7 @@ export default function SingleProduct({ product, isInStock }) {
 												setQtyHandler("increment")
 											}}
 										>
-											<div className="relative h-[18px] w-[18px] lg:h-[15px] lg:w-[15px]">
+											<div className="relative h-[10px] w-[10px] lg:h-[15px] lg:w-[15px]">
 												<Image
 													src={plusIcon}
 													layout='fill'
@@ -266,7 +252,7 @@ export default function SingleProduct({ product, isInStock }) {
 										<div
 											className="drop-shadow-lg p-1 flex items-center justify-center bg-white rounded-md hover:scale-105 duration-100"
 											onClick={() => {
-
+												addToWishlistApi()
 											}}
 										>
 											<div className="relative h-[18px] w-[18px] lg:h-[30px] lg:w-[30px]">

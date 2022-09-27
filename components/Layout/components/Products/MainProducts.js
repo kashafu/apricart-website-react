@@ -27,7 +27,7 @@ export default function MainProducts({ section }) {
 					</p>
 					{identifier === "mostviewed" && (
 						<Link href={"/products/most-viewed"} passHref>
-							<a className="bg-main-blue px-10 py-2 h-full rounded-md flex items-center">
+							<a className="bg-main-blue px-6 py-1 h-full rounded-md flex items-center">
 								<p className="text-white font-nunito font-normal text-xs lg:text-lg">
 									View All
 								</p>
@@ -36,7 +36,7 @@ export default function MainProducts({ section }) {
 					)}
 					{identifier === "recommended" && (
 						<Link href={"/products/recommended"} passHref>
-							<a className="bg-main-blue px-10 py-2 h-full rounded-md flex items-center">
+							<a className="bg-main-blue px-6 py-1 h-full rounded-md flex items-center">
 								<p className="text-white font-nunito font-normal text-xs lg:text-lg">
 									View All
 								</p>
@@ -89,7 +89,7 @@ export default function MainProducts({ section }) {
 						layout={'responsive'}
 						alt={"banner image"}
 						width={'100%'}
-						height={20}
+						height={25}
 					/>
 				) : (
 					<Link

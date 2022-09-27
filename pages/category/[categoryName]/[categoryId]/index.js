@@ -51,7 +51,7 @@ export default function CategoryProducts() {
 									passHref
 								>
 									<a className="transition-all duration-100 rounded-xl shadow-sm px-4 border-main-blue border-2 hover:bg-main-blue text-main-blue hover:text-white">
-										<p className="flex flex-col h-full w-full items-center font-lato text-center text-lg font-bold py-2 truncate">
+										<p className="flex flex-col h-full w-full items-center font-lato text-center text-lg font-bold truncate">
 											{name}
 										</p>
 									</a>
@@ -72,7 +72,7 @@ export default function CategoryProducts() {
 					onClick={() => {
 						setPage(index / size)
 					}}
-					className={index / size === page ? "border-main-blue border-1 bg-main-blue p-2 text-white font-bold rounded-lg" : "border-main-blue border-1 p-2 text-main-blue font-bold rounded-lg duration-200 hover:bg-main-blue hover:text-white"}
+					className={index / size === page ? "border-main-blue border-1 bg-main-blue px-2 text-white font-bold rounded-lg" : "border-main-blue border-1 px-2 text-main-blue font-bold rounded-lg duration-200 hover:bg-main-blue hover:text-white"}
 				>
 					{index / size}
 				</button>
@@ -153,9 +153,8 @@ export default function CategoryProducts() {
 							text={fromKebabCase(categoryName.toUpperCase())}
 						/>
 					)}
-					<section className="space-y-12">
+					<section className="space-y-4">
 						<SubCategories />
-						<Filter />
 						<CategoryProducts />
 						<Filter />
 					</section>

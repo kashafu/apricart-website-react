@@ -11,12 +11,12 @@ const MainCategories = ({ categories }) => {
         <section className="space-y-4 px-2 py-2">
             <div className="w-full border-b border-main-blue-100 py-2">
                 <div className="flex flex-row items-center w-full justify-between">
-                    <p className="text-2xl text-main-blue font-bold">
+                    <p className="text-lg lg:text-[22px] text-main-blue font-bold">
                         Shop By Category
                     </p>
                     <Link href={"/category"} passHref>
-                        <a className="bg-main-blue px-4 h-1/2 rounded-xl flex items-center">
-                            <p className="text-white font-bold text-md lg:text-lg">
+                        <a className="bg-main-blue px-6 py-1 h-full rounded-md flex items-center">
+                            <p className="text-white font-nunito font-normal text-xs lg:text-lg">
                                 View All
                             </p>
                         </a>

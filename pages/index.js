@@ -223,7 +223,7 @@ export default function Home() {
 		}
 
 		return (
-			<section className="space-y-12">
+			<section className="space-y-4">
 				{homeData.products.map((product, index) => {
 					let { identifier } = product
 					return (
