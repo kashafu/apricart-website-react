@@ -39,7 +39,7 @@ const OtpJsPopup = ({ setShowJsScreen }) => {
                     <p className="font-nunito text-js text-xl text-center">
                         Authentication
                     </p>
-                    <p className="text-nunito text-black font-semibold">
+                    <p className="text-nunito text-black text-center font-semibold">
                         Enter the 4-digit OTP for +92{redirectInformationSelector.phoneNumber}
                     </p>
                     <div className="flex space-x-2 w-4/5">

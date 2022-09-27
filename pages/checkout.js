@@ -360,24 +360,47 @@ export default function Checkout() {
 								<div className="flex flex-col space-y-2">
 									{paymentMethods.map((method) => {
 										let { id, name, key } = method
-										{/* if (key === "jswallet") {
-											return <div key={id}></div>
-										} */}
-										return (
-											<div key={id} className='flex items-center space-x-2'>
-												<input
-													value={key}
-													type={"radio"}
-													onChange={(e) => {
-														setPaymentMethod(e.target.value)
-													}}
-													checked={paymentMethod === key}
-												/>
-												<p>
-													{name}
-												</p>
-											</div>
-										)
+
+										{/* ZINDIGI */ }
+										if (redirectSourceSelector === 'js_bank') {
+											if (key === "jswallet") {
+												return (
+													<div key={id} className='flex items-center space-x-2'>
+														<input
+															value={key}
+															type={"radio"}
+															onChange={(e) => {
+																setPaymentMethod(e.target.value)
+															}}
+															checked={paymentMethod === key}
+														/>
+														<p>
+															{name}
+														</p>
+													</div>
+												)
+											}
+										}
+										else {
+											if (key === "jswallet") {
+												return <div key={id}></div>
+											}
+											return (
+												<div key={id} className='flex items-center space-x-2'>
+													<input
+														value={key}
+														type={"radio"}
+														onChange={(e) => {
+															setPaymentMethod(e.target.value)
+														}}
+														checked={paymentMethod === key}
+													/>
+													<p>
+														{name}
+													</p>
+												</div>
+											)
+										}
 									})}
 								</div>
 							</div>
@@ -437,15 +460,11 @@ export default function Checkout() {
 	}
 
 	const JsScreen = () => {
-		const [showJsPopup, setShowJsPopup] = useState(false)
+		const [showJsPopup, setShowJsPopup] = useState(true)
 		const [showJsOtp, setShowJsOtp] = useState(false)
 
 		useEffect(() => {
-			setShowJsPopup(redirectSourceSelector === 'js_bank')
-		}, [])
-
-		useEffect(() => {
-			if (showJsPopup) {
+			if (showJsPopup && showJsOtp) {
 				setShowJsPopup(false)
 			}
 		}, [showJsOtp])
