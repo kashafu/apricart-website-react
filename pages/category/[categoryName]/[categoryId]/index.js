@@ -123,7 +123,6 @@ export default function CategoryProducts() {
 							<div key={sku}>
 								<SingleProduct
 									product={product}
-								// TODO call api to get updated details of product and check if it is in stock
 								/>
 							</div>
 						)
@@ -135,12 +134,14 @@ export default function CategoryProducts() {
 
 	return (
 		<div>
-			<HeadTag
-				title={
-					fromKebabCase(categoryName)[0].toUpperCase() +
-					fromKebabCase(categoryName).substring(1)
-				}
-			/>
+			{router.isReady && (
+				<HeadTag
+					title={
+						fromKebabCase(categoryName)[0].toUpperCase() +
+						fromKebabCase(categoryName).substring(1)
+					}
+				/>
+			)}
 			<div className="grid grid-cols-5 gap-8">
 				{/* CATEGORIES SECTION */}
 				<section className="hidden lg:col-span-1 lg:block">
