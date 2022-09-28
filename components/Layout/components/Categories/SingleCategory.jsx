@@ -16,9 +16,9 @@ const SingleCategory = ({ category }) => {
             }
             passHref
         >
-            <a className="w-full grow flex flex-col gap-y-4 bg-white">
+            <a className="w-full grow flex group flex-col gap-y-4 bg-white">
                 <div className="w-full flex items-center justify-center rounded-full aspect-square overflow-hidden shadow-xl">
-                    <div className="w-2/3 items-center">
+                    <div className="w-2/3 items-center group-hover:scale-105 duration-200">
                         <Image
                             src={image}
                             layout={'responsive'}
