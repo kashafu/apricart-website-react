@@ -175,15 +175,15 @@ export default function SingleProduct({ product, isInStock }) {
 					<div className="flex w-fit flex-col justify-center">
 						{specialPrice > 0 ? (
 							<>
-								<p className="text-xs lg:text-sm 2xl:text-lg text-left font-bold text-black line-through decoration-red-600">
+								<p className="text-xs lg:text-sm 2xl:text-base text-left font-bold text-black line-through decoration-red-600">
 									Rs. {currentPrice}
 								</p>
-								<p className="text-sm lg:text-base 2xl:text-xl text-left font-bold text-black">
+								<p className="text-sm lg:text-base 2xl:text-lg text-left font-bold text-black">
 									Rs. {specialPrice}
 								</p>
 							</>
 						) : (
-							<p className="text-sm lg:text-base 2xl:text-xl text-left font-bold text-black">
+							<p className="text-sm lg:text-base 2xl:text-lg text-left font-bold text-black">
 								Rs. {currentPrice}
 							</p>
 						)}
