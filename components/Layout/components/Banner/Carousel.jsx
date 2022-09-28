@@ -50,11 +50,15 @@ const Carousel = () => {
                     {selectedTypeSelector === 'home' && (
                         <Slider {...settings}>
                             <div className="w-full h-full">
-                                <Image
-                                    src={karachiScrollingBanner1}
-                                    layout={"responsive"}
-                                    alt="banner"
-                                />
+                                <Link href={'/offers/77'} passHref>
+                                    <a className="w-full h-full">
+                                        <Image
+                                            src={karachiScrollingBanner1}
+                                            layout={"responsive"}
+                                            alt="banner"
+                                        />
+                                    </a>
+                                </Link>
                             </div>
                             <div className='w-full h-full'>
                                 <Link href={'/offers/76'} passHref>
@@ -72,13 +76,17 @@ const Carousel = () => {
                     {selectedTypeSelector === 'cnc' && (
                         <Slider {...settings}>
                             <div className="w-full h-full">
-                                <Image
-                                    src={karachiScrollingBanner1}
-                                    layout={"responsive"}
-                                    alt="banner"
-                                />
+                                <Link href={'/offers/77'} passHref>
+                                    <a className="w-full h-full">
+                                        <Image
+                                            src={karachiScrollingBanner1}
+                                            layout={"responsive"}
+                                            alt="banner"
+                                        />
+                                    </a>
+                                </Link>
                             </div>
-                            <div className='w-full h-full'>
+                            {/* <div className='w-full h-full'>
                                 <Link href={'/offers/76'} passHref>
                                     <a className="w-full h-full">
                                         <Image
@@ -88,7 +96,7 @@ const Carousel = () => {
                                         />
                                     </a>
                                 </Link>
-                            </div>
+                            </div> */}
                         </Slider>
                     )}
 
