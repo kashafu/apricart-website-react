@@ -70,7 +70,7 @@ export default function MainProducts({ section }) {
 						})}
 					</section>
 					{/* DESKTOP VIEW PRODUCTS */}
-					<section className="hidden xl:grid xl:grid-cols-5 2xl:grid-cols-6 gap-2">
+					<section className="hidden xl:grid xl:grid-cols-5 3xl:grid-cols-6 gap-2">
 						{data.slice(0, numberOfProductsDesktop).map((product) => {
 							let { id } = product
 							return (
