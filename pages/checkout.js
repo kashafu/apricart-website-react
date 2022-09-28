@@ -494,7 +494,7 @@ export default function Checkout() {
 		return (
 			<>
 				<HeadTag title={"Checkout"} />
-				<h5 className="login-token"> Please Login First</h5>
+				<h5 className=""> Please Login First</h5>
 			</>
 		)
 	}
@@ -517,19 +517,19 @@ export default function Checkout() {
 		return (
 			<>
 				<HeadTag title={"Checkout"} />
-				<h5 className="login-token">YOUR CART IS EMPTY</h5>
+				<h5 className="">YOUR CART IS EMPTY</h5>
 			</>
 		)
 	}
 
-	if (!initialCartProducts) {
-		return (
-			<div>
-				<HeadTag title={"Checkout"} />
-				<h5 className="login-token">Fetching cart...</h5>
-			</div>
-		)
-	}
+	// if (isLoading) {
+	// 	return (
+	// 		<div>
+	// 			<HeadTag title={"Checkout"} />
+	// 			<h5 className="">Fetching cart...</h5>
+	// 		</div>
+	// 	)
+	// }
 
 	return (
 		<div className="h-full w-full">

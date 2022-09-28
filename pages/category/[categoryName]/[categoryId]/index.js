@@ -116,7 +116,7 @@ export default function CategoryProducts() {
 
 		return (
 			<section>
-				<section className="grid grid-cols-2 md:grid-cols-4 2xl:grid-cols-5 gap-4">
+				<section className="grid grid-cols-2 md:grid-cols-4 xl:grid-cols-5 3xl:grid-cols-6 gap-4">
 					{categoryProducts.map((product) => {
 						let { sku } = product
 						return (
