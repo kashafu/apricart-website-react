@@ -494,7 +494,7 @@ export default function Checkout() {
 
 		return (
 			<div className="flex flex-col w-full bg-white lg:border-l-2 border-t-2 lg:border-t-0">
-				<div className="overflow-y-auto max-h-64 divide-y">
+				<div className="overflow-y-auto w-full max-h-64 divide-y">
 					{reduxCart.map((product) => {
 						return (
 							<CartItemListing
@@ -565,7 +565,7 @@ export default function Checkout() {
 		return (
 			<>
 				<HeadTag title={"Checkout"} />
-				<h5 className="login-token"> Please Login First</h5>
+				<h5 className=""> Please Login First</h5>
 			</>
 		)
 	}
@@ -588,19 +588,19 @@ export default function Checkout() {
 		return (
 			<>
 				<HeadTag title={"Checkout"} />
-				<h5 className="login-token">YOUR CART IS EMPTY</h5>
+				<h5 className="">YOUR CART IS EMPTY</h5>
 			</>
 		)
 	}
 
-	if (!initialCartProducts) {
-		return (
-			<div>
-				<HeadTag title={"Checkout"} />
-				<h5 className="login-token">Fetching cart...</h5>
-			</div>
-		)
-	}
+	// if (isLoading) {
+	// 	return (
+	// 		<div>
+	// 			<HeadTag title={"Checkout"} />
+	// 			<h5 className="">Fetching cart...</h5>
+	// 		</div>
+	// 	)
+	// }
 
 	return (
 		<div className="h-full w-full">
@@ -614,13 +614,13 @@ export default function Checkout() {
 				<div className={viewState === 'review' ? "lg:col-span-5 2xl:col-span-6 flex flex-col w-full items-center" : "lg:col-span-3 2xl:col-span-4 flex flex-col w-full items-center"}>
 					{/* CART DIV for phone*/}
 					{viewState !== 'review' && (
-						<div className="lg:hidden">
+						<div className="lg:hidden w-full">
 							<Cart />
 						</div>
 					)}
 					<DetailsArea />
 					{viewState !== 'review' && (
-						<div className="lg:hidden">
+						<div className="lg:hidden w-full">
 							<CartDetails />
 						</div>
 					)}

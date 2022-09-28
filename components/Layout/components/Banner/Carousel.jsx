@@ -3,12 +3,12 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useSelector } from 'react-redux'
 
-import karachiCncBanner from '../../../../public/assets/images/banners/cncBlessedFridayCarousel.png'
-import karachiScrollingBanner1 from '../../../../public/assets/images/banners/saylaniCarousel.jpg'
-import karachiScrollingBanner2 from '../../../../public/assets/images/banners/homeDeliveryCarousel.png'
+// import karachiCncBanner from '../../../../public/assets/images/banners/cncBlessedFridayCarousel.png'
+import karachiScrollingBanner1 from '../../../../public/assets/images/banners/homeDeliveryCarousel2.png'
+import karachiScrollingBanner2 from '../../../../public/assets/images/banners/homeDeliveryCarousel3.png'
 import peshawarScrollingBanner from '../../../../public/assets/images/banners/peshawarBulkBuyCarousel3.png'
 import bulkBuyBanner from '../../../../public/assets/images/banners/bulkBuyCarousel.png'
-import bulkBuyBanner2 from '../../../../public/assets/images/banners/bulkBuyCarousel2.png'
+// import bulkBuyBanner2 from '../../../../public/assets/images/banners/bulkBuyCarousel2.png'
 
 const Carousel = () => {
     const citySelector = useSelector(state => state.general.city)
@@ -38,29 +38,33 @@ const Carousel = () => {
                                     alt="banner"
                                 />
                             </div>
-                            <div className="w-full h-full">
+                            {/* <div className="w-full h-full">
                                 <Image
                                     src={bulkBuyBanner2}
                                     layout={"responsive"}
                                     alt="banner"
                                 />
-                            </div>
+                            </div> */}
                         </Slider>
                     )}
                     {selectedTypeSelector === 'home' && (
                         <Slider {...settings}>
                             <div className="w-full h-full">
-                                <Image
-                                    src={karachiScrollingBanner2}
-                                    layout={"responsive"}
-                                    alt="banner"
-                                />
-                            </div>
-                            <div className='w-full h-full'>
-                                <Link href={'/offers/45'} passHref>
+                                <Link href={'/offers/77'} passHref>
                                     <a className="w-full h-full">
                                         <Image
                                             src={karachiScrollingBanner1}
+                                            layout={"responsive"}
+                                            alt="banner"
+                                        />
+                                    </a>
+                                </Link>
+                            </div>
+                            <div className='w-full h-full'>
+                                <Link href={'/offers/76'} passHref>
+                                    <a className="w-full h-full">
+                                        <Image
+                                            src={karachiScrollingBanner2}
                                             layout={"responsive"}
                                             alt="banner"
                                         />
@@ -72,12 +76,27 @@ const Carousel = () => {
                     {selectedTypeSelector === 'cnc' && (
                         <Slider {...settings}>
                             <div className="w-full h-full">
-                                <Image
-                                    src={karachiCncBanner}
-                                    layout={"responsive"}
-                                    alt="banner"
-                                />
+                                <Link href={'/offers/77'} passHref>
+                                    <a className="w-full h-full">
+                                        <Image
+                                            src={karachiScrollingBanner1}
+                                            layout={"responsive"}
+                                            alt="banner"
+                                        />
+                                    </a>
+                                </Link>
                             </div>
+                            {/* <div className='w-full h-full'>
+                                <Link href={'/offers/76'} passHref>
+                                    <a className="w-full h-full">
+                                        <Image
+                                            src={karachiScrollingBanner2}
+                                            layout={"responsive"}
+                                            alt="banner"
+                                        />
+                                    </a>
+                                </Link>
+                            </div> */}
                         </Slider>
                     )}
 

@@ -293,13 +293,13 @@ export default function Home() {
 						)}
 						{selectedTypeSelector === 'cnc' && (
 							<Link
-								href={"/"}
+								href={"/category/under-rs.99/1242"}
 								passHref
 								className="w-full"
 							>
 								<a className="w-full">
 									<Image
-										src={karachiCncStaticBanner1}
+										src={karachiStaticBanner1}
 										layout={"responsive"}
 										alt="banner"
 									/>
