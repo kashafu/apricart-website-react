@@ -166,7 +166,7 @@ export default function SingleProduct({ product, isInStock }) {
 					</Link>
 				</div>
 				{/* TITLE */}
-				<p className="row-span-1 place-self-start font-lato text-black font-normal text-left text-xs xl:text-base line-clamp-2 overflow-y-hidden">
+				<p className="row-span-1 px-1 lg:px-2 place-self-start font-lato text-black font-normal text-left text-xs xl:text-base line-clamp-2 overflow-y-hidden">
 					{title}
 				</p>
 				{/* PRICE and  ADD TO CART*/}
