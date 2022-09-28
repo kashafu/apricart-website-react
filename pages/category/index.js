@@ -1,48 +1,56 @@
-import { useState, useEffect } from "react";
-import axios from "axios";
-import { getGeneralApiParams } from "../../helpers/ApiHelpers";
-import { base_url_api } from '../../information.json'
-import Categories from "../../components/Layout/components/Categories/Categories";
+import MainCategories from '../../components/Layout/components/Categories/MainCategories'
+import SingleCategory from '../../components/Layout/components/Categories/SingleCategory'
+import HeadTag from '../../components/Layout/components/Head/HeadTag'
+import PageHeading from '../../components/Layout/components/Typography/PageHeading'
+import { useCategoriesApi } from '../../helpers/Api'
 
-export default function Posts({ posts }) {
+const CategoriesListing = () => {
+	const Categories = () => {
+		const { isLoading, errorResponse, errorMessage, categories } = useCategoriesApi()
+
+		if (isLoading) {
+			return <>
+
+			</>
+		}
+
+		if (errorResponse) {
+			<p>
+				{errorMessage}
+			</p>
+		}
+
+		return (
+			<section>
+				<section className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-5 2xl:grid-cols-8 gap-4">
+					{categories.map((category) => {
+						let { id } = category
+						return (
+							<div key={id}>
+								<SingleCategory
+									category={category}
+								/>
+							</div>
+						)
+					})}
+				</section>
+			</section>
+		)
+	}
+
 	return (
 		<div className="w-full">
-			<div className="w-full">
+			<HeadTag
+				title="Categories"
+			/>
+			<PageHeading
+				text={"CATEGORIES"}
+			/>
+			<section className="w-full">
 				<Categories />
-			</div>
+			</section>
 		</div>
 	)
-	// console.log("Data product", posts)
-	// return (
-	// 	<ul>
-	// 		{posts.map((post) => {
-	// 			return (
-	// 				<li key={post.id}>
-	// 					<h3>
-	// 						<Link href="/category/[id]" as={"/category/" + post.id}>
-	// 							<a>{post.name}</a>
-	// 						</Link>
-	// 					</h3>
-
-	// 				</li>
-	// 			);
-	// 		})}
-	// 	</ul>
-	// );
 }
 
-// export async function getServerSideProps() {
-// 	const res = await fetch("https://stag.apricart.pk/v1/catalog/categories?level=all");
-
-// 	const getdata = await res.json();
-// 	const posts = getdata.data
-// 	// const  posts = await postData.data.childrenData;
-
-
-
-// 	return {
-// 		props: {
-// 			posts,
-// 		},
-// 	};
-// }
+export default CategoriesListing

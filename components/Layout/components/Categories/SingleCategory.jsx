@@ -29,7 +29,7 @@ const SingleCategory = ({ category }) => {
                     </div>
                 </div>
                 <div className="w-full h-full flex flex-col items-center justify-center">
-                    <p className="text-center text-main-blue font-bold text-xs">
+                    <p className="text-center text-main-blue font-bold text-xs lg:text-lg">
                         {name}
                     </p>
                 </div>
