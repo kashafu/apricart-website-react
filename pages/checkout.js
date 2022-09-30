@@ -13,6 +13,7 @@ import HeadTag from "../components/Layout/components/Head/HeadTag"
 import { useInitialCartDataApi, usePickupLocationsApi } from "../helpers/Api"
 import PickupLocationSelector from "../components/Layout/components/Selectors/PickupLocationSelector"
 import CartItemListing from "../components/Layout/components/Cart/CartItemListing"
+import CartDetailsShimmer from "../components/Layout/components/Loaders/Shimmers/CartDetailsShimmer"
 
 export default function Checkout() {
 	const dispatch = useDispatch()
@@ -445,7 +446,7 @@ export default function Checkout() {
 		let pRight = "font-lato text-lg font-bold text-right"
 
 		if (isLoading) {
-			return <></>
+			return <CartDetailsShimmer />
 		}
 
 		let {
