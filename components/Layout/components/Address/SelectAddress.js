@@ -15,7 +15,7 @@ import { updateCity, updateSelectedAddress } from "../../../../redux/general.sli
     'manage' allows u to edit address and select
 */
 
-export default function SelectAddress({ type, setAddress, dropDownSelectedAddress }) {
+export default function SelectAddress({ type }) {
     const dispatch = useDispatch()
     const selectedAddressSelector = useSelector(state => state.general.selectedAddress)
 

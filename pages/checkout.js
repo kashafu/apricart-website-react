@@ -316,7 +316,6 @@ export default function Checkout() {
 						) : (
 							<SelectAddress
 								type={"checkout"}
-								dropDownSelectedAddress={selectedAddressSelector}
 							/>
 						)}
 						<ErrorText text={errorMessage} />

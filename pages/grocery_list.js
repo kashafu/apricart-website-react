@@ -67,9 +67,7 @@ export default function GroceryList() {
 				<section className="flex flex-col p-2 space-y-4 lg:w-2/3 items-center align-center bg-slate-100 shadow rounded-3xl">
 					<PageHeading text={"Type Your Grocery List"} />
 					<SelectAddress
-						setAddress={setAddress}
 						type={"checkout"}
-						dropDownSelectedAddress={address}
 					/>
 					<TextArea
 						label={"Grocery List"}
