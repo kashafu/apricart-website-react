@@ -1,9 +1,7 @@
-import { useEffect, useState } from "react"
-import axios from "axios"
+import { useState, memo } from "react"
 import { useDispatch, useSelector } from "react-redux";
 
 import { getGeneralApiParams } from "../../../../helpers/ApiHelpers"
-import { base_url_api } from '../../../../information.json'
 import SubmitButton from "../Buttons/SubmitButton"
 import AddAddressCard from "./AddAddressCard"
 import SingleAddressListing from "./SingleAddressListing"
@@ -16,7 +14,7 @@ import { useSavedAddressesApi } from "../../../../helpers/Api";
     'manage' allows u to edit address and select
 */
 
-export default function SelectAddress({ type }) {
+const SelectAddress = ({ type }) => {
     const dispatch = useDispatch()
     const selectedAddressSelector = useSelector(state => state.general.selectedAddress)
 
@@ -103,3 +101,5 @@ export default function SelectAddress({ type }) {
         </div>
     )
 }
+
+export default memo(SelectAddress)
