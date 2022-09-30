@@ -1,53 +1,38 @@
-import { createContext, useState } from "react";
+import { useRouter } from "next/router";
+
 import TopBar from "./components/TopBar/TopBar";
 import Header from "./components/Header/Header";
 import Copyrights from "./components/Footer/Copyrights";
-import { useRouter } from "next/router";
-import { getGeneralApiParams } from "../../helpers/ApiHelpers";
 import Footer from "./components/Footer/Footer";
 
-export const AppContext = createContext();
-
 export default function Layout(props) {
-	const router = useRouter();
-	const [appState, setAppState] = useState({ sideDrawerStatus: false });
-
-	const handleAppState = (newState) => {
-		setAppState({ ...appState, ...newState });
-	};
-
-	// if (token && !selectedAddress) {
-	// 	toast.warn("Please select your delivery address")
-	// 	console.log("Please select your delivery address")
-	// }
+	const router = useRouter()
 
 	return (
-		<AppContext.Provider value={{ appState, handleAppState }}>
-			<div className="flex flex-col min-h-screen max-w-screen">
-				{!(
-					router.pathname === "/privacy-policy-mobile" ||
-					router.pathname === "/terms-of-use-mobile" ||
-					router.pathname === "/faqs-mobile"
-				) && (
-					<div>
+		<div className="flex flex-col min-h-screen max-w-screen bg-white" id="app">
+			{!(
+				router.pathname === "/privacy-policy-mobile" ||
+				router.pathname === "/terms-of-use-mobile" ||
+				router.pathname === "/faqs-mobile"
+			) && (
+					<div className="mb-2">
 						<TopBar />
 						<Header />
 					</div>
 				)}
-				<div className="flex-1 min-h-full min-w-full pt-2 pb-10 px-2 md:px-8 bg-white">
-					<div className="pt-6 lg:pt-10">{props.children}</div>
-				</div>
-				{!(
-					router.pathname === "/privacy-policy-mobile" ||
-					router.pathname === "/terms-of-use-mobile" ||
-					router.pathname === "/faqs-mobile"
-				) && (
+			<div className="flex-1 min-h-full min-w-full pb-10 px-2">
+				{props.children}
+			</div>
+			{!(
+				router.pathname === "/privacy-policy-mobile" ||
+				router.pathname === "/terms-of-use-mobile" ||
+				router.pathname === "/faqs-mobile"
+			) && (
 					<div className="mt-auto">
 						<Footer />
 						<Copyrights />
 					</div>
 				)}
-			</div>
-		</AppContext.Provider>
+		</div>
 	);
 }

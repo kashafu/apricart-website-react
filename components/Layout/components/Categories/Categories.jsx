@@ -102,7 +102,7 @@ export default function Categories() {
 											</div>
 										</div>
 									) : (
-										<div className="grid grid-cols-5 py-2 pl-4 bg-white duration-100 hover:border-l-main-blue hover:border-l-8 hover:bg-black items-center rounded-lg">
+										<div id="app" className="grid grid-cols-5 py-2 pl-4 bg-white duration-100 hover:border-l-main-blue hover:border-l-8 items-center rounded-lg">
 											<Link
 												href={
 													"/category/" +
