@@ -304,7 +304,7 @@ export default function Home() {
 				<div className="flex flex-row w-full space-x-2">
 					<div className="flex flex-col justify-between w-full lg:w-[65%]">
 						<TypeCardSelector />
-						<div className="w-full my-2 lg:my-0">
+						<div className="w-full mt-2">
 							<Carousel />
 						</div>
 					</div>

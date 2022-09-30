@@ -53,7 +53,7 @@ export default function Header() {
 				<div className="grow">
 					<SearchBar />
 				</div>
-				<div className="lg:hidden px-2 flex flex-row pr-4">
+				<div className="lg:hidden px-2 flex flex-row">
 					<CartSlider />
 				</div>
 				<div className="h-full hidden lg:inline-flex  lg:flex-row lg:space-x-4 lg:items-center">
