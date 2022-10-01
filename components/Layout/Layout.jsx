@@ -9,7 +9,7 @@ export default function Layout(props) {
 	const router = useRouter()
 
 	return (
-		<div className="flex flex-col min-h-screen max-w-screen bg-white" id="app">
+		<div className="flex flex-col justify-between items-stretch min-h-screen max-w-screen bg-white">
 			{!(
 				router.pathname === "/privacy-policy-mobile" ||
 				router.pathname === "/terms-of-use-mobile" ||
@@ -20,7 +20,7 @@ export default function Layout(props) {
 						<Header />
 					</div>
 				)}
-			<div className="flex-1 min-h-full min-w-full pb-10 px-2">
+			<div className="flex flex-col grow items-stretch min-h-full min-w-full pb-10 px-2">
 				{props.children}
 			</div>
 			{!(
@@ -28,7 +28,7 @@ export default function Layout(props) {
 				router.pathname === "/terms-of-use-mobile" ||
 				router.pathname === "/faqs-mobile"
 			) && (
-					<div className="mt-auto">
+					<div className="">
 						<Footer />
 						<Copyrights />
 					</div>

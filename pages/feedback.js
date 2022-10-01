@@ -1,7 +1,8 @@
+import SubmitButton from "../components/Layout/components/Buttons/SubmitButton"
+
 const FeedbackPage = () => {
     return (
-        <div className="flex w-full h-full items-stretch bg-black">
-            <p>AddAddressCard</p>
+        <div className="flex grow w-full h-full bg-black">
         </div>
     )
 }
