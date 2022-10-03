@@ -325,139 +325,143 @@ export default function Checkout() {
 		const [couponCode, setCouponCode] = useState('')
 
 		return (
-			<section className="w-full lg:w-[80%] 2xl:w-[60%] space-y-4 bg-slate-100 p-4 m-4 rounded-2xl">
-				{viewState == "shipping" && (
-					<>
-						<p className="font-lato text-lg text-main-blue font-extrabold text-center">
-							DELIVERY DETAILS
-						</p>
-						{selectedTypeSelector === 'cnc' ? (
-							<PickupLocation />
-						) : (
-							<SelectAddress
-								type={"checkout"}
-							/>
-						)}
-						<ErrorText text={errorMessage} />
-						<div className="">
-							<TextField
-								label={"Special Instructions"}
-								placeHolder={"instructions"}
-								customOnChange
-								onChange={(e) => {
-									notes.current = e.target.value
-								}}
-							/>
-						</div>
-					</>
-				)}
-				{viewState === "payment" && (
-					<>
-						<p className="font-lato text-lg text-main-blue font-extrabold text-center">
-							PAYMENT SELECTION
-						</p>
-						<div className="flex flex-col items-center w-full">
-							<div className="space-y-2 flex flex-col items-center">
-								<InputLabelText text={"Payment Method"} />
-								<div className="flex flex-col space-y-2">
-									{paymentMethods.map((method) => {
-										let { id, name, key } = method
-
-										{/* ZINDIGI */ }
-										if (redirectSourceSelector === 'js_bank') {
-											if (key === "jswallet") {
-												return (
-													<div key={id} className='flex items-center space-x-2'>
-														<input
-															value={key}
-															type={"radio"}
-															onChange={(e) => {
-																setPaymentMethod(e.target.value)
-															}}
-															checked={paymentMethod === key}
-														/>
-														<p>
-															{name}
-														</p>
-													</div>
-												)
-											}
-										}
-										else {
-											if (key === "jswallet") {
-												return <div key={id}></div>
-											}
-											return (
-												<div key={id} className='flex items-center space-x-2'>
-													<input
-														value={key}
-														type={"radio"}
-														onChange={(e) => {
-															setPaymentMethod(e.target.value)
-														}}
-														checked={paymentMethod === key}
-													/>
-													<p>
-														{name}
-													</p>
-												</div>
-											)
-										}
-									})}
-								</div>
-							</div>
-						</div>
-						{/* PROMO CODE */}
-						<div className="flex flex-row w-full items-center space-x-4">
-							<div className="w-4/6">
-								<TextField
-									label={'Promo Code'}
-									placeHolder={'Enter Code'}
-									onChange={setCouponCode}
-									value={couponCode}
-								/>
-							</div>
-							<div className="w-2/6">
-								<SubmitButton
-									text={'Apply'}
-									onClick={() => {
-										setCoupon(couponCode)
-									}}
-								/>
-							</div>
-						</div>
-						{couponMessage !== 'Discount code not received' && (
-							<p>
-								{couponMessage}
-							</p>
-						)}
-					</>
-				)}
-				{viewState == "review" && (
-					<>
-						{isLoading ? (
-							<div>
-								Loading
-							</div>
-						) : (
-							<section className="w-full flex flex-col items-center">
-								<div className="text-center">
-									{parse(checkoutResponse.data.message)}
-								</div>
-								<div className="w-full lg:w-2/3">
-									<Image
-										src={checkoutResponse.data.data.thankyou_image}
-										layout={"responsive"}
-										alt={"Thank You Image"}
-										width={450}
-										height={100}
+			<>
+				{!(redirectSourceSelector === 'js_bank' && !token) && (
+					<section className="w-full lg:w-[80%] 2xl:w-[60%] space-y-4 bg-slate-100 p-4 m-4 rounded-2xl">
+						{viewState == "shipping" && (
+							<>
+								<p className="font-lato text-lg text-main-blue font-extrabold text-center">
+									DELIVERY DETAILS
+								</p>
+								{selectedTypeSelector === 'cnc' ? (
+									<PickupLocation />
+								) : (
+									<SelectAddress
+										type={"checkout"}
+									/>
+								)}
+								<ErrorText text={errorMessage} />
+								<div className="">
+									<TextField
+										label={"Special Instructions"}
+										placeHolder={"instructions"}
+										customOnChange
+										onChange={(e) => {
+											notes.current = e.target.value
+										}}
 									/>
 								</div>
-							</section>
+							</>
 						)}
-					</>
+						{viewState === "payment" && (
+							<>
+								<p className="font-lato text-lg text-main-blue font-extrabold text-center">
+									PAYMENT SELECTION
+								</p>
+								<div className="flex flex-col items-center w-full">
+									<div className="space-y-2 flex flex-col items-center">
+										<InputLabelText text={"Payment Method"} />
+										<div className="flex flex-col space-y-2">
+											{paymentMethods.map((method) => {
+												let { id, name, key } = method
+
+												{/* ZINDIGI */ }
+												if (redirectSourceSelector === 'js_bank') {
+													if (key === "jswallet") {
+														return (
+															<div key={id} className='flex items-center space-x-2'>
+																<input
+																	value={key}
+																	type={"radio"}
+																	onChange={(e) => {
+																		setPaymentMethod(e.target.value)
+																	}}
+																	checked={paymentMethod === key}
+																/>
+																<p>
+																	{name}
+																</p>
+															</div>
+														)
+													}
+												}
+												else {
+													if (key === "jswallet") {
+														return <div key={id}></div>
+													}
+													return (
+														<div key={id} className='flex items-center space-x-2'>
+															<input
+																value={key}
+																type={"radio"}
+																onChange={(e) => {
+																	setPaymentMethod(e.target.value)
+																}}
+																checked={paymentMethod === key}
+															/>
+															<p>
+																{name}
+															</p>
+														</div>
+													)
+												}
+											})}
+										</div>
+									</div>
+								</div>
+								{/* PROMO CODE */}
+								<div className="flex flex-row w-full items-center space-x-4">
+									<div className="w-4/6">
+										<TextField
+											label={'Promo Code'}
+											placeHolder={'Enter Code'}
+											onChange={setCouponCode}
+											value={couponCode}
+										/>
+									</div>
+									<div className="w-2/6">
+										<SubmitButton
+											text={'Apply'}
+											onClick={() => {
+												setCoupon(couponCode)
+											}}
+										/>
+									</div>
+								</div>
+								{couponMessage !== 'Discount code not received' && (
+									<p>
+										{couponMessage}
+									</p>
+								)}
+							</>
+						)}
+						{viewState == "review" && (
+							<>
+								{isLoading ? (
+									<div>
+										Loading
+									</div>
+								) : (
+									<section className="w-full flex flex-col items-center">
+										<div className="text-center">
+											{parse(checkoutResponse.data.message)}
+										</div>
+										<div className="w-full lg:w-2/3">
+											<Image
+												src={checkoutResponse.data.data.thankyou_image}
+												layout={"responsive"}
+												alt={"Thank You Image"}
+												width={450}
+												height={100}
+											/>
+										</div>
+									</section>
+								)}
+							</>
+						)}
+					</section>
 				)}
-			</section>
+			</>
 		)
 	}
 
@@ -594,15 +598,6 @@ export default function Checkout() {
 			</>
 		)
 	}
-
-	// if (isLoading) {
-	// 	return (
-	// 		<div>
-	// 			<HeadTag title={"Checkout"} />
-	// 			<h5 className="">Fetching cart...</h5>
-	// 		</div>
-	// 	)
-	// }
 
 	return (
 		<div className="h-full w-full">
