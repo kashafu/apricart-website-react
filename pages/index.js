@@ -7,7 +7,6 @@ import Link from "next/link"
 import MainProducts from "../components/Layout/components/Products/MainProducts"
 import HeadTag from "../components/Layout/components/Head/HeadTag"
 import Carousel from "../components/Layout/components/Banner/Carousel"
-import Categories from "../components/Layout/components/Categories/Categories"
 import { useHomeApi, useOptionsApi } from "../helpers/Api"
 import TypeCardSelector from "../components/Layout/components/Cards/TypeCardSelector"
 import HomeLoader from "../components/Layout/components/Loaders/HomeLoader"
@@ -24,6 +23,7 @@ import { clearCookies } from "../helpers/Cookies"
 import { clearLocalStorage, clearSessionStorage } from "../helpers/Storage"
 import MainProductsShimmer from "../components/Layout/components/Loaders/Shimmers/MainProductsShimmer"
 import MainCategories from "../components/Layout/components/Categories/MainCategories"
+import CategoryAndItemsLayout from "../components/Layout/components/Layouts/CategoryAndItemsLayout"
 
 export default function Home() {
 	const router = useRouter()
@@ -373,15 +373,9 @@ export default function Home() {
 				}
 				isIndex
 			/>
-			<div className="grid grid-cols-5 gap-6">
-				{/* CATEGORIES SECTION */}
-				<section className="hidden lg:block lg:col-span-1">
-					<Categories />
-				</section>
-				<section className="space-y-2 lg:space-y-6 col-span-5 lg:col-span-4">
-					<HomeItems />
-				</section>
-			</div>
+			<CategoryAndItemsLayout>
+				<HomeItems />
+			</CategoryAndItemsLayout>
 		</div>
 	)
 }
