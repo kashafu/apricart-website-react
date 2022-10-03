@@ -11,16 +11,12 @@ import logoPNG from "../../../../public/assets/images/logo.png"
 export default function TopBar() {
 	const router = useRouter()
 
-	const addressSelector = useSelector(
-		(state) => state.general.selectedAddress
-	)
 	const tickerSelector = useSelector((state) => state.general.ticker)
 	const selectedTypeSelector = useSelector((state) => state.general.selectedType)
-	let pStyle = "font-lato font-bold text-sm lg:text-md text-black lg:text-base"
 
 	return (
 		<header className="flex flex-col">
-			<div className="flex flex-row w-full bg-main-yellow lg:justify-between px-2 lg:px-12 items-center h-[50px]">
+			<div className="flex flex-row w-full bg-main-yellow lg:justify-between px-2 items-center h-[50px]">
 				{/* ARPICART LOGO, LOCATION AND SELECTED ADDRESS */}
 				<div className="flex flex-row items-center justify-between">
 					{/* APRICART LOGO shown on phone, hidden on desktop*/}
@@ -78,7 +74,9 @@ export default function TopBar() {
 							layout={"fill"}
 						/>
 					</div>
-					<p className={[pStyle] + " truncate"}>0304-111-0195</p>
+					<p className="font-nunito font-bold text-sm lg:text-md text-black lg:text-base truncate">
+						0304-111-0195
+					</p>
 				</div>
 			</div>
 		</header>

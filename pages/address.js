@@ -24,7 +24,9 @@ export default function Address() {
 					<ProfileNavigationMenu />
 				</div>
 				<section className="w-full lg:w-4/5">
-					<SelectAddress type={"manage"} />
+					<SelectAddress
+						type={"manage"}
+					/>
 				</section>
 			</div>
 		</div>

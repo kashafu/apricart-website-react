@@ -1408,3 +1408,50 @@ export const useRemoveFromWishlist = () => {
 		errorResponse,
 	}
 }
+
+export const useSavedAddressesApi = () => {
+	const router = useRouter()
+	const dispatch = useDispatch()
+	const [isLoading, setIsLoading] = useState(true)
+	const [savedAddresses, setSavedAddresses] = useState([])
+	const [response, setResponse] = useState(null)
+	const [errorResponse, setErrorResponse] = useState(null)
+	const [errorMessage, setErrorMessage] = useState("")
+
+	useEffect(() => {
+		callApi()
+	}, [])
+
+	const callApi = async () => {
+		setIsLoading(true)
+		if (router.pathname !== '/') {
+			if (await initializeUserApi()) {
+				dispatch(updateIsUserInitialized(true))
+			}
+		}
+		let { headers, token } = getGeneralApiParams()
+
+		let url = '/home/address/delivery?'
+
+		try {
+			let apiResponse = await axios.get(fullUrl(url), {
+				headers: headers,
+			})
+			setResponse(apiResponse)
+			setSavedAddresses(apiResponse.data.data)
+		} catch (error) {
+			setErrorResponse(error?.response)
+			setErrorMessage(error?.response?.data?.message)
+		} finally {
+			setIsLoading(false)
+		}
+	}
+
+	return {
+		isLoading,
+		savedAddresses,
+		errorMessage,
+		response,
+		errorResponse,
+	}
+}

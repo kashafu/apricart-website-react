@@ -3,6 +3,7 @@
 const plugin = require("tailwindcss/plugin");
 
 module.exports = {
+	important: true,
 	content: [
 		"./pages/**/*.{js,ts,jsx,tsx}",
 		"./components/**/*.{js,ts,jsx,tsx}",
@@ -67,7 +68,9 @@ module.exports = {
 				"main-grey": {
 					DEFAULT: "#E5E5E5",
 					200: "#F1F1F1",
+					500: "#828282",
 					800: "#363636",
+					1000: "#242633",
 				},
 				"main-green": {
 					DEFAULT: "#296118",
@@ -82,7 +85,7 @@ module.exports = {
 			fontFamily: {
 				lato: ["Lato", "sans-serif"],
 				nunito: ["Nunito"],
-				inter: ["Inter", "sans-serif"]
+				inter: ["Inter", "sans-serif"],
 			},
 			screens: {
 				"3xl": "1920px",

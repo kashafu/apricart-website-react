@@ -1,13 +1,12 @@
-import { useEffect, useState } from "react"
-import axios from "axios"
+import { useState, memo } from "react"
 import { useDispatch, useSelector } from "react-redux";
 
 import { getGeneralApiParams } from "../../../../helpers/ApiHelpers"
-import { base_url_api } from '../../../../information.json'
 import SubmitButton from "../Buttons/SubmitButton"
 import AddAddressCard from "./AddAddressCard"
 import SingleAddressListing from "./SingleAddressListing"
 import { updateCity, updateSelectedAddress } from "../../../../redux/general.slice"
+import { useSavedAddressesApi } from "../../../../helpers/Api";
 
 /*
     type can be 'checkout', 'manage' 
@@ -15,34 +14,13 @@ import { updateCity, updateSelectedAddress } from "../../../../redux/general.sli
     'manage' allows u to edit address and select
 */
 
-export default function SelectAddress({ type, setAddress, dropDownSelectedAddress }) {
+const SelectAddress = ({ type }) => {
     const dispatch = useDispatch()
     const selectedAddressSelector = useSelector(state => state.general.selectedAddress)
 
-    const [savedAddresses, setSavedAddresses] = useState([])
+    const { savedAddresses } = useSavedAddressesApi()
     const [selectedAddress, setSelectedAddress] = useState(getGeneralApiParams().selectedAddress)
     const [showAddressCard, setShowAddressCard] = useState(false)
-
-    useEffect(() => {
-        getSavedAddressesApi()
-    }, [])
-
-    const getSavedAddressesApi = async () => {
-        let { headers, userId } = getGeneralApiParams()
-        let url = base_url_api + '/home/address/delivery?lang=en&client_type=apricart&userid=' + userId
-
-        try {
-            const response = await axios.get(
-                url,
-                {
-                    headers: headers
-                }
-            )
-            setSavedAddresses(response.data.data)
-        } catch (error) {
-            console.log(error)
-        }
-    }
 
     return (
         <div className="w-full space-y-2">
@@ -123,3 +101,5 @@ export default function SelectAddress({ type, setAddress, dropDownSelectedAddres
         </div>
     )
 }
+
+export default memo(SelectAddress)

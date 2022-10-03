@@ -16,8 +16,8 @@ import { updateIsShowSelectionScreen, updateRedirectInformation, updateRedirectS
 import homeDeliveryIcon from "../public/assets/svgs/homeDeliveryIcon.svg"
 import clickAndCollectIcon from "../public/assets/svgs/clickAndCollectIcon.svg"
 import bulkBuyIcon from "../public/assets/svgs/bulkBuyIcon.svg"
-import karachiStaticBanner1 from "../public/assets/images/banners/99AndBelow.jpg"
-import karachiCncStaticBanner1 from "../public/assets/images/banners/cncBlessedFridayStatic.png"
+import karachiStaticBanner1 from "../public/assets/images/banners/staticbannerBC.png"
+import karachiCncStaticBanner1 from "../public/assets/images/banners/webstaticbanner.jpg"
 import bulkBuyStaticBanner from "../public/assets/images/banners/bulkBuyMainBanner.png"
 import crossIcon from "../public/assets/svgs/crossIcon.svg"
 import { clearCookies } from "../helpers/Cookies"
@@ -271,7 +271,7 @@ export default function Home() {
 				<div className="flex flex-row w-full space-x-2">
 					<div className="flex flex-col justify-between w-full lg:w-[65%]">
 						<TypeCardSelector />
-						<div className="w-full my-2 lg:my-0">
+						<div className="w-full mt-2">
 							<Carousel />
 						</div>
 					</div>
@@ -292,23 +292,17 @@ export default function Home() {
 							</Link>
 						)}
 						{selectedTypeSelector === 'cnc' && (
-							<Link
-								href={"/category/under-rs.99/1242"}
-								passHref
-								className="w-full"
-							>
-								<a className="w-full">
-									<Image
-										src={karachiStaticBanner1}
-										layout={"responsive"}
-										alt="banner"
-									/>
-								</a>
-							</Link>
+							<div className="w-full">
+								<Image
+									src={karachiCncStaticBanner1}
+									layout={"responsive"}
+									alt="banner"
+								/>
+							</div>
 						)}
 						{selectedTypeSelector === 'home' && (
 							<Link
-								href={"/category/under-rs.99/1242"}
+								href={"/offers/81"}
 								passHref
 								className="w-full"
 							>

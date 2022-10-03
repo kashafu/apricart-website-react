@@ -16,6 +16,8 @@ import PickupLocationSelector from "../components/Layout/components/Selectors/Pi
 import JsPopup from "../components/Layout/components/Popup/JsPopup"
 import OtpJsPopup from "../components/Layout/components/Popup/OtpJsPopup"
 import CartItemListing from "../components/Layout/components/Cart/CartItemListing"
+import CartDetailsShimmer from "../components/Layout/components/Loaders/Shimmers/CartDetailsShimmer"
+import { updatePickupLocation } from "../redux/general.slice"
 
 export default function Checkout() {
 	const dispatch = useDispatch()
@@ -38,8 +40,7 @@ export default function Checkout() {
 	const [selectedDate, setSelectedDate] = useState('')
 	const [selectedTime, setSelectedTime] = useState('')
 
-	const { initialCartProducts, initialCartData, isLoading, errorMessage, response, setCoupon, notes, setPaymentMethod, paymentMethod, setIsCheckout, couponMessage, paymentMethods, checkoutResponse, setDay, setStartTime, setEndTime, setIsFetchCart } = useInitialCartDataApi()
-	const { pickupLocations, availableDates, response: pickupLocationsApiResponse, isLoading: pickupLocationsApiIsLoading } = usePickupLocationsApi()
+	const { initialCartData, isLoading, errorMessage, response, setCoupon, notes, setPaymentMethod, paymentMethod, setIsCheckout, couponMessage, paymentMethods, checkoutResponse, setDay, setStartTime, setEndTime, setIsFetchCart } = useInitialCartDataApi()
 
 	/*
 		To check if checkout api response is succesful
@@ -118,6 +119,8 @@ export default function Checkout() {
 	}
 
 	const PickupLocation = () => {
+		const { pickupLocations, availableDates, response: pickupLocationsApiResponse, isLoading: pickupLocationsApiIsLoading } = usePickupLocationsApi()
+
 		let divStyle = "grid grid-cols-1 items-center w-full h-full"
 		let selectStyle = "h-full w-full py-2 lg:px-4 text-xs lg:text-lg rounded-lg bg-slate-200 h-[40px]"
 
@@ -333,7 +336,6 @@ export default function Checkout() {
 						) : (
 							<SelectAddress
 								type={"checkout"}
-								dropDownSelectedAddress={selectedAddressSelector}
 							/>
 						)}
 						<ErrorText text={errorMessage} />
@@ -516,7 +518,7 @@ export default function Checkout() {
 		let pRight = "font-lato text-lg font-bold text-right"
 
 		if (isLoading) {
-			return <></>
+			return <CartDetailsShimmer />
 		}
 
 		let {
