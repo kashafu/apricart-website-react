@@ -2,14 +2,16 @@ import { useEffect, useState } from "react"
 import Image from "next/image"
 import { toast } from "react-toastify"
 import { useSelector } from "react-redux"
+import Link from "next/link"
 
-import Categories from "../../../../../components/Layout/components/Categories/Categories"
+import { fromPipeCase } from "../../../../../helpers/PipeCase"
 import RelatedProduct from "../../../../../components/Layout/components/RelatedProduct/RelatedProduct"
 import HeadTag from "../../../../../components/Layout/components/Head/HeadTag"
 import minusIcon from "../../../../../public/assets/svgs/minusIcon.svg"
 import plusIcon from "../../../../../public/assets/svgs/plusIcon.svg"
 import { useAddToCartApi, useProductDetailsApi } from "../../../../../helpers/Api"
 import CategoryAndItemsLayout from "../../../../../components/Layout/components/Layouts/CategoryAndItemsLayout"
+import toKebabCase from "../../../../../helpers/toKebabCase"
 
 /*
 	Gets the product details from the useProductDetailsApi that picks up the url query params
@@ -49,6 +51,7 @@ export default function ProductDetail() {
 		title,
 		description,
 		categoryleafName,
+		categoryIds,
 		productImageUrl,
 		specialPrice,
 		currentPrice,
@@ -179,9 +182,30 @@ export default function ProductDetail() {
 		}
 
 		const BreadCrumbs = () => {
+			let categoryNamesArray = fromPipeCase(categoryleafName)
+			let categoryIdsArray = fromPipeCase(categoryIds)
+
+			const BreadCrumb = ({ categoryName, categoryId }) => {
+				return (
+					<Link
+						passHref
+						href={
+							"/category/" +
+							toKebabCase(categoryName) +
+							"/" +
+							categoryId
+						}
+					>
+						<a className="font-lato">
+							{categoryName}
+						</a>
+					</Link>
+				)
+			}
+
 			return (
 				<div className="">
-
+					{ }
 				</div>
 			)
 		}
