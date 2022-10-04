@@ -183,7 +183,7 @@ export default function ProductDetail() {
 
 		const BreadCrumbs = () => {
 			let categoryNamesArray = fromPipeCase(categoryleafName)
-			let categoryIdsArray = fromPipeCase(categoryIds)
+			let categoryIdsArray = fromPipeCase(categoryIds.replace(/\s/g, ''))
 
 			const BreadCrumb = ({ categoryName, categoryId }) => {
 				return (
@@ -196,16 +196,24 @@ export default function ProductDetail() {
 							categoryId
 						}
 					>
-						<a className="font-lato">
-							{categoryName}
+						<a className="font-lato text-main-blue hover:brightness-200">
+							&gt; {categoryName}
 						</a>
 					</Link>
 				)
 			}
 
 			return (
-				<div className="">
-					{ }
+				<div className="space-x-2">
+					{categoryIdsArray.slice(0, categoryIdsArray.length - 1).map((id, index) => {
+						return (
+							<BreadCrumb
+								key={index}
+								categoryName={categoryNamesArray[index]}
+								categoryId={id}
+							/>
+						)
+					})}
 				</div>
 			)
 		}
