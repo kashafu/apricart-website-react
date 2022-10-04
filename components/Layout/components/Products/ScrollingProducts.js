@@ -5,6 +5,7 @@ export default function ScrollingProducts({ products }) {
     const settings = {
         dots: false,
         infinite: true,
+        arrows: false,
         speed: 500,
         autoplay: true,
         slidesToShow: 4,
@@ -56,7 +57,7 @@ export default function ScrollingProducts({ products }) {
                 {products.map((product) => {
                     let { id } = product
                     return (
-                        <section key={id} className='lg:px-4 py-12 h-full w-full'>
+                        <section key={id} className='lg:px-4 h-full w-full'>
                             <SingleProduct
                                 product={product}
                             />
