@@ -1,7 +1,7 @@
 const SubCategoryShimmer = () => {
     const SingleShimmer = () => {
         return (
-            <div className="h-[50px] w-[200px] rounded-xl bg-slate-200 animate-pulse" />
+            <div className="h-[30px] w-[200px] rounded-xl bg-slate-200 animate-pulse" />
         )
     }
 

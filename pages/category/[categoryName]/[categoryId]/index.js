@@ -1,7 +1,6 @@
 import { useRouter } from "next/router"
 import Link from "next/link"
 
-import Categories from "../../../../components/Layout/components/Categories/Categories"
 import PageHeading from "../../../../components/Layout/components/Typography/PageHeading"
 import HeadTag from "../../../../components/Layout/components/Head/HeadTag"
 import toKebabCase, { fromKebabCase } from "../../../../helpers/toKebabCase"
@@ -11,6 +10,7 @@ import {
 import SubCategoryShimmer from "../../../../components/Layout/components/Loaders/Shimmers/SubCategoryShimmer"
 import ListProductsShimmer from "../../../../components/Layout/components/Loaders/Shimmers/ListProductsShimmer"
 import ListProducts from "../../../../components/Layout/components/Products/ListProducts"
+import CategoryAndItemsLayout from "../../../../components/Layout/components/Layouts/CategoryAndItemsLayout"
 
 export default function CategoryProducts() {
 	const router = useRouter()
@@ -121,6 +121,23 @@ export default function CategoryProducts() {
 		)
 	}
 
+	const PageItems = () => {
+		return (
+			<>
+				{router.isReady && (
+					<PageHeading
+						text={fromKebabCase(categoryName.toUpperCase())}
+					/>
+				)}
+				<section className="space-y-4">
+					<SubCategories />
+					<CategoryProducts />
+					<Filter />
+				</section>
+			</>
+		)
+	}
+
 	return (
 		<div>
 			{router.isReady && (
@@ -130,25 +147,9 @@ export default function CategoryProducts() {
 					}
 				/>
 			)}
-			<div className="grid grid-cols-5 gap-8">
-				{/* CATEGORIES SECTION */}
-				<section className="hidden lg:col-span-1 lg:block">
-					<Categories />
-				</section>
-				{/* PRODUCTS SECTION */}
-				<section className="col-span-5 lg:col-span-4">
-					{router.isReady && (
-						<PageHeading
-							text={fromKebabCase(categoryName.toUpperCase())}
-						/>
-					)}
-					<section className="space-y-4">
-						<SubCategories />
-						<CategoryProducts />
-						<Filter />
-					</section>
-				</section>
-			</div>
+			<CategoryAndItemsLayout>
+				<PageItems />
+			</CategoryAndItemsLayout>
 		</div>
 	)
 }
