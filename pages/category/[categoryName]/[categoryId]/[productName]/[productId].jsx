@@ -12,6 +12,7 @@ import plusIcon from "../../../../../public/assets/svgs/plusIcon.svg"
 import { useAddToCartApi, useProductDetailsApi } from "../../../../../helpers/Api"
 import CategoryAndItemsLayout from "../../../../../components/Layout/components/Layouts/CategoryAndItemsLayout"
 import toKebabCase from "../../../../../helpers/toKebabCase"
+import ProductPageLoader from "../../../../../components/Layout/components/Loaders/ProductPageLoader"
 
 /*
 	Gets the product details from the useProductDetailsApi that picks up the url query params
@@ -20,46 +21,37 @@ import toKebabCase from "../../../../../helpers/toKebabCase"
 export default function ProductDetail() {
 	const { isLoading, productData, errorMessage } = useProductDetailsApi()
 
-	if (isLoading) {
-		return (
-			<div>
-				<HeadTag title={"Loading Product"} />
-				<p>Loading</p>
-			</div>
-		)
-	}
-
-	if (!productData) {
-		return (
-			<div>
-				<HeadTag title={"Product Detail"} />
-				<p>{errorMessage}</p>
-			</div>
-		)
-	}
-
-	if (productData.length == 0) {
-		return (
-			<div>
-				<HeadTag title={"No Item"} />
-				<p>Item does not exist</p>
-			</div>
-		)
-	}
-
-	const {
-		title,
-		description,
-		categoryleafName,
-		categoryIds,
-		productImageUrl,
-		specialPrice,
-		currentPrice,
-		sku,
-		inStock,
-	} = productData[0]
-
 	const Product = () => {
+		if (isLoading) {
+			return (
+				<ProductPageLoader />
+			)
+		}
+
+		if (!productData) {
+			return (
+				<p>{errorMessage}</p>
+			)
+		}
+
+		if (productData.length == 0) {
+			return (
+				<p>Item does not exist</p>
+			)
+		}
+
+		const {
+			title,
+			description,
+			categoryleafName,
+			categoryIds,
+			productImageUrl,
+			specialPrice,
+			currentPrice,
+			sku,
+			inStock,
+		} = productData[0]
+
 		const AddToCart = () => {
 			const reduxCart = useSelector((state) => state.cart)
 
@@ -186,6 +178,7 @@ export default function ProductDetail() {
 			let categoryIdsArray = fromPipeCase(categoryIds.replace(/\s/g, ''))
 
 			const BreadCrumb = ({ categoryName, categoryId }) => {
+				console.log(categoryName, categoryId)
 				return (
 					<Link
 						passHref
@@ -205,12 +198,12 @@ export default function ProductDetail() {
 
 			return (
 				<div className="space-x-2">
-					{categoryIdsArray.slice(0, categoryIdsArray.length - 1).map((id, index) => {
+					{categoryNamesArray.slice(0, categoryNamesArray.length - 1).map((name, index) => {
 						return (
 							<BreadCrumb
 								key={index}
-								categoryName={categoryNamesArray[index]}
-								categoryId={id}
+								categoryName={name}
+								categoryId={categoryIdsArray[index]}
 							/>
 						)
 					})}
@@ -219,11 +212,11 @@ export default function ProductDetail() {
 		}
 
 		return (
-			<main>
+			<main className="space-y-6">
 				<BreadCrumbs />
-				<section className="w-full flex flex-col lg:grid lg:grid-cols-3 lg:gap-8 items-center">
+				<section className="w-full flex flex-col space-y-6 lg:grid lg:grid-cols-3 lg:gap-8 items-center">
 					{/* IMAGE */}
-					<div className="w-10/12 lg:w-full lg:col-span-1">
+					<div className="w-10/12 sm:w-3/5 lg:w-full lg:col-span-1">
 						<Image
 							src={productImageUrl}
 							alt={title + " image"}
@@ -281,7 +274,9 @@ export default function ProductDetail() {
 
 	return (
 		<div>
-			<HeadTag title={title} description={description} />
+			{productData && (
+				<HeadTag title={productData[0].title} description={productData[0].description} />
+			)}
 			<CategoryAndItemsLayout>
 				<PageItems />
 			</CategoryAndItemsLayout>
