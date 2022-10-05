@@ -171,7 +171,7 @@ export default function SingleProduct({ product, isInStock }) {
 						{title}
 					</p>
 					{/* PRICE and  ADD TO CART*/}
-					<div className="row-span-1 flex items-center w-full justify-between">
+					<div className="row-span-2 flex items-center w-full justify-between">
 						{/* PRICE */}
 						<div className="flex w-fit flex-col justify-center">
 							{specialPrice > 0 ? (
