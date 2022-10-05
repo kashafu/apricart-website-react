@@ -8,12 +8,14 @@ import TextField from "../Input/TextField";
 import SubmitButton from "../Buttons/SubmitButton";
 import LocationPicker from "../Input/LocationPicker";
 import ErrorText from "../Typography/ErrorText";
+import { useRouter } from "next/router";
 
 /*  type can be either 'edit' or 'add'
     previousAddress will be empty if type is 'add', in 'edit' previousAddress is the previous address to be modified
     updateSavedAddresses is there so that it can recall the getSavedAddresses API in parent component
 */
 export default function AddAddressCard({ type, previousAddress, updateSavedAddresses, setShow }) {
+    const router = useRouter()
     const [deliveryAreaOptions, setDeliveryAreaOptions] = useState([]);
     const [cityOptions, setCityOptions] = useState([]);
     const [errorMessage, setErrorMessage] = useState('')
@@ -101,7 +103,8 @@ export default function AddAddressCard({ type, previousAddress, updateSavedAddre
                 }
             )
 
-            updateSavedAddresses()
+            // updateSavedAddresses()
+            router.reload()
             setErrorMessage('')
             alert(response.data.message)
         } catch (err) {
@@ -128,7 +131,7 @@ export default function AddAddressCard({ type, previousAddress, updateSavedAddre
             )
 
             setShow(false)
-            updateSavedAddresses()
+            // updateSavedAddresses()
             alert(response.data.message)
             setErrorMessage('')
         } catch (err) {

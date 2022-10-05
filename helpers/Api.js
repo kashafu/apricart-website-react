@@ -1447,3 +1447,53 @@ export const useSavedAddressesApi = () => {
 		errorResponse,
 	}
 }
+
+export const useOfferProductsApi = () => {
+	const router = useRouter()
+	const dispatch = useDispatch()
+	const { id } = router.query
+
+	const [isLoading, setIsLoading] = useState(true)
+	const [offerProducts, setOfferProducts] = useState(null)
+	const [response, setResponse] = useState(null)
+	const [errorResponse, setErrorResponse] = useState(null)
+	const [errorMessage, setErrorMessage] = useState("")
+
+	useEffect(() => {
+		if (router.isReady) {
+			callApi()
+		}
+	}, [router.query, router.isReady])
+
+	const callApi = async () => {
+		setIsLoading(true)
+		if (router.pathname !== '/') {
+			if (await initializeUserApi()) {
+				dispatch(updateIsUserInitialized(true))
+			}
+		}
+		let { headers } = getGeneralApiParams()
+		let url = "/offers/detail?id=" + id
+
+		try {
+			let apiResponse = await axios.get(fullUrl(url), {
+				headers: headers,
+			})
+			setResponse(apiResponse)
+			setOfferProducts(apiResponse.data.data.products)
+		} catch (error) {
+			setErrorResponse(error?.response)
+			setErrorMessage(error?.response?.data?.message)
+		} finally {
+			setIsLoading(false)
+		}
+	}
+
+	return {
+		isLoading,
+		offerProducts,
+		errorMessage,
+		response,
+		errorResponse,
+	}
+}
