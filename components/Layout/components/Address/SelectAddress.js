@@ -79,7 +79,7 @@ const SelectAddress = ({ type }) => {
                                 listing={address}
                                 isSelected={selectedAddress ? selectedAddress.id == id : false}
                                 setAddress={setSelectedAddress}
-                                updateSavedAddresses={getSavedAddressesApi}
+                            // updateSavedAddresses={getSavedAddressesApi}
                             />
                         )
                     })}
@@ -94,7 +94,7 @@ const SelectAddress = ({ type }) => {
             {showAddressCard && (
                 <AddAddressCard
                     type={'add'}
-                    updateSavedAddresses={getSavedAddressesApi}
+                    // updateSavedAddresses={getSavedAddressesApi}
                     setShow={setShowAddressCard}
                 />
             )}

@@ -9,7 +9,7 @@ import AddAddressCard from "./AddAddressCard"
 import { getGeneralApiParams } from "../../../../helpers/ApiHelpers"
 import { base_url_api } from "../../../../information.json"
 
-export default function SingleAddressListing({ listing, isSelected, setAddress, updateSavedAddresses, }) {
+export default function SingleAddressListing({ listing, isSelected, setAddress, updateSavedAddresses }) {
 	const dispatch = useDispatch()
 	const router = useRouter()
 
@@ -32,7 +32,8 @@ export default function SingleAddressListing({ listing, isSelected, setAddress, 
 				data: body,
 			})
 
-			updateSavedAddresses()
+			router.reload()
+			// updateSavedAddresses()
 		} catch (error) {
 			console.log(error?.response)
 		}
@@ -82,7 +83,7 @@ export default function SingleAddressListing({ listing, isSelected, setAddress, 
 				<AddAddressCard
 					type={"edit"}
 					previousAddress={listing}
-					updateSavedAddresses={updateSavedAddresses}
+					// updateSavedAddresses={updateSavedAddresses}
 					setShow={setShowEdit}
 				/>
 			)}
