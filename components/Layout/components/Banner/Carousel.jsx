@@ -7,6 +7,7 @@ import { useSelector } from 'react-redux'
 import karachiScrollingBanner1 from '../../../../public/assets/images/banners/homeDeliveryCarousel2.png'
 import karachiScrollingBanner2 from '../../../../public/assets/images/banners/homeDeliveryCarousel3.png'
 import peshawarScrollingBanner from '../../../../public/assets/images/banners/peshawarBulkBuyCarousel3.png'
+import bulkBuyBannerKarachi from '../../../../public/assets/images/banners/webscrollablebannerBBD&D.png'
 import bulkBuyBanner from '../../../../public/assets/images/banners/bulkBuyCarousel.png'
 // import bulkBuyBanner2 from '../../../../public/assets/images/banners/bulkBuyCarousel2.png'
 
@@ -32,19 +33,23 @@ const Carousel = () => {
                     {selectedTypeSelector === 'bulk' && (
                         <Slider {...settings}>
                             <div className="w-full h-full">
+                                <Link href={'/offers/86'} passHref>
+                                    <a className="w-full h-full">
+                                        <Image
+                                            src={bulkBuyBannerKarachi}
+                                            layout={"responsive"}
+                                            alt="banner"
+                                        />
+                                    </a>
+                                </Link>
+                            </div>
+                            <div className="w-full h-full">
                                 <Image
                                     src={bulkBuyBanner}
                                     layout={"responsive"}
                                     alt="banner"
                                 />
                             </div>
-                            {/* <div className="w-full h-full">
-                                <Image
-                                    src={bulkBuyBanner2}
-                                    layout={"responsive"}
-                                    alt="banner"
-                                />
-                            </div> */}
                         </Slider>
                     )}
                     {selectedTypeSelector === 'home' && (
