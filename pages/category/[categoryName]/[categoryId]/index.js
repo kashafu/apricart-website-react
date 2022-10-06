@@ -71,6 +71,11 @@ export default function CategoryProducts() {
 				<button key={index}
 					onClick={() => {
 						setPage(index / size)
+						window.scroll({
+							top: 0,
+							left: 0,
+							behavior: "smooth",
+						})
 					}}
 					className={index / size === page ? "border-main-blue border-1 bg-main-blue px-2 text-white font-bold rounded-lg" : "border-main-blue border-1 px-2 text-main-blue font-bold rounded-lg duration-200 hover:bg-main-blue hover:text-white"}
 				>

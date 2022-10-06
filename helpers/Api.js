@@ -12,7 +12,7 @@ import {
 	removeFromCart,
 	updateQuantity,
 } from "../redux/cart.slice"
-import { updateIsUserInitialized, updateTicker } from "../redux/general.slice"
+import { removeSelectedAddress, updateIsUserInitialized, updateTicker } from "../redux/general.slice"
 import { setCookie } from "./Cookies"
 import { updateCategories } from "../redux/data.slice"
 
@@ -1492,6 +1492,65 @@ export const useOfferProductsApi = () => {
 	return {
 		isLoading,
 		offerProducts,
+		errorMessage,
+		response,
+		errorResponse,
+	}
+}
+
+export const useDeleteAddressApi = () => {
+	const dispatch = useDispatch()
+	const router = useRouter()
+	const selectedAddressSelector = useSelector(state => state.general.selectedAddress)
+	const [isLoading, setIsLoading] = useState(false)
+	const [response, setResponse] = useState(null)
+	const [errorResponse, setErrorResponse] = useState(null)
+	const [errorMessage, setErrorMessage] = useState("")
+	const [isRemove, setIsRemove] = useState(false)
+	const [data, setData] = useState({
+		id: ''
+	})
+
+	useEffect(() => {
+		if (isRemove) {
+			callApi()
+		}
+	}, [isRemove])
+
+	const callApi = async () => {
+		setIsLoading(true)
+		let { headers } = getGeneralApiParams()
+
+		let url = "/home/address/delivery/delete?"
+
+		try {
+			let apiResponse = await axios.delete(fullUrl(url), {
+				headers: headers,
+				data: data
+			})
+
+			setResponse(apiResponse)
+			toast.success(apiResponse.data?.message)
+			setErrorMessage('')
+			setErrorResponse(null)
+			if (selectedAddressSelector?.id === data.id) {
+				dispatch(removeSelectedAddress(""))
+			}
+			router.reload()
+		} catch (error) {
+			setErrorResponse(error?.response)
+			setErrorMessage(error?.response?.data?.message)
+			toast.error(error?.response?.data?.message)
+		} finally {
+			setIsLoading(false)
+			setIsRemove(false)
+		}
+	}
+
+	return {
+		isLoading,
+		setData,
+		setIsRemove,
 		errorMessage,
 		response,
 		errorResponse,
