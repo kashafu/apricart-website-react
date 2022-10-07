@@ -12,7 +12,7 @@ const ProfileNavigationMenuAndItemsMenuLayout = ({ children }) => {
         if (!token) {
             router.push("/login")
         }
-    }, [])
+    }, [token])
 
     return (
         <main className="flex flex-col lg:flex-row w-full space-y-6 lg:space-y-0 lg:space-x-4">
