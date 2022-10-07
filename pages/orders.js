@@ -6,7 +6,7 @@ import HeadTag from "../components/Layout/components/Head/HeadTag"
 import { toast } from 'react-toastify'
 import ProfileNavigationMenu from "../components/Layout/components/Menus/ProfileNavigationMenu"
 
-export default function Order() {
+const Orders = () => {
 	let { token } = getGeneralApiParams()
 
 	const [pendingOrders, setPendingOrders] = useState([])
@@ -276,3 +276,5 @@ export default function Order() {
 		</div>
 	)
 }
+
+export default Orders
