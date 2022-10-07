@@ -1,8 +1,9 @@
 import HeadTag from "../../components/Layout/components/Head/HeadTag"
-import Categories from "../../components/Layout/components/Categories/Categories"
 import SingleProduct from "../../components/Layout/components/Products/SingleProduct"
 import PageHeading from '../../components/Layout/components/Typography/PageHeading'
 import { useRecommendedProductsApi } from "../../helpers/Api"
+import CategoryAndItemsLayout from "../../components/Layout/components/Layouts/CategoryAndItemsLayout"
+import ListProductsShimmer from "../../components/Layout/components/Loaders/Shimmers/ListProductsShimmer"
 
 export default function Recommended() {
 	const { isLoading, errorMessage, recommendedProducts } = useRecommendedProductsApi()
@@ -10,7 +11,7 @@ export default function Recommended() {
 	const RecommendedProducts = () => {
 		if (isLoading) {
 			return (
-				<div></div>
+				<ListProductsShimmer />
 			)
 		}
 
@@ -42,25 +43,27 @@ export default function Recommended() {
 				})}
 			</section>
 		)
+	}
 
+	const PageItems = () => {
+		return (
+			<div className='space-y-4'>
+				<PageHeading
+					text="PEOPLE ALSO BUY"
+				/>
+				<RecommendedProducts />
+			</div>
+		)
 	}
 
 	return (
 		<div>
-			<HeadTag title={"Recommended Products"} />
-			<div className="grid grid-cols-5 gap-8">
-				{/* CATEGORIES SECTION */}
-				<section className="hidden lg:col-span-1 lg:block">
-					<Categories />
-				</section>
-				{/* PRODUCTS SECTION */}
-				<section className="col-span-5 lg:col-span-4 space-y-12">
-					<PageHeading
-						text='PEOPLE ALSO BUY'
-					/>
-					<RecommendedProducts />
-				</section>
-			</div>
+			<HeadTag
+				title={"Recommended Products"}
+			/>
+			<CategoryAndItemsLayout>
+				<PageItems />
+			</CategoryAndItemsLayout>
 		</div>
 	)
 }
