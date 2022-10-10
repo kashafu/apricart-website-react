@@ -21,6 +21,9 @@ import ProductPageLoader from "../../../../../components/Layout/components/Loade
 export default function ProductDetail() {
 	const { isLoading, productData, errorMessage } = useProductDetailsApi()
 
+	const [title, setTitle] = useState("Product")
+	const [description, setDescription] = useState("")
+
 	const Product = () => {
 		if (isLoading) {
 			return (
@@ -34,7 +37,7 @@ export default function ProductDetail() {
 			)
 		}
 
-		if (productData.length == 0) {
+		if (productData.length === 0) {
 			return (
 				<p>Item does not exist</p>
 			)
@@ -51,6 +54,9 @@ export default function ProductDetail() {
 			sku,
 			inStock,
 		} = productData[0]
+
+		setTitle(title)
+		setDescription(description)
 
 		const AddToCart = () => {
 			const reduxCart = useSelector((state) => state.cart)
@@ -274,9 +280,7 @@ export default function ProductDetail() {
 
 	return (
 		<div>
-			{productData && (
-				<HeadTag title={productData[0].title} description={productData[0].description} />
-			)}
+			<HeadTag title={title} description={description} />
 			<CategoryAndItemsLayout>
 				<PageItems />
 			</CategoryAndItemsLayout>
