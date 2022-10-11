@@ -15,7 +15,7 @@ import { updateIsShowSelectionScreen, updateRedirectSource, updateSelectedType }
 import homeDeliveryIcon from "../public/assets/svgs/homeDeliveryIcon.svg"
 import clickAndCollectIcon from "../public/assets/svgs/clickAndCollectIcon.svg"
 import bulkBuyIcon from "../public/assets/svgs/bulkBuyIcon.svg"
-import karachiStaticBanner1 from "../public/assets/images/banners/staticbannerBC.png"
+import karachiStaticBanner1 from "../public/assets/images/banners/StaticBanner.png"
 import karachiCncStaticBanner1 from "../public/assets/images/banners/webstaticbannershangrila.png"
 import bulkBuyStaticBanner from "../public/assets/images/banners/bulkBuyMainBanner.png"
 import crossIcon from "../public/assets/svgs/crossIcon.svg"
@@ -341,7 +341,7 @@ export default function Home() {
 						)}
 						{selectedTypeSelector === 'home' && (
 							<Link
-								href={"/offers/81"}
+								href={"/offers/93"}
 								passHref
 								className="w-full"
 							>
