@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux'
 // import karachiCncBanner from '../../../../public/assets/images/banners/cncBlessedFridayCarousel.png'
 import karachiScrollingBanner1 from '../../../../public/assets/images/banners/homeDeliveryCarousel2.png'
 import karachiScrollingBanner2 from '../../../../public/assets/images/banners/homeDeliveryCarousel3.png'
+import karachiScrollingBanner3 from '../../../../public/assets/images/banners/7 Main scrollable Banner.png'
 import peshawarScrollingBanner from '../../../../public/assets/images/banners/peshawarBulkBuyCarousel3.png'
 import bulkBuyBannerKarachi from '../../../../public/assets/images/banners/webscrollablebannerBBD&D.png'
 import bulkBuyBanner from '../../../../public/assets/images/banners/bulkBuyCarousel.png'
@@ -54,6 +55,17 @@ const Carousel = () => {
                     )}
                     {selectedTypeSelector === 'home' && (
                         <Slider {...settings}>
+                            <div className="w-full h-full">
+                                <Link href={'/offers/81'} passHref>
+                                    <a className="w-full h-full">
+                                        <Image
+                                            src={karachiScrollingBanner3}
+                                            layout={"responsive"}
+                                            alt="banner"
+                                        />
+                                    </a>
+                                </Link>
+                            </div>
                             <div className="w-full h-full">
                                 <Link href={'/offers/77'} passHref>
                                     <a className="w-full h-full">

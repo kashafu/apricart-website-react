@@ -1556,3 +1556,50 @@ export const useDeleteAddressApi = () => {
 		errorResponse,
 	}
 }
+
+export const useOrderHistoryApi = () => {
+	const router = useRouter()
+	const dispatch = useDispatch()
+
+	const [isLoading, setIsLoading] = useState(true)
+	const [pendingOrders, setPendingOrders] = useState(null)
+	const [completedOrders, setCompletedOrders] = useState(null)
+	const [cancelledOrders, setCancelledOrders] = useState(null)
+	const [response, setResponse] = useState(null)
+	const [errorResponse, setErrorResponse] = useState(null)
+	const [errorMessage, setErrorMessage] = useState("")
+
+	useEffect(() => {
+		callApi()
+	}, [])
+
+	const callApi = async () => {
+		setIsLoading(true)
+
+		let { headers } = getGeneralApiParams()
+		let url = "/order/history?"
+
+		try {
+			let apiResponse = await axios.get(fullUrl(url), {
+				headers: headers,
+			})
+			setResponse(apiResponse)
+			setPendingOrders(apiResponse.data.data.pending)
+			setCancelledOrders(apiResponse.data.data.cancelled)
+			setCompletedOrders(apiResponse.data.data.completed)
+		} catch (error) {
+			setErrorResponse(error?.response)
+			setErrorMessage(error?.response?.data?.message)
+		} finally {
+			setIsLoading(false)
+		}
+	}
+
+	return {
+		isLoading,
+		offerProducts: pendingOrders,
+		errorMessage,
+		response,
+		errorResponse,
+	}
+}

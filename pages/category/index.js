@@ -1,4 +1,3 @@
-import MainCategories from '../../components/Layout/components/Categories/MainCategories'
 import SingleCategory from '../../components/Layout/components/Categories/SingleCategory'
 import HeadTag from '../../components/Layout/components/Head/HeadTag'
 import PageHeading from '../../components/Layout/components/Typography/PageHeading'
