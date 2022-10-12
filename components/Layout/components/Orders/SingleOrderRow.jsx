@@ -1,7 +1,8 @@
 import { useState } from "react"
 
-const SingleOrderRow = ({ order }) => {
+const SingleOrderRow = ({ order, cancelTime }) => {
     const [showDetails, setShowDetails] = useState(false)
+    const [isCancellable, setIsCancellable] = useState(false)
 
     let {
         orderId,
@@ -27,6 +28,8 @@ const SingleOrderRow = ({ order }) => {
         tax,
         totalDiscountAmount
     } = order
+
+    // if(created_at )
 
     return (
         <>

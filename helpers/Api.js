@@ -1245,7 +1245,8 @@ export const useOptionsApi = () => {
 	const [response, setResponse] = useState(null)
 	const [errorResponse, setErrorResponse] = useState(null)
 	const [errorMessage, setErrorMessage] = useState("")
-	const [welcomeVideo, setWelcomeVideo] = useState('')
+	const [welcomeVideo, setWelcomeVideo] = useState("")
+	const [orderCancelTime, setOrderCancelTime] = useState("")
 
 	useEffect(() => {
 		callApi()
@@ -1270,7 +1271,10 @@ export const useOptionsApi = () => {
 				if (element.key === 'welcome_video') {
 					setWelcomeVideo("https://www.youtube.com/embed/" + element.value + "?autoplay=1&mute=1")
 				}
-			});
+				else if (element.key === 'order_cancel') {
+					setOrderCancelTime(element.value)
+				}
+			})
 		} catch (error) {
 			setErrorResponse(error?.response)
 			setErrorMessage(error?.response?.data?.message)
@@ -1284,7 +1288,8 @@ export const useOptionsApi = () => {
 		errorMessage,
 		response,
 		errorResponse,
-		welcomeVideo
+		welcomeVideo,
+		orderCancelTime
 	}
 }
 

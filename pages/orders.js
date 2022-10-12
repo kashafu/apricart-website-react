@@ -5,15 +5,18 @@ import { base_url_api } from "../information.json"
 import HeadTag from "../components/Layout/components/Head/HeadTag"
 import { toast } from 'react-toastify'
 import ProfileNavigationMenuAndItemsLayout from "../components/Layout/components/Layouts/ProfileNavigationMenuAndItemsLayout"
-import { useOrderHistoryApi } from "../helpers/Api"
+import { useOptionsApi, useOrderHistoryApi } from "../helpers/Api"
 import SingleOrderRow from "../components/Layout/components/Orders/SingleOrderRow"
+import { useRouter } from "next/router"
 
 const Orders = () => {
+	const router = useRouter()
 	let { token } = getGeneralApiParams()
 
 	const AllOrders = () => {
 		const [selectedTab, setSelectedTab] = useState('pending')
 		const { isLoading, errorResponse, errorMessage, pendingOrders, cancelledOrders, completedOrders } = useOrderHistoryApi()
+		const { isLoading: optionsIsLoading, orderCancelTime } = useOptionsApi()
 
 		const Tab = () => {
 			return (
@@ -44,7 +47,7 @@ const Orders = () => {
 			)
 		}
 
-		if (isLoading) {
+		if (isLoading || optionsIsLoading) {
 			return <></>
 		}
 
@@ -79,6 +82,7 @@ const Orders = () => {
 											<SingleOrderRow
 												key={orderId}
 												order={order}
+												isCancel={orderCancelTime}
 											/>
 										)
 									})}
@@ -103,6 +107,7 @@ const Orders = () => {
 											<SingleOrderRow
 												key={orderId}
 												order={order}
+												isCancel={orderCancelTime}
 											/>
 										)
 									})}
@@ -127,6 +132,7 @@ const Orders = () => {
 											<SingleOrderRow
 												key={orderId}
 												order={order}
+												isCancel={orderCancelTime}
 											/>
 										)
 									})}
@@ -139,34 +145,29 @@ const Orders = () => {
 		)
 	}
 
-	const cancelOrderApi = async (id) => {
-		let { headers, userId } = getGeneralApiParams()
-		let url = base_url_api + '/order/checkout/cancel?client_type=apricart&id=' + id + '&userid=' + userId
+	// const cancelOrderApi = async (id) => {
+	// 	let { headers, userId } = getGeneralApiParams()
+	// 	let url = base_url_api + '/order/checkout/cancel?client_type=apricart&id=' + id + '&userid=' + userId
 
-		toast.info('Cancelling order')
-		try {
-			let response = await axios.get(url, { headers: headers })
+	// 	toast.info('Cancelling order')
+	// 	try {
+	// 		let response = await axios.get(url, { headers: headers })
 
-			console.log(response.data)
-			getOrderHistoryApi()
-			toast.success(response.data.message)
-		} catch (error) {
-			toast.error(error?.response?.data?.message)
-		}
-	}
+	// 		console.log(response.data)
+	// 		getOrderHistoryApi()
+	// 		toast.success(response.data.message)
+	// 	} catch (error) {
+	// 		toast.error(error?.response?.data?.message)
+	// 	}
+	// }
 
 	if (!token) {
-		return (
-			<>
-				<HeadTag title={"Order"} />
-				<h5 className="login-token">Please Login first</h5>
-			</>
-		)
+		router.push('/login')
 	}
 
 	return (
 		<div>
-			<HeadTag title={"Order"} />
+			<HeadTag title={"Orders"} />
 			<ProfileNavigationMenuAndItemsLayout>
 				<AllOrders />
 			</ProfileNavigationMenuAndItemsLayout>
