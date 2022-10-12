@@ -1558,9 +1558,6 @@ export const useDeleteAddressApi = () => {
 }
 
 export const useOrderHistoryApi = () => {
-	const router = useRouter()
-	const dispatch = useDispatch()
-
 	const [isLoading, setIsLoading] = useState(true)
 	const [pendingOrders, setPendingOrders] = useState(null)
 	const [completedOrders, setCompletedOrders] = useState(null)
@@ -1597,7 +1594,9 @@ export const useOrderHistoryApi = () => {
 
 	return {
 		isLoading,
-		offerProducts: pendingOrders,
+		pendingOrders,
+		cancelledOrders,
+		completedOrders,
 		errorMessage,
 		response,
 		errorResponse,

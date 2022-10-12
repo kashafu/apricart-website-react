@@ -4,35 +4,140 @@ import { getGeneralApiParams } from "../helpers/ApiHelpers"
 import { base_url_api } from "../information.json"
 import HeadTag from "../components/Layout/components/Head/HeadTag"
 import { toast } from 'react-toastify'
-import ProfileNavigationMenu from "../components/Layout/components/Menus/ProfileNavigationMenu"
+import ProfileNavigationMenuAndItemsLayout from "../components/Layout/components/Layouts/ProfileNavigationMenuAndItemsLayout"
+import { useOrderHistoryApi } from "../helpers/Api"
+import SingleOrderRow from "../components/Layout/components/Orders/SingleOrderRow"
 
 const Orders = () => {
 	let { token } = getGeneralApiParams()
 
-	const [pendingOrders, setPendingOrders] = useState([])
-	const [completedOrders, setCompletedOrders] = useState([])
-	const [cancelledOrders, setCancelledOrders] = useState([])
+	const AllOrders = () => {
+		const [selectedTab, setSelectedTab] = useState('pending')
+		const { isLoading, errorResponse, errorMessage, pendingOrders, cancelledOrders, completedOrders } = useOrderHistoryApi()
 
-	const getOrderHistoryApi = async () => {
-		let { headers, userId } = getGeneralApiParams()
-		let url = base_url_api + "/order/history?client_type=apricart&userid=" + userId
+		const Tab = () => {
+			return (
+				<div className="flex flex-row w-full">
+					<button className={"w-1/3 bg-white font-nunito text-main-blue font-bold text-lg border-2 border-main-blue " + [selectedTab === 'pending' && "text-white bg-main-blue"]}
+						onClick={() => {
+							setSelectedTab('pending')
+						}}
+					>
+						PENDING
+					</button>
+					<button className={"w-1/3 bg-white font-nunito text-main-blue font-bold text-lg border-2 border-main-blue " + [selectedTab === 'completed' && "text-white bg-main-blue"]}
+						onClick={() => {
+							setSelectedTab('completed')
+						}}
+					>
+						COMPLETED
+					</button>
+					<button className={"w-1/3 bg-white font-nunito text-main-blue font-bold text-lg border-2 border-main-blue " + [selectedTab === 'cancelled' && "text-white bg-main-blue"]}
+						onClick={() => {
+							setSelectedTab('cancelled')
+						}}
+					>
+						CANCELLED
+					</button>
 
-		try {
-			let response = await axios.get(url, {
-				headers: headers,
-			})
-
-			setPendingOrders(response.data.data.pending)
-			setCancelledOrders(response.data.data.cancelled)
-			setCompletedOrders(response.data.data.completed)
-		} catch (error) {
-			console.log(error.response)
+				</div>
+			)
 		}
-	}
 
-	useEffect(() => {
-		getOrderHistoryApi()
-	}, [])
+		if (isLoading) {
+			return <></>
+		}
+
+		if (errorResponse) {
+			return (
+				<p>
+					{errorMessage}
+				</p>
+			)
+		}
+
+		return (
+			<div className="w-full">
+				<Tab />
+				<div className="overflow-auto">
+					<table className="w-full table-auto table border-separate">
+						{selectedTab === 'pending' && (
+							<>
+								<thead>
+									<tr className="text-center truncate">
+										<th>Order Id</th>
+										<th>Order Date</th>
+										<th>Total Items</th>
+										<th>Total Amount</th>
+										<th>Order Type</th>
+									</tr>
+								</thead>
+								<tbody>
+									{pendingOrders.map((order) => {
+										let { orderId } = order
+										return (
+											<SingleOrderRow
+												key={orderId}
+												order={order}
+											/>
+										)
+									})}
+								</tbody>
+							</>
+						)}
+						{selectedTab === 'completed' && (
+							<>
+								<thead>
+									<tr className="text-center truncate">
+										<th>Order Id</th>
+										<th>Order Date</th>
+										<th>Total Items</th>
+										<th>Total Amount</th>
+										<th>Order Type</th>
+									</tr>
+								</thead>
+								<tbody>
+									{completedOrders.map((order) => {
+										let { orderId } = order
+										return (
+											<SingleOrderRow
+												key={orderId}
+												order={order}
+											/>
+										)
+									})}
+								</tbody>
+							</>
+						)}
+						{selectedTab === 'cancelled' && (
+							<>
+								<thead>
+									<tr className="text-center truncate">
+										<th>Order Id</th>
+										<th>Order Date</th>
+										<th>Total Items</th>
+										<th>Total Amount</th>
+										<th>Order Type</th>
+									</tr>
+								</thead>
+								<tbody>
+									{cancelledOrders.map((order) => {
+										let { orderId } = order
+										return (
+											<SingleOrderRow
+												key={orderId}
+												order={order}
+											/>
+										)
+									})}
+								</tbody>
+							</>
+						)}
+					</table>
+				</div>
+			</div>
+		)
+	}
 
 	const cancelOrderApi = async (id) => {
 		let { headers, userId } = getGeneralApiParams()
@@ -62,7 +167,10 @@ const Orders = () => {
 	return (
 		<div>
 			<HeadTag title={"Order"} />
-			<div className="flex flex-col lg:flex-row w-full space-y-6 lg:space-y-0 lg:space-x-4">
+			<ProfileNavigationMenuAndItemsLayout>
+				<AllOrders />
+			</ProfileNavigationMenuAndItemsLayout>
+			{/* <div className="flex flex-col lg:flex-row w-full space-y-6 lg:space-y-0 lg:space-x-4">
 				<div className="w-full lg:w-1/5">
 					<ProfileNavigationMenu />
 				</div>
@@ -266,13 +374,10 @@ const Orders = () => {
 									</div>
 								</div>
 							</div>
-							{/* <!-- /.card-body --> */}
 						</div>
-						{/* <!-- /.card -->
-                     <!-- /.content --> */}
 					</div>
 				</section>
-			</div>
+			</div> */}
 		</div>
 	)
 }
