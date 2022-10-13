@@ -37,6 +37,10 @@ export default function SingleProduct({ product, isInStock }) {
 		categoryIds,
 	} = product
 
+	// For error handling when category leaf name or id are undefined or null from api
+	categoryleafName = categoryleafName ?? "category-leaf"
+	categoryIds = categoryIds ?? "0"
+
 	const dispatch = useDispatch()
 	const reduxCart = useSelector((state) => state.cart)
 	const [showFloatAnimation, setShowFloatAnimation] = useState(false)

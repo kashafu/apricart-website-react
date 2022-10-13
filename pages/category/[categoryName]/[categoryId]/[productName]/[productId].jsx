@@ -55,6 +55,10 @@ export default function ProductDetail() {
 			inStock,
 		} = productData[0]
 
+		// For error handling when category leaf name or id are undefined or null from api
+		categoryleafName = categoryleafName ?? "category-leaf"
+		categoryIds = categoryIds ?? "0"
+
 		setTitle(title)
 		setDescription(description)
 
