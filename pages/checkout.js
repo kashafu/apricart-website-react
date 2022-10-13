@@ -296,6 +296,7 @@ export default function Checkout() {
 									behavior: "smooth",
 								})
 							}}
+							disabled={isLoading}
 						/>
 					</div>
 				)}
@@ -523,15 +524,6 @@ export default function Checkout() {
 			</>
 		)
 	}
-
-	// if (isLoading) {
-	// 	return (
-	// 		<div>
-	// 			<HeadTag title={"Checkout"} />
-	// 			<h5 className="">Fetching cart...</h5>
-	// 		</div>
-	// 	)
-	// }
 
 	return (
 		<div className="h-full w-full">

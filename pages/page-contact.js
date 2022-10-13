@@ -27,7 +27,6 @@ export default function PageContact() {
 			let response = await axios.post(url, body, {
 				headers: headers,
 			})
-			console.log(response.data)
 			if (response.data.status == 1) {
 				toast.success(response.data.message)
 			}

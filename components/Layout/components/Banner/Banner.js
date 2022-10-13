@@ -2,7 +2,6 @@ import Image from "next/image";
 import Link from "next/link";
 
 export default function Banner({ banner }) {
-    console.log(banner);
     const { bannerUrlWeb, offerId } = banner
 
     return (

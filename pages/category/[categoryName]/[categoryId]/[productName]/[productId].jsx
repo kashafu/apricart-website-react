@@ -188,7 +188,6 @@ export default function ProductDetail() {
 			let categoryIdsArray = fromPipeCase(categoryIds.replace(/\s/g, ''))
 
 			const BreadCrumb = ({ categoryName, categoryId }) => {
-				console.log(categoryName, categoryId)
 				return (
 					<Link
 						passHref

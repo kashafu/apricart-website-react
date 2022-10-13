@@ -1,9 +1,7 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
+import { useCancelOrderApi } from "../../../../helpers/Api"
 
 const SingleOrderRow = ({ order, cancelTime }) => {
-    const [showDetails, setShowDetails] = useState(false)
-    const [isCancellable, setIsCancellable] = useState(false)
-
     let {
         orderId,
         created_at,
@@ -29,7 +27,16 @@ const SingleOrderRow = ({ order, cancelTime }) => {
         totalDiscountAmount
     } = order
 
-    // if(created_at )
+    const [showDetails, setShowDetails] = useState(false)
+    const [isCancellable, setIsCancellable] = useState(false)
+    const { setIsCancel } = useCancelOrderApi(orderId)
+
+
+    useEffect(() => {
+        if (cancelTime) {
+            setIsCancellable((Date.now() - Date.parse(created_at)) / 60000 <= cancelTime)
+        }
+    }, [])
 
     return (
         <>
@@ -63,6 +70,18 @@ const SingleOrderRow = ({ order, cancelTime }) => {
                         {showDetails ? "Hide Details" : "View Details"}
                     </button>
                 </td>
+                {isCancellable && (
+                    <td className="bg-red-600">
+                        <button className="w-full h-full font-nunito text-white font-bold"
+                            onClick={() => {
+                                setIsCancel(true)
+                            }}
+                        >
+                            CANCEL
+                        </button>
+                    </td>
+                )}
+
             </tr>
             {showDetails && (
                 <tr className="animate-dropdown">
