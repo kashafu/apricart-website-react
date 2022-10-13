@@ -39,10 +39,13 @@ export default function TopBar() {
 									Latest Update
 								</p>
 							</div>
-							<Marquee speed={50} className="overflow-hidden bg-transparent">
+							{/* <Marquee speed={50} className="overflow-hidden">
 								<p className="text-center text-sm font-bold text-black">
 									{tickerSelector}
 								</p>
+							</Marquee> */}
+							<Marquee>
+								I can be a React component, multiple React components, or just some text.
 							</Marquee>
 						</div>
 					) : (
