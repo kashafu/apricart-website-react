@@ -1245,7 +1245,8 @@ export const useOptionsApi = () => {
 	const [response, setResponse] = useState(null)
 	const [errorResponse, setErrorResponse] = useState(null)
 	const [errorMessage, setErrorMessage] = useState("")
-	const [welcomeVideo, setWelcomeVideo] = useState('')
+	const [welcomeVideo, setWelcomeVideo] = useState("")
+	const [orderCancelTime, setOrderCancelTime] = useState("")
 
 	useEffect(() => {
 		callApi()
@@ -1270,7 +1271,10 @@ export const useOptionsApi = () => {
 				if (element.key === 'welcome_video') {
 					setWelcomeVideo("https://www.youtube.com/embed/" + element.value + "?autoplay=1&mute=1")
 				}
-			});
+				else if (element.key === 'order_cancel') {
+					setOrderCancelTime(element.value)
+				}
+			})
 		} catch (error) {
 			setErrorResponse(error?.response)
 			setErrorMessage(error?.response?.data?.message)
@@ -1284,7 +1288,8 @@ export const useOptionsApi = () => {
 		errorMessage,
 		response,
 		errorResponse,
-		welcomeVideo
+		welcomeVideo,
+		orderCancelTime
 	}
 }
 
@@ -1558,9 +1563,6 @@ export const useDeleteAddressApi = () => {
 }
 
 export const useOrderHistoryApi = () => {
-	const router = useRouter()
-	const dispatch = useDispatch()
-
 	const [isLoading, setIsLoading] = useState(true)
 	const [pendingOrders, setPendingOrders] = useState(null)
 	const [completedOrders, setCompletedOrders] = useState(null)
@@ -1597,7 +1599,65 @@ export const useOrderHistoryApi = () => {
 
 	return {
 		isLoading,
-		offerProducts: pendingOrders,
+		pendingOrders,
+		cancelledOrders,
+		completedOrders,
+		errorMessage,
+		response,
+		errorResponse,
+	}
+}
+
+export const useCancelOrderApi = () => {
+	const [isLoading, setIsLoading] = useState(false)
+	const [response, setResponse] = useState(null)
+	const [errorResponse, setErrorResponse] = useState(null)
+	const [errorMessage, setErrorMessage] = useState("")
+	const [isCancel, setIsCancel] = useState(false)
+	const [data, setData] = useState({
+		id: ''
+	})
+
+	useEffect(() => {
+		if (isCancel) {
+			callApi()
+		}
+	}, [isCancel])
+
+	const callApi = async () => {
+		setIsLoading(true)
+		toast.info('Cancelling order')
+		let { headers } = getGeneralApiParams()
+
+		let url = "/order/checkout/cancel?id=" + data.id
+
+		try {
+			let apiResponse = await axios.get(fullUrl(url), {
+				headers: headers,
+			})
+
+			setResponse(apiResponse)
+			toast.success(apiResponse.data?.message)
+			setErrorMessage('')
+			setErrorResponse(null)
+			if (selectedAddressSelector?.id === data.id) {
+				dispatch(removeSelectedAddress(""))
+			}
+			router.reload()
+		} catch (error) {
+			setErrorResponse(error?.response)
+			setErrorMessage(error?.response?.data?.message)
+			toast.error(error?.response?.data?.message)
+		} finally {
+			setIsLoading(false)
+			setIsCancel(false)
+		}
+	}
+
+	return {
+		isLoading,
+		setData,
+		setIsCancel,
 		errorMessage,
 		response,
 		errorResponse,
