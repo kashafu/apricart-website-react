@@ -63,8 +63,8 @@ const Orders = () => {
 									<tr className="text-center truncate">
 										<th>Order Id</th>
 										<th>Order Date</th>
-										<th>Total Items</th>
-										<th>Total Amount</th>
+										<th>Items</th>
+										<th>Amount</th>
 										<th>Order Type</th>
 									</tr>
 								</thead>
@@ -75,7 +75,7 @@ const Orders = () => {
 											<SingleOrderRow
 												key={orderId}
 												order={order}
-												isCancel={orderCancelTime}
+												cancelTime={orderCancelTime}
 											/>
 										)
 									})}
@@ -100,7 +100,6 @@ const Orders = () => {
 											<SingleOrderRow
 												key={orderId}
 												order={order}
-												isCancel={orderCancelTime}
 											/>
 										)
 									})}
@@ -125,7 +124,6 @@ const Orders = () => {
 											<SingleOrderRow
 												key={orderId}
 												order={order}
-												isCancel={orderCancelTime}
 											/>
 										)
 									})}

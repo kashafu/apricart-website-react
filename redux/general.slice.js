@@ -26,7 +26,6 @@ const generalSlice = createSlice({
 		removeSelectedAddress: (state, action) => {
 			state.selectedAddress = action.payload
 			removeItemLocalStorage('selected-address')
-			console.log(state.selectedAddress)
 		},
 		updateTicker: (state, action) => {
 			state.ticker = action.payload

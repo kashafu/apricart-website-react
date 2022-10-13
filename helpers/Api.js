@@ -1608,15 +1608,12 @@ export const useOrderHistoryApi = () => {
 	}
 }
 
-export const useCancelOrderApi = () => {
+export const useCancelOrderApi = (id) => {
 	const [isLoading, setIsLoading] = useState(false)
 	const [response, setResponse] = useState(null)
 	const [errorResponse, setErrorResponse] = useState(null)
 	const [errorMessage, setErrorMessage] = useState("")
 	const [isCancel, setIsCancel] = useState(false)
-	const [data, setData] = useState({
-		id: ''
-	})
 
 	useEffect(() => {
 		if (isCancel) {
@@ -1629,7 +1626,7 @@ export const useCancelOrderApi = () => {
 		toast.info('Cancelling order')
 		let { headers } = getGeneralApiParams()
 
-		let url = "/order/checkout/cancel?id=" + data.id
+		let url = "/order/checkout/cancel?id=" + id
 
 		try {
 			let apiResponse = await axios.get(fullUrl(url), {
@@ -1640,9 +1637,6 @@ export const useCancelOrderApi = () => {
 			toast.success(apiResponse.data?.message)
 			setErrorMessage('')
 			setErrorResponse(null)
-			if (selectedAddressSelector?.id === data.id) {
-				dispatch(removeSelectedAddress(""))
-			}
 			router.reload()
 		} catch (error) {
 			setErrorResponse(error?.response)
@@ -1656,7 +1650,6 @@ export const useCancelOrderApi = () => {
 
 	return {
 		isLoading,
-		setData,
 		setIsCancel,
 		errorMessage,
 		response,
