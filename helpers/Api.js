@@ -5,7 +5,7 @@ import { useRouter } from "next/router"
 import { toast } from "react-toastify"
 
 import { base_url_api } from "../information.json"
-import { getGeneralApiParams } from "./ApiHelpers"
+import { getGeneralApiParams, logOutRemoveCookies } from "./ApiHelpers"
 import {
 	addToCart,
 	initialize,
@@ -1651,6 +1651,102 @@ export const useCancelOrderApi = (id) => {
 	return {
 		isLoading,
 		setIsCancel,
+		errorMessage,
+		response,
+		errorResponse,
+	}
+}
+
+export const useGetProfileApi = () => {
+	const [isLoading, setIsLoading] = useState(true)
+	const [profile, setProfile] = useState(null)
+	const [response, setResponse] = useState(null)
+	const [errorResponse, setErrorResponse] = useState(null)
+	const [errorMessage, setErrorMessage] = useState("")
+
+	useEffect(() => {
+		callApi()
+	}, [])
+
+	const callApi = async () => {
+		setIsLoading(true)
+
+		let { headers } = getGeneralApiParams()
+		let url = "/home/profile?"
+
+		try {
+			let apiResponse = await axios.get(fullUrl(url), {
+				headers: headers,
+			})
+			setResponse(apiResponse)
+			setProfile(apiResponse.data.data)
+		} catch (error) {
+			setErrorResponse(error?.response)
+			setErrorMessage(error?.response?.data?.message)
+		} finally {
+			setIsLoading(false)
+		}
+	}
+
+	return {
+		isLoading,
+		profile,
+		errorMessage,
+		response,
+		errorResponse,
+	}
+}
+
+export const useUpdateProfileApi = () => {
+	const router = useRouter()
+	const [isLoading, setIsLoading] = useState(false)
+	const [response, setResponse] = useState(null)
+	const [errorResponse, setErrorResponse] = useState(null)
+	const [errorMessage, setErrorMessage] = useState("")
+	const [isUpdate, setIsUpdate] = useState(false)
+	const [data, setData] = useState({
+		name: '',
+		email: '',
+		phoneNumber: '',
+	})
+
+	useEffect(() => {
+		if (isUpdate) {
+			callApi()
+		}
+	}, [isUpdate])
+
+	const callApi = async () => {
+		setIsLoading(true)
+		let { headers } = getGeneralApiParams()
+
+		let url = "/home/profile/save?"
+
+		try {
+			let apiResponse = await axios.post(fullUrl(url), data, {
+				headers: headers
+			})
+
+			setResponse(apiResponse)
+			toast.success(apiResponse.data?.message)
+			setErrorMessage('')
+			setErrorResponse(null)
+			logOutRemoveCookies()
+			router.push("/login")
+		} catch (error) {
+			setErrorResponse(error?.response)
+			setErrorMessage(error?.response?.data?.message)
+			toast.error(error?.response?.data?.message)
+		} finally {
+			setIsLoading(false)
+			setIsUpdate(false)
+		}
+	}
+
+	return {
+		isLoading,
+		setData,
+		setIsUpdate,
 		errorMessage,
 		response,
 		errorResponse,
