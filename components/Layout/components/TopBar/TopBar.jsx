@@ -39,7 +39,7 @@ export default function TopBar() {
 									Latest Update
 								</p>
 							</div>
-							<Marquee speed={50} className="overflow-hidden" gradient={false}>
+							<Marquee speed={50} className="overflow-hidden">
 								<p className="text-center text-sm font-bold text-black">
 									{tickerSelector}
 								</p>
