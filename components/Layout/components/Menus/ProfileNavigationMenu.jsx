@@ -1,5 +1,7 @@
 import Link from "next/link"
 import { useRouter } from "next/router"
+
+import { logOutRemoveCookies } from "../../../../helpers/ApiHelpers"
 import SubmitButton from "../Buttons/SubmitButton"
 
 const ProfileNavigationMenu = () => {
