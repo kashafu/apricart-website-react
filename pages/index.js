@@ -21,7 +21,6 @@ import bulkBuyStaticBanner from "../public/assets/images/banners/bulkBuyMainBann
 import crossIcon from "../public/assets/svgs/crossIcon.svg"
 import { clearCookies } from "../helpers/Cookies"
 import { clearLocalStorage, clearSessionStorage } from "../helpers/Storage"
-import MainProductsShimmer from "../components/Layout/components/Loaders/Shimmers/MainProductsShimmer"
 import MainCategories from "../components/Layout/components/Categories/MainCategories"
 import CategoryAndItemsLayout from "../components/Layout/components/Layouts/CategoryAndItemsLayout"
 
@@ -209,12 +208,6 @@ export default function Home() {
 	}
 
 	const Products = () => {
-		if (isLoading) {
-			return (
-				<MainProductsShimmer />
-			)
-		}
-
 		return (
 			<section className="space-y-4">
 				{homeData.products.map((product, index) => {
