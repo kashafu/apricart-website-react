@@ -206,7 +206,7 @@ export default function ProductDetail() {
 			}
 
 			return (
-				<div className="space-x-2">
+				<div className="">
 					{categoryNamesArray.slice(0, categoryNamesArray.length - 1).map((name, index) => {
 						return (
 							<BreadCrumb
