@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { useSelector } from 'react-redux'
 
 // import karachiCncBanner from '../../../../public/assets/images/banners/cncBlessedFridayCarousel.png'
-import karachiScrollingBanner1 from '../../../../public/assets/images/banners/homeDeliveryCarousel4.png'
+import karachiScrollingBanner1 from '../../../../public/assets/images/banners/homeDeliveryCarousel2.png'
 import karachiScrollingBanner2 from '../../../../public/assets/images/banners/homeDeliveryCarousel3.png'
 import karachiScrollingBanner3 from '../../../../public/assets/images/banners/7 Main scrollable Banner.png'
 import karachiScrollingBanner4 from '../../../../public/assets/images/banners/1+Main+Scrollable+(Website+Banner).png'
@@ -105,7 +105,7 @@ const Carousel = () => {
                     {selectedTypeSelector === 'cnc' && (
                         <Slider {...settings}>
                             <div className="w-full h-full">
-                                <Link href={'/offers/111'} passHref>
+                                <Link href={'/offers/77'} passHref>
                                     <a className="w-full h-full">
                                         <Image
                                             src={karachiScrollingBanner1}
