@@ -117,7 +117,7 @@ export default function SearchBar() {
 				</button>
 			</div>
 			{showSearchResults && !isLoading && (
-				<div className="absolute z-30 w-full bg-white max-h-[350px] overflow-auto rounded-b-lg">
+				<div className="animate-dropdown absolute z-30 w-full bg-slate-100 max-h-[350px] overflow-auto rounded-b-lg">
 					{searchResults.length > 0 ? (
 						<div className="flex flex-col p-2 lg:p-4 space-y-2">
 							{searchResults.map((product) => {

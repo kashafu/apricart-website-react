@@ -16,7 +16,7 @@ import homeDeliveryIcon from "../public/assets/svgs/homeDeliveryIcon.svg"
 import clickAndCollectIcon from "../public/assets/svgs/clickAndCollectIcon.svg"
 import bulkBuyIcon from "../public/assets/svgs/bulkBuyIcon.svg"
 import karachiStaticBanner1 from "../public/assets/images/banners/StaticBanner.png"
-import karachiCncStaticBanner1 from "../public/assets/images/banners/webstaticbannershangrila.png"
+import karachiCncStaticBanner1 from "../public/assets/images/banners/webstaticbannerbeauty.png"
 import bulkBuyStaticBanner from "../public/assets/images/banners/bulkBuyMainBanner.png"
 import crossIcon from "../public/assets/svgs/crossIcon.svg"
 import { clearCookies } from "../helpers/Cookies"
@@ -279,7 +279,7 @@ export default function Home() {
 						)}
 						{selectedTypeSelector === 'cnc' && (
 							<Link
-								href={"/offers/82"}
+								href={"/offers/111"}
 								passHref
 								className="w-full"
 							>
