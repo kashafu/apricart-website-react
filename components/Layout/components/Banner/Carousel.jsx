@@ -7,7 +7,7 @@ import { useSelector } from 'react-redux'
 import karachiScrollingBanner1 from '../../../../public/assets/images/banners/homeDeliveryCarousel4.png'
 import karachiScrollingBanner2 from '../../../../public/assets/images/banners/homeDeliveryCarousel3.png'
 import karachiScrollingBanner3 from '../../../../public/assets/images/banners/7 Main scrollable Banner.png'
-import karachiScrollingBanner4 from '../../../../public/assets/images/banners/1+Main+Scrollable+(Website+Banner).png'
+import karachiScrollingBanner4 from '../../../../public/assets/images/banners/web 1.png'
 import peshawarScrollingBanner from '../../../../public/assets/images/banners/peshawarBulkBuyCarousel3.png'
 import bulkBuyBannerKarachi from '../../../../public/assets/images/banners/webscrollablebannerBBD&D.png'
 import bulkBuyBanner from '../../../../public/assets/images/banners/bulkBuyCarousel.png'
@@ -57,7 +57,7 @@ const Carousel = () => {
                     {selectedTypeSelector === 'home' && (
                         <Slider {...settings}>
                             <div className="w-full h-full">
-                                <Link href={'/offers/103'} passHref>
+                                <Link href={'/offers/119'} passHref>
                                     <a className="w-full h-full">
                                         <Image
                                             src={karachiScrollingBanner4}
