@@ -1,58 +1,42 @@
-import axios from "axios"
 import { useDispatch } from "react-redux"
-import { removeSelectedAddress, updateCity, updateSelectedAddress } from "../../../../redux/general.slice"
 import { toast } from "react-toastify"
 import { useState } from "react"
 import { useRouter } from "next/router"
+import { useSelector } from "react-redux"
 
+import { updateCity, updateSelectedAddress } from "../../../../redux/general.slice"
 import AddAddressCard from "./AddAddressCard"
-import { getGeneralApiParams } from "../../../../helpers/ApiHelpers"
-import { base_url_api } from "../../../../information.json"
+import { useDeleteAddressApi } from "../../../../helpers/Api"
 
-export default function SingleAddressListing({ listing, isSelected, setAddress, updateSavedAddresses, }) {
+export default function SingleAddressListing({ listing }) {
+	let { address, area, city, name, phoneNumber, email, id } = listing
+
+	const selectedAddressSelector = useSelector(state => state.general.selectedAddress)
 	const dispatch = useDispatch()
 	const router = useRouter()
 
-	let { address, area, city, name, phoneNumber, email } = listing
-	let style = isSelected ? "bg-lime-300" : ""
-
+	const { setData, setIsRemove } = useDeleteAddressApi()
 	const [showEdit, setShowEdit] = useState(false)
-
-	const deleteAddressApi = async () => {
-		let { headers, userId } = getGeneralApiParams()
-		let url =
-			base_url_api + "/home/address/delivery/delete?client_type=apricart&userid=" + userId
-		let body = {
-			id: listing.id,
-		}
-
-		try {
-			await axios.delete(url, {
-				headers: headers,
-				data: body,
-			})
-
-			updateSavedAddresses()
-		} catch (error) {
-			console.log(error?.response)
-		}
-	}
 
 	const onClickHandle = () => {
 		toast.success('Selected Address Updated')
 		dispatch(updateSelectedAddress(listing))
 		dispatch(updateCity(listing.city.toLowerCase()))
-		setAddress(listing)
 		router.push('/')
 	}
 
 	return (
 		<div className="flex flex-col border-2 rounded-2xl mx-4 overflow-hidden space-y-2">
-			<button onClick={onClickHandle} className={[style] + ' p-2 space-y-2 rounded-lg'}>
+			<button
+				className={[selectedAddressSelector?.id === id ? "bg-lime-300" : ""] + " p-2 space-y-2 rounded-lg"}
+				onClick={onClickHandle}
+			>
 				<p className="text-lg font-bold">
 					{name}, {phoneNumber}
 				</p>
-				<p>{email}</p>
+				<p>
+					{email}
+				</p>
 				<p>
 					{address}, {area}, {city}
 				</p>
@@ -64,25 +48,28 @@ export default function SingleAddressListing({ listing, isSelected, setAddress, 
 					}}
 					className="bg-main-yellow w-full py-2 rounded-lg sm:w-1/3"
 				>
-					<p className="text-white font-bold">EDIT</p>
+					<p className="text-white font-bold">
+						EDIT
+					</p>
 				</button>
 				<button
-					onClick={() => {
-						deleteAddressApi()
-						if (isSelected) {
-							dispatch(removeSelectedAddress)
-						}
-					}}
 					className="bg-red-500 w-full py-2 rounded-lg sm:w-1/3"
+					onClick={() => {
+						setData({
+							id: id
+						})
+						setIsRemove(true)
+					}}
 				>
-					<p className="text-white font-bold">DELETE</p>
+					<p className="text-white font-bold">
+						DELETE
+					</p>
 				</button>
 			</div>
 			{showEdit && (
 				<AddAddressCard
 					type={"edit"}
 					previousAddress={listing}
-					updateSavedAddresses={updateSavedAddresses}
 					setShow={setShowEdit}
 				/>
 			)}

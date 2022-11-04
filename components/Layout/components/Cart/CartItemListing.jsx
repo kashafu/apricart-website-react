@@ -22,6 +22,10 @@ const CartItemListing = ({ item, fetchCart }) => {
         categoryIds,
     } = item
 
+    // For error handling when category leaf name or id are undefined or null from api
+    categoryleafName = categoryleafName ?? "category-leaf"
+    categoryIds = categoryIds ?? "0"
+
     const { setIsUpdateItemQty, setData } = useUpdateItemQtyApi()
     const { setIsDelete, setSku } = useDeleteItemApi()
 

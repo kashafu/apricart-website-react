@@ -89,7 +89,7 @@ export default function MainProducts({ section }) {
 						layout={'responsive'}
 						alt={"banner image"}
 						width={'100%'}
-						height={25}
+						height={18}
 					/>
 				) : (
 					<Link
@@ -105,7 +105,7 @@ export default function MainProducts({ section }) {
 								layout={'responsive'}
 								alt={"banner image"}
 								width={'100%'}
-								height={20}
+								height={18}
 							/>
 						</a>
 					</Link>

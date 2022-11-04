@@ -37,6 +37,10 @@ export default function SingleProduct({ product, isInStock }) {
 		categoryIds,
 	} = product
 
+	// For error handling when category leaf name or id are undefined or null from api
+	categoryleafName = categoryleafName ?? "category-leaf"
+	categoryIds = categoryIds ?? "0"
+
 	const dispatch = useDispatch()
 	const reduxCart = useSelector((state) => state.cart)
 	const [showFloatAnimation, setShowFloatAnimation] = useState(false)
@@ -171,7 +175,7 @@ export default function SingleProduct({ product, isInStock }) {
 						{title}
 					</p>
 					{/* PRICE and  ADD TO CART*/}
-					<div className="row-span-1 flex items-center w-full justify-between">
+					<div className="row-span-2 flex items-center w-full justify-between">
 						{/* PRICE */}
 						<div className="flex w-fit flex-col justify-center">
 							{specialPrice > 0 ? (

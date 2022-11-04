@@ -41,7 +41,7 @@ export default function Profile() {
 			>
 				<div className="flex flex-col items-center space-y-4">
 					<LinkText text={"My Profile"} path={"/profile"} />
-					<LinkText text={"My Orders"} path={"/order"} />
+					<LinkText text={"My Orders"} path={"/orders"} />
 					<LinkText text={"My Addresses"} path={"/address"} />
 				</div>
 				<SubmitButton text={"LOGOUT"} onClick={logout} bgColor={"bg-red-500"} />

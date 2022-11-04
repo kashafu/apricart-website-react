@@ -7,7 +7,6 @@ import Link from "next/link"
 import MainProducts from "../components/Layout/components/Products/MainProducts"
 import HeadTag from "../components/Layout/components/Head/HeadTag"
 import Carousel from "../components/Layout/components/Banner/Carousel"
-import Categories from "../components/Layout/components/Categories/Categories"
 import { useHomeApi, useOptionsApi } from "../helpers/Api"
 import TypeCardSelector from "../components/Layout/components/Cards/TypeCardSelector"
 import HomeLoader from "../components/Layout/components/Loaders/HomeLoader"
@@ -16,14 +15,14 @@ import { updateIsShowSelectionScreen, updateRedirectInformation, updateRedirectS
 import homeDeliveryIcon from "../public/assets/svgs/homeDeliveryIcon.svg"
 import clickAndCollectIcon from "../public/assets/svgs/clickAndCollectIcon.svg"
 import bulkBuyIcon from "../public/assets/svgs/bulkBuyIcon.svg"
-import karachiStaticBanner1 from "../public/assets/images/banners/staticbannerBC.png"
-import karachiCncStaticBanner1 from "../public/assets/images/banners/webstaticbanner.jpg"
+import karachiStaticBanner1 from "../public/assets/images/banners/web2_2022-10-31T13_07_06.581994.png"
+import karachiCncStaticBanner1 from "../public/assets/images/banners/webstaticbannershangrila.png"
 import bulkBuyStaticBanner from "../public/assets/images/banners/bulkBuyMainBanner.png"
 import crossIcon from "../public/assets/svgs/crossIcon.svg"
 import { clearCookies } from "../helpers/Cookies"
 import { clearLocalStorage, clearSessionStorage } from "../helpers/Storage"
-import MainProductsShimmer from "../components/Layout/components/Loaders/Shimmers/MainProductsShimmer"
 import MainCategories from "../components/Layout/components/Categories/MainCategories"
+import CategoryAndItemsLayout from "../components/Layout/components/Layouts/CategoryAndItemsLayout"
 
 export default function Home() {
 	const router = useRouter()
@@ -216,12 +215,6 @@ export default function Home() {
 	}
 
 	const Products = () => {
-		if (isLoading) {
-			return (
-				<MainProductsShimmer />
-			)
-		}
-
 		return (
 			<section className="space-y-4">
 				{homeData.products.map((product, index) => {
@@ -292,17 +285,23 @@ export default function Home() {
 							</Link>
 						)}
 						{selectedTypeSelector === 'cnc' && (
-							<div className="w-full">
-								<Image
-									src={karachiCncStaticBanner1}
-									layout={"responsive"}
-									alt="banner"
-								/>
-							</div>
+							<Link
+								href={"/offers/82"}
+								passHref
+								className="w-full"
+							>
+								<a className="w-full">
+									<Image
+										src={karachiCncStaticBanner1}
+										layout={"responsive"}
+										alt="banner"
+									/>
+								</a>
+							</Link>
 						)}
 						{selectedTypeSelector === 'home' && (
 							<Link
-								href={"/offers/81"}
+								href={"/offers/118"}
 								passHref
 								className="w-full"
 							>
@@ -334,15 +333,9 @@ export default function Home() {
 				}
 				isIndex
 			/>
-			<div className="grid grid-cols-5 gap-6">
-				{/* CATEGORIES SECTION */}
-				<section className="hidden lg:block lg:col-span-1">
-					<Categories />
-				</section>
-				<section className="space-y-2 lg:space-y-6 col-span-5 lg:col-span-4">
-					<HomeItems />
-				</section>
-			</div>
+			<CategoryAndItemsLayout>
+				<HomeItems />
+			</CategoryAndItemsLayout>
 		</div>
 	)
 }

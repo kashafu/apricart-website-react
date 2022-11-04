@@ -1,11 +1,14 @@
-import locationPinPNG from "../../../../public/assets/svgs/locationPinIcon.svg"
 import Image from "next/image"
 import { useSelector } from "react-redux"
 import Link from "next/link"
 import { toast } from "react-toastify"
 import { useEffect } from "react"
+import { useRouter } from "next/router"
+
+import locationPinPNG from "../../../../public/assets/svgs/locationPinIcon.svg"
 
 const AddressSelector = () => {
+    const router = useRouter()
     const selectedAddressSelector = useSelector(
         (state) => state.general.selectedAddress
     )
@@ -14,7 +17,10 @@ const AddressSelector = () => {
         if (!selectedAddressSelector) {
             let toastId = 'delivery'
             toast.warn("SELECT DELIVERY ADDRESS", {
-                toastId: toastId
+                toastId: toastId,
+                onClick: (() => {
+                    router.push('/address')
+                })
             })
         }
     }, [])
@@ -37,7 +43,7 @@ const AddressSelector = () => {
                                     "font-bold text-base truncate max-w-[150px] xl:max-w-xs text-main-grey-800 capitalize font-nunito"
                                 }
                             >
-                                {selectedAddressSelector ? [selectedAddressSelector.address] : "Select Address"}
+                                {selectedAddressSelector && selectedAddressSelector !== '' ? [selectedAddressSelector.address] : "Select Address"}
                             </p>
                         </div>
                     </div>

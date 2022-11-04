@@ -314,6 +314,7 @@ export default function Checkout() {
 									behavior: "smooth",
 								})
 							}}
+							disabled={isLoading}
 						/>
 					</div>
 				)}

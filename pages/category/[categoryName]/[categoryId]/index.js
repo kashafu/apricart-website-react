@@ -1,8 +1,6 @@
 import { useRouter } from "next/router"
 import Link from "next/link"
 
-import Categories from "../../../../components/Layout/components/Categories/Categories"
-import SingleProduct from "../../../../components/Layout/components/Products/SingleProduct"
 import PageHeading from "../../../../components/Layout/components/Typography/PageHeading"
 import HeadTag from "../../../../components/Layout/components/Head/HeadTag"
 import toKebabCase, { fromKebabCase } from "../../../../helpers/toKebabCase"
@@ -10,7 +8,9 @@ import {
 	useCategoryProductsApi,
 } from "../../../../helpers/Api"
 import SubCategoryShimmer from "../../../../components/Layout/components/Loaders/Shimmers/SubCategoryShimmer"
-import SubCategoryProductsShimmer from "../../../../components/Layout/components/Loaders/Shimmers/SubCategoryProductsShimmer"
+import ListProductsShimmer from "../../../../components/Layout/components/Loaders/Shimmers/ListProductsShimmer"
+import ListProducts from "../../../../components/Layout/components/Products/ListProducts"
+import CategoryAndItemsLayout from "../../../../components/Layout/components/Layouts/CategoryAndItemsLayout"
 
 export default function CategoryProducts() {
 	const router = useRouter()
@@ -71,8 +71,13 @@ export default function CategoryProducts() {
 				<button key={index}
 					onClick={() => {
 						setPage(index / size)
+						window.scroll({
+							top: 0,
+							left: 0,
+							behavior: "smooth",
+						})
 					}}
-					className={index / size === page ? "border-main-blue border-1 bg-main-blue px-2 text-white font-bold rounded-lg" : "border-main-blue border-1 px-2 text-main-blue font-bold rounded-lg duration-200 hover:bg-main-blue hover:text-white"}
+					className={index / size === page ? "border-main-blue bg-main-blue px-2 text-white font-bold rounded-lg" : "border-main-blue px-2 text-main-blue font-bold rounded-lg duration-200 hover:bg-main-blue hover:text-white"}
 				>
 					{index / size}
 				</button>
@@ -94,7 +99,7 @@ export default function CategoryProducts() {
 	const CategoryProducts = () => {
 		if (isLoading || !router.isReady) {
 			return (
-				<SubCategoryProductsShimmer />
+				<ListProductsShimmer />
 			)
 		}
 
@@ -115,20 +120,26 @@ export default function CategoryProducts() {
 		}
 
 		return (
-			<section>
-				<section className="grid grid-cols-2 md:grid-cols-4 xl:grid-cols-5 3xl:grid-cols-6 gap-4">
-					{categoryProducts.map((product) => {
-						let { sku } = product
-						return (
-							<div key={sku}>
-								<SingleProduct
-									product={product}
-								/>
-							</div>
-						)
-					})}
+			<ListProducts
+				products={categoryProducts}
+			/>
+		)
+	}
+
+	const PageItems = () => {
+		return (
+			<>
+				{router.isReady && (
+					<PageHeading
+						text={fromKebabCase(categoryName.toUpperCase())}
+					/>
+				)}
+				<section className="space-y-4">
+					<SubCategories />
+					<CategoryProducts />
+					<Filter />
 				</section>
-			</section>
+			</>
 		)
 	}
 
@@ -141,25 +152,9 @@ export default function CategoryProducts() {
 					}
 				/>
 			)}
-			<div className="grid grid-cols-5 gap-8">
-				{/* CATEGORIES SECTION */}
-				<section className="hidden lg:col-span-1 lg:block">
-					<Categories />
-				</section>
-				{/* PRODUCTS SECTION */}
-				<section className="col-span-5 lg:col-span-4">
-					{router.isReady && (
-						<PageHeading
-							text={fromKebabCase(categoryName.toUpperCase())}
-						/>
-					)}
-					<section className="space-y-4">
-						<SubCategories />
-						<CategoryProducts />
-						<Filter />
-					</section>
-				</section>
-			</div>
+			<CategoryAndItemsLayout>
+				<PageItems />
+			</CategoryAndItemsLayout>
 		</div>
 	)
 }

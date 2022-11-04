@@ -4,7 +4,7 @@ const MainProductsShimmer = () => {
 	return (
 		<div className="space-y-4 lg:space-y-12">
 			{/* <div className="lg:hidden h-[150px] w-full bg-slate-200 animate-pulse rounded-lg" /> */}
-			<div>
+			<div className="space-y-4">
 				<div className="w-full h-[40px] p-1 flex flex-row items-center justify-between">
 					<div className="h-full w-3/6 animate-pulse bg-slate-100 rounded-lg" />
 					<div className="h-full w-2/6 animate-pulse bg-slate-100 rounded-lg" />

@@ -6,35 +6,12 @@ export default function ListProducts({ products }) {
 	}
 
 	return (
-		<section className="space-y-4 px-2">
-			{/* MOBILE VIEW PRODUCTS */}
-			<section className="grid grid-cols-2 lg:hidden gap-2">
+		<section className="px-2">
+			<section className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 3xl:grid-cols-6 gap-2">
 				{products.map((product) => {
-					let { id } = product
+					let { sku } = product
 					return (
-						<div key={id}>
-							<SingleProduct product={product} />
-						</div>
-					)
-				})}
-			</section>
-			{/* LAPTOP VIEW PRODUCTS */}
-			<section className="hidden lg:grid lg:grid-cols-4 gap-2 2xl:hidden">
-				{products.map((product) => {
-					let { id } = product
-					return (
-						<div key={id}>
-							<SingleProduct product={product} />
-						</div>
-					)
-				})}
-			</section>
-			{/* DESKTOP VIEW PRODUCTS */}
-			<section className="hidden 2xl:grid 2xl:grid-cols-5 gap-2">
-				{products.map((product) => {
-					let { id } = product
-					return (
-						<div key={id}>
+						<div key={sku}>
 							<SingleProduct product={product} />
 						</div>
 					)

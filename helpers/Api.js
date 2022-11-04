@@ -5,14 +5,14 @@ import { useRouter } from "next/router"
 import { toast } from "react-toastify"
 
 import { base_url_api } from "../information.json"
-import { getGeneralApiParams } from "./ApiHelpers"
+import { getGeneralApiParams, logOutRemoveCookies } from "./ApiHelpers"
 import {
 	addToCart,
 	initialize,
 	removeFromCart,
 	updateQuantity,
 } from "../redux/cart.slice"
-import { updateIsUserInitialized, updateTicker } from "../redux/general.slice"
+import { removeSelectedAddress, updateIsUserInitialized, updateTicker } from "../redux/general.slice"
 import { setCookie } from "./Cookies"
 import { updateCategories } from "../redux/data.slice"
 
@@ -1253,7 +1253,8 @@ export const useOptionsApi = () => {
 	const [response, setResponse] = useState(null)
 	const [errorResponse, setErrorResponse] = useState(null)
 	const [errorMessage, setErrorMessage] = useState("")
-	const [welcomeVideo, setWelcomeVideo] = useState('')
+	const [welcomeVideo, setWelcomeVideo] = useState("")
+	const [orderCancelTime, setOrderCancelTime] = useState("")
 
 	useEffect(() => {
 		callApi()
@@ -1278,7 +1279,10 @@ export const useOptionsApi = () => {
 				if (element.key === 'welcome_video') {
 					setWelcomeVideo("https://www.youtube.com/embed/" + element.value + "?autoplay=1&mute=1")
 				}
-			});
+				else if (element.key === 'order_cancel') {
+					setOrderCancelTime(element.value)
+				}
+			})
 		} catch (error) {
 			setErrorResponse(error?.response)
 			setErrorMessage(error?.response?.data?.message)
@@ -1292,7 +1296,8 @@ export const useOptionsApi = () => {
 		errorMessage,
 		response,
 		errorResponse,
-		welcomeVideo
+		welcomeVideo,
+		orderCancelTime
 	}
 }
 
@@ -1450,6 +1455,306 @@ export const useSavedAddressesApi = () => {
 	return {
 		isLoading,
 		savedAddresses,
+		errorMessage,
+		response,
+		errorResponse,
+	}
+}
+
+export const useOfferProductsApi = () => {
+	const router = useRouter()
+	const dispatch = useDispatch()
+	const { id } = router.query
+
+	const [isLoading, setIsLoading] = useState(true)
+	const [offerProducts, setOfferProducts] = useState(null)
+	const [response, setResponse] = useState(null)
+	const [errorResponse, setErrorResponse] = useState(null)
+	const [errorMessage, setErrorMessage] = useState("")
+
+	useEffect(() => {
+		if (router.isReady) {
+			callApi()
+		}
+	}, [router.query, router.isReady])
+
+	const callApi = async () => {
+		setIsLoading(true)
+		if (router.pathname !== '/') {
+			if (await initializeUserApi()) {
+				dispatch(updateIsUserInitialized(true))
+			}
+		}
+		let { headers } = getGeneralApiParams()
+		let url = "/offers/detail?id=" + id
+
+		try {
+			let apiResponse = await axios.get(fullUrl(url), {
+				headers: headers,
+			})
+			setResponse(apiResponse)
+			setOfferProducts(apiResponse.data.data.products)
+		} catch (error) {
+			setErrorResponse(error?.response)
+			setErrorMessage(error?.response?.data?.message)
+		} finally {
+			setIsLoading(false)
+		}
+	}
+
+	return {
+		isLoading,
+		offerProducts,
+		errorMessage,
+		response,
+		errorResponse,
+	}
+}
+
+export const useDeleteAddressApi = () => {
+	const dispatch = useDispatch()
+	const router = useRouter()
+	const selectedAddressSelector = useSelector(state => state.general.selectedAddress)
+	const [isLoading, setIsLoading] = useState(false)
+	const [response, setResponse] = useState(null)
+	const [errorResponse, setErrorResponse] = useState(null)
+	const [errorMessage, setErrorMessage] = useState("")
+	const [isRemove, setIsRemove] = useState(false)
+	const [data, setData] = useState({
+		id: ''
+	})
+
+	useEffect(() => {
+		if (isRemove) {
+			callApi()
+		}
+	}, [isRemove])
+
+	const callApi = async () => {
+		setIsLoading(true)
+		let { headers } = getGeneralApiParams()
+
+		let url = "/home/address/delivery/delete?"
+
+		try {
+			let apiResponse = await axios.delete(fullUrl(url), {
+				headers: headers,
+				data: data
+			})
+
+			setResponse(apiResponse)
+			toast.success(apiResponse.data?.message)
+			setErrorMessage('')
+			setErrorResponse(null)
+			if (selectedAddressSelector?.id === data.id) {
+				dispatch(removeSelectedAddress(""))
+			}
+			router.reload()
+		} catch (error) {
+			setErrorResponse(error?.response)
+			setErrorMessage(error?.response?.data?.message)
+			toast.error(error?.response?.data?.message)
+		} finally {
+			setIsLoading(false)
+			setIsRemove(false)
+		}
+	}
+
+	return {
+		isLoading,
+		setData,
+		setIsRemove,
+		errorMessage,
+		response,
+		errorResponse,
+	}
+}
+
+export const useOrderHistoryApi = () => {
+	const [isLoading, setIsLoading] = useState(true)
+	const [pendingOrders, setPendingOrders] = useState(null)
+	const [completedOrders, setCompletedOrders] = useState(null)
+	const [cancelledOrders, setCancelledOrders] = useState(null)
+	const [response, setResponse] = useState(null)
+	const [errorResponse, setErrorResponse] = useState(null)
+	const [errorMessage, setErrorMessage] = useState("")
+
+	useEffect(() => {
+		callApi()
+	}, [])
+
+	const callApi = async () => {
+		setIsLoading(true)
+
+		let { headers } = getGeneralApiParams()
+		let url = "/order/history?"
+
+		try {
+			let apiResponse = await axios.get(fullUrl(url), {
+				headers: headers,
+			})
+			setResponse(apiResponse)
+			setPendingOrders(apiResponse.data.data.pending)
+			setCancelledOrders(apiResponse.data.data.cancelled)
+			setCompletedOrders(apiResponse.data.data.completed)
+		} catch (error) {
+			setErrorResponse(error?.response)
+			setErrorMessage(error?.response?.data?.message)
+		} finally {
+			setIsLoading(false)
+		}
+	}
+
+	return {
+		isLoading,
+		pendingOrders,
+		cancelledOrders,
+		completedOrders,
+		errorMessage,
+		response,
+		errorResponse,
+	}
+}
+
+export const useCancelOrderApi = (id) => {
+	const [isLoading, setIsLoading] = useState(false)
+	const [response, setResponse] = useState(null)
+	const [errorResponse, setErrorResponse] = useState(null)
+	const [errorMessage, setErrorMessage] = useState("")
+	const [isCancel, setIsCancel] = useState(false)
+
+	useEffect(() => {
+		if (isCancel) {
+			callApi()
+		}
+	}, [isCancel])
+
+	const callApi = async () => {
+		setIsLoading(true)
+		toast.info('Cancelling order')
+		let { headers } = getGeneralApiParams()
+
+		let url = "/order/checkout/cancel?id=" + id
+
+		try {
+			let apiResponse = await axios.get(fullUrl(url), {
+				headers: headers,
+			})
+
+			setResponse(apiResponse)
+			toast.success(apiResponse.data?.message)
+			setErrorMessage('')
+			setErrorResponse(null)
+			router.reload()
+		} catch (error) {
+			setErrorResponse(error?.response)
+			setErrorMessage(error?.response?.data?.message)
+			toast.error(error?.response?.data?.message)
+		} finally {
+			setIsLoading(false)
+			setIsCancel(false)
+		}
+	}
+
+	return {
+		isLoading,
+		setIsCancel,
+		errorMessage,
+		response,
+		errorResponse,
+	}
+}
+
+export const useGetProfileApi = () => {
+	const [isLoading, setIsLoading] = useState(true)
+	const [profile, setProfile] = useState(null)
+	const [response, setResponse] = useState(null)
+	const [errorResponse, setErrorResponse] = useState(null)
+	const [errorMessage, setErrorMessage] = useState("")
+
+	useEffect(() => {
+		callApi()
+	}, [])
+
+	const callApi = async () => {
+		setIsLoading(true)
+
+		let { headers } = getGeneralApiParams()
+		let url = "/home/profile?"
+
+		try {
+			let apiResponse = await axios.get(fullUrl(url), {
+				headers: headers,
+			})
+			setResponse(apiResponse)
+			setProfile(apiResponse.data.data)
+		} catch (error) {
+			setErrorResponse(error?.response)
+			setErrorMessage(error?.response?.data?.message)
+		} finally {
+			setIsLoading(false)
+		}
+	}
+
+	return {
+		isLoading,
+		profile,
+		errorMessage,
+		response,
+		errorResponse,
+	}
+}
+
+export const useUpdateProfileApi = () => {
+	const router = useRouter()
+	const [isLoading, setIsLoading] = useState(false)
+	const [response, setResponse] = useState(null)
+	const [errorResponse, setErrorResponse] = useState(null)
+	const [errorMessage, setErrorMessage] = useState("")
+	const [isUpdate, setIsUpdate] = useState(false)
+	const [data, setData] = useState({
+		name: '',
+		email: '',
+		phoneNumber: '',
+	})
+
+	useEffect(() => {
+		if (isUpdate) {
+			callApi()
+		}
+	}, [isUpdate])
+
+	const callApi = async () => {
+		setIsLoading(true)
+		let { headers } = getGeneralApiParams()
+
+		let url = "/home/profile/save?"
+
+		try {
+			let apiResponse = await axios.post(fullUrl(url), data, {
+				headers: headers
+			})
+
+			setResponse(apiResponse)
+			toast.success(apiResponse.data?.message)
+			setErrorMessage('')
+			setErrorResponse(null)
+			logOutRemoveCookies()
+			router.push("/login")
+		} catch (error) {
+			setErrorResponse(error?.response)
+			setErrorMessage(error?.response?.data?.message)
+			toast.error(error?.response?.data?.message)
+		} finally {
+			setIsLoading(false)
+			setIsUpdate(false)
+		}
+	}
+
+	return {
+		isLoading,
+		setData,
+		setIsUpdate,
 		errorMessage,
 		response,
 		errorResponse,

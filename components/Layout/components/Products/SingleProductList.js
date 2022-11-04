@@ -15,6 +15,10 @@ export default function SingleProductList({ product, isInStock }) {
 		categoryIds,
 	} = product
 
+	// For error handling when category leaf name or id are undefined or null from api
+	categoryleafName = categoryleafName ?? "category-leaf"
+	categoryIds = categoryIds ?? "0"
+
 	if (isInStock) {
 		inStock = isInStock
 	}
@@ -23,8 +27,8 @@ export default function SingleProductList({ product, isInStock }) {
 		productImageUrlThumbnail != ""
 			? productImageUrlThumbnail
 			: productImageUrl != ""
-			? productImageUrl
-			: missingImageIcon
+				? productImageUrl
+				: missingImageIcon
 
 	let immediateCategoryName = categoryleafName.split("|")[0].trim()
 	let immediateCategoryId = categoryIds.replace(/\s+/g, "").split("|")[0]

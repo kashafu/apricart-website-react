@@ -19,7 +19,6 @@ const SelectAddress = ({ type }) => {
     const selectedAddressSelector = useSelector(state => state.general.selectedAddress)
 
     const { savedAddresses } = useSavedAddressesApi()
-    const [selectedAddress, setSelectedAddress] = useState(getGeneralApiParams().selectedAddress)
     const [showAddressCard, setShowAddressCard] = useState(false)
 
     return (
@@ -77,9 +76,6 @@ const SelectAddress = ({ type }) => {
                             <SingleAddressListing
                                 key={id}
                                 listing={address}
-                                isSelected={selectedAddress ? selectedAddress.id == id : false}
-                                setAddress={setSelectedAddress}
-                                updateSavedAddresses={getSavedAddressesApi}
                             />
                         )
                     })}
@@ -94,7 +90,6 @@ const SelectAddress = ({ type }) => {
             {showAddressCard && (
                 <AddAddressCard
                     type={'add'}
-                    updateSavedAddresses={getSavedAddressesApi}
                     setShow={setShowAddressCard}
                 />
             )}
