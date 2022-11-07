@@ -82,14 +82,7 @@ export default function Checkout() {
 					onClick={() => {
 						onClick("payment")
 					}}
-					disabled={() => {
-						if (
-							currentState == "review" ||
-							currentState == "shipping"
-						) {
-							return true
-						}
-					}}
+					disabled={currentState == "review" || currentState == "shipping"}
 				>
 					<p className={pStyle}>PAYMENT</p>
 				</button>
@@ -103,14 +96,7 @@ export default function Checkout() {
 					onClick={() => {
 						onClick("review")
 					}}
-					disabled={() => {
-						if (
-							currentState == "shipping" ||
-							currentState == "payment"
-						) {
-							return true
-						}
-					}}
+					disabled={currentState == "shipping" || currentState == "payment"}
 				>
 					<p className={pStyle}>COMPLETE</p>
 				</button>
