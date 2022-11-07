@@ -7,6 +7,7 @@ import minusIcon from '../../../../public/assets/svgs/minusIcon.svg'
 import missingImageIcon from '../../../../public/assets/svgs/missingImageIcon.svg'
 import { useDeleteItemApi, useUpdateItemQtyApi } from "../../../../helpers/Api"
 import toKebabCase from "../../../../helpers/toKebabCase"
+import { useEffect } from "react"
 
 const CartItemListing = ({ item, fetchCart }) => {
     let {
@@ -26,8 +27,14 @@ const CartItemListing = ({ item, fetchCart }) => {
     categoryleafName = categoryleafName ?? "category-leaf"
     categoryIds = categoryIds ?? "0"
 
-    const { setIsUpdateItemQty, setData } = useUpdateItemQtyApi()
-    const { setIsDelete, setSku } = useDeleteItemApi()
+    const { setIsUpdateItemQty, setData, response: updateItemResponse } = useUpdateItemQtyApi()
+    const { setIsDelete, setSku, response: deleteItemResponse } = useDeleteItemApi()
+
+    useEffect(() => {
+        if (updateItemResponse || deleteItemResponse) {
+            fetchCart(true)
+        }
+    }, [updateItemResponse, deleteItemResponse])
 
     let immediateCategoryName = categoryleafName.split("|")[0].trim()
     let immediateCategoryId = categoryIds.replace(/\s+/g, "").split("|")[0]
@@ -79,7 +86,6 @@ const CartItemListing = ({ item, fetchCart }) => {
                                         sku: sku
                                     })
                                     setIsUpdateItemQty(true)
-                                    fetchCart(true)
                                 }}
                             >
                                 <Image src={minusIcon} width={10} height={10} alt="" />
@@ -93,7 +99,6 @@ const CartItemListing = ({ item, fetchCart }) => {
                                         sku: sku
                                     })
                                     setIsUpdateItemQty(true)
-                                    fetchCart(true)
                                 }}
                             >
                                 <Image src={plusIcon} width={10} height={10} alt="" />
@@ -112,7 +117,6 @@ const CartItemListing = ({ item, fetchCart }) => {
                             setSku(sku)
                             qty = minQty
                             setIsDelete(true)
-                            fetchCart(true)
                         }}
                     >
                         <Image
