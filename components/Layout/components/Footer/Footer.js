@@ -22,7 +22,7 @@ const Footer = () => {
 						</div>
 						<div className="px-2 inline-flex mb-2">
 							<p className=" px-2 text-main-grey-500 font-lato text-sm">
-								<strong>Address: </strong>Office No 601, Emarah Suites, Main
+								<strong>Address: </strong>Office No 106, Emarah Suites, Main
 								Shahrah-e-Faisal, Sindhi Muslim Co-operative Housing Society,
 								Karachi
 							</p>
