@@ -1248,6 +1248,62 @@ export const useVerifyOtpApi = () => {
 	}
 }
 
+export const useVerifyPaymentProcessApi = () => {
+	const [isLoading, setIsLoading] = useState(false)
+	const [response, setResponse] = useState(null)
+	const [errorResponse, setErrorResponse] = useState(null)
+	const [errorMessage, setErrorMessage] = useState("")
+	const [isVerifyOtp, setIsVerifyOtp] = useState(false)
+	const [data, setData] = useState({
+		"consumerOrderId": '',
+		"otp": '',
+	})
+
+	useEffect(() => {
+		if (isVerifyOtp) {
+			callApi()
+		}
+	}, [isVerifyOtp])
+
+	const callApi = async () => {
+		setIsLoading(true)
+		let { headers } = getGeneralApiParams()
+
+		let url = "/order/wallet/payment/process?"
+		let body = {
+			"consumerOrderId": data.consumerOrderId,
+			"otp": data.otp
+		}
+
+		try {
+			let apiResponse = await axios.post(fullUrl(url), body, {
+				headers: headers,
+			})
+
+			setResponse(apiResponse)
+			toast.success(apiResponse.data?.message)
+			setErrorMessage('')
+			setErrorResponse(null)
+		} catch (error) {
+			setErrorResponse(error?.response)
+			setErrorMessage(error?.response?.data?.message)
+			toast.error(error?.response?.data?.message)
+		} finally {
+			setIsLoading(false)
+			setIsVerifyOtp(false)
+		}
+	}
+
+	return {
+		isLoading,
+		setData,
+		setIsVerifyOtp,
+		errorMessage,
+		response,
+		errorResponse,
+	}
+}
+
 export const useOptionsApi = () => {
 	const [isLoading, setIsLoading] = useState(true)
 	const [response, setResponse] = useState(null)

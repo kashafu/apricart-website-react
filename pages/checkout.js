@@ -14,7 +14,8 @@ import HeadTag from "../components/Layout/components/Head/HeadTag"
 import { useInitialCartDataApi, usePickupLocationsApi } from "../helpers/Api"
 import PickupLocationSelector from "../components/Layout/components/Selectors/PickupLocationSelector"
 import JsPopup from "../components/Layout/components/Popup/JsPopup"
-import OtpJsPopup from "../components/Layout/components/Popup/OtpJsPopup"
+import OtpPopup from "../components/Layout/components/Popup/OtpPopup"
+import JsOtpPopup from "../components/Layout/components/Popup/JsOtpPopup"
 import CartItemListing from "../components/Layout/components/Cart/CartItemListing"
 import CartDetailsShimmer from "../components/Layout/components/Loaders/Shimmers/CartDetailsShimmer"
 import { updatePickupLocation } from "../redux/general.slice"
@@ -355,6 +356,7 @@ export default function Checkout() {
 												{/* ZINDIGI */ }
 												if (redirectSourceSelector === 'js_bank') {
 													if (key === "jswallet") {
+														setPaymentMethod("jswallet")
 														return (
 															<div key={id} className='flex items-center space-x-2'>
 																<input
@@ -454,13 +456,22 @@ export default function Checkout() {
 
 	const JsScreen = () => {
 		const [showJsPopup, setShowJsPopup] = useState(true)
-		const [showJsOtp, setShowJsOtp] = useState(false)
+		const [showOtp, setShowOtp] = useState(false)
+		const [showJsVerifyOtp, setShowJsVerifyOtp] = useState(false)
 
 		useEffect(() => {
-			if (showJsPopup && showJsOtp) {
+			if (showJsPopup && showOtp) {
 				setShowJsPopup(false)
 			}
-		}, [showJsOtp])
+		}, [showOtp])
+
+		useEffect(() => {
+			if (viewState === 'payment' && isCheckoutButtonPressed) {
+				if (checkoutResponse) {
+					// If user is from JS zindigi app, show payment verification opt screen
+				}
+			}
+		}, [checkoutResponse, viewState, isCheckoutButtonPressed])
 
 		return (
 			<>
@@ -468,12 +479,18 @@ export default function Checkout() {
 					<>
 						{showJsPopup && (
 							<JsPopup
-								setShowOtp={setShowJsOtp}
+								setShowOtp={setShowOtp}
 							/>
 						)}
-						{showJsOtp && (
-							<OtpJsPopup
+						{showOtp && (
+							<OtpPopup
 								setShowJsScreen={setShowJsScreen}
+							/>
+						)}
+						{showJsVerifyOtp && (
+							<JsOtpPopup
+							// setShowJsScreen={}
+
 							/>
 						)}
 					</>

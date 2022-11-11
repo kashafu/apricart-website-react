@@ -3,22 +3,24 @@ import { useEffect } from "react"
 import { useState, useRef } from "react"
 import { useSelector } from "react-redux"
 
-import { useVerifyOtpApi } from "../../../../helpers/Api"
+import { useVerifyPaymentProcessApi } from "../../../../helpers/Api"
 
-const OtpJsPopup = ({ setShowJsScreen }) => {
+const JsOtpPopup = ({ setShowJsScreen }) => {
     const router = useRouter()
     const redirectInformationSelector = useSelector(state => state.general.redirectInformation)
-    const { isLoading, setData: setOtpData, setIsVerifyOtp, response: otpResponse } = useVerifyOtpApi()
+    const { isLoading, setData: setOtpData, setIsVerifyOtp, response: otpResponse } = useVerifyPaymentProcessApi()
 
     const [otp1, setOtp1] = useState('')
     const [otp2, setOtp2] = useState('')
     const [otp3, setOtp3] = useState('')
     const [otp4, setOtp4] = useState('')
+    const [otp5, setOtp5] = useState('')
 
     const otp1Ref = useRef()
     const otp2Ref = useRef()
     const otp3Ref = useRef()
     const otp4Ref = useRef()
+    const otp5Ref = useRef()
 
     let otpStyle = 'rounded-full w-1/4 aspect-square shadow-inner-3xl text-center'
 
@@ -106,6 +108,7 @@ const OtpJsPopup = ({ setShowJsScreen }) => {
                             onChange={(e) => {
                                 if (e.target.value.length == 1) {
                                     setOtp4(e.target.value)
+                                    otp5Ref.current.focus()
                                 }
                                 else if (e.target.value.length <= 1) {
                                     setOtp4(e.target.value)
@@ -114,6 +117,25 @@ const OtpJsPopup = ({ setShowJsScreen }) => {
                             onKeyUp={async (e) => {
                                 if (e.key === 'Backspace' && otp4 === '') {
                                     otp3Ref.current.focus()
+                                }
+                            }}
+                        />
+                        <input
+                            ref={otp5Ref}
+                            className={otpStyle}
+                            type={'number'}
+                            value={otp5}
+                            onChange={(e) => {
+                                if (e.target.value.length == 1) {
+                                    setOtp5(e.target.value)
+                                }
+                                else if (e.target.value.length <= 1) {
+                                    setOtp5(e.target.value)
+                                }
+                            }}
+                            onKeyUp={async (e) => {
+                                if (e.key === 'Backspace' && otp5 === '') {
+                                    otp4Ref.current.focus()
                                 }
                             }}
                         />
@@ -151,4 +173,4 @@ const OtpJsPopup = ({ setShowJsScreen }) => {
     )
 }
 
-export default OtpJsPopup
+export default JsOtpPopup
