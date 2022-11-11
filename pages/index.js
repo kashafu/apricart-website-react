@@ -17,7 +17,7 @@ import clickAndCollectIcon from "../public/assets/svgs/clickAndCollectIcon.svg"
 import bulkBuyIcon from "../public/assets/svgs/bulkBuyIcon.svg"
 import karachiStaticBanner1 from "../public/assets/images/banners/web2_2022-10-31T13_07_06.581994.png"
 import karachiCncStaticBanner1 from "../public/assets/images/banners/webstaticbannershangrila.png"
-import bulkBuyStaticBanner from "../public/assets/images/banners/bulkBuyMainBanner.png"
+import bulkBuyStaticBanner from "../public/assets/images/banners/webstaticbannerfreeolpers.png"
 import crossIcon from "../public/assets/svgs/crossIcon.svg"
 import { clearCookies } from "../helpers/Cookies"
 import { clearLocalStorage, clearSessionStorage } from "../helpers/Storage"
@@ -271,7 +271,7 @@ export default function Home() {
 					<div className="hidden lg:inline-block lg:w-[35%]">
 						{selectedTypeSelector === 'bulk' && (
 							<Link
-								href={"/"}
+								href={"/category/tea-&-coffee/1216/mezan-hardum-danedar---900gm-(pack-of-2)-+-free-olpers-250-ml/APRA-BLK81-03"}
 								passHref
 								className="w-full"
 							>
