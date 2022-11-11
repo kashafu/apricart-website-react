@@ -5,7 +5,7 @@ import { useSelector } from "react-redux"
 import { useRegisterApi } from "../../../../helpers/Api"
 import SubmitButton from "../Buttons/SubmitButton"
 
-const JsPopup = ({ setShowOtp }) => {
+const JsPopup = ({ setShowScreen }) => {
     const router = useRouter()
     const redirectInformationSelector = useSelector(state => state.general.redirectInformation)
     const { isLoading, response, setData, setIsRegister, errorResponse } = useRegisterApi()
@@ -17,7 +17,7 @@ const JsPopup = ({ setShowOtp }) => {
 
     useEffect(() => {
         if (response || errorResponse?.status === 409) {
-            setShowOtp(true)
+            setShowScreen(true)
         }
 
     }, [errorResponse, response])

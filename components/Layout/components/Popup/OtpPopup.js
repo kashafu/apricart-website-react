@@ -5,7 +5,7 @@ import { useSelector } from "react-redux"
 
 import { useVerifyOtpApi } from "../../../../helpers/Api"
 
-const OtpPopup = ({ setShowJsScreen }) => {
+const OtpPopup = ({ setShowScreen }) => {
     const router = useRouter()
     const redirectInformationSelector = useSelector(state => state.general.redirectInformation)
     const { isLoading, setData: setOtpData, setIsVerifyOtp, response: otpResponse } = useVerifyOtpApi()
@@ -28,7 +28,7 @@ const OtpPopup = ({ setShowJsScreen }) => {
 
     useEffect(() => {
         if (otpResponse) {
-            setShowJsScreen(false)
+            setShowScreen(false)
         }
     }, [otpResponse])
 

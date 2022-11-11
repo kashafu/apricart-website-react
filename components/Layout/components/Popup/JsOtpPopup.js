@@ -5,7 +5,7 @@ import { useSelector } from "react-redux"
 
 import { useVerifyPaymentProcessApi } from "../../../../helpers/Api"
 
-const JsOtpPopup = ({ setShowJsScreen }) => {
+const JsOtpPopup = ({ setShowScreen, orderId }) => {
     const router = useRouter()
     const redirectInformationSelector = useSelector(state => state.general.redirectInformation)
     const { isLoading, setData: setOtpData, setIsVerifyOtp, response: otpResponse } = useVerifyPaymentProcessApi()
@@ -30,7 +30,7 @@ const JsOtpPopup = ({ setShowJsScreen }) => {
 
     useEffect(() => {
         if (otpResponse) {
-            setShowJsScreen(false)
+            setShowScreen(false)
         }
     }, [otpResponse])
 
@@ -39,10 +39,10 @@ const JsOtpPopup = ({ setShowJsScreen }) => {
             <div className="fixed w-3/4 lg:w-1/3 h-fit bg-white border-2 shadow-2xl inset-0 m-auto z-50 rounded-lg p-2">
                 <div className="flex flex-col items-center space-y-4 h-full w-full">
                     <p className="font-nunito text-js text-xl text-center">
-                        Authentication
+                        Authenticate Payment
                     </p>
                     <p className="text-nunito text-black text-center font-semibold">
-                        Enter the 4-digit OTP for +92{redirectInformationSelector.phoneNumber}
+                        Enter the 5-digit OTP for +92{redirectInformationSelector.phoneNumber}
                     </p>
                     <div className="flex space-x-2 w-4/5">
                         <input
@@ -155,8 +155,8 @@ const JsOtpPopup = ({ setShowJsScreen }) => {
                             className="w-full rounded-full bg-white drop-shadow-2xl"
                             onClick={() => {
                                 setOtpData({
-                                    phoneNumber: redirectInformationSelector.phoneNumber,
-                                    otp: otp1 + otp2 + otp3 + otp4
+                                    consumerOrderId: orderId,
+                                    otp: otp1 + otp2 + otp3 + otp4 + otp5
                                 })
                                 setIsVerifyOtp(true)
                             }}

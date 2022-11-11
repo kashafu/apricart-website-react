@@ -466,9 +466,13 @@ export default function Checkout() {
 		}, [showOtp])
 
 		useEffect(() => {
-			if (viewState === 'payment' && isCheckoutButtonPressed) {
+			if (viewState === 'review' && isCheckoutButtonPressed) {
 				if (checkoutResponse) {
 					// If user is from JS zindigi app, show payment verification opt screen
+					setShowJsScreen(true)
+					setShowJsVerifyOtp(true)
+					setShowJsPopup(false)
+					setShowOtp(false)
 				}
 			}
 		}, [checkoutResponse, viewState, isCheckoutButtonPressed])
@@ -479,18 +483,18 @@ export default function Checkout() {
 					<>
 						{showJsPopup && (
 							<JsPopup
-								setShowOtp={setShowOtp}
+								setShowScreen={setShowOtp}
 							/>
 						)}
 						{showOtp && (
 							<OtpPopup
-								setShowJsScreen={setShowJsScreen}
+								setShowScreen={setShowOtp}
 							/>
 						)}
 						{showJsVerifyOtp && (
 							<JsOtpPopup
-							// setShowJsScreen={}
-
+								setShowScreen={setShowJsScreen}
+								orderId={checkoutResponse?.data?.data?.orderId}
 							/>
 						)}
 					</>
