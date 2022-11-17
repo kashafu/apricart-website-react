@@ -2,7 +2,6 @@ import { useState, useEffect } from "react"
 import parse from "html-react-parser"
 import Image from "next/image"
 import { useSelector, useDispatch } from "react-redux"
-import { useRouter } from "next/router"
 
 import { getGeneralApiParams } from "../helpers/ApiHelpers"
 import SelectAddress from "../components/Layout/components/Address/SelectAddress"
@@ -22,7 +21,6 @@ import { updatePickupLocation } from "../redux/general.slice"
 
 export default function Checkout() {
 	const dispatch = useDispatch()
-	const router = useRouter()
 	let { token } = getGeneralApiParams()
 	const selectedAddressSelector = useSelector((state) => state.general.selectedAddress)
 	const selectedTypeSelector = useSelector((state) => state.general.selectedType)
