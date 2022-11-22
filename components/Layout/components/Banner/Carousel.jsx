@@ -8,6 +8,7 @@ import karachiScrollingBanner1 from '../../../../public/assets/images/banners/ho
 import karachiScrollingBanner2 from '../../../../public/assets/images/banners/homeDeliveryCarousel3.png'
 import karachiScrollingBanner3 from '../../../../public/assets/images/banners/7 Main scrollable Banner.png'
 import karachiScrollingBanner4 from '../../../../public/assets/images/banners/web 1.png'
+import karachiScrollingBanner5 from '../../../../public/assets/images/banners/sunlightwebbanner.png'
 import peshawarScrollingBanner from '../../../../public/assets/images/banners/peshawarBulkBuyCarousel3.png'
 import bulkBuyBannerKarachi from '../../../../public/assets/images/banners/1111.png'
 import bulkBuyBanner from '../../../../public/assets/images/banners/bulkBuyCarousel.png'
@@ -34,6 +35,17 @@ const Carousel = () => {
                 <div>
                     {selectedTypeSelector === 'bulk' && (
                         <Slider {...settings}>
+                            <div className="w-full h-full">
+                                <Link href={'/offers/133'} passHref>
+                                    <a className="w-full h-full">
+                                        <Image
+                                            src={karachiScrollingBanner5}
+                                            layout={"responsive"}
+                                            alt="banner"
+                                        />
+                                    </a>
+                                </Link>
+                            </div>
                             <div className="w-full h-full">
                                 <Link href={'/offers/122'} passHref>
                                     <a className="w-full h-full">
