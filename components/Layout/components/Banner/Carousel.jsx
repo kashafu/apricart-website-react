@@ -192,28 +192,6 @@ const Carousel = () => {
             )}
             {citySelector === 'peshawar' && (
                 <Slider {...settings}>
-                    <div className="w-full h-full">
-                        <Link href={'/offers/132'} passHref>
-                            <a className="w-full h-full">
-                                <Image
-                                    src={banner2}
-                                    layout={"responsive"}
-                                    alt="banner"
-                                />
-                            </a>
-                        </Link>
-                    </div>
-                    <div className="w-full h-full">
-                        <Link href={'/offers/131'} passHref>
-                            <a className="w-full h-full">
-                                <Image
-                                    src={banner}
-                                    layout={"responsive"}
-                                    alt="banner"
-                                />
-                            </a>
-                        </Link>
-                    </div>
                     <div className='w-full h-full'>
                         <Link href={'/offers/75'} passHref>
                             <a className="w-full h-full">
