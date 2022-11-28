@@ -15,6 +15,7 @@ import PickupLocationSelector from "../components/Layout/components/Selectors/Pi
 import CartItemListing from "../components/Layout/components/Cart/CartItemListing"
 import CartDetailsShimmer from "../components/Layout/components/Loaders/Shimmers/CartDetailsShimmer"
 import { updatePickupLocation } from "../redux/general.slice"
+import Alert from "../components/Layout/components/Alerts/Alert"
 
 export default function Checkout() {
 	const dispatch = useDispatch()
@@ -33,7 +34,7 @@ export default function Checkout() {
 	const [selectedDate, setSelectedDate] = useState('')
 	const [selectedTime, setSelectedTime] = useState('')
 
-	const { initialCartData, isLoading, errorMessage, response, setCoupon, notes, setPaymentMethod, paymentMethod, setIsCheckout, couponMessage, paymentMethods, checkoutResponse, setDay, setStartTime, setEndTime, setIsFetchCart } = useInitialCartDataApi()
+	const { initialCartData, isLoading, errorMessage, response, setCoupon, notes, setPaymentMethod, paymentMethod, setIsCheckout, couponMessage, paymentMethods, checkoutResponse, setDay, setStartTime, setEndTime, setIsFetchCart, isContinue, isContinueMessage } = useInitialCartDataApi()
 
 	/*
 		To check if checkout api response is succesful
@@ -479,6 +480,21 @@ export default function Checkout() {
 		)
 	}
 
+	const AlertBox = () => {
+		const [isProceed, setIsProceed] = useState(!isContinue)
+
+		return (
+			<>
+				{isProceed && !isLoading && (
+					<Alert
+						text={isContinueMessage}
+						setIsProceed={setIsProceed}
+					/>
+				)}
+			</>
+		)
+	}
+
 	if (!token) {
 		return (
 			<>
@@ -514,6 +530,7 @@ export default function Checkout() {
 	return (
 		<div className="h-full w-full">
 			<HeadTag title={"Checkout"} />
+			<AlertBox />
 			<ProgressBar
 				currentState={viewState}
 				onClick={setViewState}
