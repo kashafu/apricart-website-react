@@ -231,6 +231,9 @@ export default function Checkout() {
 			<div className="">
 				{viewState === "shipping" && (
 					<div>
+						{isMinOrder && (
+							<ErrorText text={isMinOrderMessage} />
+						)}
 						{selectedTypeSelector === 'cnc' ? (
 							<SubmitButton
 								text={
