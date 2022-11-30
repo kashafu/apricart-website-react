@@ -34,7 +34,7 @@ export default function Checkout() {
 	const [selectedDate, setSelectedDate] = useState('')
 	const [selectedTime, setSelectedTime] = useState('')
 
-	const { initialCartData, isLoading, errorMessage, response, setCoupon, notes, setPaymentMethod, paymentMethod, setIsCheckout, couponMessage, paymentMethods, checkoutResponse, setDay, setStartTime, setEndTime, setIsFetchCart, isContinue, isContinueMessage } = useInitialCartDataApi()
+	const { initialCartData, isLoading, errorMessage, response, setCoupon, notes, setPaymentMethod, paymentMethod, setIsCheckout, couponMessage, paymentMethods, checkoutResponse, setDay, setStartTime, setEndTime, setIsFetchCart, isContinue, isContinueMessage, isMinOrder, isMinOrderMessage } = useInitialCartDataApi()
 
 	/*
 		To check if checkout api response is succesful
@@ -246,7 +246,7 @@ export default function Checkout() {
 										behavior: "smooth",
 									})
 								}}
-								disabled={selectedDate === '' || selectedTime === ''}
+								disabled={(selectedDate === '' || selectedTime === '') || isMinOrder}
 							/>
 						) : (
 							<SubmitButton
@@ -264,7 +264,7 @@ export default function Checkout() {
 										behavior: "smooth",
 									})
 								}}
-								disabled={selectedAddressSelector && response ? false : true}
+								disabled={(selectedAddressSelector && response ? false : true) || isMinOrder}
 							/>
 						)}
 					</div>
@@ -481,14 +481,14 @@ export default function Checkout() {
 	}
 
 	const AlertBox = () => {
-		const [isProceed, setIsProceed] = useState(!isContinue)
+		const [isProceed, setIsProceed] = useState(isMinOrder)
 
 		return (
 			<>
 				{isProceed && !isLoading && (
 					<Alert
-						text={isContinueMessage}
-						setIsProceed={setIsProceed}
+						text={isMinOrderMessage}
+						setShow={setIsProceed}
 					/>
 				)}
 			</>
