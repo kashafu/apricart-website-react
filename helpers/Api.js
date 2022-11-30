@@ -584,9 +584,6 @@ export const useInitialCartDataApi = () => {
 	const [endTime, setEndTime] = useState("11:30")
 	const [isContinue, setIsContinue] = useState(false)
 	const [isContinueMessage, setIsContinueMessage] = useState("")
-	const [isMinOrder, setIsMinOrder] = useState(false)
-	const [isProceed, setIsProceed] = useState(false)
-	const [isMinOrderMessage, setIsMinOrderMessage] = useState("")
 	const [isCheckout, setIsCheckout] = useState(false)
 	const [isFetchCart, setIsFetchCart] = useState(false)
 	const [checkoutResponse, setCheckoutResponse] = useState(null)
@@ -664,9 +661,6 @@ export const useInitialCartDataApi = () => {
 			setPaymentMethods(apiResponse.data.data.paymentInfo)
 			setIsContinue(apiResponse.data.data.isContinue)
 			setIsContinueMessage(apiResponse.data.data.isContinueMessage)
-			setIsMinOrder(apiResponse.data.data.isMinOrder)
-			setIsMinOrderMessage(apiResponse.data.data.isMinOrderMessage)
-			setIsProceed(apiResponse.data.data.isProceed)
 			dispatch(initialize(apiResponse.data.data.products))
 			setErrorMessage('')
 		} catch (error) {
@@ -754,9 +748,6 @@ export const useInitialCartDataApi = () => {
 		coupon,
 		isContinue,
 		isContinueMessage,
-		isMinOrder,
-		isMinOrderMessage,
-		isProceed,
 		setPaymentMethod,
 		paymentMethod,
 		couponMessage,
