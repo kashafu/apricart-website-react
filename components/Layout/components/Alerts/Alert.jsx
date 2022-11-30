@@ -1,14 +1,10 @@
-import { useRouter } from "next/router";
-
 import SubmitButton from "../Buttons/SubmitButton";
 
-const Alert = ({ text, setShow }) => {
-    const router = useRouter()
-
+const Alert = ({ text, onClick }) => {
     return (
         <div className="animate-slide-up fixed inset-0 h-full w-full backdrop-blur-sm z-50">
-            <div className="fixed w-full lg:w-1/3 bg-white h-[300px] border-t-2 border-main-red shadow-2xl bottom-0 z-50 rounded-t-3xl p-2">
-                <div className="h-3/4 w-full flex items-center justify-center">
+            <div className="fixed w-full lg:w-1/3 bg-white border-t-2 border-main-red shadow-2xl bottom-0 z-50 rounded-t-3xl p-2">
+                <div className="h-3/4 w-full flex items-center justify-center py-16">
                     <p className="font-nunito text-black text-2xl">
                         {text}
                     </p>
@@ -17,7 +13,7 @@ const Alert = ({ text, setShow }) => {
                     <SubmitButton
                         text={"OK"}
                         onClick={() => {
-                            setShow(false)
+                            onClick()
                         }}
                     />
                 </div>
