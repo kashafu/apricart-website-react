@@ -1,6 +1,4 @@
-import Link from "next/link"
-import Image from "next/image"
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { useState, useEffect } from "react"
 
 import { setCookie, getCookie } from "../../../../helpers/Cookies"
@@ -8,17 +6,17 @@ import { getGeneralApiParams } from "../../../../helpers/ApiHelpers"
 import SearchBar from "../SearchBar/SearchBar"
 import HamburgerMenu from "../Menus/HamburgerMenu"
 import Logo from "../Logo/Logo"
-import Profile from "../Auth/Profile"
 import CartSlider from "../Cart/CartSlider"
 import CitySelector from "../Selectors/CitySelector"
 import AddressSelector from "../Selectors/AddressSelector"
 import PickupLocationSelector from "../Selectors/PickupLocationSelector"
 import { getItemLocalStorage, setItemLocalStorage } from "../../../../helpers/Storage"
-
-import heartIcon from "../../../../public/assets/svgs/heartIcon.svg"
 import TypeCardSelector from "../Cards/TypeCardSelector"
+import { updateSelectedType } from "../../../../redux/general.slice"
 
 export default function Header() {
+	const dispatch = useDispatch()
+
 	let { token } = getGeneralApiParams()
 	const selectedTypeSelector = useSelector(state => state.general.selectedType)
 	const [offset, setOffset] = useState(0);
@@ -30,7 +28,8 @@ export default function Header() {
 		}
 
 		if (!getItemLocalStorage("selected-type")) {
-			setItemLocalStorage('selected-type', 'home')
+			setItemLocalStorage('selected-type', 'bulk')
+			dispatch(updateSelectedType('bulk'))
 		}
 	}, [token])
 

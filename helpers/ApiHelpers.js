@@ -34,19 +34,29 @@ export const getGeneralApiParams = () => {
     let orderType = ''
 
     let selectedType = getItemLocalStorage('selected-type')
-    if (selectedType === 'bulk') {
-        selectedType = 'bulk'
-        prodType = 'b2b'
-        orderType = 'delivery'
-    }
-    else if (selectedType === 'cnc') {
+    // if (selectedType === 'bulk') {
+    //     selectedType = 'bulk'
+    //     prodType = 'b2b'
+    //     orderType = 'delivery'
+    // }
+    // else if (selectedType === 'cnc') {
+    //     selectedType = 'cnc'
+    //     prodType = 'cus'
+    //     orderType = 'pickup'
+    // }
+    // else {
+    //     selectedType = 'home'
+    //     prodType = 'cus'
+    //     orderType = 'delivery'
+    // }
+    if (selectedType === 'cnc') {
         selectedType = 'cnc'
         prodType = 'cus'
         orderType = 'pickup'
     }
     else {
-        selectedType = 'home'
-        prodType = 'cus'
+        selectedType = 'bulk'
+        prodType = 'b2b'
         orderType = 'delivery'
     }
 
