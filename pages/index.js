@@ -2,22 +2,17 @@ import Image from "next/image"
 import { useRouter } from "next/router"
 import { useState, useEffect } from "react"
 import { useSelector, useDispatch } from "react-redux"
-import Link from "next/link"
 
 import MainProducts from "../components/Layout/components/Products/MainProducts"
 import HeadTag from "../components/Layout/components/Head/HeadTag"
 import Carousel from "../components/Layout/components/Banner/Carousel"
 import { useHomeApi, useOptionsApi } from "../helpers/Api"
-import TypeCardSelector from "../components/Layout/components/Cards/TypeCardSelector"
 import HomeLoader from "../components/Layout/components/Loaders/HomeLoader"
 import { updateIsShowSelectionScreen, updateRedirectSource, updateSelectedType } from "../redux/general.slice"
 
 import homeDeliveryIcon from "../public/assets/svgs/homeDeliveryIcon.svg"
 import clickAndCollectIcon from "../public/assets/svgs/clickAndCollectIcon.svg"
 import bulkBuyIcon from "../public/assets/svgs/bulkBuyIcon.svg"
-import karachiStaticBanner1 from "../public/assets/images/banners/web2_2022-10-31T13_07_06.581994.png"
-import karachiCncStaticBanner1 from "../public/assets/images/banners/webstaticbannershangrila.png"
-import bulkBuyStaticBanner from "../public/assets/images/banners/webstaticbannerfreeolpers.png"
 import crossIcon from "../public/assets/svgs/crossIcon.svg"
 import { clearCookies } from "../helpers/Cookies"
 import { clearLocalStorage, clearSessionStorage } from "../helpers/Storage"
@@ -27,7 +22,6 @@ import CategoryAndItemsLayout from "../components/Layout/components/Layouts/Cate
 export default function Home() {
 	const router = useRouter()
 	const dispatch = useDispatch()
-	const selectedTypeSelector = useSelector(state => state.general.selectedType)
 	const isShowSelectionScreen = useSelector(state => state.general.isShowSelectionScreen)
 	const { isLoading, isPopupAd, homeData, errorMessage, categories } = useHomeApi()
 	const [showPopupAd, setShowPopupAd] = useState(isPopupAd)
