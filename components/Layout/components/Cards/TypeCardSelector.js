@@ -28,26 +28,29 @@ const TypeCardSelector = () => {
     }, [selectedTypeSelector])
 
     return (
-        <div className="flex flex-col w-[165px]">
-            <button className="w-full h-[50px] bg-main-blue rounded-md flex flex-row items-center justify-between px-2"
+        <div className="flex flex-col w-[100px] lg:w-[165px]">
+            <button className="w-full h-[40px] lg:h-[50px] bg-main-blue rounded-md flex flex-row items-center justify-between px-1 lg:px-2"
                 onClick={() => {
                     setIsShow(!isShow)
                 }}
             >
-                <p className="font-nunito text-base font-bold text-white">
+                <p className="font-nunito text-[10px] lg:text-base font-bold text-white">
                     {selectedTypeSelector === 'bulk' && "Online Delivery"}
                     {selectedTypeSelector === 'cnc' && "Click & Collect"}
                 </p>
-                <Image
-                    className={isShow ? "rotate-180 duration-300 ease-in-out" : "rotate-0 duration-300 ease-in-out"}
-                    src={dropdownSVG}
-                    alt='icon'
-                />
+                <div className="relative h-[8px] w-[10px] lg:h-[10px] lg:w-[12px]">
+                    <Image
+                        className={isShow ? "rotate-180 duration-300 ease-in-out" : "rotate-0 duration-300 ease-in-out"}
+                        src={dropdownSVG}
+                        alt='icon'
+                        layout="fill"
+                    />
+                </div>
             </button>
             {isShow && (
                 <>
                     {citySelector === 'karachi' && (
-                        <div className="animate-dropdown w-[165px] absolute top-[50px] bg-[#F0F0F0] border-b-2 border-x-2 border-main-blue py-2">
+                        <div className="animate-dropdown w-[100px] lg:w-[165px] absolute z-50 top-[40px] lg:top-[50px] bg-[#F0F0F0] border-b-2 border-x-2 border-main-blue py-2">
                             <>
                                 {selectedTypeSelector === 'bulk' && (
                                     <ClickAndCollectCard />

@@ -58,8 +58,8 @@ export default function CartSlider() {
 					<div
 						className={
 							showCart
-								? "fixed top-0 right-0 flex ease-in duration-200 flex-col items-center w-2/3 lg:w-1/3 h-full bg-white shadow-2xl z-50 rounded-l-2xl overflow-hidden"
-								: "fixed top-0 -right-[100rem] ease-in duration-700 flex flex-col items-center w-2/3 lg:w-1/3 h-full bg-white shadow-2xl z-50 rounded-l-2xl overflow-hidden"
+								? "fixed top-0 right-0 flex ease-in duration-200 flex-col items-center w-2/3 lg:w-1/3 h-full bg-white shadow-2xl z-[60] rounded-l-2xl overflow-hidden"
+								: "fixed top-0 -right-[100rem] ease-in duration-700 flex flex-col items-center w-2/3 lg:w-1/3 h-full bg-white shadow-2xl z-[60] rounded-l-2xl overflow-hidden"
 						}
 					>
 						<div className="w-full py-2 bg-main-blue">
@@ -110,7 +110,7 @@ export default function CartSlider() {
 					{/* BACKDROP */}
 					{showCart && (
 						<div
-							className="fixed top-0 left-0 h-screen w-1/3 lg:w-2/3 z-50"
+							className="fixed top-0 left-0 h-screen w-1/3 lg:w-2/3 z-[60]"
 							onClick={() => {
 								setShowCart(!showCart);
 							}}

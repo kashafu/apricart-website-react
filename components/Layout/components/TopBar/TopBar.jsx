@@ -6,6 +6,7 @@ import { useRouter } from "next/router"
 
 import { getGeneralApiParams } from "../../../../helpers/ApiHelpers"
 import Profile from "../Auth/Profile"
+import TypeCardSelector from "../Cards/TypeCardSelector"
 
 // IMAGES
 import logoPNG from "../../../../public/assets/images/logo.png"
@@ -49,7 +50,7 @@ export default function TopBar() {
 							</Marquee>
 						</div>
 					) : (
-						<div>
+						<div className="hidden lg:block">
 							{selectedTypeSelector == 'bulk' && (
 								<p className="text-black font-nunito font-black capitalize">
 									Bulk Buy
@@ -67,6 +68,9 @@ export default function TopBar() {
 							)}
 						</div>
 					)}
+					<div className="lg:hidden">
+						<TypeCardSelector />
+					</div>
 				</div>
 				{/* LOGIN SIGNUP AND PROFILE */}
 				<div className="hidden lg:block">
