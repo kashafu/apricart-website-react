@@ -1,33 +1,20 @@
-import Image from "next/image"
 import { useRouter } from "next/router"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 
-import clickAndCollectIcon from "../../../../public/assets/svgs/clickAndCollectIcon.svg"
 import { updatePickupLocation, updateSelectedType } from "../../../../redux/general.slice"
 import Popup from "../Popup/Popup"
 import SubmitButton from "../Buttons/SubmitButton"
 import { usePickupLocationsApi } from "../../../../helpers/Api"
 
-export default function ClickAndCollectCard({ isDisabled }) {
+export default function ClickAndCollectCard() {
 	const dispatch = useDispatch()
 	const router = useRouter()
-	const [style, setStlye] = useState('')
-	const [disabledStyle, setDisabledStyle] = useState('')
-	const selectedTypeSelector = useSelector((state) => state.general.selectedType)
 	const selectedPickupLocationSelector = useSelector(state => state.general.pickupLocation)
 
 	const { pickupLocations } = usePickupLocationsApi()
 	const [selectedPickupLocation, setSelectedPickupLocation] = useState('')
 	const [showPopup, setShowPopup] = useState(false)
-
-	useEffect(() => {
-		setStlye(selectedTypeSelector === 'cnc' ? 'bg-main-yellow' : '')
-	}, [selectedTypeSelector])
-
-	useEffect(() => {
-		setDisabledStyle(isDisabled ? 'bg-main-grey grayscale' : '')
-	}, [isDisabled])
 
 	const closeButton = () => {
 		setShowPopup(!showPopup)
@@ -41,22 +28,14 @@ export default function ClickAndCollectCard({ isDisabled }) {
 	return (
 		<>
 			<button
-				className={[style] + ' relative rounded-lg shadow flex grow items-center hover:bg-main-yellow duration-300 ' + [disabledStyle]}
+				className='items-center w-full h-full hover:scale-105 duration-300'
 				onClick={() => {
 					setShowPopup(!showPopup)
 				}}
-				disabled={isDisabled}
 			>
 				<p className='font-nunito text-main-blue font-black lg:font-extrabold w-full text-xs md:text-base lg:text-sm 2xl:text-lg pl-1 lg:pl-2 leading-none'>
 					Click & Collect
 				</p>
-				{/* <div className='w-[80%] max-w-[180px] pr-2'>
-					<Image
-						src={clickAndCollectIcon}
-						layout={'responsive'}
-						alt='icon'
-					/>
-				</div> */}
 			</button>
 			{showPopup && (
 				<Popup

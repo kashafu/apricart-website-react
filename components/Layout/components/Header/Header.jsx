@@ -4,7 +4,6 @@ import { useSelector } from "react-redux"
 import { useState, useEffect } from "react"
 
 import { setCookie, getCookie } from "../../../../helpers/Cookies"
-import heartIcon from "../../../../public/assets/svgs/heartIcon.svg"
 import { getGeneralApiParams } from "../../../../helpers/ApiHelpers"
 import SearchBar from "../SearchBar/SearchBar"
 import HamburgerMenu from "../Menus/HamburgerMenu"
@@ -15,6 +14,9 @@ import CitySelector from "../Selectors/CitySelector"
 import AddressSelector from "../Selectors/AddressSelector"
 import PickupLocationSelector from "../Selectors/PickupLocationSelector"
 import { getItemLocalStorage, setItemLocalStorage } from "../../../../helpers/Storage"
+
+import heartIcon from "../../../../public/assets/svgs/heartIcon.svg"
+import TypeCardSelector from "../Cards/TypeCardSelector"
 
 export default function Header() {
 	let { token } = getGeneralApiParams()
@@ -101,6 +103,7 @@ export default function Header() {
 							</Link>
 						</div>
 					)}
+					<TypeCardSelector />
 				</div>
 			</div>
 		</div>
