@@ -206,7 +206,9 @@ export default function Checkout() {
 				if (pickupLocationsApiIsLoading) {
 					return (
 						<>
-
+							<p>
+								Getting locations...
+							</p>
 						</>
 					)
 				}
