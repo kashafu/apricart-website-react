@@ -4,13 +4,16 @@ import Marquee from "react-fast-marquee"
 import { useSelector } from "react-redux"
 import { useRouter } from "next/router"
 
+import { getGeneralApiParams } from "../../../../helpers/ApiHelpers"
+import Profile from "../Auth/Profile"
+
 // IMAGES
-import phonePNG from "../../../../public/assets/images/phone.png"
 import logoPNG from "../../../../public/assets/images/logo.png"
 
 export default function TopBar() {
 	const router = useRouter()
 
+	let { token } = getGeneralApiParams()
 	const tickerSelector = useSelector((state) => state.general.ticker)
 	const selectedTypeSelector = useSelector((state) => state.general.selectedType)
 
@@ -65,19 +68,26 @@ export default function TopBar() {
 						</div>
 					)}
 				</div>
-				{/* PHONE NUMBER hidden on phone, shown on desktop*/}
-				<div className="hidden space-x-2 items-center lg:inline-flex pl-2 pr-4">
-					<div className="relative w-[15px] h-[15px] lg:w-[22px] lg:h-[22px]">
-						<Image
-							src={phonePNG}
-							alt={"phone icon"}
-							layout={"fill"}
-						/>
+				{/* LOGIN SIGNUP AND PROFILE */}
+				{token ? (
+					<div className="flex-col h-full">
+						<Profile />
 					</div>
-					<p className="font-nunito font-bold text-sm lg:text-md text-black lg:text-base truncate">
-						0304-111-0195
-					</p>
-				</div>
+				) : (
+					<div className="flex flex-row space-x-2 items-center">
+						<Link href={"/login"} passHref>
+							<a className="font-nunito text-base font-main-grey-800 font-semibold">
+								Login
+							</a>
+						</Link>
+						<p className="text-3xl font-bold pb-[5px]">|</p>
+						<Link href={"/register"} passHref>
+							<a className="truncate text-base font-nunito font-main-grey-800 font-semibold">
+								Sign Up
+							</a>
+						</Link>
+					</div>
+				)}
 			</div>
 		</header>
 	)
