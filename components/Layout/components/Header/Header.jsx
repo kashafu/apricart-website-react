@@ -72,15 +72,6 @@ export default function Header() {
 							</>
 						)}
 					</div>
-					<Link href={"/shopping-list"} passHref>
-						<a className="flex items-center relative w-[30px] h-[30px]">
-							<Image
-								src={heartIcon}
-								layout='fixed'
-								alt="wishlist icon"
-							/>
-						</a>
-					</Link>
 					<div className="relative">
 						<CartSlider />
 					</div>
