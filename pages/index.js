@@ -254,60 +254,8 @@ export default function Home() {
 			<div>
 				<PopupAd />
 				<SelectionScreenPopup />
-				<div className="flex flex-row w-full space-x-2">
-					<div className="flex flex-col justify-between w-full lg:w-[65%]">
-						<TypeCardSelector />
-						<div className="w-full mt-2">
-							<Carousel />
-						</div>
-					</div>
-					<div className="hidden lg:inline-block lg:w-[35%]">
-						{selectedTypeSelector === 'bulk' && (
-							<Link
-								href={"/category/tea-&-coffee/1216/mezan-hardum-danedar---900gm-(pack-of-2)-+-free-olpers-250-ml/APRA-BLK81-03"}
-								passHref
-								className="w-full"
-							>
-								<a className="w-full">
-									<Image
-										src={bulkBuyStaticBanner}
-										layout={"responsive"}
-										alt="banner"
-									/>
-								</a>
-							</Link>
-						)}
-						{selectedTypeSelector === 'cnc' && (
-							<Link
-								href={"/offers/82"}
-								passHref
-								className="w-full"
-							>
-								<a className="w-full">
-									<Image
-										src={karachiCncStaticBanner1}
-										layout={"responsive"}
-										alt="banner"
-									/>
-								</a>
-							</Link>
-						)}
-						{selectedTypeSelector === 'home' && (
-							<Link
-								href={"/offers/118"}
-								passHref
-								className="w-full"
-							>
-								<a className="w-full">
-									<Image
-										src={karachiStaticBanner1}
-										layout={"responsive"}
-										alt="banner"
-									/>
-								</a>
-							</Link>
-						)}
-					</div>
+				<div className="flex flex-row w-full">
+					<Carousel />
 				</div>
 				<MainCategories
 					categories={categories}
