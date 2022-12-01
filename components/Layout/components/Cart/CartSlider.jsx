@@ -46,7 +46,7 @@ export default function CartSlider() {
 						height={30}
 						layout='fixed'
 					/>
-					<div className="absolute -top-[15px] -right-[15px] w-[30px] h-[30px] flex items-center justify-center rounded-full bg-main-red">
+					<div className="absolute -top-[8px] -right-[8px] lg:-top-[15px] lg:-right-[15px] w-[20px] h-[20px] lg:w-[30px] lg:h-[30px] flex items-center justify-center rounded-full bg-main-red">
 						<p className="font-nunito text-xs font-bold text-white">
 							{reduxCart.length}
 						</p>
