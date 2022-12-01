@@ -156,6 +156,9 @@ export default function Checkout() {
 					)}
 					{viewState === "payment" && (
 						<div className="space-y-4">
+							{isMinOrder && (
+								<ErrorText text={isMinOrderMessage} />
+							)}
 							<ErrorText text={errorMessage} />
 							<SubmitButton
 								text={"CHECKOUT"}
@@ -168,7 +171,7 @@ export default function Checkout() {
 										behavior: "smooth",
 									})
 								}}
-								disabled={isLoading}
+								disabled={isLoading || isMinOrder}
 							/>
 						</div>
 					)}
@@ -354,7 +357,7 @@ export default function Checkout() {
 							</div>
 						</>
 					)}
-					{viewState === "payment" && (
+					{viewState === "payment" && !isLoading && (
 						<>
 							<p className="font-lato text-lg text-main-blue font-extrabold text-center">
 								PAYMENT SELECTION
