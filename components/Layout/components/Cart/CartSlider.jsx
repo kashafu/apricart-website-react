@@ -39,10 +39,18 @@ export default function CartSlider() {
 				<div className="flex items-center"
 					ref={cartIconRef}
 				>
-					<Image src={cartIcon} alt={"icon"} width={30} height={30} layout='fixed' />
-					<p className="absolute inset-0 m-auto pt-1 h-fit w-fit rounded-full text-xs font-bold text-main-blue">
-						{reduxCart.length}
-					</p>
+					<Image
+						src={cartIcon}
+						alt={"icon"}
+						width={30}
+						height={30}
+						layout='fixed'
+					/>
+					<div className="absolute -top-[15px] -right-[15px] w-[30px] h-[30px] flex items-center justify-center rounded-full bg-main-red">
+						<p className="font-nunito text-xs font-bold text-white">
+							{reduxCart.length}
+						</p>
+					</div>
 				</div>
 			</button>
 			{

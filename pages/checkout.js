@@ -589,3 +589,19 @@ export default function Checkout() {
 		</div >
 	)
 }
+
+// const { welcomeVideo, isLoading } = useOptionsApi()
+// 		{/* VIDEO CONTAINER */ }
+// 		<div className="w-full aspect-video rounded-2xl overflow-hidden">
+// 			{!isLoading && (
+// 				<iframe
+// 					width={'100%'}
+// 					height={'100%'}
+// 					src={welcomeVideo}
+// 					frameBorder="0"
+// 					allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+// 					allowFullScreen
+// 					title="Embedded youtube"
+// 				/>
+// 			)}
+// 		</div>
