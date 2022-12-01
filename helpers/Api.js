@@ -242,9 +242,9 @@ export const useHomeApi = () => {
 }
 
 export const usePickupLocationsApi = () => {
+	console.log("PICKUP LOCATIONS API CALLED")
 	const router = useRouter()
 	const dispatch = useDispatch()
-	const citySelector = useSelector((state) => state.general.city)
 	const [isLoading, setIsLoading] = useState(true)
 	const [pickupLocations, setPickupLocations] = useState(null)
 	const [availableDates, setAvailableDates] = useState(null)
@@ -254,7 +254,7 @@ export const usePickupLocationsApi = () => {
 
 	useEffect(() => {
 		callApi()
-	}, [citySelector])
+	}, [])
 
 	const callApi = async () => {
 		setIsLoading(true)
@@ -598,7 +598,7 @@ export const useInitialCartDataApi = () => {
 
 	useEffect(() => {
 		callApi()
-	}, [selectedTypeSelector, citySelector, selectedAddressSelector, selectedPickupLocationSelector, token, coupon, day, startTime, endTime])
+	}, [selectedTypeSelector, citySelector, selectedAddressSelector, selectedPickupLocationSelector, token, coupon])
 
 	useEffect(() => {
 		if (isCheckout) {

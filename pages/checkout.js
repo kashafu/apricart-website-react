@@ -194,138 +194,136 @@ export default function Checkout() {
 			)
 		}
 
-		const DetailsArea = () => {
-			const [couponCode, setCouponCode] = useState('')
+		const PickupLocation = () => {
+			const { pickupLocations, availableDates, response: pickupLocationsApiResponse, isLoading } = usePickupLocationsApi()
 
-			const PickupLocation = () => {
-				const { pickupLocations, availableDates, response: pickupLocationsApiResponse, isLoading: pickupLocationsApiIsLoading } = usePickupLocationsApi()
+			let divStyle = "grid grid-cols-1 items-center w-full h-full"
+			let selectStyle = "h-full w-full py-2 lg:px-4 text-xs lg:text-lg rounded-lg bg-slate-200 h-[40px]"
 
-				let divStyle = "grid grid-cols-1 items-center w-full h-full"
-				let selectStyle = "h-full w-full py-2 lg:px-4 text-xs lg:text-lg rounded-lg bg-slate-200 h-[40px]"
-
-				if (pickupLocationsApiIsLoading) {
-					return (
-						<>
-							<p>
-								Getting locations...
-							</p>
-						</>
-					)
-				}
-
-				return (
-					<div className="w-full grid-rows-4 text-center space-y-4">
-						<p className="font-lato text-main-blue font-semibold">
-							Select Pickup Details
-						</p>
-						{/* PICKUP LOCATION */}
-						<div className={divStyle}>
-							<div>
-								<select
-									className={selectStyle}
-									disabled={false}
-									onChange={(e) => {
-										dispatch(updatePickupLocation(JSON.parse(e.target.value)))
-									}}
-									value={selectedPickupLocationSelector}
+			return (
+				<div className="w-full grid-rows-4 text-center space-y-4">
+					<p className="font-lato text-main-blue font-semibold">
+						Select Pickup Details
+					</p>
+					{/* PICKUP LOCATION */}
+					<div className={divStyle}>
+						<div>
+							<select
+								className={selectStyle}
+								disabled={false}
+								onChange={(e) => {
+									dispatch(updatePickupLocation(JSON.parse(e.target.value)))
+								}}
+								value={selectedPickupLocationSelector}
+							>
+								<option
+									value={''}
+									disabled={true}
+									selected={true}
 								>
+									Select Pickup Location
+								</option>
+								{isLoading && (
 									<option
 										value={''}
 										disabled={true}
-										selected={true}
 									>
-										Select Pickup Location
+										Loading...
 									</option>
-									{pickupLocationsApiResponse && pickupLocations.map((location) => {
-										return (
-											<option
-												selected={selectedPickupLocationSelector ? selectedPickupLocationSelector.id == location.id : false}
-												key={location.id}
-												value={JSON.stringify(location)}
-											>
-												{location.name}
-											</option>
-										)
-									})}
-								</select>
-							</div>
+								)}
+								{pickupLocationsApiResponse && pickupLocations.map((location) => {
+									return (
+										<option
+											selected={selectedPickupLocationSelector ? selectedPickupLocationSelector.id == location.id : false}
+											key={location.id}
+											value={JSON.stringify(location)}
+										>
+											{location.name}
+										</option>
+									)
+								})}
+							</select>
 						</div>
-						{/* DATE SELECT */}
-						<div className={divStyle}>
-							<div>
-								<select
-									className={selectStyle}
-									disabled={selectedPickupLocationSelector === '' ? true : false}
-									onChange={(e) => {
-										if (e.target.value !== '') {
-											let parsed = JSON.parse(e.target.value)
-											setSelectedDate(parsed)
-											setDay(parsed.dateForServer)
-											setDayIdentifier(parsed.identifier)
-										}
-									}}
-									value={JSON.stringify(selectedDate)}
-								>
-									<option
-										value={''}
-										hidden={selectedDate !== ''}
-									>
-										Select Date
-									</option>
-									{availableDates.map((date) => {
-										return (
-											<option
-												key={date.dateForServer}
-												value={JSON.stringify(date)}
-											>
-												{date.displayDate}
-											</option>
-										)
-									})}
-								</select>
-							</div>
-						</div>
-						{/* TIME SELECT */}
-						<div className={divStyle}>
-							<div>
-								<select
-									className={selectStyle}
-									disabled={selectedDate === ''}
-									onChange={(e) => {
-										if (e.target.value !== '') {
-											let parsed = JSON.parse(e.target.value)
-											setSelectedTime(parsed)
-											setStartTime(parsed.startTime)
-											setEndTime(parsed.endTime)
-										}
-									}}
-									value={JSON.stringify(selectedTime)}
-								>
-									<option
-										value={''}
-										hidden={selectedTime !== ''}
-									>
-										Select Time
-									</option>
-									{dayIdentifier !== '' && selectedPickupLocationSelector[dayIdentifier].map((time) => {
-										return (
-											<option
-												key={time.displayTime}
-												value={JSON.stringify(time)}
-											>
-												{time.displayTime}
-											</option>
-										)
-									})}
-								</select>
-							</div>
-						</div>
-						<p className="font-semibold">
-							Pickup location address is {selectedPickupLocationSelector.address}
-						</p>
 					</div>
-				)
-			}
+					{/* DATE SELECT */}
+					<div className={divStyle}>
+						<div>
+							<select
+								className={selectStyle}
+								disabled={selectedPickupLocationSelector === '' ? true : false}
+								onChange={(e) => {
+									if (e.target.value !== '') {
+										let parsed = JSON.parse(e.target.value)
+										setSelectedDate(parsed)
+										setDay(parsed.dateForServer)
+										setDayIdentifier(parsed.identifier)
+									}
+								}}
+								value={JSON.stringify(selectedDate)}
+							>
+								<option
+									value={''}
+									hidden={selectedDate !== ''}
+								>
+									Select Date
+								</option>
+								{pickupLocationsApiResponse && availableDates.map((date) => {
+									return (
+										<option
+											key={date.dateForServer}
+											value={JSON.stringify(date)}
+										>
+											{date.displayDate}
+										</option>
+									)
+								})}
+							</select>
+						</div>
+					</div>
+					{/* TIME SELECT */}
+					<div className={divStyle}>
+						<div>
+							<select
+								className={selectStyle}
+								disabled={selectedDate === ''}
+								onChange={(e) => {
+									if (e.target.value !== '') {
+										let parsed = JSON.parse(e.target.value)
+										setSelectedTime(parsed)
+										setStartTime(parsed.startTime)
+										setEndTime(parsed.endTime)
+									}
+								}}
+								value={JSON.stringify(selectedTime)}
+							>
+								<option
+									value={''}
+									hidden={selectedTime !== ''}
+								>
+									Select Time
+								</option>
+								{dayIdentifier !== '' && selectedPickupLocationSelector[dayIdentifier].map((time) => {
+									return (
+										<option
+											key={time.displayTime}
+											value={JSON.stringify(time)}
+										>
+											{time.displayTime}
+										</option>
+									)
+								})}
+							</select>
+						</div>
+					</div>
+					<p className="font-semibold">
+						Pickup location address is {selectedPickupLocationSelector.address}
+					</p>
+				</div>
+			)
+		}
+
+		const DetailsArea = () => {
+			const [couponCode, setCouponCode] = useState('')
 
 			return (
 				<section className="w-full lg:w-[80%] 2xl:w-[60%] space-y-4 bg-slate-100 p-4 m-4 rounded-2xl">
