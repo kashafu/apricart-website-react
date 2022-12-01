@@ -27,11 +27,7 @@ export default function Checkout() {
 
 	const [isAlertShownAlready, setIsAlertShownAlready] = useState(false)
 
-	// useEffect(() => {
-	// 	console.log("IsAlertShownAlready", isAlertShownAlready)
-	// }, [isAlertShownAlready])
-
-
+	// Top bar to navigate between shipping, payment and review
 	const ProgressBar = ({ currentState, onClick }) => {
 		let pStyle = "font-lato text-md font-semibold"
 		let divStyle = "justify-self-center place-self-end"
@@ -83,6 +79,7 @@ export default function Checkout() {
 		)
 	}
 
+	// Made component of all api driven stuff so that the page doesnt re render uselessly
 	const CartItems = () => {
 		const selectedTypeSelector = useSelector((state) => state.general.selectedType)
 		const selectedPickupLocationSelector = useSelector((state) => state.general.pickupLocation)
