@@ -53,12 +53,7 @@ export default function TopBar() {
 						<div className="hidden lg:block">
 							{selectedTypeSelector == 'bulk' && (
 								<p className="text-black font-nunito font-black capitalize">
-									Bulk Buy
-								</p>
-							)}
-							{selectedTypeSelector == 'home' && (
-								<p className="text-black font-nunito font-black capitalize">
-									Home Delivery
+									Online Delivery
 								</p>
 							)}
 							{selectedTypeSelector == 'cnc' && (

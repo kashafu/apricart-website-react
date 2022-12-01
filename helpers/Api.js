@@ -242,7 +242,6 @@ export const useHomeApi = () => {
 }
 
 export const usePickupLocationsApi = () => {
-	console.log("PICKUP LOCATIONS API CALLED")
 	const router = useRouter()
 	const dispatch = useDispatch()
 	const [isLoading, setIsLoading] = useState(true)
