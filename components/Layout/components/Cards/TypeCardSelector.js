@@ -5,15 +5,16 @@ import Image from "next/image"
 import ClickAndCollectCard from "./ClickAndCollectCard"
 import BulkBuyCard from "./BulkBuyCard"
 import { updateSelectedType } from "../../../../redux/general.slice"
-import SubmitButton from "../Buttons/SubmitButton"
 
 import dropdownSVG from "../../../../public/assets/svgs/dropdownArrow.svg"
 import Alert from "../Alerts/Alert"
 
 const TypeCardSelector = () => {
     const dispatch = useDispatch()
-    const citySelector = useSelector((state) => state.general.city)
     const selectedTypeSelector = useSelector((state) => state.general.selectedType)
+    const citySelector = useSelector((state) => state.general.city)
+    const reduxCart = useSelector((state) => state.cart)
+
     const [isShow, setIsShow] = useState(false)
     const [isShowAlert, setIsShowAlert] = useState(false)
 
@@ -29,7 +30,9 @@ const TypeCardSelector = () => {
     */
     useEffect(() => {
         setIsShow(false)
-        setIsShowAlert(true)
+        if (reduxCart.length > 0) {
+            setIsShowAlert(true)
+        }
     }, [selectedTypeSelector])
 
     const AlertBox = () => {
