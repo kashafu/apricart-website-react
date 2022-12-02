@@ -139,7 +139,7 @@ export default function Home() {
 		}
 
 		return (
-			<div>
+			<div className="animate-fade-in">
 				<PopupAd />
 				<div className="flex flex-row w-full">
 					<Carousel />
