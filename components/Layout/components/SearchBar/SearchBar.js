@@ -97,7 +97,7 @@ export default function SearchBar() {
 					autoComplete="false"
 					name="hidden"
 				/>
-				<button className="h-full w-16 rounded-xl ml-[-30px] bg-main-blue flex items-center justify-center"
+				<button className="h-full w-16 rounded-xl ml-[-30px] bg-main-red flex items-center justify-center"
 					onClick={async () => {
 						if (searchText === '') {
 							searchBarRef.current.focus()
