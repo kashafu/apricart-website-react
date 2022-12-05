@@ -12,19 +12,16 @@ import InputLabelText from "../components/Layout/components/Typography/InputLabe
 import HeadTag from "../components/Layout/components/Head/HeadTag"
 import { useInitialCartDataApi, usePickupLocationsApi } from "../helpers/Api"
 import PickupLocationSelector from "../components/Layout/components/Selectors/PickupLocationSelector"
-import JsPopup from "../components/Layout/components/Popup/JsPopup"
-import OtpPopup from "../components/Layout/components/Popup/OtpPopup"
-import JsOtpPopup from "../components/Layout/components/Popup/JsOtpPopup"
 import CartItemListing from "../components/Layout/components/Cart/CartItemListing"
 import CartDetailsShimmer from "../components/Layout/components/Loaders/Shimmers/CartDetailsShimmer"
 import { updatePickupLocation } from "../redux/general.slice"
+import Alert from "../components/Layout/components/Alerts/Alert"
 
 export default function Checkout() {
 	const dispatch = useDispatch()
 	let { token } = getGeneralApiParams()
 	const selectedAddressSelector = useSelector((state) => state.general.selectedAddress)
 	const selectedTypeSelector = useSelector((state) => state.general.selectedType)
-	const redirectSourceSelector = useSelector((state) => state.general.redirectSource)
 	const selectedPickupLocationSelector = useSelector((state) => state.general.pickupLocation)
 	const reduxCart = useSelector((state) => state.cart)
 
@@ -32,14 +29,12 @@ export default function Checkout() {
 	const [viewState, setViewState] = useState("shipping")
 	const [isCheckoutButtonPressed, setIsCheckoutButtonPressed] = useState(false)
 
-	const [showJsScreen, setShowJsScreen] = useState(false)
-
 	// For the PickupLocation Component
 	const [dayIdentifier, setDayIdentifier] = useState('')
 	const [selectedDate, setSelectedDate] = useState('')
 	const [selectedTime, setSelectedTime] = useState('')
 
-	const { initialCartData, isLoading, errorMessage, response, setCoupon, notes, setPaymentMethod, paymentMethod, setIsCheckout, couponMessage, paymentMethods, checkoutResponse, setDay, setStartTime, setEndTime, setIsFetchCart } = useInitialCartDataApi()
+	const { initialCartData, isLoading, errorMessage, response, setCoupon, notes, setPaymentMethod, paymentMethod, setIsCheckout, couponMessage, paymentMethods, checkoutResponse, setDay, setStartTime, setEndTime, setIsFetchCart, isContinue, isContinueMessage } = useInitialCartDataApi()
 
 	/*
 		To check if checkout api response is succesful
@@ -236,52 +231,41 @@ export default function Checkout() {
 			<div className="">
 				{viewState === "shipping" && (
 					<div>
-						{redirectSourceSelector === 'js_bank' && !token ? (
+						{selectedTypeSelector === 'cnc' ? (
 							<SubmitButton
-								text={'CONTINUE WITH ORDER'}
+								text={
+									selectedDate === '' || selectedTime === ''
+										? "SELECT PICKUP LOCATION"
+										: "CONTINUE TO PAYMENT"
+								}
 								onClick={() => {
-									setShowJsScreen(true)
+									setViewState("payment")
+									window.scroll({
+										top: 0,
+										left: 0,
+										behavior: "smooth",
+									})
 								}}
+								disabled={selectedDate === '' || selectedTime === ''}
 							/>
 						) : (
-							<>
-								{selectedTypeSelector === 'cnc' ? (
-									<SubmitButton
-										text={
-											selectedDate === '' || selectedTime === ''
-												? "SELECT PICKUP LOCATION"
-												: "CONTINUE TO PAYMENT"
-										}
-										onClick={() => {
-											setViewState("payment")
-											window.scroll({
-												top: 0,
-												left: 0,
-												behavior: "smooth",
-											})
-										}}
-										disabled={selectedDate === '' || selectedTime === ''}
-									/>
-								) : (
-									<SubmitButton
-										text={
-											isLoading ? "LOADING" :
-												selectedAddressSelector && response
-													? "CONTINUE TO PAYMENT"
-													: "SELECT ADDRESS"
-										}
-										onClick={() => {
-											setViewState("payment")
-											window.scroll({
-												top: 0,
-												left: 0,
-												behavior: "smooth",
-											})
-										}}
-										disabled={selectedAddressSelector && response ? false : true}
-									/>
-								)}
-							</>
+							<SubmitButton
+								text={
+									isLoading ? "LOADING" :
+										selectedAddressSelector && response
+											? "CONTINUE TO PAYMENT"
+											: "SELECT ADDRESS"
+								}
+								onClick={() => {
+									setViewState("payment")
+									window.scroll({
+										top: 0,
+										left: 0,
+										behavior: "smooth",
+									})
+								}}
+								disabled={selectedAddressSelector && response ? false : true}
+							/>
 						)}
 					</div>
 				)}
@@ -311,193 +295,116 @@ export default function Checkout() {
 		const [couponCode, setCouponCode] = useState('')
 
 		return (
-			<>
-				{!(redirectSourceSelector === 'js_bank' && !token) && (
-					<section className="w-full lg:w-[80%] 2xl:w-[60%] space-y-4 bg-slate-100 p-4 m-4 rounded-2xl">
-						{viewState == "shipping" && (
-							<>
-								<p className="font-lato text-lg text-main-blue font-extrabold text-center">
-									DELIVERY DETAILS
-								</p>
-								{selectedTypeSelector === 'cnc' ? (
-									<PickupLocation />
-								) : (
-									<SelectAddress
-										type={"checkout"}
-									/>
-								)}
-								<ErrorText text={errorMessage} />
-								<div className="">
-									<TextField
-										label={"Special Instructions"}
-										placeHolder={"instructions"}
-										customOnChange
-										onChange={(e) => {
-											notes.current = e.target.value
-										}}
-									/>
-								</div>
-							</>
-						)}
-						{viewState === "payment" && (
-							<>
-								<p className="font-lato text-lg text-main-blue font-extrabold text-center">
-									PAYMENT SELECTION
-								</p>
-								<div className="flex flex-col items-center w-full">
-									<div className="space-y-2 flex flex-col items-center">
-										<InputLabelText text={"Payment Method"} />
-										<div className="flex flex-col space-y-2">
-											{paymentMethods.map((method) => {
-												let { id, name, key } = method
-
-												{/* ZINDIGI */ }
-												if (redirectSourceSelector === 'js_bank') {
-													if (key === "jswallet") {
-														setPaymentMethod("jswallet")
-														return (
-															<div key={id} className='flex items-center space-x-2'>
-																<input
-																	value={key}
-																	type={"radio"}
-																	onChange={(e) => {
-																		setPaymentMethod(e.target.value)
-																	}}
-																	checked={paymentMethod === key}
-																/>
-																<p>
-																	{name}
-																</p>
-															</div>
-														)
-													}
-												}
-												else {
-													if (key === "jswallet") {
-														return <div key={id}></div>
-													}
-													return (
-														<div key={id} className='flex items-center space-x-2'>
-															<input
-																value={key}
-																type={"radio"}
-																onChange={(e) => {
-																	setPaymentMethod(e.target.value)
-																}}
-																checked={paymentMethod === key}
-															/>
-															<p>
-																{name}
-															</p>
-														</div>
-													)
-												}
-											})}
-										</div>
-									</div>
-								</div>
-								{/* PROMO CODE */}
-								<div className="flex flex-row w-full items-center space-x-4">
-									<div className="w-4/6">
-										<TextField
-											label={'Promo Code'}
-											placeHolder={'Enter Code'}
-											onChange={setCouponCode}
-											value={couponCode}
-										/>
-									</div>
-									<div className="w-2/6">
-										<SubmitButton
-											text={'Apply'}
-											onClick={() => {
-												setCoupon(couponCode)
-											}}
-										/>
-									</div>
-								</div>
-								{couponMessage !== 'Discount code not received' && (
-									<p>
-										{couponMessage}
-									</p>
-								)}
-							</>
-						)}
-						{viewState == "review" && (
-							<>
-								{isLoading ? (
-									<div>
-										Loading
-									</div>
-								) : (
-									<section className="w-full flex flex-col items-center">
-										<div className="text-center">
-											{parse(checkoutResponse.data.message)}
-										</div>
-										<div className="w-full lg:w-2/3">
-											<Image
-												src={checkoutResponse.data.data.thankyou_image}
-												layout={"responsive"}
-												alt={"Thank You Image"}
-												width={450}
-												height={100}
-											/>
-										</div>
-									</section>
-								)}
-							</>
-						)}
-					</section>
-				)}
-			</>
-		)
-	}
-
-	const JsScreen = () => {
-		const [showJsPopup, setShowJsPopup] = useState(true)
-		const [showOtp, setShowOtp] = useState(false)
-		const [showJsVerifyOtp, setShowJsVerifyOtp] = useState(false)
-
-		useEffect(() => {
-			if (showJsPopup && showOtp) {
-				setShowJsPopup(false)
-			}
-		}, [showOtp])
-
-		useEffect(() => {
-			if (viewState === 'review' && isCheckoutButtonPressed) {
-				if (checkoutResponse) {
-					// If user is from JS zindigi app, show payment verification opt screen
-					setShowJsScreen(true)
-					setShowJsVerifyOtp(true)
-					setShowJsPopup(false)
-					setShowOtp(false)
-				}
-			}
-		}, [checkoutResponse, viewState, isCheckoutButtonPressed])
-
-		return (
-			<>
-				{showJsScreen && (
+			<section className="w-full lg:w-[80%] 2xl:w-[60%] space-y-4 bg-slate-100 p-4 m-4 rounded-2xl">
+				{viewState == "shipping" && (
 					<>
-						{showJsPopup && (
-							<JsPopup
-								setShowScreen={setShowOtp}
+						<p className="font-lato text-lg text-main-blue font-extrabold text-center">
+							DELIVERY DETAILS
+						</p>
+						{selectedTypeSelector === 'cnc' ? (
+							<PickupLocation />
+						) : (
+							<SelectAddress
+								type={"checkout"}
 							/>
 						)}
-						{showOtp && (
-							<OtpPopup
-								setShowScreen={setShowOtp}
+						<ErrorText text={errorMessage} />
+						<div className="">
+							<TextField
+								label={"Special Instructions"}
+								placeHolder={"instructions"}
+								customOnChange
+								onChange={(e) => {
+									notes.current = e.target.value
+								}}
 							/>
-						)}
-						{showJsVerifyOtp && (
-							<JsOtpPopup
-								setShowScreen={setShowJsScreen}
-								orderId={checkoutResponse?.data?.data?.orderId}
-							/>
+						</div>
+					</>
+				)}
+				{viewState === "payment" && (
+					<>
+						<p className="font-lato text-lg text-main-blue font-extrabold text-center">
+							PAYMENT SELECTION
+						</p>
+						<div className="flex flex-col items-center w-full">
+							<div className="space-y-2 flex flex-col items-center w-1/3">
+								<InputLabelText text={"Payment Method"} />
+								<div className="flex flex-col space-y-2">
+									{paymentMethods.map((method) => {
+										let { id, name, key } = method
+										if (key === "jswallet") {
+											return <div key={id}></div>
+										}
+										return (
+											<div key={id} className='flex items-center space-x-2'>
+												<input
+													value={key}
+													type={"radio"}
+													onChange={(e) => {
+														setPaymentMethod(e.target.value)
+													}}
+													checked={paymentMethod === key}
+												/>
+												<p>
+													{name}
+												</p>
+											</div>
+										)
+									})}
+								</div>
+							</div>
+						</div>
+						{/* PROMO CODE */}
+						<div className="flex flex-row w-full items-center space-x-4">
+							<div className="w-4/6">
+								<TextField
+									label={'Promo Code'}
+									placeHolder={'Enter Code'}
+									onChange={setCouponCode}
+									value={couponCode}
+								/>
+							</div>
+							<div className="w-2/6">
+								<SubmitButton
+									text={'Apply'}
+									onClick={() => {
+										setCoupon(couponCode)
+									}}
+								/>
+							</div>
+						</div>
+						{couponMessage !== 'Discount code not received' && (
+							<p>
+								{couponMessage}
+							</p>
 						)}
 					</>
 				)}
-			</>
+				{viewState == "review" && (
+					<>
+						{isLoading ? (
+							<div>
+								Loading
+							</div>
+						) : (
+							<section className="w-full flex flex-col items-center">
+								<div className="text-center">
+									{parse(checkoutResponse.data.message)}
+								</div>
+								<div className="w-full lg:w-2/3">
+									<Image
+										src={checkoutResponse.data.data.thankyou_image}
+										layout={"responsive"}
+										alt={"Thank You Image"}
+										width={450}
+										height={100}
+									/>
+								</div>
+							</section>
+						)}
+					</>
+				)}
+			</section>
 		)
 	}
 
@@ -573,7 +480,22 @@ export default function Checkout() {
 		)
 	}
 
-	if (!token && redirectSourceSelector !== 'js_bank') {
+	const AlertBox = () => {
+		const [isProceed, setIsProceed] = useState(!isContinue)
+
+		return (
+			<>
+				{isProceed && !isLoading && (
+					<Alert
+						text={isContinueMessage}
+						setIsProceed={setIsProceed}
+					/>
+				)}
+			</>
+		)
+	}
+
+	if (!token) {
 		return (
 			<>
 				<HeadTag title={"Checkout"} />
@@ -608,7 +530,7 @@ export default function Checkout() {
 	return (
 		<div className="h-full w-full">
 			<HeadTag title={"Checkout"} />
-			<JsScreen />
+			<AlertBox />
 			<ProgressBar
 				currentState={viewState}
 				onClick={setViewState}

@@ -585,6 +585,8 @@ export const useInitialCartDataApi = () => {
 	const [day, setDay] = useState("2022-04-10")
 	const [startTime, setStartTime] = useState("11:00")
 	const [endTime, setEndTime] = useState("11:30")
+	const [isContinue, setIsContinue] = useState(false)
+	const [isContinueMessage, setIsContinueMessage] = useState("")
 	const [isCheckout, setIsCheckout] = useState(false)
 	const [isFetchCart, setIsFetchCart] = useState(false)
 	const [checkoutResponse, setCheckoutResponse] = useState(null)
@@ -660,12 +662,13 @@ export const useInitialCartDataApi = () => {
 			setInitialCartProducts(apiResponse.data.data.products)
 			setCouponMessage(apiResponse.data.data.couponMessage)
 			setPaymentMethods(apiResponse.data.data.paymentInfo)
+			setIsContinue(apiResponse.data.data.isContinue)
+			setIsContinueMessage(apiResponse.data.data.isContinueMessage)
 			dispatch(initialize(apiResponse.data.data.products))
 			setErrorMessage('')
 		} catch (error) {
 			setErrorResponse(error?.response)
 			setErrorMessage(error?.response?.data?.message)
-			// toast.error(error?.response?.data?.message)
 		} finally {
 			setIsLoading(false)
 			setIsCheckout(false)
@@ -746,6 +749,8 @@ export const useInitialCartDataApi = () => {
 		setIsCheckout,
 		notes,
 		coupon,
+		isContinue,
+		isContinueMessage,
 		setPaymentMethod,
 		paymentMethod,
 		couponMessage,
