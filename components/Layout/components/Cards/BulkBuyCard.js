@@ -10,28 +10,20 @@ const BulkBuyCard = () => {
 
 	const [isShowAlert, setIsShowAlert] = useState(false)
 
-	const AlertBox = () => {
-		return (
-			<>
-				{isShowAlert && (
-					<Alert
-						text={"Attention: Some of the selected products may not be available if you change order type."}
-						onClickOk={() => {
-							setIsShowAlert(false)
-							dispatch(updateSelectedType('bulk'))
-						}}
-						onClickCancel={() => {
-							setIsShowAlert(false)
-						}}
-					/>
-				)}
-			</>
-		)
-	}
-
 	return (
 		<>
-			<AlertBox />
+			{isShowAlert && (
+				<Alert
+					text={"Attention: Some of the selected products may not be available if you change order type."}
+					onClickOk={() => {
+						setIsShowAlert(false)
+						dispatch(updateSelectedType('bulk'))
+					}}
+					onClickCancel={() => {
+						setIsShowAlert(false)
+					}}
+				/>
+			)}
 			<button
 				className='items-center w-full h-full hover:scale-105 duration-300'
 				onClick={() => {

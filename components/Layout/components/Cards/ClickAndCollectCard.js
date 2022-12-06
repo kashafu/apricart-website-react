@@ -29,28 +29,20 @@ export default function ClickAndCollectCard() {
 		}
 	}
 
-	const AlertBox = () => {
-		return (
-			<>
-				{isShowAlert && (
-					<Alert
-						text={"Attention: Some of the selected products may not be available if you change order type."}
-						onClickOk={() => {
-							setIsShowAlert(false)
-							setShowPopup(!showPopup)
-						}}
-						onClickCancel={() => {
-							setIsShowAlert(false)
-						}}
-					/>
-				)}
-			</>
-		)
-	}
-
 	return (
 		<>
-			<AlertBox />
+			{isShowAlert && (
+				<Alert
+					text={"Attention: Some of the selected products may not be available if you change order type."}
+					onClickOk={() => {
+						setIsShowAlert(false)
+						setShowPopup(!showPopup)
+					}}
+					onClickCancel={() => {
+						setIsShowAlert(false)
+					}}
+				/>
+			)}
 			<button
 				className='items-center w-full h-full hover:scale-105 duration-300'
 				onClick={() => {
