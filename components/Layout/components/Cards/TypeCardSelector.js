@@ -7,16 +7,13 @@ import BulkBuyCard from "./BulkBuyCard"
 import { updateSelectedType } from "../../../../redux/general.slice"
 
 import dropdownSVG from "../../../../public/assets/svgs/dropdownArrow.svg"
-import Alert from "../Alerts/Alert"
 
 const TypeCardSelector = () => {
     const dispatch = useDispatch()
     const selectedTypeSelector = useSelector((state) => state.general.selectedType)
     const citySelector = useSelector((state) => state.general.city)
-    const reduxCart = useSelector((state) => state.cart)
 
     const [isShow, setIsShow] = useState(false)
-    const [isShowAlert, setIsShowAlert] = useState(false)
 
     useEffect(() => {
         if (citySelector === 'peshawar') {
@@ -30,29 +27,10 @@ const TypeCardSelector = () => {
     */
     useEffect(() => {
         setIsShow(false)
-        if (reduxCart.length > 0) {
-            setIsShowAlert(true)
-        }
     }, [selectedTypeSelector])
-
-    const AlertBox = () => {
-        return (
-            <>
-                {isShowAlert && (
-                    <Alert
-                        text={"Attention: Some of the selected products may not be available if you change order type."}
-                        onClick={() => {
-                            setIsShowAlert(false)
-                        }}
-                    />
-                )}
-            </>
-        )
-    }
 
     return (
         <>
-            <AlertBox />
             <div className="flex flex-col w-[100px] lg:w-[165px]">
                 <button className="w-full h-[40px] lg:h-[50px] bg-main-blue rounded-md flex flex-row items-center justify-between px-1 lg:px-2"
                     onClick={() => {

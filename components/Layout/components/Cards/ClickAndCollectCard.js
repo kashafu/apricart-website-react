@@ -6,15 +6,19 @@ import { updatePickupLocation, updateSelectedType } from "../../../../redux/gene
 import Popup from "../Popup/Popup"
 import SubmitButton from "../Buttons/SubmitButton"
 import { usePickupLocationsApi } from "../../../../helpers/Api"
+import Alert from "../Alerts/Alert"
 
 export default function ClickAndCollectCard() {
 	const dispatch = useDispatch()
 	const router = useRouter()
 	const selectedPickupLocationSelector = useSelector(state => state.general.pickupLocation)
+	const reduxCart = useSelector((state) => state.cart)
 
 	const { pickupLocations } = usePickupLocationsApi()
 	const [selectedPickupLocation, setSelectedPickupLocation] = useState('')
 	const [showPopup, setShowPopup] = useState(false)
+
+	const [isShowAlert, setIsShowAlert] = useState(false)
 
 	const closeButton = () => {
 		setShowPopup(!showPopup)
@@ -25,12 +29,37 @@ export default function ClickAndCollectCard() {
 		}
 	}
 
+	const AlertBox = () => {
+		return (
+			<>
+				{isShowAlert && (
+					<Alert
+						text={"Attention: Some of the selected products may not be available if you change order type."}
+						onClickOk={() => {
+							setIsShowAlert(false)
+							setShowPopup(!showPopup)
+						}}
+						onClickCancel={() => {
+							setIsShowAlert(false)
+						}}
+					/>
+				)}
+			</>
+		)
+	}
+
 	return (
 		<>
+			<AlertBox />
 			<button
 				className='items-center w-full h-full hover:scale-105 duration-300'
 				onClick={() => {
-					setShowPopup(!showPopup)
+					if (reduxCart.length > 0) {
+						setIsShowAlert(true)
+					}
+					else {
+						setShowPopup(!showPopup)
+					}
 				}}
 			>
 				<p className='font-nunito text-main-blue font-black lg:font-extrabold w-full text-xs md:text-base lg:text-sm 2xl:text-lg pl-1 lg:pl-2 leading-none'>

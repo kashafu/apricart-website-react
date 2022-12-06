@@ -495,7 +495,7 @@ export default function Checkout() {
 				{isShow && !isLoading && !isAlertShownAlready && (
 					<Alert
 						text={isMinOrderMessage}
-						onClick={() => {
+						onClickOk={() => {
 							setIsShow(false)
 							setIsAlertShownAlready(true)
 						}}
