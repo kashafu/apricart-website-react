@@ -18,6 +18,7 @@ import JsOtpPopup from "../components/Layout/components/Popup/JsOtpPopup"
 import CartItemListing from "../components/Layout/components/Cart/CartItemListing"
 import CartDetailsShimmer from "../components/Layout/components/Loaders/Shimmers/CartDetailsShimmer"
 import { updatePickupLocation } from "../redux/general.slice"
+import Alert from "../components/Layout/components/Alerts/Alert"
 
 export default function Checkout() {
 	const dispatch = useDispatch()
