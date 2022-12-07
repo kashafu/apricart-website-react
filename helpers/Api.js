@@ -247,7 +247,6 @@ export const useHomeApi = () => {
 export const usePickupLocationsApi = () => {
 	const router = useRouter()
 	const dispatch = useDispatch()
-	const citySelector = useSelector((state) => state.general.city)
 	const [isLoading, setIsLoading] = useState(true)
 	const [pickupLocations, setPickupLocations] = useState(null)
 	const [availableDates, setAvailableDates] = useState(null)
@@ -257,7 +256,7 @@ export const usePickupLocationsApi = () => {
 
 	useEffect(() => {
 		callApi()
-	}, [citySelector])
+	}, [])
 
 	const callApi = async () => {
 		setIsLoading(true)
@@ -585,6 +584,10 @@ export const useInitialCartDataApi = () => {
 	const [day, setDay] = useState("2022-04-10")
 	const [startTime, setStartTime] = useState("11:00")
 	const [endTime, setEndTime] = useState("11:30")
+	const [isContinue, setIsContinue] = useState(false)
+	const [isContinueMessage, setIsContinueMessage] = useState("")
+	const [isMinOrder, setIsMinOrder] = useState(false)
+	const [isMinOrderMessage, setIsMinOrderMessage] = useState("")
 	const [isCheckout, setIsCheckout] = useState(false)
 	const [isFetchCart, setIsFetchCart] = useState(false)
 	const [checkoutResponse, setCheckoutResponse] = useState(null)
@@ -597,7 +600,7 @@ export const useInitialCartDataApi = () => {
 
 	useEffect(() => {
 		callApi()
-	}, [selectedTypeSelector, citySelector, selectedAddressSelector, selectedPickupLocationSelector, token, coupon, day, startTime, endTime])
+	}, [selectedTypeSelector, citySelector, selectedAddressSelector, selectedPickupLocationSelector, token, coupon])
 
 	useEffect(() => {
 		if (isCheckout) {
@@ -660,6 +663,10 @@ export const useInitialCartDataApi = () => {
 			setInitialCartProducts(apiResponse.data.data.products)
 			setCouponMessage(apiResponse.data.data.couponMessage)
 			setPaymentMethods(apiResponse.data.data.paymentInfo)
+			setIsContinue(apiResponse.data.data.isContinue)
+			setIsContinueMessage(apiResponse.data.data.isContinueMessage)
+			setIsMinOrder(apiResponse.data.data.isMinOrder)
+			setIsMinOrderMessage(apiResponse.data.data.isMinOrderMessage)
 			dispatch(initialize(apiResponse.data.data.products))
 			setErrorMessage('')
 		} catch (error) {
@@ -746,6 +753,10 @@ export const useInitialCartDataApi = () => {
 		setIsCheckout,
 		notes,
 		coupon,
+		isContinue,
+		isContinueMessage,
+		isMinOrder,
+		isMinOrderMessage,
 		setPaymentMethod,
 		paymentMethod,
 		couponMessage,

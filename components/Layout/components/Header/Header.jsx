@@ -1,22 +1,22 @@
-import Link from "next/link"
-import Image from "next/image"
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { useState, useEffect } from "react"
 
 import { setCookie, getCookie } from "../../../../helpers/Cookies"
-import heartIcon from "../../../../public/assets/svgs/heartIcon.svg"
 import { getGeneralApiParams } from "../../../../helpers/ApiHelpers"
 import SearchBar from "../SearchBar/SearchBar"
 import HamburgerMenu from "../Menus/HamburgerMenu"
 import Logo from "../Logo/Logo"
-import Profile from "../Auth/Profile"
 import CartSlider from "../Cart/CartSlider"
 import CitySelector from "../Selectors/CitySelector"
 import AddressSelector from "../Selectors/AddressSelector"
 import PickupLocationSelector from "../Selectors/PickupLocationSelector"
 import { getItemLocalStorage, setItemLocalStorage } from "../../../../helpers/Storage"
+import TypeCardSelector from "../Cards/TypeCardSelector"
+import { updateSelectedType } from "../../../../redux/general.slice"
 
 export default function Header() {
+	const dispatch = useDispatch()
+
 	let { token } = getGeneralApiParams()
 	const selectedTypeSelector = useSelector(state => state.general.selectedType)
 	const redirectSourceSelector = useSelector(state => state.general.redirectSource)
@@ -29,7 +29,8 @@ export default function Header() {
 		}
 
 		if (!getItemLocalStorage("selected-type")) {
-			setItemLocalStorage('selected-type', 'home')
+			setItemLocalStorage('selected-type', 'bulk')
+			dispatch(updateSelectedType('bulk'))
 		}
 	}, [token])
 
@@ -71,41 +72,10 @@ export default function Header() {
 							</>
 						)}
 					</div>
-					<Link href={"/shopping-list"} passHref>
-						<a className="flex items-center relative w-[30px] h-[30px]">
-							<Image
-								src={heartIcon}
-								layout='fixed'
-								alt="wishlist icon"
-							/>
-						</a>
-					</Link>
 					<div className="relative">
 						<CartSlider />
 					</div>
-					{token ? (
-						<div className="flex-col h-full">
-							<Profile />
-						</div>
-					) : (
-						<>
-							{redirectSourceSelector !== 'js_bank' && (
-								<div className="flex flex-row space-x-2 items-center">
-									<Link href={"/login"} passHref>
-										<a className="font-nunito text-base font-main-grey-800 font-semibold">
-											Login
-										</a>
-									</Link>
-									<p className="text-3xl font-bold pb-[5px]">|</p>
-									<Link href={"/register"} passHref>
-										<a className="truncate text-base font-nunito font-main-grey-800 font-semibold">
-											Sign Up
-										</a>
-									</Link>
-								</div>
-							)}
-						</>
-					)}
+					<TypeCardSelector />
 				</div>
 			</div>
 		</div>

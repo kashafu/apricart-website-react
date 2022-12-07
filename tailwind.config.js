@@ -48,6 +48,10 @@ module.exports = {
 					"0%": { transform: "translateX(20px)" },
 					"100%": { transform: "translateX(0px)" },
 				},
+				"slide-up": {
+					"0%": { opacity: 0, transform: "translateY(50px)" },
+					"100%": { opacity: 100, transform: "translateY(0px)" },
+				},
 			},
 			animation: {
 				dangle: "dangle infinite 3s ease-in",
@@ -58,6 +62,7 @@ module.exports = {
 				"float-up": "float-up 2s ease-out",
 				"slide-in-right": "slide-in-right 0.5s ease-in-out",
 				"slide-in-left": "slide-in-left 0.5s ease-in-out",
+				"slide-up": "slide-up 0.25s ease-in-out",
 			},
 			colors: {
 				"main-yellow": {

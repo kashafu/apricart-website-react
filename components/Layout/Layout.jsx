@@ -15,7 +15,7 @@ export default function Layout(props) {
 				router.pathname === "/terms-of-use-mobile" ||
 				router.pathname === "/faqs-mobile"
 			) && (
-					<div className="mb-2">
+					<div className="mb-2 animate-dropdown">
 						<TopBar />
 						<Header />
 					</div>
