@@ -485,7 +485,7 @@ export default function Checkout() {
 		}, [showOtp])
 
 		useEffect(() => {
-			if (viewState === 'review' && isCheckoutButtonPressed) {
+			if (viewState === 'review' && isCheckoutButtonPressed && redirectSourceSelector === 'js_bank') {
 				if (checkoutResponse) {
 					// If user is from JS zindigi app, show payment verification opt screen
 					setShowJsScreen(true)
