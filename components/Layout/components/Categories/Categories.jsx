@@ -32,7 +32,7 @@ export default function Categories() {
 
 	if (categoriesSelector.length != 0) {
 		return (
-			<div className="sticky top-[70px] w-full overflow-y-auto no-scrollbar max-h-[calc(100vh-100px)]">
+			<div className="animate-slide-in-right sticky top-[70px] w-full overflow-y-auto no-scrollbar max-h-[calc(100vh-100px)]">
 				<div className="space-y-4">
 					<p className="text-main-blue font-lato font-bold lg:text-2xl 2xl:text-3xl">
 						Categories
@@ -166,7 +166,7 @@ export default function Categories() {
 	}
 
 	return (
-		<div className="sticky top-[70px] w-full overflow-y-auto no-scrollbar max-h-[calc(100vh-100px)]">
+		<div className="animate-slide-in-right sticky top-[70px] w-full overflow-y-auto no-scrollbar max-h-[calc(100vh-100px)]">
 			<div className="space-y-4">
 				<p className="text-main-blue font-lato font-bold lg:text-2xl 2xl:text-3xl">
 					Categories

@@ -15,6 +15,7 @@ import PickupLocationSelector from "../components/Layout/components/Selectors/Pi
 import CartItemListing from "../components/Layout/components/Cart/CartItemListing"
 import CartDetailsShimmer from "../components/Layout/components/Loaders/Shimmers/CartDetailsShimmer"
 import { updatePickupLocation } from "../redux/general.slice"
+import Alert from "../components/Layout/components/Alerts/Alert"
 
 export default function Checkout() {
 	const dispatch = useDispatch()
@@ -26,6 +27,7 @@ export default function Checkout() {
 
 	// view state can be either 'loading', 'shipping', 'payment', 'review'
 	const [viewState, setViewState] = useState("shipping")
+	const [isAlertShownAlready, setIsAlertShownAlready] = useState(false)
 	const [isCheckoutButtonPressed, setIsCheckoutButtonPressed] = useState(false)
 
 	// For the PickupLocation Component
@@ -33,7 +35,7 @@ export default function Checkout() {
 	const [selectedDate, setSelectedDate] = useState('')
 	const [selectedTime, setSelectedTime] = useState('')
 
-	const { initialCartData, isLoading, errorMessage, response, setCoupon, notes, setPaymentMethod, paymentMethod, setIsCheckout, couponMessage, paymentMethods, checkoutResponse, setDay, setStartTime, setEndTime, setIsFetchCart } = useInitialCartDataApi()
+	const { initialCartData, isLoading, errorMessage, response, setCoupon, notes, setPaymentMethod, paymentMethod, setIsCheckout, couponMessage, paymentMethods, checkoutResponse, setDay, setStartTime, setEndTime, setIsFetchCart, isMinOrder, isMinOrderMessage } = useInitialCartDataApi()
 
 	/*
 		To check if checkout api response is succesful
@@ -98,18 +100,10 @@ export default function Checkout() {
 	}
 
 	const PickupLocation = () => {
-		const { pickupLocations, availableDates, response: pickupLocationsApiResponse, isLoading: pickupLocationsApiIsLoading } = usePickupLocationsApi()
+		const { pickupLocations, availableDates, response: pickupLocationsApiResponse, isLoading } = usePickupLocationsApi()
 
 		let divStyle = "grid grid-cols-1 items-center w-full h-full"
 		let selectStyle = "h-full w-full py-2 lg:px-4 text-xs lg:text-lg rounded-lg bg-slate-200 h-[40px]"
-
-		if (pickupLocationsApiIsLoading) {
-			return (
-				<>
-
-				</>
-			)
-		}
 
 		return (
 			<div className="w-full grid-rows-4 text-center space-y-4">
@@ -134,6 +128,14 @@ export default function Checkout() {
 							>
 								Select Pickup Location
 							</option>
+							{isLoading && (
+								<option
+									value={''}
+									disabled={true}
+								>
+									Loading...
+								</option>
+							)}
 							{pickupLocationsApiResponse && pickupLocations.map((location) => {
 								return (
 									<option
@@ -170,7 +172,7 @@ export default function Checkout() {
 							>
 								Select Date
 							</option>
-							{availableDates.map((date) => {
+							{pickupLocationsApiResponse && availableDates.map((date) => {
 								return (
 									<option
 										key={date.dateForServer}
@@ -230,6 +232,9 @@ export default function Checkout() {
 			<div className="">
 				{viewState === "shipping" && (
 					<div>
+						{isMinOrder && (
+							<ErrorText text={isMinOrderMessage} />
+						)}
 						{selectedTypeSelector === 'cnc' ? (
 							<SubmitButton
 								text={
@@ -245,7 +250,7 @@ export default function Checkout() {
 										behavior: "smooth",
 									})
 								}}
-								disabled={selectedDate === '' || selectedTime === ''}
+								disabled={(selectedDate === '' || selectedTime === '') || isMinOrder}
 							/>
 						) : (
 							<SubmitButton
@@ -263,13 +268,16 @@ export default function Checkout() {
 										behavior: "smooth",
 									})
 								}}
-								disabled={selectedAddressSelector && response ? false : true}
+								disabled={(selectedAddressSelector && response ? false : true) || isMinOrder}
 							/>
 						)}
 					</div>
 				)}
 				{viewState === "payment" && (
 					<div className="space-y-4">
+						{isMinOrder && (
+							<ErrorText text={isMinOrderMessage} />
+						)}
 						<ErrorText text={errorMessage} />
 						<SubmitButton
 							text={"CHECKOUT"}
@@ -282,7 +290,7 @@ export default function Checkout() {
 									behavior: "smooth",
 								})
 							}}
-							disabled={isLoading}
+							disabled={isLoading || isMinOrder}
 						/>
 					</div>
 				)}
@@ -479,6 +487,24 @@ export default function Checkout() {
 		)
 	}
 
+	const AlertBox = () => {
+		const [isShow, setIsShow] = useState(isMinOrder)
+
+		return (
+			<>
+				{isShow && !isLoading && !isAlertShownAlready && (
+					<Alert
+						text={isMinOrderMessage}
+						onClickOk={() => {
+							setIsShow(false)
+							setIsAlertShownAlready(true)
+						}}
+					/>
+				)}
+			</>
+		)
+	}
+
 	if (!token) {
 		return (
 			<>
@@ -518,6 +544,7 @@ export default function Checkout() {
 				currentState={viewState}
 				onClick={setViewState}
 			/>
+			<AlertBox />
 			<div className="flex flex-col w-full h-full lg:grid lg:grid-cols-5 2xl:grid 2xl:grid-cols-6">
 				<div className={viewState === 'review' ? "lg:col-span-5 2xl:col-span-6 flex flex-col w-full items-center" : "lg:col-span-3 2xl:col-span-4 flex flex-col w-full items-center"}>
 					{/* CART DIV for phone*/}
@@ -553,3 +580,19 @@ export default function Checkout() {
 		</div >
 	)
 }
+
+// // const { welcomeVideo, isLoading } = useOptionsApi()
+// // 		{/* VIDEO CONTAINER */ }
+// // 		<div className="w-full aspect-video rounded-2xl overflow-hidden">
+// // 			{!isLoading && (
+// // 				<iframe
+// // 					width={'100%'}
+// // 					height={'100%'}
+// // 					src={welcomeVideo}
+// // 					frameBorder="0"
+// // 					allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+// // 					allowFullScreen
+// // 					title="Embedded youtube"
+// // 				/>
+// // 			)}
+// // 		</div>
