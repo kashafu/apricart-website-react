@@ -41,6 +41,29 @@ export default function Checkout() {
 	const [selectedDate, setSelectedDate] = useState('')
 	const [selectedTime, setSelectedTime] = useState('')
 
+	// JS
+	const [showJsPopup, setShowJsPopup] = useState(true)
+	const [showOtp, setShowOtp] = useState(false)
+	const [showJsVerifyOtp, setShowJsVerifyOtp] = useState(false)
+
+	useEffect(() => {
+		if (showJsPopup && showOtp) {
+			setShowJsPopup(false)
+		}
+	}, [showOtp])
+
+	useEffect(() => {
+		if (viewState === 'review' && isCheckoutButtonPressed && redirectSourceSelector === 'js_bank') {
+			if (checkoutResponse) {
+				// If user is from JS zindigi app, show payment verification opt screen
+				setShowJsScreen(true)
+				setShowJsVerifyOtp(true)
+				setShowJsPopup(false)
+				setShowOtp(false)
+			}
+		}
+	}, [checkoutResponse, viewState, isCheckoutButtonPressed])
+
 	const { initialCartData, isLoading, errorMessage, response, setCoupon, notes, setPaymentMethod, paymentMethod, setIsCheckout, couponMessage, paymentMethods, checkoutResponse, setDay, setStartTime, setEndTime, setIsFetchCart, isMinOrder, isMinOrderMessage } = useInitialCartDataApi()
 
 	/*
@@ -652,7 +675,29 @@ export default function Checkout() {
 				onClick={setViewState}
 			/>
 			<AlertBox />
-			<JsScreen />
+			{/* <JsScreen /> */}
+			<>
+				{showJsScreen && (
+					<>
+						{showJsPopup && (
+							<JsPopup
+								setShowScreen={setShowOtp}
+							/>
+						)}
+						{showOtp && (
+							<OtpPopup
+								setShowScreen={setShowOtp}
+							/>
+						)}
+						{showJsVerifyOtp && (
+							<JsOtpPopup
+								setShowScreen={setShowJsScreen}
+								orderId={checkoutResponse?.data?.data?.orderId}
+							/>
+						)}
+					</>
+				)}
+			</>
 			<div className="flex flex-col w-full h-full lg:grid lg:grid-cols-5 2xl:grid 2xl:grid-cols-6">
 				<div className={viewState === 'review' ? "lg:col-span-5 2xl:col-span-6 flex flex-col w-full items-center" : "lg:col-span-3 2xl:col-span-4 flex flex-col w-full items-center"}>
 					{/* CART DIV for phone*/}
