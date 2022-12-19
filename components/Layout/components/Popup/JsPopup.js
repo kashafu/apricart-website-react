@@ -4,16 +4,17 @@ import { useSelector } from "react-redux"
 
 import { useRegisterApi } from "../../../../helpers/Api"
 import SubmitButton from "../Buttons/SubmitButton"
+import { generatePassword } from "../../../../helpers/HelperFunctions"
 
 const JsPopup = ({ setShowScreen }) => {
     const router = useRouter()
     const redirectInformationSelector = useSelector(state => state.general.redirectInformation)
     const { isLoading, response, setData, setIsRegister, errorResponse } = useRegisterApi()
 
-    function generatePassword() {
-        let password = "Mujtaba"
-        return password
-    }
+    // function generatePassword() {
+    //     let password = "Mujtaba"
+    //     return password
+    // }
 
     useEffect(() => {
         if (response || errorResponse?.status === 409) {
