@@ -140,33 +140,46 @@ const JsOtpPopup = ({ setShowScreen, orderId }) => {
                             }}
                         />
                     </div>
-                    <div className="flex flex-row space-x-4 w-full pt-4">
-                        <button
-                            className="w-full rounded-full bg-white drop-shadow-2xl"
-                            onClick={() => {
-                                router.push('/')
-                            }}
-                        >
-                            <p className="text-js text-center font-nunito">
-                                CANCEL
-                            </p>
-                        </button>
-                        <button
-                            className="w-full rounded-full bg-white drop-shadow-2xl"
-                            onClick={() => {
-                                setOtpData({
-                                    consumerOrderId: orderId,
-                                    otp: otp1 + otp2 + otp3 + otp4 + otp5
-                                })
-                                setIsVerifyOtp(true)
-                            }}
-                            disabled={isLoading}
-                        >
-                            <p className="text-js text-center font-nunito">
-                                NEXT
-                            </p>
-                        </button>
-                    </div>
+                    {isLoading ? (
+                        <div className="flex flex-row items-center w-full pt-4">
+                            <button
+                                className="w-4/5 rounded-full bg-white drop-shadow-2xl"
+                                disabled={true}
+                            >
+                                <p className="text-js text-center font-nunito">
+                                    PROCESSING
+                                </p>
+                            </button>
+                        </div>
+                    ) : (
+                        <div className="flex flex-row space-x-4 w-full pt-4">
+                            <button
+                                className="w-full rounded-full bg-white drop-shadow-2xl"
+                                onClick={() => {
+                                    router.push('/')
+                                }}
+                            >
+                                <p className="text-js text-center font-nunito">
+                                    CANCEL
+                                </p>
+                            </button>
+                            <button
+                                className="w-full rounded-full bg-white drop-shadow-2xl"
+                                onClick={() => {
+                                    setOtpData({
+                                        consumerOrderId: orderId,
+                                        otp: otp1 + otp2 + otp3 + otp4 + otp5
+                                    })
+                                    setIsVerifyOtp(true)
+                                }}
+                                disabled={isLoading}
+                            >
+                                <p className="text-js text-center font-nunito">
+                                    NEXT
+                                </p>
+                            </button>
+                        </div>
+                    )}
                 </div>
             </div>
         </div>
