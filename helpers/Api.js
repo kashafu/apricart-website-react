@@ -1291,10 +1291,17 @@ export const useVerifyPaymentProcessApi = () => {
 				headers: headers,
 			})
 
-			setResponse(apiResponse)
-			toast.success(apiResponse.data?.message)
-			setErrorMessage('')
-			setErrorResponse(null)
+			if (apiResponse.data?.data === "00") {
+				setResponse(apiResponse)
+				toast.success(apiResponse.data?.message)
+				setErrorMessage('')
+				setErrorResponse(null)
+			}
+			else {
+				setErrorResponse(error?.response)
+				setErrorMessage(error?.response?.data?.message)
+				toast.error(error?.response?.data?.message)
+			}
 		} catch (error) {
 			setErrorResponse(error?.response)
 			setErrorMessage(error?.response?.data?.message)

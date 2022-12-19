@@ -152,19 +152,23 @@ export default function HamburgerMenu() {
 							</div>
 						</div>
 						{token ? (
-							<div className="flex flex-col space-y-2">
-								<LinkButton
-									text={"Logout"}
-									path={"/"}
-									onClick={() => {
-										logout()
-										setShowMenu(!showMenu)
-									}}
-									icon={logoutIcon}
-									height={'20px'}
-									width={'20px'}
-								/>
-							</div>
+							<>
+								{redirectSourceSelector !== 'js_bank' && (
+									<div className="flex flex-col space-y-2">
+										<LinkButton
+											text={"Logout"}
+											path={"/"}
+											onClick={() => {
+												logout()
+												setShowMenu(!showMenu)
+											}}
+											icon={logoutIcon}
+											height={'20px'}
+											width={'20px'}
+										/>
+									</div>
+								)}
+							</>
 						) : (
 							<>
 								{redirectSourceSelector !== 'js_bank' && (
