@@ -3,19 +3,13 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useSelector } from 'react-redux'
 
-// import karachiCncBanner from '../../../../public/assets/images/banners/cncBlessedFridayCarousel.png'
 import karachiScrollingBanner1 from '../../../../public/assets/images/banners/homeDeliveryCarousel4.png'
-import karachiScrollingBanner2 from '../../../../public/assets/images/banners/homeDeliveryCarousel3.png'
-import karachiScrollingBanner3 from '../../../../public/assets/images/banners/7 Main scrollable Banner.png'
-import karachiScrollingBanner4 from '../../../../public/assets/images/banners/web 1.png'
+import karachiScrollingBanner2 from '../../../../public/assets/images/banners/Main_scrollable_Banner_National.png'
+import karachiScrollingBanner3 from '../../../../public/assets/images/banners/Main_scrollable_Banner.png'
+import karachiScrollingBanner4 from '../../../../public/assets/images/banners/Sunridge_web_Main_scrollable_Banner.png'
 import karachiScrollingBanner5 from '../../../../public/assets/images/banners/sunlightwebbanner.png'
-import banner from '../../../../public/assets/images/banners/webbannerdalda.png'
-import banner2 from '../../../../public/assets/images/banners/webbannerCP.png'
-import banner3 from '../../../../public/assets/images/banners/kiwiwebbanner.png'
 import peshawarScrollingBanner from '../../../../public/assets/images/banners/peshawarBulkBuyCarousel3.png'
-import bulkBuyBannerKarachi from '../../../../public/assets/images/banners/1111.png'
 import bulkBuyBanner from '../../../../public/assets/images/banners/bulkBuyCarousel.png'
-// import bulkBuyBanner2 from '../../../../public/assets/images/banners/bulkBuyCarousel2.png'
 
 const Carousel = () => {
     const citySelector = useSelector(state => state.general.city)
@@ -39,10 +33,10 @@ const Carousel = () => {
                     {selectedTypeSelector === 'bulk' && (
                         <Slider {...settings}>
                             <div className="w-full h-full">
-                                <Link href={'/offers/132'} passHref>
+                                <Link href={'/offers/147'} passHref>
                                     <a className="w-full h-full">
                                         <Image
-                                            src={banner2}
+                                            src={karachiScrollingBanner2}
                                             layout={"responsive"}
                                             alt="banner"
                                         />
@@ -50,10 +44,21 @@ const Carousel = () => {
                                 </Link>
                             </div>
                             <div className="w-full h-full">
-                                <Link href={'/offers/131'} passHref>
+                                <Link href={'/offers/146'} passHref>
                                     <a className="w-full h-full">
                                         <Image
-                                            src={banner}
+                                            src={karachiScrollingBanner3}
+                                            layout={"responsive"}
+                                            alt="banner"
+                                        />
+                                    </a>
+                                </Link>
+                            </div>
+                            <div className="w-full h-full">
+                                <Link href={'/offers/148'} passHref>
+                                    <a className="w-full h-full">
+                                        <Image
+                                            src={karachiScrollingBanner4}
                                             layout={"responsive"}
                                             alt="banner"
                                         />
@@ -72,92 +77,11 @@ const Carousel = () => {
                                 </Link>
                             </div>
                             <div className="w-full h-full">
-                                <Link href={'/offers/122'} passHref>
-                                    <a className="w-full h-full">
-                                        <Image
-                                            src={bulkBuyBannerKarachi}
-                                            layout={"responsive"}
-                                            alt="banner"
-                                        />
-                                    </a>
-                                </Link>
-                            </div>
-                            <div className="w-full h-full">
                                 <Image
                                     src={bulkBuyBanner}
                                     layout={"responsive"}
                                     alt="banner"
                                 />
-                            </div>
-                        </Slider>
-                    )}
-                    {selectedTypeSelector === 'home' && (
-                        <Slider {...settings}>
-                            <div className="w-full h-full">
-                                <Link href={'/offers/134'} passHref>
-                                    <a className="w-full h-full">
-                                        <Image
-                                            src={banner3}
-                                            layout={"responsive"}
-                                            alt="banner"
-                                        />
-                                    </a>
-                                </Link>
-                            </div>
-                            <div className="w-full h-full">
-                                <Link href={'/offers/131'} passHref>
-                                    <a className="w-full h-full">
-                                        <Image
-                                            src={banner}
-                                            layout={"responsive"}
-                                            alt="banner"
-                                        />
-                                    </a>
-                                </Link>
-                            </div>
-                            <div className="w-full h-full">
-                                <Link href={'/offers/119'} passHref>
-                                    <a className="w-full h-full">
-                                        <Image
-                                            src={karachiScrollingBanner4}
-                                            layout={"responsive"}
-                                            alt="banner"
-                                        />
-                                    </a>
-                                </Link>
-                            </div>
-                            <div className="w-full h-full">
-                                <Link href={'/offers/81'} passHref>
-                                    <a className="w-full h-full">
-                                        <Image
-                                            src={karachiScrollingBanner3}
-                                            layout={"responsive"}
-                                            alt="banner"
-                                        />
-                                    </a>
-                                </Link>
-                            </div>
-                            {/* <div className="w-full h-full">
-                                <Link href={'/offers/77'} passHref>
-                                    <a className="w-full h-full">
-                                        <Image
-                                            src={karachiScrollingBanner1}
-                                            layout={"responsive"}
-                                            alt="banner"
-                                        />
-                                    </a>
-                                </Link>
-                            </div> */}
-                            <div className='w-full h-full'>
-                                <Link href={'/offers/76'} passHref>
-                                    <a className="w-full h-full">
-                                        <Image
-                                            src={karachiScrollingBanner2}
-                                            layout={"responsive"}
-                                            alt="banner"
-                                        />
-                                    </a>
-                                </Link>
                             </div>
                         </Slider>
                     )}
@@ -174,17 +98,6 @@ const Carousel = () => {
                                     </a>
                                 </Link>
                             </div>
-                            {/* <div className='w-full h-full'>
-                                <Link href={'/offers/76'} passHref>
-                                    <a className="w-full h-full">
-                                        <Image
-                                            src={karachiScrollingBanner2}
-                                            layout={"responsive"}
-                                            alt="banner"
-                                        />
-                                    </a>
-                                </Link>
-                            </div> */}
                         </Slider>
                     )}
 
