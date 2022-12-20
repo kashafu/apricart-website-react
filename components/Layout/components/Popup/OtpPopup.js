@@ -30,6 +30,7 @@ const OtpPopup = ({ setShowScreen }) => {
     useEffect(() => {
         if (otpResponse) {
             setShowScreen(false)
+            // router.reload()
         }
     }, [otpResponse])
 

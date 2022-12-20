@@ -151,7 +151,7 @@ const JsOtpPopup = ({ setShowScreen, orderId }) => {
                         />
                     </div>
                     {isLoading ? (
-                        <div className="flex flex-row items-center w-full pt-4">
+                        <div className="flex flex-row items-center justify-center w-full pt-4">
                             <button
                                 className="w-4/5 rounded-full bg-white drop-shadow-2xl"
                                 disabled={true}

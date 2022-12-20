@@ -723,6 +723,7 @@ export const useInitialCartDataApi = () => {
 				headers: headers,
 			})
 			setCheckoutResponse(apiResponse)
+			toast.info(apiResponse.data?.data?.paymentMessage)
 			if (apiResponse.data.data.paymentUrl !== "") {
 				window.open(apiResponse.data.data.paymentUrl, '_blank').focus();
 			}
@@ -1290,17 +1291,16 @@ export const useVerifyPaymentProcessApi = () => {
 			let apiResponse = await axios.post(fullUrl(url), body, {
 				headers: headers,
 			})
-
-			if (apiResponse.data?.data === "00") {
+			if (apiResponse.data?.data == "00") {
 				setResponse(apiResponse)
 				toast.success(apiResponse.data?.message)
 				setErrorMessage('')
 				setErrorResponse(null)
 			}
 			else {
-				setErrorResponse(error?.response)
-				setErrorMessage(error?.response?.data?.message)
-				toast.error(error?.response?.data?.message)
+				setErrorResponse(apiResponse.data)
+				setErrorMessage(apiResponse.data?.message)
+				toast.error(apiResponse.data?.message)
 			}
 		} catch (error) {
 			setErrorResponse(error?.response)

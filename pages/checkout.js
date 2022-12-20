@@ -151,7 +151,7 @@ const PickupLocation = ({ setSelectedDate, setDay, setDayIdentifier, selectedDat
 	)
 }
 
-const DetailsArea = ({ viewState, errorMessage, notes, paymentMethods, setPaymentMethod, paymentMethod, setCoupon, couponMessage, isLoading, checkoutResponse, dayIdentifier, selectedDate, selectedTime, setDay, setDayIdentifier, setEndTime, setSelectedDate, setSelectedTime, setStartTime }) => {
+const DetailsArea = ({ viewState, errorMessage, notes, paymentMethods, setPaymentMethod, paymentMethod, setCoupon, couponMessage, isLoading, checkoutResponse, dayIdentifier, selectedDate, selectedTime, setDay, setDayIdentifier, setEndTime, setSelectedDate, setSelectedTime, setStartTime, isCheckoutButtonPressed }) => {
 	const redirectSourceSelector = useSelector((state) => state.general.redirectSource)
 	const selectedTypeSelector = useSelector((state) => state.general.selectedType)
 	let { token } = getGeneralApiParams()
@@ -197,6 +197,13 @@ const DetailsArea = ({ viewState, errorMessage, notes, paymentMethods, setPaymen
 							</div>
 						</>
 					)}
+					{/* {viewState === "payent" && isLoading && isCheckoutButtonPressed && (
+						<>
+							<p>
+								test
+							</p>
+						</>
+					)} */}
 					{viewState === "payment" && (
 						<>
 							<p className="font-lato text-lg text-main-blue font-extrabold text-center">
@@ -717,6 +724,7 @@ export default function Checkout() {
 						setSelectedDate={setSelectedDate}
 						setSelectedTime={setSelectedTime}
 						setStartTime={setStartTime}
+						isCheckoutButtonPressed={isCheckoutButtonPressed}
 					/>
 					{viewState !== 'review' && (
 						<div className="lg:hidden w-full">
