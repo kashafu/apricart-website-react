@@ -10,6 +10,7 @@ const OtpPopup = ({ setShowScreen }) => {
     const redirectInformationSelector = useSelector(state => state.general.redirectInformation)
     const { isLoading, setData: setOtpData, setIsVerifyOtp, response: otpResponse } = useVerifyOtpApi()
 
+    const [isDisabled, setIsDisabled] = useState(false)
     const [otp1, setOtp1] = useState('')
     const [otp2, setOtp2] = useState('')
     const [otp3, setOtp3] = useState('')
@@ -31,6 +32,15 @@ const OtpPopup = ({ setShowScreen }) => {
             setShowScreen(false)
         }
     }, [otpResponse])
+
+    useEffect(() => {
+        if (otp1 === '' || otp2 === '' || otp3 === '' || otp4 === '') {
+            setIsDisabled(true)
+        }
+        else {
+            setIsDisabled(false)
+        }
+    }, [otp1, otp2, otp3, otp4])
 
     return (
         <div className="animate-dropdown fixed inset-0 h-full w-full backdrop-blur-sm z-50">
@@ -130,7 +140,7 @@ const OtpPopup = ({ setShowScreen }) => {
                             </p>
                         </button>
                         <button
-                            className="w-full rounded-full bg-white drop-shadow-2xl"
+                            className={"w-full rounded-full drop-shadow-2xl " + [isLoading || isDisabled ? "bg-gray-200" : "bg-white"]}
                             onClick={() => {
                                 setOtpData({
                                     phoneNumber: redirectInformationSelector.phoneNumber,
@@ -138,7 +148,7 @@ const OtpPopup = ({ setShowScreen }) => {
                                 })
                                 setIsVerifyOtp(true)
                             }}
-                            disabled={isLoading}
+                            disabled={isLoading || isDisabled}
                         >
                             <p className="text-js text-center font-nunito">
                                 NEXT

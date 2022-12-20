@@ -10,6 +10,7 @@ const JsOtpPopup = ({ setShowScreen, orderId }) => {
     const redirectInformationSelector = useSelector(state => state.general.redirectInformation)
     const { isLoading, setData: setOtpData, setIsVerifyOtp, response: otpResponse } = useVerifyPaymentProcessApi()
 
+    const [isDisabled, setIsDisabled] = useState(false)
     const [otp1, setOtp1] = useState('')
     const [otp2, setOtp2] = useState('')
     const [otp3, setOtp3] = useState('')
@@ -33,6 +34,15 @@ const JsOtpPopup = ({ setShowScreen, orderId }) => {
             setShowScreen(false)
         }
     }, [otpResponse])
+
+    useEffect(() => {
+        if (otp1 === '' || otp2 === '' || otp3 === '' || otp4 === '' || otp5 === '') {
+            setIsDisabled(true)
+        }
+        else {
+            setIsDisabled(false)
+        }
+    }, [otp1, otp2, otp3, otp4, otp5])
 
     return (
         <div className="animate-dropdown fixed inset-0 h-full w-full backdrop-blur-sm z-50">
@@ -164,7 +174,7 @@ const JsOtpPopup = ({ setShowScreen, orderId }) => {
                                 </p>
                             </button>
                             <button
-                                className="w-full rounded-full bg-white drop-shadow-2xl"
+                                className={"w-full rounded-full drop-shadow-2xl " + [isLoading || isDisabled ? "bg-gray-200" : "bg-white"]}
                                 onClick={() => {
                                     setOtpData({
                                         consumerOrderId: orderId,
@@ -172,7 +182,7 @@ const JsOtpPopup = ({ setShowScreen, orderId }) => {
                                     })
                                     setIsVerifyOtp(true)
                                 }}
-                                disabled={isLoading}
+                                disabled={isLoading || isDisabled}
                             >
                                 <p className="text-js text-center font-nunito">
                                     NEXT
