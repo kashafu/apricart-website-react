@@ -20,6 +20,8 @@ import CartDetailsShimmer from "../components/Layout/components/Loaders/Shimmers
 import { updatePickupLocation } from "../redux/general.slice"
 import Alert from "../components/Layout/components/Alerts/Alert"
 
+import apricartLogoPNG from "../public/assets/images/cartonly.png"
+
 const PickupLocation = ({ setSelectedDate, setDay, setDayIdentifier, selectedDate, setSelectedTime, setStartTime, setEndTime, selectedTime, dayIdentifier }) => {
 	const dispatch = useDispatch()
 	const selectedPickupLocationSelector = useSelector((state) => state.general.pickupLocation)
@@ -695,93 +697,107 @@ export default function Checkout() {
 				viewState={viewState}
 			/>
 			<div className="flex flex-col w-full h-full lg:grid lg:grid-cols-5 2xl:grid 2xl:grid-cols-6">
-				<div className={viewState === 'review' ? "lg:col-span-5 2xl:col-span-6 flex flex-col w-full items-center" : "lg:col-span-3 2xl:col-span-4 flex flex-col w-full items-center"}>
-					{/* CART DIV for phone*/}
-					{viewState !== 'review' && (
-						<div className="lg:hidden w-full">
-							<Cart
-								setIsFetchCart={setIsFetchCart}
+				{viewState === 'payment' && isCheckoutButtonPressed && isLoading ? (
+					<div className="w-full py-12 lg:col-span-6 flex items-center justify-center">
+						<div className="w-1/4 lg:w-1/12 animate-spin-loader">
+							<Image
+								src={apricartLogoPNG}
+								alt='Apricart loading logo'
+								layout="responsive"
 							/>
 						</div>
-					)}
-					<DetailsArea
-						viewState={viewState}
-						checkoutResponse={checkoutResponse}
-						couponMessage={couponMessage}
-						errorMessage={errorMessage}
-						isLoading={isLoading}
-						notes={notes}
-						paymentMethod={paymentMethod}
-						paymentMethods={paymentMethods}
-						setCoupon={setCoupon}
-						setPaymentMethod={setPaymentMethod}
-						dayIdentifier={dayIdentifier}
-						selectedDate={selectedDate}
-						selectedTime={selectedTime}
-						setDay={setDay}
-						setDayIdentifier={setDayIdentifier}
-						setEndTime={setEndTime}
-						setSelectedDate={setSelectedDate}
-						setSelectedTime={setSelectedTime}
-						setStartTime={setStartTime}
-						isCheckoutButtonPressed={isCheckoutButtonPressed}
-					/>
-					{viewState !== 'review' && (
-						<div className="lg:hidden w-full">
-							<CartDetails
+					</div>
+				) : (
+					<>
+						<div className={viewState === 'review' ? "lg:col-span-5 2xl:col-span-6 flex flex-col w-full items-center" : "lg:col-span-3 2xl:col-span-4 flex flex-col w-full items-center"}>
+							{/* CART DIV for phone*/}
+							{viewState !== 'review' && (
+								<div className="lg:hidden w-full">
+									<Cart
+										setIsFetchCart={setIsFetchCart}
+									/>
+								</div>
+							)}
+							<DetailsArea
+								viewState={viewState}
+								checkoutResponse={checkoutResponse}
+								couponMessage={couponMessage}
+								errorMessage={errorMessage}
 								isLoading={isLoading}
-								initialCartData={initialCartData}
+								notes={notes}
+								paymentMethod={paymentMethod}
+								paymentMethods={paymentMethods}
+								setCoupon={setCoupon}
+								setPaymentMethod={setPaymentMethod}
+								dayIdentifier={dayIdentifier}
+								selectedDate={selectedDate}
+								selectedTime={selectedTime}
+								setDay={setDay}
+								setDayIdentifier={setDayIdentifier}
+								setEndTime={setEndTime}
+								setSelectedDate={setSelectedDate}
+								setSelectedTime={setSelectedTime}
+								setStartTime={setStartTime}
+								isCheckoutButtonPressed={isCheckoutButtonPressed}
+							/>
+							{viewState !== 'review' && (
+								<div className="lg:hidden w-full">
+									<CartDetails
+										isLoading={isLoading}
+										initialCartData={initialCartData}
+									/>
+								</div>
+							)}
+							{/* CHECKOUT BUTTON DIV for desktop*/}
+							<div className="hidden w-[60%] lg:grid lg:col-span-3 2xl:col-span-4">
+								<CheckoutButton
+									viewState={viewState}
+									isMinOrder={isMinOrder}
+									isMinOrderMessage={isMinOrderMessage}
+									setShowJsScreen={setShowJsScreen}
+									selectedDate={selectedDate}
+									selectedTime={selectedTime}
+									setViewState={setViewState}
+									isLoading={isLoading}
+									response={response}
+									errorMessage={errorMessage}
+									setIsCheckout={setIsCheckout}
+									setIsCheckoutButtonPressed={setIsCheckoutButtonPressed}
+								/>
+							</div>
+						</div>
+						{/* CART DIV */}
+						{viewState !== 'review' && (
+							<div className="hidden lg:grid lg:col-span-2 h-full">
+								<div className="p-2 lg:hidden"></div>
+								<Cart
+									setIsFetchCart={setIsFetchCart}
+								/>
+								<CartDetails
+									isLoading={isLoading}
+									initialCartData={initialCartData}
+								/>
+							</div>
+						)}
+						{/* CHECKOUT BUTTON DIV for mobile*/}
+						<div className="lg:hidden w-full">
+							<CheckoutButton
+								viewState={viewState}
+								isMinOrder={isMinOrder}
+								isMinOrderMessage={isMinOrderMessage}
+								setShowJsScreen={setShowJsScreen}
+								selectedDate={selectedDate}
+								selectedTime={selectedTime}
+								setViewState={setViewState}
+								isLoading={isLoading}
+								response={response}
+								errorMessage={errorMessage}
+								setIsCheckout={setIsCheckout}
+								setIsCheckoutButtonPressed={setIsCheckoutButtonPressed}
 							/>
 						</div>
-					)}
-					{/* CHECKOUT BUTTON DIV for desktop*/}
-					<div className="hidden w-[60%] lg:grid lg:col-span-3 2xl:col-span-4">
-						<CheckoutButton
-							viewState={viewState}
-							isMinOrder={isMinOrder}
-							isMinOrderMessage={isMinOrderMessage}
-							setShowJsScreen={setShowJsScreen}
-							selectedDate={selectedDate}
-							selectedTime={selectedTime}
-							setViewState={setViewState}
-							isLoading={isLoading}
-							response={response}
-							errorMessage={errorMessage}
-							setIsCheckout={setIsCheckout}
-							setIsCheckoutButtonPressed={setIsCheckoutButtonPressed}
-						/>
-					</div>
-				</div>
-				{/* CART DIV */}
-				{viewState !== 'review' && (
-					<div className="hidden lg:grid lg:col-span-2 h-full">
-						<div className="p-2 lg:hidden"></div>
-						<Cart
-							setIsFetchCart={setIsFetchCart}
-						/>
-						<CartDetails
-							isLoading={isLoading}
-							initialCartData={initialCartData}
-						/>
-					</div>
+					</>
 				)}
-				{/* CHECKOUT BUTTON DIV for mobile*/}
-				<div className="lg:hidden w-full">
-					<CheckoutButton
-						viewState={viewState}
-						isMinOrder={isMinOrder}
-						isMinOrderMessage={isMinOrderMessage}
-						setShowJsScreen={setShowJsScreen}
-						selectedDate={selectedDate}
-						selectedTime={selectedTime}
-						setViewState={setViewState}
-						isLoading={isLoading}
-						response={response}
-						errorMessage={errorMessage}
-						setIsCheckout={setIsCheckout}
-						setIsCheckoutButtonPressed={setIsCheckoutButtonPressed}
-					/>
-				</div>
 			</div>
 		</div >
 	)
