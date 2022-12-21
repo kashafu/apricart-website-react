@@ -1,10 +1,13 @@
 import { useRouter } from "next/router"
 import { useEffect } from "react"
 import { useSelector } from "react-redux"
+import Image from "next/image"
 
 import { useRegisterApi } from "../../../../helpers/Api"
 import SubmitButton from "../Buttons/SubmitButton"
 import { generatePassword } from "../../../../helpers/HelperFunctions"
+
+import zindigiLogo from "../../../../public/assets/images/zindigiLogo.png"
 
 const JsPopup = ({ setShowScreen }) => {
     const router = useRouter()
@@ -20,9 +23,18 @@ const JsPopup = ({ setShowScreen }) => {
 
     return (
         <div className="animate-dropdown fixed inset-0 h-full w-full backdrop-blur-sm z-50">
-            <div className="fixed w-3/4 lg:w-1/3 h-fit bg-white border-2 shadow-2xl inset-0 m-auto z-50 rounded-lg p-2">
+            <div className="fixed w-3/4 lg:w-1/3 h-fit bg-slate-800 border-2 border-slate-900 shadow-2xl inset-0 m-auto z-50 rounded-lg p-4">
                 <div className="flex flex-col justify-between h-full w-full">
-                    <p className="font-nunito text-black text-xl text-center py-4">
+                    <div className="flex w-full justify-center items-center">
+                        <div className="w-2/3">
+                            <Image
+                                src={zindigiLogo}
+                                alt='zindigi logo'
+                                layout="responsive"
+                            />
+                        </div>
+                    </div>
+                    <p className="font-nunito text-white text-xl text-center py-4">
                         Your Zindigi User ID and number is needed to proceed. Please confirm to grant access to this information.
                     </p>
                     <div className="flex flex-row space-x-4">
