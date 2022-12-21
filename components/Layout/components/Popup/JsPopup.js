@@ -11,11 +11,6 @@ const JsPopup = ({ setShowScreen }) => {
     const redirectInformationSelector = useSelector(state => state.general.redirectInformation)
     const { isLoading, response, setData, setIsRegister, errorResponse } = useRegisterApi()
 
-    // function generatePassword() {
-    //     let password = "Mujtaba"
-    //     return password
-    // }
-
     useEffect(() => {
         if (response || errorResponse?.status === 409) {
             setShowScreen(true)
