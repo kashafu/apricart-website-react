@@ -723,7 +723,9 @@ export const useInitialCartDataApi = () => {
 				headers: headers,
 			})
 			setCheckoutResponse(apiResponse)
-			toast.info(apiResponse.data?.data?.paymentMessage)
+			if (apiResponse.data?.data?.paymentMessage != "") {
+				toast.info(apiResponse.data?.data?.paymentMessage)
+			}
 			if (apiResponse.data.data.paymentUrl !== "") {
 				window.open(apiResponse.data.data.paymentUrl, '_blank').focus();
 			}
