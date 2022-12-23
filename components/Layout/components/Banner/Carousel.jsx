@@ -8,6 +8,8 @@ import karachiScrollingBanner2 from '../../../../public/assets/images/banners/Ma
 import karachiScrollingBanner3 from '../../../../public/assets/images/banners/Main_scrollable_Banner.png'
 import karachiScrollingBanner4 from '../../../../public/assets/images/banners/Sunridge_web_Main_scrollable_Banner.png'
 import karachiScrollingBanner5 from '../../../../public/assets/images/banners/sunlightwebbanner.png'
+import karachiScrollingBanner6 from '../../../../public/assets/images/banners/web_banner_clearance_sale.png'
+import karachiScrollingBanner7 from '../../../../public/assets/images/banners/jehan_web_banner_1.jpg'
 import peshawarScrollingBanner from '../../../../public/assets/images/banners/peshawarBulkBuyCarousel3.png'
 import bulkBuyBanner from '../../../../public/assets/images/banners/bulkBuyCarousel.png'
 
@@ -32,6 +34,28 @@ const Carousel = () => {
                 <div>
                     {selectedTypeSelector === 'bulk' && (
                         <Slider {...settings}>
+                            <div className="w-full h-full">
+                                <Link href={'/offers/151'} passHref>
+                                    <a className="w-full h-full">
+                                        <Image
+                                            src={karachiScrollingBanner6}
+                                            layout={"responsive"}
+                                            alt="banner"
+                                        />
+                                    </a>
+                                </Link>
+                            </div>
+                            <div className="w-full h-full">
+                                <Link href={'/offers/150'} passHref>
+                                    <a className="w-full h-full">
+                                        <Image
+                                            src={karachiScrollingBanner7}
+                                            layout={"responsive"}
+                                            alt="banner"
+                                        />
+                                    </a>
+                                </Link>
+                            </div>
                             <div className="w-full h-full">
                                 <Link href={'/offers/147'} passHref>
                                     <a className="w-full h-full">
