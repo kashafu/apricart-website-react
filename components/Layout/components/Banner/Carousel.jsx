@@ -6,8 +6,6 @@ import { useSelector } from 'react-redux'
 import karachiScrollingBanner1 from '../../../../public/assets/images/banners/homeDeliveryCarousel4.png'
 import karachiScrollingBanner2 from '../../../../public/assets/images/banners/Web_Main_Haleeb_Banner.jpg'
 import karachiScrollingBanner3 from '../../../../public/assets/images/banners/Web_banner_main_jehanPulses_1.png'
-import karachiScrollingBanner4 from '../../../../public/assets/images/banners/Sunridge_web_Main_scrollable_Banner.png'
-import karachiScrollingBanner5 from '../../../../public/assets/images/banners/sunlightwebbanner.png'
 import karachiScrollingBanner6 from '../../../../public/assets/images/banners/web_banner_clearance_sale.png'
 import karachiScrollingBanner7 from '../../../../public/assets/images/banners/jehan_web_banner_1.jpg'
 import karachiScrollingBanner8 from '../../../../public/assets/images/banners/Web_Banner_main_NEWYEAR.png'
@@ -85,28 +83,6 @@ const Carousel = () => {
                                     <a className="w-full h-full">
                                         <Image
                                             src={karachiScrollingBanner7}
-                                            layout={"responsive"}
-                                            alt="banner"
-                                        />
-                                    </a>
-                                </Link>
-                            </div>
-                            <div className="w-full h-full">
-                                <Link href={'/offers/148'} passHref>
-                                    <a className="w-full h-full">
-                                        <Image
-                                            src={karachiScrollingBanner4}
-                                            layout={"responsive"}
-                                            alt="banner"
-                                        />
-                                    </a>
-                                </Link>
-                            </div>
-                            <div className="w-full h-full">
-                                <Link href={'/offers/133'} passHref>
-                                    <a className="w-full h-full">
-                                        <Image
-                                            src={karachiScrollingBanner5}
                                             layout={"responsive"}
                                             alt="banner"
                                         />
