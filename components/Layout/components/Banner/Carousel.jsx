@@ -34,7 +34,7 @@ const Carousel = () => {
                 <div>
                     {selectedTypeSelector === 'bulk' && (
                         <Slider {...settings}>
-                            <div className="w-full h-full">
+                            {/* <div className="w-full h-full">
                                 <Link href={'/offers/156'} passHref>
                                     <a className="w-full h-full">
                                         <Image
@@ -44,7 +44,7 @@ const Carousel = () => {
                                         />
                                     </a>
                                 </Link>
-                            </div>
+                            </div> */}
                             <div className="w-full h-full">
                                 <Link href={'/offers/152'} passHref>
                                     <a className="w-full h-full">
