@@ -3,6 +3,10 @@ import { Autocomplete, GoogleMap, LoadScript, Marker } from '@react-google-maps/
 
 const libraries = ['places']
 
+/*
+    add different background for address selector for differnetioant
+*/
+
 export default function LocationPicker({ onChangeLatitude, onChangeLongitude }) {
     const [mapref, setMapRef] = useState(null);
     const [autocomplete, setAutocomplete] = useState(null)

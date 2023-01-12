@@ -8,6 +8,9 @@ import PageHeading from "../components/Layout/components/Typography/PageHeading"
 import HeadTag from "../components/Layout/components/Head/HeadTag"
 import { useRegisterApi, useVerifyOtpApi } from "../helpers/Api"
 
+
+// TOOD
+// ADD CHECK FOR NUMBER 
 export default function Register() {
     const router = useRouter();
 
