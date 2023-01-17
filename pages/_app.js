@@ -1,5 +1,4 @@
 import "../styles/custom.css"
-import { useEffect } from "react"
 import { Provider } from "react-redux"
 import { ToastContainer, Slide } from "react-toastify"
 import { CookiesProvider } from "react-cookie"
@@ -9,17 +8,9 @@ import axios from "axios"
 import Layout from "../components/Layout/Layout"
 import store from "../redux/store"
 import { getCookie } from "../helpers/Cookies"
-import { getGeneralApiParams } from "../helpers/ApiHelpers"
 
 function MyApp({ Component, pageProps }) {
     axios.defaults.headers.common["Authorization"] = "Bearer" + getCookie("cookies-token")
-    let { token } = getGeneralApiParams()
-
-    useEffect(() => {
-        if (!token) {
-
-        }
-    }, [token])
 
     return (
         <Provider store={store}>

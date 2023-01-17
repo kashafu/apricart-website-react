@@ -15,6 +15,7 @@ import {
 import { removeSelectedAddress, updateIsUserInitialized, updateTicker } from "../redux/general.slice"
 import { setCookie } from "./Cookies"
 import { updateCategories } from "../redux/data.slice"
+import { generatePassword } from "./HelperFunctions"
 
 const fullUrl = (url) => {
 	let { city, userId, clientType, orderType, prodType } = getGeneralApiParams()
@@ -1151,7 +1152,6 @@ export const useJSRegisterApi = () => {
 		"email": '',
 		"name": '',
 		"phoneNumber": '',
-		"password": '',
 	})
 
 	useEffect(() => {
@@ -1169,7 +1169,7 @@ export const useJSRegisterApi = () => {
 			"email": data.email,
 			"name": data.name,
 			"phoneNumber": '92' + data.phoneNumber,
-			"password": data.password,
+			"password": generatePassword(),
 			"guestuserid": userId,
 			"clientType": "jsstore",
 		}
