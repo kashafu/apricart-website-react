@@ -1,12 +1,37 @@
-import { useRouter } from "next/router";
+import { useRouter } from "next/router"
+import { useDispatch } from "react-redux"
+import { useEffect } from "react"
 
-import TopBar from "./components/TopBar/TopBar";
-import Header from "./components/Header/Header";
-import Copyrights from "./components/Footer/Copyrights";
-import Footer from "./components/Footer/Footer";
+import TopBar from "./components/TopBar/TopBar"
+import Header from "./components/Header/Header"
+import Copyrights from "./components/Footer/Copyrights"
+import Footer from "./components/Footer/Footer"
+import {
+	updateRedirectInformation,
+	updateRedirectSource,
+} from "../../redux/general.slice"
 
-export default function Layout(props) {
+const Layout = (props) => {
 	const router = useRouter()
+	const dispatch = useDispatch()
+
+	useEffect(() => {
+		if (router.isReady) {
+			let queries = router.query
+			if (queries.source) {
+				dispatch(updateRedirectSource(queries?.source))
+			}
+			if (queries.name && queries.email && queries.phone_number) {
+				dispatch(
+					updateRedirectInformation({
+						name: queries?.name,
+						email: queries?.email,
+						phoneNumber: queries?.phone_number,
+					})
+				)
+			}
+		}
+	}, [router.isReady, router.query])
 
 	return (
 		<div className="flex flex-col justify-between items-stretch min-h-screen max-w-screen bg-white">
@@ -34,5 +59,7 @@ export default function Layout(props) {
 					</div>
 				)}
 		</div>
-	);
+	)
 }
+
+export default Layout

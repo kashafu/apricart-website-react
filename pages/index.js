@@ -1,14 +1,12 @@
 import Image from "next/image"
 import { useRouter } from "next/router"
-import { useState, useEffect } from "react"
-import { useDispatch } from "react-redux"
+import { useState } from "react"
 
 import MainProducts from "../components/Layout/components/Products/MainProducts"
 import HeadTag from "../components/Layout/components/Head/HeadTag"
 import Carousel from "../components/Layout/components/Banner/Carousel"
 import { useHomeApi } from "../helpers/Api"
 import HomeLoader from "../components/Layout/components/Loaders/HomeLoader"
-import { updateRedirectInformation, updateRedirectSource } from "../redux/general.slice"
 
 import crossIcon from "../public/assets/svgs/crossIcon.svg"
 import { clearCookies } from "../helpers/Cookies"
@@ -18,25 +16,8 @@ import CategoryAndItemsLayout from "../components/Layout/components/Layouts/Cate
 
 export default function Home() {
 	const router = useRouter()
-	const dispatch = useDispatch()
 	const { isLoading, isPopupAd, homeData, errorMessage, categories } = useHomeApi()
 	const [showPopupAd, setShowPopupAd] = useState(isPopupAd)
-
-	useEffect(() => {
-		if (router.isReady) {
-			let queries = router.query
-			if (queries.source) {
-				dispatch(updateRedirectSource(queries?.source))
-			}
-			if (queries.name && queries.email && queries.phone_number) {
-				dispatch(updateRedirectInformation({
-					name: queries?.name,
-					email: queries?.email,
-					phoneNumber: queries?.phone_number
-				}))
-			}
-		}
-	}, [router.isReady, router.query])
 
 	const PopupAd = () => {
 		return (

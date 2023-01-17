@@ -1141,6 +1141,68 @@ export const useResetPasswordApi = () => {
 	}
 }
 
+export const useJSRegisterApi = () => {
+	const [isLoading, setIsLoading] = useState(false)
+	const [response, setResponse] = useState(null)
+	const [errorResponse, setErrorResponse] = useState(null)
+	const [errorMessage, setErrorMessage] = useState("")
+	const [isRegister, setIsRegister] = useState(false)
+	const [data, setData] = useState({
+		"email": '',
+		"name": '',
+		"phoneNumber": '',
+		"password": '',
+	})
+
+	useEffect(() => {
+		if (isRegister) {
+			callApi()
+		}
+	}, [isRegister])
+
+	const callApi = async () => {
+		setIsLoading(true)
+		let { userId, headers } = getGeneralApiParams()
+
+		let url = "/auth/open/register?"
+		let body = {
+			"email": data.email,
+			"name": data.name,
+			"phoneNumber": '92' + data.phoneNumber,
+			"password": data.password,
+			"guestuserid": userId,
+			"clientType": "jsstore",
+		}
+
+		try {
+			let apiResponse = await axios.post(fullUrl(url), body, {
+				headers: headers,
+			})
+
+			setResponse(apiResponse)
+			toast.success(apiResponse.data?.message)
+			setErrorMessage('')
+			setErrorResponse(null)
+		} catch (error) {
+			setErrorResponse(error?.response)
+			setResponse(null)
+			setErrorMessage(error?.response?.data?.message)
+		} finally {
+			setIsLoading(false)
+			setIsRegister(false)
+		}
+	}
+
+	return {
+		isLoading,
+		setData,
+		setIsRegister,
+		errorMessage,
+		response,
+		errorResponse,
+	}
+}
+
 export const useRegisterApi = () => {
 	const [isLoading, setIsLoading] = useState(false)
 	const [response, setResponse] = useState(null)
