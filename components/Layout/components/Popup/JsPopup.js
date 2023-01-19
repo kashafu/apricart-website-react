@@ -3,16 +3,15 @@ import { useEffect } from "react"
 import { useSelector } from "react-redux"
 import Image from "next/image"
 
-import { useRegisterApi } from "../../../../helpers/Api"
+import { useJSRegisterApi } from "../../../../helpers/Api"
 import SubmitButton from "../Buttons/SubmitButton"
-import { generatePassword } from "../../../../helpers/HelperFunctions"
 
 import zindigiLogo from "../../../../public/assets/images/zindigiLogo.png"
 
 const JsPopup = ({ setShowScreen }) => {
     const router = useRouter()
     const redirectInformationSelector = useSelector(state => state.general.redirectInformation)
-    const { isLoading, response, setData, setIsRegister, errorResponse } = useRegisterApi()
+    const { isLoading, response, setData, setIsRegister, errorResponse } = useJSRegisterApi()
 
     useEffect(() => {
         if (response || errorResponse?.status === 409) {
@@ -35,7 +34,7 @@ const JsPopup = ({ setShowScreen }) => {
                         </div>
                     </div>
                     <p className="font-nunito text-white text-xl text-center py-4">
-                        Your Zindigi User ID and number is needed to proceed. Please confirm to grant access to this information.
+                        Your Username and Zindigi Number is needed to proceed. Please confirm to grant access to this information.
                     </p>
                     <div className="flex flex-row space-x-4">
                         <SubmitButton
@@ -45,7 +44,6 @@ const JsPopup = ({ setShowScreen }) => {
                                     email: redirectInformationSelector.email,
                                     phoneNumber: redirectInformationSelector.phoneNumber,
                                     name: redirectInformationSelector.name,
-                                    password: generatePassword()
                                 })
                                 setIsRegister(true)
                             }}
