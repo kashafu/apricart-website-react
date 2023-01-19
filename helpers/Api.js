@@ -1180,7 +1180,12 @@ export const useJSRegisterApi = () => {
 			})
 
 			setResponse(apiResponse)
-			toast.success(apiResponse.data?.message)
+			// toast.success(apiResponse.data?.message)
+			setCookie("cookies-token", apiResponse.data.data.token)
+			setCookie("cookies-name", apiResponse.data.data.name)
+			setCookie("cookies-email", apiResponse.data.data.email)
+			setCookie("cookies-phoneNumber", apiResponse.data.data.phoneNumber)
+
 			setErrorMessage('')
 			setErrorResponse(null)
 		} catch (error) {
