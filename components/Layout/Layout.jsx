@@ -11,13 +11,11 @@ import {
 	updateRedirectSource,
 } from "../../redux/general.slice"
 import { getGeneralApiParams } from "../../helpers/ApiHelpers"
-import { useJSRegisterApi } from "../../helpers/Api"
 
 const Layout = (props) => {
 	const router = useRouter()
 	const dispatch = useDispatch()
 	let { token } = getGeneralApiParams()
-	const { setData, setIsRegister } = useJSRegisterApi()
 
 	// REDIRECT STUFF
 	useEffect(() => {
@@ -34,14 +32,6 @@ const Layout = (props) => {
 						phoneNumber: queries?.phone_number,
 					})
 				)
-				if (!token && queries?.source === "js_bank") {
-					setData({
-						email: queries?.email,
-						name: queries?.name,
-						phoneNumber: queries?.phone_number,
-					})
-					setIsRegister(true)
-				}
 			}
 		}
 	}, [router.isReady, router.query, token])
