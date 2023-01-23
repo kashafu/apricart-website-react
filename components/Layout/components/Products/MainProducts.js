@@ -1,12 +1,10 @@
-import SingleProduct from "./SingleProduct"
 import Link from "next/link"
 import Image from "next/image"
-import missingImageIcon from '../../../../public/assets/images/missingImage.png'
+
+import SingleProduct from "./SingleProduct"
 
 export default function MainProducts({ section }) {
-	let { data, name, offerId } = section
-	let bannerImageWeb = section?.bannerImageWeb
-	let identifier = section?.identifier
+	let { data, name, offerId, bannerImageWeb, identifier } = section
 
 	let numberOfProductsMobile = 6
 	let numberOfProductsLaptop = 8
@@ -15,8 +13,6 @@ export default function MainProducts({ section }) {
 	if (!section) {
 		return <div>Loading</div>
 	}
-
-	let imageUrl = bannerImageWeb === '' ? missingImageIcon : bannerImageWeb
 
 	return (
 		<section key={name} className="space-y-4 px-2 py-2">
@@ -45,72 +41,74 @@ export default function MainProducts({ section }) {
 					)}
 				</div>
 			</div>
-			{identifier !== 'otherstores' && (
+			{identifier !== "otherstores" && (
 				<div>
 					{/* MOBILE VIEW PRODUCTS */}
 					<section className="grid grid-cols-2 sm:grid-cols-3 md:hidden gap-2">
-						{data.slice(0, numberOfProductsMobile).map((product) => {
-							let { id } = product
-							return (
-								<div key={id}>
-									<SingleProduct product={product} />
-								</div>
-							)
-						})}
+						{data
+							.slice(0, numberOfProductsMobile)
+							.map((product) => {
+								let { id } = product
+								return (
+									<div key={id}>
+										<SingleProduct product={product} />
+									</div>
+								)
+							})}
 					</section>
 					{/* LAPTOP AND TABLET VIEW PRODUCTS */}
 					<section className="hidden md:grid md:grid-cols-4 gap-2 xl:hidden">
-						{data.slice(0, numberOfProductsLaptop).map((product) => {
-							let { id } = product
-							return (
-								<div key={id}>
-									<SingleProduct product={product} />
-								</div>
-							)
-						})}
+						{data
+							.slice(0, numberOfProductsLaptop)
+							.map((product) => {
+								let { id } = product
+								return (
+									<div key={id}>
+										<SingleProduct product={product} />
+									</div>
+								)
+							})}
 					</section>
 					{/* DESKTOP VIEW PRODUCTS */}
 					<section className="hidden xl:grid xl:grid-cols-5 3xl:grid-cols-6 gap-2">
-						{data.slice(0, numberOfProductsDesktop).map((product) => {
-							let { id } = product
-							return (
-								<div key={id}>
-									<SingleProduct product={product} />
-								</div>
-							)
-						})}
+						{data
+							.slice(0, numberOfProductsDesktop)
+							.map((product) => {
+								let { id } = product
+								return (
+									<div key={id}>
+										<SingleProduct product={product} />
+									</div>
+								)
+							})}
 					</section>
 				</div>
 			)}
-			<div className="w-full rounded-xl overflow-hidden">
-				{offerId == 0 ? (
-					<Image
-						src={imageUrl}
-						layout={'responsive'}
-						alt={"banner image"}
-						width={'100%'}
-						height={18}
-					/>
-				) : (
-					<Link
-						href={
-							"/offers/" + offerId
-						}
-						passHref
-						key={offerId}
-					>
-						<a className="w-full">
-							<Image
-								src={imageUrl}
-								layout={'responsive'}
-								alt={"banner image"}
-								width={'100%'}
-								height={18}
-							/>
-						</a>
-					</Link>
-				)}
-			</div>
+			{bannerImageWeb !== "" && (
+				<div className="w-full rounded-xl overflow-hidden">
+					{offerId == 0 ? (
+						<Image
+							src={bannerImageWeb}
+							layout={"responsive"}
+							alt={"banner image"}
+							width={"100%"}
+							height={18}
+						/>
+					) : (
+						<Link href={"/offers/" + offerId} passHref key={offerId}>
+							<a className="w-full">
+								<Image
+									src={bannerImageWeb}
+									layout={"responsive"}
+									alt={"banner image"}
+									width={"100%"}
+									height={18}
+								/>
+							</a>
+						</Link>
+					)}
+				</div>
+			)}
 		</section>
 	)
 }
