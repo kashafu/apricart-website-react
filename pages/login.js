@@ -204,7 +204,8 @@ export default function Login() {
 
         useEffect(() => {
             if (response) {
-                setViewState('login')
+                // setViewState('login')
+                router.push('/')
             }
         }, [response])
 

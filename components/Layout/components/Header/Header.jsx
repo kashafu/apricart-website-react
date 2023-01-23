@@ -19,6 +19,7 @@ export default function Header() {
 
 	let { token } = getGeneralApiParams()
 	const selectedTypeSelector = useSelector(state => state.general.selectedType)
+	const redirectSourceSelector = useSelector(state => state.general.redirectSource)
 	const [offset, setOffset] = useState(0);
 
 	useEffect(() => {

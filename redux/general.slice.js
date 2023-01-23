@@ -3,7 +3,7 @@ import { setItemSessionStorage, setItemLocalStorage, removeItemLocalStorage } fr
 import { getGeneralApiParams } from "../helpers/ApiHelpers"
 import { setCookie } from "../helpers/Cookies"
 
-let { selectedAddress, selectedType, city, selectedPickupLocation, redirectSource, isShowSelectionScreen, isUserInitialized } = getGeneralApiParams()
+let { selectedAddress, selectedType, city, selectedPickupLocation, redirectSource, isShowSelectionScreen, isUserInitialized, redirectInformation } = getGeneralApiParams()
 
 const generalSlice = createSlice({
 	name: "general",
@@ -16,6 +16,7 @@ const generalSlice = createSlice({
 		isUserInitialized: isUserInitialized,
 		pickupLocation: selectedPickupLocation,
 		redirectSource: redirectSource,
+		redirectInformation: redirectInformation,
 		isShowSelectionScreen: isShowSelectionScreen
 	},
 	reducers: {
@@ -46,6 +47,10 @@ const generalSlice = createSlice({
 			state.redirectSource = action.payload
 			setItemSessionStorage("redirect-source", action.payload)
 		},
+		updateRedirectInformation: (state, action) => {
+			state.redirectInformation = action.payload
+			setItemSessionStorage("redirect-information", JSON.stringify(action.payload))
+		},
 		updateIsShowSelectionScreen: (state, action) => {
 			state.isShowSelectionScreen = action.payload
 			setItemSessionStorage("is_show_selection_screen", action.payload)
@@ -54,7 +59,6 @@ const generalSlice = createSlice({
 			state.isUserInitialized = action.payload
 			setCookie("user-initialized", action.payload)
 		},
-
 	},
 })
 
@@ -69,5 +73,6 @@ export const {
 	updateRedirectSource,
 	removeSelectedAddress,
 	updateIsShowSelectionScreen,
-	updateIsUserInitialized
+	updateIsUserInitialized,
+	updateRedirectInformation
 } = generalSlice.actions

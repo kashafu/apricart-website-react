@@ -27,6 +27,7 @@ import PickupLocationSelector from "../Selectors/PickupLocationSelector"
 export default function HamburgerMenu() {
 	const router = useRouter()
 	const selectedTypeSelector = useSelector(state => state.general.selectedType)
+	const redirectSourceSelector = useSelector(state => state.general.redirectSource)
 
 	let { token } = getGeneralApiParams()
 	let { name } = getGeneralCookies()
@@ -151,36 +152,44 @@ export default function HamburgerMenu() {
 							</div>
 						</div>
 						{token ? (
-							<div className="flex flex-col space-y-2">
-								<LinkButton
-									text={"Logout"}
-									path={"/"}
-									onClick={() => {
-										logout()
-										setShowMenu(!showMenu)
-									}}
-									icon={logoutIcon}
-									height={'20px'}
-									width={'20px'}
-								/>
-							</div>
+							<>
+								{redirectSourceSelector !== 'js_bank' && (
+									<div className="flex flex-col space-y-2">
+										<LinkButton
+											text={"Logout"}
+											path={"/"}
+											onClick={() => {
+												logout()
+												setShowMenu(!showMenu)
+											}}
+											icon={logoutIcon}
+											height={'20px'}
+											width={'20px'}
+										/>
+									</div>
+								)}
+							</>
 						) : (
-							<div className="space-y-2">
-								<SubmitButton
-									text={"LOGIN"}
-									onClick={() => {
-										setShowMenu(!showMenu)
-										router.push("/login")
-									}}
-								/>
-								<SubmitButton
-									text={"REGISTER"}
-									onClick={() => {
-										setShowMenu(!showMenu)
-										router.push("/register")
-									}}
-								/>
-							</div>
+							<>
+								{redirectSourceSelector !== 'js_bank' && (
+									< div className="space-y-2">
+										<SubmitButton
+											text={"LOGIN"}
+											onClick={() => {
+												setShowMenu(!showMenu)
+												router.push("/login")
+											}}
+										/>
+										<SubmitButton
+											text={"REGISTER"}
+											onClick={() => {
+												setShowMenu(!showMenu)
+												router.push("/register")
+											}}
+										/>
+									</div>
+								)}
+							</>
 						)}
 					</div>
 					{/* BACKDROP */}
@@ -191,7 +200,8 @@ export default function HamburgerMenu() {
 						}}
 					></div>
 				</div>
-			)}
-		</div>
+			)
+			}
+		</div >
 	)
 }

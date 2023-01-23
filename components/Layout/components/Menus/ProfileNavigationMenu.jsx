@@ -1,10 +1,11 @@
 import Link from "next/link"
 import { useRouter } from "next/router"
-
+import { useSelector } from "react-redux"
 import { logOutRemoveCookies } from "../../../../helpers/ApiHelpers"
 import SubmitButton from "../Buttons/SubmitButton"
 
 const ProfileNavigationMenu = () => {
+    const redirectSourceSelector = useSelector(state => state.general.redirectSource)
     const router = useRouter()
 
     const logout = () => {
@@ -25,7 +26,9 @@ const ProfileNavigationMenu = () => {
                     <a className={"text-main-blue font-bold text-xl text-center py-2 hover:bg-main-blue hover:text-white duration-200 ease-in-out " + [router.pathname === '/profile' && 'bg-main-blue text-white']}>Account details</a>
                 </Link>
             </div>
-            <SubmitButton text={"LOGOUT"} onClick={logout} bgColor={"bg-red-500"} />
+            {redirectSourceSelector !== 'js_bank' && (
+                <SubmitButton text={"LOGOUT"} onClick={logout} bgColor={"bg-red-500"} />
+            )}
         </>
     )
 }
