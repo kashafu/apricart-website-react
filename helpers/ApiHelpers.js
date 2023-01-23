@@ -1,6 +1,6 @@
+import { getItemSessionStorage, getItemLocalStorage, removeItemLocalStorage } from './Storage';
 let isNode = require('detect-node')
 import { getCookie, removeCookie } from './Cookies';
-import { getItemSessionStorage, getItemLocalStorage, removeItemLocalStorage } from './Storage';
 
 export const getGeneralCookies = () => {
     let name = getCookie('cookies-name')
@@ -23,13 +23,14 @@ export const getGeneralCookies = () => {
 */
 export const getGeneralApiParams = () => {
     let redirectSource = getItemSessionStorage('redirect-source')
+    let redirectInformation = getItemSessionStorage('redirect-information') ? JSON.parse(getItemSessionStorage('redirect-information')) : {}
 
+    let clientType = redirectSource === 'js_bank' ? 'jsstore' : 'apricart'
     let isShowSelectionScreen = true
     if (getItemSessionStorage('is_show_selection_screen')) {
         isShowSelectionScreen = getItemSessionStorage('is_show_selection_screen') === 'true' ? true : false
     }
 
-    let clientType = 'apricart'
     let prodType = ''
     let orderType = ''
 
@@ -150,6 +151,7 @@ export const getGeneralApiParams = () => {
         isUserInitialized,
         selectedPickupLocation,
         redirectSource,
+        redirectInformation,
         isShowSelectionScreen
     })
 }

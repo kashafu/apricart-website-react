@@ -15,10 +15,10 @@ import {
 import { removeSelectedAddress, updateIsUserInitialized, updateTicker } from "../redux/general.slice"
 import { setCookie } from "./Cookies"
 import { updateCategories } from "../redux/data.slice"
+import { generatePassword } from "./HelperFunctions"
 
 const fullUrl = (url) => {
-	let { city, userId, clientType, orderType, prodType } =
-		getGeneralApiParams()
+	let { city, userId, clientType, orderType, prodType } = getGeneralApiParams()
 
 	return (
 		base_url_api +
@@ -175,12 +175,14 @@ export const useCategoryProductsApi = () => {
 
 export const useHomeApi = () => {
 	const dispatch = useDispatch()
+	const router = useRouter()
 	const selectedTypeSelector = useSelector(
 		(state) => state.general.selectedType
 	)
 	const citySelector = useSelector((state) => state.general.city)
 	const selectedAddressSelector = useSelector((state) => state.general.selectedAddress)
 	const selectedPickupLocationSelector = useSelector((state) => state.general.pickupLocation)
+	const redirectSourceSelector = useSelector((state) => state.general.redirectSource)
 	const [isLoading, setIsLoading] = useState(true)
 	const [homeData, setHomeData] = useState(null)
 	const [categories, setCategories] = useState(null)
@@ -192,8 +194,10 @@ export const useHomeApi = () => {
 	const [errorMessage, setErrorMessage] = useState("")
 
 	useEffect(() => {
-		callApi()
-	}, [selectedTypeSelector, citySelector, selectedAddressSelector, selectedPickupLocationSelector])
+		if (router.isReady) {
+			callApi()
+		}
+	}, [selectedTypeSelector, citySelector, selectedAddressSelector, selectedPickupLocationSelector, router.query, redirectSourceSelector])
 
 	const callApi = async () => {
 		setIsLoading(true)
@@ -669,6 +673,7 @@ export const useInitialCartDataApi = () => {
 		} catch (error) {
 			setErrorResponse(error?.response)
 			setErrorMessage(error?.response?.data?.message)
+			// toast.error(error?.response?.data?.message)
 		} finally {
 			setIsLoading(false)
 			setIsCheckout(false)
@@ -719,6 +724,9 @@ export const useInitialCartDataApi = () => {
 				headers: headers,
 			})
 			setCheckoutResponse(apiResponse)
+			if (apiResponse.data?.data?.paymentMessage != "") {
+				toast.info(apiResponse.data?.data?.paymentMessage)
+			}
 			if (apiResponse.data.data.paymentUrl !== "") {
 				window.open(apiResponse.data.data.paymentUrl, '_blank').focus();
 			}
@@ -1134,6 +1142,72 @@ export const useResetPasswordApi = () => {
 	}
 }
 
+export const useJSRegisterApi = () => {
+	const [isLoading, setIsLoading] = useState(false)
+	const [response, setResponse] = useState(null)
+	const [errorResponse, setErrorResponse] = useState(null)
+	const [errorMessage, setErrorMessage] = useState("")
+	const [isRegister, setIsRegister] = useState(false)
+	const [data, setData] = useState({
+		"email": '',
+		"name": '',
+		"phoneNumber": '',
+	})
+
+	useEffect(() => {
+		if (isRegister) {
+			callApi()
+		}
+	}, [isRegister])
+
+	const callApi = async () => {
+		setIsLoading(true)
+		let { userId, headers } = getGeneralApiParams()
+
+		let url = "/auth/open/register?"
+		let body = {
+			"email": data.email,
+			"name": data.name,
+			"phoneNumber": '92' + data.phoneNumber,
+			"password": generatePassword(),
+			"guestuserid": userId,
+			"clientType": "jsstore",
+		}
+
+		try {
+			let apiResponse = await axios.post(fullUrl(url), body, {
+				headers: headers,
+			})
+
+			setResponse(apiResponse)
+			// toast.success(apiResponse.data?.message)
+			setCookie("cookies-token", apiResponse.data.data.token)
+			setCookie("cookies-name", apiResponse.data.data.name)
+			setCookie("cookies-email", apiResponse.data.data.email)
+			setCookie("cookies-phoneNumber", apiResponse.data.data.phoneNumber)
+
+			setErrorMessage('')
+			setErrorResponse(null)
+		} catch (error) {
+			setErrorResponse(error?.response)
+			setResponse(null)
+			setErrorMessage(error?.response?.data?.message)
+		} finally {
+			setIsLoading(false)
+			setIsRegister(false)
+		}
+	}
+
+	return {
+		isLoading,
+		setData,
+		setIsRegister,
+		errorMessage,
+		response,
+		errorResponse,
+	}
+}
+
 export const useRegisterApi = () => {
 	const [isLoading, setIsLoading] = useState(false)
 	const [response, setResponse] = useState(null)
@@ -1177,6 +1251,7 @@ export const useRegisterApi = () => {
 			setErrorResponse(null)
 		} catch (error) {
 			setErrorResponse(error?.response)
+			setResponse(null)
 			setErrorMessage(error?.response?.data?.message)
 		} finally {
 			setIsLoading(false)
@@ -1227,9 +1302,75 @@ export const useVerifyOtpApi = () => {
 			})
 
 			setResponse(apiResponse)
+			setCookie("cookies-token", apiResponse.data.data.token)
+			setCookie("cookies-name", apiResponse.data.data.name)
+			setCookie("cookies-email", apiResponse.data.data.email)
+			setCookie("cookies-phoneNumber", apiResponse.data.data.phoneNumber)
 			toast.success(apiResponse.data?.message)
 			setErrorMessage('')
 			setErrorResponse(null)
+		} catch (error) {
+			setErrorResponse(error?.response)
+			setErrorMessage(error?.response?.data?.message)
+			toast.error(error?.response?.data?.message)
+		} finally {
+			setIsLoading(false)
+			setIsVerifyOtp(false)
+		}
+	}
+
+	return {
+		isLoading,
+		setData,
+		setIsVerifyOtp,
+		errorMessage,
+		response,
+		errorResponse,
+	}
+}
+
+export const useVerifyPaymentProcessApi = () => {
+	const [isLoading, setIsLoading] = useState(false)
+	const [response, setResponse] = useState(null)
+	const [errorResponse, setErrorResponse] = useState(null)
+	const [errorMessage, setErrorMessage] = useState("")
+	const [isVerifyOtp, setIsVerifyOtp] = useState(false)
+	const [data, setData] = useState({
+		"consumerOrderId": '',
+		"otp": '',
+	})
+
+	useEffect(() => {
+		if (isVerifyOtp) {
+			callApi()
+		}
+	}, [isVerifyOtp])
+
+	const callApi = async () => {
+		setIsLoading(true)
+		let { headers } = getGeneralApiParams()
+
+		let url = "/order/wallet/payment/process?"
+		let body = {
+			"consumerOrderId": data.consumerOrderId,
+			"otp": data.otp
+		}
+
+		try {
+			let apiResponse = await axios.post(fullUrl(url), body, {
+				headers: headers,
+			})
+			if (apiResponse.data?.data == "00") {
+				setResponse(apiResponse)
+				toast.success(apiResponse.data?.message)
+				setErrorMessage('')
+				setErrorResponse(null)
+			}
+			else {
+				setErrorResponse(apiResponse.data)
+				setErrorMessage(apiResponse.data?.message)
+				toast.error(apiResponse.data?.message)
+			}
 		} catch (error) {
 			setErrorResponse(error?.response)
 			setErrorMessage(error?.response?.data?.message)

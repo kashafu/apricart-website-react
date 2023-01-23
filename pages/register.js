@@ -140,7 +140,7 @@ export default function Register() {
 
         useEffect(() => {
             if (response) {
-                router.push('/login')
+                router.push('/')
             }
         }, [response])
 

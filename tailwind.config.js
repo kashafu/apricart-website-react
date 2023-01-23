@@ -52,6 +52,11 @@ module.exports = {
 					"0%": { opacity: 0, transform: "translateY(50px)" },
 					"100%": { opacity: 100, transform: "translateY(0px)" },
 				},
+				"spin-loader": {
+					"0%": { transform: "rotate(0deg) scale(1)" },
+					"50%": { transform: "rotate(0deg) scale(1.2)" },
+					"100%": { transform: "rotate(360deg) scale(1)" },
+				}
 			},
 			animation: {
 				dangle: "dangle infinite 3s ease-in",
@@ -63,6 +68,7 @@ module.exports = {
 				"slide-in-right": "slide-in-right 0.5s ease-in-out",
 				"slide-in-left": "slide-in-left 0.5s ease-in-out",
 				"slide-up": "slide-up 0.25s ease-in-out",
+				"spin-loader": "spin-loader 1.2s ease-in-out infinite",
 			},
 			colors: {
 				"main-yellow": {
@@ -85,6 +91,12 @@ module.exports = {
 				"main-green": {
 					DEFAULT: "#296118",
 				},
+				"js": {
+					DEFAULT: "#00CC99"
+				}
+			},
+			boxShadow: {
+				'inner-3xl': 'inset 5px 5px 5px 5px rgb(0 0 0 / 0.05)'
 			},
 			fontFamily: {
 				lato: ["Lato", "sans-serif"],
