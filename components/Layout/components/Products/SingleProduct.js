@@ -92,7 +92,7 @@ export default function SingleProduct({ product, isInStock }) {
 				await axios.post(url, body, {
 					headers: headers,
 				})
-				toast.success("Added to Shopping List")
+				toast.success("Added to Favourites")
 				dispatch(addToWish(product))
 			} catch (error) {
 				console.log(error)
