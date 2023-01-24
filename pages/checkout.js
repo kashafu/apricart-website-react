@@ -13,7 +13,6 @@ import HeadTag from "../components/Layout/components/Head/HeadTag"
 import { useInitialCartDataApi, usePickupLocationsApi } from "../helpers/Api"
 import PickupLocationSelector from "../components/Layout/components/Selectors/PickupLocationSelector"
 import JsPopup from "../components/Layout/components/Popup/JsPopup"
-import OtpPopup from "../components/Layout/components/Popup/OtpPopup"
 import JsOtpPopup from "../components/Layout/components/Popup/JsOtpPopup"
 import CartItemListing from "../components/Layout/components/Cart/CartItemListing"
 import CartDetailsShimmer from "../components/Layout/components/Loaders/Shimmers/CartDetailsShimmer"
@@ -423,14 +422,7 @@ const JsScreen = ({ viewState, isCheckoutButtonPressed, checkoutResponse, setSho
 	const redirectSourceSelector = useSelector((state) => state.general.redirectSource)
 
 	const [showJsPopup, setShowJsPopup] = useState(true)
-	const [showOtp, setShowOtp] = useState(false)
 	const [showJsVerifyOtp, setShowJsVerifyOtp] = useState(false)
-
-	useEffect(() => {
-		if (showJsPopup && showOtp) {
-			setShowJsPopup(false)
-		}
-	}, [showOtp])
 
 	useEffect(() => {
 		if (viewState === 'review' && isCheckoutButtonPressed && redirectSourceSelector === 'js_bank') {
@@ -439,7 +431,6 @@ const JsScreen = ({ viewState, isCheckoutButtonPressed, checkoutResponse, setSho
 				setShowJsScreen(true)
 				setShowJsVerifyOtp(true)
 				setShowJsPopup(false)
-				setShowOtp(false)
 			}
 		}
 	}, [checkoutResponse, viewState, isCheckoutButtonPressed])
@@ -450,12 +441,7 @@ const JsScreen = ({ viewState, isCheckoutButtonPressed, checkoutResponse, setSho
 				<>
 					{showJsPopup && (
 						<JsPopup
-							setShowScreen={setShowOtp}
-						/>
-					)}
-					{showOtp && (
-						<OtpPopup
-							setShowScreen={setShowOtp}
+							setShowScreen={setShowJsPopup}
 						/>
 					)}
 					{showJsVerifyOtp && (

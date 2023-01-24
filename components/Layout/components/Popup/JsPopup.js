@@ -15,7 +15,7 @@ const JsPopup = ({ setShowScreen }) => {
 
     useEffect(() => {
         if (response || errorResponse?.status === 409) {
-            setShowScreen(true)
+            setShowScreen(false)
         }
 
     }, [errorResponse, response])
