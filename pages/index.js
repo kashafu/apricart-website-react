@@ -96,7 +96,7 @@ const Products = ({ homeData }) => {
 	)
 }
 
-const HomeItems = ({ homeData, errorMessage, setShowPopupAd, showPopupAd, categories, isLoading }) => {
+const HomeItems = ({ homeData, errorMessage, setShowPopupAd, showPopupAd, categories, isLoading, banners }) => {
 	if (isLoading) {
 		return (
 			<HomeLoader />
@@ -129,7 +129,9 @@ const HomeItems = ({ homeData, errorMessage, setShowPopupAd, showPopupAd, catego
 				showPopupAd={showPopupAd}
 			/>
 			<div className="flex flex-row w-full">
-				<Carousel />
+				<Carousel
+					banners={banners}
+				/>
 			</div>
 			<MainCategories
 				categories={categories}
@@ -142,7 +144,7 @@ const HomeItems = ({ homeData, errorMessage, setShowPopupAd, showPopupAd, catego
 }
 
 export default function Home() {
-	const { isLoading, isPopupAd, homeData, errorMessage, categories } = useHomeApi()
+	const { isLoading, isPopupAd, homeData, errorMessage, categories, banners } = useHomeApi()
 	const [showPopupAd, setShowPopupAd] = useState(isPopupAd)
 
 	return (
@@ -162,6 +164,7 @@ export default function Home() {
 					homeData={homeData}
 					setShowPopupAd={setShowPopupAd}
 					showPopupAd={showPopupAd}
+					banners={banners}
 				/>
 			</CategoryAndItemsLayout>
 		</div>
