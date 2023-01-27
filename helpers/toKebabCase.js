@@ -1,5 +1,5 @@
 export default function toKebabCase(word) {
-	return encodeURI(word
+	return encodeURIComponent(word
 		.replace(/([a-z])([A-Z])/g, "$1-$2")
 		.replace(/[\s_]+/g, "-")
 		.toLowerCase())
@@ -11,5 +11,5 @@ export function fromKebabCase(word) {
 	temp.forEach((item) => {
 		out = out.concat(item + " ")
 	})
-	return decodeURI(out)
+	return decodeURIComponent(out)
 }
