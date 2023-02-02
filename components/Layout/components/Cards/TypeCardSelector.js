@@ -8,7 +8,7 @@ import { updateSelectedType } from "../../../../redux/general.slice"
 
 import dropdownSVG from "../../../../public/assets/svgs/dropdownArrow.svg"
 
-const TypeCardSelector = () => {
+const TypeCardSelector = ({ isDisableCNC, isDisableDelivery }) => {
     const dispatch = useDispatch()
     const selectedTypeSelector = useSelector((state) => state.general.selectedType)
     const citySelector = useSelector((state) => state.general.city)
@@ -28,6 +28,42 @@ const TypeCardSelector = () => {
     useEffect(() => {
         setIsShow(false)
     }, [selectedTypeSelector])
+
+    /*
+        For controlling cnc or online delivery disable state
+    */
+    useEffect(() => {
+        if (isDisableCNC) {
+            dispatch(updateSelectedType('bulk'))
+        }
+        if (isDisableDelivery) {
+            dispatch(updateSelectedType('cnc'))
+        }
+    }, [selectedTypeSelector])
+
+    if (isDisableCNC) {
+        return (
+            <>
+                <div className="flex flex-col items-center justify-center w-[90px] lg:w-[145px] h-[40px] lg:h-[50px] bg-main-blue rounded-md px-1 lg:px-2">
+                    <p className="font-nunito text-[10px] lg:text-base font-bold text-white">
+                        Online Delivery
+                    </p>
+                </div>
+            </>
+        )
+    }
+
+    if (isDisableDelivery) {
+        return (
+            <>
+                <div className="flex flex-col items-center justify-center w-[90px] lg:w-[145px] h-[40px] lg:h-[50px] bg-main-blue rounded-md px-1 lg:px-2">
+                    <p className="font-nunito text-[10px] lg:text-base font-bold text-white">
+                        Click & Collect
+                    </p>
+                </div>
+            </>
+        )
+    }
 
     return (
         <>
@@ -56,7 +92,9 @@ const TypeCardSelector = () => {
                             <div className="animate-dropdown w-[100px] lg:w-[165px] absolute z-50 top-[40px] lg:top-[50px] bg-[#F0F0F0] border-b-2 border-x-2 border-main-blue py-2">
                                 <>
                                     {selectedTypeSelector === 'bulk' && (
-                                        <ClickAndCollectCard />
+                                        <ClickAndCollectCard
+                                            isDisabled={isDisableCNC}
+                                        />
                                     )}
                                     {selectedTypeSelector === 'cnc' && (
                                         <BulkBuyCard />
@@ -69,6 +107,11 @@ const TypeCardSelector = () => {
             </div>
         </>
     )
+}
+
+TypeCardSelector.defaultProps = {
+    isDisableCNC: false,
+    isDisableDelivery: false
 }
 
 export default TypeCardSelector
