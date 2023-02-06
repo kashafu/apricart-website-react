@@ -1,5 +1,6 @@
 import Image from "next/image"
 import { useState } from "react"
+import { useRouter } from "next/router"
 
 import MainProducts from "../components/Layout/components/Products/MainProducts"
 import HeadTag from "../components/Layout/components/Head/HeadTag"
@@ -97,6 +98,8 @@ const Products = ({ homeData }) => {
 }
 
 const HomeItems = ({ homeData, errorMessage, setShowPopupAd, showPopupAd, categories, isLoading, banners }) => {
+	const router = useRouter()
+
 	if (isLoading) {
 		return (
 			<HomeLoader />

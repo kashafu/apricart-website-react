@@ -1,6 +1,9 @@
 import Image from "next/image"
 import Link from "next/link"
+
 import toKebabCase from "../../../../helpers/toKebabCase"
+
+import missingImageIcon from "../../../../public/assets/images/missingImage.png"
 
 const SingleCategory = ({ category }) => {
     let { id, name, image } = category
@@ -20,7 +23,7 @@ const SingleCategory = ({ category }) => {
                 <div className="w-full flex items-center justify-center rounded-full aspect-square overflow-hidden shadow-xl">
                     <div className="w-2/3 items-center group-hover:scale-105 duration-200">
                         <Image
-                            src={image}
+                            src={image ? image : missingImageIcon}
                             layout={'responsive'}
                             alt='category image'
                             width={20}
