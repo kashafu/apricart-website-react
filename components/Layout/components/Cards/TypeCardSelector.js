@@ -110,7 +110,7 @@ const TypeCardSelector = ({ isDisableCNC, isDisableDelivery }) => {
 }
 
 TypeCardSelector.defaultProps = {
-    isDisableCNC: false,
+    isDisableCNC: true,
     isDisableDelivery: false
 }
 
