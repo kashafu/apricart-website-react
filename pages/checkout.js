@@ -152,12 +152,10 @@ const PickupLocation = ({ setSelectedDate, setDay, setDayIdentifier, selectedDat
 	)
 }
 
-const DetailsArea = ({ viewState, errorMessage, notes, paymentMethods, setPaymentMethod, paymentMethod, setCoupon, couponMessage, isLoading, checkoutResponse, dayIdentifier, selectedDate, selectedTime, setDay, setDayIdentifier, setEndTime, setSelectedDate, setSelectedTime, setStartTime, isCheckoutButtonPressed }) => {
+const DetailsArea = ({ viewState, errorMessage, notes, paymentMethods, setPaymentMethod, paymentMethod, isLoading, checkoutResponse, dayIdentifier, selectedDate, selectedTime, setDay, setDayIdentifier, setEndTime, setSelectedDate, setSelectedTime, setStartTime, isCheckoutButtonPressed }) => {
 	const redirectSourceSelector = useSelector((state) => state.general.redirectSource)
 	const selectedTypeSelector = useSelector((state) => state.general.selectedType)
 	let { token } = getGeneralApiParams()
-
-	const [couponCode, setCouponCode] = useState('')
 
 	return (
 		<>
@@ -198,13 +196,6 @@ const DetailsArea = ({ viewState, errorMessage, notes, paymentMethods, setPaymen
 							</div>
 						</>
 					)}
-					{/* {viewState === "payent" && isLoading && isCheckoutButtonPressed && (
-						<>
-							<p>
-								test
-							</p>
-						</>
-					)} */}
 					{viewState === "payment" && (
 						<>
 							<p className="font-lato text-lg text-main-blue font-extrabold text-center">
@@ -262,30 +253,6 @@ const DetailsArea = ({ viewState, errorMessage, notes, paymentMethods, setPaymen
 									</div>
 								</div>
 							</div>
-							{/* PROMO CODE */}
-							<div className="flex flex-row w-full items-center space-x-4">
-								<div className="w-4/6">
-									<TextField
-										label={'Promo Code'}
-										placeHolder={'Enter Code'}
-										onChange={setCouponCode}
-										value={couponCode}
-									/>
-								</div>
-								<div className="w-2/6">
-									<SubmitButton
-										text={'Apply'}
-										onClick={() => {
-											setCoupon(couponCode)
-										}}
-									/>
-								</div>
-							</div>
-							{couponMessage !== 'Discount code not received' && (
-								<p>
-									{couponMessage}
-								</p>
-							)}
 						</>
 					)}
 					{viewState == "review" && (
@@ -476,8 +443,9 @@ const Cart = ({ setIsFetchCart }) => {
 	)
 }
 
-const CartDetails = ({ isLoading, initialCartData }) => {
+const CartDetails = ({ isLoading, initialCartData, setCoupon, couponMessage }) => {
 	const selectedTypeSelector = useSelector(state => state.general.selectedType)
+	const [couponCode, setCouponCode] = useState('')
 
 	let pLeft = "font-lato text-md text-main-blue"
 	let pRight = "font-lato text-lg font-bold text-right"
@@ -498,6 +466,32 @@ const CartDetails = ({ isLoading, initialCartData }) => {
 
 	return (
 		<div className="flex flex-col w-full bg-white lg:border-l-2 border-t-2 lg:border-t-0">
+			{/* PROMO CODE */}
+			<div className="px-4 lg:border-t-2 py-2">
+				<div className="flex flex-row w-full items-center space-x-4">
+					<div className="w-4/6">
+						<TextField
+							label={'Coupon'}
+							placeHolder={'Enter Coupon'}
+							onChange={setCouponCode}
+							value={couponCode}
+						/>
+					</div>
+					<div className="w-2/6">
+						<SubmitButton
+							text={'Apply'}
+							onClick={() => {
+								setCoupon(couponCode)
+							}}
+						/>
+					</div>
+				</div>
+				{couponMessage !== 'Discount code not received' && (
+					<p>
+						{couponMessage}
+					</p>
+				)}
+			</div>
 			<div className="grid grid-cols-2 gap-2 font-lato items-center border-y-2 px-4 py-2">
 				<p className={pLeft}>SubTotal</p>
 				<p className={pRight}>{base_currency_code} {subtotal}</p>
@@ -731,6 +725,8 @@ export default function Checkout() {
 									<CartDetails
 										isLoading={isLoading}
 										initialCartData={initialCartData}
+										couponMessage={couponMessage}
+										setCoupon={setCoupon}
 									/>
 								</div>
 							)}
@@ -762,6 +758,8 @@ export default function Checkout() {
 								<CartDetails
 									isLoading={isLoading}
 									initialCartData={initialCartData}
+									couponMessage={couponMessage}
+									setCoupon={setCoupon}
 								/>
 							</div>
 						)}
