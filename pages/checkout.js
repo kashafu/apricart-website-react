@@ -487,7 +487,7 @@ const CartDetails = ({ isLoading, initialCartData, setCoupon, couponMessage }) =
 					</div>
 				</div>
 				{couponMessage !== 'Discount code not received' && (
-					<p>
+					<p className="font-nunito text-main-blue font-semibold py-2">
 						{couponMessage}
 					</p>
 				)}
