@@ -1,7 +1,6 @@
 import Image from "next/image"
 import Link from "next/link"
-import axios from "axios"
-import { useDispatch, useSelector } from "react-redux"
+import { useSelector } from "react-redux"
 import { useState, useEffect } from "react"
 import { toast } from "react-toastify"
 
@@ -12,10 +11,7 @@ import wishlistIcon from "../../../../public/assets/svgs/wishlistIcon.svg"
 import addToCartIcon from "../../../../public/assets/svgs/addToCartIcon.svg"
 import productBackground from "../../../../public/assets/svgs/productBackground.svg"
 
-import { addToWish } from "../../../../redux/wish.slice"
-import { useAddToCartApi } from "../../../../helpers/Api"
-import { base_url_api } from "../../../../information.json"
-import { getGeneralApiParams } from "../../../../helpers/ApiHelpers"
+import { useAddToCartApi, useAddToWishlist } from "../../../../helpers/Api"
 import toKebabCase from "../../../../helpers/toKebabCase"
 
 /*
@@ -41,12 +37,12 @@ export default function SingleProduct({ product, isInStock }) {
 	categoryleafName = categoryleafName ?? "category-leaf"
 	categoryIds = categoryIds ?? "0"
 
-	const dispatch = useDispatch()
 	const reduxCart = useSelector((state) => state.cart)
 	const [showFloatAnimation, setShowFloatAnimation] = useState(false)
 	const [qty, setQty] = useState(minQty)
 	const [showQty, setShowQty] = useState(false)
 	const { setIsPlaceOrder, errorResponse } = useAddToCartApi(sku, qty, product)
+	const { setIsAdd, setData } = useAddToWishlist()
 
 	useEffect(() => {
 		const item = reduxCart.find((item) => item.sku === sku)
@@ -78,29 +74,6 @@ export default function SingleProduct({ product, isInStock }) {
 				: missingImageIcon
 	let immediateCategoryName = categoryleafName.split("|")[0].trim()
 	let immediateCategoryId = categoryIds.replace(/\s+/g, "").split("|")[0]
-
-	const addToWishlistApi = async () => {
-		let { token, headers, userId } = getGeneralApiParams()
-		let body = { sku: [product.sku] }
-		if (token) {
-			let url =
-				base_url_api +
-				"/watchlist/save?city=karachi&lang=en&client_type=apricart&userid=" +
-				userId
-
-			try {
-				await axios.post(url, body, {
-					headers: headers,
-				})
-				toast.success("Added to Favourites")
-				dispatch(addToWish(product))
-			} catch (error) {
-				console.log(error)
-			}
-		} else {
-			toast.error("Login first")
-		}
-	}
 
 	const setQtyHandler = (type) => {
 		if (type == "increment") {
@@ -257,7 +230,10 @@ export default function SingleProduct({ product, isInStock }) {
 											<div
 												className="drop-shadow-lg p-1 flex items-center justify-center bg-white rounded-md hover:scale-105 duration-100"
 												onClick={() => {
-													addToWishlistApi()
+													setData({
+														sku: [sku]
+													})
+													setIsAdd(true)
 												}}
 											>
 												<div className="relative h-[18px] w-[18px]">

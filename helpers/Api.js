@@ -1562,6 +1562,75 @@ export const useRemoveFromWishlist = () => {
 	}
 }
 
+export const useAddToWishlist = () => {
+	const [isLoading, setIsLoading] = useState(false)
+	const [response, setResponse] = useState(null)
+	const [errorResponse, setErrorResponse] = useState(null)
+	const [errorMessage, setErrorMessage] = useState("")
+	const [isAdd, setIsAdd] = useState(false)
+	const [data, setData] = useState({
+		"sku": []
+	})
+
+	useEffect(() => {
+		if (isAdd) {
+			callApi()
+		}
+	}, [isAdd])
+
+	const callApi = async () => {
+		setIsLoading(true)
+		let { headers, token, userId } = getGeneralApiParams()
+
+		let url = ""
+
+		if (token) {
+			url = "/watchlist/save?"
+		}
+		else {
+			url = "/guest/watchlist/save?"
+		}
+
+		try {
+			let body = {}
+			if (token) {
+				body = { ...data }
+			}
+			else {
+				body = {
+					"userid": userId,
+					"sku": data.sku
+				}
+			}
+
+			let apiResponse = await axios.post(fullUrl(url), body, {
+				headers: headers,
+			})
+
+			setResponse(apiResponse)
+			toast.success(apiResponse.data?.message)
+			setErrorMessage('')
+			setErrorResponse(null)
+		} catch (error) {
+			setErrorResponse(error?.response)
+			setErrorMessage(error?.response?.data?.message)
+			toast.error(error?.response?.data?.message)
+		} finally {
+			setIsLoading(false)
+			setIsAdd(false)
+		}
+	}
+
+	return {
+		isLoading,
+		setData,
+		setIsAdd,
+		errorMessage,
+		response,
+		errorResponse,
+	}
+}
+
 export const useSavedAddressesApi = () => {
 	const router = useRouter()
 	const dispatch = useDispatch()
