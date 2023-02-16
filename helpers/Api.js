@@ -1448,14 +1448,17 @@ export const useWishlistProductsApi = () => {
 	const router = useRouter()
 	const dispatch = useDispatch()
 	const [isLoading, setIsLoading] = useState(true)
+	const [isRefreshWishlist, setIsRefreshWishlist] = useState(true)
 	const [wishlistProducts, setWishlistProducts] = useState(null)
 	const [response, setResponse] = useState(null)
 	const [errorResponse, setErrorResponse] = useState(null)
 	const [errorMessage, setErrorMessage] = useState("")
 
 	useEffect(() => {
-		callApi()
-	}, [])
+		if (isRefreshWishlist) {
+			callApi()
+		}
+	}, [isRefreshWishlist])
 
 	const callApi = async () => {
 		setIsLoading(true)
@@ -1486,6 +1489,7 @@ export const useWishlistProductsApi = () => {
 			setErrorMessage(error?.response?.data?.message)
 		} finally {
 			setIsLoading(false)
+			setIsRefreshWishlist(false)
 		}
 	}
 
@@ -1495,6 +1499,7 @@ export const useWishlistProductsApi = () => {
 		errorMessage,
 		response,
 		errorResponse,
+		setIsRefreshWishlist
 	}
 }
 

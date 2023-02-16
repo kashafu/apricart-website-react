@@ -5,10 +5,17 @@ import { useRemoveFromWishlist, useWishlistProductsApi } from "../helpers/Api"
 import SubCategoryProductsShimmer from "../components/Layout/components/Loaders/Shimmers/SubCategoryProductsShimmer"
 import CategoryAndItemsLayout from "../components/Layout/components/Layouts/CategoryAndItemsLayout"
 import Paragraph from "../components/Layout/components/Typography/Paragraph"
+import { useEffect } from "react"
 
 const WishlistProducts = () => {
-	const { setData, setIsRemove } = useRemoveFromWishlist()
-	const { isLoading, errorMessage, errorResponse, wishlistProducts } = useWishlistProductsApi()
+	const { setData, setIsRemove, response } = useRemoveFromWishlist()
+	const { isLoading, errorMessage, errorResponse, wishlistProducts, setIsRefreshWishlist } = useWishlistProductsApi()
+
+	useEffect(() => {
+		if (response) {
+			setIsRefreshWishlist(true)
+		}
+	}, [response])
 
 	if (isLoading) {
 		return (
