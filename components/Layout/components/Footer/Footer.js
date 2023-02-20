@@ -417,12 +417,14 @@ const Footer = () => {
 					{/* BANKS */}
 					<div className="col-span-2 flex justify-center items-center w-full">
 						{redirectSourceSelector === "js_bank" ? (
-							<Image
-								src={zindigiLogo}
-								alt={"zindigi Logo"}
-								width={"101px"}
-								height={"30px"}
-							/>
+							<div className="flex w-full px-4">
+								<Image
+									src={zindigiLogo}
+									alt={"zindigi Logo"}
+									width={"101px"}
+									height={"30px"}
+								/>
+							</div>
 						) : (
 							<div className="col-span-2 justify-center items-center w-full grid grid-cols-4 px-4">
 								<Image
