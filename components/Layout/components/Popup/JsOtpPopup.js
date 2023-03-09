@@ -1,14 +1,13 @@
 import { useRouter } from "next/router"
 import { useEffect } from "react"
 import { useState, useRef } from "react"
-import { useSelector } from "react-redux"
 
-import { useVerifyPaymentProcessApi } from "../../../../helpers/Api"
+import { useCancelOrderApi, useVerifyPaymentProcessApi } from "../../../../helpers/Api"
 
 const JsOtpPopup = ({ setShowScreen, orderId }) => {
     const router = useRouter()
-    const redirectInformationSelector = useSelector(state => state.general.redirectInformation)
     const { isLoading, setData: setOtpData, setIsVerifyOtp, response: otpResponse } = useVerifyPaymentProcessApi()
+    const { setIsCancel } = useCancelOrderApi(orderId)
 
     const [isDisabled, setIsDisabled] = useState(false)
     const [otp1, setOtp1] = useState('')
@@ -144,6 +143,7 @@ const JsOtpPopup = ({ setShowScreen, orderId }) => {
                             <button
                                 className="w-full rounded-full bg-white drop-shadow-2xl"
                                 onClick={() => {
+                                    setIsCancel(true)
                                     router.push('/')
                                 }}
                             >
