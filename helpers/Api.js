@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from "react"
 import { useRouter } from "next/router"
 import { toast } from "react-toastify"
 
-import { base_url_api } from "../information.json"
+import info from "../information.json"
 import { getGeneralApiParams, logOutRemoveCookies } from "./ApiHelpers"
 import {
 	addToCart,
@@ -16,6 +16,8 @@ import { removeSelectedAddress, updateIsUserInitialized, updateTicker } from "..
 import { setCookie } from "./Cookies"
 import { updateCategories } from "../redux/data.slice"
 import { generatePassword } from "./HelperFunctions"
+
+const base_url_api = info.base_url_api;
 
 const fullUrl = (url) => {
 	let { city, userId, clientType, orderType, prodType } = getGeneralApiParams()
