@@ -18,23 +18,23 @@ const Layout = (props) => {
 	let { token } = getGeneralApiParams()
 
 	// REDIRECT STUFF
-	// useEffect(() => {
-	// 	if (router.isReady) {
-	// 		let queries = router.query
-	// 		if (queries.source) {
-	// 			dispatch(updateRedirectSource(queries?.source))
-	// 		}
-	// 		if (queries.name && queries.email && queries.phone_number) {
-	// 			dispatch(
-	// 				updateRedirectInformation({
-	// 					name: queries?.name,
-	// 					email: queries?.email,
-	// 					phoneNumber: queries?.phone_number,
-	// 				})
-	// 			)
-	// 		}
-	// 	}
-	// }, [router.isReady, router.query, token])
+	useEffect(() => {
+		if (router.isReady) {
+			let queries = router.query
+			if (queries.source) {
+				dispatch(updateRedirectSource(queries?.source))
+			}
+			if (queries.name && queries.email && queries.phone_number) {
+				dispatch(
+					updateRedirectInformation({
+						name: queries?.name,
+						email: queries?.email,
+						phoneNumber: queries?.phone_number,
+					})
+				)
+			}
+		}
+	}, [router.isReady, router.query, token])
 
 	return (
 		<div className="flex flex-col justify-between items-stretch min-h-screen max-w-screen bg-white">

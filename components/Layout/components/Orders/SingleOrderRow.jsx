@@ -39,98 +39,93 @@ const SingleOrderRow = ({ order, cancelTime }) => {
     }, [])
 
     return (
-        <>
-            <tr key={orderId}
-                className="odd:bg-slate-100 even:bg-slate-200 truncate font-nunito capitalize text-center"
+        <div>
+            <div key={orderId}
+                className="flex flex-col p-4 bg-white rounded-lg truncate font-nunito capitalize text-left"
                 onClick={() => {
                     setShowDetails(!showDetails)
                 }}
             >
-                <td>
-                    {orderId}
-                </td>
-                <td>
-                    {created_at}
-                </td>
-                <td>
-                    {productCount}
-                </td>
-                <td>
-                    {grandTotal} {baseCurrencyCode}
-                </td>
-                <td>
-                    {shippingMethod}
-                </td>
-                <td className="bg-main-blue">
-                    <button className="w-full h-full font-nunito text-white font-bold"
+                <p className="text-main-blue text-lg font-bold">
+                    Order no: {orderId}
+                </p>
+                <p>
+                    Order Date: {created_at}
+                </p>
+                <p>
+                    Total Items: {productCount}
+                </p>
+                <p>
+                    Total Amount: {grandTotal} {baseCurrencyCode}
+                </p>
+                <p>
+                    Order Type: {shippingMethod}
+                </p>
+                <div className="flex w-full justify-between space-x-2 pt-2">
+                    <button className="w-full h-full py-1 font-nunito bg-main-blue rounded-lg text-white font-bold"
                         onClick={() => {
                             setShowDetails(!showDetails)
                         }}
                     >
                         {showDetails ? "Hide Details" : "View Details"}
                     </button>
-                </td>
-                {isCancellable && (
-                    <td className="bg-red-600">
-                        <button className="w-full h-full font-nunito text-white font-bold"
+                    {isCancellable && (
+                        <button className="w-full h-full py-1 font-nunito bg-red-600 rounded-lg text-white font-bold"
                             onClick={() => {
                                 setIsCancel(true)
                             }}
                         >
                             CANCEL
                         </button>
-                    </td>
-                )}
-
-            </tr>
+                    )}
+                </div>
+            </div>
             {showDetails && (
-                <tr className="animate-dropdown">
-                    <td colSpan={6}>
-                        <div className="bg-slate-100 rounded-lg flex flex-col p-2 space-y-1">
+                <div className="animate-dropdownflex flex-col ">
+                    <div className="bg-slate-200 rounded-lg flex flex-col p-2 space-y-1">
+                        <p>
+                            <strong>Order Number:</strong> {orderId}
+                        </p>
+                        <p>
+                            <strong>Status:</strong> {status}
+                        </p>
+                        <p>
+                            <strong>Order Date:</strong> {created_at}
+                        </p>
+                        <p>
+                            <strong>Address:</strong> {addressUsed}, {city}
+                        </p>
+                        <p>
+                            <strong>Payment Method:</strong> {paymentMethod}
+                        </p>
+                        <p>
+                            <strong>Payment Status:</strong> {paymentStatus}
+                        </p>
+                        <p>
+                            <strong>Notes:</strong> {notes}
+                        </p>
+                        {couponsUsed !== '' && (
                             <p>
-                                <strong>Order Number:</strong> {orderId}
+                                <strong>Coupon:</strong> {couponsUsed}
                             </p>
-                            <p>
-                                <strong>Status:</strong> {status}
-                            </p>
-                            <p>
-                                <strong>Order Date:</strong> {created_at}
-                            </p>
-                            <p>
-                                <strong>Address:</strong> {addressUsed}, {city}
-                            </p>
-                            <p>
-                                <strong>Payment Method:</strong> {paymentMethod}
-                            </p>
-                            <p>
-                                <strong>Payment Status:</strong> {paymentStatus}
-                            </p>
-                            <p>
-                                <strong>Notes:</strong> {notes}
-                            </p>
-                            {couponsUsed !== '' && (
+                        )}
+                        {pickupLocation !== '' && (
+                            <>
                                 <p>
-                                    <strong>Coupon:</strong> {couponsUsed}
+                                    <strong>Pickup Location:</strong> {pickupLocation}
                                 </p>
-                            )}
-                            {pickupLocation !== '' && (
-                                <>
-                                    <p>
-                                        <strong>Pickup Location:</strong> {pickupLocation}
-                                    </p>
-                                    <p>
-                                        <strong>Pickup Date and Time:</strong> {pickupStartTime} - {pickupEndTime}
-                                    </p>
-                                </>
-                            )}
-                            <p>
-                                <strong>TOTAL:</strong> {grandTotal} {baseCurrencyCode}
-                            </p>
-                        </div>
-                    </td>
-                </tr>
+                                <p>
+                                    <strong>Pickup Date and Time:</strong> {pickupStartTime} - {pickupEndTime}
+                                </p>
+                            </>
+                        )}
+                        <p>
+                            <strong>TOTAL:</strong> {grandTotal} {baseCurrencyCode}
+                        </p>
+                    </div>
+                </div>
             )}
-        </>
+        </div>
     )
 }
 

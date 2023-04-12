@@ -243,7 +243,7 @@ const Footer = () => {
 			</footer>
 
 			{/* Phone  */}
-			<footer className="flex flex-col sm:hidden bg-main-grey-1000 pt-5 pb-12">
+			<footer className="flex flex-col sm:hidden bg-main-grey-1000 py-5">
 				<section className="flex flex-col sm:flex-row justify-between w-full ">
 					<section className=" flex flex-col ">
 						<div className="pl-4 pb-4">
@@ -415,36 +415,38 @@ const Footer = () => {
 						</a>
 					</div>
 					{/* BANKS */}
-					{redirectSourceSelector === "js_bank" ? (
-						<div className="col-span-2 flex justify-center items-center w-full">
-							<Image
-								src={zindigiLogo}
-								alt={"zindigi Logo"}
-								width={"101px"}
-								height={"30px"}
-							/>
-						</div>
-					) : (
-						<div className="col-span-2 justify-center items-center w-full grid grid-cols-4 px-4">
-							<Image
-								src={meezanIcon}
-								alt={"Meezan Icon"}
-							/>
-							<Image
-								src={visaIcon}
-								alt={"Visa Icon"}
-							/>
-							<Image
-								src={masterIcon}
-								alt={"Visa Icon"}
-							/>
+					<div className="col-span-2 flex justify-center items-center w-full">
+						{redirectSourceSelector === "js_bank" ? (
+							<div className="flex w-full px-4">
+								<Image
+									src={zindigiLogo}
+									alt={"zindigi Logo"}
+									width={"101px"}
+									height={"30px"}
+								/>
+							</div>
+						) : (
+							<div className="col-span-2 justify-center items-center w-full grid grid-cols-4 px-4">
+								<Image
+									src={meezanIcon}
+									alt={"Meezan Icon"}
+								/>
+								<Image
+									src={visaIcon}
+									alt={"Visa Icon"}
+								/>
+								<Image
+									src={masterIcon}
+									alt={"Visa Icon"}
+								/>
 
-							<Image
-								src={codIcon}
-								alt={"Visa Icon"}
-							/>
-						</div>
-					)}
+								<Image
+									src={codIcon}
+									alt={"Visa Icon"}
+								/>
+							</div>
+						)}
+					</div>
 				</div>
 			</footer>
 		</>
